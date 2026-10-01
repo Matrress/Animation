@@ -7,6 +7,16 @@
 **ONE SECTION.** A single page-specific *Embed & Custom Code* section on the Homepage.
 Ecwid's documented 4,000-symbol limit belongs to the **site-wide body "Custom JavaScript code" field**, not to page sections; the section limit is undocumented (see REPORT.md §D). Our section is **6,335 characters / 6,337 bytes**.
 
+### Two equivalent forms of the same single section
+
+| Form | File | Paste size | What must be hosted |
+|---|---|---|---|
+| **All-in-one (simplest; ready now)** | `ecwid/section-1.0.0-allinone-jsdelivr.html` | 28,826 characters | Nothing: CSS + JS are inside the section; images/fonts come from jsDelivr (pinned commit `c517ded`) |
+| All-in-one, own domain | `ecwid/section-1.0.0-allinone.html` | 27,873 characters | images + fonts on `assets.divinedunlop.com` (§2) |
+| External CSS/JS (leanest page HTML) | `ecwid/section-1.0.0.html` | 6,335 characters | everything in `release/1.0.0/` on `assets.divinedunlop.com` (§2) |
+
+All three produce identical output (verified: same geometry, same 131 interaction checks). The all-in-one is about the size of the v26 reference file (28,761 characters) that was planned for one section. Its CSS/JS aren't cached separately, which costs about 6 KB compressed per homepage view.
+
 ## 2. Where the external files live (choose one host)
 
 **Recommended — first-party, `assets.divinedunlop.com` (Cloudflare Pages, free):**
@@ -130,12 +140,13 @@ Add one line right after the `hero.css` link:
 On desktop Chrome + Safari, iPhone Safari, Android Chrome, iPad (portrait + landscape):
 1. **Full bleed:** no side gaps, no strip above the clouds, lockup sits inside the sky.
 2. **Lockup:** links / LATEX / certification share one left and right edge; phone: certification above the DIVINE logo, not over it.
-3. **Hotspots:** 7 visible and pulsing (also the lowest "ventilation" one on 1920×1080). Mouse hover, click, tap (tap again closes), Tab → arrows → Escape, tap outside closes. Swiping that starts on a hotspot scrolls the page.
-4. **Links:** Mattresses / Shop Your Mattress → `/products/latex-mattresses-collection`; Toppers / Shop Your Topper → `/products/latex-toppers-collection`; Pillows → `/products/latex-pillows`.
-5. **Console:** no red errors (CSP, 404, CORS). Network tab: `hero.css`, `hero.js`, 1 `hero-band-*.webp`, 1–2 fonts; `plate-*`/`spine-*` appear only after you interact.
-6. **Scroll down and back up** several times (Instant Site unloads/reloads sections): hotspots still work, and the console runs `document.querySelectorAll('.ddh [aria-live]').length` → `1`.
-7. **CTA fold:** on a 1366×768 / 1440×900 laptop the Shop buttons are visible without scrolling.
-8. PageSpeed Insights on the test page URL: LCP element = the hero image, CLS ≈ 0.
+3. **Ventilation:** pressing the lowest hotspot turns the whole picture fresh sky-blue (strongest at the mattress) with "Best Air Ventilation / Temperature Comfort"; it fades back when closed.
+4. **Hotspots:** 7 visible and pulsing (also the lowest "ventilation" one on 1920×1080). Mouse hover, click, tap (tap again closes), Tab → arrows → Escape, tap outside closes. Swiping that starts on a hotspot scrolls the page.
+5. **Links:** Mattresses / Shop Your Mattress → `/products/latex-mattresses-collection`; Toppers / Shop Your Topper → `/products/latex-toppers-collection`; Pillows → `/products/latex-pillows`.
+6. **Console:** no red errors (CSP, 404, CORS). Network tab: `hero.css`, `hero.js`, 1 `hero-band-*.webp`, 1–2 fonts; `plate-*`/`spine-*` appear only after you interact.
+7. **Scroll down and back up** several times (Instant Site unloads/reloads sections): hotspots still work, and the console runs `document.querySelectorAll('.ddh [aria-live]').length` → `1`.
+8. **CTA fold:** on a 1366×768 / 1440×900 laptop the Shop buttons are visible without scrolling.
+9. PageSpeed Insights on the test page URL: LCP element = the hero image, CLS ≈ 0.
 
 ## 9. If the editor rejects the length (fallback ladder — do not split the hero)
 
@@ -157,7 +168,7 @@ npm i -g esbuild playwright pngjs axe-core          # or any local install
 node tests/build.mjs                                # src/ → release/1.0.0, ecwid/, preview/
 npx http-server -p 8765 -c-1 .                      # in another terminal
 node tests/matrix.mjs polished-h50 preview/harness-polished-h50.html
-node tests/interaction.mjs preview/harness-polished-h50.html     # 127 checks
+node tests/interaction.mjs preview/harness-polished-h50.html     # 131 checks
 node tests/guards.mjs && node tests/a11y.mjs preview/harness-polished-h50.html
 node tests/lockup-pixels.mjs http://127.0.0.1:8765/preview/harness-polished-h50.html
 python3 tests/serve.py 8766 & BASE=http://127.0.0.1:8766/ node tests/perf.mjs preview/harness-polished-h50.html 5
