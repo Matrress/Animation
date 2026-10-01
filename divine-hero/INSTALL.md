@@ -1,0 +1,164 @@
+# Divine DunlopDreams Hero 1.0.0 — installation (Ecwid Instant Site)
+
+> **Do not publish until you approve.** Everything below is built and tested off-site. Nothing on divinedunlop.com has been changed.
+
+## 1. Section count
+
+**ONE SECTION.** A single page-specific *Embed & Custom Code* section on the Homepage.
+Ecwid's documented 4,000-symbol limit belongs to the **site-wide body "Custom JavaScript code" field**, not to page sections; the section limit is undocumented (see REPORT.md §D). Our section is **6,335 characters / 6,337 bytes**.
+
+## 2. Where the external files live (choose one host)
+
+**Recommended — first-party, `assets.divinedunlop.com` (Cloudflare Pages, free):**
+1. Create a Cloudflare Pages project (direct upload, no build). Upload a folder whose structure is exactly:
+   ```
+   _headers                          ← copy of hosting/_headers
+   divine-hero/
+     1.0.0/
+       hero.css                      ← release/1.0.0/hero.css
+       hero.js                       ← release/1.0.0/hero.js
+       assets/
+         chillax-400.woff2  chillax-600.woff2
+         hero-band-800.webp  hero-band-1200.webp  hero-band-1640.webp  hero-band-2048.webp
+         hero-band-2560.webp hero-band-2880.webp  hero-band-3554.webp
+         plate-back.webp  plate-logo.webp  spine-graphic.webp
+   ```
+2. In the Pages project → *Custom domains*, add `assets.divinedunlop.com`. At whoever manages DNS for divinedunlop.com, add the CNAME it asks for (`assets` → `<project>.pages.dev`).
+3. Check: `curl -sI https://assets.divinedunlop.com/divine-hero/1.0.0/hero.css` → `200`, `cache-control: public, max-age=31536000, immutable`, `access-control-allow-origin: *`.
+
+The production section below already points at `https://assets.divinedunlop.com/divine-hero/1.0.0/`.
+
+**Ready now — staging via jsDelivr (no setup):** `ecwid/section-1.0.0-jsdelivr.html` loads the same files from this repository at the pinned commit `75db0b7`. It's immutable and CORS-enabled. Use it for the hidden-page test or as an interim host. Swap to the first-party file before launch: that file serves from a GitHub fork of an unrelated project, so it isn't brand-controlled.
+
+## 3. Exact external file URLs (production)
+
+```
+https://assets.divinedunlop.com/divine-hero/1.0.0/hero.css
+https://assets.divinedunlop.com/divine-hero/1.0.0/hero.js
+https://assets.divinedunlop.com/divine-hero/1.0.0/assets/chillax-400.woff2
+https://assets.divinedunlop.com/divine-hero/1.0.0/assets/chillax-600.woff2
+https://assets.divinedunlop.com/divine-hero/1.0.0/assets/hero-band-{800,1200,1640,2048,2560,2880,3554}.webp
+https://assets.divinedunlop.com/divine-hero/1.0.0/assets/plate-back.webp
+https://assets.divinedunlop.com/divine-hero/1.0.0/assets/plate-logo.webp
+https://assets.divinedunlop.com/divine-hero/1.0.0/assets/spine-graphic.webp
+```
+File contents = the files in `release/1.0.0/` of this repository (byte-exact; readable sources in `src/`).
+
+## 4. Order of operations
+
+1. Host the files (§2) and run the `curl` check.
+2. Ecwid admin → **Website → Edit Site** → page dropdown **Add page** → create a test page (e.g. "hero-test"), not linked in navigation.
+3. On that page: **Add Section → Advanced Solutions → Embed & Custom Code → Add Custom Code Section** → paste the code from §5 → **Back** → drag the section to the **top** → **Publish**.
+4. Run the test procedure (§8) on the test page.
+5. Only after approval: repeat step 3 on **Page: Homepage**, drag it directly under the store header, above the existing sections. Leave the existing Ecwid Shop buttons and navigation as they are. Hide or remove any old cover/hero section above it only once you're happy.
+6. Publish.
+
+## 5. Paste-ready code — Section 1 of 1 (Homepage, top)
+
+Source of truth: `ecwid/section-1.0.0.html` (identical to the block below).
+
+```html
+<!-- Divine DunlopDreams Hero 1.0.0 | one Instant Site "Embed & Custom Code" section | CSS/JS/assets: https://assets.divinedunlop.com/divine-hero/1.0.0/ -->
+<link rel="preconnect" href="https://assets.divinedunlop.com">
+<link rel="preload" href="https://assets.divinedunlop.com/divine-hero/1.0.0/assets/chillax-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://assets.divinedunlop.com/divine-hero/1.0.0/hero.css">
+<section class="ddh" aria-labelledby="ddh-title" data-ddh-mode="interactive" style="--ddh-bars:50px">
+<h1 class="ddh__sr" id="ddh-title">Divine DunlopDreams – Engineering Natural Latex Sleep System</h1>
+<div class="ddh__scene">
+<div class="ddh__sky">
+<div class="ddh__sky-lockup"><nav class="ddh__hero-nav" aria-label="Product collections"><a href="https://divinedunlop.com/products/latex-mattresses-collection">Mattresses</a><a href="https://divinedunlop.com/products/latex-toppers-collection">Toppers</a><a href="https://divinedunlop.com/products/latex-pillows">Pillows</a></nav><span class="ddh__sky-word" aria-hidden="true"><span>L</span><span>A</span><span>T</span><span>E</span><span>X</span></span><span class="ddh__sky-cert" aria-hidden="true"><span class="ddh__leaf"></span><span><b>European Production</b><br>Certified for UK &amp; EU</span></span></div>
+</div>
+<div class="ddh__art">
+<div class="ddh__plane">
+<picture class="ddh__picture"><img class="ddh__img" src="https://assets.divinedunlop.com/divine-hero/1.0.0/assets/hero-band-1640.webp" srcset="https://assets.divinedunlop.com/divine-hero/1.0.0/assets/hero-band-800.webp 800w,https://assets.divinedunlop.com/divine-hero/1.0.0/assets/hero-band-1200.webp 1200w,https://assets.divinedunlop.com/divine-hero/1.0.0/assets/hero-band-1640.webp 1640w,https://assets.divinedunlop.com/divine-hero/1.0.0/assets/hero-band-2048.webp 2048w,https://assets.divinedunlop.com/divine-hero/1.0.0/assets/hero-band-2560.webp 2560w,https://assets.divinedunlop.com/divine-hero/1.0.0/assets/hero-band-2880.webp 2880w,https://assets.divinedunlop.com/divine-hero/1.0.0/assets/hero-band-3554.webp 3554w" sizes="100vw" width="3554" height="2744" alt="" fetchpriority="high" loading="eager" decoding="async"></picture>
+<div class="ddh__screen ddh__screen--back" id="ddh-screen-back" aria-hidden="true">
+<img class="ddh__plate" src="https://assets.divinedunlop.com/divine-hero/1.0.0/assets/plate-back.webp" width="573" height="232" alt="" loading="lazy" decoding="async">
+<div class="ddh__spine" data-ddh-copy="back" aria-hidden="true"><strong>Spinal Alignment</strong><img src="https://assets.divinedunlop.com/divine-hero/1.0.0/assets/spine-graphic.webp" width="1615" height="145" alt="" loading="lazy" decoding="async"><span><b>Stretching</b> Effect</span></div>
+</div>
+<div class="ddh__screen ddh__screen--brand" id="ddh-screen-brand" aria-hidden="true">
+<img class="ddh__plate" src="https://assets.divinedunlop.com/divine-hero/1.0.0/assets/plate-logo.webp" width="470" height="175" alt="" loading="lazy" decoding="async">
+<p class="ddh__copy ddh__copy--solo" data-ddh-copy="shoulder" aria-hidden="true"><strong>Balance &amp; Relief</strong></p>
+<p class="ddh__copy ddh__copy--solo" data-ddh-copy="zones" aria-hidden="true"><strong>Original Dunlop Technology</strong></p>
+<p class="ddh__copy" data-ddh-copy="head" data-ddh-claim="review" aria-hidden="true"><strong>100% EU-UK Certified</strong><span>Latex (Rubber) Foam</span></p>
+<p class="ddh__copy" data-ddh-copy="system" aria-hidden="true"><strong>Dual Plush System</strong><span>Latex Mattress for <b>Support</b></span><span>Latex Topper for <b>Comfort</b></span></p>
+<p class="ddh__copy" data-ddh-copy="firmness" aria-hidden="true"><strong>Natural Adaptation</strong><span>Keeps Your Body on the Surface</span></p>
+<p class="ddh__copy" data-ddh-copy="temperature" aria-hidden="true"><strong>Best Air Ventilation</strong><span>Temperature Comfort</span></p>
+</div>
+<ul class="ddh__benefits" aria-label="Benefits"><li>High Support</li><li>Anatomical Balance</li><li>Orthopaedic Comfort</li><li>High Adaptability</li></ul>
+<p class="ddh__sr">European production, certified for UK &amp; EU. Dual Plush conception.</p>
+<div class="ddh__points" role="group" aria-label="Explore the sleep system">
+<button class="ddh__point" type="button" data-ddh-point="shoulder" aria-controls="ddh-screen-brand" aria-expanded="false" style="--x:41.8%;--y:41.96%;--i:0"><span class="ddh__sr">Shoulder: balance and relief</span></button>
+<button class="ddh__point" type="button" data-ddh-point="back" aria-controls="ddh-screen-back" aria-expanded="false" style="--x:21.4%;--y:52.19%;--i:1"><span class="ddh__sr">Back: spinal alignment</span></button>
+<button class="ddh__point" type="button" data-ddh-point="zones" aria-controls="ddh-screen-brand" aria-expanded="false" style="--x:74.6%;--y:37.42%;--i:2"><span class="ddh__sr">Original Dunlop technology</span></button>
+<button class="ddh__point" type="button" data-ddh-point="head" aria-controls="ddh-screen-brand" aria-expanded="false" style="--x:75.4%;--y:61.25%;--i:3"><span class="ddh__sr">Pillow: certified latex rubber foam</span></button>
+<button class="ddh__point" type="button" data-ddh-point="system" aria-controls="ddh-screen-brand" aria-expanded="false" style="--x:22%;--y:75.11%;--i:4"><span class="ddh__sr">Dual Plush mattress and topper system</span></button>
+<button class="ddh__point" type="button" data-ddh-point="firmness" aria-controls="ddh-screen-brand" aria-expanded="false" style="--x:38.1%;--y:73.82%;--i:5"><span class="ddh__sr">Natural adaptation</span></button>
+<button class="ddh__point ddh__point--m" type="button" data-ddh-point="temperature" aria-controls="ddh-screen-brand" aria-expanded="false" style="--x:47.7%;--y:78.74%;--i:6;--mx:62%;--my:84%"><span class="ddh__sr">Ventilation and temperature comfort</span></button>
+</div>
+</div>
+</div>
+<div class="ddh__wash" aria-hidden="true"></div>
+<nav class="ddh__shop" aria-label="Shop natural latex">
+<a class="ddh__cta" href="https://divinedunlop.com/products/latex-mattresses-collection">Shop Your Mattress</a>
+<a class="ddh__cta" href="https://divinedunlop.com/products/latex-toppers-collection">Shop Your Topper</a>
+</nav>
+</div>
+</section>
+<script src="https://assets.divinedunlop.com/divine-hero/1.0.0/hero.js" defer></script>
+<script>window.DDHero&&DDHero.boot()</script>
+```
+
+## 6. Settings inside the code you may need to adjust
+
+* `style="--ddh-bars:50px"`: the height of the store header above the hero on desktop. The hero fills `100svh − bars − 16px`, so the CTAs sit just above the fold. Measure it on the test page (desktop, scrolled to top), run this in the browser console:
+  `Math.round(document.querySelector('.ddh').getBoundingClientRect().top)`
+  and put that number in place of `50`.
+* **H1.** In the console on the live homepage: `[...document.querySelectorAll('h1')].map(h => h.textContent.trim())`
+  If anything **other than** "Divine DunlopDreams – Engineering Natural Latex Sleep System" is listed, change `<h1 class="ddh__sr" id="ddh-title">…</h1>` to `<h2 class="ddh__sr" id="ddh-title">…</h2>` (both tags). Nothing visible changes.
+* **Side gaps.** If the hero doesn't touch both screen edges (the Instant Site section adds padding), change `class="ddh"` to `class="ddh ddh--breakout"`.
+
+## 7. Optional variants (only if approved)
+
+Add one line right after the `hero.css` link:
+```html
+<link rel="stylesheet" href="https://assets.divinedunlop.com/divine-hero/1.0.0/variant-b-large-display.css">
+```
+(Upload `variants/variant-*.css` next to `hero.css` first.) For a permanent adoption, fold it into `src/hero.css` and release 1.1.0.
+
+## 8. Test procedure (test page first, then homepage)
+
+On desktop Chrome + Safari, iPhone Safari, Android Chrome, iPad (portrait + landscape):
+1. **Full bleed:** no side gaps, no strip above the clouds, lockup sits inside the sky.
+2. **Lockup:** links / LATEX / certification share one left and right edge; phone: certification above the DIVINE logo, not over it.
+3. **Hotspots:** 7 visible and pulsing (also the lowest "ventilation" one on 1920×1080). Mouse hover, click, tap (tap again closes), Tab → arrows → Escape, tap outside closes. Swiping that starts on a hotspot scrolls the page.
+4. **Links:** Mattresses / Shop Your Mattress → `/products/latex-mattresses-collection`; Toppers / Shop Your Topper → `/products/latex-toppers-collection`; Pillows → `/products/latex-pillows`.
+5. **Console:** no red errors (CSP, 404, CORS). Network tab: `hero.css`, `hero.js`, 1 `hero-band-*.webp`, 1–2 fonts; `plate-*`/`spine-*` appear only after you interact.
+6. **Scroll down and back up** several times (Instant Site unloads/reloads sections): hotspots still work, and the console runs `document.querySelectorAll('.ddh [aria-live]').length` → `1`.
+7. **CTA fold:** on a 1366×768 / 1440×900 laptop the Shop buttons are visible without scrolling.
+8. PageSpeed Insights on the test page URL: LCP element = the hero image, CLS ≈ 0.
+
+## 9. If the editor rejects the length (fallback ladder — do not split the hero)
+
+1. Paste `ecwid/section-1.0.0.min.html` (same markup, whitespace removed, 6,288 characters).
+2. If still rejected, tell me the exact limit shown. The next step is a small mount section (≈600 characters) with hero.js rendering the same markup from an external template, keeping one section and one lifecycle. I haven't built it because nothing indicates it's needed, and it costs no-JS fallback and early image discovery.
+
+## 10. Rollback
+
+* **Instant:** Edit Site → Homepage → the custom-code section → *Hide* (eye icon) or delete it → Publish. The existing sections and Shop buttons were never removed, so the page returns to its previous state.
+* **Version rollback:** hosted versions are immutable folders (`/divine-hero/1.0.0/`, later `/1.0.1/`…). Paste the previous version's `ecwid/section-<version>.html`. Never overwrite files inside a published version folder.
+* **Release scheme:** semantic versions. Patch = fix with no visual change, minor = approved visual change (e.g. a variant), major = new composition. Each release gets a new folder and a new `ecwid/section-<version>.html`; `tests/build.mjs` sets `VERSION`.
+* **AVIF later (optional):** with the original master `M.png`: `for w in 800 1200 1640 2048 2560 2880 3554; do avifenc --min 0 --max 63 -a end-usage=q -a cq-level=24 -s 4 <(magick M.png -resize ${w}x png:-) hero-band-$w.avif; done`. Then add `<source type="image/avif">` inside `<picture>` and keep WebP as the `<img>`. Ship only if side-by-side quality is equal.
+
+## 11. Rebuilding / re-testing locally
+
+```
+cd divine-hero
+npm i -g esbuild playwright pngjs axe-core          # or any local install
+node tests/build.mjs                                # src/ → release/1.0.0, ecwid/, preview/
+npx http-server -p 8765 -c-1 .                      # in another terminal
+node tests/matrix.mjs polished-h50 preview/harness-polished-h50.html
+node tests/interaction.mjs preview/harness-polished-h50.html     # 127 checks
+node tests/guards.mjs && node tests/a11y.mjs preview/harness-polished-h50.html
+node tests/lockup-pixels.mjs http://127.0.0.1:8765/preview/harness-polished-h50.html
+python3 tests/serve.py 8766 & BASE=http://127.0.0.1:8766/ node tests/perf.mjs preview/harness-polished-h50.html 5
+```
