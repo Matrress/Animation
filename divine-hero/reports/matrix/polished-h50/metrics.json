@@ -253,14 +253,14 @@
   ],
   "requests": [
    {
-    "url": "preview/harness-polished-h50.html",
-    "bytes": 6507,
-    "type": "document"
+    "url": "release/1.0.0/hero.css",
+    "bytes": 14994,
+    "type": "stylesheet"
    },
    {
-    "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
-    "type": "stylesheet"
+    "url": "release/1.0.0/assets/chillax-600.woff2",
+    "bytes": 13208,
+    "type": "font"
    },
    {
     "url": "release/1.0.0/assets/hero-band-1200.webp",
@@ -268,9 +268,9 @@
     "type": "image"
    },
    {
-    "url": "release/1.0.0/assets/chillax-600.woff2",
-    "bytes": 13208,
-    "type": "font"
+    "url": "preview/harness-polished-h50.html",
+    "bytes": 6507,
+    "type": "document"
    },
    {
     "url": "release/1.0.0/hero.js",
@@ -283,7 +283,7 @@
     "type": "font"
    }
   ],
-  "bytes": 104824
+  "bytes": 105016
  },
  "phone-390x844": {
   "w": 390,
@@ -545,7 +545,7 @@
    },
    {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
@@ -569,7 +569,7 @@
     "type": "font"
    }
   ],
-  "bytes": 104824
+  "bytes": 105016
  },
  "phone-430x932": {
   "w": 430,
@@ -830,14 +830,14 @@
     "type": "document"
    },
    {
+    "url": "release/1.0.0/hero.css",
+    "bytes": 14994,
+    "type": "stylesheet"
+   },
+   {
     "url": "release/1.0.0/assets/chillax-600.woff2",
     "bytes": 13208,
     "type": "font"
-   },
-   {
-    "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
-    "type": "stylesheet"
    },
    {
     "url": "release/1.0.0/assets/hero-band-1640.webp",
@@ -855,7 +855,7 @@
     "type": "font"
    }
   ],
-  "bytes": 132098
+  "bytes": 132290
  },
  "tablet-768x1024": {
   "w": 768,
@@ -1116,19 +1116,19 @@
     "type": "document"
    },
    {
-    "url": "release/1.0.0/assets/chillax-600.woff2",
-    "bytes": 13208,
-    "type": "font"
-   },
-   {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
     "url": "release/1.0.0/assets/hero-band-1640.webp",
     "bytes": 78436,
     "type": "image"
+   },
+   {
+    "url": "release/1.0.0/assets/chillax-600.woff2",
+    "bytes": 13208,
+    "type": "font"
    },
    {
     "url": "release/1.0.0/hero.js",
@@ -1141,7 +1141,7 @@
     "type": "font"
    }
   ],
-  "bytes": 132098
+  "bytes": 132290
  },
  "tablet-820x1180": {
   "w": 820,
@@ -1402,14 +1402,14 @@
     "type": "document"
    },
    {
-    "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
-    "type": "stylesheet"
-   },
-   {
     "url": "release/1.0.0/assets/hero-band-1640.webp",
     "bytes": 78436,
     "type": "image"
+   },
+   {
+    "url": "release/1.0.0/hero.css",
+    "bytes": 14994,
+    "type": "stylesheet"
    },
    {
     "url": "release/1.0.0/assets/chillax-600.woff2",
@@ -1427,7 +1427,7 @@
     "type": "font"
    }
   ],
-  "bytes": 132098
+  "bytes": 132290
  },
  "ipad-portrait-1024x1366": {
   "w": 1024,
@@ -1689,7 +1689,7 @@
    },
    {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
@@ -1713,7 +1713,7 @@
     "type": "font"
    }
   ],
-  "bytes": 159752
+  "bytes": 159944
  },
  "edge-1050x800": {
   "w": 1050,
@@ -1974,14 +1974,14 @@
     "type": "document"
    },
    {
+    "url": "release/1.0.0/hero.css",
+    "bytes": 14994,
+    "type": "stylesheet"
+   },
+   {
     "url": "release/1.0.0/assets/hero-band-1200.webp",
     "bytes": 51162,
     "type": "image"
-   },
-   {
-    "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
-    "type": "stylesheet"
    },
    {
     "url": "release/1.0.0/assets/chillax-600.woff2",
@@ -1999,7 +1999,7 @@
     "type": "font"
    }
   ],
-  "bytes": 104824
+  "bytes": 105016
  },
  "edge-1051x800": {
   "w": 1051,
@@ -2260,14 +2260,14 @@
     "type": "document"
    },
    {
+    "url": "release/1.0.0/hero.css",
+    "bytes": 14994,
+    "type": "stylesheet"
+   },
+   {
     "url": "release/1.0.0/assets/hero-band-1200.webp",
     "bytes": 51162,
     "type": "image"
-   },
-   {
-    "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
-    "type": "stylesheet"
    },
    {
     "url": "release/1.0.0/assets/chillax-600.woff2",
@@ -2285,7 +2285,7 @@
     "type": "font"
    }
   ],
-  "bytes": 104824
+  "bytes": 105016
  },
  "ipad-landscape-1366x1024": {
   "w": 1366,
@@ -2547,13 +2547,8 @@
    },
    {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
-   },
-   {
-    "url": "release/1.0.0/assets/chillax-600.woff2",
-    "bytes": 13208,
-    "type": "font"
    },
    {
     "url": "release/1.0.0/assets/hero-band-2880.webp",
@@ -2566,12 +2561,17 @@
     "type": "script"
    },
    {
+    "url": "release/1.0.0/assets/chillax-600.woff2",
+    "bytes": 13208,
+    "type": "font"
+   },
+   {
     "url": "release/1.0.0/assets/chillax-400.woff2",
     "bytes": 12520,
     "type": "font"
    }
   ],
-  "bytes": 212990
+  "bytes": 213182
  },
  "laptop-1366x768": {
   "w": 1366,
@@ -2832,6 +2832,11 @@
     "type": "document"
    },
    {
+    "url": "release/1.0.0/hero.css",
+    "bytes": 14994,
+    "type": "stylesheet"
+   },
+   {
     "url": "release/1.0.0/assets/chillax-600.woff2",
     "bytes": 13208,
     "type": "font"
@@ -2840,11 +2845,6 @@
     "url": "release/1.0.0/assets/hero-band-1640.webp",
     "bytes": 78436,
     "type": "image"
-   },
-   {
-    "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
-    "type": "stylesheet"
    },
    {
     "url": "release/1.0.0/hero.js",
@@ -2857,7 +2857,7 @@
     "type": "font"
    }
   ],
-  "bytes": 132098
+  "bytes": 132290
  },
  "laptop-1440x900-retina": {
   "w": 1440,
@@ -3118,19 +3118,19 @@
     "type": "document"
    },
    {
+    "url": "release/1.0.0/assets/chillax-600.woff2",
+    "bytes": 13208,
+    "type": "font"
+   },
+   {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
     "url": "release/1.0.0/assets/hero-band-2880.webp",
     "bytes": 159328,
     "type": "image"
-   },
-   {
-    "url": "release/1.0.0/assets/chillax-600.woff2",
-    "bytes": 13208,
-    "type": "font"
    },
    {
     "url": "release/1.0.0/hero.js",
@@ -3143,7 +3143,7 @@
     "type": "font"
    }
   ],
-  "bytes": 212990
+  "bytes": 213182
  },
  "laptop-1536x864": {
   "w": 1536,
@@ -3405,7 +3405,7 @@
    },
    {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
@@ -3429,7 +3429,7 @@
     "type": "font"
    }
   ],
-  "bytes": 159752
+  "bytes": 159944
  },
  "mbp16-1728x1117-retina": {
   "w": 1728,
@@ -3691,8 +3691,13 @@
    },
    {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
+   },
+   {
+    "url": "release/1.0.0/assets/hero-band-3554.webp",
+    "bytes": 235562,
+    "type": "image"
    },
    {
     "url": "release/1.0.0/assets/chillax-600.woff2",
@@ -3705,17 +3710,12 @@
     "type": "script"
    },
    {
-    "url": "release/1.0.0/assets/hero-band-3554.webp",
-    "bytes": 235562,
-    "type": "image"
-   },
-   {
     "url": "release/1.0.0/assets/chillax-400.woff2",
     "bytes": 12520,
     "type": "font"
    }
   ],
-  "bytes": 289224
+  "bytes": 289416
  },
  "desktop-1920x1080": {
   "w": 1920,
@@ -3977,7 +3977,7 @@
    },
    {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
@@ -4001,7 +4001,7 @@
     "type": "font"
    }
   ],
-  "bytes": 159752
+  "bytes": 159944
  },
  "desktop-1920x1080-dpr2": {
   "w": 1920,
@@ -4262,13 +4262,8 @@
     "type": "document"
    },
    {
-    "url": "release/1.0.0/assets/hero-band-3554.webp",
-    "bytes": 235562,
-    "type": "image"
-   },
-   {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
@@ -4282,12 +4277,17 @@
     "type": "script"
    },
    {
+    "url": "release/1.0.0/assets/hero-band-3554.webp",
+    "bytes": 235562,
+    "type": "image"
+   },
+   {
     "url": "release/1.0.0/assets/chillax-400.woff2",
     "bytes": 12520,
     "type": "font"
    }
   ],
-  "bytes": 289224
+  "bytes": 289416
  },
  "desktop-2560x1440": {
   "w": 2560,
@@ -4554,7 +4554,7 @@
    },
    {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
@@ -4573,7 +4573,7 @@
     "type": "font"
    }
   ],
-  "bytes": 197116
+  "bytes": 197308
  },
  "5k-2560x1440-dpr2": {
   "w": 2560,
@@ -4829,18 +4829,18 @@
   ],
   "requests": [
    {
-    "url": "preview/harness-polished-h50.html",
-    "bytes": 6507,
-    "type": "document"
-   },
-   {
     "url": "release/1.0.0/assets/chillax-600.woff2",
     "bytes": 13208,
     "type": "font"
    },
    {
+    "url": "preview/harness-polished-h50.html",
+    "bytes": 6507,
+    "type": "document"
+   },
+   {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
@@ -4859,7 +4859,7 @@
     "type": "font"
    }
   ],
-  "bytes": 289224
+  "bytes": 289416
  },
  "6k-32in-3008x1692-dpr2": {
   "w": 3008,
@@ -5120,19 +5120,14 @@
     "type": "document"
    },
    {
-    "url": "release/1.0.0/assets/chillax-600.woff2",
-    "bytes": 13208,
-    "type": "font"
-   },
-   {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
-    "url": "release/1.0.0/assets/hero-band-3554.webp",
-    "bytes": 235562,
-    "type": "image"
+    "url": "release/1.0.0/assets/chillax-600.woff2",
+    "bytes": 13208,
+    "type": "font"
    },
    {
     "url": "release/1.0.0/hero.js",
@@ -5140,12 +5135,17 @@
     "type": "script"
    },
    {
+    "url": "release/1.0.0/assets/hero-band-3554.webp",
+    "bytes": 235562,
+    "type": "image"
+   },
+   {
     "url": "release/1.0.0/assets/chillax-400.woff2",
     "bytes": 12520,
     "type": "font"
    }
   ],
-  "bytes": 289224
+  "bytes": 289416
  },
  "4k-3840x2160": {
   "w": 3840,
@@ -5407,7 +5407,7 @@
    },
    {
     "url": "release/1.0.0/hero.css",
-    "bytes": 14802,
+    "bytes": 14994,
     "type": "stylesheet"
    },
    {
@@ -5416,14 +5416,14 @@
     "type": "font"
    },
    {
-    "url": "release/1.0.0/hero.js",
-    "bytes": 6625,
-    "type": "script"
-   },
-   {
     "url": "release/1.0.0/assets/hero-band-3554.webp",
     "bytes": 235562,
     "type": "image"
+   },
+   {
+    "url": "release/1.0.0/hero.js",
+    "bytes": 6625,
+    "type": "script"
    },
    {
     "url": "release/1.0.0/assets/chillax-400.woff2",
@@ -5431,6 +5431,6 @@
     "type": "font"
    }
   ],
-  "bytes": 289224
+  "bytes": 289416
  }
 }

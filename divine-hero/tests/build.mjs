@@ -25,10 +25,19 @@ fs.writeFileSync(path.join(root, 'ecwid', `section-${VERSION}.html`), render(HOS
 // Fallback only (INSTALL.md §9): same markup, whitespace between tags removed.
 const compact = (h) => h.replace(/\n(?=<)/g, '').replace(/>\n/g, '>').trim() + '\n';
 fs.writeFileSync(path.join(root, 'ecwid', `section-${VERSION}.min.html`), compact(render(HOSTS.production)));
+// All-in-one: CSS and JS inlined into the one section; only images/fonts are fetched from `base`.
+const css = fs.readFileSync(path.join(rel, 'hero.css'), 'utf8');
+const js = fs.readFileSync(path.join(rel, 'hero.js'), 'utf8');
+const allInOne = (base) => render(base)
+  .replace(/<!-- [^\n]*-->\n/, `<!-- Divine DunlopDreams Hero ${VERSION} | ALL-IN-ONE: one Instant Site "Embed & Custom Code" section | images/fonts: ${base} -->\n`)
+  .replace(/<link rel="stylesheet" href="[^"]*hero\.css">\n/, () => `<style>${css.replace(/url\(assets\//g, 'url(' + base + 'assets/').trim()}</style>\n`)
+  .replace(/<script src="[^"]*hero\.js" defer><\/script>\n<script>window\.DDHero&&DDHero\.boot\(\)<\/script>\n/, () => `<script>${js.trim()}</script>\n`);
+fs.writeFileSync(path.join(root, 'ecwid', `section-${VERSION}-allinone.html`), allInOne(HOSTS.production));
 if (process.env.JSDELIVR_REF) {
   const base = `https://cdn.jsdelivr.net/gh/Matrress/Animation@${process.env.JSDELIVR_REF}/divine-hero/release/${VERSION}/`;
   fs.writeFileSync(path.join(root, 'ecwid', `section-${VERSION}-jsdelivr.html`), render(base));
   fs.writeFileSync(path.join(root, 'ecwid', `section-${VERSION}-jsdelivr.min.html`), compact(render(base)));
+  fs.writeFileSync(path.join(root, 'ecwid', `section-${VERSION}-allinone-jsdelivr.html`), allInOne(base));
 }
 
 // Local harnesses (same markup, assets served from ../release/<version>/)

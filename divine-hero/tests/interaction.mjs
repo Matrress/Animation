@@ -45,6 +45,10 @@ async function desktop(w, h) {
   await page.mouse.move(2, 2); await page.waitForTimeout(80);
   // click each
   for (const k of KEYS) { const c = await centre(page, k); await page.mouse.click(c.x, c.y); await page.waitForTimeout(40); const s = await state(page); ok(s.s === k, `click ${k} -> ${s.s}`); }
+  // ventilation "cooling": full-frame blue wash visible only in the temperature state
+  await page.waitForTimeout(500);
+  const wash = await page.evaluate(() => { const w = document.querySelector('.ddh__wash'); const a = document.querySelector('.ddh__art').getBoundingClientRect(); const r = w.getBoundingClientRect(); return { op: +getComputedStyle(w).opacity, covers: r.top <= a.top + 1 && r.bottom >= a.bottom - 1 && r.left <= 0 && r.right >= a.right - 1 }; });
+  ok(wash.op === 1 && wash.covers, 'ventilation turns the whole artwork blue: ' + JSON.stringify(wash));
   // live region: should announce last clicked copy
   const live = await page.$eval('.ddh [aria-live]', (e) => e.textContent);
   ok(/Best Air Ventilation/.test(live), 'live region announces on click: ' + live);
@@ -52,6 +56,8 @@ async function desktop(w, h) {
   await page.evaluate(() => { const n = document.querySelector('.next-section'); n.scrollIntoView(); });
   await page.mouse.click(10, 10); await page.waitForTimeout(60);
   ok((await state(page)).s === null, 'outside click closes');
+  await page.waitForTimeout(500);
+  ok(await page.evaluate(() => +getComputedStyle(document.querySelector('.ddh__wash')).opacity) === 0, 'blue wash fades out when closed');
   await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(80);
   // keyboard
   await page.mouse.move(1, h - 1);

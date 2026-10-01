@@ -87,8 +87,14 @@
 .ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=shoulder]:is(:hover,:focus-visible)) [data-ddh-copy=shoulder],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=zones]:is(:hover,:focus-visible)) [data-ddh-copy=zones],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=head]:is(:hover,:focus-visible)) [data-ddh-copy=head],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=system]:is(:hover,:focus-visible)) [data-ddh-copy=system],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=firmness]:is(:hover,:focus-visible)) [data-ddh-copy=firmness],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=temperature]:is(:hover,:focus-visible)) [data-ddh-copy=temperature],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=back]:is(:hover,:focus-visible)) [data-ddh-copy=back]{display:flex}
 }
 
-.ddh__wash{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;background:linear-gradient(180deg,rgba(0,184,245,0) 28%,rgba(0,184,245,.1) 52%,rgba(0,178,242,.3) 100%);transition:opacity .28s ease}
+/* Ventilation "cooling" state. 1.0.0: the whole artwork turns from mint to fresh sky-blue (v26 tinted only the lower
+   half, max 30%). The layer lives inside the image plane: above the photo and the logo plate (so both cool together),
+   below the hotspots (z 5). Two layers: an even cool cast plus a stronger blue rising from the mattress. The pale
+   bottom seam softens while cooling so the blue reaches the edge. Only opacity animates (compositor-only). */
+.ddh__wash{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;background:linear-gradient(180deg,rgba(0,178,245,0) 30%,rgba(0,176,245,.2) 60%,rgba(0,168,242,.46) 100%),linear-gradient(180deg,rgba(64,140,214,.14),rgba(30,160,236,.16));transition:opacity .45s ease}
 .ddh[data-ddh-state=temperature] .ddh__wash{opacity:1}
+.ddh__art::after{transition:opacity .45s ease}
+.ddh[data-ddh-state=temperature] .ddh__art::after{opacity:.3}
 
 /* Shop CTAs (graphite) */
 .ddh__shop{position:relative;z-index:6;display:flex;gap:clamp(24px,3vw,42px)}
@@ -152,7 +158,9 @@
 .ddh__leaf{flex-basis:16px;width:16px;height:11px}
 .ddh__screen--brand{left:30%;width:50%;top:7%;height:36%}
 .ddh__screen--brand .ddh__plate{left:7%;width:75%;top:48.9%;height:50.36%}
-.ddh__copy{left:-4%;right:-4%;top:auto;bottom:22%;height:auto;font-size:13px;gap:.18em;letter-spacing:.01em;text-shadow:0 0 6px rgba(226,246,240,.9),0 1px 0 rgba(236,252,247,.6)}
+/* 1.0.0: copy starts at 57% of the screen (just under the lockup at 360–430px) and flows down over the logo plate,
+   so it never overlaps the certification line above. */
+.ddh__copy{left:-4%;right:-4%;top:57%;bottom:auto;height:auto;justify-content:flex-start;font-size:13px;gap:.18em;letter-spacing:.01em;text-shadow:0 0 6px rgba(226,246,240,.9),0 1px 0 rgba(236,252,247,.6)}
 .ddh__copy strong{font-size:1.14em;letter-spacing:.03em}
 .ddh__copy--solo strong{font-size:1.24em}
 .ddh__spine{left:2%;width:95%;top:6%;height:64%}
@@ -165,5 +173,5 @@
 .ddh__point::before{width:30px;height:30px}
 }
 
-@media (prefers-reduced-motion:reduce){.ddh__copy,.ddh__spine{animation:none}.ddh__wash,.ddh__cta{transition:none}.ddh__cta:hover{transform:none}.ddh__point::before,.ddh__point::after{animation:none}.ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
+@media (prefers-reduced-motion:reduce){.ddh__copy,.ddh__spine{animation:none}.ddh__wash,.ddh__art::after,.ddh__cta{transition:none}.ddh__cta:hover{transform:none}.ddh__point::before,.ddh__point::after{animation:none}.ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
 @media (forced-colors:active){.ddh__point::before{display:none}.ddh__point::after{border-color:CanvasText;background:Canvas}.ddh__cta{border-color:LinkText}}
