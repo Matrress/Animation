@@ -1,5 +1,17 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.5.1 — one safe window for every hotspot text (2026-10-02)
+
+Owner's live iPad screenshot: "Levels of Adaptation" fell into the hair. Cause: the live site's custom-code CSS roughly doubled the line spacing of `p/span/strong` (lines ~2× apart), so the window grew downwards. Our imitation page did not have that rule, so the tests had passed.
+
+* **Metrics locked**: copy and lockup line-height/margins now carry `!important`; the imitation page (`tests/make-ecwid-sim.py`) now ships the same inflation (`.ins-tile p{line-height:1.75;margin:0 0 1em}`, `.ins-tile span,strong{line-height:1.9}`) so this is tested from now on.
+* **One window for all 8 brand-screen texts** (7 originals + 2 new), top-aligned, same rules everywhere: desktop plane x 37–72.5% from the DIVINE logo top; tablet / phone landscape x 33.5–65% (left of the LATEX lockup, which sits at the window's height there); small phones x 16–50%. The sweep also found that the original texts collided with the lockup on tablets/phone landscape and went under the header on 1366×768; the shared window fixes those too.
+* **Cloud mist**: a feathered haze in the sky's colour behind window texts (no box, no edges) so copy reads on any part of the photo.
+* `tests/panels.mjs`: 11 viewports × 9 languages × 8 texts = 792/792: no overlap with the hair (dark-pixel profile of the photo), the zones point, the header or the lockup; no spill. Interaction 272/272 per harness, axe 0, guards pass.
+* Pinned staging section: `ecwid/section-1.5.1-jsdelivr.html` (commit `ba96b81`).
+
+![window at 1180×820 (sizes, system), 1366×1024 German, 1024×768 French](reports/compare/ecwid-sim-1.5.1-window.jpg)
+
 ## 1.5.0 — two more points, a wider text window, eight languages (2026-10-02)
 
 * **Two new hotspots** (owner's iPad mark-up), right edge: `sizes` under the certification line (plane 94.2% / 38%) and `weight` on the pillow (94.5% / 61.1%). Same pulse, same open/close behaviour, keyboard (roving tabindex now over 9 points), touch, no-JS `:has()` fallback.
