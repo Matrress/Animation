@@ -1,5 +1,24 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.9.0 — Natural Adaptation: the sleeper settles; Dual Plush lands clean (2026-10-02)
+
+Owner: (1) while the mattress lands, a second mattress opened under it in the final phase; (2) new: opening **Natural Adaptation** shows the sleeper's micro-movements, the kind of settling people do in sleep. The head nestles into the pillow, the upper shoulder lets go (more visible), and the lower shoulder nudges the pillow, sinks a touch into the mattress and floats back. Everything is human, smooth, without kinks, 1–2 s, and returns to the original pose.
+
+* **Landing**: the rebuilt place under the mattress (`.ddh__bed`) used to fade out 0.25–0.7 s into the 0.8 s descent, so the photo's own mattress showed under the one coming down. It now stays until the mattress has landed and swaps in the same frame (`transition: opacity 0s linear .8s`, the mattress's own timing).
+* **The settle** (`hero.js`, `.ddh__settle`): a puppet-warp of the photo's own pixels in WebGL (one full-quad shader), drawn over the photo only where pixels actually move (alpha = smoothstep of the displacement, 0.25–1 px). At rest and at the end it is invisible, and the photo shows unchanged.
+  * Three body parts. Each has a rigid core (an ellipse that moves as one piece, so the hair, ear and skin keep their shape) and a soft falloff into the pillow, mattress and sky. That falloff is what makes the pillow give way and the mattress take the shoulder.
+  * Upper shoulder: down and slightly forward, 15 master px, 0 → 0.6 → 1.75 s.
+  * Lower shoulder: toward the pillow by 10 px (0.2 → 0.6 → 1.3 s) and into the mattress by 9 px (0.35 → 0.85 → 1.65 s).
+  * Head: nestles down 8 px and rolls 0.8° about its contact with the pillow, 0.4 → 0.95 → 1.95 s, with an 18% breath of rebound.
+  * Every curve is a cosine ease with zero velocity at start, peak and end, so there are no kinks. Total 2.05 s; it always completes, and plays once per opening.
+  * The baked lettering (DIVINE, the benefits, Engineering / NATURAL LATEX / Sleep System) is protected: the displacement fades to zero 40 px around it, so the letters never move.
+  * No download: the picture already on screen is reused (same file, from cache). It is off for `prefers-reduced-motion`, off where WebGL would run in software (`failIfMajorPerformanceCaveat`), and off on upright phones (no points there).
+* Weight: hero.js 13.2 → 17.6 KB minified (≈ +1.5 KB compressed); the page transfer is +2.4 KB. LCP is unchanged.
+* Tests: a new `settle` suite on a virtual clock checks that the sleeper moves at 0.9 s, that the lettering is pixel-identical at the peak, and that the layer is gone after 2.4 s (the exact photo). It also covers touch and reduced motion, and checks there are no script errors. All suites are green: 327–328 per harness, panels 792/792, axe 0, guards.
+* Pinned staging section: `ecwid/section-1.9.0-jsdelivr.html` (commit `352bcc3`, 9,013 characters).
+
+![Natural Adaptation settle, 1440×900 (frames every 150 ms)](reports/compare/settle-1.9.0.gif)
+
 ## 1.8.2 — under the risen mattress: the owner's picture; "Dual Plush" rises with it (2026-10-02)
 
 Owner: after the rise, the place where the model and the mattress she lies on should show was broken and limited; the second picture (the mockup) shows what must be seen there. And the "Dual Plush" line must rise with the mattress to the mockup's position.
