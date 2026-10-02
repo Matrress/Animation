@@ -1,5 +1,19 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.5.0 — two more points, a wider text window, eight languages (2026-10-02)
+
+* **Two new hotspots** (owner's iPad mark-up), right edge: `sizes` under the certification line (plane 94.2% / 38%) and `weight` on the pillow (94.5% / 61.1%). Same pulse, same open/close behaviour, keyboard (roving tabindex now over 9 points), touch, no-JS `:has()` fallback.
+  * sizes: **All UK & EU Sizes** / **Customisable** Mattress & Topper **Depths** / Different Depths for **Different Levels of Adaptation**
+  * weight: **Firmness** Regulated by Body Weight / Soft · Medium · Firm · Extra Firm — each word one step heavier (400 → 400+stroke → 600 → 600+stroke; no extra font file).
+* **"Window 3"**: their longer copy opens right of the DIVINE logo (the logo plate hides it meanwhile), plane x 44–72.5% so no line can reach the zones point; on desktop it starts level with the logo top, which the layout keeps under the header even on cropped 16:9 screens.
+* **Translations** of all hotspot copy (9 points) for DE, SV, FR, ES, PT, EL, FI, IT. English stays in the HTML (what Google indexes). hero.js picks the page `lang`, else the browser's preferred language; an English browser preference wins. `<base>i18n/<lang>.json` (0.6–1.0 KB) is fetched after page load and only for those visitors. Test any language with `?ddh-lang=de`. Lines that would spill (German compounds, letter-spaced spine line) shrink to fit; the firmness scale wraps between words. Greek renders in the site font (Chillax has no Greek glyphs). **Translations should be reviewed by native speakers before launch.**
+* **Fix**: the screen-reader announcement glued lines together ("Best Air VentilationTemperature Comfort"); now "Best Air Ventilation. Temperature Comfort".
+* Tests: interaction 272/272 per harness (incl. 3 languages × 3 viewports, English downloads no translation), `tests/panels.mjs` 198/198 (11 viewports × 9 languages × 2 panels: no overlap with the zones point, header or lockup; no spill), axe 0, guards pass.
+* Weight: section 6.9k characters; hero.css 4.2 KB + hero.js 3.9 KB compressed; lab LCP phone 0.75 s, CLS 0.
+* Pinned staging section: `ecwid/section-1.5.0-jsdelivr.html` (commit `23eb60e`).
+
+![new points, EN and DE, iPad 1366×1024](reports/compare/ecwid-sim-1.5.0-new-points-ipad.jpg)
+
 ## 1.4.3 — clean pillow, hover on iPad (2026-10-02)
 
 * **Smudge removed from the photo.** A soft dark leaf-shaped smudge (~90×120 px at 3554w) and a small speck were baked into the hero photo on the pillow, below "Sleep System" (owner's iPad screenshot). `tests/clean-smudge.py` lifts only the low-frequency darkening back to the surrounding level (robust local percentile), so the foam grain stays; applied to all 7 widths, each re-encoded within ±4% of its previous size.
