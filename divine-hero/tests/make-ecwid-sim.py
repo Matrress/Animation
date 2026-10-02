@@ -39,6 +39,9 @@ body{{margin:0;font-family:Comfortaa,system-ui,sans-serif;background:#fff;color:
 .ins-tile button{{position:relative;display:inline-block;margin:0 4px;font:inherit}}
 .ins-tile a{{position:relative;display:inline-block}}
 .ins-tile nav{{display:block}}
+/* 1.5.1: live Instant Site inflates text metrics inside custom-code sections (owner screenshot 2026-10-02) */
+.ins-tile p{{margin:0 0 1em;line-height:1.75}}
+.ins-tile span,.ins-tile strong{{line-height:1.9}}
 .next{{height:1600px;background:linear-gradient(#3a2a20 0,#3a2a20 60px,#efe7dc 60px)}}
 </style></head><body>
 <div class="ins-tile ins-tile--announcement">-10% OFF + 2 FREE Natural Latex Pillows - "Summer Moves On" <a href="#">Contact Us</a></div>

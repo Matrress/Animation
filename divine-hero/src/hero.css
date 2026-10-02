@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.5.0 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.5.1 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -220,14 +220,33 @@
 .ddh .ddh__copy .ddh__w4{font-weight:600;-webkit-text-stroke:.045em currentColor;letter-spacing:.05em}
 .ddh .ddh__copy--lede strong{font-weight:400}
 .ddh .ddh__copy--lede strong b{font-weight:600}
-/* Window spans plane x 44–72.5%: the lines can never reach the zones point (x 74.6%). Desktop: starts level with the
+/* 1.5.1: window widened to plane x 37–72.5% (the DIVINE logo is hidden while it shows) so the copy needs fewer lines and
+   ends above the hair (which starts at ~42% of the plane height under the right half). Was: plane x 44–72.5%: the lines can never reach the zones point (x 74.6%). Desktop: starts level with the
    DIVINE logo top (27.3% of the plane), which the layout keeps >=10px below the header even on cropped 16:9 screens.
    Tablet / phone landscape: the plane is not cropped there, so the window may start higher to leave room. */
+/* 1.5.1: ONE window for every brand-screen copy (the 7 originals + the 2 panels), so all information appears in the same
+   place with the same safety rules: below the header, clear of the LATEX lockup, the zones point and the hair.
+   Desktop: plane x 37–72.5%, from the DIVINE logo top (27.3% of the plane; the layout keeps it under the header even on
+   cropped 16:9 screens). Tablet / phone landscape: the lockup sits at the window's height, so x 33.5–65% (left of it).
+   Small phones (<=700px landscape): x 16–50%. Copy is top-aligned and flows down; hair starts at ~42% of the plane. */
 @media (min-width:701px){
-.ddh .ddh__screen .ddh__copy--panel{left:28%;right:-4%;top:15%;bottom:auto;justify-content:flex-start;gap:.3em;font-size:1.5cqw;line-height:1.1}
+.ddh .ddh__screen--brand .ddh__copy{left:9.3%;right:-4%;top:15%;bottom:auto;justify-content:flex-start}
+.ddh .ddh__screen .ddh__copy--panel{gap:.3em;font-size:1.5cqw}
 .ddh .ddh__screen .ddh__copy--panel strong{font-size:1.25em;margin-bottom:.08em}
 }
-@media (min-width:701px) and (max-width:1050px){.ddh .ddh__screen .ddh__copy--panel{top:-5%;font-size:1.55cqw}}
-@media (max-width:700px){.ddh .ddh__screen .ddh__copy--panel{left:26%;right:16%;font-size:12px}}
+@media (min-width:701px) and (max-width:1050px){.ddh .ddh__screen--brand .ddh__copy{left:0;right:16%;top:-5%}.ddh .ddh__screen .ddh__copy--panel{font-size:1.55cqw}}
+@media (max-width:700px){.ddh .ddh__screen--brand .ddh__copy{left:-28%;right:60%}.ddh .ddh__screen .ddh__copy--panel{font-size:12px;gap:.2em}}
+/* 1.5.1: the live site's custom-code CSS inflated line-height/margins of p/span/strong (lines ~2x apart, the window grew
+   into the hair). Copy metrics are now locked. */
+.ddh .ddh__copy{margin:0!important;padding:0!important}
+.ddh .ddh__sky-lockup span,.ddh .ddh__sky-lockup b{line-height:inherit!important;margin-top:0!important;margin-bottom:0!important}
+.ddh .ddh__copy strong,.ddh .ddh__copy span,.ddh .ddh__copy b,.ddh .ddh__copy i{line-height:inherit!important;margin-top:0!important;padding:0!important}
+.ddh .ddh__copy:not(.ddh__copy--solo){line-height:1.08!important}
+.ddh .ddh__screen .ddh__copy--panel{line-height:1.1!important}
+.ddh .ddh__copy--solo{line-height:1.15!important}
+/* Cloud mist behind every window copy: a feathered haze in the sky's own colour, no edges, so the copy reads on any
+   part of the photo (shoulder, pillow, hair) without a "box". */
+.ddh .ddh__screen--brand .ddh__copy{isolation:isolate}
+.ddh .ddh__screen--brand .ddh__copy::before{content:"";position:absolute;z-index:-1;left:-6%;right:-6%;top:-28%;bottom:-30%;border-radius:50%;background:radial-gradient(closest-side,rgba(226,247,243,.86),rgba(222,245,241,.62) 52%,rgba(214,241,237,.22) 78%,rgba(214,241,237,0));filter:blur(4px);pointer-events:none}
 @media (prefers-reduced-motion:reduce){.ddh .ddh__copy,.ddh .ddh__spine{animation:none}.ddh .ddh__wash,.ddh .ddh__art::after,.ddh .ddh__shop .ddh__cta{transition:none}.ddh .ddh__shop .ddh__cta:hover{transform:none}.ddh .ddh__point::before,.ddh .ddh__point::after{animation:none}.ddh .ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh .ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
 @media (forced-colors:active){.ddh .ddh__point::before{display:none}.ddh .ddh__point::after{border-color:CanvasText;background:Canvas}.ddh .ddh__shop .ddh__cta{border-color:LinkText;color:LinkText}}
