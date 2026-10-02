@@ -1,5 +1,12 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.4.1 — search: image description and heading (2026-10-02)
+
+* Hero image `alt`: "Woman sleeping on a natural latex pillow beside the Divine DunlopDreams Dual Plush latex mattress and topper". It describes what is in the picture, which is what Google Images and screen readers use.
+* H1 (screen-reader/search heading; the live homepage's indexed text shows no other H1): "Divine DunlopDreams – 100% Natural Latex Mattresses, Toppers & Pillows. Engineering Natural Latex Sleep System". It keeps the v26 line and names the three products shown and linked in the hero.
+* No hidden keyword text: Google's spam policies treat text hidden only for search engines as a violation. The visually hidden text the hero has describes what is on screen.
+* Pinned staging section: `ecwid/section-1.4.1-jsdelivr.html` (commit `0c25c9b`). Tests: 156/156 interaction checks per harness, axe 0, guards pass (copy guard records the H1 change).
+
 ## 1.4.0 — upright phones: clean picture, no hotspots (2026-10-02)
 
 Scope: phones only, `(max-width:700px) and (orientation:portrait)`. Desktop, laptop and tablet (incl. iPad portrait 1024×1366) are unchanged.
