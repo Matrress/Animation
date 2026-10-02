@@ -1,5 +1,14 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.7.2 — the moon on the logo's meridian (2026-10-02)
+
+* The mockup's moon sat at 51.1% of the width; the site logo sits on the page centre. `tests/make-night.py` now shifts the whole frame (moon, glitter path, stars, clouds) so the moon centre is at exactly 50%.
+* hero.js also measures the real header logo on every layout and shifts the night image by any remaining difference (clamped ±3%, scaled about the moon so no edge shows), e.g. if a scrollbar or an asymmetric header moves the logo.
+* Measured on screenshots: moon centre = logo centre to the pixel at 1366, 1586 and 1920 wide. New interaction check; all suites green.
+* Pinned staging section: `ecwid/section-1.7.2-jsdelivr.html` (commit `e1c57d6`).
+
+![moon and logo on one meridian (red guide line), 1586×992](reports/compare/ecwid-sim-1.7.2-moon-meridian.png)
+
 ## 1.7.1 — shoulder fix, night point like every other point (2026-10-02)
 
 * **Shoulder no longer bulges** when a text opens (owner's iPad: "Balance & Relief"). The v26 logo plate carried its own drawing of the shoulder corner. `tests/make-logo-plate.py` rebuilds it from the photo: the shoulder contour is read off the photo (top y≈57, quarter-ellipse to the vertical side at x≈305, box px at 3554w), letters on the shoulder are filled from the shoulder only, letters + emboss halo on the sky from the photo's own sky (no faint plate box).
