@@ -66,9 +66,8 @@ async function desktop(w, h) {
   ok((await state(page)).s === 'shoulder', 'focus opens state');
   await page.keyboard.press('ArrowRight'); ok((await state(page)).s === 'back', 'ArrowRight -> back');
   await page.keyboard.press('End');
-  { const f = await page.evaluate(() => document.activeElement.dataset.ddhPoint); ok(f === 'night' && (await state(page)).s === null, `End -> night point focused, nothing opened (${f})`); }
-  await page.keyboard.press('Enter'); ok((await state(page)).s === 'night', 'Enter on the night point opens night mode');
-  await page.keyboard.press('Escape'); ok((await state(page)).s === null, 'Escape leaves night mode');
+  { const f = await page.evaluate(() => document.activeElement.dataset.ddhPoint), st = (await state(page)).s; ok(w >= 1051 ? f === 'night' && st === 'night' : f === 'weight' && st === 'weight', `End -> last visible point (${f}/${st})`); }
+  await page.keyboard.press('Escape'); ok((await state(page)).s === null, 'Escape closes');
   await page.keyboard.press('Home'); ok((await state(page)).s === 'shoulder', 'Home -> shoulder');
   await page.keyboard.press('Escape'); ok((await state(page)).s === null, 'Escape closes');
   await page.keyboard.press('Enter'); ok((await state(page)).s === 'shoulder', 'Enter re-opens');
@@ -108,7 +107,7 @@ async function touch(w, h, dpr, label) {
   const c2 = await centre(page, 'zones'); await page.touchscreen.tap(c2.x, c2.y); await page.waitForTimeout(60);
   ok((await state(page)).s === 'zones', 'tap opens zones');
   await page.touchscreen.tap(8, 8); await page.waitForTimeout(60);   // empty sky, far from any hotspot
-  ok((await state(page)).s === null, 'tap on empty artwork closes');
+  { const st = await state(page); ok(st.s === null, 'tap on empty artwork closes ' + label + ' ' + JSON.stringify(st)); }
   await page.touchscreen.tap(c2.x, c2.y); await page.waitForTimeout(60);
   await page.evaluate(() => document.querySelector('.next-section').scrollIntoView()); await page.waitForTimeout(100);
   await page.touchscreen.tap(20, h - 20); await page.waitForTimeout(60);
@@ -181,7 +180,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.7.0/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.7.1/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -213,44 +212,42 @@ async function nojs() {
 
 async function night() {
   console.log('night mode');
-  // desktop with a mouse: available, click-only, everything else steps back
-  const ctx = await browser.newContext({ viewport: { width: 1586, height: 992 } });
+  // pointer screens >=1051px (desktop, iPad with trackpad): works like every other point — near = night, away = day
+  const ctx = await browser.newContext({ viewport: { width: 1366, height: 1024 } });
   const page = await ctx.newPage(); const req = [];
   page.on('request', (r) => /\/night-\d+\.webp/.test(r.url()) && req.push(r.url()));
   await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(300);
   ok(req.length === 0, 'night plate not loaded before intent');
+  ok(await page.evaluate(() => document.querySelector('[data-ddh-point=night]').offsetWidth > 0), 'night point shown');
+  const pos = await page.evaluate(() => { const b = document.querySelector('.ddh__plane').getBoundingClientRect(), r = document.querySelector('[data-ddh-point=night]').getBoundingClientRect(); return [(r.left + r.width / 2 - b.left) / b.width * 100, (r.top + r.height / 2 - b.top) / b.height * 100]; });
+  ok(Math.abs(pos[0] - 50.5) < .3 && Math.abs(pos[1] - 53.2) < .3, `night point at the owner's spot (50.5%, 53.2%): ${pos.map((v) => v.toFixed(1))}`);
   const c = await centre(page, 'night');
-  ok(await page.evaluate(() => document.querySelector('[data-ddh-point=night]').offsetWidth > 0), 'night point shown on desktop');
-  const hdr = await page.evaluate(() => { const h = document.querySelector('.ins-tile--header'); return h ? h.getBoundingClientRect().bottom : 0; });
-  ok(c.y > hdr + 8, `night point below the header (${Math.round(c.y)} > ${Math.round(hdr)})`);
-  await page.mouse.move(c.x, c.y); await page.waitForTimeout(250);
-  ok((await state(page)).s === null, 'hovering the night point does not open it');
-  await page.mouse.click(c.x, c.y); await page.waitForTimeout(1200);
-  ok((await state(page)).s === 'night', 'click opens night mode');
+  await page.mouse.move(c.x + 60, c.y + 30); await page.mouse.move(c.x + 10, c.y + 6, { steps: 4 }); await page.waitForTimeout(1300);
+  ok((await state(page)).s === 'night', 'approaching the point turns on the night');
   ok(req.length === 1, 'one night plate requested: ' + req.map((u) => u.split('/').pop()));
   const v = await page.evaluate(() => {
     const op = (s) => +getComputedStyle(document.querySelector(s)).opacity;
     const pts = [...document.querySelectorAll('.ddh__point:not([data-ddh-point=night])')].map((p) => +getComputedStyle(p).opacity);
     const cta = [...document.querySelectorAll('.ddh__cta')].map((a) => a.innerText.trim());
-    return { night: op('.ddh__night'), lockup: op('.ddh__sky-lockup'), dp: op('.ddh__dp'), pts: Math.max(...pts), title: document.querySelector('.ddh__night-copy').innerText.trim(), shown: getComputedStyle(document.querySelector('.ddh__night-copy')).display, cta, live: document.querySelector('.ddh [aria-live]').textContent };
+    return { night: op('.ddh__night'), lockup: op('.ddh__sky-lockup'), dp: op('.ddh__dp'), pts: Math.max(...pts), title: document.querySelector('.ddh__night-copy').innerText.trim(), cta };
   });
   ok(v.night > .98 && v.lockup < .02 && v.dp < .02 && v.pts < .02, 'night scene up, every other text hidden: ' + JSON.stringify(v));
-  ok(v.shown === 'block' && v.title === 'Improve the Quality of Your Sleep', 'headline: ' + v.title);
+  ok(v.title === 'Improve the Quality of Your Sleep', 'headline: ' + v.title);
   ok(v.cta.join('|') === 'Shop Your Latex Mattress|Shop Your Latex Topper', 'night buttons: ' + v.cta.join('|'));
-  ok(/Improve the Quality of Your Sleep/.test(v.live), 'screen readers hear the headline');
-  const s = await centre(page, 'system'); await page.mouse.move(s.x, s.y); await page.waitForTimeout(250);
-  ok((await state(page)).s === 'night', 'hovering other points during night changes nothing');
-  const m = await centre(page, 'night'); await page.mouse.click(m.x, m.y); await page.waitForTimeout(900);
-  ok((await state(page)).s === null, 'clicking the moon wakes up');
+  await page.mouse.move(c.x + 25, c.y - 20, { steps: 3 }); await page.waitForTimeout(200);
+  ok((await state(page)).s === 'night', 'small moves around the point keep the night');
+  await page.mouse.move(c.x + 330, c.y + 260, { steps: 6 }); await page.waitForTimeout(900);
+  ok((await state(page)).s !== 'night', 'leaving the range brings the day back');
   ok(await page.evaluate(() => +getComputedStyle(document.querySelector('.ddh__night')).opacity) < .02, 'night layer gone');
-  ok(await page.evaluate(() => [...document.querySelectorAll('.ddh__cta')].map((a) => a.innerText.trim()).join('|')) === 'Shop Your Mattress|Shop Your Topper', 'day buttons back to "Shop Your Mattress"');
-  await page.mouse.click(c.x, c.y); await page.waitForTimeout(300);
-  await page.mouse.click(5, 5); await page.waitForTimeout(300);
-  ok((await state(page)).s === null, 'a click outside the hero wakes up');
+  ok(await page.evaluate(() => [...document.querySelectorAll('.ddh__cta')].map((a) => a.innerText.trim()).join('|')) === 'Shop Your Mattress|Shop Your Topper', 'day buttons back');
+  await page.mouse.move(c.x, c.y, { steps: 4 }); await page.waitForTimeout(300);
+  ok((await state(page)).s === 'night', 'night again on return');
+  await page.mouse.move(5, 5); await page.waitForTimeout(300);
+  ok((await state(page)).s === null, 'pointer leaving the hero ends the night');
   await ctx.close();
-  // tablet / touch and phones: no night point, no night plate download
-  for (const [w, h, touch] of [[1366, 1024, true], [1024, 768, true], [844, 390, true], [390, 844, true]]) {
-    const cx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: touch, isMobile: w < 700 });
+  // touch-only tablets (<1051px) and phones: no night point, no download
+  for (const [w, h] of [[1024, 768], [844, 390], [390, 844]]) {
+    const cx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: true, isMobile: true });
     const pg = await cx.newPage(); const rq = [];
     pg.on('request', (r) => /\/night-\d+\.webp/.test(r.url()) && rq.push(r.url()));
     await pg.goto(url, { waitUntil: 'load' }); await pg.waitForTimeout(250);

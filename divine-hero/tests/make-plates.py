@@ -33,6 +33,14 @@ for name, ((l, t, w, h), d, zone) in CFG.items():
     corr = np.stack([blur((under[..., c] - rgb[..., c]) * wgt, 10) / np.maximum(blur(wgt, 10), 1e-3) for c in range(3)], -1)
     fixed = np.clip(rgb + corr, 0, 255)
     m = np.asarray(Image.fromarray((text * 255).astype('uint8')).filter(ImageFilter.MaxFilter(15)).filter(ImageFilter.GaussianBlur(4))).astype(float)
+    if name == 'plate-logo':
+        # 1.7.1: over the shoulder the v26 plate has its own (wider, rounder) drawing of it. There the plate may cover only
+        # the letter strokes — found from the photo itself (fine detail against a smooth shoulder) — never a wide margin.
+        Lu = under.mean(-1); body = blur(Lu, 2) < 192
+        strokes = zm & (np.abs(Lu - blur(Lu, 4)) > 9)
+        strokes = np.asarray(Image.fromarray((strokes * 255).astype('uint8')).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(.8))).astype(float)
+        bodyw = blur(body.astype(float), 2)
+        m = m * (1 - bodyw) + np.minimum(m, strokes * 1.0) * bodyw
     a = np.minimum(np.clip(m * 1.8, 0, 255), np.asarray(warped.getchannel('A')).astype(float))
     res = Image.fromarray(np.dstack([fixed, a]).astype('uint8'), 'RGBA')
     res.save(out + f'/{name}.webp', 'WEBP', quality=92, method=6)

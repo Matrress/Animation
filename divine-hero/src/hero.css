@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.7.0 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.7.1 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -262,10 +262,10 @@
 .ddh .ddh__copy:not(.ddh__copy--solo){line-height:1.08!important}
 .ddh .ddh__screen .ddh__copy--panel{line-height:1.06!important}
 .ddh .ddh__copy--solo{line-height:1.15!important}
-/* 1.7.0: NIGHT MODE (desktop with a mouse only). A golden crescent in the sky above DIVINE, where the moon will rise.
-   A click turns the hero into the owner's night scene (src/night: same moon, stars, Milky Way, clouds, sea and the
-   woman's silhouette), shows one line "Improve the Quality of Your Sleep" and hides every other text. The moon itself
-   closes it again (as do Esc, a click outside and scrolling away). The plate is fetched only on desktop intent. */
+/* 1.7.0/1.7.1: NIGHT MODE (screens >=1051px with a mouse or trackpad — iPads with a trackpad included). A golden
+   crescent on the woman's back (owner's spot). It works like every other point: the pointer comes near → the hero
+   turns into the owner's night scene (src/night) with one line "Improve the Quality of Your Sleep", every other text
+   hidden; the pointer leaves its range → day again. Tap/click/Enter work too. Plate fetched on first intent only. */
 .ddh .ddh__cta-n{display:none}
 .ddh .ddh__night{position:absolute;inset:0;z-index:4;display:none;opacity:0;pointer-events:none;transition:opacity .7s ease}
 .ddh .ddh__night-img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block;margin:0}
@@ -273,9 +273,9 @@
 .ddh .ddh__night-copy span{display:block;line-height:inherit!important}
 .ddh .ddh__night-copy b{font-weight:600;-webkit-text-stroke:.018em currentColor}
 .ddh .ddh__points .ddh__point[data-ddh-point=night]{display:none!important}
-@media (min-width:1051px) and (hover:hover) and (pointer:fine){
+@media (min-width:1051px) and (any-hover:hover){
 .ddh[data-ddh-warm] .ddh__night{display:block} /* only after intent: an opacity-0 layer on screen would still fetch its lazy image */
-.ddh .ddh__points .ddh__point[data-ddh-point=night]{display:block!important;--x:51.1%;--y:22%;top:max(min(var(--y),calc(var(--ddh-h0) - var(--ddh-plane-top) - 96px)),calc(var(--ddh-safe) + 28px - var(--ddh-plane-top)))}
+.ddh .ddh__points .ddh__point[data-ddh-point=night]{display:block!important;--x:50.5%;--y:53.2%;--i:9}
 .ddh .ddh__point[data-ddh-point=night]::before{border-color:rgba(220,174,85,.85);background:rgba(246,226,176,.12)}
 .ddh .ddh__point[data-ddh-point=night]::after{border:0;background:none;box-shadow:inset -6px 3px 0 0 #dcae55,0 0 10px rgba(220,174,85,.55),0 0 1px rgba(80,60,20,.35);transform:translate(-50%,-50%) rotate(-18deg)}
 .ddh[data-ddh-state=night] .ddh__night{opacity:1;pointer-events:auto}
@@ -284,9 +284,8 @@
 .ddh .ddh__sky-lockup,.ddh .ddh__dp,.ddh .ddh__points .ddh__point{transition:opacity .4s ease}
 .ddh[data-ddh-state=night] .ddh__sky-lockup,.ddh[data-ddh-state=night] .ddh__dp{opacity:0}
 .ddh[data-ddh-state=night] .ddh__points .ddh__point:not([data-ddh-point=night]){opacity:0;pointer-events:none!important}
-/* the crescent becomes the (invisible) switch over the moon: click the moon to wake up */
-.ddh[data-ddh-state=night] .ddh__points .ddh__point[data-ddh-point=night]{--y:31.07%;top:var(--y);width:8.2cqw;height:8.2cqw;margin:-4.1cqw 0 0 -4.1cqw!important;border-radius:50%!important;cursor:pointer}
-.ddh[data-ddh-state=night] .ddh__point[data-ddh-point=night]::before,.ddh[data-ddh-state=night] .ddh__point[data-ddh-point=night]::after{opacity:0!important;animation:none}
+/* the crescent stays, glowing: the night lasts while the pointer is near it (like every other point) */
+.ddh[data-ddh-state=night] .ddh__point[data-ddh-point=night]::after{box-shadow:inset -6px 3px 0 0 #f1dca6,0 0 16px rgba(241,220,166,.75)}
 .ddh .ddh__scene,.ddh .ddh__art{transition:background-color .7s ease}
 .ddh[data-ddh-state=night] .ddh__scene,.ddh[data-ddh-state=night] .ddh__art{background-color:#040a16}
 /* night buttons: "Shop Your Latex Mattress" — light outline on the water, cream fill on hover */

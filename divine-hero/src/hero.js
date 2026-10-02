@@ -1,13 +1,13 @@
-/*! Divine DunlopDreams Hero 1.7.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.7.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.7.0';
+  var VERSION = '1.7.1';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
-  var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06 };
-  var NIGHT = 'night'; // 1.7.0: desktop-only night mode — opened by click/Enter only, never by hover or focus
+  var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07 };
+  var NIGHT = 'night'; // 1.7.0: night mode (pointer screens >=1051px); 1.7.1: hover in/out like every other point
   // 1.5.0: hotspot copy in the visitor's language (page lang first, then browser preference; English stays in the HTML).
   var LANGS = ['de', 'sv', 'fr', 'es', 'pt', 'el', 'fi', 'it'];
   var BACK = { l: .008, r: .465, t: .4468, b: .6864 };
@@ -148,7 +148,7 @@
     var screens = [].slice.call(root.querySelectorAll('.ddh__screen'));
     var lazyImgs = [].slice.call(root.querySelectorAll('.ddh__screen img'));
     var fine = w.matchMedia ? w.matchMedia('(hover:hover) and (pointer:fine)') : { matches: true };
-    var nightMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (hover:hover) and (pointer:fine)') : { matches: false };
+    var nightMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (any-hover:hover)') : { matches: false };
     var nightImg = root.querySelector('.ddh__night-img');
     var live = d.createElement('p');
     live.className = 'ddh__sr';
@@ -195,7 +195,7 @@
     function measure() {
       var b = art.getBoundingClientRect();
       if (!b.width || !b.height) { centres = null; return; }
-      centres = points.map(function (p) {
+      centres = points.filter(function (p) { return p.offsetWidth > 0; }).map(function (p) { // hidden points (night on touch) never hit
         var r = p.getBoundingClientRect();
         return { key: p.getAttribute('data-ddh-point'), x: (r.left + r.width / 2 - b.left) / b.width, y: (r.top + r.height / 2 - b.top) / b.height };
       });
@@ -214,9 +214,9 @@
       if (x < -.02 || x > 1.02 || y < -.02 || y > 1.02) return null;
       var ratio = b.height / b.width, best = null, bd = Infinity, e = scale > 1 ? .02 : 0;
       centres.forEach(function (p) {
-        if (p.key === NIGHT) return;                               // night opens by click only
+        if (active === NIGHT && p.key !== NIGHT) return;            // at night only the crescent is live
         var dd = Math.hypot(x - p.x, (y - p.y) * ratio), r = R[p.key] * scale;
-        if (active === p.key) r += .02;
+        if (active === p.key) r += p.key === NIGHT ? .05 : .02;   // the night holds a little wider
         if (dd < r && dd < bd) { best = p.key; bd = dd; }
       });
       var inBack = x >= BACK.l - e && x <= BACK.r + e && y >= BACK.t - e && y <= BACK.b + e;
@@ -226,7 +226,7 @@
 
     // Pointer proximity: coalesced to one hit-test per frame.
     var raf = 0, lastX = 0, lastY = 0;
-    function frame() { raf = 0; if (active !== NIGHT) show(hit(lastX, lastY, 1)); }
+    function frame() { raf = 0; show(hit(lastX, lastY, 1)); }
     on(art, 'pointermove', function (ev) {
       if (ev.pointerType === 'touch') return;
       lastX = ev.clientX; lastY = ev.clientY;
@@ -234,7 +234,7 @@
     }, { passive: true });
     cleanups.push(function () { if (raf) w.cancelAnimationFrame(raf); });
     on(art, 'pointerleave', function (ev) {
-      if (ev.pointerType === 'touch' || group.contains(d.activeElement) || active === NIGHT) return;
+      if (ev.pointerType === 'touch' || group.contains(d.activeElement)) return;
       if (raf) { w.cancelAnimationFrame(raf); raf = 0; }
       show(null);
     }, { passive: true });
@@ -247,7 +247,6 @@
     on(group, 'focusin', warm, { once: true });
 
     on(art, 'click', function (ev) {
-      if (active === NIGHT) { show(null, true); return; }         // night: any click in the picture (the moon, too) wakes up
       var btn = ev.target.closest && ev.target.closest('[data-ddh-point]');
       var precise = ev.pointerType === 'mouse' || ev.pointerType === 'pen' || (!ev.pointerType && fine.matches);
       var key = btn ? btn.getAttribute('data-ddh-point') : hit(ev.clientX, ev.clientY, precise ? 1 : 1.7);
@@ -257,7 +256,7 @@
       show(key, true);
     });
     points.forEach(function (p) {
-      on(p, 'pointerenter', function (ev) { var k = p.getAttribute('data-ddh-point'); if (ev.pointerType !== 'touch' && k !== NIGHT && active !== NIGHT) show(k); }, { passive: true });
+      on(p, 'pointerenter', function (ev) { var k = p.getAttribute('data-ddh-point'); if (ev.pointerType !== 'touch' && (active !== NIGHT || k === NIGHT)) show(k); }, { passive: true });
     });
     on(d, 'click', function (ev) { if (active && !viewport.contains(ev.target)) show(null); });
     on(d, 'keydown', function (ev) { if (active && (ev.key === 'Escape' || ev.key === 'Esc')) show(null); });
@@ -323,8 +322,8 @@
     // Open on keyboard focus only. A tap also focuses the button (Chrome/Android); opening here would make the
     // click that follows read as a "second tap" and close it again.
     function kbFocus(el) { try { return el.matches(':focus-visible'); } catch (e) { return true; } }
-    on(group, 'focusin', function (ev) { var p = ev.target.closest('[data-ddh-point]'), k = p && p.getAttribute('data-ddh-point'); if (!p || !kbFocus(p) || active === NIGHT) return; show(k === NIGHT ? null : k, k !== NIGHT); }); // night: Enter opens it
-    on(group, 'focusout', function (ev) { if (!group.contains(ev.relatedTarget) && active !== NIGHT) show(null); });
+    on(group, 'focusin', function (ev) { var p = ev.target.closest('[data-ddh-point]'), k = p && p.getAttribute('data-ddh-point'); if (p && kbFocus(p)) show(k, true); });
+    on(group, 'focusout', function (ev) { if (!group.contains(ev.relatedTarget)) show(null); });
 
     // Out of view: close any open state and pause the pulses.
     if (w.IntersectionObserver) {
