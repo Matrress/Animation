@@ -1,5 +1,17 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.3.0 — full lettering, centred transparent CTAs, quieter phone hotspots (2026-10-02)
+
+- **"Dual Plush conception" no longer cut.** The lettering ends at 84.2% of the picture height. New crop rule: keep the v26 crop (28% of the overflow from the top) unless it cuts the lettering; in that case lift the picture just enough to keep 85.5% visible, but never bring the DIVINE logo closer than 10 px to the header.
+  - The lettering is now fully visible at 1366×845 (the iPad in the screenshot), 1440×900, 1536×864, 1728×1117, 1920×1080, 2560×1440, on tablets and on phones.
+  - Only at 1366×768, where both cannot fit, does the hero grow 26 px past the screen. The Shop buttons stay anchored at the screen bottom.
+- **Shop buttons.** Centred, clear of the chat bubble, and smaller (≈199×40 px on desktop). Transparent at rest, like the original cover, with a thin graphite outline and crisp dark lettering. Graphite with white lettering on hover, press or keyboard focus.
+  - Phone: the bar is raised and compact.
+  - Hotspots are kept ≥ 96 px above the screen bottom, so they never sit on the buttons.
+- **Phone hotspots.** 14 px ring with a 21 px pulse (tablet: 17 px), down from 20/30 px; the pulse animation is unchanged. The touch target is still 40 px.
+- **Fix.** The header scan is limited to the hero itself; a short hero on a page without a header no longer mistakes the next section for a header.
+- **Tests.** 125/125 in all harnesses and in the Ecwid imitation (with styles stripped too). axe: 0 violations. Guards pass.
+
 ## 1.2.0 — short section, compact lockup, glass CTAs (2026-10-02)
 
 **Why the hotspots and Shop buttons never appeared live.** Both live tests lost everything after roughly 20–22 thousand characters of the pasted code. The image survived, but the hotspots, the CTAs and the trailing `<script>` did not; with no script, the lockup sat at its CSS fallback position. Only one cut-off fits both pastes:
