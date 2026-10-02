@@ -1,12 +1,13 @@
-/*! Divine DunlopDreams Hero 1.6.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.7.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.6.0';
+  var VERSION = '1.7.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06 };
+  var NIGHT = 'night'; // 1.7.0: desktop-only night mode — opened by click/Enter only, never by hover or focus
   // 1.5.0: hotspot copy in the visitor's language (page lang first, then browser preference; English stays in the HTML).
   var LANGS = ['de', 'sv', 'fr', 'es', 'pt', 'el', 'fi', 'it'];
   var BACK = { l: .008, r: .465, t: .4468, b: .6864 };
@@ -133,7 +134,7 @@
     cleanups.push(function () {
       if (mRaf) w.cancelAnimationFrame(mRaf);
       inst.layout = null;
-      root.style.removeProperty('--ddh-top'); root.style.removeProperty('--ddh-safe'); root.style.removeProperty('--ddh-win-top'); root.removeAttribute('data-ddh-lockup-yield'); root.style.removeProperty('--ddh-edge-r'); root.removeAttribute('data-ddh-measured');
+      root.style.removeProperty('--ddh-top'); root.style.removeProperty('--ddh-safe'); root.style.removeProperty('--ddh-win-top'); root.removeAttribute('data-ddh-lockup-yield'); root.removeAttribute('data-ddh-warm'); root.style.removeProperty('--ddh-edge-r'); root.removeAttribute('data-ddh-measured');
     });
 
     // The pasted section ends with <i class="ddh__end">. If it is missing, the site builder cut the code short.
@@ -147,6 +148,8 @@
     var screens = [].slice.call(root.querySelectorAll('.ddh__screen'));
     var lazyImgs = [].slice.call(root.querySelectorAll('.ddh__screen img'));
     var fine = w.matchMedia ? w.matchMedia('(hover:hover) and (pointer:fine)') : { matches: true };
+    var nightMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (hover:hover) and (pointer:fine)') : { matches: false };
+    var nightImg = root.querySelector('.ddh__night-img');
     var live = d.createElement('p');
     live.className = 'ddh__sr';
     live.setAttribute('aria-live', 'polite');
@@ -161,13 +164,14 @@
     function warm() {
       if (warmed || pointsOff()) return; warmed = true;
       lazyImgs.forEach(function (img) { img.loading = 'eager'; });
+      if (nightImg && nightMQ.matches) { nightImg.loading = 'eager'; root.setAttribute('data-ddh-warm', ''); }
     }
 
     function show(key, announce) {
       if (key && pointsOff()) key = null;
       if (key === active) { if (key && announce) live.textContent = txtOf(key); return; }
       active = key;
-      if (key) { warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : 'brand'); fit(key); }
+      if (key) { warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : key === NIGHT ? NIGHT : 'brand'); fit(key); }
       else { root.removeAttribute('data-ddh-state'); root.removeAttribute('data-ddh-screen'); }
       var txt = '';
       copies.forEach(function (c) { var isOn = c.getAttribute('data-ddh-copy') === key; c.setAttribute('aria-hidden', String(!isOn)); if (isOn) txt = speak(c); });
@@ -210,6 +214,7 @@
       if (x < -.02 || x > 1.02 || y < -.02 || y > 1.02) return null;
       var ratio = b.height / b.width, best = null, bd = Infinity, e = scale > 1 ? .02 : 0;
       centres.forEach(function (p) {
+        if (p.key === NIGHT) return;                               // night opens by click only
         var dd = Math.hypot(x - p.x, (y - p.y) * ratio), r = R[p.key] * scale;
         if (active === p.key) r += .02;
         if (dd < r && dd < bd) { best = p.key; bd = dd; }
@@ -221,7 +226,7 @@
 
     // Pointer proximity: coalesced to one hit-test per frame.
     var raf = 0, lastX = 0, lastY = 0;
-    function frame() { raf = 0; show(hit(lastX, lastY, 1)); }
+    function frame() { raf = 0; if (active !== NIGHT) show(hit(lastX, lastY, 1)); }
     on(art, 'pointermove', function (ev) {
       if (ev.pointerType === 'touch') return;
       lastX = ev.clientX; lastY = ev.clientY;
@@ -229,7 +234,7 @@
     }, { passive: true });
     cleanups.push(function () { if (raf) w.cancelAnimationFrame(raf); });
     on(art, 'pointerleave', function (ev) {
-      if (ev.pointerType === 'touch' || group.contains(d.activeElement)) return;
+      if (ev.pointerType === 'touch' || group.contains(d.activeElement) || active === NIGHT) return;
       if (raf) { w.cancelAnimationFrame(raf); raf = 0; }
       show(null);
     }, { passive: true });
@@ -242,6 +247,7 @@
     on(group, 'focusin', warm, { once: true });
 
     on(art, 'click', function (ev) {
+      if (active === NIGHT) { show(null, true); return; }         // night: any click in the picture (the moon, too) wakes up
       var btn = ev.target.closest && ev.target.closest('[data-ddh-point]');
       var precise = ev.pointerType === 'mouse' || ev.pointerType === 'pen' || (!ev.pointerType && fine.matches);
       var key = btn ? btn.getAttribute('data-ddh-point') : hit(ev.clientX, ev.clientY, precise ? 1 : 1.7);
@@ -251,7 +257,7 @@
       show(key, true);
     });
     points.forEach(function (p) {
-      on(p, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') show(p.getAttribute('data-ddh-point')); }, { passive: true });
+      on(p, 'pointerenter', function (ev) { var k = p.getAttribute('data-ddh-point'); if (ev.pointerType !== 'touch' && k !== NIGHT && active !== NIGHT) show(k); }, { passive: true });
     });
     on(d, 'click', function (ev) { if (active && !viewport.contains(ev.target)) show(null); });
     on(d, 'keydown', function (ev) { if (active && (ev.key === 'Escape' || ev.key === 'Esc')) show(null); });
@@ -306,18 +312,19 @@
 
     // Roving tabindex: one Tab stop, arrows move between the points.
     function rove(t) { points.forEach(function (p) { p.tabIndex = p === t ? 0 : -1; }); t.focus(); }
+    function visible() { return points.filter(function (p) { return p.offsetWidth > 0; }); }
     points.forEach(function (p, i) { p.tabIndex = i ? -1 : 0; p.style.setProperty('--i', i); });
     on(group, 'keydown', function (ev) {
-      var i = points.indexOf(d.activeElement); if (i < 0) return;
+      var vis = visible(), i = vis.indexOf(d.activeElement); if (i < 0) return; // hidden points (night on tablets) are skipped
       var n = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[ev.key];
-      if (n) { ev.preventDefault(); rove(points[(i + n + points.length) % points.length]); }
-      else if (ev.key === 'Home' || ev.key === 'End') { ev.preventDefault(); rove(points[ev.key === 'Home' ? 0 : points.length - 1]); }
+      if (n) { ev.preventDefault(); rove(vis[(i + n + vis.length) % vis.length]); }
+      else if (ev.key === 'Home' || ev.key === 'End') { ev.preventDefault(); rove(vis[ev.key === 'Home' ? 0 : vis.length - 1]); }
     });
     // Open on keyboard focus only. A tap also focuses the button (Chrome/Android); opening here would make the
     // click that follows read as a "second tap" and close it again.
     function kbFocus(el) { try { return el.matches(':focus-visible'); } catch (e) { return true; } }
-    on(group, 'focusin', function (ev) { var p = ev.target.closest('[data-ddh-point]'); if (p && kbFocus(p)) show(p.getAttribute('data-ddh-point'), true); });
-    on(group, 'focusout', function (ev) { if (!group.contains(ev.relatedTarget)) show(null); });
+    on(group, 'focusin', function (ev) { var p = ev.target.closest('[data-ddh-point]'), k = p && p.getAttribute('data-ddh-point'); if (!p || !kbFocus(p) || active === NIGHT) return; show(k === NIGHT ? null : k, k !== NIGHT); }); // night: Enter opens it
+    on(group, 'focusout', function (ev) { if (!group.contains(ev.relatedTarget) && active !== NIGHT) show(null); });
 
     // Out of view: close any open state and pause the pulses.
     if (w.IntersectionObserver) {
