@@ -1,5 +1,15 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.7.1 — shoulder fix, night point like every other point (2026-10-02)
+
+* **Shoulder no longer bulges** when a text opens (owner's iPad: "Balance & Relief"). The v26 logo plate carried its own drawing of the shoulder corner. `tests/make-logo-plate.py` rebuilds it from the photo: the shoulder contour is read off the photo (top y≈57, quarter-ellipse to the vertical side at x≈305, box px at 3554w), letters on the shoulder are filled from the shoulder only, letters + emboss halo on the sky from the photo's own sky (no faint plate box).
+* **Night point** moved to the owner's spot (picture 50.5% / 53.2%, on the woman's back) and now behaves like the other points: the pointer comes near → night; leaves the range (slightly wider while night is on) → day. Tap, click, keyboard focus work too.
+* **iPad with trackpad**: night mode was gated by `(hover:hover) and (pointer:fine)`, false on iPad (touch is its primary pointer), so it never loaded there. Now `(min-width:1051px) and (any-hover:hover)`; touch-only tablets/phones still never show or download it. Hidden points are excluded from hit-testing.
+* Tests: interaction 291/291 per harness (night: position, near → night, away → day, return, no download on 3 touch viewports), panels 792/792, axe 0, guards pass.
+* Pinned staging section: `ecwid/section-1.7.1-jsdelivr.html` (commit `a3b2583`).
+
+![day with the crescent / night on approach, 1366×1024](reports/compare/ecwid-sim-1.7.1-night.jpg)
+
 ## 1.7.0 — night mode (desktop) (2026-10-02)
 
 Owner's mockup (`src/night/owner-mockup.png`): a moonlit night over the sea, the woman as a faint silhouette, one line "Improve the Quality of Your Sleep" and "Shop Your Latex Mattress / Topper".
