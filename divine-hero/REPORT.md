@@ -1,5 +1,31 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.2.0 — short section, compact lockup, glass CTAs (2026-10-02)
+
+**Why the hotspots and Shop buttons never appeared live.** Both live tests lost everything after roughly 20–22 thousand characters of the pasted code. The image survived, but the hotspots, the CTAs and the trailing `<script>` did not; with no script, the lockup sat at its CSS fallback position. Only one cut-off fits both pastes:
+
+| pasted file | image ends | hotspots start | CTAs start | script starts |
+|---|---|---|---|---|
+| 1.0.0 all-in-one (28,826) | 17,989 ✔ shown | 20,199 | 21,889 ✘ | 22,184 |
+| 1.1.0 all-in-one (32,267) | 20,124 ✔ shown | 22,334 ✘ | 23,763 ✘ | 24,058 ✘ |
+
+→ the builder kept something between 20,124 and 21,889 characters. 1.2.0 is the **short form**: CSS and JS are external on jsDelivr (proven to load on the live site, because the hero images already come from there), and the section is **6,734 characters**.
+
+It is also ordered so that a cut costs nothing essential:
+1. `<link>` and `<script defer>` first;
+2. then the image, hotspots and CTAs;
+3. then the hidden hotspot copy;
+4. last, an end marker `.ddh__end`. If it is missing, hero.js logs `[DDHero] … truncated` in the console.
+
+**Design changes requested by the owner.**
+- The duplicate Mattresses/Toppers/Pillows bar is removed; the Ecwid menu above already carries them.
+- LATEX + certification form a compact lockup tucked under the header. Its right edge is aligned to the header's own right edge (measured `--ddh-edge-r`), and so is the CTA pair.
+- Shop buttons are transparent "glass" at rest (outlined, readable) and turn graphite on hover, tap or keyboard focus.
+- Ecwid's header, logo, menu and icons are never touched: measurement is read-only, nothing is restyled outside `.ddh`, and no events are stopped.
+
+**Tests.** Interaction suite 125/125 (two links now) in the plain harnesses and in the Ecwid imitation, including with style attributes stripped. axe: 0 violations. Copy is unchanged apart from the removed bar.
+
+
 ## 1.1.0 — fitting the live Instant Site header (2026-10-02)
 
 The live test on iPad showed that the Instant Site header (announcement bar, then a **transparent** header with logo, menu, Email Us and icons) lies **over** the first section. 1.0.0 was laid out as if the header pushed it down, which caused:
