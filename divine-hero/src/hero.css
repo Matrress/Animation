@@ -1,80 +1,97 @@
-/*! Divine DunlopDreams Hero 1.0.0 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.1.0 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
 
-.ddh{--ddh-sky:#aac5d5;--ddh-floor:#bbdbe9;--ddh-seam-top:transparent;--ddh-seam-bottom:#d6f3fb;--ddh-bars:50px;--ddh-vh:100vh;--ddh-fold-peek:16px;--ddh-ink:#24514b;--ddh-ink-soft:#2f5d57;--ddh-graphite:#343a3c;--ddh-graphite-hover:#272c2e;--ddh-sky-height:clamp(92px,9vw,132px);position:relative;isolation:isolate;display:block;width:100%;margin:0;padding:0;color:var(--ddh-ink);font-family:system-ui,sans-serif;line-height:1.2;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.ddh{--ddh-sky:#aac5d5;--ddh-floor:#bbdbe9;--ddh-seam-top:transparent;--ddh-seam-bottom:#d6f3fb;--ddh-vh:100vh;--ddh-top:0px;--ddh-safe:64px;--ddh-room:86px;--ddh-ink:#24514b;--ddh-ink-soft:#2f5d57;--ddh-graphite:#343a3c;--ddh-graphite-hover:#272c2e;--ddh-sky-height:clamp(92px,9vw,132px);position:relative;isolation:isolate;display:block;width:100%;margin:0;padding:0;color:var(--ddh-ink);font-family:system-ui,sans-serif;line-height:1.2;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 @supports (height:100svh){.ddh{--ddh-vh:100svh}}
+/* 1.1.0 header-aware layout (Instant Site header is TRANSPARENT and lies over the first section):
+   --ddh-top  = how far the hero starts below the page top (e.g. the announcement bar) → hero height = screen − top, so the
+                hero ends exactly at the bottom of the screen and no other section shows through;
+   --ddh-safe = how much of the hero the overlaying header covers (logo + menu + icons).
+   hero.js measures both on the live page; the values here are fallbacks for the first paint / no JS.
+   Everything we draw (lockup, logo clearance, hotspots, CTAs) is placed below --ddh-safe; only the sky and clouds of
+   the artwork run up behind the header, as in the original cover. */
+/* 1.1.0 hardening: builder-wide rules (`.ins-tile section`, `.ins-tile nav`, …) must not move the hero. */
+.ddh.ddh{position:relative;display:block;width:100%;max-width:none;margin:0;padding:0;float:none;transform:none}
 /* 1.0.0: opt-in full-bleed breakout. Add class "ddh--breakout" to the <section> ONLY if the Instant Site section
    container turns out to be padded (side gaps). --ddh-sbw (scrollbar width) is set by hero.js so 100vw never overflows. */
 .ddh.ddh--breakout{width:calc(100vw - var(--ddh-sbw,0px));max-width:none;margin-left:calc(50% - (100vw - var(--ddh-sbw,0px)) / 2)}
 .ddh *,.ddh *::before,.ddh *::after{box-sizing:border-box}
-.ddh__sr,.ddh__benefits{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important;font-family:system-ui,sans-serif}
-.ddh__benefits{list-style:none}
+.ddh .ddh__sr,.ddh .ddh__benefits{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important;font-family:system-ui,sans-serif}
+.ddh .ddh__benefits{list-style:none}
 
-.ddh__scene{position:relative;background:var(--ddh-floor);overflow:hidden}
-.ddh__sky{position:absolute;z-index:7;left:0;right:0;top:0;height:var(--ddh-sky-height);background:transparent;pointer-events:none}
+.ddh .ddh__scene{position:relative;display:block;background:var(--ddh-sky);overflow:hidden}
+.ddh .ddh__sky{position:absolute;z-index:7;left:0;right:0;top:0;height:var(--ddh-sky-height);background:transparent;pointer-events:none}
 
 /* Upper-right lockup: links / LATEX / certification as one frame. */
-.ddh__hero-nav{display:flex;align-items:center;justify-content:space-between;width:100%;gap:clamp(16px,2vw,34px);pointer-events:auto}
-.ddh__hero-nav a{position:relative;color:var(--ddh-ink);font:600 clamp(13px,1.05vw,17px)/1.1 system-ui,sans-serif;text-decoration:none;white-space:nowrap;padding:3px 0}
+.ddh .ddh__hero-nav{display:flex!important;margin:0;padding:0;align-items:center;justify-content:space-between;width:100%;gap:clamp(16px,2vw,34px);pointer-events:auto}
+.ddh .ddh__hero-nav a{position:relative;display:inline;margin:0;border:0;background:none;color:var(--ddh-ink);font:600 clamp(13px,1.05vw,17px)/1.1 system-ui,sans-serif;text-decoration:none;white-space:nowrap;padding:3px 0}
 /* 1.0.0: invisible hit-area extension (≥32px tall) for touch; no layout change. */
-.ddh__hero-nav a::after{content:"";position:absolute;inset:-8px -6px}
-@media (hover:hover){.ddh__hero-nav a:hover{text-decoration:underline;text-underline-offset:4px}}
-.ddh__hero-nav a:focus-visible{outline:2px solid #173f3b;outline-offset:3px;border-radius:2px}
-.ddh__sky-lockup{position:absolute;right:clamp(20px,4vw,72px);left:auto;width:clamp(292px,24vw,390px);top:clamp(12px,1.2vw,20px);display:flex;flex-direction:column;align-items:stretch;gap:5px;pointer-events:none;z-index:8}
+.ddh .ddh__hero-nav a::after{content:"";position:absolute;inset:-8px -6px}
+@media (hover:hover){.ddh .ddh__hero-nav a:hover{text-decoration:underline;text-underline-offset:4px}}
+.ddh .ddh__hero-nav a:focus-visible{outline:2px solid #173f3b;outline-offset:3px;border-radius:2px}
+.ddh .ddh__sky-lockup{position:absolute;right:clamp(20px,4vw,72px);left:auto;width:clamp(292px,24vw,390px);top:calc(var(--ddh-safe) + clamp(8px,1vw,16px));display:flex;flex-direction:column;align-items:stretch;gap:5px;pointer-events:none;z-index:8}
 /* 1.0.0: optical alignment, calibrated by pixel scan (tests/lockup-pixels.mjs):
    - margin-left -.065em cancels most of the L side-bearing (90/1000) so the L ink starts under the M ink of "Mattresses";
    - margin-bottom -.16em removes part of the dead space scaleY(.75) leaves under the word, so links→LATEX and
      LATEX→certification are the same interval. */
-.ddh__sky-word{--ddh-latex-flat:.75;display:flex;width:auto;margin:0 0 -.16em -.065em;align-items:flex-start;justify-content:space-between;white-space:nowrap;color:rgba(225,248,252,.27);font:600 clamp(46px,3.85vw,64px)/.88 DDHChillax,system-ui,sans-serif;text-shadow:0 1px 0 rgba(255,255,255,.18),0 8px 16px rgba(68,123,138,.09);transform:scaleY(var(--ddh-latex-flat));transform-origin:center top}
-.ddh__sky-word>span{display:block}
+.ddh .ddh__sky-word{--ddh-latex-flat:.75;display:flex;width:auto;margin:0 0 -.16em -.065em;align-items:flex-start;justify-content:space-between;white-space:nowrap;color:rgba(225,248,252,.27);font:600 clamp(46px,3.85vw,64px)/.88 DDHChillax,system-ui,sans-serif;text-shadow:0 1px 0 rgba(255,255,255,.18),0 8px 16px rgba(68,123,138,.09);transform:scaleY(var(--ddh-latex-flat));transform-origin:center top}
+.ddh .ddh__sky-word>span{display:block}
 /* 1.0.0: -.13em pulls the rotated leaf's ink onto the same left edge as the links and LATEX. */
-.ddh__sky-cert{display:flex;align-items:center;justify-content:flex-start;gap:8px;width:auto;margin:0 0 0 -.13em;color:rgba(47,93,87,.92);font:400 clamp(10px,.76vw,13px)/1.05 DDHChillax,system-ui,sans-serif;letter-spacing:.05em;white-space:nowrap;text-align:left;padding-inline-start:0}
-.ddh__sky-cert b{font-weight:600}
-.ddh__leaf{position:relative;flex:0 0 clamp(19px,1.55vw,27px);width:clamp(19px,1.55vw,27px);height:clamp(13px,1.05vw,19px);border-radius:100% 0 100% 0;background:linear-gradient(135deg,#9bd26b,#63b963);transform:rotate(-28deg);box-shadow:inset -1px -1px 1px rgba(64,129,74,.18)}
-.ddh__leaf::after{content:"";position:absolute;left:48%;top:5%;width:1px;height:88%;background:rgba(255,255,255,.45);transform:rotate(38deg);transform-origin:center}
+.ddh .ddh__sky-cert{display:flex;align-items:center;justify-content:flex-start;gap:8px;width:auto;margin:0 0 0 -.13em;color:rgba(47,93,87,.92);font:400 clamp(10px,.76vw,13px)/1.05 DDHChillax,system-ui,sans-serif;letter-spacing:.05em;white-space:nowrap;text-align:left;padding-inline-start:0}
+.ddh .ddh__sky-cert b{font-weight:600}
+.ddh .ddh__leaf{position:relative;flex:0 0 clamp(19px,1.55vw,27px);width:clamp(19px,1.55vw,27px);height:clamp(13px,1.05vw,19px);border-radius:100% 0 100% 0;background:linear-gradient(135deg,#9bd26b,#63b963);transform:rotate(-28deg);box-shadow:inset -1px -1px 1px rgba(64,129,74,.18)}
+.ddh .ddh__leaf::after{content:"";position:absolute;left:48%;top:5%;width:1px;height:88%;background:rgba(255,255,255,.45);transform:rotate(38deg);transform-origin:center}
 
 /* Artwork */
-.ddh__art{position:relative;width:100%;margin:0;container-type:inline-size;background:var(--ddh-sky);overflow:hidden}
-.ddh__plane{position:relative;width:100%;aspect-ratio:3554/2744;container-type:inline-size}
-.ddh__picture,.ddh__img{display:block;width:100%;height:100%}
-.ddh__img{object-fit:cover}
-.ddh__art::before,.ddh__art::after{content:"";position:absolute;left:0;right:0;pointer-events:none;z-index:1}
-.ddh__art::before{top:0;height:7%;background:linear-gradient(var(--ddh-seam-top),transparent)}
-.ddh__art::after{bottom:0;height:7%;background:linear-gradient(transparent,var(--ddh-seam-bottom))}
+.ddh .ddh__art{position:relative;width:100%;margin:0;container-type:inline-size;background:var(--ddh-sky);overflow:hidden}
+.ddh .ddh__plane{position:relative;width:100%;aspect-ratio:3554/2744;container-type:inline-size}
+.ddh .ddh__picture,.ddh .ddh__img{display:block;width:100%;height:100%}
+.ddh .ddh__img{object-fit:cover}
+.ddh .ddh__art::before,.ddh .ddh__art::after{content:"";position:absolute;left:0;right:0;pointer-events:none;z-index:1}
+.ddh .ddh__art::before{top:0;height:7%;background:linear-gradient(var(--ddh-seam-top),transparent)}
+.ddh .ddh__art::after{bottom:0;height:7%;background:linear-gradient(transparent,var(--ddh-seam-bottom))}
 
 /* Contextual screens */
-.ddh__screen{position:absolute;z-index:2;display:none;pointer-events:none}
-.ddh__screen--brand{left:33.5%;top:24.6%;width:37.5%;height:18.13%}
-.ddh__screen--back{left:.8%;top:44.68%;width:45.7%;height:23.96%}
+.ddh .ddh__screen{position:absolute;z-index:2;display:none;pointer-events:none}
+.ddh .ddh__screen--brand{left:33.5%;top:24.6%;width:37.5%;height:18.13%}
+.ddh .ddh__screen--back{left:.8%;top:44.68%;width:45.7%;height:23.96%}
 .ddh[data-ddh-screen=brand] .ddh__screen--brand,.ddh[data-ddh-screen=back] .ddh__screen--back,.ddh--translated .ddh__screen--back{display:block}
-.ddh__plate{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.ddh__copy,.ddh__spine{font-family:DDHChillax,"Comfortaa",system-ui,sans-serif;display:none}
-.ddh__copy{position:absolute;left:24%;right:1%;top:-6%;bottom:24%;margin:0;flex-direction:column;align-items:center;justify-content:center;gap:.28em;text-align:center;color:var(--ddh-ink-soft);font-size:1.72cqw;text-wrap:balance;font-weight:400;letter-spacing:.035em;line-height:1.08;text-shadow:0 1px 0 rgba(236,252,247,.45);animation:ddh-in .22s ease-out both}
-.ddh__copy strong{display:block;color:var(--ddh-ink);font-size:1.3em;font-weight:600;letter-spacing:.07em;margin-bottom:.12em}
-.ddh__copy span{display:block}
-.ddh__copy span b{font-weight:600;color:var(--ddh-ink)}
-.ddh__copy--solo strong{font-size:1.42em;line-height:1.15;margin:0}
-.ddh__spine{position:absolute;left:2.6%;width:93%;top:5%;height:62%;flex-direction:column;justify-content:space-between;align-items:stretch;text-transform:uppercase;line-height:1;animation:ddh-in .22s ease-out both}
-.ddh__spine strong{display:block;color:#1c4843;font-size:2.02cqw;font-weight:600;letter-spacing:.39em;white-space:nowrap;text-shadow:0 1px 0 rgba(214,240,232,.35)}
-.ddh__spine img{display:block;width:100%;height:auto}
-.ddh__spine span{display:block;color:#fff;font-size:1.72cqw;font-weight:400;letter-spacing:.57em;white-space:nowrap;opacity:.93}
-.ddh__spine b{font-weight:600;opacity:1}
+.ddh .ddh__plate{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.ddh .ddh__copy,.ddh .ddh__spine{font-family:DDHChillax,"Comfortaa",system-ui,sans-serif;display:none}
+.ddh .ddh__copy{position:absolute;left:24%;right:1%;top:-6%;bottom:24%;margin:0;flex-direction:column;align-items:center;justify-content:center;gap:.28em;text-align:center;color:var(--ddh-ink-soft);font-size:1.72cqw;text-wrap:balance;font-weight:400;letter-spacing:.035em;line-height:1.08;text-shadow:0 1px 0 rgba(236,252,247,.45);animation:ddh-in .22s ease-out both}
+.ddh .ddh__copy strong{display:block;color:var(--ddh-ink);font-size:1.3em;font-weight:600;letter-spacing:.07em;margin-bottom:.12em}
+.ddh .ddh__copy span{display:block}
+.ddh .ddh__copy span b{font-weight:600;color:var(--ddh-ink)}
+.ddh .ddh__copy--solo strong{font-size:1.42em;line-height:1.15;margin:0}
+.ddh .ddh__spine{position:absolute;left:2.6%;width:93%;top:5%;height:62%;flex-direction:column;justify-content:space-between;align-items:stretch;text-transform:uppercase;line-height:1;animation:ddh-in .22s ease-out both}
+.ddh .ddh__spine strong{display:block;color:#1c4843;font-size:2.02cqw;font-weight:600;letter-spacing:.39em;white-space:nowrap;text-shadow:0 1px 0 rgba(214,240,232,.35)}
+.ddh .ddh__spine img{display:block;width:100%;height:auto}
+.ddh .ddh__spine span{display:block;color:#fff;font-size:1.72cqw;font-weight:400;letter-spacing:.57em;white-space:nowrap;opacity:.93}
+.ddh .ddh__spine b{font-weight:600;opacity:1}
 .ddh[data-ddh-state=shoulder] [data-ddh-copy=shoulder],.ddh[data-ddh-state=zones] [data-ddh-copy=zones],.ddh[data-ddh-state=head] [data-ddh-copy=head],.ddh[data-ddh-state=system] [data-ddh-copy=system],.ddh[data-ddh-state=firmness] [data-ddh-copy=firmness],.ddh[data-ddh-state=temperature] [data-ddh-copy=temperature],.ddh[data-ddh-state=back] [data-ddh-copy=back]{display:flex}
 .ddh--translated .ddh__benefits{position:absolute!important;width:auto!important;height:auto!important;margin:0!important;overflow:visible!important;clip:auto!important;clip-path:none!important;white-space:normal!important;inset:48.03% 54.87% 36.63% 2.17%!important;z-index:2;display:grid;grid-template-columns:1fr 1fr;align-content:center;gap:12% 6%;padding:0;color:#fff;font:600 1.62cqw/1.12 DDHChillax,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase}
 .ddh--translated .ddh__benefits li::before{content:"• ";letter-spacing:0}
 .ddh--translated[data-ddh-screen] .ddh__benefits{visibility:hidden}
 
 /* Hotspots */
-.ddh__points{position:absolute;inset:0;z-index:5;pointer-events:none}
-.ddh__point{position:absolute;left:var(--x);top:var(--y);width:46px;height:46px;margin:-23px 0 0 -23px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-.ddh__point::before,.ddh__point::after{content:"";position:absolute;left:50%;top:50%;border-radius:50%;pointer-events:none}
-.ddh__point::before{width:clamp(30px,2.8cqw,42px);height:clamp(30px,2.8cqw,42px);border:1.5px solid rgba(235,255,250,.9);background:rgba(221,250,242,.16);transform:translate(-50%,-50%) scale(.82);opacity:0;animation:ddh-twinkle 2s ease-in-out infinite;animation-delay:calc(var(--i,0) * -285ms)}
-.ddh__point::after{width:clamp(20px,1.85cqw,26px);height:clamp(20px,1.85cqw,26px);transform:translate(-50%,-50%);border:2px solid rgba(255,255,255,.97);background:radial-gradient(circle,#f5fffb 0 2.5px,rgba(111,156,149,.72) 3.5px);box-shadow:0 0 0 1.2px rgba(39,88,82,.6),0 1px 6px rgba(11,65,57,.18);animation:ddh-point-beat 2s ease-in-out infinite;animation-delay:calc(var(--i,0) * -285ms)}
-.ddh__point[aria-expanded=true]::after{box-shadow:0 0 0 2px rgba(255,255,255,.85),0 0 0 3px rgba(36,84,79,.6)}
-.ddh__point:focus{outline:none}
-.ddh__point:focus-visible{outline:2px solid #173f3b;outline-offset:-8px}
+.ddh .ddh__points{position:absolute;inset:0;z-index:5;pointer-events:none}
+.ddh .ddh__points .ddh__point{position:absolute!important;display:block!important;left:var(--x)!important;top:var(--y);right:auto!important;bottom:auto!important;float:none;width:46px;height:46px;min-width:0;min-height:0;margin:-23px 0 0 -23px!important;padding:0!important;border:0!important;border-radius:50%;background:none!important;box-shadow:none;outline-offset:-8px;font-size:0;line-height:0;opacity:1;visibility:visible!important;transform:none!important;cursor:pointer;pointer-events:auto;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* 1.1.0: coordinates (% of the artwork) moved out of style="" so an editor that strips inline styles can't collapse them. */
+.ddh .ddh__point[data-ddh-point=shoulder]{--x:41.8%;--y:41.96%;--i:0}
+.ddh .ddh__point[data-ddh-point=back]{--x:21.4%;--y:52.19%;--i:1}
+.ddh .ddh__point[data-ddh-point=zones]{--x:74.6%;--y:37.42%;--i:2}
+.ddh .ddh__point[data-ddh-point=head]{--x:75.4%;--y:61.25%;--i:3}
+.ddh .ddh__point[data-ddh-point=system]{--x:22%;--y:75.11%;--i:4}
+.ddh .ddh__point[data-ddh-point=firmness]{--x:38.1%;--y:73.82%;--i:5}
+.ddh .ddh__point[data-ddh-point=temperature]{--x:47.7%;--y:78.74%;--i:6}
+.ddh .ddh__point::before,.ddh .ddh__point::after{content:"";position:absolute;left:50%;top:50%;border-radius:50%;pointer-events:none}
+.ddh .ddh__point::before{width:clamp(30px,2.8cqw,42px);height:clamp(30px,2.8cqw,42px);border:1.5px solid rgba(235,255,250,.9);background:rgba(221,250,242,.16);transform:translate(-50%,-50%) scale(.82);opacity:0;animation:ddh-twinkle 2s ease-in-out infinite;animation-delay:calc(var(--i,0) * -285ms)}
+.ddh .ddh__point::after{width:clamp(20px,1.85cqw,26px);height:clamp(20px,1.85cqw,26px);transform:translate(-50%,-50%);border:2px solid rgba(255,255,255,.97);background:radial-gradient(circle,#f5fffb 0 2.5px,rgba(111,156,149,.72) 3.5px);box-shadow:0 0 0 1.2px rgba(39,88,82,.6),0 1px 6px rgba(11,65,57,.18);animation:ddh-point-beat 2s ease-in-out infinite;animation-delay:calc(var(--i,0) * -285ms)}
+.ddh .ddh__point[aria-expanded=true]::after{box-shadow:0 0 0 2px rgba(255,255,255,.85),0 0 0 3px rgba(36,84,79,.6)}
+.ddh .ddh__points .ddh__point:focus{outline:none}
+.ddh .ddh__points .ddh__point:focus-visible{outline:2px solid #173f3b;outline-offset:-8px}
 .ddh[data-ddh-state] .ddh__point:not([aria-expanded=true])::after{animation:none;opacity:.4}
 .ddh[data-ddh-state=back] .ddh__point[data-ddh-point=back]::after,.ddh--translated:not([data-ddh-state]) .ddh__point[data-ddh-point=back]::after{animation:none;opacity:0}
 .ddh[data-ddh-state=back] .ddh__point[data-ddh-point=back]::before{animation:none;opacity:0}
@@ -91,19 +108,19 @@
    half, max 30%). The layer lives inside the image plane: above the photo and the logo plate (so both cool together),
    below the hotspots (z 5). Two layers: an even cool cast plus a stronger blue rising from the mattress. The pale
    bottom seam softens while cooling so the blue reaches the edge. Only opacity animates (compositor-only). */
-.ddh__wash{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;background:linear-gradient(180deg,rgba(0,178,245,0) 30%,rgba(0,176,245,.2) 60%,rgba(0,168,242,.46) 100%),linear-gradient(180deg,rgba(64,140,214,.14),rgba(30,160,236,.16));transition:opacity .45s ease}
+.ddh .ddh__wash{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;background:linear-gradient(180deg,rgba(0,178,245,0) 30%,rgba(0,176,245,.2) 60%,rgba(0,168,242,.46) 100%),linear-gradient(180deg,rgba(64,140,214,.14),rgba(30,160,236,.16));transition:opacity .45s ease}
 .ddh[data-ddh-state=temperature] .ddh__wash{opacity:1}
-.ddh__art::after{transition:opacity .45s ease}
+.ddh .ddh__art::after{transition:opacity .45s ease}
 .ddh[data-ddh-state=temperature] .ddh__art::after{opacity:.3}
 
 /* Shop CTAs (graphite) */
-.ddh__shop{position:relative;z-index:6;display:flex;gap:clamp(24px,3vw,42px)}
-.ddh__cta{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 22px;border:1.6px solid #252a2c;border-radius:8px;background:var(--ddh-graphite);color:#fff;font:600 17px/1.2 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:.015em;text-align:center;text-decoration:none;white-space:nowrap;box-shadow:0 2px 10px rgba(24,29,31,.18);transition:background-color .15s,box-shadow .15s,transform .15s}
-.ddh__cta:visited{color:#fff}
+.ddh .ddh__shop{position:relative;z-index:6;display:flex!important;visibility:visible!important;margin:0;gap:clamp(24px,3vw,42px)}
+.ddh .ddh__shop .ddh__cta{position:relative;display:inline-flex!important;visibility:visible!important;opacity:1;margin:0;align-items:center;justify-content:center;min-height:48px;padding:10px 22px;border:1.6px solid #252a2c;border-radius:8px;background:var(--ddh-graphite);color:#fff;font:600 17px/1.2 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:.015em;text-align:center;text-decoration:none;white-space:nowrap;box-shadow:0 2px 10px rgba(24,29,31,.18);transition:background-color .15s,box-shadow .15s,transform .15s}
+.ddh .ddh__shop .ddh__cta:visited{color:#fff}
 /* 1.0.0: hover lift only where a real hover exists (no sticky hover after a tap); pressed state for touch. */
-@media (hover:hover){.ddh__cta:hover{background:var(--ddh-graphite-hover);color:#fff;box-shadow:0 3px 14px rgba(24,29,31,.28);transform:translateY(-1px)}}
-.ddh__cta:active{background:var(--ddh-graphite-hover);color:#fff;transform:none;box-shadow:0 1px 6px rgba(24,29,31,.2)}
-.ddh__cta:focus-visible{outline:3px solid #15191a;outline-offset:3px}
+@media (hover:hover){.ddh .ddh__shop .ddh__cta:hover{background:var(--ddh-graphite-hover);color:#fff;box-shadow:0 3px 14px rgba(24,29,31,.28);transform:translateY(-1px)}}
+.ddh .ddh__shop .ddh__cta:active{background:var(--ddh-graphite-hover);color:#fff;transform:none;box-shadow:0 1px 6px rgba(24,29,31,.2)}
+.ddh .ddh__shop .ddh__cta:focus-visible{outline:3px solid #15191a;outline-offset:3px}
 
 @keyframes ddh-in{from{opacity:0}to{opacity:1}}
 @keyframes ddh-twinkle{0%,100%{opacity:0;transform:translate(-50%,-50%) scale(.82)}35%{opacity:.77;transform:translate(-50%,-50%) scale(1.08)}65%{opacity:0;transform:translate(-50%,-50%) scale(1.35)}}
@@ -111,67 +128,71 @@
 
 /* Desktop / landscape: framed hero, CTAs inside the artwork. */
 @media (min-width:1051px){
-.ddh{--ddh-sky-height:clamp(92px,6.4vw,112px);--ddh-scene-h:calc(var(--ddh-vh) - var(--ddh-bars) - var(--ddh-fold-peek));--ddh-art-h:var(--ddh-scene-h)}
-.ddh__scene{height:var(--ddh-scene-h);background:var(--ddh-sky)}
-.ddh__art{height:var(--ddh-art-h);width:100%;overflow:hidden}
+.ddh{--ddh-safe:136px;--ddh-sky-height:clamp(92px,6.4vw,112px);--ddh-scene-h:calc(var(--ddh-vh) - var(--ddh-top));--ddh-art-h:var(--ddh-scene-h);
+/* plane height = 100cqw·.772088; DIVINE logo ink starts at 27.33% of it (= 100cqw·.21102).
+   Default crop: 28% of the overflow from the top. But the logo must stay ≥36px below the header: if the default would
+   put it under the header, crop less (or move the picture down; the sky colour continues behind the header). */
+--ddh-plane-top:max(min(0px,calc((var(--ddh-art-h) - 100cqw * .772088) * .28)),calc(var(--ddh-safe) + 36px - 100cqw * .21102))}
+.ddh .ddh__scene{height:var(--ddh-scene-h);background:var(--ddh-sky)}
+.ddh .ddh__art{height:var(--ddh-art-h);width:100%;overflow:hidden}
 /* 1.0.0: vertical crop in CSS (was JS fitPlane): crop 28% from the top, 72% from the bottom.
    100cqw = artwork width; .772088 = 2744/3554. No script, no layout read, no shift after load. */
-.ddh__plane{position:absolute;left:0;top:min(0px,calc((var(--ddh-art-h) - 100cqw * .772088) * .28));width:100%;aspect-ratio:3554/2744}
-/* 1.0.0: keep all seven hotspots inside the visible frame. Visible plane bottom = .72·art-h + .28·plane-h
-   (plane-h = 100cqw·.772088, so .28·plane-h = .216185·100cqw). A point is lifted only if it would sit within 34px
-   of that edge — on 16:9 screens the ventilation point (78.74%) was cropped out entirely. */
-.ddh__point{top:min(var(--y),calc(.72 * var(--ddh-art-h) + 100cqw * .216185 - 34px))}
-.ddh__shop{position:absolute;right:4%;bottom:clamp(22px,2.8vh,38px)}
-.ddh__cta{min-width:clamp(190px,10vw,262px);min-height:clamp(48px,2.5vw,58px);font-size:clamp(15px,1.12vw,20px)}
+.ddh .ddh__plane{position:absolute;left:0;top:var(--ddh-plane-top);width:100%;aspect-ratio:3554/2744}
+/* Keep all seven hotspots inside the visible frame: visible plane bottom = art-h − plane-top. A point is lifted only
+   if it would sit within 34px of that edge (on 16:9 screens the ventilation point was cropped out entirely). */
+.ddh .ddh__points .ddh__point{top:min(var(--y),calc(var(--ddh-art-h) - var(--ddh-plane-top) - 34px))}
+.ddh .ddh__shop{position:absolute;right:4%;bottom:clamp(22px,2.8vh,38px)}
+.ddh .ddh__shop .ddh__cta{min-width:clamp(190px,10vw,262px);min-height:clamp(48px,2.5vw,58px);font-size:clamp(15px,1.12vw,20px)}
 }
-@media (min-width:1051px) and (max-height:650px){.ddh{--ddh-fold-peek:8px;--ddh-sky-height:84px}.ddh__shop{bottom:16px}.ddh__cta{min-height:46px}.ddh__sky-cert{font-size:10px}}
+@media (min-width:1051px) and (max-height:650px){.ddh{--ddh-sky-height:84px}.ddh .ddh__shop{bottom:16px}.ddh .ddh__shop .ddh__cta{min-height:46px}.ddh .ddh__sky-cert{font-size:10px}}
 
 /* Tablet */
 @media (min-width:701px) and (max-width:1050px){
-.ddh{--ddh-sky-height:116px}
-.ddh__art{height:auto;overflow:visible}
-.ddh__plane{position:relative;top:0;left:0;width:100%;aspect-ratio:3554/2744}
-.ddh__shop{justify-content:flex-end;padding:24px 4% 20px;background:var(--ddh-seam-bottom)}
-.ddh__cta{min-width:220px}
-.ddh__sky-lockup{left:auto;right:4%;width:42%;top:10px}
-.ddh__hero-nav{gap:12px}
-.ddh__hero-nav a{font-size:clamp(11px,1.6vw,14px)}
-.ddh__sky-word{font-size:clamp(48px,6.4vw,64px)}
-.ddh__sky-cert{font-size:10.5px}
-.ddh__copy{font-size:1.95cqw;left:20%;right:-2%}
-.ddh__spine strong{font-size:2.02cqw}
+.ddh{--ddh-sky-height:116px;--ddh-safe:100px;--ddh-room:130px}
+/* 1.1.0: the picture starts just low enough that header + lockup fit above the DIVINE logo (logo = 21.1% of width
+   below the picture top; % margins resolve against the width). The gap behind the header is the picture's sky colour. */
+.ddh .ddh__art{height:auto;overflow:visible;margin-top:max(0px,calc(var(--ddh-safe) + var(--ddh-room) - 21.1%))}
+.ddh .ddh__plane{position:relative;top:0;left:0;width:100%;aspect-ratio:3554/2744}
+.ddh .ddh__shop{justify-content:flex-end;padding:24px 4% 20px;background:var(--ddh-seam-bottom)}
+.ddh .ddh__shop .ddh__cta{min-width:220px}
+.ddh .ddh__sky-lockup{left:auto;right:4%;width:42%;top:calc(var(--ddh-safe) + 10px)}
+.ddh .ddh__hero-nav{gap:12px}
+.ddh .ddh__hero-nav a{font-size:clamp(11px,1.6vw,14px)}
+.ddh .ddh__sky-word{font-size:clamp(48px,6.4vw,64px)}
+.ddh .ddh__sky-cert{font-size:10.5px}
+.ddh .ddh__copy{font-size:1.95cqw;left:20%;right:-2%}
+.ddh .ddh__spine strong{font-size:2.02cqw}
 }
 
 /* Phone */
 @media (max-width:700px){
-.ddh{--ddh-seam-top:#badbeb;--ddh-sky-height:110px}
-.ddh__art{height:auto;overflow:visible}
-.ddh__plane{position:relative;top:0;left:0;width:100%;aspect-ratio:3554/2744}
-.ddh__shop{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:28px 4% 18px;background:var(--ddh-seam-bottom)}
-.ddh__cta{min-width:0;min-height:54px;padding:10px 4px;font-size:clamp(13.5px,3.8vw,16px);letter-spacing:0;white-space:normal}
-/* 1.0.0: top 8px→4px and LATEX 12vw→11vw so the certification ends above the DIVINE logo (was overlapping it, 360–430px). */
-.ddh__sky-lockup{left:38%;right:4%;width:auto;top:4px;gap:3px}
-.ddh__hero-nav{gap:6px}
-.ddh__hero-nav a{font-size:clamp(10px,2.8vw,13px)}
-.ddh__sky-word{font-size:clamp(38px,11vw,54px)}
-.ddh__sky-cert{font-size:9px;letter-spacing:.03em;gap:5px}
-.ddh__leaf{flex-basis:16px;width:16px;height:11px}
-.ddh__screen--brand{left:30%;width:50%;top:7%;height:36%}
-.ddh__screen--brand .ddh__plate{left:7%;width:75%;top:48.9%;height:50.36%}
+.ddh{--ddh-sky-height:110px;--ddh-safe:64px;--ddh-room:94px}
+.ddh .ddh__art{height:auto;overflow:visible;margin-top:max(0px,calc(var(--ddh-safe) + var(--ddh-room) - 21.1%))}
+.ddh .ddh__plane{position:relative;top:0;left:0;width:100%;aspect-ratio:3554/2744}
+.ddh .ddh__shop{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:28px 4% 18px;background:var(--ddh-seam-bottom)}
+.ddh .ddh__shop .ddh__cta{min-width:0;min-height:54px;padding:10px 4px;font-size:clamp(13.5px,3.8vw,16px);letter-spacing:0;white-space:normal}
+/* 1.0.0: top 8px→4px (1.1.0: measured from the header bottom) and LATEX 12vw→11vw so the certification ends above the DIVINE logo (was overlapping it, 360–430px). */
+.ddh .ddh__sky-lockup{left:38%;right:4%;width:auto;top:calc(var(--ddh-safe) + 4px);gap:3px}
+.ddh .ddh__hero-nav{gap:6px}
+.ddh .ddh__hero-nav a{font-size:clamp(10px,2.8vw,13px)}
+.ddh .ddh__sky-word{font-size:clamp(38px,11vw,54px)}
+.ddh .ddh__sky-cert{font-size:9px;letter-spacing:.03em;gap:5px}
+.ddh .ddh__leaf{flex-basis:16px;width:16px;height:11px}
+.ddh .ddh__screen--brand{left:30%;width:50%;top:7%;height:36%}
+.ddh .ddh__screen--brand .ddh__plate{left:7%;width:75%;top:48.9%;height:50.36%}
 /* 1.0.0: copy starts at 57% of the screen (just under the lockup at 360–430px) and flows down over the logo plate,
    so it never overlaps the certification line above. */
-.ddh__copy{left:-4%;right:-4%;top:57%;bottom:auto;height:auto;justify-content:flex-start;font-size:13px;gap:.18em;letter-spacing:.01em;text-shadow:0 0 6px rgba(226,246,240,.9),0 1px 0 rgba(236,252,247,.6)}
-.ddh__copy strong{font-size:1.14em;letter-spacing:.03em}
-.ddh__copy--solo strong{font-size:1.24em}
-.ddh__spine{left:2%;width:95%;top:6%;height:64%}
-.ddh__spine strong{font-size:max(9.5px,2.2cqw);letter-spacing:.2em}
-.ddh__spine span{font-size:max(9px,2cqw);letter-spacing:.34em}
+.ddh .ddh__copy{left:-4%;right:-4%;top:57%;bottom:auto;height:auto;justify-content:flex-start;font-size:13px;gap:.18em;letter-spacing:.01em;text-shadow:0 0 6px rgba(226,246,240,.9),0 1px 0 rgba(236,252,247,.6)}
+.ddh .ddh__copy strong{font-size:1.14em;letter-spacing:.03em}
+.ddh .ddh__copy--solo strong{font-size:1.24em}
+.ddh .ddh__spine{left:2%;width:95%;top:6%;height:64%}
+.ddh .ddh__spine strong{font-size:max(9.5px,2.2cqw);letter-spacing:.2em}
+.ddh .ddh__spine span{font-size:max(9px,2cqw);letter-spacing:.34em}
 .ddh--translated .ddh__benefits{font-size:max(8.5px,1.9cqw);letter-spacing:.06em}
-.ddh__point{width:46px;height:46px;margin:-23px 0 0 -23px}
-.ddh__point--m{left:var(--mx);top:var(--my)}
-.ddh__point::after{width:20px;height:20px}
-.ddh__point::before{width:30px;height:30px}
+.ddh .ddh__points .ddh__point[data-ddh-point=temperature]{--x:62%;--y:84%}
+.ddh .ddh__point::after{width:20px;height:20px}
+.ddh .ddh__point::before{width:30px;height:30px}
 }
 
-@media (prefers-reduced-motion:reduce){.ddh__copy,.ddh__spine{animation:none}.ddh__wash,.ddh__art::after,.ddh__cta{transition:none}.ddh__cta:hover{transform:none}.ddh__point::before,.ddh__point::after{animation:none}.ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
-@media (forced-colors:active){.ddh__point::before{display:none}.ddh__point::after{border-color:CanvasText;background:Canvas}.ddh__cta{border-color:LinkText}}
+@media (prefers-reduced-motion:reduce){.ddh .ddh__copy,.ddh .ddh__spine{animation:none}.ddh .ddh__wash,.ddh .ddh__art::after,.ddh .ddh__shop .ddh__cta{transition:none}.ddh .ddh__shop .ddh__cta:hover{transform:none}.ddh .ddh__point::before,.ddh .ddh__point::after{animation:none}.ddh .ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh .ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
+@media (forced-colors:active){.ddh .ddh__point::before{display:none}.ddh .ddh__point::after{border-color:CanvasText;background:Canvas}.ddh .ddh__shop .ddh__cta{border-color:LinkText}}

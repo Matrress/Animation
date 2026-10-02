@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { chromium } from 'playwright';
 let fail = 0; const ok = (c, m) => { console.log((c ? '  ok   ' : '  FAIL ') + m); if (!c) fail++; };
 // 1. CSS scoping: every selector must start with .ddh (or be @font-face/@keyframes internals)
-for (const f of ['release/1.0.0/hero.css', 'variants/variant-a-tone.css', 'variants/variant-b-large-display.css']) {
+for (const f of ['release/1.1.0/hero.css', 'variants/variant-a-tone.css', 'variants/variant-b-large-display.css']) {
   const css = fs.readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/@keyframes[^{]+\{([^{}]*\{[^}]*\})*[^}]*\}/g, '').replace(/@font-face\{[^}]*\}/g, '');
   const sels = [...css.matchAll(/([^{}@;]+)\{[^{}]*\}/g)].map((m) => m[1].trim()).filter((s) => s && !/^(from|to|\d+%)/.test(s));
   const split = (s) => { const out = []; let d = 0, cur = ''; for (const ch of s) { if (ch === '(') d++; if (ch === ')') d--; if (ch === ',' && !d) { out.push(cur); cur = ''; } else cur += ch; } out.push(cur); return out; };

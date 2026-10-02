@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.0.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.1.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.0.0';
+  var VERSION = '1.1.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062 };
@@ -50,6 +50,56 @@
       sbw(); on(w, 'resize', sbw, { passive: true });
       cleanups.push(function () { root.style.removeProperty('--ddh-sbw'); });
     }
+
+    // 1.1.0 Header-aware layout. The Instant Site header is transparent and lies over the first section, so measure
+    //  --ddh-top : distance from the page top to the hero (announcement bar)  → hero height = screen − top
+    //  --ddh-safe: how far the overlaying header reaches into the hero        → lockup, logo and hotspots go below it
+    // Found two ways: known header containers, then hit-testing what actually sits on top of the hero.
+    var HEADER_SEL = '.ins-tile--header, header, [role="banner"]';
+    var mRaf = 0, pendingTop = false;
+    function covering(el) { return el && el !== d.body && el !== html && !root.contains(el) && !el.contains(root); }
+    function layoutNow() {
+      mRaf = 0;
+      var r = root.getBoundingClientRect(), vh = w.innerHeight, vw = html.clientWidth || w.innerWidth;
+      if (!r.width || !vh) return;
+      var sy = w.pageYOffset || html.scrollTop || 0, docTop = r.top + sy;
+      root.style.setProperty('--ddh-top', (docTop < vh * .4 ? Math.max(0, Math.round(docTop)) : 0) + 'px');
+      if (sy > 2) { pendingTop = true; return; }            // only measure the overlap with the page at rest at the top
+      pendingTop = false;
+      var safe = 0, limit = Math.min(vh * .45, 420), i, c;
+      var cands = d.querySelectorAll(HEADER_SEL);
+      for (i = 0; i < cands.length; i++) {
+        if (!covering(cands[i])) continue;
+        c = cands[i].getBoundingClientRect();
+        if (c.height > 4 && c.width > vw * .5 && c.top < r.top + limit && c.bottom > r.top && c.bottom - r.top < limit) safe = Math.max(safe, c.bottom - r.top);
+      }
+      if (d.elementFromPoint) {
+        var xs = [.1, .3, .5, .7, .9];
+        for (i = 0; i < xs.length; i++) {
+          var miss = 0, seen = false;
+          for (var y = Math.max(0, r.top) + 1; y < r.top + limit && y < vh; y += 6) {
+            if (covering(d.elementFromPoint(vw * xs[i], y))) { seen = true; miss = 0; safe = Math.max(safe, y + 6 - r.top); }
+            else if (seen && (miss += 6) > 60) break;
+          }
+        }
+      }
+      root.style.setProperty('--ddh-safe', Math.round(safe) + 'px');
+      root.setAttribute('data-ddh-measured', '1');
+    }
+    function layout() { if (!mRaf) mRaf = w.requestAnimationFrame(layoutNow); }
+    inst.layout = layout;
+    layout();
+    on(w, 'resize', layout, { passive: true });
+    on(w, 'orientationchange', layout, { passive: true });
+    if (d.readyState !== 'complete') on(w, 'load', layout, { once: true });
+    on(w, 'scroll', function () { if (pendingTop && (w.pageYOffset || 0) <= 2) layout(); }, { passive: true });
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(function () { if (inst.layout) layout(); });
+    [500, 1500, 4000].forEach(function (t) { var id = setTimeout(layout, t); cleanups.push(function () { clearTimeout(id); }); });
+    cleanups.push(function () {
+      if (mRaf) w.cancelAnimationFrame(mRaf);
+      inst.layout = null;
+      root.style.removeProperty('--ddh-top'); root.style.removeProperty('--ddh-safe'); root.removeAttribute('data-ddh-measured');
+    });
 
     var viewport = root.querySelector('.ddh__art'), art = root.querySelector('.ddh__plane'), group = root.querySelector('.ddh__points');
     if (root.getAttribute('data-ddh-mode') !== 'interactive' || !viewport || !art || !group) return inst;
@@ -207,7 +257,7 @@
 
   // Idempotent: drops instances whose section was removed by Instant Site, initialises new ones.
   function boot() {
-    instances.slice().forEach(function (inst) { if (!inst.root.isConnected) inst.destroy(); });
+    instances.slice().forEach(function (inst) { if (!inst.root.isConnected) inst.destroy(); else if (inst.layout) inst.layout(); });
     [].forEach.call(d.querySelectorAll('.ddh'), init);
   }
 

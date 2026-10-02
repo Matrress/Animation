@@ -63,7 +63,7 @@ async function desktop(w, h) {
   await page.mouse.move(1, h - 1);
   await page.evaluate(() => { const b = document.createElement('button'); b.id = 'pre'; b.textContent = 'pre'; document.body.prepend(b); b.focus(); });
   let tabs = 0, focused = '';
-  while (tabs++ < 12) { await page.keyboard.press('Tab'); focused = await page.evaluate(() => document.activeElement.dataset.ddhPoint || document.activeElement.textContent.trim()); if (KEYS.includes(focused)) break; }
+  while (tabs++ < 40) { await page.keyboard.press('Tab'); focused = await page.evaluate(() => document.activeElement.dataset.ddhPoint || document.activeElement.textContent.trim()); if (KEYS.includes(focused)) break; }
   ok(focused === 'shoulder', 'tab reaches first hotspot: ' + focused);
   ok((await state(page)).s === 'shoulder', 'focus opens state');
   await page.keyboard.press('ArrowRight'); ok((await state(page)).s === 'back', 'ArrowRight -> back');
@@ -146,7 +146,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.0.0/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.1.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);

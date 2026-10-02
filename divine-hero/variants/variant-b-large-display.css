@@ -4,12 +4,12 @@
    of the lockup and hotspots up to 2560px (27" / 5K), then caps. CTAs deliberately stay at baseline size: scaled up they
    cover the "Sleep System" line of the artwork. At ≤1920px every value equals the baseline exactly. */
 @media (min-width:1921px){
-.ddh__sky-lockup{width:clamp(390px,20.3125vw,520px);right:clamp(72px,3.75vw,96px);top:clamp(20px,1.0417vw,26.7px);gap:clamp(5px,.26vw,6.7px)}
-.ddh__hero-nav a{font-size:clamp(17px,.8854vw,22.7px)}
-.ddh__sky-word{font-size:clamp(64px,3.3333vw,85.3px)}
-.ddh__sky-cert{font-size:clamp(13px,.6771vw,17.3px);gap:clamp(8px,.4167vw,10.7px)}
-.ddh__leaf{flex-basis:clamp(27px,1.4063vw,36px);width:clamp(27px,1.4063vw,36px);height:clamp(19px,.9896vw,25.3px)}
-.ddh__point{width:clamp(46px,2.3958vw,61px);height:clamp(46px,2.3958vw,61px);margin:calc(clamp(46px,2.3958vw,61px) / -2) 0 0 calc(clamp(46px,2.3958vw,61px) / -2)}
-.ddh__point::before{width:clamp(42px,2.1875vw,56px);height:clamp(42px,2.1875vw,56px)}
-.ddh__point::after{width:clamp(26px,1.3542vw,34.7px);height:clamp(26px,1.3542vw,34.7px)}
+.ddh .ddh__sky-lockup{width:clamp(390px,20.3125vw,520px);right:clamp(72px,3.75vw,96px);top:calc(var(--ddh-safe) + clamp(16px,.8333vw,21.3px));gap:clamp(5px,.26vw,6.7px)}
+.ddh .ddh__hero-nav a{font-size:clamp(17px,.8854vw,22.7px)}
+.ddh .ddh__sky-word{font-size:clamp(64px,3.3333vw,85.3px)}
+.ddh .ddh__sky-cert{font-size:clamp(13px,.6771vw,17.3px);gap:clamp(8px,.4167vw,10.7px)}
+.ddh .ddh__leaf{flex-basis:clamp(27px,1.4063vw,36px);width:clamp(27px,1.4063vw,36px);height:clamp(19px,.9896vw,25.3px)}
+.ddh .ddh__points .ddh__point{width:clamp(46px,2.3958vw,61px);height:clamp(46px,2.3958vw,61px);margin:calc(clamp(46px,2.3958vw,61px) / -2) 0 0 calc(clamp(46px,2.3958vw,61px) / -2)!important}
+.ddh .ddh__point::before{width:clamp(42px,2.1875vw,56px);height:clamp(42px,2.1875vw,56px)}
+.ddh .ddh__point::after{width:clamp(26px,1.3542vw,34.7px);height:clamp(26px,1.3542vw,34.7px)}
 }
