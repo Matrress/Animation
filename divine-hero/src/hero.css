@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.7.1 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.7.2 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -268,7 +268,7 @@
    hidden; the pointer leaves its range → day again. Tap/click/Enter work too. Plate fetched on first intent only. */
 .ddh .ddh__cta-n{display:none}
 .ddh .ddh__night{position:absolute;inset:0;z-index:4;display:none;opacity:0;pointer-events:none;transition:opacity .7s ease}
-.ddh .ddh__night-img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block;margin:0}
+.ddh .ddh__night-img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block;margin:0;transform:translateX(var(--ddh-moon-dx,0px)) scale(var(--ddh-moon-s,1));transform-origin:50% 31.2%} /* 1.7.2: moon on the logo meridian; scaled about the moon so no edge shows */
 .ddh .ddh__night-copy{position:absolute;left:4%;right:4%;top:calc(52.7% - .6em);margin:0!important;padding:0!important;display:none;text-align:center;color:#f6f0e2;font:400 3.1cqw/1.2 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:.005em;text-shadow:0 2px 16px rgba(2,6,14,.45)}
 .ddh .ddh__night-copy span{display:block;line-height:inherit!important}
 .ddh .ddh__night-copy b{font-weight:600;-webkit-text-stroke:.018em currentColor}

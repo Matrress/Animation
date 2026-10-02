@@ -180,7 +180,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.7.1/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.7.2/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -233,6 +233,8 @@ async function night() {
   });
   ok(v.night > .98 && v.lockup < .02 && v.dp < .02 && v.pts < .02, 'night scene up, every other text hidden: ' + JSON.stringify(v));
   ok(v.title === 'Improve the Quality of Your Sleep', 'headline: ' + v.title);
+  { const m = await page.evaluate(() => { const im = document.querySelector('.ddh__night-img').getBoundingClientRect(), lg = document.querySelector('.ins-header__logo'); if (!lg) return null; const l = lg.getBoundingClientRect(); return { moon: im.left + im.width * .5, logo: l.left + l.width / 2 }; });
+    if (m) ok(Math.abs(m.moon - m.logo) < 1.5, `moon on the logo meridian (moon ${m.moon.toFixed(1)}, logo ${m.logo.toFixed(1)})`); }
   ok(v.cta.join('|') === 'Shop Your Latex Mattress|Shop Your Latex Topper', 'night buttons: ' + v.cta.join('|'));
   await page.mouse.move(c.x + 25, c.y - 20, { steps: 3 }); await page.waitForTimeout(200);
   ok((await state(page)).s === 'night', 'small moves around the point keep the night');

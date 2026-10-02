@@ -68,6 +68,12 @@ clean(img, (1188, 640, 1545, 742), 5, grow=2, sig=6)               # faint "Engi
 clean(img, (10, 755, 300, 900), 5, grow=2, sig=6)                  # faint "Dual Plush" / "organic"
 from_above(img, (552, 872, 1036, 946), 92)                         # buttons (live HTML now)
 
+# 1.7.2: the moon on the logo's meridian. In the mockup its centre is x = 811 of 1586 (51.1%); the site logo sits on
+# the page centre. Shift the whole frame (moon, glitter path, stars, clouds together) so the moon centre is at 50%.
+DX = round(W0 / 2 - 811)
+img = np.roll(img, DX, axis=1)
+if DX < 0: img[:, DX:] = img[:, 2 * DX:DX][:, ::-1]                 # refill the right edge by mirroring
+elif DX > 0: img[:, :DX] = img[:, DX:2 * DX][:, ::-1]
 # continue to the full picture: sky above the frame, sea below it
 S = 1640 / W0; WF, HF = 1640, round(1640 * 2744 / 3554)
 mid = Image.fromarray(np.clip(img, 0, 255).astype('uint8')).resize((WF, round(H0 * S)), Image.LANCZOS)

@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.7.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.7.2 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.7.1';
+  var VERSION = '1.7.2';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07 };
@@ -109,6 +109,20 @@
       }
       root.style.setProperty('--ddh-safe', Math.round(safe) + 'px');
       spread(); // the lockup width follows --ddh-edge-r, just set
+      // 1.7.2: the night moon sits on the site logo's meridian. The plate puts the moon at 50% of the picture; if the
+      // header logo is measured off-centre (scrollbar, asymmetric header), shift the night image by the difference.
+      var night = root.querySelector('.ddh__night-img'), lg = null;
+      if (night) {
+        var hdr = d.querySelector('.ins-tile--header, header, [role="banner"]'), plr = root.querySelector('.ddh__plane').getBoundingClientRect();
+        if (hdr && covering(hdr)) {
+          var cand = hdr.querySelectorAll('[class*="logo"], img, svg'), best = 1e9;
+          for (var j = 0; j < cand.length; j++) { var q = cand[j].getBoundingClientRect(), cx = q.left + q.width / 2;
+            if (q.width > 8 && q.width < 320 && Math.abs(cx - vw / 2) < vw * .12 && Math.abs(cx - vw / 2) < best) { best = Math.abs(cx - vw / 2); lg = cx; } }
+        }
+        var dx = lg == null ? 0 : Math.max(-plr.width * .03, Math.min(plr.width * .03, lg - (plr.left + plr.width / 2)));
+        root.style.setProperty('--ddh-moon-dx', dx.toFixed(1) + 'px');
+        root.style.setProperty('--ddh-moon-s', (1 + 2 * Math.abs(dx) / (plr.width || 1)).toFixed(4));
+      }
       // 1.6.0: top of the copy window (picture px): 20% of the picture, but never under the header or the LATEX lockup
       var pl = root.querySelector('.ddh__plane'), lk = root.querySelector('.ddh__sky-lockup');
       if (pl) {
@@ -134,7 +148,7 @@
     cleanups.push(function () {
       if (mRaf) w.cancelAnimationFrame(mRaf);
       inst.layout = null;
-      root.style.removeProperty('--ddh-top'); root.style.removeProperty('--ddh-safe'); root.style.removeProperty('--ddh-win-top'); root.removeAttribute('data-ddh-lockup-yield'); root.removeAttribute('data-ddh-warm'); root.style.removeProperty('--ddh-edge-r'); root.removeAttribute('data-ddh-measured');
+      root.style.removeProperty('--ddh-top'); root.style.removeProperty('--ddh-safe'); root.style.removeProperty('--ddh-win-top'); root.style.removeProperty('--ddh-moon-dx'); root.style.removeProperty('--ddh-moon-s'); root.removeAttribute('data-ddh-lockup-yield'); root.removeAttribute('data-ddh-warm'); root.style.removeProperty('--ddh-edge-r'); root.removeAttribute('data-ddh-measured');
     });
 
     // The pasted section ends with <i class="ddh__end">. If it is missing, the site builder cut the code short.
