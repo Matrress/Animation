@@ -1,12 +1,14 @@
-/*! Divine DunlopDreams Hero 1.7.2 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.8.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.7.2';
+  var VERSION = '1.8.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07 };
+  // 1.8.0: 'immersive' states take over the whole scene; while one is open only its own point is live
+  function immersive(k, w) { return k === 'night' || (k === 'system' && w.innerWidth > 700); }
   var NIGHT = 'night'; // 1.7.0: night mode (pointer screens >=1051px); 1.7.1: hover in/out like every other point
   // 1.5.0: hotspot copy in the visitor's language (page lang first, then browser preference; English stays in the HTML).
   var LANGS = ['de', 'sv', 'fr', 'es', 'pt', 'el', 'fi', 'it'];
@@ -160,7 +162,7 @@
     var points = [].slice.call(group.querySelectorAll('[data-ddh-point]'));
     var copies = [].slice.call(root.querySelectorAll('[data-ddh-copy]'));
     var screens = [].slice.call(root.querySelectorAll('.ddh__screen'));
-    var lazyImgs = [].slice.call(root.querySelectorAll('.ddh__screen img'));
+    var lazyImgs = [].slice.call(root.querySelectorAll('.ddh__screen img, .ddh__mat img'));
     var fine = w.matchMedia ? w.matchMedia('(hover:hover) and (pointer:fine)') : { matches: true };
     var nightMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (any-hover:hover)') : { matches: false };
     var nightImg = root.querySelector('.ddh__night-img');
@@ -178,7 +180,8 @@
     function warm() {
       if (warmed || pointsOff()) return; warmed = true;
       lazyImgs.forEach(function (img) { img.loading = 'eager'; });
-      if (nightImg && nightMQ.matches) { nightImg.loading = 'eager'; root.setAttribute('data-ddh-warm', ''); }
+      root.setAttribute('data-ddh-warm', '');                       // lets the mattress / night layers render (and load)
+      if (nightImg && nightMQ.matches) nightImg.loading = 'eager';
     }
 
     function show(key, announce) {
@@ -228,9 +231,9 @@
       if (x < -.02 || x > 1.02 || y < -.02 || y > 1.02) return null;
       var ratio = b.height / b.width, best = null, bd = Infinity, e = scale > 1 ? .02 : 0;
       centres.forEach(function (p) {
-        if (active === NIGHT && p.key !== NIGHT) return;            // at night only the crescent is live
+        if (active && immersive(active, w) && p.key !== active) return; // immersive: only its own point is live
         var dd = Math.hypot(x - p.x, (y - p.y) * ratio), r = R[p.key] * scale;
-        if (active === p.key) r += p.key === NIGHT ? .05 : .02;   // the night holds a little wider
+        if (active === p.key) r += immersive(p.key, w) ? .05 : .02; // immersive states hold a little wider
         if (dd < r && dd < bd) { best = p.key; bd = dd; }
       });
       var inBack = x >= BACK.l - e && x <= BACK.r + e && y >= BACK.t - e && y <= BACK.b + e;
@@ -270,7 +273,7 @@
       show(key, true);
     });
     points.forEach(function (p) {
-      on(p, 'pointerenter', function (ev) { var k = p.getAttribute('data-ddh-point'); if (ev.pointerType !== 'touch' && (active !== NIGHT || k === NIGHT)) show(k); }, { passive: true });
+      on(p, 'pointerenter', function (ev) { var k = p.getAttribute('data-ddh-point'); if (ev.pointerType !== 'touch' && (!active || !immersive(active, w) || k === active)) show(k); }, { passive: true });
     });
     on(d, 'click', function (ev) { if (active && !viewport.contains(ev.target)) show(null); });
     on(d, 'keydown', function (ev) { if (active && (ev.key === 'Escape' || ev.key === 'Esc')) show(null); });

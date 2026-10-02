@@ -180,7 +180,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.7.2/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.8.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -260,6 +260,40 @@ async function night() {
   }
 }
 
+async function sunrise() {
+  console.log('Dual Plush sunrise');
+  for (const [w, h, touch] of [[1366, 1024, false], [1920, 1080, false], [1024, 768, true]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: touch });
+    const page = await ctx.newPage(); const rq = [];
+    page.on('request', (r) => /mattress\.webp/.test(r.url()) && rq.push(r.url()));
+    await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(300);
+    ok(rq.length === 0, `${w}x${h}: mattress layer not loaded before intent`);
+    const c = await centre(page, 'system');
+    if (touch) await page.touchscreen.tap(c.x, c.y); else { await page.mouse.move(c.x + 200, c.y - 200); await page.mouse.move(c.x, c.y, { steps: 3 }); }
+    await page.waitForTimeout(1600);
+    const v = await page.evaluate(() => {
+      const m = document.querySelector('.ddh__mat'), r = m.getBoundingClientRect(), pl = document.querySelector('.ddh__plane').getBoundingClientRect();
+      const op = (s) => +getComputedStyle(document.querySelector(s)).opacity;
+      const others = [...document.querySelectorAll('.ddh__point:not([data-ddh-point=system])')].filter((p) => p.offsetWidth).map((p) => +getComputedStyle(p).opacity);
+      return { state: document.querySelector('.ddh').getAttribute('data-ddh-state'), op: op('.ddh__mat'), right: (r.right - pl.left) / pl.width * 100, loaded: m.querySelector('img').complete && m.querySelector('img').naturalWidth > 0,
+        lockup: op('.ddh__sky-lockup'), others: Math.max(...others), dp: op('.ddh__dp'), back: getComputedStyle(document.querySelector('.ddh__screen--back')).display, spine: getComputedStyle(document.querySelector('.ddh__spine')).display, copy: getComputedStyle(document.querySelector('[data-ddh-copy=system]')).display };
+    });
+    ok(v.state === 'system' && v.op === 1 && v.loaded && Math.abs(v.right - 46.9) < 1, `${w}x${h}: mattress bloomed to ~47% width: ${JSON.stringify(v)}`);
+    ok(v.lockup < .02 && v.others < .02 && v.back === 'block' && v.spine === 'none', `${w}x${h}: every other text steps back`);
+    ok(v.dp > .98 && v.copy === 'flex', `${w}x${h}: "Dual Plush" and its copy stay`);
+    if (touch) await page.touchscreen.tap(c.x, c.y); else await page.mouse.move(c.x + 420, c.y - 380, { steps: 5 });
+    await page.waitForTimeout(1000);
+    const after = await page.evaluate(() => ({ s: document.querySelector('.ddh').getAttribute('data-ddh-state'), op: +getComputedStyle(document.querySelector('.ddh__mat')).opacity, lockup: +getComputedStyle(document.querySelector('.ddh__sky-lockup')).opacity }));
+    ok(after.s !== 'system' && after.op === 0 && after.lockup > .98, `${w}x${h}: back to default: ${JSON.stringify(after)}`);
+    await ctx.close();
+  }
+  const ph = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  const pp = await ph.newPage(); const rq = []; pp.on('request', (r) => /mattress\.webp/.test(r.url()) && rq.push(r.url()));
+  await pp.goto(url, { waitUntil: 'load' }); await pp.waitForTimeout(300);
+  ok(rq.length === 0 && await pp.evaluate(() => getComputedStyle(document.querySelector('.ddh__mat')).display) === 'none', 'phone: no mattress layer, no download');
+  await ph.close();
+}
+
 async function i18n() {
   console.log('i18n');
   const en = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'en-GB' });
@@ -303,6 +337,7 @@ await lifecycle();
 await nojs();
 await i18n();
 await night();
+await sunrise();
 await browser.close();
 console.log(`\n${passes} passed, ${fails} failed`);
 process.exit(fails ? 1 : 0);
