@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const VERSION = '1.4.1';
+const VERSION = '1.4.2';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const esbuild = process.env.ESBUILD || 'esbuild';
 const rel = path.join(root, 'release', VERSION);

@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.4.1 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.4.2 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -51,6 +51,8 @@
 .ddh .ddh__screen--brand{left:33.5%;top:24.6%;width:37.5%;height:18.13%}
 .ddh .ddh__screen--back{left:.8%;top:44.68%;width:45.7%;height:23.96%}
 .ddh[data-ddh-screen=brand] .ddh__screen--brand,.ddh[data-ddh-screen=back] .ddh__screen--back,.ddh--translated .ddh__screen--back{display:block}
+/* 1.4.2: plates cover only the baked-in lettering (soft alpha mask, tone-matched; tests/make-plates.py), so the mattress
+   and the shoulder always come from the photo itself and no longer shift when a hotspot opens. */
 .ddh .ddh__plate{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .ddh .ddh__copy,.ddh .ddh__spine{font-family:DDHChillax,"Comfortaa",system-ui,sans-serif;display:none}
 .ddh .ddh__copy{position:absolute;left:24%;right:1%;top:-6%;bottom:24%;margin:0;flex-direction:column;align-items:center;justify-content:center;gap:.28em;text-align:center;color:var(--ddh-ink-soft);font-size:1.72cqw;text-wrap:balance;font-weight:400;letter-spacing:.035em;line-height:1.08;text-shadow:0 1px 0 rgba(236,252,247,.45);animation:ddh-in .22s ease-out both}
@@ -193,7 +195,7 @@
 .ddh .ddh__point::before{width:21px;height:21px;border-width:1.2px}
 }
 
-/* 1.4.1: phone held upright — calm picture only: no hotspots / info layers, no certification line or leaf (LATEX stays).
+/* 1.4.0: phone held upright — calm picture only: no hotspots / info layers, no certification line or leaf (LATEX stays).
    Turning the phone sideways (landscape) brings everything back; tablets, laptops and desktops are unaffected.
    hero.js applies the same rule (no tap-to-open, interaction graphics never downloaded). */
 @media (max-width:700px) and (orientation:portrait){

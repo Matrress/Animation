@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.4.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.4.2 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.4.1';
+  var VERSION = '1.4.2';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062 };
@@ -129,7 +129,7 @@
 
     // Interaction graphics (~15 KB) load on first sign of intent, not with the page.
     var warmed = false;
-    // 1.4.1: hotspots are hidden on an upright phone (CSS); nothing may open or download there.
+    // 1.4.0: hotspots are hidden on an upright phone (CSS); nothing may open or download there.
     function pointsOff() { return !group.offsetWidth; }
     function warm() {
       if (warmed || pointsOff()) return; warmed = true;
