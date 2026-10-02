@@ -1,5 +1,17 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.8.1 — the mattress goes to the owner's spot, clean (2026-10-02)
+
+Owner (live iPad): the mattress must not only grow but move to the mockup's position; a fold of its cover stayed behind it; no light behind it; clean contour.
+
+* **Target from the mockup**: `src/night/owner-dualplush-mockup.jpg` registered on the photo by the two straps and the shoulder (master = (1496,1100) + (mockup1932 − (818,885)) × 1.944, consistent with the head scale). The mattress's front-bottom-left corner goes (60,2052) → (38,1638), ×1.57; transform `translate(-2.05%,-96.16%) scale(1.57)` in one 1.3 s ease-out (`cubic-bezier(.22,1,.36,1)`), back in 0.8 s.
+* **Its old place rebuilt** (`tests/make-vacated.py`, `mattress-bed.webp`, 13 KB): the footprint plus its cast shadow is filled by an exact region-aware membrane (sparse Laplace, CG): body above the bed line, bed below, never across it; the bed line itself continued from the photo; the shadow margin melts into the photo over 90 px. Shown only while the mattress is up.
+* **Clean**: dawn glow and drop shadow removed.
+* Tests: sunrise suite now checks the risen position and the rebuilt place; all suites green (307–308 per harness, panels 792/792, axe 0, guards).
+* Pinned staging section: `ecwid/section-1.8.1-jsdelivr.html` (commit `364e54f`).
+
+![Dual Plush at 0 / 0.3 / 0.65 / 1.8 s, 1366×1024](reports/compare/ecwid-sim-1.8.1-dual-plush.jpg)
+
 ## 1.8.0 — Dual Plush "sunrise" (2026-10-02)
 
 Owner's mockup: on the Dual Plush point the mattress comes forward, larger, over the woman's back; every other text disappears; the Dual Plush label stays.
@@ -11,7 +23,6 @@ Owner's mockup: on the Dual Plush point the mattress comes forward, larger, over
 * Tests: new sunrise suite (no early download; bloom to ~47%; others hidden; label + copy stay; back to default; phone: nothing) — interaction 307–308 per harness, panels 792/792, axe 0, guards pass. Lab: phone LCP 0.80 s, CLS 0.
 * Pinned staging section: `ecwid/section-1.8.0-jsdelivr.html` (commit `bfb1d12`).
 
-![sunrise at 0 / 0.3 / 0.7 / 1.6 s, 1366×1024](reports/compare/ecwid-sim-1.8.0-sunrise.jpg)
 
 ## 1.7.2 — the moon on the logo's meridian (2026-10-02)
 
