@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.4.0 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.4.1 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -193,7 +193,7 @@
 .ddh .ddh__point::before{width:21px;height:21px;border-width:1.2px}
 }
 
-/* 1.4.0: phone held upright — calm picture only: no hotspots / info layers, no certification line or leaf (LATEX stays).
+/* 1.4.1: phone held upright — calm picture only: no hotspots / info layers, no certification line or leaf (LATEX stays).
    Turning the phone sideways (landscape) brings everything back; tablets, laptops and desktops are unaffected.
    hero.js applies the same rule (no tap-to-open, interaction graphics never downloaded). */
 @media (max-width:700px) and (orientation:portrait){
