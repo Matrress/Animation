@@ -91,11 +91,16 @@ async function touch(w, h, dpr, label) {
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(250);
   for (const k of KEYS) {
+    // short landscape screens: the user scrolls a point into view before tapping it
+    await page.evaluate((k) => { const b = document.querySelector(`[data-ddh-point=${k}]`), r = b.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) b.scrollIntoView({ block: 'center' }); }, k);
+    await page.waitForTimeout(120);
     const c = await centre(page, k); await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(60);
     const s = await state(page); ok(s.s === k && s.exp.length === 1, `tap ${k} -> ${JSON.stringify(s)}`);
   }
+  await page.evaluate(() => document.querySelector('[data-ddh-point=temperature]').scrollIntoView({ block: 'center' })); await page.waitForTimeout(120);
   const c = await centre(page, 'temperature'); await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(60);
   ok((await state(page)).s === null, 'second tap on same hotspot closes');
+  await page.evaluate(() => document.querySelector('[data-ddh-point=zones]').scrollIntoView({ block: 'center' })); await page.waitForTimeout(120);
   const c2 = await centre(page, 'zones'); await page.touchscreen.tap(c2.x, c2.y); await page.waitForTimeout(60);
   ok((await state(page)).s === 'zones', 'tap opens zones');
   await page.touchscreen.tap(8, 8); await page.waitForTimeout(60);   // empty sky, far from any hotspot
@@ -116,6 +121,35 @@ async function touch(w, h, dpr, label) {
   const y1 = await page.evaluate(() => scrollY);
   ok(y1 > y0 + 100, `touch-drag from hotspot scrolls page (${y0} -> ${y1})`);
   ok((await state(page)).s === null, 'touch-drag does not open a state');
+  await ctx.close();
+}
+
+async function phonePortrait(w, h) {
+  console.log(`phone portrait ${w}x${h}`);
+  const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 3, hasTouch: true, isMobile: true });
+  const page = await ctx.newPage();
+  const plates = [];
+  page.on('request', (r) => /plate-|spine-graphic/.test(r.url()) && plates.push(r.url()));
+  await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(300);
+  const vis = await page.evaluate(() => ({ points: getComputedStyle(document.querySelector('.ddh__points')).display, cert: getComputedStyle(document.querySelector('.ddh__sky-cert')).display, latex: getComputedStyle(document.querySelector('.ddh__sky-word')).display, ctas: [...document.querySelectorAll('.ddh__cta')].map((a) => getComputedStyle(a).display) }));
+  ok(vis.points === 'none', 'upright phone: hotspots hidden (' + vis.points + ')');
+  ok(vis.cert === 'none', 'upright phone: certification + leaf hidden (' + vis.cert + ')');
+  ok(vis.latex !== 'none', 'upright phone: LATEX still shown');
+  ok(vis.ctas.every((d) => d !== 'none'), 'upright phone: Shop buttons shown');
+  // tapping where hotspots would be opens nothing and downloads nothing
+  const art = await page.$eval('.ddh__plane', (e) => { const r = e.getBoundingClientRect(); return { x: r.left + r.width * .42, y: r.top + r.height * .42 }; });
+  await page.touchscreen.tap(art.x, art.y); await page.waitForTimeout(250);
+  ok((await state(page)).s === null, 'upright phone: tap on the picture opens nothing');
+  ok(plates.length === 0, 'upright phone: interaction graphics never downloaded (' + plates.length + ')');
+  // rotate to landscape: everything comes back and works
+  await page.setViewportSize({ width: h, height: w }); await page.waitForTimeout(400);
+  const vis2 = await page.evaluate(() => ({ points: getComputedStyle(document.querySelector('.ddh__points')).display, cert: getComputedStyle(document.querySelector('.ddh__sky-cert')).display }));
+  ok(vis2.points !== 'none' && vis2.cert !== 'none', 'rotated to landscape: hotspots + certification back (' + JSON.stringify(vis2) + ')');
+  const c = await centre(page, 'zones'); await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(150);
+  ok((await state(page)).s === 'zones', 'rotated to landscape: tap opens a hotspot');
+  // rotate back to upright with a panel open: it closes
+  await page.setViewportSize({ width: w, height: h }); await page.waitForTimeout(400);
+  ok((await state(page)).s === null, 'rotated back upright: open panel closes');
   await ctx.close();
 }
 
@@ -143,7 +177,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.3.0/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.4.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -175,7 +209,10 @@ async function nojs() {
 
 await desktop(1440, 900);
 await desktop(1920, 1080);
-await touch(390, 844, 3, 'phone');
+await phonePortrait(390, 844);
+await phonePortrait(360, 800);
+await touch(844, 390, 3, 'phone landscape (844x390)');
+await touch(667, 375, 2, 'small phone landscape (667x375)');
 await touch(1024, 1366, 2, 'iPad portrait');
 await touch(1366, 1024, 2, 'iPad landscape / touch laptop');
 await lifecycle();

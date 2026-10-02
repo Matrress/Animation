@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.3.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.4.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.3.0';
+  var VERSION = '1.4.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062 };
@@ -129,12 +129,15 @@
 
     // Interaction graphics (~15 KB) load on first sign of intent, not with the page.
     var warmed = false;
+    // 1.4.0: hotspots are hidden on an upright phone (CSS); nothing may open or download there.
+    function pointsOff() { return !group.offsetWidth; }
     function warm() {
-      if (warmed) return; warmed = true;
+      if (warmed || pointsOff()) return; warmed = true;
       lazyImgs.forEach(function (img) { img.loading = 'eager'; });
     }
 
     function show(key, announce) {
+      if (key && pointsOff()) key = null;
       if (key === active) { if (key && announce) live.textContent = txtOf(key); return; }
       active = key;
       if (key) { warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : 'brand'); }
@@ -222,6 +225,7 @@
     });
     on(d, 'click', function (ev) { if (active && !viewport.contains(ev.target)) show(null); });
     on(d, 'keydown', function (ev) { if (active && (ev.key === 'Escape' || ev.key === 'Esc')) show(null); });
+    on(w, 'resize', function () { if (active && pointsOff()) show(null); }, { passive: true }); // rotated to upright phone
 
     // Roving tabindex: one Tab stop, arrows move between the seven points.
     function rove(t) { points.forEach(function (p) { p.tabIndex = p === t ? 0 : -1; }); t.focus(); }
