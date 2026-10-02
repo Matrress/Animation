@@ -1,5 +1,32 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.4.0 — upright phones: clean picture, no hotspots (2026-10-02)
+
+Scope: phones only, `(max-width:700px) and (orientation:portrait)`. Desktop, laptop and tablet (incl. iPad portrait 1024×1366) are unchanged.
+
+| | Phone upright | Phone sideways | Tablet / laptop / desktop |
+|---|---|---|---|
+| 7 hotspots + info panels + blue wash | hidden (`display:none`, out of tab order) | shown, all 7 work | shown, all 7 work |
+| "European Production / Certified for UK & EU" + leaf | hidden | shown | shown |
+| LATEX lettering, picture, Shop buttons | shown | shown | shown |
+
+* JS guard: when the points are hidden, a tap opens nothing and the interaction graphics (≈15 KB) are never fetched. Rotating to upright while a panel is open closes it.
+* The benefits list and certification sentence stay in the HTML for screen readers and search engines, whatever the orientation.
+* Tests: 156/156 interaction checks on each of h0, h50, Ecwid sim, Ecwid sim with stripped inline styles. New checks cover upright 390×844 and 360×800 (hidden, inert, no plate requests, rotate → shown and working, rotate back → closed), and sideways 844×390 and 667×375. axe: 0 violations at 1440×900 and 390×844.
+* Pinned staging section: `ecwid/section-1.4.0-jsdelivr.html` (commit `65a5407`, 6,239 characters, about 30% of the ~20k paste-truncation point).
+
+Weight (Brotli, Slow 4G lab run, median of 3):
+
+| Profile | Transferred | LCP | CLS |
+|---|---|---|---|
+| Phone 390×844@3, Slow 4G, 4× CPU | 96 KB | 1.14 s | 0 |
+| Laptop 1440×900@2 | 214 KB | 0.20 s | 0.002 |
+| Desktop 1920×1080@1 | 162 KB | 0.20 s | 0.002 |
+
+hero.css 17.5 KB → 3.9 KB br; hero.js 8.9 KB → 3.2 KB br; no long tasks.
+
+![phone upright vs sideways](reports/compare/ecwid-sim-1.4.0-phone-portrait-vs-landscape.jpg)
+
 ## 1.3.0 — full lettering, centred transparent CTAs, quieter phone hotspots (2026-10-02)
 
 - **"Dual Plush conception" no longer cut.** The lettering ends at 84.2% of the picture height. New crop rule: keep the v26 crop (28% of the overflow from the top) unless it cuts the lettering; in that case lift the picture just enough to keep 85.5% visible, but never bring the DIVINE logo closer than 10 px to the header.
