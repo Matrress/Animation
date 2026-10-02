@@ -1,5 +1,18 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.8.0 — Dual Plush "sunrise" (2026-10-02)
+
+Owner's mockup: on the Dual Plush point the mattress comes forward, larger, over the woman's back; every other text disappears; the Dual Plush label stays.
+
+* **Mattress layer** (`tests/make-mattress.py`): cut from the master along its measured silhouette (convex outline, anti-aliased), 1072×430 with alpha, 27 KB, fetched on first intent; never on phones.
+* **Bloom**: scales 1 → 1.55 from its front-bottom-left corner over 1.25 s with a gentle overshoot (`cubic-bezier(.16,1.12,.3,1)`), soft drop shadow, and a warm dawn light rising behind it (1.6 s) that settles. Scaling about a point inside a convex shape always covers the original footprint, so the photo's mattress never shows twice; the right edge lands at 47% of the width (mockup). Closing reverses in 0.75 s; the layer hides only once back in place. Reduced-motion: crossfade only.
+* **Everything else steps back**: LATEX lockup, the other points (and their hit areas — while it is open only the Dual Plush point is live, like night mode), baked benefits and DIVINE (their plates). "Dual Plush" (above the layer) and the Dual Plush System copy stay.
+* Devices: ≥701px — all tablets (tap / tap again or tap elsewhere), laptops, Macs, monitors (hover in / out). Phones unchanged.
+* Tests: new sunrise suite (no early download; bloom to ~47%; others hidden; label + copy stay; back to default; phone: nothing) — interaction 307–308 per harness, panels 792/792, axe 0, guards pass. Lab: phone LCP 0.80 s, CLS 0.
+* Pinned staging section: `ecwid/section-1.8.0-jsdelivr.html` (commit `bfb1d12`).
+
+![sunrise at 0 / 0.3 / 0.7 / 1.6 s, 1366×1024](reports/compare/ecwid-sim-1.8.0-sunrise.jpg)
+
 ## 1.7.2 — the moon on the logo's meridian (2026-10-02)
 
 * The mockup's moon sat at 51.1% of the width; the site logo sits on the page centre. `tests/make-night.py` now shifts the whole frame (moon, glitter path, stars, clouds) so the moon centre is at exactly 50%.
