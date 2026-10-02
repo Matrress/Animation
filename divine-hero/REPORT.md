@@ -1,5 +1,18 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.6.0 — minimal, engineered: clean sky window, live Dual Plush, leaf in the slogan (2026-10-02)
+
+Owner's brief: minimalist, precise, clearly readable — no haze, no "balloons".
+
+* **Mist removed.** Instead the copy window lives only where the photo is calm: picture x 44–72.5% (right of the shoulder, left of the zones point). Its top is computed per screen (`--ddh-win-top`): 20% of the picture, but never under the header; on tablets/phones, where the LATEX block sits above the window, the block steps aside (fades) while a text is open, like the DIVINE logo. `tests/panels.mjs` composites the photo + logo plate on a canvas and checks the darkest 10% of every line's background against its ink: **lowest of 792 cases = 4.86:1** (WCAG AA for normal text is 4.5:1), no overlap with hair, header, lockup or zones point.
+* **"conception" removed; "Dual Plush" is live text.** The baked curved lettering (with drop shadow and mirrored ghost) is removed from all 7 widths (`tests/clean-dualplush.py`: floor modelled by distance from the mattress edge + slow sideways trend, synthetic grain; ±1% file size). "Dual Plush" is now one line parallel to the mattress's lower front edge (measured 12.43°), spread by hero.js to exactly the mattress length, brand ink #1f4a45.
+* **Leaf inside the slogan.** The leaf is the first sign of LATEX (a flex item of the word, spaced like a letter, counter-scaled against the word's flattening). "EUROPEAN PRODUCTION / CERTIFIED FOR UK & EU" form one block exactly as wide as LATEX (`[data-ddh-spread]`, recomputed on layout). Upright phones still hide leaf + certification.
+* Window type slightly more compact (originals 1.6cqw, panels 1.42cqw; line-height locked).
+* Tests: interaction 272/272 per harness, panels 792/792, axe 0, guards pass (records the removed "conception" and the live "Dual Plush"). Lab: phone LCP 0.77 s, CLS 0.
+* Pinned staging section: `ecwid/section-1.6.0-jsdelivr.html` (commit `18fc483`).
+
+![1.6.0: rest, sizes, system (1366×1024), weight on 1024×768 with the lockup stepping aside](reports/compare/ecwid-sim-1.6.0.jpg)
+
 ## 1.5.1 — one safe window for every hotspot text (2026-10-02)
 
 Owner's live iPad screenshot: "Levels of Adaptation" fell into the hair. Cause: the live site's custom-code CSS roughly doubled the line spacing of `p/span/strong` (lines ~2× apart), so the window grew downwards. Our imitation page did not have that rule, so the tests had passed.
