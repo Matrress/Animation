@@ -1,5 +1,11 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.4.3 — clean pillow, hover on iPad (2026-10-02)
+
+* **Smudge removed from the photo.** A soft dark leaf-shaped smudge (~90×120 px at 3554w) and a small speck were baked into the hero photo on the pillow, below "Sleep System" (owner's iPad screenshot). `tests/clean-smudge.py` lifts only the low-frequency darkening back to the surrounding level (robust local percentile), so the foam grain stays; applied to all 7 widths, each re-encoded within ±4% of its previous size.
+* **Shop buttons darken on hover on iPad.** The hover rule was gated by `(hover:hover)`, which is false on an iPad even with a trackpad/mouse (its primary pointer is touch), so the graphite state appeared only on press. Now `(any-hover:hover)`. Phones without a pointer match neither, so no sticky hover after a tap. Guard added.
+* Pinned staging section: `ecwid/section-1.4.3-jsdelivr.html` (commit `de9486d`). Tests: 156/156 per harness, axe 0, guards pass.
+
 ## 1.4.2 — hotspots no longer disturb the mattress or the shoulder (2026-10-02)
 
 Reported on a live iPad (1366×1024): opening "Spinal Alignment" made the Dual Plush mattress shift and lose its crisp edge, and "Balance & Relief" did the same to the shoulder. Cause: the two v26 "clean background" plates (`plate-back`, `plate-logo`) replaced whole rectangles of the photo with a ~3× lower-resolution copy that also contained the mattress top and the shoulder/strap.
