@@ -4,9 +4,6 @@ const base = process.env.BASE || 'http://127.0.0.1:8765/';
 const url = base + process.argv[2];
 const KEYS = ['shoulder', 'back', 'zones', 'head', 'system', 'firmness', 'temperature'];
 const LINKS = {
-  Mattresses: 'https://divinedunlop.com/products/latex-mattresses-collection',
-  Toppers: 'https://divinedunlop.com/products/latex-toppers-collection',
-  Pillows: 'https://divinedunlop.com/products/latex-pillows',
   'Shop Your Mattress': 'https://divinedunlop.com/products/latex-mattresses-collection',
   'Shop Your Topper': 'https://divinedunlop.com/products/latex-toppers-collection',
 };
@@ -27,7 +24,7 @@ async function desktop(w, h) {
   // links
   const hrefs = await page.$$eval('.ddh a', (as) => as.map((a) => [a.textContent.trim(), a.getAttribute('href')]));
   for (const [t, hr] of hrefs) ok(LINKS[t] === hr, `link ${t} -> ${hr}`);
-  ok(hrefs.length === 5, '5 shopping links');
+  ok(hrefs.length === 2, '2 shopping links (Mattress, Topper); the duplicate menu bar was removed in 1.2.0');
   // pulse
   const anim = await page.evaluate(() => { const b = document.querySelector('.ddh__point'); const a = getComputedStyle(b, '::after'), be = getComputedStyle(b, '::before'); return [a.animationName, be.animationName, a.animationPlayState]; });
   ok(anim[0] === 'ddh-point-beat' && anim[1] === 'ddh-twinkle' && anim[2] === 'running', 'pulse running ' + anim);
@@ -146,7 +143,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.1.0/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.2.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -169,7 +166,7 @@ async function nojs() {
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(200);
   const hrefs = await page.$$eval('.ddh a', (as) => as.map((a) => a.getAttribute('href')));
-  ok(hrefs.length === 5 && hrefs.every((h) => /^https:\/\/divinedunlop\.com\/products\//.test(h)), 'links work without JS');
+  ok(hrefs.length === 2 && hrefs.every((h) => /^https:\/\/divinedunlop\.com\/products\//.test(h)), 'links work without JS');
   const c = await centre(page, 'system'); await page.mouse.move(c.x, c.y);
   await page.waitForTimeout(100);
   ok(await page.evaluate(() => getComputedStyle(document.querySelector('[data-ddh-copy=system]')).display) === 'flex', 'CSS :has() fallback reveals copy without JS');

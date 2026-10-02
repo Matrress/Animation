@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.1.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.2.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.1.0';
+  var VERSION = '1.2.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062 };
@@ -66,13 +66,20 @@
       root.style.setProperty('--ddh-top', (docTop < vh * .4 ? Math.max(0, Math.round(docTop)) : 0) + 'px');
       if (sy > 2) { pendingTop = true; return; }            // only measure the overlap with the page at rest at the top
       pendingTop = false;
-      var safe = 0, limit = Math.min(vh * .45, 420), i, c;
+      var safe = 0, limit = Math.min(vh * .45, 420), i, c, edgeR = 0;
       var cands = d.querySelectorAll(HEADER_SEL);
       for (i = 0; i < cands.length; i++) {
         if (!covering(cands[i])) continue;
         c = cands[i].getBoundingClientRect();
-        if (c.height > 4 && c.width > vw * .5 && c.top < r.top + limit && c.bottom > r.top && c.bottom - r.top < limit) safe = Math.max(safe, c.bottom - r.top);
+        if (c.height > 4 && c.width > vw * .5 && c.top < r.top + limit && c.bottom > r.top && c.bottom - r.top < limit) {
+          safe = Math.max(safe, c.bottom - r.top);
+          // right edge of the header's own content (icons / bag), so our lockup and CTAs line up under it
+          var items = cands[i].querySelectorAll('a,button,svg,img,input,[role="button"],[class*="icon"]');
+          for (var k = 0; k < items.length; k++) { var q = items[k].getBoundingClientRect(); if (q.width && q.height && q.right <= vw + 1) edgeR = Math.max(edgeR, q.right); }
+        }
       }
+      if (edgeR > vw * .6) root.style.setProperty('--ddh-edge-r', Math.round(Math.min(Math.max(vw - edgeR, 12), vw * .12)) + 'px');
+      else root.style.removeProperty('--ddh-edge-r');
       if (d.elementFromPoint) {
         var xs = [.1, .3, .5, .7, .9];
         for (i = 0; i < xs.length; i++) {
@@ -98,8 +105,11 @@
     cleanups.push(function () {
       if (mRaf) w.cancelAnimationFrame(mRaf);
       inst.layout = null;
-      root.style.removeProperty('--ddh-top'); root.style.removeProperty('--ddh-safe'); root.removeAttribute('data-ddh-measured');
+      root.style.removeProperty('--ddh-top'); root.style.removeProperty('--ddh-safe'); root.style.removeProperty('--ddh-edge-r'); root.removeAttribute('data-ddh-measured');
     });
+
+    // The pasted section ends with <i class="ddh__end">. If it is missing, the site builder cut the code short.
+    if (!root.querySelector('.ddh__end') && w.console) w.console.warn('[DDHero] the hero section code looks truncated: paste the complete code (it must end with ddh__end).');
 
     var viewport = root.querySelector('.ddh__art'), art = root.querySelector('.ddh__plane'), group = root.querySelector('.ddh__points');
     if (root.getAttribute('data-ddh-mode') !== 'interactive' || !viewport || !art || !group) return inst;

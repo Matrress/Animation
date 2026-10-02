@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.1.0 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.2.0 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -25,21 +25,14 @@
 .ddh .ddh__sky{position:absolute;z-index:7;left:0;right:0;top:0;height:var(--ddh-sky-height);background:transparent;pointer-events:none}
 
 /* Upper-right lockup: links / LATEX / certification as one frame. */
-.ddh .ddh__hero-nav{display:flex!important;margin:0;padding:0;align-items:center;justify-content:space-between;width:100%;gap:clamp(16px,2vw,34px);pointer-events:auto}
-.ddh .ddh__hero-nav a{position:relative;display:inline;margin:0;border:0;background:none;color:var(--ddh-ink);font:600 clamp(13px,1.05vw,17px)/1.1 system-ui,sans-serif;text-decoration:none;white-space:nowrap;padding:3px 0}
-/* 1.0.0: invisible hit-area extension (≥32px tall) for touch; no layout change. */
-.ddh .ddh__hero-nav a::after{content:"";position:absolute;inset:-8px -6px}
-@media (hover:hover){.ddh .ddh__hero-nav a:hover{text-decoration:underline;text-underline-offset:4px}}
-.ddh .ddh__hero-nav a:focus-visible{outline:2px solid #173f3b;outline-offset:3px;border-radius:2px}
-.ddh .ddh__sky-lockup{position:absolute;right:clamp(20px,4vw,72px);left:auto;width:clamp(292px,24vw,390px);top:calc(var(--ddh-safe) + clamp(8px,1vw,16px));display:flex;flex-direction:column;align-items:stretch;gap:5px;pointer-events:none;z-index:8}
-/* 1.0.0: optical alignment, calibrated by pixel scan (tests/lockup-pixels.mjs):
-   - margin-left -.065em cancels most of the L side-bearing (90/1000) so the L ink starts under the M ink of "Mattresses";
-   - margin-bottom -.16em removes part of the dead space scaleY(.75) leaves under the word, so links→LATEX and
-     LATEX→certification are the same interval. */
-.ddh .ddh__sky-word{--ddh-latex-flat:.75;display:flex;width:auto;margin:0 0 -.16em -.065em;align-items:flex-start;justify-content:space-between;white-space:nowrap;color:rgba(225,248,252,.27);font:600 clamp(46px,3.85vw,64px)/.88 DDHChillax,system-ui,sans-serif;text-shadow:0 1px 0 rgba(255,255,255,.18),0 8px 16px rgba(68,123,138,.09);transform:scaleY(var(--ddh-latex-flat));transform-origin:center top}
+.ddh .ddh__sky-lockup{position:absolute;right:var(--ddh-edge-r,clamp(20px,3.6vw,64px));left:auto;width:clamp(214px,16.5vw,318px);top:calc(var(--ddh-safe) + clamp(14px,1.6vw,26px));display:flex;flex-direction:column;align-items:stretch;gap:clamp(6px,.6vw,10px);pointer-events:none;z-index:8}
+/* 1.2.0: compact lockup = LATEX + certification, tucked under the header's right edge (the menu row above already
+   carries Mattresses / Toppers / Pillows). margin-left -.09em cancels the L side-bearing (90/1000) so the L ink, the
+   leaf ink and the header icons above share one right/left frame; -.16em trims the dead space scaleY(.75) leaves. */
+.ddh .ddh__sky-word{--ddh-latex-flat:.75;display:flex;width:auto;margin:0 0 -.16em -.09em;align-items:flex-start;justify-content:space-between;white-space:nowrap;color:rgba(225,248,252,.27);font:600 clamp(38px,2.75vw,52px)/.88 DDHChillax,system-ui,sans-serif;text-shadow:0 1px 0 rgba(255,255,255,.18),0 8px 16px rgba(68,123,138,.09);transform:scaleY(var(--ddh-latex-flat));transform-origin:center top}
 .ddh .ddh__sky-word>span{display:block}
 /* 1.0.0: -.13em pulls the rotated leaf's ink onto the same left edge as the links and LATEX. */
-.ddh .ddh__sky-cert{display:flex;align-items:center;justify-content:flex-start;gap:8px;width:auto;margin:0 0 0 -.13em;color:rgba(47,93,87,.92);font:400 clamp(10px,.76vw,13px)/1.05 DDHChillax,system-ui,sans-serif;letter-spacing:.05em;white-space:nowrap;text-align:left;padding-inline-start:0}
+.ddh .ddh__sky-cert{display:flex;align-items:center;justify-content:flex-start;gap:8px;width:auto;margin:0 0 0 -.13em;color:rgba(47,93,87,.92);font:400 clamp(10px,.72vw,12.5px)/1.05 DDHChillax,system-ui,sans-serif;letter-spacing:.05em;white-space:nowrap;text-align:left;padding-inline-start:0}
 .ddh .ddh__sky-cert b{font-weight:600}
 .ddh .ddh__leaf{position:relative;flex:0 0 clamp(19px,1.55vw,27px);width:clamp(19px,1.55vw,27px);height:clamp(13px,1.05vw,19px);border-radius:100% 0 100% 0;background:linear-gradient(135deg,#9bd26b,#63b963);transform:rotate(-28deg);box-shadow:inset -1px -1px 1px rgba(64,129,74,.18)}
 .ddh .ddh__leaf::after{content:"";position:absolute;left:48%;top:5%;width:1px;height:88%;background:rgba(255,255,255,.45);transform:rotate(38deg);transform-origin:center}
@@ -115,11 +108,12 @@
 
 /* Shop CTAs (graphite) */
 .ddh .ddh__shop{position:relative;z-index:6;display:flex!important;visibility:visible!important;margin:0;gap:clamp(24px,3vw,42px)}
-.ddh .ddh__shop .ddh__cta{position:relative;display:inline-flex!important;visibility:visible!important;opacity:1;margin:0;align-items:center;justify-content:center;min-height:48px;padding:10px 22px;border:1.6px solid #252a2c;border-radius:8px;background:var(--ddh-graphite);color:#fff;font:600 17px/1.2 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:.015em;text-align:center;text-decoration:none;white-space:nowrap;box-shadow:0 2px 10px rgba(24,29,31,.18);transition:background-color .15s,box-shadow .15s,transform .15s}
-.ddh .ddh__shop .ddh__cta:visited{color:#fff}
+/* 1.2.0: "glass" at rest — transparent, outlined, readable; becomes the graphite button on hover, tap or keyboard focus. */
+.ddh .ddh__shop .ddh__cta{position:relative;display:inline-flex!important;visibility:visible!important;opacity:1;margin:0;align-items:center;justify-content:center;min-height:48px;padding:10px 22px;border:1.6px solid rgba(52,58,60,.82);border-radius:8px;background:rgba(255,255,255,.16);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);color:var(--ddh-graphite);font:600 17px/1.2 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:.015em;text-align:center;text-decoration:none;white-space:nowrap;box-shadow:none;transition:background-color .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.ddh .ddh__shop .ddh__cta:visited{color:var(--ddh-graphite)}
 /* 1.0.0: hover lift only where a real hover exists (no sticky hover after a tap); pressed state for touch. */
-@media (hover:hover){.ddh .ddh__shop .ddh__cta:hover{background:var(--ddh-graphite-hover);color:#fff;box-shadow:0 3px 14px rgba(24,29,31,.28);transform:translateY(-1px)}}
-.ddh .ddh__shop .ddh__cta:active{background:var(--ddh-graphite-hover);color:#fff;transform:none;box-shadow:0 1px 6px rgba(24,29,31,.2)}
+@media (hover:hover){.ddh .ddh__shop .ddh__cta:hover{background:var(--ddh-graphite);border-color:var(--ddh-graphite);color:#fff;box-shadow:0 3px 14px rgba(24,29,31,.28);transform:translateY(-1px)}}
+.ddh .ddh__shop .ddh__cta:active,.ddh .ddh__shop .ddh__cta:focus-visible{background:var(--ddh-graphite-hover);border-color:var(--ddh-graphite-hover);color:#fff;transform:none;box-shadow:0 1px 6px rgba(24,29,31,.2)}
 .ddh .ddh__shop .ddh__cta:focus-visible{outline:3px solid #15191a;outline-offset:3px}
 
 @keyframes ddh-in{from{opacity:0}to{opacity:1}}
@@ -141,24 +135,22 @@
 /* Keep all seven hotspots inside the visible frame: visible plane bottom = art-h − plane-top. A point is lifted only
    if it would sit within 34px of that edge (on 16:9 screens the ventilation point was cropped out entirely). */
 .ddh .ddh__points .ddh__point{top:min(var(--y),calc(var(--ddh-art-h) - var(--ddh-plane-top) - 34px))}
-.ddh .ddh__shop{position:absolute;right:4%;bottom:clamp(22px,2.8vh,38px)}
+.ddh .ddh__shop{position:absolute;right:var(--ddh-edge-r,4%);bottom:clamp(22px,2.8vh,38px)}
 .ddh .ddh__shop .ddh__cta{min-width:clamp(190px,10vw,262px);min-height:clamp(48px,2.5vw,58px);font-size:clamp(15px,1.12vw,20px)}
 }
 @media (min-width:1051px) and (max-height:650px){.ddh{--ddh-sky-height:84px}.ddh .ddh__shop{bottom:16px}.ddh .ddh__shop .ddh__cta{min-height:46px}.ddh .ddh__sky-cert{font-size:10px}}
 
 /* Tablet */
 @media (min-width:701px) and (max-width:1050px){
-.ddh{--ddh-sky-height:116px;--ddh-safe:100px;--ddh-room:130px}
+.ddh{--ddh-sky-height:116px;--ddh-safe:100px;--ddh-room:96px}
 /* 1.1.0: the picture starts just low enough that header + lockup fit above the DIVINE logo (logo = 21.1% of width
    below the picture top; % margins resolve against the width). The gap behind the header is the picture's sky colour. */
 .ddh .ddh__art{height:auto;overflow:visible;margin-top:max(0px,calc(var(--ddh-safe) + var(--ddh-room) - 21.1%))}
 .ddh .ddh__plane{position:relative;top:0;left:0;width:100%;aspect-ratio:3554/2744}
 .ddh .ddh__shop{justify-content:flex-end;padding:24px 4% 20px;background:var(--ddh-seam-bottom)}
 .ddh .ddh__shop .ddh__cta{min-width:220px}
-.ddh .ddh__sky-lockup{left:auto;right:4%;width:42%;top:calc(var(--ddh-safe) + 10px)}
-.ddh .ddh__hero-nav{gap:12px}
-.ddh .ddh__hero-nav a{font-size:clamp(11px,1.6vw,14px)}
-.ddh .ddh__sky-word{font-size:clamp(48px,6.4vw,64px)}
+.ddh .ddh__sky-lockup{left:auto;right:var(--ddh-edge-r,4%);width:30%;top:calc(var(--ddh-safe) + 12px)}
+.ddh .ddh__sky-word{font-size:clamp(40px,4.6vw,48px)}
 .ddh .ddh__sky-cert{font-size:10.5px}
 .ddh .ddh__copy{font-size:1.95cqw;left:20%;right:-2%}
 .ddh .ddh__spine strong{font-size:2.02cqw}
@@ -166,16 +158,13 @@
 
 /* Phone */
 @media (max-width:700px){
-.ddh{--ddh-sky-height:110px;--ddh-safe:64px;--ddh-room:94px}
+.ddh{--ddh-sky-height:110px;--ddh-safe:64px;--ddh-room:72px}
 .ddh .ddh__art{height:auto;overflow:visible;margin-top:max(0px,calc(var(--ddh-safe) + var(--ddh-room) - 21.1%))}
 .ddh .ddh__plane{position:relative;top:0;left:0;width:100%;aspect-ratio:3554/2744}
 .ddh .ddh__shop{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:28px 4% 18px;background:var(--ddh-seam-bottom)}
 .ddh .ddh__shop .ddh__cta{min-width:0;min-height:54px;padding:10px 4px;font-size:clamp(13.5px,3.8vw,16px);letter-spacing:0;white-space:normal}
-/* 1.0.0: top 8px→4px (1.1.0: measured from the header bottom) and LATEX 12vw→11vw so the certification ends above the DIVINE logo (was overlapping it, 360–430px). */
-.ddh .ddh__sky-lockup{left:38%;right:4%;width:auto;top:calc(var(--ddh-safe) + 4px);gap:3px}
-.ddh .ddh__hero-nav{gap:6px}
-.ddh .ddh__hero-nav a{font-size:clamp(10px,2.8vw,13px)}
-.ddh .ddh__sky-word{font-size:clamp(38px,11vw,54px)}
+.ddh .ddh__sky-lockup{left:auto;right:var(--ddh-edge-r,4%);width:46%;top:calc(var(--ddh-safe) + 8px);gap:4px}
+.ddh .ddh__sky-word{font-size:clamp(32px,9vw,44px)}
 .ddh .ddh__sky-cert{font-size:9px;letter-spacing:.03em;gap:5px}
 .ddh .ddh__leaf{flex-basis:16px;width:16px;height:11px}
 .ddh .ddh__screen--brand{left:30%;width:50%;top:7%;height:36%}
@@ -195,4 +184,4 @@
 }
 
 @media (prefers-reduced-motion:reduce){.ddh .ddh__copy,.ddh .ddh__spine{animation:none}.ddh .ddh__wash,.ddh .ddh__art::after,.ddh .ddh__shop .ddh__cta{transition:none}.ddh .ddh__shop .ddh__cta:hover{transform:none}.ddh .ddh__point::before,.ddh .ddh__point::after{animation:none}.ddh .ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh .ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
-@media (forced-colors:active){.ddh .ddh__point::before{display:none}.ddh .ddh__point::after{border-color:CanvasText;background:Canvas}.ddh .ddh__shop .ddh__cta{border-color:LinkText}}
+@media (forced-colors:active){.ddh .ddh__point::before{display:none}.ddh .ddh__point::after{border-color:CanvasText;background:Canvas}.ddh .ddh__shop .ddh__cta{border-color:LinkText;color:LinkText}}

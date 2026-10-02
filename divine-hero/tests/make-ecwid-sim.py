@@ -30,7 +30,7 @@ body{{margin:0;font-family:Comfortaa,system-ui,sans-serif;background:#fff;color:
 .ins-header__top{{display:flex;justify-content:center;align-items:center;height:72px;position:relative}}
 .ins-header__logo{{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 40% 45%,#2b6f86,#123 70%);}}
 .ins-header__tools{{position:absolute;right:0;top:12px;display:flex;gap:22px;align-items:center}}
-.ins-header__tools a{{border:1px solid #234;border-radius:20px;padding:6px 26px;color:#234;text-decoration:none;font-size:15px}}
+.ins-header__tools a{{border:1px solid #234;border-radius:20px;padding:6px 26px;color:#234;text-decoration:none;font-size:15px}}.ins-header__tools a.ico{{border:0;padding:0;line-height:0}}
 .ins-header__tools i{{display:inline-block;width:22px;height:22px;border:2px solid #234;border-radius:50%}}
 .ins-header__menu{{display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:clamp(11px,1.15vw,17px)}}
 .ins-header__menu a{{color:#234;text-decoration:none;white-space:nowrap}}
@@ -42,7 +42,7 @@ body{{margin:0;font-family:Comfortaa,system-ui,sans-serif;background:#fff;color:
 .next{{height:1600px;background:linear-gradient(#3a2a20 0,#3a2a20 60px,#efe7dc 60px)}}
 </style></head><body>
 <div class="ins-tile ins-tile--announcement">-10% OFF + 2 FREE Natural Latex Pillows - "Summer Moves On" <a href="#">Contact Us</a></div>
-<div class="ins-tile ins-tile--header"><div class="ins-header__top"><div class="ins-header__logo"></div><div class="ins-header__tools"><a href="#">Email Us</a><i></i><i></i><i></i></div></div><nav class="ins-header__menu">{menu}</nav></div>
+<div class="ins-tile ins-tile--header"><div class="ins-header__top"><div class="ins-header__logo"></div><div class="ins-header__tools"><a href="#">Email Us</a><a class="ico" href="#" aria-label="Search"><svg width="22" height="22"><circle cx="11" cy="11" r="9" fill="none" stroke="#234" stroke-width="2"/></svg></a><a class="ico" href="#" aria-label="Account"><svg width="22" height="22"><circle cx="11" cy="11" r="9" fill="none" stroke="#234" stroke-width="2"/></svg></a><a class="ico" href="#" aria-label="Bag"><svg width="22" height="22"><rect x="3" y="5" width="16" height="15" fill="none" stroke="#234" stroke-width="2"/></svg></a></div></div><nav class="ins-header__menu">{menu}</nav></div>
 <div class="ins-tile ins-tile--custom-code">
 {code}
 </div>
