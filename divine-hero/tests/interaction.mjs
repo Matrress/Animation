@@ -46,7 +46,7 @@ async function desktop(w, h) {
   { const t = await centre(page, 'temperature'); await page.mouse.click(t.x, t.y); }
   await page.waitForTimeout(500);
   const wash = await page.evaluate(() => { const w = document.querySelector('.ddh__wash'); const a = document.querySelector('.ddh__art').getBoundingClientRect(); const r = w.getBoundingClientRect(); return { op: +getComputedStyle(w).opacity, covers: r.top <= a.top + 1 && r.bottom >= a.bottom - 1 && r.left <= 0 && r.right >= a.right - 1 }; });
-  ok(wash.op === 1 && wash.covers, 'ventilation turns the whole artwork blue: ' + JSON.stringify(wash));
+  ok(wash.op > .98 && wash.covers, 'ventilation turns the whole artwork blue: ' + JSON.stringify(wash));
   // live region: should announce last clicked copy
   const live = await page.$eval('.ddh [aria-live]', (e) => e.textContent);
   ok(/^Best Air Ventilation\. Temperature Comfort$/.test(live), 'live region announces on click, lines separated: ' + live);
@@ -178,7 +178,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.5.1/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.6.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);

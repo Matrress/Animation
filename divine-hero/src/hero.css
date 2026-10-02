@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.5.1 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.6.0 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -36,6 +36,17 @@
 .ddh .ddh__sky-cert b{font-weight:600}
 .ddh .ddh__leaf{position:relative;flex:0 0 clamp(19px,1.55vw,27px);width:clamp(19px,1.55vw,27px);height:clamp(13px,1.05vw,19px);border-radius:100% 0 100% 0;background:linear-gradient(135deg,#9bd26b,#63b963);transform:rotate(-28deg);box-shadow:inset -1px -1px 1px rgba(64,129,74,.18)}
 .ddh .ddh__leaf::after{content:"";position:absolute;left:48%;top:5%;width:1px;height:88%;background:rgba(255,255,255,.45);transform:rotate(38deg);transform-origin:center}
+/* 1.6.0: the leaf is the first sign of the LATEX slogan (owner: part of the slogan's strength, not a bullet). It is a flex
+   item of the word, so space-between spaces it like a letter; scaleY(1/.75) cancels the word's flattening. The two
+   certification lines form one block exactly as wide as the word: hero.js spreads [data-ddh-spread] edge to edge. */
+.ddh .ddh__sky-word{margin-left:0}
+.ddh .ddh__sky-word .ddh__leaf{flex:0 0 .5em;width:.5em;height:.34em;align-self:center;margin:0;transform:scaleY(1.3333) rotate(-28deg)}
+.ddh .ddh__sky-lockup .ddh__sky-cert{flex-direction:column;align-items:flex-start;gap:.42em;margin:0;text-transform:uppercase;letter-spacing:0;line-height:1!important;font-size:clamp(10.5px,.8vw,13.5px)}
+.ddh .ddh__sky-cert>*{display:block;white-space:nowrap}
+.ddh [data-ddh-spread]{display:inline-block;white-space:nowrap}
+/* 1.6.0: "Dual Plush" is live text on one line, parallel to the mattress's lower front edge (measured in the photo:
+   (60,2040)→(650,2170) of 3554×2744, i.e. 12.43°, 17% of the width) and spread to exactly its length. */
+.ddh .ddh__dp{position:absolute;z-index:1;left:1.69%;top:75.3%;width:17%;margin:0;transform:rotate(12.43deg);transform-origin:0 0;pointer-events:none;white-space:nowrap;color:#1f4a45;font:600 max(8px,2.05cqw)/1 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:0}
 
 /* Artwork */
 .ddh .ddh__art{position:relative;width:100%;margin:0;container-type:inline-size;background:var(--ddh-sky);overflow:hidden}
@@ -181,7 +192,7 @@
 .ddh .ddh__sky-lockup{left:auto;right:var(--ddh-edge-r,4%);width:46%;top:calc(var(--ddh-safe) + 8px);gap:4px}
 .ddh .ddh__sky-word{font-size:clamp(32px,9vw,44px)}
 .ddh .ddh__sky-cert{font-size:9px;letter-spacing:.03em;gap:5px}
-.ddh .ddh__leaf{flex-basis:16px;width:16px;height:11px}
+.ddh .ddh__sky-cert .ddh__leaf{flex-basis:16px;width:16px;height:11px}
 .ddh .ddh__screen--brand{left:30%;width:50%;top:7%;height:36%}
 .ddh .ddh__screen--brand .ddh__plate{left:7%;width:75%;top:48.9%;height:50.36%}
 /* 1.0.0: copy starts at 57% of the screen (just under the lockup at 360–430px) and flows down over the logo plate,
@@ -205,7 +216,7 @@
    hero.js applies the same rule (no tap-to-open, interaction graphics never downloaded). */
 @media (max-width:700px) and (orientation:portrait){
 .ddh .ddh__points,.ddh .ddh__screen,.ddh .ddh__wash{display:none!important}
-.ddh .ddh__sky-cert{display:none!important}
+.ddh .ddh__sky-cert,.ddh .ddh__sky-word .ddh__leaf{display:none!important}
 .ddh{--ddh-room:46px}
 }
 /* 1.5.0: "window 3" — the longer copy of the two new points. Wider than the standard copy box and shifted right
@@ -229,24 +240,27 @@
    Desktop: plane x 37–72.5%, from the DIVINE logo top (27.3% of the plane; the layout keeps it under the header even on
    cropped 16:9 screens). Tablet / phone landscape: the lockup sits at the window's height, so x 33.5–65% (left of it).
    Small phones (<=700px landscape): x 16–50%. Copy is top-aligned and flows down; hair starts at ~42% of the plane. */
-@media (min-width:701px){
-.ddh .ddh__screen--brand .ddh__copy{left:9.3%;right:-4%;top:15%;bottom:auto;justify-content:flex-start}
-.ddh .ddh__screen .ddh__copy--panel{gap:.3em;font-size:1.5cqw}
-.ddh .ddh__screen .ddh__copy--panel strong{font-size:1.25em;margin-bottom:.08em}
-}
-@media (min-width:701px) and (max-width:1050px){.ddh .ddh__screen--brand .ddh__copy{left:0;right:16%;top:-5%}.ddh .ddh__screen .ddh__copy--panel{font-size:1.55cqw}}
-@media (max-width:700px){.ddh .ddh__screen--brand .ddh__copy{left:-28%;right:60%}.ddh .ddh__screen .ddh__copy--panel{font-size:12px;gap:.2em}}
+/* 1.6.0: the brand screen spans the whole picture and the logo plate keeps its own box, so the window is set in picture
+   coordinates on every device: x 44–72.5% (clean sky: right of the shoulder, left of the zones point; measured ink
+   contrast 4.6–5.8), from --ddh-win-top down. hero.js sets --ddh-win-top to the lowest of: 20% of the picture,
+   just under the header, just under the LATEX lockup where it sits above the window. Copy flows down from there and
+   must end above the hair (~40% of the picture height under the window's right half); tests/panels.mjs measures it. */
+.ddh .ddh__screen.ddh__screen--brand{left:0;top:0;width:100%;height:100%}
+.ddh .ddh__screen--brand .ddh__plate{left:33.5%;top:24.6%;width:37.5%;height:18.13%}
+.ddh .ddh__screen--brand .ddh__copy{left:44%;right:27.5%;top:var(--ddh-win-top,27.3%);bottom:auto;height:auto;justify-content:flex-start}
+.ddh .ddh__sky-lockup{transition:opacity .2s ease}
+.ddh[data-ddh-lockup-yield][data-ddh-screen=brand] .ddh__sky-lockup{opacity:0}
+@media (min-width:701px){.ddh .ddh__screen--brand .ddh__copy:not(.ddh__copy--panel){font-size:1.6cqw;gap:.24em}.ddh .ddh__screen--brand .ddh__copy strong{margin-bottom:.04em}}
+@media (min-width:701px){.ddh .ddh__screen .ddh__copy--panel{gap:.24em;font-size:1.42cqw}.ddh .ddh__screen .ddh__copy--panel strong{font-size:1.25em;margin-bottom:.08em}}
+@media (min-width:701px) and (max-width:1050px){.ddh .ddh__screen .ddh__copy--panel{font-size:1.5cqw}}
+@media (max-width:700px){.ddh .ddh__screen .ddh__copy--panel{font-size:12px;gap:.2em}}
 /* 1.5.1: the live site's custom-code CSS inflated line-height/margins of p/span/strong (lines ~2x apart, the window grew
    into the hair). Copy metrics are now locked. */
 .ddh .ddh__copy{margin:0!important;padding:0!important}
 .ddh .ddh__sky-lockup span,.ddh .ddh__sky-lockup b{line-height:inherit!important;margin-top:0!important;margin-bottom:0!important}
 .ddh .ddh__copy strong,.ddh .ddh__copy span,.ddh .ddh__copy b,.ddh .ddh__copy i{line-height:inherit!important;margin-top:0!important;padding:0!important}
 .ddh .ddh__copy:not(.ddh__copy--solo){line-height:1.08!important}
-.ddh .ddh__screen .ddh__copy--panel{line-height:1.1!important}
+.ddh .ddh__screen .ddh__copy--panel{line-height:1.06!important}
 .ddh .ddh__copy--solo{line-height:1.15!important}
-/* Cloud mist behind every window copy: a feathered haze in the sky's own colour, no edges, so the copy reads on any
-   part of the photo (shoulder, pillow, hair) without a "box". */
-.ddh .ddh__screen--brand .ddh__copy{isolation:isolate}
-.ddh .ddh__screen--brand .ddh__copy::before{content:"";position:absolute;z-index:-1;left:-6%;right:-6%;top:-28%;bottom:-30%;border-radius:50%;background:radial-gradient(closest-side,rgba(226,247,243,.86),rgba(222,245,241,.62) 52%,rgba(214,241,237,.22) 78%,rgba(214,241,237,0));filter:blur(4px);pointer-events:none}
 @media (prefers-reduced-motion:reduce){.ddh .ddh__copy,.ddh .ddh__spine{animation:none}.ddh .ddh__wash,.ddh .ddh__art::after,.ddh .ddh__shop .ddh__cta{transition:none}.ddh .ddh__shop .ddh__cta:hover{transform:none}.ddh .ddh__point::before,.ddh .ddh__point::after{animation:none}.ddh .ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh .ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
 @media (forced-colors:active){.ddh .ddh__point::before{display:none}.ddh .ddh__point::after{border-color:CanvasText;background:Canvas}.ddh .ddh__shop .ddh__cta{border-color:LinkText;color:LinkText}}

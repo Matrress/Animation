@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.5.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.6.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.5.1';
+  var VERSION = '1.6.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06 };
@@ -60,10 +60,23 @@
     var HEADER_SEL = '.ins-tile--header, header, [role="banner"]';
     var mRaf = 0, pendingTop = false;
     function covering(el) { return el && el !== d.body && el !== html && !root.contains(el) && !el.contains(root); }
+    // 1.6.0: lines marked [data-ddh-spread] (certification block, "Dual Plush") are tracked out to exactly the width
+    // of their box, so they form a clean block edge to edge. letter-spacing also follows the last glyph: margin cancels it.
+    function spread() {
+      [].forEach.call(root.querySelectorAll('[data-ddh-spread]'), function (el) {
+        el.style.letterSpacing = '0px'; el.style.marginRight = '0px';
+        var W = el.parentNode.clientWidth, w0 = el.offsetWidth, n = el.textContent.length;
+        if (!W || !w0 || n < 2) return;
+        var ls = Math.max(0, (W - w0) / (n - 1));
+        el.style.letterSpacing = ls.toFixed(2) + 'px'; el.style.marginRight = -ls.toFixed(2) + 'px';
+      });
+    }
+    cleanups.push(function () { [].forEach.call(root.querySelectorAll('[data-ddh-spread]'), function (el) { el.style.letterSpacing = ''; el.style.marginRight = ''; }); });
     function layoutNow() {
       mRaf = 0;
       var r = root.getBoundingClientRect(), vh = w.innerHeight, vw = html.clientWidth || w.innerWidth;
       if (!r.width || !vh) return;
+      spread();
       var sy = w.pageYOffset || html.scrollTop || 0, docTop = r.top + sy;
       root.style.setProperty('--ddh-top', (docTop < vh * .4 ? Math.max(0, Math.round(docTop)) : 0) + 'px');
       if (sy > 2) { pendingTop = true; return; }            // only measure the overlap with the page at rest at the top
@@ -94,6 +107,18 @@
         }
       }
       root.style.setProperty('--ddh-safe', Math.round(safe) + 'px');
+      spread(); // the lockup width follows --ddh-edge-r, just set
+      // 1.6.0: top of the copy window (picture px): 20% of the picture, but never under the header or the LATEX lockup
+      var pl = root.querySelector('.ddh__plane'), lk = root.querySelector('.ddh__sky-lockup');
+      if (pl) {
+        var pr = pl.getBoundingClientRect(), wy = pr.top + pr.height * .2;
+        wy = Math.max(wy, r.top + safe + 8);
+        // where the lockup sits above the window (tablets, phones) it steps aside while a text is open, like the logo
+        var yieldLk = false;
+        if (lk) { var lr = lk.getBoundingClientRect(); yieldLk = !!lr.height && lr.left < pr.left + pr.width * .725 && lr.right > pr.left + pr.width * .44 && lr.bottom + 10 > wy; }
+        root.toggleAttribute('data-ddh-lockup-yield', yieldLk);
+        root.style.setProperty('--ddh-win-top', Math.round(wy - pr.top) + 'px');
+      }
       root.setAttribute('data-ddh-measured', '1');
     }
     function layout() { if (!mRaf) mRaf = w.requestAnimationFrame(layoutNow); }
@@ -108,7 +133,7 @@
     cleanups.push(function () {
       if (mRaf) w.cancelAnimationFrame(mRaf);
       inst.layout = null;
-      root.style.removeProperty('--ddh-top'); root.style.removeProperty('--ddh-safe'); root.style.removeProperty('--ddh-edge-r'); root.removeAttribute('data-ddh-measured');
+      root.style.removeProperty('--ddh-top'); root.style.removeProperty('--ddh-safe'); root.style.removeProperty('--ddh-win-top'); root.removeAttribute('data-ddh-lockup-yield'); root.style.removeProperty('--ddh-edge-r'); root.removeAttribute('data-ddh-measured');
     });
 
     // The pasted section ends with <i class="ddh__end">. If it is missing, the site builder cut the code short.
