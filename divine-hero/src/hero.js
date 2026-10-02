@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.8.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.8.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.8.0';
+  var VERSION = '1.8.1';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07 };
@@ -162,7 +162,7 @@
     var points = [].slice.call(group.querySelectorAll('[data-ddh-point]'));
     var copies = [].slice.call(root.querySelectorAll('[data-ddh-copy]'));
     var screens = [].slice.call(root.querySelectorAll('.ddh__screen'));
-    var lazyImgs = [].slice.call(root.querySelectorAll('.ddh__screen img, .ddh__mat img'));
+    var lazyImgs = [].slice.call(root.querySelectorAll('.ddh__screen img, .ddh__mat img, .ddh__bed img'));
     var fine = w.matchMedia ? w.matchMedia('(hover:hover) and (pointer:fine)') : { matches: true };
     var nightMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (any-hover:hover)') : { matches: false };
     var nightImg = root.querySelector('.ddh__night-img');

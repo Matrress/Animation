@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.8.0 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.8.1 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -262,27 +262,26 @@
 .ddh .ddh__copy:not(.ddh__copy--solo){line-height:1.08!important}
 .ddh .ddh__screen .ddh__copy--panel{line-height:1.06!important}
 .ddh .ddh__copy--solo{line-height:1.15!important}
-/* 1.8.0: DUAL PLUSH "SUNRISE" (tablets, laptops, monitors — not phones). Opening the system point lifts the mattress
-   out of the photo (its own cut-out layer, tests/make-mattress.py) and lets it bloom to 1.55× from its front-bottom-left
-   corner: it grows up over the back and to 47% of the width (owner's mockup), always covering its original footprint,
-   so the photo never shows twice. A warm dawn light rises behind it and settles. Every other text steps back (LATEX
-   lockup, the other points, the baked benefits and DIVINE via their plates); "Dual Plush" and the Dual Plush copy stay.
-   Closing reverses smoothly; the layer hides only once it is back in place. Fetched on first intent. */
-.ddh .ddh__mat{position:absolute;z-index:3;left:1.125%;top:64.14%;width:30.163%;height:15.671%;display:none;pointer-events:none;transform-origin:1.87% 67.91%;transform:scale(1);opacity:0;filter:drop-shadow(0 0 0 rgba(255,236,196,0));transition:transform .75s cubic-bezier(.4,0,.2,1),filter .75s ease,opacity 0s linear .75s;will-change:transform}
-.ddh .ddh__mat img{display:block;width:100%;height:100%;max-width:none;margin:0}
-.ddh .ddh__mat::before{content:"";position:absolute;z-index:-1;left:-12%;right:-12%;top:-40%;bottom:-25%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,244,214,.62),rgba(255,236,196,.22) 55%,rgba(255,236,196,0));opacity:0;transform:scale(.6) translateY(18%);transition:opacity .6s ease,transform .75s ease}
+/* 1.8.0/1.8.1: DUAL PLUSH "SUNRISE" (tablets, laptops, monitors — not phones). Opening the system point lifts the
+   mattress out of the photo (cut-out layer, tests/make-mattress.py) and carries it — moving and growing in one smooth
+   arc — to the owner's spot (mockup registered on the photo: front-bottom-left corner (60,2052) → (38,1638) px of
+   3554×2744, ×1.57, right edge at 46.5% of the width). The place it leaves is the photo rebuilt without it
+   (tests/make-vacated.py: body, strap and bed continued, its cast shadow removed), so nothing of the old mattress stays.
+   Clean contour: no glow, no shadow. Every other text steps back; "Dual Plush" and the Dual Plush copy stay. */
+.ddh .ddh__bed,.ddh .ddh__mat{position:absolute;display:none;pointer-events:none;margin:0}
+.ddh .ddh__bed img,.ddh .ddh__mat img{display:block;width:100%;height:100%;max-width:none;margin:0}
+.ddh .ddh__bed{z-index:3;left:0;top:61.953%;width:41.643%;height:26.239%;opacity:0;transition:opacity .45s ease .25s}
+.ddh .ddh__mat{z-index:3;left:1.125%;top:64.14%;width:30.163%;height:15.671%;transform-origin:1.87% 67.91%;transform:none;opacity:0;transition:transform .8s cubic-bezier(.45,0,.25,1),opacity 0s linear .8s;will-change:transform}
 @media (min-width:701px){
-.ddh[data-ddh-warm] .ddh__mat{display:block}
-.ddh[data-ddh-state=system] .ddh__mat{opacity:1;transform:scale(1.55);filter:drop-shadow(0 18px 26px rgba(20,58,54,.28));transition:transform 1.25s cubic-bezier(.16,1.12,.3,1),filter 1.25s ease,opacity 0s}
-.ddh[data-ddh-state=system] .ddh__mat::before{animation:ddh-dawn 1.6s ease-out both}
-/* every other text steps back */
+.ddh[data-ddh-warm] .ddh__bed,.ddh[data-ddh-warm] .ddh__mat{display:block}
+.ddh[data-ddh-state=system] .ddh__bed{opacity:1;transition:opacity .25s ease}
+.ddh[data-ddh-state=system] .ddh__mat{opacity:1;transform:translate(-2.05%,-96.16%) scale(1.57);transition:transform 1.3s cubic-bezier(.22,1,.36,1),opacity 0s}
 .ddh[data-ddh-state=system] .ddh__sky-lockup{opacity:0}
 .ddh[data-ddh-state=system] .ddh__points .ddh__point:not([data-ddh-point=system]){opacity:0;pointer-events:none!important;transition:opacity .4s ease}
 .ddh[data-ddh-state=system] .ddh__screen--back{display:block}
 .ddh[data-ddh-state=system] .ddh__screen--back .ddh__spine{display:none!important}
 }
-@keyframes ddh-dawn{0%{opacity:0;transform:scale(.55) translateY(22%)}45%{opacity:1;transform:scale(1.08) translateY(0)}100%{opacity:.38;transform:scale(1) translateY(0)}}
-@media (prefers-reduced-motion:reduce){.ddh .ddh__mat,.ddh[data-ddh-state=system] .ddh__mat{transition:opacity .2s}.ddh[data-ddh-state=system] .ddh__mat::before{animation:none;opacity:.3}}
+@media (prefers-reduced-motion:reduce){.ddh .ddh__mat,.ddh[data-ddh-state=system] .ddh__mat{transition:opacity .2s}}
 
 /* 1.7.0/1.7.1: NIGHT MODE (screens >=1051px with a mouse or trackpad — iPads with a trackpad included). A golden
    crescent on the woman's back (owner's spot). It works like every other point: the pointer comes near → the hero
