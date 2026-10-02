@@ -1,5 +1,19 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.7.0 — night mode (desktop) (2026-10-02)
+
+Owner's mockup (`src/night/owner-mockup.png`): a moonlit night over the sea, the woman as a faint silhouette, one line "Improve the Quality of Your Sleep" and "Shop Your Latex Mattress / Topper".
+
+* **The point**: a golden crescent in the sky above DIVINE, where the moon rises (kept under the header on cropped screens). Desktop with a mouse only: `(min-width:1051px) and (hover:hover) and (pointer:fine)`; tablets and phones never show it or download anything.
+* **Click-only**: a whole-scene change is never triggered by a passing hover or by Tab focus; Enter/click opens it. The moon (the same button, now invisible over it), Esc, a click anywhere in the picture or outside, or scrolling away wakes up.
+* **The plate** (`tests/make-night.py`): the owner's own frame — moon, star field, Milky Way, clouds, sea glitter and silhouette — with the site header, headline, buttons and faint photo inscriptions removed (stroke masks + fill + grain; stars restored in the cleaned header band at the surrounding density), placed in picture coordinates and continued above/below. 1640w 57 KB / 2560w 103 KB, fetched only after desktop intent (the layer is not rendered before, so its lazy image cannot load early).
+* **Everything else steps back**: LATEX lockup, Dual Plush, the other 9 points (hover does nothing while it is night). Headline is live text (translated in the 8 languages; screen readers hear it). The buttons read "Shop Your **Latex Mattress** / **Latex Topper**" with a light outline on the water.
+* **Site header**: its transparent menu sits on the night sky, so for the duration of night mode only, its text/links/icons are lightened (colour only; the one rule outside `.ddh`, allow-listed in the guard).
+* Tests: interaction 295/295 per harness (incl. a night suite: no early download, click-only, everything hidden, headline, Latex buttons, moon/outside to wake, absent on 4 touch viewports), panels 792/792 (lowest contrast 4.86), axe 0, guards pass.
+* Pinned staging section: `ecwid/section-1.7.0-jsdelivr.html` (commit `0c6c70e`).
+
+![night mode: 1586×992 vs the owner's mockup; 1920×1080; 1366×768](reports/compare/ecwid-sim-1.7.0-night.jpg)
+
 ## 1.6.0 — minimal, engineered: clean sky window, live Dual Plush, leaf in the slogan (2026-10-02)
 
 Owner's brief: minimalist, precise, clearly readable — no haze, no "balloons".
