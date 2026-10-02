@@ -1,4 +1,21 @@
-# Divine DunlopDreams Hero 1.0.0 — engineering & design polish report
+# Divine DunlopDreams Hero — engineering & design polish report
+
+## 1.1.0 — fitting the live Instant Site header (2026-10-02)
+
+The live test on iPad showed that the Instant Site header (announcement bar, then a **transparent** header with logo, menu, Email Us and icons) lies **over** the first section. 1.0.0 was laid out as if the header pushed it down, which caused:
+
+| Live symptom | Cause (reproduced in `tests/make-ecwid-sim.py`) | 1.1.0 |
+|---|---|---|
+| Mattresses/Toppers/Pillows + LATEX collided with Email Us / icons / menu | the lockup sat 16 px from the hero top, but the header covers about 120 px of it | `hero.js` measures the header (known `.ins-tile--header` tiles plus hit-testing of what sits on the hero). The lockup now sits 14–21 px **below** the header at every size |
+| Hotspot circles not visible / not working | builder rules such as `.ins-tile button {position:relative}` (0,1,1) beat `.ddh__point` (0,1,0). If an editor strips `style=""`, all 7 points collapse to the top under the header | coordinates moved into CSS (`[data-ddh-point=…]`). Every selector scoped `.ddh .ddh__*`, plus `!important` on hotspot and CTA geometry. 7/7 points can be pressed, including with styles stripped |
+| Another section showing at the bottom | hero height = screen − 50 − 16 px, a guess. The real offset is the 49 px announcement bar, and the 16 px "peek" was intentional | hero height = screen − measured offset, so it ends **exactly** at the screen bottom (Δ 0 px at all desktop sizes) |
+| Composition not reaching under the menu like the old cover | — | desktop: picture from the hero top, so sky and clouds run behind the menu. The DIVINE logo is kept ≥ 36 px below the header. Tablet/phone: the picture starts just low enough for header + lockup to fit above DIVINE; the sky colour (#aac5d5, the picture's own top edge) continues behind the header |
+
+Also handled: solid header (pushes content), so the hero fills the remaining screen; hero not first on the page, so it gets full height. Re-measured on load, resize, orientation change, font load and Instant Site tile load. Interaction suite: 131/131 in the Ecwid imitation (normal, styles stripped) and in the plain harnesses. axe: 0 violations. Copy guard: unchanged.
+
+---
+
+# 1.0.0 report (baseline polish)
 
 Baseline: approved **v26** (`reference/v26-REFERENCE-SOURCE.html`, `reference/v26-preview.html`, both unmodified).
 Result: **Hero 1.0.0 "baseline polished"**. It keeps the v26 composition, copy, model, mattress, clouds, lockup, graphite CTAs and seven pulsing hotspots, and fixes the defects measured below.
