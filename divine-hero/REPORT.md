@@ -1,5 +1,13 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.4.2 — hotspots no longer disturb the mattress or the shoulder (2026-10-02)
+
+Reported on a live iPad (1366×1024): opening "Spinal Alignment" made the Dual Plush mattress shift and lose its crisp edge, and "Balance & Relief" did the same to the shoulder. Cause: the two v26 "clean background" plates (`plate-back`, `plate-logo`) replaced whole rectangles of the photo with a ~3× lower-resolution copy that also contained the mattress top and the shoulder/strap.
+
+Fix (`tests/make-plates.py`): each plate is registered to the photo, tone-matched, and given an alpha mask that covers only the baked-in lettering (benefits list; DIVINE / Dunlop Dreams) plus a soft margin, restricted to the lettering zone. Change outside the lettering when a plate shows: before mean 2.8 / max 56 (of 255), now mean 0.00 / max 2. Plates 8.2 KB + 2.9 KB → 19.0 KB + 9.9 KB (fetched only on first hover/tap intent; never on an upright phone).
+
+Pinned staging section: `ecwid/section-1.4.2-jsdelivr.html` (commit `8a6c3a6`). Tests: 156/156 per harness, axe 0, guards pass.
+
 ## 1.4.1 — search: image description and heading (2026-10-02)
 
 * Hero image `alt`: "Woman sleeping on a natural latex pillow beside the Divine DunlopDreams Dual Plush latex mattress and topper". It describes what is in the picture, which is what Google Images and screen readers use.
