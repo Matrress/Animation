@@ -1,12 +1,14 @@
-/*! Divine DunlopDreams Hero 1.4.3 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.5.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.4.3';
+  var VERSION = '1.5.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
-  var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062 };
+  var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06 };
+  // 1.5.0: hotspot copy in the visitor's language (page lang first, then browser preference; English stays in the HTML).
+  var LANGS = ['de', 'sv', 'fr', 'es', 'pt', 'el', 'fi', 'it'];
   var BACK = { l: .008, r: .465, t: .4468, b: .6864 };
   var instances = [];
 
@@ -140,18 +142,21 @@
       if (key && pointsOff()) key = null;
       if (key === active) { if (key && announce) live.textContent = txtOf(key); return; }
       active = key;
-      if (key) { warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : 'brand'); }
+      if (key) { warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : 'brand'); fit(key); }
       else { root.removeAttribute('data-ddh-state'); root.removeAttribute('data-ddh-screen'); }
       var txt = '';
-      copies.forEach(function (c) { var isOn = c.getAttribute('data-ddh-copy') === key; c.setAttribute('aria-hidden', String(!isOn)); if (isOn) txt = c.textContent.replace(/\s+/g, ' ').trim(); });
+      copies.forEach(function (c) { var isOn = c.getAttribute('data-ddh-copy') === key; c.setAttribute('aria-hidden', String(!isOn)); if (isOn) txt = speak(c); });
       screens.forEach(function (s) { var isBack = s.classList.contains('ddh__screen--back'); s.setAttribute('aria-hidden', String(!key || (key === 'back' ? !isBack : isBack))); });
       points.forEach(function (p) { p.setAttribute('aria-expanded', String(p.getAttribute('data-ddh-point') === key)); });
       // Announce only for keyboard/tap/click activation — not for every mouse hover.
       if (announce || !key) live.textContent = key ? txt : '';
     }
 
+    // Lines are separate elements with no whitespace between them: join them so "Title" + "Line" is not read as "TitleLine".
+    function speak(c) { return [].map.call(c.querySelectorAll('strong,span'), function (el) { return el.textContent; }).filter(function (t, i, a) { return a.indexOf(t) === i; }).join('. ').replace(/\s+/g, ' ').trim(); }
+
     function txtOf(key) {
-      for (var i = 0; i < copies.length; i++) if (copies[i].getAttribute('data-ddh-copy') === key) return copies[i].textContent.replace(/\s+/g, ' ').trim();
+      for (var i = 0; i < copies.length; i++) if (copies[i].getAttribute('data-ddh-copy') === key) return speak(copies[i]);
       return '';
     }
 
@@ -227,7 +232,54 @@
     on(d, 'keydown', function (ev) { if (active && (ev.key === 'Escape' || ev.key === 'Esc')) show(null); });
     on(w, 'resize', function () { if (active && pointsOff()) show(null); }, { passive: true }); // rotated to upright phone
 
-    // Roving tabindex: one Tab stop, arrows move between the seven points.
+    // Long words (German compounds, the nowrap firmness scale, the letter-spaced spine line): shrink a line until it
+    // fits its box. Runs only when a state opens; English normally needs nothing.
+    function fit(key) {
+      copies.forEach(function (c) {
+        if (c.getAttribute('data-ddh-copy') !== key) return;
+        [].forEach.call(c.querySelectorAll('strong,span'), function (el) {
+          el.style.fontSize = '';
+          for (var n = 0; n < 6 && el.scrollWidth > el.clientWidth + 1; n++) el.style.fontSize = parseFloat(w.getComputedStyle(el).fontSize) * .92 + 'px';
+        });
+      });
+    }
+
+    // Translations: <base>i18n/<lang>.json, fetched after page load and only for the eight languages.
+    function pickLang() {
+      var q = /[?&]ddh-lang=([a-z]{2})/.exec(w.location.search || ''); if (q) return LANGS.indexOf(q[1]) > -1 ? q[1] : null;
+      var page = (d.documentElement.getAttribute('lang') || '').slice(0, 2).toLowerCase(); if (LANGS.indexOf(page) > -1) return page;
+      var list = (w.navigator.languages && w.navigator.languages.length) ? w.navigator.languages : [w.navigator.language || ''];
+      for (var i = 0; i < list.length; i++) { var l = String(list[i]).slice(0, 2).toLowerCase(); if (l === 'en') return null; if (LANGS.indexOf(l) > -1) return l; }
+      return null;
+    }
+    function fill(el, line) {
+      while (el.firstChild) el.removeChild(el.firstChild);
+      if (Array.isArray(line)) { line.forEach(function (word, i) { if (i) el.appendChild(d.createTextNode(' · ')); var t = d.createElement('i'); t.className = 'ddh__w' + (i + 1); t.textContent = word; el.appendChild(t); }); return; }
+      String(line).split('**').forEach(function (part, i) { if (!part) return; if (i % 2) { var b = d.createElement('b'); b.textContent = part; el.appendChild(b); } else el.appendChild(d.createTextNode(part)); });
+    }
+    function applyLang(dict, lang) {
+      copies.forEach(function (c) {
+        var lines = dict[c.getAttribute('data-ddh-copy')];
+        var slots = [].filter.call(c.children, function (k) { return k.tagName === 'STRONG' || k.tagName === 'SPAN'; });
+        if (!Array.isArray(lines) || lines.length !== slots.length) return;
+        slots.forEach(function (sl, i) { fill(sl, lines[i]); });
+        c.setAttribute('lang', lang);
+      });
+      root.setAttribute('data-ddh-lang', lang);
+      if (active) fit(active);
+    }
+    var lang = pickLang(), img = root.querySelector('.ddh__img');
+    if (lang && img && w.fetch) {
+      var url = (img.getAttribute('src') || '').replace(/assets\/[^\/]*$/, '') + 'i18n/' + lang + '.json';
+      var load = function () {
+        w.fetch(url, { signal: signal }).then(function (r) { if (!r.ok) throw r; return r.json(); })
+          .then(function (dict) { if (root.hasAttribute('data-ddh-ready')) applyLang(dict, lang); })
+          .catch(function () {}); // English stays
+      };
+      if (d.readyState === 'complete') load(); else on(w, 'load', load, { once: true });
+    }
+
+    // Roving tabindex: one Tab stop, arrows move between the points.
     function rove(t) { points.forEach(function (p) { p.tabIndex = p === t ? 0 : -1; }); t.focus(); }
     points.forEach(function (p, i) { p.tabIndex = i ? -1 : 0; p.style.setProperty('--i', i); });
     on(group, 'keydown', function (ev) {

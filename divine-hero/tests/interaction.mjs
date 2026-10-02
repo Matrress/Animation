@@ -2,7 +2,7 @@
 import { chromium } from 'playwright';
 const base = process.env.BASE || 'http://127.0.0.1:8765/';
 const url = base + process.argv[2];
-const KEYS = ['shoulder', 'back', 'zones', 'head', 'system', 'firmness', 'temperature'];
+const KEYS = ['shoulder', 'back', 'zones', 'head', 'system', 'firmness', 'temperature', 'sizes', 'weight'];
 const LINKS = {
   'Shop Your Mattress': 'https://divinedunlop.com/products/latex-mattresses-collection',
   'Shop Your Topper': 'https://divinedunlop.com/products/latex-toppers-collection',
@@ -28,7 +28,7 @@ async function desktop(w, h) {
   // pulse
   const anim = await page.evaluate(() => { const b = document.querySelector('.ddh__point'); const a = getComputedStyle(b, '::after'), be = getComputedStyle(b, '::before'); return [a.animationName, be.animationName, a.animationPlayState]; });
   ok(anim[0] === 'ddh-point-beat' && anim[1] === 'ddh-twinkle' && anim[2] === 'running', 'pulse running ' + anim);
-  ok((await page.$$('.ddh__point')).length === 7, 'seven hotspots');
+  ok((await page.$$('.ddh__point')).length === 9, 'nine hotspots');
   // hover each
   for (const k of KEYS) {
     const c = await centre(page, k); await page.mouse.move(c.x, c.y, { steps: 2 }); await page.waitForTimeout(60);
@@ -43,12 +43,13 @@ async function desktop(w, h) {
   // click each
   for (const k of KEYS) { const c = await centre(page, k); await page.mouse.click(c.x, c.y); await page.waitForTimeout(40); const s = await state(page); ok(s.s === k, `click ${k} -> ${s.s}`); }
   // ventilation "cooling": full-frame blue wash visible only in the temperature state
+  { const t = await centre(page, 'temperature'); await page.mouse.click(t.x, t.y); }
   await page.waitForTimeout(500);
   const wash = await page.evaluate(() => { const w = document.querySelector('.ddh__wash'); const a = document.querySelector('.ddh__art').getBoundingClientRect(); const r = w.getBoundingClientRect(); return { op: +getComputedStyle(w).opacity, covers: r.top <= a.top + 1 && r.bottom >= a.bottom - 1 && r.left <= 0 && r.right >= a.right - 1 }; });
   ok(wash.op === 1 && wash.covers, 'ventilation turns the whole artwork blue: ' + JSON.stringify(wash));
   // live region: should announce last clicked copy
   const live = await page.$eval('.ddh [aria-live]', (e) => e.textContent);
-  ok(/Best Air Ventilation/.test(live), 'live region announces on click: ' + live);
+  ok(/^Best Air Ventilation\. Temperature Comfort$/.test(live), 'live region announces on click, lines separated: ' + live);
   // click outside closes
   await page.evaluate(() => { const n = document.querySelector('.next-section'); n.scrollIntoView(); });
   await page.mouse.click(10, 10); await page.waitForTimeout(60);
@@ -64,7 +65,7 @@ async function desktop(w, h) {
   ok(focused === 'shoulder', 'tab reaches first hotspot: ' + focused);
   ok((await state(page)).s === 'shoulder', 'focus opens state');
   await page.keyboard.press('ArrowRight'); ok((await state(page)).s === 'back', 'ArrowRight -> back');
-  await page.keyboard.press('End'); ok((await state(page)).s === 'temperature', 'End -> temperature');
+  await page.keyboard.press('End'); ok((await state(page)).s === 'weight', 'End -> weight (last point)');
   await page.keyboard.press('Home'); ok((await state(page)).s === 'shoulder', 'Home -> shoulder');
   await page.keyboard.press('Escape'); ok((await state(page)).s === null, 'Escape closes');
   await page.keyboard.press('Enter'); ok((await state(page)).s === 'shoulder', 'Enter re-opens');
@@ -97,8 +98,8 @@ async function touch(w, h, dpr, label) {
     const c = await centre(page, k); await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(60);
     const s = await state(page); ok(s.s === k && s.exp.length === 1, `tap ${k} -> ${JSON.stringify(s)}`);
   }
-  await page.evaluate(() => document.querySelector('[data-ddh-point=temperature]').scrollIntoView({ block: 'center' })); await page.waitForTimeout(120);
-  const c = await centre(page, 'temperature'); await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(60);
+  await page.evaluate(() => document.querySelector('[data-ddh-point=weight]').scrollIntoView({ block: 'center' })); await page.waitForTimeout(120);
+  const c = await centre(page, 'weight'); await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(60);
   ok((await state(page)).s === null, 'second tap on same hotspot closes');
   await page.evaluate(() => document.querySelector('[data-ddh-point=zones]').scrollIntoView({ block: 'center' })); await page.waitForTimeout(120);
   const c2 = await centre(page, 'zones'); await page.touchscreen.tap(c2.x, c2.y); await page.waitForTimeout(60);
@@ -177,7 +178,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.4.3/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.5.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -207,6 +208,37 @@ async function nojs() {
   await ctx.close();
 }
 
+async function i18n() {
+  console.log('i18n');
+  const en = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'en-GB' });
+  const ep = await en.newPage(); const er = [];
+  ep.on('request', (r) => /\/i18n\//.test(r.url()) && er.push(r.url()));
+  await ep.goto(url, { waitUntil: 'load' }); await ep.waitForTimeout(400);
+  ok(er.length === 0, 'English visitor downloads no translation file');
+  await en.close();
+  for (const [loc, lang, title] of [['de-DE', 'de', 'Alle UK- & EU-Größen'], ['el-GR', 'el', 'Όλα τα μεγέθη ΗΒ & ΕΕ'], ['fi-FI', 'fi', 'Kaikki UK- & EU-koot']]) {
+    for (const [w, h] of [[1440, 900], [1024, 768], [844, 390]]) {
+      const ctx = await browser.newContext({ viewport: { width: w, height: h }, locale: loc, hasTouch: w < 1100 });
+      const page = await ctx.newPage(); const reqs = [];
+      page.on('request', (r) => /\/i18n\//.test(r.url()) && reqs.push(r.url()));
+      await page.goto(url, { waitUntil: 'load' });
+      await page.waitForFunction(() => document.querySelector('.ddh').getAttribute('data-ddh-lang'), null, { timeout: 4000 }).catch(() => {});
+      ok(reqs.length === 1 && reqs[0].endsWith(`/i18n/${lang}.json`), `${loc} ${w}x${h}: one translation request (${reqs.length})`);
+      ok(await page.evaluate(() => document.querySelector('[data-ddh-copy=sizes] strong').textContent) === title, `${loc}: sizes title translated`);
+      for (const k of KEYS) {
+        const r = await page.evaluate((k) => {
+          document.querySelector(`[data-ddh-point=${k}]`).click();
+          const c = document.querySelector(`[data-ddh-copy=${k}]`);
+          const bad = [...c.querySelectorAll('strong,span')].filter((el) => { const b = el.getBoundingClientRect(); return el.scrollWidth > el.clientWidth + 1 || b.left < -1 || b.right > innerWidth + 1; }).map((el) => el.textContent);
+          return { lang: c.getAttribute('lang'), shown: getComputedStyle(c).display !== 'none', bad };
+        }, k);
+        ok(r.lang === lang && r.shown && r.bad.length === 0, `${loc} ${w}x${h} ${k}: ${JSON.stringify(r)}`);
+      }
+      await ctx.close();
+    }
+  }
+}
+
 await desktop(1440, 900);
 await desktop(1920, 1080);
 await phonePortrait(390, 844);
@@ -217,6 +249,7 @@ await touch(1024, 1366, 2, 'iPad portrait');
 await touch(1366, 1024, 2, 'iPad landscape / touch laptop');
 await lifecycle();
 await nojs();
+await i18n();
 await browser.close();
 console.log(`\n${passes} passed, ${fails} failed`);
 process.exit(fails ? 1 : 0);

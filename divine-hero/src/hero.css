@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.4.3 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.5.0 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -65,7 +65,7 @@
 .ddh .ddh__spine img{display:block;width:100%;height:auto}
 .ddh .ddh__spine span{display:block;color:#fff;font-size:1.72cqw;font-weight:400;letter-spacing:.57em;white-space:nowrap;opacity:.93}
 .ddh .ddh__spine b{font-weight:600;opacity:1}
-.ddh[data-ddh-state=shoulder] [data-ddh-copy=shoulder],.ddh[data-ddh-state=zones] [data-ddh-copy=zones],.ddh[data-ddh-state=head] [data-ddh-copy=head],.ddh[data-ddh-state=system] [data-ddh-copy=system],.ddh[data-ddh-state=firmness] [data-ddh-copy=firmness],.ddh[data-ddh-state=temperature] [data-ddh-copy=temperature],.ddh[data-ddh-state=back] [data-ddh-copy=back]{display:flex}
+.ddh[data-ddh-state=shoulder] [data-ddh-copy=shoulder],.ddh[data-ddh-state=zones] [data-ddh-copy=zones],.ddh[data-ddh-state=head] [data-ddh-copy=head],.ddh[data-ddh-state=system] [data-ddh-copy=system],.ddh[data-ddh-state=firmness] [data-ddh-copy=firmness],.ddh[data-ddh-state=temperature] [data-ddh-copy=temperature],.ddh[data-ddh-state=back] [data-ddh-copy=back],.ddh[data-ddh-state=sizes] [data-ddh-copy=sizes],.ddh[data-ddh-state=weight] [data-ddh-copy=weight]{display:flex}
 .ddh--translated .ddh__benefits{position:absolute!important;width:auto!important;height:auto!important;margin:0!important;overflow:visible!important;clip:auto!important;clip-path:none!important;white-space:normal!important;inset:48.03% 54.87% 36.63% 2.17%!important;z-index:2;display:grid;grid-template-columns:1fr 1fr;align-content:center;gap:12% 6%;padding:0;color:#fff;font:600 1.62cqw/1.12 DDHChillax,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase}
 .ddh--translated .ddh__benefits li::before{content:"• ";letter-spacing:0}
 .ddh--translated[data-ddh-screen] .ddh__benefits{visibility:hidden}
@@ -81,6 +81,10 @@
 .ddh .ddh__point[data-ddh-point=system]{--x:22%;--y:75.11%;--i:4}
 .ddh .ddh__point[data-ddh-point=firmness]{--x:38.1%;--y:73.82%;--i:5}
 .ddh .ddh__point[data-ddh-point=temperature]{--x:47.7%;--y:78.74%;--i:6}
+/* 1.5.0: two more points on the right edge (owner's iPad mark-up): sizes & depths under the certification line,
+   firmness-by-weight on the pillow. Their copy opens in a wider window right of the DIVINE logo (see .ddh__copy--panel). */
+.ddh .ddh__point[data-ddh-point=sizes]{--x:94.2%;--y:38%;--i:7}
+.ddh .ddh__point[data-ddh-point=weight]{--x:94.5%;--y:61.1%;--i:8}
 .ddh .ddh__point::before,.ddh .ddh__point::after{content:"";position:absolute;left:50%;top:50%;border-radius:50%;pointer-events:none}
 .ddh .ddh__point::before{width:clamp(30px,2.8cqw,42px);height:clamp(30px,2.8cqw,42px);border:1.5px solid rgba(235,255,250,.9);background:rgba(221,250,242,.16);transform:translate(-50%,-50%) scale(.82);opacity:0;animation:ddh-twinkle 2s ease-in-out infinite;animation-delay:calc(var(--i,0) * -285ms)}
 .ddh .ddh__point::after{width:clamp(20px,1.85cqw,26px);height:clamp(20px,1.85cqw,26px);transform:translate(-50%,-50%);border:2px solid rgba(255,255,255,.97);background:radial-gradient(circle,#f5fffb 0 2.5px,rgba(111,156,149,.72) 3.5px);box-shadow:0 0 0 1.2px rgba(39,88,82,.6),0 1px 6px rgba(11,65,57,.18);animation:ddh-point-beat 2s ease-in-out infinite;animation-delay:calc(var(--i,0) * -285ms)}
@@ -96,7 +100,7 @@
 /* No-JS fallback: hover/focus still reveals the copy. */
 @supports selector(.ddh__art:has(.ddh__point:hover)){
 .ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point:not([data-ddh-point=back]):is(:hover,:focus-visible)) .ddh__screen--brand,.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=back]:is(:hover,:focus-visible)) .ddh__screen--back{display:block}
-.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=shoulder]:is(:hover,:focus-visible)) [data-ddh-copy=shoulder],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=zones]:is(:hover,:focus-visible)) [data-ddh-copy=zones],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=head]:is(:hover,:focus-visible)) [data-ddh-copy=head],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=system]:is(:hover,:focus-visible)) [data-ddh-copy=system],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=firmness]:is(:hover,:focus-visible)) [data-ddh-copy=firmness],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=temperature]:is(:hover,:focus-visible)) [data-ddh-copy=temperature],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=back]:is(:hover,:focus-visible)) [data-ddh-copy=back]{display:flex}
+.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=shoulder]:is(:hover,:focus-visible)) [data-ddh-copy=shoulder],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=zones]:is(:hover,:focus-visible)) [data-ddh-copy=zones],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=head]:is(:hover,:focus-visible)) [data-ddh-copy=head],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=system]:is(:hover,:focus-visible)) [data-ddh-copy=system],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=firmness]:is(:hover,:focus-visible)) [data-ddh-copy=firmness],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=temperature]:is(:hover,:focus-visible)) [data-ddh-copy=temperature],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=back]:is(:hover,:focus-visible)) [data-ddh-copy=back],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=sizes]:is(:hover,:focus-visible)) [data-ddh-copy=sizes],.ddh:not([data-ddh-ready]) .ddh__art:has(.ddh__point[data-ddh-point=weight]:is(:hover,:focus-visible)) [data-ddh-copy=weight]{display:flex}
 }
 
 /* Ventilation "cooling" state. 1.0.0: the whole artwork turns from mint to fresh sky-blue (v26 tinted only the lower
@@ -204,5 +208,26 @@
 .ddh .ddh__sky-cert{display:none!important}
 .ddh{--ddh-room:46px}
 }
+/* 1.5.0: "window 3" — the longer copy of the two new points. Wider than the standard copy box and shifted right
+   (plane x 45–80%, y 25–42%: the free sky right of the DIVINE logo, which the logo plate hides meanwhile); top-aligned so
+   the lines stay clear of the zones point. Firmness scale: each word one step bolder, Extra Firm the heaviest. */
+.ddh .ddh__copy>strong,.ddh .ddh__copy>span{max-width:100%;min-width:0} /* a nowrap line may not widen its own box: hero.js fit() shrinks it instead */
+.ddh .ddh__copy .ddh__scale{display:block;text-wrap:balance}
+.ddh .ddh__copy .ddh__scale i{font-style:normal;color:var(--ddh-ink);white-space:nowrap}
+.ddh .ddh__copy .ddh__w1{font-weight:400;opacity:.86}
+.ddh .ddh__copy .ddh__w2{font-weight:400;-webkit-text-stroke:.022em currentColor}
+.ddh .ddh__copy .ddh__w3{font-weight:600}
+.ddh .ddh__copy .ddh__w4{font-weight:600;-webkit-text-stroke:.045em currentColor;letter-spacing:.05em}
+.ddh .ddh__copy--lede strong{font-weight:400}
+.ddh .ddh__copy--lede strong b{font-weight:600}
+/* Window spans plane x 44–72.5%: the lines can never reach the zones point (x 74.6%). Desktop: starts level with the
+   DIVINE logo top (27.3% of the plane), which the layout keeps >=10px below the header even on cropped 16:9 screens.
+   Tablet / phone landscape: the plane is not cropped there, so the window may start higher to leave room. */
+@media (min-width:701px){
+.ddh .ddh__screen .ddh__copy--panel{left:28%;right:-4%;top:15%;bottom:auto;justify-content:flex-start;gap:.3em;font-size:1.5cqw;line-height:1.1}
+.ddh .ddh__screen .ddh__copy--panel strong{font-size:1.25em;margin-bottom:.08em}
+}
+@media (min-width:701px) and (max-width:1050px){.ddh .ddh__screen .ddh__copy--panel{top:-5%;font-size:1.55cqw}}
+@media (max-width:700px){.ddh .ddh__screen .ddh__copy--panel{left:26%;right:16%;font-size:12px}}
 @media (prefers-reduced-motion:reduce){.ddh .ddh__copy,.ddh .ddh__spine{animation:none}.ddh .ddh__wash,.ddh .ddh__art::after,.ddh .ddh__shop .ddh__cta{transition:none}.ddh .ddh__shop .ddh__cta:hover{transform:none}.ddh .ddh__point::before,.ddh .ddh__point::after{animation:none}.ddh .ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh .ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
 @media (forced-colors:active){.ddh .ddh__point::before{display:none}.ddh .ddh__point::after{border-color:CanvasText;background:Canvas}.ddh .ddh__shop .ddh__cta{border-color:LinkText;color:LinkText}}

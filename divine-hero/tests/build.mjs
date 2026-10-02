@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const VERSION = '1.4.3';
+const VERSION = '1.5.0';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const esbuild = process.env.ESBUILD || 'esbuild';
 const rel = path.join(root, 'release', VERSION);
@@ -12,6 +12,9 @@ fs.mkdirSync(rel, { recursive: true });
 
 execFileSync(esbuild, [path.join(root, 'src/hero.css'), '--minify', '--legal-comments=inline', '--target=chrome105,safari16,firefox110', '--outfile=' + path.join(rel, 'hero.css')], { stdio: 'inherit' });
 execFileSync(esbuild, [path.join(root, 'src/hero.js'), '--minify', '--legal-comments=inline', '--target=es2017', '--outfile=' + path.join(rel, 'hero.js')], { stdio: 'inherit' });
+// 1.5.0: hotspot copy translations, minified JSON, fetched on demand (hero.js: <base>i18n/<lang>.json)
+fs.mkdirSync(path.join(rel, 'i18n'), { recursive: true });
+for (const f of fs.readdirSync(path.join(root, 'src/i18n'))) fs.writeFileSync(path.join(rel, 'i18n', f), JSON.stringify(JSON.parse(fs.readFileSync(path.join(root, 'src/i18n', f), 'utf8'))));
 
 const tpl = fs.readFileSync(path.join(root, 'src/section.html'), 'utf8');
 const render = (base) => tpl.replaceAll('{{BASE}}', base).replaceAll('{{ORIGIN}}', new URL(base, 'http://local.test/').origin);
