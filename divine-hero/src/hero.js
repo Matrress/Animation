@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.2.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.3.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.2.0';
+  var VERSION = '1.3.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062 };
@@ -66,7 +66,8 @@
       root.style.setProperty('--ddh-top', (docTop < vh * .4 ? Math.max(0, Math.round(docTop)) : 0) + 'px');
       if (sy > 2) { pendingTop = true; return; }            // only measure the overlap with the page at rest at the top
       pendingTop = false;
-      var safe = 0, limit = Math.min(vh * .45, 420), i, c, edgeR = 0;
+      // only the top part of the hero itself is scanned: anything below the hero (the next section) is not a header
+      var safe = 0, limit = Math.min(vh * .45, 420, r.height * .6), i, c, edgeR = 0;
       var cands = d.querySelectorAll(HEADER_SEL);
       for (i = 0; i < cands.length; i++) {
         if (!covering(cands[i])) continue;
