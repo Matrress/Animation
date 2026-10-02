@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.8.2 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.9.0 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -270,7 +270,7 @@
    Clean contour: no glow, no shadow. Every other text steps back; "Dual Plush" and the Dual Plush copy stay. */
 .ddh .ddh__bed,.ddh .ddh__mat{position:absolute;display:none;pointer-events:none;margin:0}
 .ddh .ddh__bed img,.ddh .ddh__mat img{display:block;width:100%;height:100%;max-width:none;margin:0}
-.ddh .ddh__bed{z-index:3;left:0;top:61.953%;width:41.643%;height:26.239%;opacity:0;transition:opacity .45s ease .25s}
+.ddh .ddh__bed{z-index:3;left:0;top:61.953%;width:41.643%;height:26.239%;opacity:0;transition:opacity 0s linear .8s} /* 1.9.0: stays until the mattress has landed (0.8 s), then swaps in one frame with it: no second mattress shows through during the descent */
 .ddh .ddh__mat{z-index:3;left:1.125%;top:64.14%;width:30.163%;height:15.671%;transform-origin:1.87% 67.91%;transform:none;opacity:0;transition:transform .8s cubic-bezier(.45,0,.25,1),opacity 0s linear .8s;will-change:transform}
 @media (min-width:701px){
 .ddh[data-ddh-warm] .ddh__bed,.ddh[data-ddh-warm] .ddh__mat{display:block}
@@ -324,3 +324,5 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 }
 @media (prefers-reduced-motion:reduce){.ddh .ddh__copy,.ddh .ddh__spine{animation:none}.ddh .ddh__wash,.ddh .ddh__art::after,.ddh .ddh__shop .ddh__cta{transition:none}.ddh .ddh__shop .ddh__cta:hover{transform:none}.ddh .ddh__point::before,.ddh .ddh__point::after{animation:none}.ddh .ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh .ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
 @media (forced-colors:active){.ddh .ddh__point::before{display:none}.ddh .ddh__point::after{border-color:CanvasText;background:Canvas}.ddh .ddh__shop .ddh__cta{border-color:LinkText;color:LinkText}}
+/* 1.9.0: the settle layer (hero.js) lies exactly over the photo's body area, under every other layer */
+.ddh .ddh__settle{position:absolute;display:none;left:32.358%;top:34.257%;width:50.647%;height:44.096%;margin:0;pointer-events:none}

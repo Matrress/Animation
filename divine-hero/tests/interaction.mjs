@@ -180,7 +180,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.8.2/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.9.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -299,6 +299,46 @@ async function sunrise() {
   await ph.close();
 }
 
+// 1.9.0: "Natural Adaptation" — the sleeper settles (WebGL warp of the photo), then is exactly the photo again
+async function settle() {
+  console.log('Natural Adaptation settle');
+  const gb = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  for (const [w, h, touch, reduce] of [[1440, 900, false, false], [1024, 768, true, false], [1440, 900, false, true]]) {
+    const ctx = await gb.newContext({ viewport: { width: w, height: h }, hasTouch: touch, reducedMotion: reduce ? 'reduce' : 'no-preference' });
+    // this lab has no GPU: let the hero accept the software renderer (production refuses it: failIfMajorPerformanceCaveat)
+    await ctx.addInitScript(() => { const g = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function (t, o) { return g.call(this, t, o && Object.assign({}, o, { failIfMajorPerformanceCaveat: false })); }; });
+    const page = await ctx.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
+    await page.clock.install();
+    await page.goto(url, { waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await page.clock.runFor(600);
+    const c = await centre(page, 'firmness');
+    const box = await page.evaluate(() => { const r = document.querySelector('.ddh__plane').getBoundingClientRect(); return [r.left, r.top, r.width]; });
+    const k = box[2] / 3554, clipOf = (x0, y0, x1, y1) => ({ x: box[0] + x0 * k, y: box[1] + y0 * k, width: (x1 - x0) * k, height: (y1 - y0) * k });
+    const body = clipOf(1250, 1000, 2900, 2050), words = clipOf(1760, 1640, 2290, 1705);
+    if (!touch) { await page.mouse.move(c.x - 160, c.y + 140); }                        // first intent warms (image reuse)
+    else await page.evaluate(() => document.querySelector('.ddh__art').dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })));
+    await page.clock.runFor(100); await page.waitForTimeout(900); await page.clock.runFor(100);
+    await page.clock.pauseAt(new Date(Date.now() + 5000));
+    if (touch) await page.touchscreen.tap(c.x, c.y); else await page.mouse.move(c.x, c.y, { steps: 2 });
+    await page.clock.runFor(900); await page.waitForTimeout(1200);              // warp frozen at 0.9 s; CSS fades finish (real time)
+    const mid = await page.evaluate(() => { const cv = document.querySelector('.ddh__settle'); return { state: document.querySelector('.ddh').getAttribute('data-ddh-state'), on: !!cv && getComputedStyle(cv).display === 'block' }; });
+    const b1 = await page.screenshot({ clip: body }), w1 = await page.screenshot({ clip: words });
+    await page.clock.runFor(1500); await page.waitForTimeout(300);
+    const end = await page.evaluate(() => { const cv = document.querySelector('.ddh__settle'); return { on: !!cv && getComputedStyle(cv).display === 'block', settling: document.querySelector('.ddh').hasAttribute('data-ddh-settling') }; });
+    const b2 = await page.screenshot({ clip: body }), w2 = await page.screenshot({ clip: words });
+    const tag = `${w}x${h}${touch ? ' touch' : ''}${reduce ? ' reduced-motion' : ''}`;
+    ok(mid.state === 'firmness', `${tag}: Natural Adaptation open`);
+    if (reduce) ok(!mid.on, `${tag}: no movement (the warp layer is never shown)`);
+    else {
+      ok(mid.on && !b1.equals(b2), `${tag}: the sleeper moves at 0.9 s: ${JSON.stringify(mid)}`);
+      ok(w1.equals(w2), `${tag}: the "Engineering" lettering never moves`);
+    }
+    ok(!end.on && !end.settling, `${tag}: after 2.4 s she is exactly the photo again (layer off): ${JSON.stringify(end)}`);
+    ok(errs.length === 0, `${tag}: no script errors: ${errs.join(' | ')}`);
+    await ctx.close();
+  }
+  await gb.close();
+}
+
 async function i18n() {
   console.log('i18n');
   const en = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'en-GB' });
@@ -343,6 +383,7 @@ await nojs();
 await i18n();
 await night();
 await sunrise();
+await settle();
 await browser.close();
 console.log(`\n${passes} passed, ${fails} failed`);
 process.exit(fails ? 1 : 0);
