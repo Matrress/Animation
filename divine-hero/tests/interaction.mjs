@@ -180,7 +180,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.8.1/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.8.2/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -260,6 +260,8 @@ async function night() {
   }
 }
 
+// 1.8.2: where the risen "Dual Plush" line lands (box left/top/right, % of the picture) = the mockup's lettering
+const DP_UP = [0.66, 59.02, 27.16]; // left varies ±.3 with the host's line-height (sim inflates span line-height)
 async function sunrise() {
   console.log('Dual Plush sunrise');
   for (const [w, h, touch] of [[1366, 1024, false], [1920, 1080, false], [1024, 768, true]]) {
@@ -276,15 +278,18 @@ async function sunrise() {
       const op = (s) => +getComputedStyle(document.querySelector(s)).opacity;
       const others = [...document.querySelectorAll('.ddh__point:not([data-ddh-point=system])')].filter((p) => p.offsetWidth).map((p) => +getComputedStyle(p).opacity);
       return { state: document.querySelector('.ddh').getAttribute('data-ddh-state'), op: op('.ddh__mat'), bed: op('.ddh__bed'), right: (r.right - pl.left) / pl.width * 100, top: (r.top - pl.top) / pl.height * 100, loaded: m.querySelector('img').complete && m.querySelector('img').naturalWidth > 0,
-        lockup: op('.ddh__sky-lockup'), others: Math.max(...others), dp: op('.ddh__dp'), back: getComputedStyle(document.querySelector('.ddh__screen--back')).display, spine: getComputedStyle(document.querySelector('.ddh__spine')).display, copy: getComputedStyle(document.querySelector('[data-ddh-copy=system]')).display };
+        lockup: op('.ddh__sky-lockup'), others: Math.max(...others), dp: op('.ddh__dp'), back: getComputedStyle(document.querySelector('.ddh__screen--back')).display, spine: getComputedStyle(document.querySelector('.ddh__spine')).display, copy: getComputedStyle(document.querySelector('[data-ddh-copy=system]')).display,
+        dpBox: (() => { const d = document.querySelector('.ddh__dp [data-ddh-spread]').getBoundingClientRect(); return [(d.left - pl.left) / pl.width * 100, (d.top - pl.top) / pl.height * 100, (d.right - pl.left) / pl.width * 100].map((x) => +x.toFixed(2)); })(), dpColor: getComputedStyle(document.querySelector('.ddh__dp')).color };
     });
     ok(v.state === 'system' && v.op === 1 && v.loaded && Math.abs(v.right - 47.54) < .3 && Math.abs(v.top - 43.0) < .3 && v.bed > .98, `${w}x${h}: mattress risen to the owner's spot (layer box right 47.54%, top 43.0% of the picture), old place rebuilt: ${JSON.stringify(v)}`);
     ok(v.lockup < .02 && v.others < .02 && v.back === 'block' && v.spine === 'none', `${w}x${h}: every other text steps back`);
     ok(v.dp > .98 && v.copy === 'flex', `${w}x${h}: "Dual Plush" and its copy stay`);
+    ok(Math.abs(v.dpBox[0] - DP_UP[0]) < .5 && Math.abs(v.dpBox[1] - DP_UP[1]) < .5 && Math.abs(v.dpBox[2] - DP_UP[2]) < .5 && v.dpColor === 'rgb(255, 255, 255)', `${w}x${h}: "Dual Plush" rose with the mattress to the mockup's spot, white: ${JSON.stringify([v.dpBox, v.dpColor])}`);
     if (touch) await page.touchscreen.tap(c.x, c.y); else await page.mouse.move(c.x + 420, c.y - 380, { steps: 5 });
     await page.waitForTimeout(1000);
-    const after = await page.evaluate(() => ({ s: document.querySelector('.ddh').getAttribute('data-ddh-state'), op: +getComputedStyle(document.querySelector('.ddh__mat')).opacity, lockup: +getComputedStyle(document.querySelector('.ddh__sky-lockup')).opacity }));
+    const after = await page.evaluate(() => ({ s: document.querySelector('.ddh').getAttribute('data-ddh-state'), op: +getComputedStyle(document.querySelector('.ddh__mat')).opacity, lockup: +getComputedStyle(document.querySelector('.ddh__sky-lockup')).opacity, dp: getComputedStyle(document.querySelector('.ddh__dp')).transform }));
     ok(after.s !== 'system' && after.op === 0 && after.lockup > .98, `${w}x${h}: back to default: ${JSON.stringify(after)}`);
+    ok(/^matrix\(0\.976/.test(after.dp), `${w}x${h}: "Dual Plush" back on the bed: ${after.dp}`);
     await ctx.close();
   }
   const ph = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });

@@ -1,111 +1,88 @@
 #!/usr/bin/env python3
-"""1.8.1: what lies behind the Dual Plush mattress once it rises to the owner's spot. Rebuilt from the photo itself by
-transfinite (Coons-style) interpolation over the mattress footprint: each hidden row is continued from the photo on its
-left and right (so the bed line and the body/strap bands run straight through), each hidden column from the photo just
-above and below it; the two are blended by distance to the nearest side, plus the photo's own grain. No foreign pixels,
-no edges. Alpha = footprint, feathered. usage: make-vacated.py <assets-dir>"""
+"""1.8.2: what the visitor sees under the risen Dual Plush mattress — the owner's own picture of it
+(src/night/owner-dualplush-mockup.jpg: the woman's hip, the lower strap, the bed under her), mapped onto the hero master
+(registration by the two straps + shoulder: master = (1496,1100) + (mockup1932 − (818,885)) × 1.944), its white
+"Dual Plush" lettering and the lettering's faint mirror removed, tone-matched to the photo, feathered into it.
+usage: make-vacated.py <assets-dir>"""
 import sys, os
 import numpy as np
-from PIL import Image
-from scipy.ndimage import gaussian_filter, binary_dilation, distance_transform_edt
+from PIL import Image, ImageDraw
+from scipy.ndimage import gaussian_filter, binary_dilation, distance_transform_edt, map_coordinates
 A = sys.argv[1]
 BOX = (0, 1700, 1480, 2420)
 hero = np.asarray(Image.open(os.path.join(A, 'hero-band-3554.webp')).convert('RGB')).astype(float)
-x0, y0, x1, y1 = BOX; ref = hero[y0:y1, x0:x1]; h, w = ref.shape[:2]
-yy, xx = np.mgrid[y0:y1, x0:x1].astype(float)
-TOP = lambda x: np.interp(x, [55, 600, 1092], [1924, 1779, 1850]) - 10      # mattress top edge (outer)
-BOT = lambda x: np.interp(x, [62, 650, 1092], [2042, 2163, 1950]) + 12      # mattress bottom edge (outer)
-XL, XR = 46, 1104                                                          # left / right of the mattress
-hole = (yy > TOP(xx)) & (yy < BOT(xx)) & (xx > XL) & (xx < XR)
-# + the mattress's own cast shadow (right of its side panel and under its front edge), so no "ghost" outline stays
-from PIL import ImageDraw
-sh = Image.new('L', (w, h), 0)
-ImageDraw.Draw(sh).polygon([(px - x0, py - y0) for px, py in [(1080, 1830), (1340, 1840), (1350, 2050), (700, 2330), (40, 2200), (40, 2000)]], fill=255)
-mat_only = binary_dilation(hole, iterations=8)                               # the mattress itself (must be fully replaced)
-hole = hole | (np.asarray(sh) > 0)
-hole = binary_dilation(hole, iterations=4)
-# harmonic (membrane) fill: smooth, and seamless against the photo all round the footprint (coarse-to-fine Jacobi)
-from scipy.ndimage import zoom
-def harmonic(img, mask):
-    out = img.copy(); levels = [8, 4, 2, 1]; prev = None
-    for f in levels:
-        hs, ws = (h + f - 1) // f, (w + f - 1) // f
-        im = np.stack([zoom(img[..., c], (hs / h, ws / w), order=1) for c in range(3)], -1)
-        mk = zoom(mask.astype(float), (hs / h, ws / w), order=1) > .5
-        cur = im.copy()
-        if prev is not None:
-            up = np.stack([zoom(prev[..., c], (hs / prev.shape[0], ws / prev.shape[1]), order=1) for c in range(3)], -1)
-            cur[mk] = up[mk]
-        else: cur[mk] = im[~mk].mean(0)
-        for _ in range(400 if f > 1 else 250):
-            avg = (np.roll(cur, 1, 0) + np.roll(cur, -1, 0) + np.roll(cur, 1, 1) + np.roll(cur, -1, 1)) / 4
-            cur[mk] = avg[mk]
-        prev = cur
-    return prev
-# two regions with a crisp edge between them, like the photo: the woman's body above the bed line, the bed below.
-# Each is filled only from its own side (region-aware membrane), then the bed line itself is continued from the photo.
-LINE = lambda x: np.interp(x, [0, 1300], [2058, 2062])                    # bed line, measured left (x<46) and right (x>1190)
-upper = yy < LINE(xx)
-def harmonic2(img, mask, region):
-    cur = img.copy(); known = ~mask
-    cur[mask & region] = img[known & region].mean(0); cur[mask & ~region] = img[known & ~region].mean(0)
-    same = lambda sh: (np.roll(region, sh[0], sh[1]) == region)
-    nb = [((1, 0)), ((-1, 0)), ((1, 1)), ((-1, 1))]
-    ws = [same(n).astype(float) for n in nb]
-    for it in range(3000):
-        acc = sum(np.roll(cur, n[0], n[1]) * wgt[..., None] for n, wgt in zip(nb, ws)); den = sum(ws)
-        avg = acc / np.maximum(den, 1)[..., None]
-        cur[mask] = avg[mask]
-    return cur
-# exact region-aware membrane: sparse Laplace system over the hole, solved with conjugate gradients per channel
-import scipy.sparse as sp
-from scipy.sparse.linalg import cg
-idx = -np.ones((h, w), int); ys_, xs_ = np.nonzero(hole); idx[ys_, xs_] = np.arange(len(ys_)); N = len(ys_)
-rows, cols, vals = [], [], []; rhs = np.zeros((N, 3)); deg = np.zeros(N)
-for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-    ny, nx = ys_ + dy, xs_ + dx; ok = (ny >= 0) & (ny < h) & (nx >= 0) & (nx < w)
-    ok[ok] &= upper[ny[ok], nx[ok]] == upper[ys_[ok], xs_[ok]]          # never across the bed line
-    i = np.nonzero(ok)[0]; deg[i] += 1
-    unk = idx[ny[i], nx[i]] >= 0
-    rows += list(i[unk]); cols += list(idx[ny[i[unk]], nx[i[unk]]]); vals += [-1.0] * int(unk.sum())
-    kn = i[~unk]; rhs[kn] += ref[ny[kn], nx[kn]]
-M = sp.csr_matrix((vals + list(deg), (rows + list(range(N)), cols + list(range(N)))), shape=(N, N))
-fill = ref.copy()
-for c in range(3):
-    x0_ = np.full(N, ref[~hole, c].mean()); sol, info = cg(M, rhs[:, c], x0=x0_, rtol=1e-6, maxiter=20000)
-    fill[ys_, xs_, c] = sol
-# the bed line: its vertical profile measured right of the footprint, laid along LINE through the hole
-prof = ref[int(LINE(1250) - y0) - 14:int(LINE(1250) - y0) + 14, 1230 - x0:1290 - x0].mean(1)       # 28 rows
-base = np.stack([np.interp(np.arange(28), [0, 27], [prof[0, c], prof[-1, c]]) for c in range(3)], -1)
-delta = prof - base
-for k in range(28):
-    yrow = (LINE(xx[0]) - y0 - 14 + k).round().astype(int)
-    for c in range(3):
-        sel = (yrow >= 0) & (yrow < h)
-        cols = np.nonzero(sel)[0]; rows = yrow[sel]
-        m = hole[rows, cols]
-        fill[rows[m], cols[m], c] += delta[k, c]
-
-hp = ref - np.stack([gaussian_filter(ref[..., c], 1.2) for c in range(3)], -1)
-rng = np.random.default_rng(4); fill += gaussian_filter(rng.standard_normal((h, w)), .7)[..., None] * hp[~hole].std(0) * 1.6
-d = distance_transform_edt(~hole)
-alpha = np.clip(1 - d / 30, 0, 1)
-# in the cast-shadow margin, melt the rebuilt surface into the photo over ~90 px (no kink, no seam);
-# over the mattress itself the rebuilt surface is used fully
-din = distance_transform_edt(hole)
-k = np.where(mat_only, 1.0, np.clip(din / 90, 0, 1))
-k = gaussian_filter(k, 6) * hole + 0
-k = np.where(mat_only, 1.0, k)[..., None]
-blend = ref * (1 - k) + fill * k
-out = np.dstack([np.clip(np.where(hole[..., None], blend, ref), 0, 255), alpha * 255]).astype('uint8')
+mk = np.asarray(Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../src/night/owner-dualplush-mockup.jpg')).convert('RGB')).astype(float)
+J = mk.shape[1] / 1932
+# 1. clean the mockup: its "Dual Plush" lettering + faint mirror, and its own floating mattress (ours covers it, but a
+# sliver would peek out under ours): harmonic fill from the surrounding hip, plus the hip's own fine grain; then the
+# lower strap, cut by the lettering, is drawn on up the hip with its own measured cross-section
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from inpaint import laplace_fill
+BAND = [(55, 1160), (300, 1200), (530, 1250), (535, 1330), (470, 1328), (420, 1305), (395, 1296), (360, 1290), (55, 1232)]
+# everything above the mockup mattress's lower edge (its mattress, and the body it floats over, which ours covers) is
+# rebuilt from the hip below it only (the crop's top/left edges are free), so the tone continues the hip, not the mist
+MATT = [(20, 900), (916, 900), (916, 1256), (566, 1378), (56, 1232), (20, 1232)]
+# the strap where it shows below the letters (its diagonal run and the run along the bed, with the buckle) is kept,
+# except under the letters' own white pixels
+STRAP = [[(343, 1280), (357, 1280), (380, 1328), (560, 1330), (560, 1352), (366, 1350)]]
+STRAP_RUN = [(366, 1340), (560, 1340), (620, 1334), (700, 1330), (780, 1318), (820, 1302), (860, 1275), (900, 1243)]   # traced
+def poly(ps):
+    m = Image.new('L', mk.shape[1::-1], 0); d = ImageDraw.Draw(m)
+    for p in ps: d.polygon([(x * J, y * J) for x, y in p], fill=255)
+    if ps is STRAP: d.line([(x * J, y * J) for x, y in STRAP_RUN], fill=255, width=round(20 * J), joint='curve')
+    return np.asarray(m) > 0
+lx0, ly0, lx1, ly1 = [round(v * J) for v in (20, 900, 960, 1420)]
+cut = lambda a: a[ly0:ly1, lx0:lx1]
+sub = mk[ly0:ly1, lx0:lx1]; sub0 = sub.copy()
+white = binary_dilation(cut(mk.mean(-1)) > 196, iterations=6)
+U = (cut(poly([BAND, MATT])) & ~cut(poly(STRAP))) | (white & cut(poly([BAND])))
+U = binary_dilation(U, iterations=3) & ~(cut(poly(STRAP)) & ~white) | (white & cut(poly([BAND])))
+f = laplace_fill(sub, U)
+hp = sub - np.stack([gaussian_filter(sub[..., c], 1.5) for c in range(3)], -1)
+ring = binary_dilation(U, iterations=30) & ~U; ring[:round((1300 - 900) * J)] = False
+noise = gaussian_filter(np.random.default_rng(3).standard_normal(U.shape), .9)
+noise *= .8 * hp[ring].mean(-1).std() / noise.std()
+f[U] += noise[U][:, None]
+# strap: visible from (350,1286) to (372,1338); its cross-section (strap minus skin), averaged along that run
+A0, A1 = np.array([350., 1286.]), np.array([372., 1338.]); t = (A1 - A0) / np.linalg.norm(A1 - A0); nrm = np.array([-t[1], t[0]])
+S = np.linspace(-9, 9, 37); prof = np.zeros((len(S), 3))
+for u in np.linspace(.25, .85, 13):
+    P = A0 + (A1 - A0) * u; pts = (P[None] + S[:, None] * nrm[None]) * J
+    prof += np.stack([map_coordinates(mk[..., c], [pts[:, 1], pts[:, 0]], order=1) for c in range(3)], -1)
+prof /= 13; prof -= np.linspace(prof[:4].mean(0), prof[-4:].mean(0), len(S))
+prof[np.abs(S) > 7.5] = 0
+# path: the strap climbs on up the hip, straight, under the risen mattress
+B0, B1, B2 = A1, A0 - 60 * t, A0 - 160 * t
+u = np.linspace(0, 1, 1200)[:, None]
+C = (1 - u) ** 2 * B0 + 2 * u * (1 - u) * B1 + u * u * B2
+T = 2 * (1 - u) * (B1 - B0) + 2 * u * (B2 - B1); T /= np.linalg.norm(T, axis=1, keepdims=True); N = np.stack([-T[:, 1], T[:, 0]], 1)
+from scipy.spatial import cKDTree
+ys, xs = np.nonzero(U); P = np.stack([(xs + lx0) / J, (ys + ly0) / J], 1)
+dist, k = cKDTree(C).query(P); sd = ((P - C[k]) * N[k]).sum(1); near = dist < 9
+for c in range(3): f[ys[near], xs[near], c] += np.interp(sd[near], S, prof[:, c])
+mk[ly0:ly1, lx0:lx1] = f
+if os.environ.get('VAC_DEBUG'): Image.fromarray(np.clip(np.vstack([sub0, f]), 0, 255).astype('uint8')).crop((round(250 * J), 0, round(560 * J), 2 * (ly1 - ly0))).save('/tmp/claude-0/mk-strap.png')
+# 2. map onto the master
+x0, y0, x1, y1 = BOX; yy, xx = np.mgrid[y0:y1, x0:x1].astype(float)
+mx = (818 + (xx - 1496) / 1.944) * J; my = (885 + (yy - 1100) / 1.944) * J
+src = np.stack([map_coordinates(mk[..., c], [my, mx], order=1, mode='nearest') for c in range(3)], -1)
+ref = hero[y0:y1, x0:x1]
+# 3. the area to replace: the old mattress footprint + its cast shadow
+sh = Image.new('L', (x1 - x0, y1 - y0), 0)
+ImageDraw.Draw(sh).polygon([(px - x0, py - y0) for px, py in [(0, 1925), (55, 1910), (600, 1765), (1100, 1825), (1340, 1840), (1350, 2060), (700, 2330), (0, 2200)]], fill=255)
+hole = binary_dilation(np.asarray(sh) > 0, iterations=4)
+def nconv(img, k, sig): return np.stack([gaussian_filter(img[..., c] * k, sig) / np.maximum(gaussian_filter(k, sig), 1e-6) for c in range(3)], -1)
+# 4. tone match on a ring past the melt zone (low-frequency difference photo − mockup)
+dout = distance_transform_edt(~hole)
+ring = (dout > 36) & (dout < 90)
+corr = nconv(ref - src, ring.astype(float), 50)
+src = np.clip(src + corr, 0, 255)
+# 5. the whole old footprint is the mockup; it melts into the photo OUTSIDE it, over ~40 px (the plate fades out there)
+alpha = np.clip(1 - dout / 40, 0, 1); alpha = alpha * alpha * (3 - 2 * alpha)
+out_rgb = src
+out = np.dstack([np.clip(out_rgb, 0, 255), alpha * 255]).astype('uint8')
 Image.fromarray(out, 'RGBA').save(os.path.join(A, 'mattress-bed.webp'), 'WEBP', quality=86, method=6)
 W, H = 3554, 2744
-print('mattress-bed.webp', (w, h), os.path.getsize(os.path.join(A, 'mattress-bed.webp')), 'bytes; css left %.3f%% top %.3f%% width %.3f%% height %.3f%%' % (x0 / W * 100, y0 / H * 100, w / W * 100, h / H * 100))
+print('mattress-bed.webp', out.shape[1::-1], os.path.getsize(os.path.join(A, 'mattress-bed.webp')), 'bytes; css left %.3f%% top %.3f%% width %.3f%% height %.3f%%' % (x0 / W * 100, y0 / H * 100, (x1 - x0) / W * 100, (y1 - y0) / H * 100))
 prev = hero.copy(); a = alpha[..., None]; prev[y0:y1, x0:x1] = ref * (1 - a) + out[..., :3] * a
 Image.fromarray(prev[1450:2350, 0:1800].astype('uint8')).save('/tmp/claude-0/vac-prev.png')
-if os.environ.get('DEBUG'):
-    r = 1950 - y0
-    print('hole', [int(hole[r, x]) for x in range(1180, 1220, 4)])
-    print('fill', [int(fill[r, x].mean()) for x in range(1180, 1220, 4)])
-    print('ref ', [int(ref[r, x].mean()) for x in range(1180, 1220, 4)])
-    print('cg info', info, 'N', N)

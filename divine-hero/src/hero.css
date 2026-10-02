@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.8.1 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.8.2 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -262,7 +262,7 @@
 .ddh .ddh__copy:not(.ddh__copy--solo){line-height:1.08!important}
 .ddh .ddh__screen .ddh__copy--panel{line-height:1.06!important}
 .ddh .ddh__copy--solo{line-height:1.15!important}
-/* 1.8.0/1.8.1: DUAL PLUSH "SUNRISE" (tablets, laptops, monitors — not phones). Opening the system point lifts the
+/* 1.8.0–1.8.2: DUAL PLUSH "SUNRISE" (tablets, laptops, monitors — not phones). Opening the system point lifts the
    mattress out of the photo (cut-out layer, tests/make-mattress.py) and carries it — moving and growing in one smooth
    arc — to the owner's spot (mockup registered on the photo: front-bottom-left corner (60,2052) → (38,1638) px of
    3554×2744, ×1.57, right edge at 46.5% of the width). The place it leaves is the photo rebuilt without it
@@ -281,6 +281,10 @@
 .ddh[data-ddh-state=system] .ddh__screen--back{display:block}
 .ddh[data-ddh-state=system] .ddh__screen--back .ddh__spine{display:none!important}
 }
+/* 1.8.2: the "Dual Plush" line rises with the mattress to where the owner's mockup letters it (registered: its glyph box
+   = the mockup's lettering mapped onto the picture), and turns white on the hip, as in the mockup */
+.ddh .ddh__dp{will-change:transform;transition:opacity .4s ease,transform .8s cubic-bezier(.45,0,.25,1),color .35s ease}
+@media (min-width:701px){.ddh[data-ddh-state=system] .ddh__dp{transform:translate(-.078cqw,-12.566cqw) rotate(12.43deg) scale(1.48);color:#fff;transition:transform 1.3s cubic-bezier(.22,1,.36,1),color .6s ease .45s,opacity .4s ease}}
 @media (prefers-reduced-motion:reduce){.ddh .ddh__mat,.ddh[data-ddh-state=system] .ddh__mat{transition:opacity .2s}}
 
 /* 1.7.0/1.7.1: NIGHT MODE (screens >=1051px with a mouse or trackpad — iPads with a trackpad included). A golden
@@ -302,7 +306,7 @@
 .ddh[data-ddh-state=night] .ddh__night{opacity:1;pointer-events:auto}
 .ddh[data-ddh-state=night] .ddh__night-copy{display:block;animation:ddh-in .6s .25s ease-out both}
 /* everything else steps back: lockup, Dual Plush, the other points */
-.ddh .ddh__sky-lockup,.ddh .ddh__dp,.ddh .ddh__points .ddh__point{transition:opacity .4s ease}
+.ddh .ddh__sky-lockup,.ddh .ddh__points .ddh__point{transition:opacity .4s ease}
 .ddh[data-ddh-state=night] .ddh__sky-lockup,.ddh[data-ddh-state=night] .ddh__dp{opacity:0}
 .ddh[data-ddh-state=night] .ddh__points .ddh__point:not([data-ddh-point=night]){opacity:0;pointer-events:none!important}
 /* the crescent stays, glowing: the night lasts while the pointer is near it (like every other point) */
