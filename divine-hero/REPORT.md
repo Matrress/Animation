@@ -1,5 +1,19 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.8.2 — under the risen mattress: the owner's picture; "Dual Plush" rises with it (2026-10-02)
+
+Owner: after the rise, the place where the model and the mattress she lies on should show was broken and limited; the second picture (the mockup) shows what must be seen there. And the "Dual Plush" line must rise with the mattress to the mockup's position.
+
+* **The mockup itself is the plate** (`tests/make-vacated.py` → `mattress-bed.webp`, 23 KB, lazy, loads only on intent): the owner's mockup, mapped onto the photo with the same registration as the mattress, fills the old footprint and its shadow: the hip, the whole lower strap with its buckle, and the white bed under her.
+  * The mockup's white "Dual Plush" lettering and its faint mirror are removed by a harmonic fill from the surrounding hip (`tests/inpaint.py`), plus the hip's own fine grain. The strap is protected wherever it shows; only the letters' own white pixels over it are rebuilt.
+  * The mockup's floating mattress (ours covers it, but a sliver peeked out below ours) is rebuilt from the hip below it only, so the tone continues the hip instead of the mist. The strap, cut by the letters, is drawn on up the hip with its own measured cross-section, under the risen mattress.
+  * The plate is tone-matched to the photo on a ring outside it. It melts into the photo **outside** the old outline over 40 px, so no pale edge of the old mattress shows.
+* **"Dual Plush" rises with the mattress**: `translate(-.078cqw,-12.566cqw) rotate(12.43deg) scale(1.48)`, with the same 1.3 s ease-out as the mattress (back in 0.8 s). Its glyph box lands on the mockup's lettering mapped onto the photo, at x 38–901 and y 1683–1942 master px. It turns white on the hip, as in the mockup. Tablets, laptops and monitors (≥701 px); phones are unchanged.
+* Tests: the sunrise suite also checks where the line lands, that it is white, and that it returns to the bed. All suites are green: 313–314 per harness, panels 792/792, axe 0, guards. Perf is unchanged from 1.8.1. On tablet and desktop, CLS reads 0.03 in this lab for both 1.8.1 and 1.8.2, which is within Google's "good" (< 0.1); phone CLS is 0.
+* Pinned staging section: `ecwid/section-1.8.2-jsdelivr.html` (commit `5c25f06`, 9,013 characters).
+
+![Dual Plush risen, 1440×900 (Ecwid imitation)](reports/compare/ecwid-sim-1.8.2-dual-plush.jpg)
+
 ## 1.8.1 — the mattress goes to the owner's spot, clean (2026-10-02)
 
 Owner (live iPad): the mattress must not only grow but move to the mockup's position; a fold of its cover stayed behind it; no light behind it; clean contour.
