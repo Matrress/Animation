@@ -1,5 +1,32 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.9.3 — four separate movements, the arm rolls in and comes out (2026-10-03)
+
+Owner, on 1.9.2: the upper arm and shoulder look wooden, like a plane's wing starting to open.
+* The arm should start lower, rolled in toward the body and sunk, so less of it shows, and then take its own place during the settle.
+* The lower shoulder's adaptation needs more depth.
+* The pelvis and hip should settle too.
+* The order is head, then lower shoulder, then upper shoulder and arm, then pelvis, each with its own rhythm, without mixing, within 3 s.
+* The shoulder blade always follows the arm. Everything is anatomical, with kinetics and gravity.
+
+**The arm** (internal rotation, then back out)
+* The arm drifts down about the shoulder joint, by 1.35° (the elbow side drops), and foreshortens 3.4% toward the shoulder. Rolled in, it sinks and shows less (0.2–1.25 s, held to 1.5 s).
+* It then comes up and out to its place, a touch past it, and settles (1.5–2.65 s). The whole arm turns about the shoulder joint, so the joint stays put and the DIVINE letters on it stay in place (≤ 1.7 px).
+* The arm never slides off the picture's left edge: its sideways motion fades to zero there, so the forearm end compresses as it rolls in.
+* The shoulder blade follows the arm 80 ms behind. It glides down and in with it (2.6 px per degree, plus 0.55 × the arm's weight), then rides up as the arm returns. As the arm arrives, the shoulder lifts and opens 5 px, then lets go (1.5–2.7 s).
+* A fading muscle tremor at the shoulder blade (2.3–2.8 s) settles it.
+
+**Order and rhythm (3.15 s including fades; all movement inside 0.15–2.95 s)**
+1. 0.15–1.7 s: the head presses into the pillow (4.6 px, 0.9° roll on its contact point) and releases, with a small second settle. The neck follows 0.1 s later; the pillow surface gives.
+2. 0.6–2.6 s: the lower shoulder sinks deep, 13 px. The mattress gives 80%, a beat behind. The latex pushes it back to 9.2, it settles to 10.2, then releases slowly.
+3. 0.2–2.65 s: the arm as above (the slow drift down overlaps the earlier phases, as gravity acting while she relaxes; its return is its own phase).
+4. 2.0–2.95 s: the pelvis and lower back settle into the bed, 6 px plus 0.3° about the hip, a slight rebound, at rest. This uses a new seventh bone.
+* The breath runs underneath: in at 0.45 s, then one long exhale.
+
+* Peak motion (master px): elbow side 53, arm middle 22, deltoid 8, lower shoulder 11, crown 11, pelvis 3.
+* Tests: all green (329–330 per harness, panels 792/792, axe 0, guards). Weight: hero.js 22.1 KB. LCP is unchanged.
+* Pinned: `ecwid/section-1.9.3-jsdelivr.html` (commit `a32d749`). Video: `reports/compare/settle-1.9.3.mp4`.
+
 ## 1.9.2 — Natural Adaptation as anatomy; Balance & Relief keeps the real shoulder (2026-10-03)
 
 Owner, on 1.9.1 (iPad):
