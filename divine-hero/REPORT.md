@@ -1,5 +1,43 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.9.2 — Natural Adaptation as anatomy; Balance & Relief keeps the real shoulder (2026-10-03)
+
+Owner, on 1.9.1 (iPad):
+1. With Balance & Relief open, the shoulder tears, sticks out and breaks the picture.
+2. The movement looks like local swelling and shrinking, not a body. The head grows like a balloon. The upper shoulder barely moves. Each movement should spread through the body anatomically, with gravity, latex support (the foam holds her up, it does not swallow her), breath taken in and released, a gentle shoulder-blade lift tied to the arm and shoulder, a settling after everything, and every part visible. 3 s maximum.
+
+**1. Balance & Relief** (`tests/make-logo-plate.py`)
+* Every earlier plate redrew part of the shoulder, and any redrawn shoulder differs from the photo's own.
+* The plate now covers only the DIVINE / Dunlop Dreams letters and their soft shadow. Elsewhere it is transparent, so the photo's own shoulder shows unchanged.
+* The shoulder's edge is measured row by row. Letters on the sky are filled from the sky only, and letters on the shoulder from the skin only (a harmonic fill with a no-flux wall at the edge). The letter stroke lying on the edge itself is rebuilt column by column, so the edge runs straight through.
+
+**2. The movement is a skeleton, not blobs** (`hero.js`)
+* Six rigid segments are skinned with linear blending (capsules with soft falloff): the thorax, the shoulder girdle (shoulder blade, strap, neck slope), the upper arm, the neck, the head, and the lower side on the mattress.
+* Each turns about a real joint (mid-back, shoulder blade, shoulder joint, C7, the head's contact point on the pillow) and passes its motion down the chain. The arm, girdle, neck and head ride on the thorax, and the head rides on the neck.
+* A segment moves rigidly, so nothing swells. Where two segments meet, the motion blends across the soft tissue between them.
+
+**The sequence (3.3 s)** — keyframes with C2-smooth easing, zero speed at every key:
+* 0–0.55 s: a breath in opens the ribs. The thorax turns 0.16° about the mid-back, and the shoulders follow at 30%.
+* 0.25–0.95 s: the head presses 4.4 px into the pillow, rolling 0.9° about its contact. The pillow's surface gives by 60% of that, a beat behind. The neck follows at half the roll, 0.12 s later.
+* 0.5–1.15 s: the upper shoulder lifts 14 px and the shoulder blade opens 1°. The arm opens about the shoulder joint 70 ms behind, so the elbow side rises 12 px.
+* 1.15–1.55 s: gravity takes the shoulder back to 6 px below rest, where the latex holds it (1.55–1.8 s, back to −3.8). It returns slowly by 2.3 s.
+* 1.2–1.68 s: the lower side sinks 11 px into the mattress, slightly toward the pillow. The mattress gives 75%, a beat behind. The latex pushes back to 7.6, settles to 8.3, then releases.
+* 1.25–1.9 s: the head releases onto the pillow, with a second small settle by 2.25 s.
+* 2.05–2.65 s: a fading muscle tremor at the shoulder blade, 2.2 px at 4.6 Hz.
+* 0.7–3.0 s: one long exhale; the ribs settle, and she is exactly the photo again.
+
+**What stays put**
+* The small Dual Plush mattress in front of her hip stays in front, and her body behind it is rebuilt from her side.
+* Where the shoulder lifts away near the logo, clean sky is rebuilt around her edge, so no trace of the old outline or of the letters is left.
+* The lettering on the pillow is protected from the pillow's give.
+
+**Peak motion** (master px; ×0.4 on a 1440 px screen): elbow side of the arm 12.7, neck–shoulder slope 7.1, strap 5.3, crown 12.1, lower side 9.7. The shoulder joint under the logo letters stays within 1.5 px, because it is the pivot.
+
+* Weight: hero.js 21.5 KB; the layers are 50 + 15 KB (on first intent). LCP and CLS are unchanged.
+* Tests: all green (329–330 per harness, panels 792/792, axe 0, guards).
+* Pinned: `ecwid/section-1.9.2-jsdelivr.html` (commit `b65d179`).
+* Video: `reports/compare/settle-1.9.2.mp4`. Shoulder before/after: `reports/compare/balance-relief-1.9.2.png`.
+
 ## 1.9.1 — Natural Adaptation, rebuilt: only she moves; points survive the display sleeping (2026-10-03)
 
 Owner, on 1.9.0: the model looked like a monitor defect. The screen tore and shifted instead of the woman moving; there was no natural settling; letters and objects bent. Wanted: about 3 s; only the woman moves; a sequence, not everything at once (lower shoulder, then upper, then the head pressing into the pillow and releasing onto it, then a slight flutter in the back); the mattress takes the weight and gives it back; all carried by an exhale; relaxing. Also: after the display sleeps, the points stop responding until the browser is restarted twice.
