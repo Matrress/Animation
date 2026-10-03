@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.9.1 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.9.2 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -324,5 +324,6 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 }
 @media (prefers-reduced-motion:reduce){.ddh .ddh__copy,.ddh .ddh__spine{animation:none}.ddh .ddh__wash,.ddh .ddh__art::after,.ddh .ddh__shop .ddh__cta{transition:none}.ddh .ddh__shop .ddh__cta:hover{transform:none}.ddh .ddh__point::before,.ddh .ddh__point::after{animation:none}.ddh .ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh .ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
 @media (forced-colors:active){.ddh .ddh__point::before{display:none}.ddh .ddh__point::after{border-color:CanvasText;background:Canvas}.ddh .ddh__shop .ddh__cta{border-color:LinkText;color:LinkText}}
-/* 1.9.0/1.9.1: the settle layer (hero.js) lies exactly over the sleeper's area of the photo, under every other layer */
-.ddh .ddh__settle{position:absolute;display:none;left:28.137%;top:27.697%;width:55.149%;height:51.020%;margin:0;pointer-events:none}
+/* 1.9.0–1.9.2: the settle layer (hero.js) lies exactly over the sleeper's area of the photo (pixel-snapped by hero.js);
+   it draws only where she is, right over the photo and under every other layer */
+.ddh .ddh__settle{position:absolute;display:none;left:0;top:24.052%;width:83.287%;height:54.665%;margin:0;pointer-events:none}

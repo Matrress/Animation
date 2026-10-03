@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.9.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.9.2 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.9.1';
+  var VERSION = '1.9.2';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07 };
@@ -189,25 +189,32 @@
       settle.load();
     }
 
-    // 1.9.1 "Natural Adaptation": the sleeper resettles, 3 s. Only the woman moves; the bed, the pillow, the sky and every
-    // letter stay where they are. Three layers, composited per pixel (WebGL): her (with the lettering lifted off her), the
-    // clean background behind her contour, and the original lettering laid back on top:
-    //   out = W(q) + (1 − A(q))·(Bg(p') − Bg(q)),  q = p − D(p)  (A: her alpha; p': the mattress's own small give)
-    // At rest D = 0 and out is the photo itself. The choreography follows a sleeper's micro-resettle: a breath in; the
-    // lower shoulder unloads into the mattress (it gives, then returns); the upper shoulder rolls forward and lets go;
-    // the head presses into the pillow and releases onto it; a last flutter in the back; all carried by one long exhale.
+    // 1.9.2 "Natural Adaptation": the sleeper resettles, 3 s. Only the woman moves; the bed and the pillow give under
+    // her weight; the sky and every letter stay where they are. Three layers, composited per pixel (WebGL): her (the
+    // lettering lifted off her), the clean background behind her contour, and the original lettering laid back on top:
+    //   out = W(q) + (1 − A(q))·(Bg(p') − B(q)),  q = p − D(p)  (A: her alpha; Bg: the clean background; B: the photo's
+    //   own background at q, i.e. the photo outside her, the rebuilt one under her edge; p': the mattress's/pillow's give)
+    // D is not a set of local blobs: it is a small skeleton (linear-blend skinning). Rigid segments turn about real
+    // joints (the lumbar spine, C7, the shoulder blade, the shoulder joint, the head's contact with the pillow)
+    // and pass their motion down the chain, so a movement is carried by the whole body, never a swelling in one spot.
+    // The sequence (owner's brief, latex support: the foam holds her up and gives back, it does not swallow her):
+    // a breath in opens the chest; the head presses into the pillow (the pillow gives) and the neck follows; the back
+    // muscles carry it; the upper shoulder lifts and opens, then lets go under gravity, a touch below rest, and is held
+    // by the latex; the lower shoulder sinks into the mattress, which takes the weight and gives it back; the head
+    // releases onto the pillow; a last tremor in the shoulder blade settles; one long exhale returns her to rest.
     var settle = (function () {
       var img = root.querySelector('.ddh__img'), plane = root.querySelector('.ddh__plane');
-      var MW = 3554, MH = 2744, RX = 1000, RY = 760, RW = 1960, RH = 1400, DUR = 3.25;
-      // body parts (master px): centre, rigid half-axes, soft falloff (× half-axis), rotation pivot
-      var PARTS = [
-        [1450, 1010, 420, 160, .8, 0, 0],          // 0 breath: the top of the flank (clear of the lettering on her back)
-        [1500, 1880, 170, 170, .6, 0, 0],           // 1 lower shoulder, on the mattress, against the pillow
-        [1710, 1200, 180, 90, .8, 0, 0],            // 2 upper shoulder
-        [2370, 1350, 400, 235, .5, 2420, 1570],    // 3 head, pivoting on the pillow
-        [1330, 1150, 150, 90, .8, 0, 0],            // 4 shoulder blade (the last flutter)
-        [1460, 2085, 260, 55, 1.2, 0, 0]           // 5 the mattress under her (gives, returns)
+      var MW = 3554, MH = 2744, RX = 0, RY = 660, RW = 2960, RH = 1500, DUR = 3.3;
+      // segments (master px): capsule a→b, radius, soft falloff
+      var BONES = [
+        [700, 1360, 1600, 1440, 300, 260],     // 0 thorax (the back, between hips and shoulders)
+        [700, 1090, 1660, 1240, 95, 115],      // 1 shoulder girdle: shoulder blade, strap, neck-shoulder slope (below the shoulder joint)
+        [60, 880, 1380, 930, 170, 150],        // 2 upper arm and the deltoid
+        [1700, 1290, 2060, 1340, 120, 130],    // 3 neck
+        [2150, 1350, 2620, 1330, 235, 110],    // 4 head
+        [1240, 1880, 1640, 1820, 150, 170]     // 5 the lower side, on the mattress, against the pillow
       ];
+      var LUMBAR = [900, 1660], SCAP = [1180, 1150], SHOULDER = [1440, 880], C7 = [1700, 1300], CONTACT = [2420, 1575];
       var reduce = w.matchMedia ? w.matchMedia('(prefers-reduced-motion:reduce)') : { matches: false };
       var cv, gl, U, srcs = [], built = false, failed = !img || !plane || !w.WebGLRenderingContext, raf = 0, last = 0, t0 = 0, pending = 0, loading = false;
       function bump(t, a, p, b) { return t <= a || t >= b ? 0 : t < p ? .5 - .5 * Math.cos(Math.PI * (t - a) / (p - a)) : .5 + .5 * Math.cos(Math.PI * (t - p) / (b - p)); }
@@ -235,16 +242,18 @@
           var hp = gl && gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT);
           if (!gl || !hp || !hp.precision) throw 0;
           var vs = 'attribute vec2 a;varying vec2 v;void main(){v=a;gl_Position=vec4(a.x*2.-1.,1.-a.y*2.,0.,1.);}';
-          var fs = 'precision highp float;uniform sampler2D T,P,K;uniform vec4 C,R,Z;uniform vec4 G[6];uniform vec3 Q[6];uniform vec3 M[6];uniform float O;varying vec2 v;' +
-            'vec2 u(vec2 x){return(x-Z.xy)/Z.zw;}uniform vec2 HO;vec2 r(vec2 x){return(x+HO-R.xy)/R.zw;}' +
-            'vec2 disp(vec2 p,int lo,int hi){vec2 D=vec2(0.);for(int i=0;i<6;i++){if(i<lo||i>hi)continue;vec4 g=G[i];float W=1.-smoothstep(1.,1.+Q[i].x,length((p-g.xy)/g.zw));' +
-            'vec2 q=p-Q[i].yz;float c=cos(M[i].z),s=sin(M[i].z);D+=W*(M[i].xy+vec2(c*q.x-s*q.y,s*q.x+c*q.y)-q);}return D;}' +
-            'vec3 bg(vec2 x){vec2 t=u(x);return mix(texture2D(T,r(x)).rgb,texture2D(P,t).rgb,texture2D(K,t).b);}' +
+          var fs = 'precision highp float;uniform sampler2D T,P,K;uniform vec4 C,R,Z;uniform vec2 HO;uniform vec4 S[6];uniform vec2 F[6];uniform vec3 X[6],Y[6];uniform vec4 V[2];uniform vec3 VD[2];uniform float O;varying vec2 v;' +
+            'vec2 u(vec2 x){return(x-Z.xy)/Z.zw;}vec2 r(vec2 x){return(x+HO-R.xy)/R.zw;}' +
+            'vec2 skin(vec2 p){vec2 D=vec2(0.);float ws=0.;for(int i=0;i<6;i++){vec2 a=S[i].xy,b=S[i].zw,ab=b-a;float h=clamp(dot(p-a,ab)/dot(ab,ab),0.,1.);' +
+            'float w=1.-smoothstep(F[i].x,F[i].x+F[i].y,length(p-a-ab*h));D+=w*(vec2(dot(X[i].xy,p)+X[i].z,dot(Y[i].xy,p)+Y[i].z)-p);ws+=w;}return D/max(ws,1.);}' +
+            'vec2 give(vec2 p){vec2 D=vec2(0.);for(int i=0;i<2;i++){vec4 g=V[i];D+=(1.-smoothstep(1.,1.+VD[i].z,length((p-g.xy)/g.zw)))*VD[i].xy;}return D*(1.-smoothstep(1600.,1622.,p.y)*step(1700.,p.x)*(1.-step(2100.,p.y)));}' +
+            'vec3 bg(vec2 x){vec2 t=u(x);return mix(texture2D(T,r(x)).rgb,texture2D(P,t).rgb,min(texture2D(K,t).b*2.,1.)*(1.-step(.52,texture2D(K,t).b)));}' +
             'void main(){vec2 p=C.xy+v*C.zw;vec2 e=min(p-Z.xy,Z.xy+Z.zw-p);float f=smoothstep(0.,60.,min(e.x,e.y));' +
-            'vec2 q=p-disp(p,0,4)*smoothstep(20.,120.,min(e.x,e.y));vec2 pm=p-disp(p,5,5)*(1.-texture2D(K,u(p)).r)*smoothstep(2000.,2050.,p.y);' +
-            'vec2 tq=u(q);vec3 Kq=texture2D(K,tq).rgb;vec3 Wq=mix(texture2D(T,r(q)).rgb,texture2D(P,tq).rgb,smoothstep(.9,1.,Kq.g));' +
-            'vec3 o=Wq+(1.-Kq.r)*(bg(pm)-bg(q));vec2 tp=u(p);vec3 Kp=texture2D(K,tp).rgb;' +
-            'float cov=max(smoothstep(.0,.03,max(Kp.r,Kq.r)),smoothstep(.05,.3,length(p-pm)));' +
+            'vec2 q=p-skin(p);vec2 tp=u(p);vec3 Kp=texture2D(K,tp).rgb;vec2 pm=p-give(p)*(1.-Kp.r);' +
+            'vec2 tq=u(q);vec3 Kq=texture2D(K,tq).rgb;float lift=max(smoothstep(.9,1.,Kq.g),smoothstep(.505,.53,Kq.b));' +
+            'vec3 Wq=mix(texture2D(T,r(q)).rgb,texture2D(P,tq).rgb,clamp(lift,0.,1.));' +
+            'vec3 bt=mix(texture2D(T,r(q)).rgb,bg(q),smoothstep(0.,.05,Kq.r));vec3 o=Wq+(1.-Kq.r)*(bg(pm)-bt);' +
+            'float cov=max(max(smoothstep(.0,.03,max(Kp.r,Kq.r)),smoothstep(.05,.3,length(p-pm))),smoothstep(0.,.06,Kp.b)*(1.-step(.52,Kp.b)));' +
             'float a=f*O*cov*(1.-Kp.g);gl_FragColor=vec4(o*a,a);}';
           var pr = gl.createProgram();
           [[gl.VERTEX_SHADER, vs], [gl.FRAGMENT_SHADER, fs]].forEach(function (x) { var sh = gl.createShader(x[0]); gl.shaderSource(sh, x[1]); gl.compileShader(sh); gl.attachShader(pr, sh); });
@@ -260,27 +269,49 @@
           c2.width = sw; c2.height = sh; c2.getContext('2d').drawImage(ph, sx, sy, sw, sh, 0, 0, sw, sh);
           texture(0, c2); texture(1, srcs[1]); texture(2, srcs[2]); photoAt = '';
           U = {}; ['T', 'P', 'K', 'C', 'R', 'Z', 'O', 'HO'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n); });
-          ['G', 'Q', 'M'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n + '[0]'); });
+          ['S', 'F', 'X', 'Y', 'V', 'VD'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n + '[0]'); });
           gl.uniform1i(U.T, 0); gl.uniform1i(U.P, 1); gl.uniform1i(U.K, 2);
           gl.uniform4f(U.Z, RX, RY, RW, RH); gl.uniform4f(U.R, sx / kx, sy / ky, sw / kx, sh / ky);
           gl.uniform2f(U.HO, .5 / kx, .5 / ky);   // browsers draw a picture half a file pixel on (measured): match it
-          gl.uniform4fv(U.G, [].concat.apply([], PARTS.map(function (q) { return q.slice(0, 4); })));
-          gl.uniform3fv(U.Q, [].concat.apply([], PARTS.map(function (q) { return q.slice(4, 7); })));
-          plane.insertBefore(cv, img.parentNode.nextSibling);
+          gl.uniform4fv(U.S, [].concat.apply([], BONES.map(function (q) { return q.slice(0, 4); })));
+          gl.uniform2fv(U.F, [].concat.apply([], BONES.map(function (q) { return q.slice(4, 6); })));
+          gl.uniform4fv(U.V, [1440, 2080, 300, 50, 2430, 1590, 190, 26]);           // the mattress under her side; the pillow under her head (its surface only: the lettering on it never moves)
+          plane.insertBefore(cv, img.parentNode.nextSibling);               // right over the photo, under the logo plate and everything else
           built = true;
           if (pending && clock() - pending < 1500) play();
         } catch (e) { failed = true; if (cv && cv.parentNode) cv.parentNode.removeChild(cv); }
       }
-      // the choreography (s); every curve leaves and lands with zero speed
-      function pose(t) {
-        var breath = -2.5 * bump(t, .05, .45, .9) + 4.5 * bump(t, .7, 1.9, 3);        // in … then one long exhale
-        var low = bump(t, .15, .75, 1.45), lowBack = bump(t, 1.2, 1.55, 1.9);          // lower shoulder unloads, rebounds
-        var give = bump(t, .25, .85, 1.6);                                             // the mattress gives, a beat later, returns
-        var up = bump(t, .6, 1.25, 2.5);                                               // upper shoulder rolls forward, lets go
-        var head = bump(t, 1.25, 1.7, 2.55) + .22 * bump(t, 2.2, 2.55, 2.95);          // presses into the pillow, releases onto it
-        var tw = bump(t, 2.4, 2.5, 2.95) * Math.sin(2 * Math.PI * Math.max(0, t - 2.4) / .22); // the last flutter
-        return [0, breath, 0, 5 * low, 10 * low - 1.8 * lowBack, 0, 7 * up, 14 * up, 0, -3 * head, 10 * head, .012 * head, .8 * tw, 3 * tw, 0, 0, 5 * give, 0];
+      // the choreography: keyframes [s, value], eased (zero speed at every key: holds and turns, never jerks)
+      function key(t, k) {
+        if (t <= k[0][0]) return k[0][1];
+        for (var i = 1; i < k.length; i++) if (t <= k[i][0]) { var u = (t - k[i - 1][0]) / (k[i][0] - k[i - 1][0]); u = u * u * u * (u * (u * 6 - 15) + 10); return k[i - 1][1] + (k[i][1] - k[i - 1][1]) * u; }
+        return k[k.length - 1][1];
       }
+      var DEG = Math.PI / 180;
+      var K_THORAX = [[0, 0], [.55, -.16], [1.25, .06], [1.95, .22], [2.55, .08], [3, 0]];                      // deg: breath in opens the ribs, the long exhale lets them settle
+      var K_PRESS = [[0, 0], [.25, 0], [.95, 4.4], [1.25, 3.8], [1.85, .9], [2.25, 1.3], [3, 0]];              // px: head into the pillow, release, settle
+      var K_ROLL = [[0, 0], [.25, 0], [.95, .9], [1.25, .78], [1.9, .16], [2.3, .26], [3, 0]];                 // deg: head rolls on its contact
+      var K_LIFT = [[0, 0], [.5, 0], [1.15, 14], [1.55, -6], [1.8, -3.8], [2.3, -.8], [3, 0]];                 // px: upper shoulder lifts/opens, drops under gravity, held
+      var K_OPEN = [[0, 0], [.5, 0], [1.15, -1], [1.55, .4], [2.3, .05], [3, 0]];                              // deg: the shoulder blade opens with the lift
+      var K_SINK = [[0, 0], [1.2, 0], [1.68, 11], [2, 7.6], [2.35, 8.3], [3, 0]];                             // px: lower side sinks, the latex pushes back
+      function pose(t) {
+        var th = key(t, K_THORAX) * DEG, roll = key(t, K_ROLL) * DEG, press = key(t, K_PRESS), neck = .5 * key(t - .12, K_ROLL) * DEG;
+        var lift = key(t, K_LIFT), open = key(t, K_OPEN) * DEG, arm = .9 * key(t - .07, K_LIFT), sink = key(t, K_SINK);
+        var trem = t > 2.05 && t < 2.65 ? 2.2 * Math.sin(Math.PI * (t - 2.05) / .6) * Math.sin(2 * Math.PI * 4.6 * (t - 2.05)) : 0;   // a fading tremor, the muscle settling
+        // the ribs turn about the mid-back; the shoulders, neck and head ride on them only in part (the breath is felt
+        // through the body, it does not swing it)
+        var thorax = rot(LUMBAR, th), base = rot(LUMBAR, .3 * th);
+        var girdle = mul(base, mul(tr(0, -lift + trem), rot(SCAP, open)));
+        var armM = mul(base, rot(SHOULDER, Math.atan2(arm, 1150)));            // the arm opens about the shoulder joint: the elbow side rises
+        var neckM = mul(base, rot(C7, neck));
+        var headM = mul(neckM, mul(tr(0, press), rot(CONTACT, roll - neck)));
+        var low = mul(base, tr(.35 * sink, sink));
+        return { bones: [thorax, girdle, armM, neckM, headM, low], give: [.75 * key(t - .05, K_SINK), .6 * key(t - .04, K_PRESS)] };
+      }
+      // 2×3 affine helpers: [a, b, c, d, e, f] maps (x, y) → (a·x + b·y + c, d·x + e·y + f)
+      function rot(o, a) { var c = Math.cos(a), s = Math.sin(a); return [c, -s, o[0] - c * o[0] + s * o[1], s, c, o[1] - s * o[0] - c * o[1]]; }
+      function tr(x, y) { return [1, 0, x, 0, 1, y]; }
+      function mul(m, n) { return [m[0] * n[0] + m[1] * n[3], m[0] * n[1] + m[1] * n[4], m[0] * n[2] + m[1] * n[5] + m[2], m[3] * n[0] + m[4] * n[3], m[3] * n[1] + m[4] * n[4], m[3] * n[2] + m[4] * n[5] + m[5]]; }
       // The layer is snapped to the device-pixel grid around the sleeper's area; each of its pixels samples the photo at
       // exactly the point the picture shows there, so she registers with the photo to a fraction of a pixel.
       var photoAt;
@@ -299,8 +330,11 @@
           gl.viewport(0, 0, Wd, Hd); gl.uniform4f(U.C, mx, my, mw, mh);
           photoAt = at;
         }
-        gl.uniform3fv(U.M, pose(t));
-        gl.uniform1f(U.O, Math.min(1, t / .18, (DUR - t) / .25));                   // the layer fades in/out while she is still
+        var ps = pose(t), X = [], Y = [];
+        ps.bones.forEach(function (m) { X.push(m[0], m[1], m[2]); Y.push(m[3], m[4], m[5]); });
+        gl.uniform3fv(U.X, X); gl.uniform3fv(U.Y, Y);
+        gl.uniform3fv(U.VD, [0, ps.give[0], 1.2, 0, ps.give[1], 1]);
+        gl.uniform1f(U.O, Math.min(1, t / .18, (DUR - t) / .25));                   // the layer fades in/out while she is at rest
         gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       }

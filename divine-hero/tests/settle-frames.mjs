@@ -12,7 +12,7 @@ const c = await p.evaluate(() => { const e = document.querySelector('.ddh__point
 await p.mouse.move(c.x - 160, c.y + 140); await p.clock.runFor(100); await p.waitForTimeout(1500); await p.clock.runFor(100);
 await p.clock.pauseAt(new Date(Date.now() + 5000));
 await p.mouse.move(c.x, c.y, { steps: 2 }); await p.clock.runFor(1); await p.waitForTimeout(1500);   // CSS fades settle in real time
-const k = c.pl[2] / 3554, clip = { x: c.pl[0] + 1000 * k, y: c.pl[1] + 760 * k, width: 1960 * k, height: 1400 * k };
+const k = c.pl[2] / 3554, clip = { x: c.pl[0], y: c.pl[1] + 660 * k, width: 2960 * k, height: 1500 * k };
 fs.mkdirSync(out, { recursive: true });
 const dt = 1000 / +FPS; let i = 0;
 for (let t = 0; t <= 3400; t += dt, i++) { if (i) await p.clock.runFor(dt); await p.screenshot({ path: `${out}/f${String(i).padStart(3, '0')}.png`, clip }); }
