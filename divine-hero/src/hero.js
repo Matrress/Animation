@@ -299,10 +299,10 @@
       var K_THORAX = [[0, 0], [.45, -.12], [1.3, .05], [2.2, .2], [2.75, .05], [3, 0]];                      // deg: breath in, one long exhale
       var K_PRESS = [[0, 0], [.1, 0], [.6, 5.5], [1, 1.2], [1.35, 1.8], [1.9, 0]];                          // px: head into the pillow, release, settle
       var K_ROLL = [[0, 0], [.1, 0], [.6, 1.1], [1, .25], [1.35, .35], [1.9, 0]];                            // deg: on its contact point
-      var K_SINK = [[0, 0], [.6, 0], [1.25, 16], [1.75, 11], [2.2, 12], [2.85, 0]];                         // px: the lower shoulder presses in, the latex lifts it back
-      var K_PELVIS = [[0, 0], [.75, 0], [1.4, 12], [1.9, 7.5], [2.3, 8.2], [2.9, 0]];                       // px: the pelvis presses in, floats back up
-      var K_ARMDN = [[0, 0], [.1, 0], [1.2, -2.4], [1.45, -2.4], [2.35, .2], [2.75, 0]];                    // deg: the arm sinks in toward the body … comes out to its place
-      var K_OPEN = [[0, 0], [1.6, 0], [2.1, 4], [2.5, -.8], [2.85, 0]];                                     // px: as the arm arrives the shoulder lifts/opens, lets go
+      var K_SINK = [[0, 0], [.55, 0], [1.35, 18], [1.8, 12.5], [2.3, 13.5], [2.85, 0]];                    // px: shoulder deep into mattress, latex returns it
+      var K_PELVIS = [[0, 0], [.55, 0], [1.35, 16], [1.8, 11], [2.3, 12], [2.9, 0]];                        // px: pelvis presses in, floats back (coordinated with shoulder)
+      var K_ARMDN = [[0, 0], [.05, 0], [1.15, -1.8], [1.4, -1.8], [2.4, .15], [2.75, 0]];                  // deg: arm inward (rounded), out to place
+      var K_OPEN = [[0, 0], [1.65, 0], [2.15, 3.5], [2.55, -.6], [2.85, 0]];                               // px: shoulder opens as arm arrives
       function pose(t) {
         var th = key(t, K_THORAX) * DEG, roll = key(t, K_ROLL) * DEG, press = key(t, K_PRESS), neck = .5 * key(t - .1, K_ROLL) * DEG;
         var dn = key(t, K_ARMDN) * DEG, sink = key(t, K_SINK), pel = key(t, K_PELVIS), open = key(t, K_OPEN);
