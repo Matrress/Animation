@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Instant Site imitation</title>
+<style>
+body{margin:0;font-family:Comfortaa,system-ui,sans-serif;background:#fff;color:#234}
+.ins-tile{position:relative;display:block}
+.ins-tile--announcement{height:49px;display:flex;align-items:center;justify-content:center;gap:14px;background:#b9d0de;font:15px system-ui;color:#234}
+.ins-tile--announcement a{border:1px solid #234;border-radius:20px;padding:6px 18px;color:#234;text-decoration:none}
+.ins-tile--header{position:absolute;top:49px;left:0;right:0;background:transparent;z-index:20;padding:6px 3% 10px}
+.ins-header__top{display:flex;justify-content:center;align-items:center;height:72px;position:relative}
+.ins-header__logo{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 40% 45%,#2b6f86,#123 70%);}
+.ins-header__tools{position:absolute;right:0;top:12px;display:flex;gap:22px;align-items:center}
+.ins-header__tools a{border:1px solid #234;border-radius:20px;padding:6px 26px;color:#234;text-decoration:none;font-size:15px}.ins-header__tools a.ico{border:0;padding:0;line-height:0}
+.ins-header__tools i{display:inline-block;width:22px;height:22px;border:2px solid #234;border-radius:50%}
+.ins-header__menu{display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:clamp(11px,1.15vw,17px)}
+.ins-header__menu a{color:#234;text-decoration:none;white-space:nowrap}
+@media (max-width:1050px){.ins-header__menu{display:none}.ins-header__top{height:58px}.ins-header__tools a{display:none}}
+/* typical builder resets that collide with embedded code */
+.ins-tile button{position:relative;display:inline-block;margin:0 4px;font:inherit}
+.ins-tile a{position:relative;display:inline-block}
+.ins-tile nav{display:block}
+/* 1.5.1: live Instant Site inflates text metrics inside custom-code sections (owner screenshot 2026-10-02) */
+.ins-tile p{margin:0 0 1em;line-height:1.75}
+.ins-tile span,.ins-tile strong{line-height:1.9}
+.next{height:1600px;background:linear-gradient(#3a2a20 0,#3a2a20 60px,#efe7dc 60px)}
+</style></head><body>
+<div class="ins-tile ins-tile--announcement">-10% OFF + 2 FREE Natural Latex Pillows - "Summer Moves On" <a href="#">Contact Us</a></div>
+<div class="ins-tile ins-tile--header"><div class="ins-header__top"><div class="ins-header__logo"></div><div class="ins-header__tools"><a href="#">Email Us</a><a class="ico" href="#" aria-label="Search"><svg width="22" height="22"><circle cx="11" cy="11" r="9" fill="none" stroke="#234" stroke-width="2"/></svg></a><a class="ico" href="#" aria-label="Account"><svg width="22" height="22"><circle cx="11" cy="11" r="9" fill="none" stroke="#234" stroke-width="2"/></svg></a><a class="ico" href="#" aria-label="Bag"><svg width="22" height="22"><rect x="3" y="5" width="16" height="15" fill="none" stroke="#234" stroke-width="2"/></svg></a></div></div><nav class="ins-header__menu"><a href="#">Mattresses</a><a href="#">Toppers</a><a href="#">Pillows</a><a href="#">Quality &amp; Benefits</a><a href="#">Firmness &amp; Comfort</a><a href="#">Custom Sizes &amp; Shapes</a><a href="#">Terms &amp; Conditions</a><a href="#">Explore</a><a href="#">About Us</a></nav></div>
+<div class="ins-tile ins-tile--custom-code">
+<!-- Divine DunlopDreams · Atelier hero (concept 0.1.0) | one Instant Site "Embed & Custom Code" section | CSS/JS/assets: /concepts/atelier/ -->
+<link rel="preload" href="/concepts/atelier/assets/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="/concepts/atelier/assets/lake-1536.webp" imagesrcset="/concepts/atelier/assets/lake-900.webp 900w,/concepts/atelier/assets/lake-1536.webp 1536w" imagesizes="(min-width:960px) 56vw,100vw" fetchpriority="high">
+<link rel="stylesheet" href="/concepts/atelier/hero.css">
+<script src="/concepts/atelier/hero.js" defer></script>
+<section class="dda" aria-labelledby="dda-title">
+<div class="dda__in">
+<div class="dda__copy">
+<p class="dda__eyebrow"><span>Original Dunlop</span><i aria-hidden="true"></i><span>European Production</span></p>
+<h1 class="dda__title" id="dda-title">Sleep on nature.<br><em>Precisely engineered.</em></h1>
+<p class="dda__lede">100% natural latex mattresses, toppers and pillows — certified for the UK &amp; EU and made to your size, depth and body weight.</p>
+<div class="dda__ctas">
+<a class="dda__btn dda__btn--solid" href="https://divinedunlop.com/products/latex-mattresses-collection">Shop Mattresses</a>
+<a class="dda__btn dda__btn--line" href="https://divinedunlop.com/products/latex-toppers-collection">Shop Toppers</a>
+</div>
+<div class="dda__finder" role="group" aria-labelledby="dda-f-t">
+<p class="dda__f-t" id="dda-f-t">Your firmness, by body weight</p>
+<div class="dda__chips">
+<button type="button" class="dda__chip" data-dda-w="Soft" aria-pressed="false">&lt; 60 kg</button>
+<button type="button" class="dda__chip" data-dda-w="Medium" aria-pressed="false">60–85 kg</button>
+<button type="button" class="dda__chip" data-dda-w="Firm" aria-pressed="false">85–110 kg</button>
+<button type="button" class="dda__chip" data-dda-w="Extra Firm" aria-pressed="false">110 kg +</button>
+</div>
+<p class="dda__f-r" aria-live="polite"><span class="dda__f-hint">Select your weight to see the right core.</span></p>
+</div>
+</div>
+<div class="dda__stage">
+<div class="dda__frame" id="dda-frame" aria-roledescription="carousel" aria-label="The Divine DunlopDreams sleep system">
+<figure class="dda__scene is-on" id="dda-s1" role="tabpanel" aria-labelledby="dda-t1" data-pos="50% 62%">
+<img src="/concepts/atelier/assets/lake-1536.webp" srcset="/concepts/atelier/assets/lake-900.webp 900w,/concepts/atelier/assets/lake-1536.webp 1536w" sizes="(min-width:960px) 56vw,100vw" width="1536" height="1024" alt="Divine DunlopDreams natural latex mattress on a lakeside deck at sunrise" fetchpriority="high" decoding="async">
+<figcaption><b>The Sleep System</b><span>High support, anatomical balance, orthopaedic comfort.</span></figcaption>
+</figure>
+<figure class="dda__scene" id="dda-s2" role="tabpanel" aria-labelledby="dda-t2" hidden>
+<img src="/concepts/atelier/assets/layers-1448.webp" srcset="/concepts/atelier/assets/layers-900.webp 900w,/concepts/atelier/assets/layers-1448.webp 1448w" sizes="(min-width:960px) 56vw,100vw" width="1448" height="1086" alt="Cross-section of a natural latex mattress with natural fibre layers" loading="lazy" decoding="async">
+<figcaption><b>Inside</b><span>Natural latex and natural fibre, layered for support.</span></figcaption>
+</figure>
+<figure class="dda__scene" id="dda-s3" role="tabpanel" aria-labelledby="dda-t3" hidden>
+<img src="/concepts/atelier/assets/dual-1443.webp" srcset="/concepts/atelier/assets/dual-900.webp 900w,/concepts/atelier/assets/dual-1443.webp 1443w" sizes="(min-width:960px) 56vw,100vw" width="1443" height="465" alt="Dual Plush latex mattress and latex topper, each in its own zipped cover" loading="lazy" decoding="async">
+<figcaption><b>Dual Plush</b><span>Latex mattress for support. Latex topper for comfort.</span></figcaption>
+</figure>
+<figure class="dda__scene" id="dda-s4" role="tabpanel" aria-labelledby="dda-t4" hidden>
+<img src="/concepts/atelier/assets/core-1600.webp" srcset="/concepts/atelier/assets/core-900.webp 900w,/concepts/atelier/assets/core-1600.webp 1600w" sizes="(min-width:960px) 56vw,100vw" width="1600" height="733" alt="Zoned pin-core natural latex block" loading="lazy" decoding="async">
+<figcaption><b>Zoned Dunlop Core</b><span>Pin-core latex, zoned for shoulders and hips. Best air ventilation.</span></figcaption>
+</figure>
+<button type="button" class="dda__pause" aria-label="Pause slideshow" aria-pressed="false"><i aria-hidden="true"></i></button>
+</div>
+<div class="dda__tabs" role="tablist" aria-label="Explore the sleep system">
+<button type="button" role="tab" class="dda__tab" id="dda-t1" aria-controls="dda-s1" aria-selected="true"><span>01</span>Sleep System</button>
+<button type="button" role="tab" class="dda__tab" id="dda-t2" aria-controls="dda-s2" aria-selected="false" tabindex="-1"><span>02</span>Inside</button>
+<button type="button" role="tab" class="dda__tab" id="dda-t3" aria-controls="dda-s3" aria-selected="false" tabindex="-1"><span>03</span>Dual Plush</button>
+<button type="button" role="tab" class="dda__tab" id="dda-t4" aria-controls="dda-s4" aria-selected="false" tabindex="-1"><span>04</span>Zoned Core</button>
+</div>
+</div>
+<ul class="dda__proof" aria-label="Why natural latex">
+<li><b>100%</b>Natural latex</li>
+<li><b>UK &amp; EU</b>Certified</li>
+<li><b>All sizes</b>Custom depths</li>
+<li><b>4 firmnesses</b>By body weight</li>
+</ul>
+</div>
+</section>
+<script>window.DDAtelier&&DDAtelier.boot()</script>
+
+</div>
+<div class="ins-tile next next-section"></div>
+</body></html>
