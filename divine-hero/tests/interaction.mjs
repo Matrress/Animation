@@ -180,7 +180,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.9.0/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.9.1/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -314,15 +314,17 @@ async function settle() {
     const box = await page.evaluate(() => { const r = document.querySelector('.ddh__plane').getBoundingClientRect(); return [r.left, r.top, r.width]; });
     const k = box[2] / 3554, clipOf = (x0, y0, x1, y1) => ({ x: box[0] + x0 * k, y: box[1] + y0 * k, width: (x1 - x0) * k, height: (y1 - y0) * k });
     const body = clipOf(1250, 1000, 2900, 2050), words = clipOf(1760, 1640, 2290, 1705);
-    if (!touch) { await page.mouse.move(c.x - 160, c.y + 140); }                        // first intent warms (image reuse)
+    if (!touch) { await page.mouse.move(c.x - 160, c.y - 140); }                        // first intent warms (loads the layers)
     else await page.evaluate(() => document.querySelector('.ddh__art').dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })));
-    await page.clock.runFor(100); await page.waitForTimeout(900); await page.clock.runFor(100);
+    await page.clock.runFor(100);
+    for (let i = 0; i < 50 && !reduce && !(await page.evaluate(() => !!document.querySelector('.ddh__settle'))); i++) { await page.waitForTimeout(100); await page.clock.runFor(50); }
+    await page.clock.runFor(100);
     await page.clock.pauseAt(new Date(Date.now() + 5000));
     if (touch) await page.touchscreen.tap(c.x, c.y); else await page.mouse.move(c.x, c.y, { steps: 2 });
     await page.clock.runFor(900); await page.waitForTimeout(1200);              // warp frozen at 0.9 s; CSS fades finish (real time)
     const mid = await page.evaluate(() => { const cv = document.querySelector('.ddh__settle'); return { state: document.querySelector('.ddh').getAttribute('data-ddh-state'), on: !!cv && getComputedStyle(cv).display === 'block' }; });
     const b1 = await page.screenshot({ clip: body }), w1 = await page.screenshot({ clip: words });
-    await page.clock.runFor(1500); await page.waitForTimeout(300);
+    await page.clock.runFor(2600); await page.waitForTimeout(300);
     const end = await page.evaluate(() => { const cv = document.querySelector('.ddh__settle'); return { on: !!cv && getComputedStyle(cv).display === 'block', settling: document.querySelector('.ddh').hasAttribute('data-ddh-settling') }; });
     const b2 = await page.screenshot({ clip: body }), w2 = await page.screenshot({ clip: words });
     const tag = `${w}x${h}${touch ? ' touch' : ''}${reduce ? ' reduced-motion' : ''}`;
@@ -332,11 +334,36 @@ async function settle() {
       ok(mid.on && !b1.equals(b2), `${tag}: the sleeper moves at 0.9 s: ${JSON.stringify(mid)}`);
       ok(w1.equals(w2), `${tag}: the "Engineering" lettering never moves`);
     }
-    ok(!end.on && !end.settling, `${tag}: after 2.4 s she is exactly the photo again (layer off): ${JSON.stringify(end)}`);
+    ok(!end.on && !end.settling, `${tag}: after 3.5 s she is exactly the photo again (layer off): ${JSON.stringify(end)}`);
     ok(errs.length === 0, `${tag}: no script errors: ${errs.join(' | ')}`);
     await ctx.close();
   }
   await gb.close();
+}
+
+// 1.9.1: the points keep working after the display sleeps / the tab is frozen (a lost animation frame used to
+// leave them dead until a reload)
+async function wakeup() {
+  console.log('after sleep');
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(300);
+  const c = await centre(page, 'head');
+  await page.mouse.move(c.x + 300, c.y + 200); await page.waitForTimeout(100);
+  // the browser drops every animation frame (asleep), then wakes
+  await page.evaluate(() => { window.__raf = window.requestAnimationFrame; window.requestAnimationFrame = () => 4242; });
+  await page.mouse.move(c.x + 250, c.y + 150, { steps: 3 }); await page.waitForTimeout(200);
+  await page.evaluate(() => { window.requestAnimationFrame = window.__raf; });
+  await page.mouse.move(c.x, c.y, { steps: 4 }); await page.waitForTimeout(250);
+  const s1 = await state(page);
+  ok(s1.s === 'head', `a lost frame does not freeze the points: ${JSON.stringify(s1)}`);
+  await page.mouse.move(c.x + 400, c.y + 300, { steps: 3 }); await page.waitForTimeout(250);
+  await page.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => false }); document.dispatchEvent(new Event('visibilitychange')); const e = new Event('pageshow'); e.persisted = true; window.dispatchEvent(e); });
+  await page.waitForTimeout(100);
+  await page.mouse.move(c.x, c.y, { steps: 4 }); await page.waitForTimeout(250);
+  const s2 = await state(page);
+  ok(s2.s === 'head', `after waking, hovering opens the point at once: ${JSON.stringify(s2)}`);
+  await ctx.close();
 }
 
 async function i18n() {
@@ -384,6 +411,7 @@ await i18n();
 await night();
 await sunrise();
 await settle();
+await wakeup();
 await browser.close();
 console.log(`\n${passes} passed, ${fails} failed`);
 process.exit(fails ? 1 : 0);

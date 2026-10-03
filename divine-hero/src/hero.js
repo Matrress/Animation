@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.9.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.9.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.9.0';
+  var VERSION = '1.9.1';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07 };
@@ -138,7 +138,11 @@
       }
       root.setAttribute('data-ddh-measured', '1');
     }
-    function layout() { if (!mRaf) mRaf = w.requestAnimationFrame(layoutNow); }
+    var mAt = 0;
+    function layout() {
+      if (mRaf && Date.now() - mAt > 250) { w.cancelAnimationFrame(mRaf); mRaf = 0; }   // a frame lost to sleep never blocks layout
+      if (!mRaf) { mAt = Date.now(); mRaf = w.requestAnimationFrame(layoutNow); }
+    }
     inst.layout = layout;
     layout();
     on(w, 'resize', layout, { passive: true });
@@ -185,46 +189,63 @@
       settle.load();
     }
 
-    // 1.9.0 "Natural Adaptation": the sleeper settles, ~2 s. A puppet-warp of the photo's own pixels (WebGL, drawn
-    // over the photo only where pixels move): the upper shoulder relaxes, the lower shoulder nudges the pillow and sinks
-    // into the mattress, the head nestles into the pillow; each movement returns exactly to the photo. The baked
-    // lettering never moves. Nothing new is downloaded (the picture already shown is reused). Off for reduced motion.
+    // 1.9.1 "Natural Adaptation": the sleeper resettles, 3 s. Only the woman moves; the bed, the pillow, the sky and every
+    // letter stay where they are. Three layers, composited per pixel (WebGL): her (with the lettering lifted off her), the
+    // clean background behind her contour, and the original lettering laid back on top:
+    //   out = W(q) + (1 − A(q))·(Bg(p') − Bg(q)),  q = p − D(p)  (A: her alpha; p': the mattress's own small give)
+    // At rest D = 0 and out is the photo itself. The choreography follows a sleeper's micro-resettle: a breath in; the
+    // lower shoulder unloads into the mattress (it gives, then returns); the upper shoulder rolls forward and lets go;
+    // the head presses into the pillow and releases onto it; a last flutter in the back; all carried by one long exhale.
     var settle = (function () {
       var img = root.querySelector('.ddh__img'), plane = root.querySelector('.ddh__plane');
-      var MW = 3554, MH = 2744, RX = 1150, RY = 940, RW = 1800, RH = 1210, DUR = 2.05;
-      // the three body parts (master px): centre, rigid half-axes, soft falloff (× half-axis), rotation pivot
+      var MW = 3554, MH = 2744, RX = 1000, RY = 760, RW = 1960, RH = 1400, DUR = 3.25;
+      // body parts (master px): centre, rigid half-axes, soft falloff (× half-axis), rotation pivot
       var PARTS = [
-        { c: [1680, 1290], r: [170, 110], f: 1.7, p: [1680, 1290] },   // upper shoulder
-        { c: [1540, 1760], r: [140, 170], f: 1.1, p: [1540, 1760] },   // lower shoulder, against the pillow
-        { c: [2370, 1360], r: [400, 230], f: .45, p: [2420, 1570] }    // head, pivoting on the pillow
+        [1450, 1010, 420, 160, .8, 0, 0],          // 0 breath: the top of the flank (clear of the lettering on her back)
+        [1500, 1880, 170, 170, .6, 0, 0],           // 1 lower shoulder, on the mattress, against the pillow
+        [1710, 1200, 180, 90, .8, 0, 0],            // 2 upper shoulder
+        [2370, 1350, 400, 235, .5, 2420, 1570],    // 3 head, pivoting on the pillow
+        [1330, 1150, 150, 90, .8, 0, 0],            // 4 shoulder blade (the last flutter)
+        [1460, 2085, 260, 55, 1.2, 0, 0]           // 5 the mattress under her (gives, returns)
       ];
-      // baked lettering that must stay put (master px boxes)
-      var KEEP = [[1290, 690, 2270, 965], [850, 1280, 1490, 1420], [850, 1470, 1500, 1645], [1740, 1625, 2310, 1715], [1730, 1750, 3430, 1890], [2690, 1910, 3310, 2000]];
       var reduce = w.matchMedia ? w.matchMedia('(prefers-reduced-motion:reduce)') : { matches: false };
-      var cv, gl, U, src, built = false, failed = !img || !plane || !w.WebGLRenderingContext, raf = 0, t0 = 0, pending = 0;
+      var cv, gl, U, srcs = [], built = false, failed = !img || !plane || !w.WebGLRenderingContext, raf = 0, last = 0, t0 = 0, pending = 0, loading = false;
       function bump(t, a, p, b) { return t <= a || t >= b ? 0 : t < p ? .5 - .5 * Math.cos(Math.PI * (t - a) / (p - a)) : .5 + .5 * Math.cos(Math.PI * (t - p) / (b - p)); }
+      function clock() { return w.performance && performance.now ? performance.now() : Date.now(); }
       function load() {
-        if (failed || src) return;
-        src = new Image(); src.crossOrigin = 'anonymous';
-        src.onload = function () { setTimeout(build, 0); };
-        src.onerror = function () { failed = true; };
-        src.src = img.currentSrc || img.src;
+        if (failed || loading) return; loading = true;
+        var base = (img.getAttribute('src') || '').replace(/[^\/]*$/, ''), left = 3;
+        [img.currentSrc || img.src, base + 'sleeper-plate.webp', base + 'sleeper-mask.webp'].forEach(function (u, i) {
+          var im = new Image(); im.crossOrigin = 'anonymous';
+          im.onload = function () { if (!--left) setTimeout(build, 0); };
+          im.onerror = function () { failed = true; };
+          im.src = u; srcs[i] = im;
+        });
+      }
+      function texture(unit, source) {
+        gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());   // stays bound to its unit
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, source);
+        [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]].forEach(function (x) { gl.texParameteri(gl.TEXTURE_2D, x[0], x[1]); });
       }
       function build() {
         if (built || failed) return;
         try {
-          var k = src.naturalWidth / MW, c2 = d.createElement('canvas');
-          c2.width = Math.round(RW * k); c2.height = Math.round(RH * k);
-          c2.getContext('2d').drawImage(src, RX * k, RY * k, RW * k, RH * k, 0, 0, c2.width, c2.height);
           cv = d.createElement('canvas'); cv.className = 'ddh__settle'; cv.setAttribute('aria-hidden', 'true');
           gl = cv.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false, failIfMajorPerformanceCaveat: true }); // no GPU: no settle
           var hp = gl && gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT);
           if (!gl || !hp || !hp.precision) throw 0;
           var vs = 'attribute vec2 a;varying vec2 v;void main(){v=a;gl_Position=vec4(a.x*2.-1.,1.-a.y*2.,0.,1.);}';
-          var fs = 'precision highp float;uniform sampler2D T;uniform vec4 R;uniform vec2 C[3],H[3],M[3],P[3];uniform float F[3],A[3];uniform vec4 K[6];varying vec2 v;' +
-            'void main(){vec2 p=R.xy+v*R.zw,D=vec2(0.);for(int i=0;i<3;i++){float W=1.-smoothstep(1.,1.+F[i],length((p-C[i])/H[i]));vec2 q=p-P[i];float c=cos(A[i]),s=sin(A[i]);' +
-            'D+=W*(M[i]+vec2(c*q.x-s*q.y,s*q.x+c*q.y)-q);}for(int i=0;i<6;i++){vec4 k=K[i];vec2 b=smoothstep(k.xy-40.,k.xy,p)*(1.-smoothstep(k.zw,k.zw+40.,p));D*=1.-b.x*b.y;}' +
-            'float al=smoothstep(.25,1.,length(D));vec4 t=texture2D(T,(p-D-R.xy)/R.zw);gl_FragColor=vec4(t.rgb*al,al);}';
+          var fs = 'precision highp float;uniform sampler2D T,P,K;uniform vec4 C,R,Z;uniform vec4 G[6];uniform vec3 Q[6];uniform vec3 M[6];uniform float O;varying vec2 v;' +
+            'vec2 u(vec2 x){return(x-Z.xy)/Z.zw;}uniform vec2 HO;vec2 r(vec2 x){return(x+HO-R.xy)/R.zw;}' +
+            'vec2 disp(vec2 p,int lo,int hi){vec2 D=vec2(0.);for(int i=0;i<6;i++){if(i<lo||i>hi)continue;vec4 g=G[i];float W=1.-smoothstep(1.,1.+Q[i].x,length((p-g.xy)/g.zw));' +
+            'vec2 q=p-Q[i].yz;float c=cos(M[i].z),s=sin(M[i].z);D+=W*(M[i].xy+vec2(c*q.x-s*q.y,s*q.x+c*q.y)-q);}return D;}' +
+            'vec3 bg(vec2 x){vec2 t=u(x);return mix(texture2D(T,r(x)).rgb,texture2D(P,t).rgb,texture2D(K,t).b);}' +
+            'void main(){vec2 p=C.xy+v*C.zw;vec2 e=min(p-Z.xy,Z.xy+Z.zw-p);float f=smoothstep(0.,60.,min(e.x,e.y));' +
+            'vec2 q=p-disp(p,0,4)*smoothstep(20.,120.,min(e.x,e.y));vec2 pm=p-disp(p,5,5)*(1.-texture2D(K,u(p)).r)*smoothstep(2000.,2050.,p.y);' +
+            'vec2 tq=u(q);vec3 Kq=texture2D(K,tq).rgb;vec3 Wq=mix(texture2D(T,r(q)).rgb,texture2D(P,tq).rgb,smoothstep(.9,1.,Kq.g));' +
+            'vec3 o=Wq+(1.-Kq.r)*(bg(pm)-bg(q));vec2 tp=u(p);vec3 Kp=texture2D(K,tp).rgb;' +
+            'float cov=max(smoothstep(.0,.03,max(Kp.r,Kq.r)),smoothstep(.05,.3,length(p-pm)));' +
+            'float a=f*O*cov*(1.-Kp.g);gl_FragColor=vec4(o*a,a);}';
           var pr = gl.createProgram();
           [[gl.VERTEX_SHADER, vs], [gl.FRAGMENT_SHADER, fs]].forEach(function (x) { var sh = gl.createShader(x[0]); gl.shaderSource(sh, x[1]); gl.compileShader(sh); gl.attachShader(pr, sh); });
           gl.linkProgram(pr);
@@ -233,48 +254,72 @@
           gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
           gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);
           var a = gl.getAttribLocation(pr, 'a'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
-          gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
-          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c2);
-          [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]].forEach(function (x) { gl.texParameteri(gl.TEXTURE_2D, x[0], x[1]); });
-          U = {}; ['T', 'R', 'C', 'H', 'M', 'P', 'F', 'A', 'K'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n === 'T' || n === 'R' ? n : n + '[0]'); });
-          gl.uniform4f(U.R, RX, RY, RW, RH);
-          gl.uniform2fv(U.C, [].concat.apply([], PARTS.map(function (q) { return q.c; })));
-          gl.uniform2fv(U.H, [].concat.apply([], PARTS.map(function (q) { return q.r; })));
-          gl.uniform2fv(U.P, [].concat.apply([], PARTS.map(function (q) { return q.p; })));
-          gl.uniform1fv(U.F, PARTS.map(function (q) { return q.f; }));
-          gl.uniform4fv(U.K, [].concat.apply([], KEEP));
+          // her pixels at the photo file's own resolution (no browser resampling: the GPU samples them at exact positions)
+          var ph = srcs[0], kx = ph.naturalWidth / MW, ky = ph.naturalHeight / MH, sx = Math.max(0, Math.floor(RX * kx) - 2), sy = Math.max(0, Math.floor(RY * ky) - 2);
+          var sw = Math.min(ph.naturalWidth - sx, Math.ceil(RW * kx) + 4), sh = Math.min(ph.naturalHeight - sy, Math.ceil(RH * ky) + 4), c2 = d.createElement('canvas');
+          c2.width = sw; c2.height = sh; c2.getContext('2d').drawImage(ph, sx, sy, sw, sh, 0, 0, sw, sh);
+          texture(0, c2); texture(1, srcs[1]); texture(2, srcs[2]); photoAt = '';
+          U = {}; ['T', 'P', 'K', 'C', 'R', 'Z', 'O', 'HO'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n); });
+          ['G', 'Q', 'M'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n + '[0]'); });
+          gl.uniform1i(U.T, 0); gl.uniform1i(U.P, 1); gl.uniform1i(U.K, 2);
+          gl.uniform4f(U.Z, RX, RY, RW, RH); gl.uniform4f(U.R, sx / kx, sy / ky, sw / kx, sh / ky);
+          gl.uniform2f(U.HO, .5 / kx, .5 / ky);   // browsers draw a picture half a file pixel on (measured): match it
+          gl.uniform4fv(U.G, [].concat.apply([], PARTS.map(function (q) { return q.slice(0, 4); })));
+          gl.uniform3fv(U.Q, [].concat.apply([], PARTS.map(function (q) { return q.slice(4, 7); })));
           plane.insertBefore(cv, img.parentNode.nextSibling);
           built = true;
-          if (pending && Date.now() - pending < 700) play();
+          if (pending && clock() - pending < 1500) play();
         } catch (e) { failed = true; if (cv && cv.parentNode) cv.parentNode.removeChild(cv); }
       }
+      // the choreography (s); every curve leaves and lands with zero speed
+      function pose(t) {
+        var breath = -2.5 * bump(t, .05, .45, .9) + 4.5 * bump(t, .7, 1.9, 3);        // in … then one long exhale
+        var low = bump(t, .15, .75, 1.45), lowBack = bump(t, 1.2, 1.55, 1.9);          // lower shoulder unloads, rebounds
+        var give = bump(t, .25, .85, 1.6);                                             // the mattress gives, a beat later, returns
+        var up = bump(t, .6, 1.25, 2.5);                                               // upper shoulder rolls forward, lets go
+        var head = bump(t, 1.25, 1.7, 2.55) + .22 * bump(t, 2.2, 2.55, 2.95);          // presses into the pillow, releases onto it
+        var tw = bump(t, 2.4, 2.5, 2.95) * Math.sin(2 * Math.PI * Math.max(0, t - 2.4) / .22); // the last flutter
+        return [0, breath, 0, 5 * low, 10 * low - 1.8 * lowBack, 0, 7 * up, 14 * up, 0, -3 * head, 10 * head, .012 * head, .8 * tw, 3 * tw, 0, 0, 5 * give, 0];
+      }
+      // The layer is snapped to the device-pixel grid around the sleeper's area; each of its pixels samples the photo at
+      // exactly the point the picture shows there, so she registers with the photo to a fraction of a pixel.
+      var photoAt;
       function draw(t) {
-        var dpr = Math.min(w.devicePixelRatio || 1, 2), W = Math.round(cv.clientWidth * dpr), H = Math.round(cv.clientHeight * dpr);
-        if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; gl.viewport(0, 0, W, H); }
-        var up = bump(t, 0, .6, 1.75);                                      // upper shoulder: lets go, then gently back
-        var push = bump(t, .2, .6, 1.3), sink = bump(t, .35, .85, 1.65);    // lower shoulder: nudges the pillow, sinks, floats up
-        var head = bump(t, .4, .95, 1.95) - .18 * bump(t, 1.3, 1.6, 1.95);  // head: nestles in, a breath of rebound, settles
-        gl.uniform2fv(U.M, [6 * up, 15 * up, 10 * push, 9 * sink, -3 * head, 8 * head]);
-        gl.uniform1fv(U.A, [0, 0, .014 * head]);
+        // where the browser actually puts the picture: object-fit:cover of this file (its own rounded size) in the box
+        var dpr = Math.min(w.devicePixelRatio || 1, 3), ib = img.getBoundingClientRect(), nw = img.naturalWidth || srcs[0].naturalWidth, nh = img.naturalHeight || srcs[0].naturalHeight;
+        if (!ib.width || !nw) return;
+        var sc = Math.max(ib.width / nw, ib.height / nh), ox = ib.left + (ib.width - nw * sc) / 2, oy = ib.top + (ib.height - nh * sc) / 2;
+        var fx = sc * nw / MW, fy = sc * nh / MH;                                   // css px per master px, per axis
+        var L = Math.floor((ox + RX * fx) * dpr), T = Math.floor((oy + RY * fy) * dpr), Rr = Math.ceil((ox + (RX + RW) * fx) * dpr), B = Math.ceil((oy + (RY + RH) * fy) * dpr);
+        var Wd = Rr - L, Hd = B - T, mx = (L / dpr - ox) / fx, my = (T / dpr - oy) / fy, mw = Wd / dpr / fx, mh = Hd / dpr / fy, pr = plane.getBoundingClientRect();
+        var at = [Wd, Hd, mx.toFixed(3), my.toFixed(3), mw.toFixed(3)].join();
+        if (photoAt !== at) {
+          var st = cv.style; st.left = (L / dpr - pr.left) + 'px'; st.top = (T / dpr - pr.top) + 'px'; st.width = Wd / dpr + 'px'; st.height = Hd / dpr + 'px';
+          if (cv.width !== Wd || cv.height !== Hd) { cv.width = Wd; cv.height = Hd; }
+          gl.viewport(0, 0, Wd, Hd); gl.uniform4f(U.C, mx, my, mw, mh);
+          photoAt = at;
+        }
+        gl.uniform3fv(U.M, pose(t));
+        gl.uniform1f(U.O, Math.min(1, t / .18, (DUR - t) / .25));                   // the layer fades in/out while she is still
         gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       }
-      function clock() { return w.performance && performance.now ? performance.now() : Date.now(); }
+      function stop() { if (raf) w.cancelAnimationFrame(raf); raf = 0; if (cv) cv.style.display = ''; root.removeAttribute('data-ddh-settling'); photoAt = ''; }
       function tick() {
-        var t = (clock() - t0) / 1000;
-        if (t >= DUR) { raf = 0; cv.style.display = ''; root.removeAttribute('data-ddh-settling'); return; }
+        var t = (clock() - t0) / 1000; last = clock();
+        if (t >= DUR || t < 0) { stop(); return; }
         draw(t); raf = w.requestAnimationFrame(tick);
       }
       function play() {
         if (reduce.matches || failed) return;
-        if (!built) { pending = Date.now(); load(); return; }
-        pending = 0; if (raf) return;                                      // one settle at a time; it always completes
-        cv.style.display = 'block'; root.setAttribute('data-ddh-settling', '');
-        t0 = clock(); draw(0);
-        raf = w.requestAnimationFrame(tick);
+        if (!built) { pending = clock(); load(); return; }
+        pending = 0;
+        if (raf && clock() - last < 250) return;                                   // one at a time; a stalled frame never blocks the next
+        stop(); cv.style.display = 'block'; root.setAttribute('data-ddh-settling', '');
+        t0 = last = clock(); draw(0); raf = w.requestAnimationFrame(tick);
       }
-      cleanups.push(function () { if (raf) w.cancelAnimationFrame(raf); if (cv && cv.parentNode) cv.parentNode.removeChild(cv); root.removeAttribute('data-ddh-settling'); });
-      return { load: load, play: play };
+      cleanups.push(function () { stop(); if (cv && cv.parentNode) cv.parentNode.removeChild(cv); });
+      return { load: load, play: play, stop: stop };
     })();
 
     function show(key, announce) {
@@ -301,9 +346,9 @@
 
     // Hotspot centres as fractions of the artwork. Recomputed only when layout changes (ResizeObserver),
     // so pointermove does a single rect read instead of eight.
-    var centres = null;
+    var centres = null, measuredAt = 0;
     function measure() {
-      var b = art.getBoundingClientRect();
+      var b = art.getBoundingClientRect(); measuredAt = Date.now();
       if (!b.width || !b.height) { centres = null; return; }
       centres = points.filter(function (p) { return p.offsetWidth > 0; }).map(function (p) { // hidden points (night on touch) never hit
         var r = p.getBoundingClientRect();
@@ -318,7 +363,7 @@
     } else on(w, 'resize', invalidate, { passive: true });
 
     function hit(cx, cy, scale) {
-      if (!centres) measure();
+      if (!centres || !centres.length || Date.now() - measuredAt > 1000) measure();
       if (!centres) return null;
       var b = art.getBoundingClientRect(), x = (cx - b.left) / b.width, y = (cy - b.top) / b.height;
       if (x < -.02 || x > 1.02 || y < -.02 || y > 1.02) return null;
@@ -334,14 +379,28 @@
       return best;
     }
 
-    // Pointer proximity: coalesced to one hit-test per frame.
-    var raf = 0, lastX = 0, lastY = 0;
+    // Pointer proximity: coalesced to one hit-test per frame. 1.9.1: a frame the browser never delivers (the display
+    // slept, the tab was frozen) can no longer leave the points dead: a pending frame older than 120 ms is dropped and
+    // the hit-test runs at once; waking the page resets everything (see below).
+    var raf = 0, rafAt = 0, lastX = 0, lastY = 0;
+    function now() { return w.performance && performance.now ? performance.now() : Date.now(); }
     function frame() { raf = 0; show(hit(lastX, lastY, 1)); }
     on(art, 'pointermove', function (ev) {
       if (ev.pointerType === 'touch') return;
       lastX = ev.clientX; lastY = ev.clientY;
-      if (!raf) raf = w.requestAnimationFrame(frame);
+      if (raf && now() - rafAt > 120) { w.cancelAnimationFrame(raf); frame(); return; }
+      if (!raf) { rafAt = now(); raf = w.requestAnimationFrame(frame); }
     }, { passive: true });
+    function unstick() {
+      if (raf) { w.cancelAnimationFrame(raf); raf = 0; }
+      if (mRaf) { w.cancelAnimationFrame(mRaf); mRaf = 0; }
+      invalidate(); layout();
+    }
+    function wake() { unstick(); settle.stop(); if (active && !group.contains(d.activeElement)) show(null); }
+    on(d, 'visibilitychange', function () { if (!d.hidden) wake(); });
+    on(w, 'pageshow', function (ev) { if (ev.persisted) wake(); else unstick(); });
+    on(d, 'resume', wake);
+    on(w, 'focus', unstick);
     cleanups.push(function () { if (raf) w.cancelAnimationFrame(raf); });
     on(art, 'pointerleave', function (ev) {
       if (ev.pointerType === 'touch' || group.contains(d.activeElement)) return;
