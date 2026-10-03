@@ -43,7 +43,7 @@ What changed:
 * Body motion is held at its shadow.
 * Its shadow zone keeps the photo as her background. The rebuilt plate there had been filled from the light mattress, which showed as a light diagonal whenever the layer was on.
 
-* Video (with a timer): `reports/compare/settle-1.9.4.mp4`.
+* Tests all green (329–330 per harness, panels 792/792, axe 0, guards). Pinned: `ecwid/section-1.9.4-jsdelivr.html` (commit `fe2609f`). Video (with a timer): `reports/compare/settle-1.9.4.mp4`.
 
 ## 1.9.3 — four separate movements, the arm rolls in and comes out (2026-10-03)
 
