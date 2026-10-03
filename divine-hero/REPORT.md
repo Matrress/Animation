@@ -1,41 +1,49 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
-## 1.9.4 — the arm rolls in behind her and comes back out, after the brand's own film (2026-10-03)
+## 1.9.4 — a settling, not a performance; the elbow rounded (2026-10-03)
 
-Owner, on 1.9.3:
-* The elbow is too sharp; everything should be rounder.
-* The upper arm should look as if it is drawn out from the hidden inner side, then show fully and naturally in its usual place.
-* The body should press into the mattress and float back up at the pelvis and the lower shoulder.
-* All the visible movement adds up to 3 s, smoother and deeper.
-* Reference: the BOTANIC film (the owner's screen recording, same model and same pillow). Its 0:15–0:19 is exactly this settle.
+Owner, on the first 1.9.4 preview (the arm rolling in behind her body and back out):
+* The arm came out wrong: it seemed to merge into the body, as if piercing it. "Better not move the arm."
+* Too abrupt. These are settlings, not movements.
+* It didn't look like 3 s: everything happened in about one second, with no separation between the movements.
+* Robotic and mechanical, not human.
+* The elbow is sharp; it should be rounder.
+* The BOTANIC film was a reference for how a body moves and how the mattress takes it, not something to copy.
 
-**What the film shows** (extracted at 4–6 fps)
-1. She lies on her side with the upper arm rolled in front of her chest, hidden by her body; only the round shoulder cap shows.
-2. The head presses into the pillow and the lower shoulder sinks into the latex.
-3. The arm comes out from in front of her, rises over her side as one round shape and slides back along it; the shoulder blade glides back toward the spine with it.
-4. The arm lays down along her side (the pose in our photo) and the body comes to rest.
+What changed:
 
-**The arm is now its own layer** (`tests/make-arm.py` → `arm-mask.webp` 18 KB, `arm-plate.webp` 8 KB)
-* The arm's underside is measured column by column in the photo, so no strip of the tank top travels with it.
-* Her back behind the arm is rebuilt up to its hidden top line: a rounded shoulder, then the slope down to her waist. It is a harmonic fill from her back, with no flux from the sky, plus soft rim shading and matched grain. The sky above that line comes from the existing clean plate.
-* In the browser the arm turns about the shoulder joint and foreshortens. Its motion fades out toward the shoulder, so the arm bends as one round shape and there is no hinge or sharp elbow.
-* It is drawn over her back, except where it has rolled behind her back's line. That threshold sweeps down as it rolls in and back up as it comes out, softly over 60 px, so the arm slips behind her body and emerges from it.
-* The shoulder cap under the DIVINE letters stays put, so the logo plate's patches never float.
+**The arm layer is gone**
+* `make-arm.py`, `arm-mask.webp` and `arm-plate.webp` are removed.
+* The arm no longer moves on its own. It rides with the shoulder girdle as one rigid piece, so nothing bends and the elbow keeps its shape.
 
-**The sequence (3.0 s, fades included)**
-* 0.05–1.9 s: the head presses 6 px into the pillow, rolls 1.1° on its contact point and releases; the pillow gives.
-* 0.12–0.85 s: the arm rolls in: down 11° and foreshortened 28%. It is hidden from 0.85 to 1.25 s.
-* 0.5–2.75 s: the lower shoulder presses 18 px into the latex. The latex holds it at 13 px, settles at 14.5, then floats it back up.
-* 0.65–2.75 s: the pelvis presses in 15 px and floats back up the same way.
-* 1.25–2.5 s: the arm comes out over her side, a touch past its place (0.35°), and lays down. The shoulder blade follows 80 ms behind: drawn forward while the arm is in front, gliding back as it returns.
-* The breath runs underneath: in at 0.4 s, then one long exhale.
+**The elbow is rounded in the photo itself** (`tests/round-elbow.py`, applied once to every width)
+* The arm's silhouette at the elbow end is opened with an 85 px disk (master scale).
+* The trimmed slivers are filled from the sky and the back around them, never from the arm.
+* The skin's dark rim continues along the new edge.
+* `sleeper-mask` and `sleeper-plate` are rebuilt from the retouched photo.
 
-**Fixes found on the way**
-* Vertical streaks around the benefit text: the arm term sampled outside its box.
-* A seam beside the small Dual Plush mattress: the bed's give now starts past it, and the lower side's sink fades out before it.
+**Five small movements, each with its own moment, speed and weight, handing over across the whole 3 s**
 
-* Tests: all green (329–330 per harness, panels 792/792, axe 0, guards). hero.js 23 KB. LCP and CLS are unchanged; the arm layers load on first intent with the other settle layers.
-* Pinned: `ecwid/section-1.9.4-jsdelivr.html` (commit `f2b4cac`). Video: `reports/compare/settle-1.9.4.mp4`.
+| Time | Movement | Amplitude |
+|---|---|---|
+| 0.3–1.6 s | The head sinks into the pillow and lets go; the pillow takes it | 4 px, 0.6° roll |
+| 0.9–2.9 s | The lower shoulder lets go into the latex, which holds it and gives it back | 11 px, held at 8.5–9 |
+| 1.3–2.9 s | The pelvis follows a beat later, softer | 8 px |
+| 1.5–2.8 s | The upper shoulder rolls forward over the chest | about 3 px |
+| 2.2–2.6 s | A small damped twitch in the back with the exhale | |
+| Throughout | One slow breath: in at the start, out across the second half | |
+
+**Easing and the mattress**
+* Each segment has its own shape. Letting go under gravity starts slowly and lands; the latex giving back starts at once and eases out long. Before, every segment used the same symmetric curve.
+* The mattress follows a little late (latex is slower than the body) and lifts her back. It is wider and deeper under the shoulder.
+
+**Seams beside the small Dual Plush mattress**
+* The bed's give starts past the small mattress.
+* The lower side's sink fades before it.
+* Body motion is held at its shadow.
+* Its shadow zone keeps the photo as her background. The rebuilt plate there had been filled from the light mattress, which showed as a light diagonal whenever the layer was on.
+
+* Video (with a timer): `reports/compare/settle-1.9.4.mp4`.
 
 ## 1.9.3 — four separate movements, the arm rolls in and comes out (2026-10-03)
 

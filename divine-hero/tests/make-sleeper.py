@@ -97,6 +97,7 @@ near_logo = np.zeros(L.shape, bool); near_logo[ly0:ly0 + pl.shape[0], lx0:lx0 + 
 near_logo = binary_dilation(near_logo, iterations=30)
 outer = binary_dilation(alpha > .002, iterations=8) | (binary_dilation(alpha > .002, iterations=22) & near_logo)
 band = np.maximum(band, outer * 1.0)   # reaches past her soft edge (no trace of the old contour), wider by the logo plate
+band *= ~binary_dilation((mat | under) & (alpha < .02), iterations=1)   # 1.9.4: beside the small mattress the photo is her background
 # 4. pack at half scale
 skin_s = np.stack([small(skin[..., c].astype(np.float32)) for c in range(3)], -1)
 let_s = small((lettered * 255).astype(np.uint8)).astype(float) / 255
