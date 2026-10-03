@@ -35,7 +35,7 @@ Owner, on 1.9.3:
 * A seam beside the small Dual Plush mattress: the bed's give now starts past it, and the lower side's sink fades out before it.
 
 * Tests: all green (329–330 per harness, panels 792/792, axe 0, guards). hero.js 23 KB. LCP and CLS are unchanged; the arm layers load on first intent with the other settle layers.
-* Video: `reports/compare/settle-1.9.4.mp4`.
+* Pinned: `ecwid/section-1.9.4-jsdelivr.html` (commit `f2b4cac`). Video: `reports/compare/settle-1.9.4.mp4`.
 
 ## 1.9.3 — four separate movements, the arm rolls in and comes out (2026-10-03)
 
