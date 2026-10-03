@@ -204,7 +204,7 @@
     // releases onto the pillow; a last tremor in the shoulder blade settles; one long exhale returns her to rest.
     var settle = (function () {
       var img = root.querySelector('.ddh__img'), plane = root.querySelector('.ddh__plane');
-      var MW = 3554, MH = 2744, RX = 0, RY = 660, RW = 2960, RH = 1500, DUR = 3.15;
+      var MW = 3554, MH = 2744, RX = 0, RY = 660, RW = 2960, RH = 1500, DUR = 3.0;
       // segments (master px): capsule a→b, radius, soft falloff
       var BONES = [
         [700, 1360, 1600, 1440, 300, 260],     // 0 thorax (the back, between hips and shoulders)
@@ -212,7 +212,7 @@
         [60, 880, 1380, 930, 170, 240],        // 2 upper arm and the deltoid (wide soft falloff: everything stays round)
         [1700, 1290, 2060, 1340, 120, 130],    // 3 neck
         [2150, 1350, 2620, 1330, 235, 110],    // 4 head
-        [1240, 1880, 1640, 1820, 150, 170],    // 5 the lower side, on the mattress, against the pillow
+        [1450, 1880, 1700, 1820, 100, 230],    // 5 the lower side, on the mattress, against the pillow (fades out before the small mattress)
         [80, 1660, 650, 1620, 250, 220]        // 6 pelvis and hip
       ];
       var LUMBAR = [900, 1660], SCAP = [1180, 1150], SHOULDER = [1440, 880], HIP = [560, 1700], C7 = [1700, 1300], CONTACT = [2420, 1575];
@@ -222,8 +222,8 @@
       function clock() { return w.performance && performance.now ? performance.now() : Date.now(); }
       function load() {
         if (failed || loading) return; loading = true;
-        var base = (img.getAttribute('src') || '').replace(/[^\/]*$/, ''), left = 3;
-        [img.currentSrc || img.src, base + 'sleeper-plate.webp', base + 'sleeper-mask.webp'].forEach(function (u, i) {
+        var base = (img.getAttribute('src') || '').replace(/[^\/]*$/, ''), left = 5;
+        [img.currentSrc || img.src, base + 'sleeper-plate.webp', base + 'sleeper-mask.webp', base + 'arm-mask.webp', base + 'arm-plate.webp'].forEach(function (u, i) {
           var im = new Image(); im.crossOrigin = 'anonymous';
           im.onload = function () { if (!--left) setTimeout(build, 0); };
           im.onerror = function () { failed = true; };
@@ -243,19 +243,25 @@
           var hp = gl && gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT);
           if (!gl || !hp || !hp.precision) throw 0;
           var vs = 'attribute vec2 a;varying vec2 v;void main(){v=a;gl_Position=vec4(a.x*2.-1.,1.-a.y*2.,0.,1.);}';
-          var fs = 'precision highp float;uniform sampler2D T,P,K;uniform vec4 C,R,Z;uniform vec2 HO;uniform vec4 S[7];uniform vec2 F[7];uniform vec3 X[7],Y[7];uniform vec4 V[2];uniform vec3 VD[2];uniform float O;varying vec2 v;' +
+          var fs = 'precision highp float;uniform sampler2D T,P,K,AM,AP;uniform vec4 AZ;uniform vec3 IA,IB;uniform float AD;uniform vec4 C,R,Z;uniform vec2 HO;uniform vec4 S[7];uniform vec2 F[7];uniform vec3 X[7],Y[7];uniform vec4 V[2];uniform vec3 VD[2];uniform float O;varying vec2 v;' +
             'vec2 u(vec2 x){return(x-Z.xy)/Z.zw;}vec2 r(vec2 x){return(x+HO-R.xy)/R.zw;}' +
             'vec2 skin(vec2 p){vec2 D=vec2(0.);float ws=0.;for(int i=0;i<7;i++){vec2 a=S[i].xy,b=S[i].zw,ab=b-a;float h=clamp(dot(p-a,ab)/dot(ab,ab),0.,1.);' +
             'float w=1.-smoothstep(F[i].x,F[i].x+F[i].y,length(p-a-ab*h));D+=w*(vec2(dot(X[i].xy,p)+X[i].z,dot(Y[i].xy,p)+Y[i].z)-p);ws+=w;}D/=max(ws,1.);return D;}' +
-            'vec2 give(vec2 p){vec2 D=vec2(0.);for(int i=0;i<2;i++){vec4 g=V[i];D+=(1.-smoothstep(1.,1.+VD[i].z,length((p-g.xy)/g.zw)))*VD[i].xy;}return D*(1.-smoothstep(1600.,1622.,p.y)*step(1700.,p.x)*(1.-step(2100.,p.y)));}' +
+            'vec2 give(vec2 p){vec2 D=vec2(0.);for(int i=0;i<2;i++){vec4 g=V[i];D+=(1.-smoothstep(1.,1.+VD[i].z,length((p-g.xy)/g.zw)))*VD[i].xy;}return D*smoothstep(1160.,1320.,p.x)*(1.-smoothstep(1600.,1622.,p.y)*step(1700.,p.x)*(1.-step(2100.,p.y)));}' +
+            'vec2 au(vec2 x){return(x-AZ.xy)/AZ.zw;}vec3 am(vec2 x){vec2 t=au(x);return(t.x<0.||t.y<0.||t.x>1.||t.y>1.)?vec3(0.,1.,0.):texture2D(AM,t).rgb;}' +
             'vec3 bg(vec2 x){vec2 t=u(x);return mix(texture2D(T,r(x)).rgb,texture2D(P,t).rgb,min(texture2D(K,t).b*2.,1.)*(1.-step(.52,texture2D(K,t).b)));}' +
             'void main(){vec2 p=C.xy+v*C.zw;vec2 e=min(p-Z.xy+vec2(step(Z.x,0.)*1e4,0.),Z.xy+Z.zw-p);float f=smoothstep(0.,60.,min(e.x,e.y));' +
             'vec2 q=p-skin(p);vec2 tp=u(p);vec3 Kp=texture2D(K,tp).rgb;vec2 pm=p-give(p)*(1.-Kp.r);' +
             'vec2 tq=u(q);vec3 Kq=texture2D(K,tq).rgb;float lift=max(smoothstep(.9,1.,Kq.g),smoothstep(.505,.53,Kq.b));' +
             'vec3 Wq=mix(texture2D(T,r(q)).rgb,texture2D(P,tq).rgb,clamp(lift,0.,1.));' +
             'vec3 bt=mix(texture2D(T,r(q)).rgb,bg(q),smoothstep(0.,.05,Kq.r));vec3 o=Wq+(1.-Kq.r)*(bg(pm)-bt);' +
+            // her body without the arm (the back rebuilt up to its hidden top line, sky above), then the arm over it
+            'vec3 Aq=am(q);float tA=clamp((Aq.g-.5)*266.7+.5,0.,1.);vec3 Pz=mix(bg(pm),texture2D(P,u(pm)).rgb,am(pm).b);' +
+            'o=mix(o,texture2D(AP,au(q)).rgb+(1.-tA)*(Pz-texture2D(P,tq).rgb),Aq.b);' +
+            'float wA=1.-smoothstep(900.,1290.,q.x);vec2 qa=mix(q,vec2(dot(IA.xy,q)+IA.z,dot(IB.xy,q)+IB.z),wA);float aA=am(qa).r;' +
+            'float vis=smoothstep(-30.,30.,12.-(Aq.g-.5)*400.-AD);o=o*(1.-aA*vis)+(texture2D(T,r(qa)).rgb-(1.-aA)*texture2D(AP,au(qa)).rgb)*vis*step(.002,aA);' +
             'float cov=max(max(smoothstep(.0,.03,max(Kp.r,Kq.r)),smoothstep(.05,.3,length(p-pm))),smoothstep(0.,.06,Kp.b)*(1.-step(.52,Kp.b)));' +
-            'float a=f*O*cov*(1.-Kp.g);gl_FragColor=vec4(o*a,a);}';
+            'cov=max(cov,max(aA*vis,am(p).b));float a=f*O*cov*(1.-Kp.g);gl_FragColor=vec4(o*a,a);}';
           var pr = gl.createProgram();
           [[gl.VERTEX_SHADER, vs], [gl.FRAGMENT_SHADER, fs]].forEach(function (x) { var sh = gl.createShader(x[0]); gl.shaderSource(sh, x[1]); gl.compileShader(sh); gl.attachShader(pr, sh); });
           gl.linkProgram(pr);
@@ -268,15 +274,16 @@
           var ph = srcs[0], kx = ph.naturalWidth / MW, ky = ph.naturalHeight / MH, sx = Math.max(0, Math.floor(RX * kx) - 2), sy = Math.max(0, Math.floor(RY * ky) - 2);
           var sw = Math.min(ph.naturalWidth - sx, Math.ceil(RW * kx) + 4), sh = Math.min(ph.naturalHeight - sy, Math.ceil(RH * ky) + 4), c2 = d.createElement('canvas');
           c2.width = sw; c2.height = sh; c2.getContext('2d').drawImage(ph, sx, sy, sw, sh, 0, 0, sw, sh);
-          texture(0, c2); texture(1, srcs[1]); texture(2, srcs[2]); photoAt = '';
-          U = {}; ['T', 'P', 'K', 'C', 'R', 'Z', 'O', 'HO'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n); });
+          texture(0, c2); texture(1, srcs[1]); texture(2, srcs[2]); texture(3, srcs[3]); texture(4, srcs[4]); photoAt = '';
+          U = {}; ['T', 'P', 'K', 'AM', 'AP', 'AZ', 'IA', 'IB', 'AD', 'C', 'R', 'Z', 'O', 'HO'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n); });
           ['S', 'F', 'X', 'Y', 'V', 'VD'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n + '[0]'); });
-          gl.uniform1i(U.T, 0); gl.uniform1i(U.P, 1); gl.uniform1i(U.K, 2);
+          gl.uniform1i(U.T, 0); gl.uniform1i(U.P, 1); gl.uniform1i(U.K, 2); gl.uniform1i(U.AM, 3); gl.uniform1i(U.AP, 4);
+          gl.uniform4f(U.AZ, 0, 680, 1600, 640);                              // the arm layers' box (tests/make-arm.py)
           gl.uniform4f(U.Z, RX, RY, RW, RH); gl.uniform4f(U.R, sx / kx, sy / ky, sw / kx, sh / ky);
           gl.uniform2f(U.HO, .5 / kx, .5 / ky);   // browsers draw a picture half a file pixel on (measured): match it
           gl.uniform4fv(U.S, [].concat.apply([], BONES.map(function (q) { return q.slice(0, 4); })));
           gl.uniform2fv(U.F, [].concat.apply([], BONES.map(function (q) { return q.slice(4, 6); })));
-          gl.uniform4fv(U.V, [1250, 2085, 560, 55, 2430, 1590, 190, 26]);           // the mattress under her side; the pillow under her head (its surface only: the lettering on it never moves)
+          gl.uniform4fv(U.V, [1300, 2100, 620, 110, 2430, 1590, 190, 26]);           // the mattress under her side; the pillow under her head (its surface only: the lettering on it never moves)
           plane.insertBefore(cv, img.parentNode.nextSibling);               // right over the photo, under the logo plate and everything else
           built = true;
           if (pending && clock() - pending < 1500) play();
@@ -289,38 +296,38 @@
         return k[k.length - 1][1];
       }
       var DEG = Math.PI / 180;
-      // 1.9.4: fewer, longer, deeper curves; all the visible movement inside 3 s:
-      //  1 the head presses into the pillow and releases (the neck follows)                         0.1–1.9 s
-      //  2 the body presses into the mattress at the lower shoulder and the pelvis together, the latex takes the
-      //    weight, and she floats back up on it                                                       0.6–2.9 s
-      //  3 the upper arm: it sinks in toward the inner side of the body (it turns about the shoulder joint, the
-      //    elbow goes down out of sight behind the curve of the back), then comes out from there, up to its own
-      //    place, rounded, a touch past and settles; the shoulder blade follows it all the way      0.1–2.75 s
-      var K_THORAX = [[0, 0], [.45, -.12], [1.3, .05], [2.2, .2], [2.75, .05], [3, 0]];                      // deg: breath in, one long exhale
-      var K_PRESS = [[0, 0], [.1, 0], [.6, 5.5], [1, 1.2], [1.35, 1.8], [1.9, 0]];                          // px: head into the pillow, release, settle
-      var K_ROLL = [[0, 0], [.1, 0], [.6, 1.1], [1, .25], [1.35, .35], [1.9, 0]];                            // deg: on its contact point
-      var K_SINK = [[0, 0], [.55, 0], [1.35, 18], [1.8, 12.5], [2.3, 13.5], [2.85, 0]];                    // px: shoulder deep into mattress, latex returns it
-      var K_PELVIS = [[0, 0], [.55, 0], [1.35, 16], [1.8, 11], [2.3, 12], [2.9, 0]];                        // px: pelvis presses in, floats back (coordinated with shoulder)
-      var K_ARMDN = [[0, 0], [.05, 0], [1.15, -1.8], [1.4, -1.8], [2.4, .15], [2.75, 0]];                  // deg: arm inward (rounded), out to place
-      var K_OPEN = [[0, 0], [1.65, 0], [2.15, 3.5], [2.55, -.6], [2.85, 0]];                               // px: shoulder opens as arm arrives
+      // 1.9.4, after the brand's own film (BOTANIC, 0:15–0:19): she turns onto her side with the upper arm rolled in front
+      // of her chest, hidden by her body; the head presses into the pillow; the lower shoulder and the pelvis press into
+      // the latex; the arm comes out from in front of her, rises over her side, round, a touch past its place, and lays
+      // down along her side (the shoulder blade glides back with it); the latex lifts her back up. 3 s in all.
+      var K_THORAX = [[0, 0], [.4, -.12], [1.3, .05], [2.2, .2], [2.75, 0]];                                // deg: breath in, one long exhale
+      var K_PRESS = [[0, 0], [.05, 0], [.55, 6], [.95, 1.6], [1.3, 2.2], [1.9, 0]];                           // px: head into the pillow, release, settle
+      var K_ROLL = [[0, 0], [.05, 0], [.55, 1.1], [.95, .3], [1.3, .4], [1.9, 0]];                            // deg: on its contact point
+      var K_ARMDN = [[0, 0], [.12, 0], [.85, -11], [1.25, -11], [2.0, .35], [2.5, 0]];                     // deg: rolled in (down, toward her chest) … out, a touch past, laid down
+      var K_ARMK = [[0, 0], [.12, 0], [.85, .28], [1.25, .28], [2.0, 0]];                                  // foreshortened while it lies in front of her
+      var K_HIDE = [[0, -300], [.3, -300], [.8, 0], [1.3, 0], [1.9, -300]];                                 // px: how deep below her back's line the arm still shows
+      var K_SINK = [[0, 0], [.5, 0], [1.15, 18], [1.6, 13], [2.0, 14.5], [2.75, 0]];                        // px: the lower shoulder presses into the latex, floats back up
+      var K_PELVIS = [[0, 0], [.65, 0], [1.3, 15], [1.75, 10], [2.15, 11], [2.75, 0]];                      // px: the pelvis presses in, floats back up
       function pose(t) {
         var th = key(t, K_THORAX) * DEG, roll = key(t, K_ROLL) * DEG, press = key(t, K_PRESS), neck = .5 * key(t - .1, K_ROLL) * DEG;
-        var dn = key(t, K_ARMDN) * DEG, sink = key(t, K_SINK), pel = key(t, K_PELVIS), open = key(t, K_OPEN);
-        var sd = key(t - .08, K_ARMDN);                                                                     // the shoulder blade, a beat behind the arm
-        var trem = t > 2.35 && t < 2.85 ? 1.3 * Math.sin(Math.PI * (t - 2.35) / .5) * Math.sin(2 * Math.PI * 4.6 * (t - 2.35)) : 0;
+        var dn = key(t, K_ARMDN) * DEG, fk = key(t, K_ARMK), sink = key(t, K_SINK), pel = key(t, K_PELVIS);
+        var sd = key(t - .08, K_ARMDN), sk = key(t - .08, K_ARMK) * 5;                                    // the shoulder blade, a beat behind the arm
         var base = rot(LUMBAR, .3 * th), thorax = rot(LUMBAR, th);
-        var girdle = mul(base, mul(tr(-1.1 * sd, -2.4 * sd - open + trem), rot(SCAP, .3 * sd * DEG)));
-        var armM = mul(base, rot(SHOULDER, dn));                                                            // about the shoulder joint (it stays put: the logo letters lie on it)
+        // drawn forward around the ribs while the arm is in front (the shoulder rounds), back toward the spine as it returns
+        var girdle = mul(base, mul(tr(2.2 * sk - .35 * sd, -1.6 * sk - .5 * sd), rot(SCAP, -.18 * sd * DEG)));
         var neckM = mul(base, rot(C7, neck));
         var headM = mul(neckM, mul(tr(0, press), rot(CONTACT, roll - neck)));
         var low = mul(base, tr(.25 * sink, sink));
         var pelvis = mul(base, mul(tr(0, pel), rot(HIP, .02 * pel * DEG)));
-        return { bones: [thorax, girdle, armM, neckM, headM, low, pelvis], give: [.8 * (.6 * key(t - .06, K_SINK) + .4 * key(t - .06, K_PELVIS)), .6 * key(t - .04, K_PRESS)] };
+        var arm = inv(mul(rot(SHOULDER, dn), sc(SHOULDER, 1 - fk, 1)));                                     // the arm layer, about the shoulder joint
+        return { bones: [thorax, girdle, base, neckM, headM, low, pelvis], arm: arm, hide: key(t, K_HIDE),
+          give: [.75 * (.6 * key(t - .06, K_SINK) + .4 * key(t - .06, K_PELVIS)), .6 * key(t - .04, K_PRESS)] };
       }
       // 2×3 affine helpers: [a, b, c, d, e, f] maps (x, y) → (a·x + b·y + c, d·x + e·y + f)
       function rot(o, a) { var c = Math.cos(a), s = Math.sin(a); return [c, -s, o[0] - c * o[0] + s * o[1], s, c, o[1] - s * o[0] - c * o[1]]; }
       function tr(x, y) { return [1, 0, x, 0, 1, y]; }
       function sc(o, x, y) { return [x, 0, o[0] - x * o[0], 0, y, o[1] - y * o[1]]; }
+      function inv(m) { var d = m[0] * m[4] - m[1] * m[3]; return [m[4] / d, -m[1] / d, (m[1] * m[5] - m[4] * m[2]) / d, -m[3] / d, m[0] / d, (m[3] * m[2] - m[0] * m[5]) / d]; }
       function mul(m, n) { return [m[0] * n[0] + m[1] * n[3], m[0] * n[1] + m[1] * n[4], m[0] * n[2] + m[1] * n[5] + m[2], m[3] * n[0] + m[4] * n[3], m[3] * n[1] + m[4] * n[4], m[3] * n[2] + m[4] * n[5] + m[5]]; }
       // The layer is snapped to the device-pixel grid around the sleeper's area; each of its pixels samples the photo at
       // exactly the point the picture shows there, so she registers with the photo to a fraction of a pixel.
@@ -343,6 +350,7 @@
         var ps = pose(t), X = [], Y = [];
         ps.bones.forEach(function (m) { X.push(m[0], m[1], m[2]); Y.push(m[3], m[4], m[5]); });
         gl.uniform3fv(U.X, X); gl.uniform3fv(U.Y, Y);
+        gl.uniform3f(U.IA, ps.arm[0], ps.arm[1], ps.arm[2]); gl.uniform3f(U.IB, ps.arm[3], ps.arm[4], ps.arm[5]); gl.uniform1f(U.AD, ps.hide);
         gl.uniform3fv(U.VD, [0, ps.give[0], 1.2, 0, ps.give[1], 1]);
         gl.uniform1f(U.O, Math.min(1, t / .18, (DUR - t) / .25));                   // the layer fades in/out while she is at rest
         gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);

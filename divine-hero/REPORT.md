@@ -1,5 +1,42 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.9.4 — the arm rolls in behind her and comes back out, after the brand's own film (2026-10-03)
+
+Owner, on 1.9.3:
+* The elbow is too sharp; everything should be rounder.
+* The upper arm should look as if it is drawn out from the hidden inner side, then show fully and naturally in its usual place.
+* The body should press into the mattress and float back up at the pelvis and the lower shoulder.
+* All the visible movement adds up to 3 s, smoother and deeper.
+* Reference: the BOTANIC film (the owner's screen recording, same model and same pillow). Its 0:15–0:19 is exactly this settle.
+
+**What the film shows** (extracted at 4–6 fps)
+1. She lies on her side with the upper arm rolled in front of her chest, hidden by her body; only the round shoulder cap shows.
+2. The head presses into the pillow and the lower shoulder sinks into the latex.
+3. The arm comes out from in front of her, rises over her side as one round shape and slides back along it; the shoulder blade glides back toward the spine with it.
+4. The arm lays down along her side (the pose in our photo) and the body comes to rest.
+
+**The arm is now its own layer** (`tests/make-arm.py` → `arm-mask.webp` 18 KB, `arm-plate.webp` 8 KB)
+* The arm's underside is measured column by column in the photo, so no strip of the tank top travels with it.
+* Her back behind the arm is rebuilt up to its hidden top line: a rounded shoulder, then the slope down to her waist. It is a harmonic fill from her back, with no flux from the sky, plus soft rim shading and matched grain. The sky above that line comes from the existing clean plate.
+* In the browser the arm turns about the shoulder joint and foreshortens. Its motion fades out toward the shoulder, so the arm bends as one round shape and there is no hinge or sharp elbow.
+* It is drawn over her back, except where it has rolled behind her back's line. That threshold sweeps down as it rolls in and back up as it comes out, softly over 60 px, so the arm slips behind her body and emerges from it.
+* The shoulder cap under the DIVINE letters stays put, so the logo plate's patches never float.
+
+**The sequence (3.0 s, fades included)**
+* 0.05–1.9 s: the head presses 6 px into the pillow, rolls 1.1° on its contact point and releases; the pillow gives.
+* 0.12–0.85 s: the arm rolls in: down 11° and foreshortened 28%. It is hidden from 0.85 to 1.25 s.
+* 0.5–2.75 s: the lower shoulder presses 18 px into the latex. The latex holds it at 13 px, settles at 14.5, then floats it back up.
+* 0.65–2.75 s: the pelvis presses in 15 px and floats back up the same way.
+* 1.25–2.5 s: the arm comes out over her side, a touch past its place (0.35°), and lays down. The shoulder blade follows 80 ms behind: drawn forward while the arm is in front, gliding back as it returns.
+* The breath runs underneath: in at 0.4 s, then one long exhale.
+
+**Fixes found on the way**
+* Vertical streaks around the benefit text: the arm term sampled outside its box.
+* A seam beside the small Dual Plush mattress: the bed's give now starts past it, and the lower side's sink fades out before it.
+
+* Tests: all green (329–330 per harness, panels 792/792, axe 0, guards). hero.js 23 KB. LCP and CLS are unchanged; the arm layers load on first intent with the other settle layers.
+* Video: `reports/compare/settle-1.9.4.mp4`.
+
 ## 1.9.3 — four separate movements, the arm rolls in and comes out (2026-10-03)
 
 Owner, on 1.9.2: the upper arm and shoulder look wooden, like a plane's wing starting to open.
