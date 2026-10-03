@@ -1,5 +1,46 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.9.1 — Natural Adaptation, rebuilt: only she moves; points survive the display sleeping (2026-10-03)
+
+Owner, on 1.9.0: the model looked like a monitor defect. The screen tore and shifted instead of the woman moving; there was no natural settling; letters and objects bent. Wanted: about 3 s; only the woman moves; a sequence, not everything at once (lower shoulder, then upper, then the head pressing into the pillow and releasing onto it, then a slight flutter in the back); the mattress takes the weight and gives it back; all carried by an exhale; relaxing. Also: after the display sleeps, the points stop responding until the browser is restarted twice.
+
+**Why 1.9.0 looked broken**
+* Its warp moved everything in an area, the sky, pillow, mattress and lettering included.
+* It was drawn only where pixels moved, so the layer switched on and off in patches.
+* Its picture was resampled differently from the photo, about one device pixel off and at a different sharpness, so every edge shimmered.
+
+**1.9.1: three layers, only the woman moves** (`tests/make-sleeper.py` → `sleeper-mask.webp` 35 KB + `sleeper-plate.webp` 9 KB, loaded on first intent)
+* Her own soft-edged mask, cut from the photo, includes the faint fringe outside her outline, so no trace of the old contour stays behind.
+* A clean background is rebuilt behind her contour (what shows where she moves away).
+* The baked lettering on her back is lifted off her and stays exactly where it is. The photo itself shows there, including its drop shadow; her skin under it is rebuilt so she moves beneath it.
+* Per pixel (WebGL): `out = W(q) + (1 − A(q))·(Bg(p') − Bg(q))`, with `q = p − D(p)`. At rest this is exactly the photo.
+* The layer covers only her and the mattress strip under her. Everything else (sky, pillow, every letter) is the untouched photo.
+* Registration: the layer is snapped to the device-pixel grid and maps the file exactly as the browser's `object-fit: cover` does (each axis of the rounded file size), plus the measured half-pixel convention. The residual is ≤ 0.25 device px (retina ≈ 0), where 1.9.0 was about 1 px.
+* It samples the photo file at its own resolution.
+
+**The choreography (3.25 s)**, modelled on a sleeper's micro-resettle:
+* 0.05–0.9 s: breath in. The flank rises 2.5 px.
+* 0.15–1.45 s: the lower shoulder unloads into the mattress, down 10 px and 5 px toward the pillow, then rebounds 1.8 px. The mattress strip under her gives 5 px a beat later (0.25–1.6 s) and returns.
+* 0.6–2.5 s: the upper shoulder rolls forward and lets go, 14 px down and 7 px forward, with a long release.
+* 1.25–2.55 s: the head presses into the pillow (10 px, rolling 0.7° on its contact point) and releases onto it, with a 22% second settle to 2.95 s.
+* 2.4–2.95 s: a last flutter in the shoulder blade, one and a half damped cycles of 3 px.
+* 0.7–3.0 s: one long exhale, the flank down 4.5 px.
+* Every curve leaves and lands at zero speed, and the end is the exact photo. The layer fades in and out (0.18 s / 0.25 s) while she is still. Measured on 1440 px: shoulder ≈ 4.5 px, head ≈ 5 px on screen.
+
+**Points after sleep**
+* The hover hit-test waited for an animation frame. A frame lost to display sleep left that wait pending forever, so every later hover was ignored.
+* Now a frame pending longer than 120 ms is dropped and the hit-test runs at once (the same guard applies to layout and to the settle).
+* Waking the page (`visibilitychange`, `pageshow` from the back/forward cache, `resume`) resets the points and closes a stale open point; window focus resets the frame guards.
+* Point positions are re-measured when older than 1 s.
+
+* Weight: hero.js 17.6 → 20.0 KB minified. The two layers (44 KB) load on the first intent, not with the page; LCP and CLS are unchanged.
+* Tests:
+  * `settle` (virtual clock): she moves at 0.9 s; the pillow lettering is pixel-identical at the peak; she is the exact photo after 3.5 s; touch; reduced motion; no errors.
+  * New `after sleep`: with every animation frame dropped and then restored, and after a wake event, hovering opens the point at once.
+  * All suites green: 329–330 per harness, panels 792/792, axe 0, guards.
+* Pinned staging section: `ecwid/section-1.9.1-jsdelivr.html` (commit `1fd688d`).
+* Review video: `reports/compare/settle-1.9.1.mp4` (retina, rendered frame by frame; the settle plays twice).
+
 ## 1.9.0 — Natural Adaptation: the sleeper settles; Dual Plush lands clean (2026-10-02)
 
 Owner: (1) while the mattress lands, a second mattress opened under it in the final phase; (2) new: opening **Natural Adaptation** shows the sleeper's micro-movements, the kind of settling people do in sleep. The head nestles into the pillow, the upper shoulder lets go (more visible), and the lower shoulder nudges the pillow, sinks a touch into the mattress and floats back. Everything is human, smooth, without kinks, 1–2 s, and returns to the original pose.
