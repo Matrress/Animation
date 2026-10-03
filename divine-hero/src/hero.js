@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.9.3 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.9.4 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.9.3';
+  var VERSION = '1.9.4';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07 };
@@ -209,7 +209,7 @@
       var BONES = [
         [700, 1360, 1600, 1440, 300, 260],     // 0 thorax (the back, between hips and shoulders)
         [700, 1090, 1660, 1240, 95, 115],      // 1 shoulder girdle: shoulder blade, strap, neck-shoulder slope (below the shoulder joint)
-        [60, 880, 1380, 930, 170, 150],        // 2 upper arm and the deltoid
+        [60, 880, 1380, 930, 170, 240],        // 2 upper arm and the deltoid (wide soft falloff: everything stays round)
         [1700, 1290, 2060, 1340, 120, 130],    // 3 neck
         [2150, 1350, 2620, 1330, 235, 110],    // 4 head
         [1240, 1880, 1640, 1820, 150, 170],    // 5 the lower side, on the mattress, against the pillow
@@ -246,7 +246,7 @@
           var fs = 'precision highp float;uniform sampler2D T,P,K;uniform vec4 C,R,Z;uniform vec2 HO;uniform vec4 S[7];uniform vec2 F[7];uniform vec3 X[7],Y[7];uniform vec4 V[2];uniform vec3 VD[2];uniform float O;varying vec2 v;' +
             'vec2 u(vec2 x){return(x-Z.xy)/Z.zw;}vec2 r(vec2 x){return(x+HO-R.xy)/R.zw;}' +
             'vec2 skin(vec2 p){vec2 D=vec2(0.);float ws=0.;for(int i=0;i<7;i++){vec2 a=S[i].xy,b=S[i].zw,ab=b-a;float h=clamp(dot(p-a,ab)/dot(ab,ab),0.,1.);' +
-            'float w=1.-smoothstep(F[i].x,F[i].x+F[i].y,length(p-a-ab*h));D+=w*(vec2(dot(X[i].xy,p)+X[i].z,dot(Y[i].xy,p)+Y[i].z)-p);ws+=w;}D/=max(ws,1.);D.x*=smoothstep(0.,170.,p.x);return D;}' +
+            'float w=1.-smoothstep(F[i].x,F[i].x+F[i].y,length(p-a-ab*h));D+=w*(vec2(dot(X[i].xy,p)+X[i].z,dot(Y[i].xy,p)+Y[i].z)-p);ws+=w;}D/=max(ws,1.);return D;}' +
             'vec2 give(vec2 p){vec2 D=vec2(0.);for(int i=0;i<2;i++){vec4 g=V[i];D+=(1.-smoothstep(1.,1.+VD[i].z,length((p-g.xy)/g.zw)))*VD[i].xy;}return D*(1.-smoothstep(1600.,1622.,p.y)*step(1700.,p.x)*(1.-step(2100.,p.y)));}' +
             'vec3 bg(vec2 x){vec2 t=u(x);return mix(texture2D(T,r(x)).rgb,texture2D(P,t).rgb,min(texture2D(K,t).b*2.,1.)*(1.-step(.52,texture2D(K,t).b)));}' +
             'void main(){vec2 p=C.xy+v*C.zw;vec2 e=min(p-Z.xy+vec2(step(Z.x,0.)*1e4,0.),Z.xy+Z.zw-p);float f=smoothstep(0.,60.,min(e.x,e.y));' +
@@ -276,7 +276,7 @@
           gl.uniform2f(U.HO, .5 / kx, .5 / ky);   // browsers draw a picture half a file pixel on (measured): match it
           gl.uniform4fv(U.S, [].concat.apply([], BONES.map(function (q) { return q.slice(0, 4); })));
           gl.uniform2fv(U.F, [].concat.apply([], BONES.map(function (q) { return q.slice(4, 6); })));
-          gl.uniform4fv(U.V, [1440, 2080, 300, 50, 2430, 1590, 190, 26]);           // the mattress under her side; the pillow under her head (its surface only: the lettering on it never moves)
+          gl.uniform4fv(U.V, [1250, 2085, 560, 55, 2430, 1590, 190, 26]);           // the mattress under her side; the pillow under her head (its surface only: the lettering on it never moves)
           plane.insertBefore(cv, img.parentNode.nextSibling);               // right over the photo, under the logo plate and everything else
           built = true;
           if (pending && clock() - pending < 1500) play();
@@ -289,37 +289,33 @@
         return k[k.length - 1][1];
       }
       var DEG = Math.PI / 180;
-      // 1.9.3: four movements, each with its own rhythm, one after the other (owner's order), carried by one breath:
-      //  1 the head presses into the pillow and releases (the neck follows)            0.15–1.7 s
-      //  2 the lower shoulder sinks deep into the mattress; the latex takes it, gives back 0.6–2.6 s
-      //  3 the upper arm: it has drifted down and rolled in toward the body (internal rotation: it sinks,
-      //    foreshortens, shows less), then comes up and out to its own place; the shoulder blade always
-      //    follows the arm (it glides down with it, rides up as the arm returns), the shoulder opens a touch 0.2–2.65 s
-      //  4 the pelvis and the lower back settle into the mattress and come to rest       2.0–2.95 s
-      var K_THORAX = [[0, 0], [.45, -.12], [1.2, .04], [2.1, .18], [2.7, .05], [3, 0]];                     // deg: breath in, one long exhale
-      var K_PRESS = [[0, 0], [.15, 0], [.55, 4.6], [.8, 3.6], [1.05, 1], [1.3, 1.4], [1.7, 0]];             // px: head into the pillow, release, settle
-      var K_ROLL = [[0, 0], [.15, 0], [.55, .9], [.8, .72], [1.05, .2], [1.3, .28], [1.7, 0]];              // deg: on its contact point
-      var K_SINK = [[0, 0], [.6, 0], [1.05, 13], [1.3, 9.2], [1.55, 10.2], [2.1, 2.2], [2.6, 0]];           // px: lower side into the mattress (deep), latex pushes back
-      var K_ARMDN = [[0, 0], [.2, 0], [1.25, -1.35], [1.5, -1.35], [2.2, .22], [2.65, 0]];                  // deg: the arm sinks (elbow down) … comes up, a touch past, settles
-      var K_ARMIN = [[0, 0], [.2, 0], [1.25, .034], [1.5, .034], [2.2, -.004], [2.65, 0]];                  // foreshortening: rolled in toward the body … out to its place
-      var K_ARMSINK = [[0, 0], [.25, 0], [1.25, 5], [1.5, 5], [2.2, -.8], [2.65, 0]];                       // px: the arm's weight drawing the shoulder blade down
-      var K_OPEN = [[0, 0], [1.5, 0], [1.95, 5], [2.35, -1.2], [2.7, 0]];                                   // px: as the arm arrives the shoulder lifts/opens a touch, then lets go
-      var K_PELVIS = [[0, 0], [2, 0], [2.35, 1], [2.65, -.22], [2.95, 0]];                                  // the pelvis settles: 6 px into the bed, 0.3° about the hip
+      // 1.9.4: fewer, longer, deeper curves; all the visible movement inside 3 s:
+      //  1 the head presses into the pillow and releases (the neck follows)                         0.1–1.9 s
+      //  2 the body presses into the mattress at the lower shoulder and the pelvis together, the latex takes the
+      //    weight, and she floats back up on it                                                       0.6–2.9 s
+      //  3 the upper arm: it sinks in toward the inner side of the body (it turns about the shoulder joint, the
+      //    elbow goes down out of sight behind the curve of the back), then comes out from there, up to its own
+      //    place, rounded, a touch past and settles; the shoulder blade follows it all the way      0.1–2.75 s
+      var K_THORAX = [[0, 0], [.45, -.12], [1.3, .05], [2.2, .2], [2.75, .05], [3, 0]];                      // deg: breath in, one long exhale
+      var K_PRESS = [[0, 0], [.1, 0], [.6, 5.5], [1, 1.2], [1.35, 1.8], [1.9, 0]];                          // px: head into the pillow, release, settle
+      var K_ROLL = [[0, 0], [.1, 0], [.6, 1.1], [1, .25], [1.35, .35], [1.9, 0]];                            // deg: on its contact point
+      var K_SINK = [[0, 0], [.6, 0], [1.25, 16], [1.75, 11], [2.2, 12], [2.85, 0]];                         // px: the lower shoulder presses in, the latex lifts it back
+      var K_PELVIS = [[0, 0], [.75, 0], [1.4, 12], [1.9, 7.5], [2.3, 8.2], [2.9, 0]];                       // px: the pelvis presses in, floats back up
+      var K_ARMDN = [[0, 0], [.1, 0], [1.2, -2.4], [1.45, -2.4], [2.35, .2], [2.75, 0]];                    // deg: the arm sinks in toward the body … comes out to its place
+      var K_OPEN = [[0, 0], [1.6, 0], [2.1, 4], [2.5, -.8], [2.85, 0]];                                     // px: as the arm arrives the shoulder lifts/opens, lets go
       function pose(t) {
         var th = key(t, K_THORAX) * DEG, roll = key(t, K_ROLL) * DEG, press = key(t, K_PRESS), neck = .5 * key(t - .1, K_ROLL) * DEG;
-        var dn = key(t, K_ARMDN) * DEG, fin = key(t, K_ARMIN), sink = key(t, K_SINK), pel = key(t, K_PELVIS);
-        var sd = key(t - .08, K_ARMDN), sa = key(t - .08, K_ARMSINK);                                      // the shoulder blade, a beat behind the arm
-        var open = key(t, K_OPEN);
-        var trem = t > 2.3 && t < 2.8 ? 1.5 * Math.sin(Math.PI * (t - 2.3) / .5) * Math.sin(2 * Math.PI * 4.6 * (t - 2.3)) : 0;   // the muscle settles
-        var base = rot(LUMBAR, .3 * th);
-        var thorax = rot(LUMBAR, th);
-        var girdle = mul(base, mul(tr(-1.2 * sd, -2.6 * sd + .55 * sa - open + trem), rot(SCAP, .35 * sd * DEG)));
-        var armM = mul(base, mul(rot(SHOULDER, dn), sc(SHOULDER, 1 - fin, 1)));                      // about the shoulder joint (it stays put: the logo letters lie on it)
+        var dn = key(t, K_ARMDN) * DEG, sink = key(t, K_SINK), pel = key(t, K_PELVIS), open = key(t, K_OPEN);
+        var sd = key(t - .08, K_ARMDN);                                                                     // the shoulder blade, a beat behind the arm
+        var trem = t > 2.35 && t < 2.85 ? 1.3 * Math.sin(Math.PI * (t - 2.35) / .5) * Math.sin(2 * Math.PI * 4.6 * (t - 2.35)) : 0;
+        var base = rot(LUMBAR, .3 * th), thorax = rot(LUMBAR, th);
+        var girdle = mul(base, mul(tr(-1.1 * sd, -2.4 * sd - open + trem), rot(SCAP, .3 * sd * DEG)));
+        var armM = mul(base, rot(SHOULDER, dn));                                                            // about the shoulder joint (it stays put: the logo letters lie on it)
         var neckM = mul(base, rot(C7, neck));
         var headM = mul(neckM, mul(tr(0, press), rot(CONTACT, roll - neck)));
-        var low = mul(base, tr(.3 * sink, sink));
-        var pelvis = mul(base, mul(tr(0, 6 * pel), rot(HIP, .3 * pel * DEG)));
-        return { bones: [thorax, girdle, armM, neckM, headM, low, pelvis], give: [.8 * key(t - .05, K_SINK), .6 * key(t - .04, K_PRESS)] };
+        var low = mul(base, tr(.25 * sink, sink));
+        var pelvis = mul(base, mul(tr(0, pel), rot(HIP, .02 * pel * DEG)));
+        return { bones: [thorax, girdle, armM, neckM, headM, low, pelvis], give: [.8 * (.6 * key(t - .06, K_SINK) + .4 * key(t - .06, K_PELVIS)), .6 * key(t - .04, K_PRESS)] };
       }
       // 2×3 affine helpers: [a, b, c, d, e, f] maps (x, y) → (a·x + b·y + c, d·x + e·y + f)
       function rot(o, a) { var c = Math.cos(a), s = Math.sin(a); return [c, -s, o[0] - c * o[0] + s * o[1], s, c, o[1] - s * o[0] - c * o[1]]; }
