@@ -16,6 +16,7 @@ Owner: "Latex" inside both buttons. "Latex Mattress" / "Latex Topper" heavier, a
 * The settle animation's WebGL context is now released when a section is destroyed. Instant Site re-initialises sections as tiles load and unload, and browsers cap live contexts.
 * `hero-band-3554.webp` is re-encoded back to its original size (234 KB) after the elbow retouch.
 * No CSS selector without matching markup. No horizontal overflow at any of the 20 matrix viewports, from a 360 px phone to a 4K screen.
+* Tests all green (329–330 per harness, panels 792/792, guards, axe 0); LCP and CLS unchanged. Pinned: `ecwid/section-1.9.4-jsdelivr.html` (commit `d3dac56`).
 
 ## 1.9.4 — a settling, not a performance; the elbow rounded (2026-10-03)
 

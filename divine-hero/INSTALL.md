@@ -15,7 +15,7 @@ Ecwid's documented 4,000-symbol limit belongs to the **site-wide body "Custom Ja
 
 | Form | File | Paste size | What must be hosted |
 |---|---|---|---|
-| All-in-one (over the ~20k paste limit: not for the live editor) | `ecwid/section-1.9.4-allinone-jsdelivr.html` | 34,611 characters | Nothing: CSS + JS are inside the section; images/fonts come from jsDelivr (pinned commit `fe2609f`) |
+| All-in-one (over the ~20k paste limit: not for the live editor) | `ecwid/section-1.9.4-allinone-jsdelivr.html` | 34,611 characters | Nothing: CSS + JS are inside the section; images/fonts come from jsDelivr (pinned commit `d3dac56`) |
 | All-in-one, own domain | `ecwid/section-1.9.4-allinone.html` | 33,967 characters | images + fonts on `assets.divinedunlop.com` (§2) |
 | External CSS/JS (leanest page HTML) | `ecwid/section-1.9.4.html` | 8,400 characters | everything in `release/1.9.4/` on `assets.divinedunlop.com` (§2) |
 
@@ -42,7 +42,7 @@ All three produce identical output (verified: same geometry, same 156 interactio
 
 The production section below already points at `https://assets.divinedunlop.com/divine-hero/1.9.4/`.
 
-**Ready now — staging via jsDelivr (no setup):** `ecwid/section-1.9.4-jsdelivr.html` loads the same files from this repository at the pinned commit `fe2609f`. It's immutable and CORS-enabled. Use it for the hidden-page test or as an interim host. Swap to the first-party file before launch: that file serves from a GitHub fork of an unrelated project, so it isn't brand-controlled.
+**Ready now — staging via jsDelivr (no setup):** `ecwid/section-1.9.4-jsdelivr.html` loads the same files from this repository at the pinned commit `d3dac56`. It's immutable and CORS-enabled. Use it for the hidden-page test or as an interim host. Swap to the first-party file before launch: that file serves from a GitHub fork of an unrelated project, so it isn't brand-controlled.
 
 ## 3. Exact external file URLs (production)
 
@@ -123,8 +123,8 @@ Source of truth: `ecwid/section-1.9.4.html` (identical to the block below).
 </div>
 </div>
 <nav class="ddh__shop" aria-label="Shop natural latex">
-<a class="ddh__cta" href="https://divinedunlop.com/products/latex-mattresses-collection"><span class="ddh__cta-t">Shop Your <span class="ddh__cta-k"><span class="ddh__cta-n">Latex </span>Mattress</span></span></a>
-<a class="ddh__cta" href="https://divinedunlop.com/products/latex-toppers-collection"><span class="ddh__cta-t">Shop Your <span class="ddh__cta-k"><span class="ddh__cta-n">Latex </span>Topper</span></span></a>
+<a class="ddh__cta" href="https://divinedunlop.com/products/latex-mattresses-collection"><span class="ddh__cta-a">Shop Your</span> <span class="ddh__cta-k">Latex Mattress</span></a>
+<a class="ddh__cta" href="https://divinedunlop.com/products/latex-toppers-collection"><span class="ddh__cta-a">Shop Your</span> <span class="ddh__cta-k">Latex Topper</span></a>
 </nav>
 </div>
 <i class="ddh__end" hidden></i>
