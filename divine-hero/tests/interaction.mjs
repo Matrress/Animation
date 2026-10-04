@@ -228,7 +228,7 @@ async function night() {
   const v = await page.evaluate(() => {
     const op = (s) => +getComputedStyle(document.querySelector(s)).opacity;
     const pts = [...document.querySelectorAll('.ddh__point:not([data-ddh-point=night])')].map((p) => +getComputedStyle(p).opacity);
-    const cta = [...document.querySelectorAll('.ddh__cta')].map((a) => a.innerText.trim());
+    const cta = [...document.querySelectorAll('.ddh__cta')].map((a) => a.innerText.replace(/\s+/g, ' ').trim());
     return { night: op('.ddh__night'), lockup: op('.ddh__sky-lockup'), dp: op('.ddh__dp'), pts: Math.max(...pts), title: document.querySelector('.ddh__night-copy').innerText.trim(), cta };
   });
   ok(v.night > .98 && v.lockup < .02 && v.dp < .02 && v.pts < .02, 'night scene up, every other text hidden: ' + JSON.stringify(v));
@@ -241,7 +241,7 @@ async function night() {
   await page.mouse.move(c.x + 330, c.y + 260, { steps: 6 }); await page.waitForTimeout(900);
   ok((await state(page)).s !== 'night', 'leaving the range brings the day back');
   ok(await page.evaluate(() => +getComputedStyle(document.querySelector('.ddh__night')).opacity) < .02, 'night layer gone');
-  ok(await page.evaluate(() => [...document.querySelectorAll('.ddh__cta')].map((a) => a.innerText.trim()).join('|')) === 'Shop Your Mattress|Shop Your Topper', 'day buttons back');
+  ok(await page.evaluate(() => [...document.querySelectorAll('.ddh__cta')].map((a) => a.innerText.replace(/\s+/g, ' ').trim()).join('|')) === 'Shop Your Latex Mattress|Shop Your Latex Topper', 'day buttons back');
   await page.mouse.move(c.x, c.y, { steps: 4 }); await page.waitForTimeout(300);
   ok((await state(page)).s === 'night', 'night again on return');
   await page.mouse.move(5, 5); await page.waitForTimeout(300);

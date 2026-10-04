@@ -218,7 +218,6 @@
       var LUMBAR = [900, 1660], SCAP = [1180, 1150], SHOULDER = [1440, 880], HIP = [560, 1700], C7 = [1700, 1300], CONTACT = [2420, 1575];
       var reduce = w.matchMedia ? w.matchMedia('(prefers-reduced-motion:reduce)') : { matches: false };
       var cv, gl, U, srcs = [], built = false, failed = !img || !plane || !w.WebGLRenderingContext, raf = 0, last = 0, t0 = 0, pending = 0, loading = false;
-      function bump(t, a, p, b) { return t <= a || t >= b ? 0 : t < p ? .5 - .5 * Math.cos(Math.PI * (t - a) / (p - a)) : .5 + .5 * Math.cos(Math.PI * (t - p) / (b - p)); }
       function clock() { return w.performance && performance.now ? performance.now() : Date.now(); }
       function load() {
         if (failed || loading) return; loading = true;
@@ -321,7 +320,6 @@
       // 2×3 affine helpers: [a, b, c, d, e, f] maps (x, y) → (a·x + b·y + c, d·x + e·y + f)
       function rot(o, a) { var c = Math.cos(a), s = Math.sin(a); return [c, -s, o[0] - c * o[0] + s * o[1], s, c, o[1] - s * o[0] - c * o[1]]; }
       function tr(x, y) { return [1, 0, x, 0, 1, y]; }
-      function sc(o, x, y) { return [x, 0, o[0] - x * o[0], 0, y, o[1] - y * o[1]]; }
       function mul(m, n) { return [m[0] * n[0] + m[1] * n[3], m[0] * n[1] + m[1] * n[4], m[0] * n[2] + m[1] * n[5] + m[2], m[3] * n[0] + m[4] * n[3], m[3] * n[1] + m[4] * n[4], m[3] * n[2] + m[4] * n[5] + m[5]]; }
       // The layer is snapped to the device-pixel grid around the sleeper's area; each of its pixels samples the photo at
       // exactly the point the picture shows there, so she registers with the photo to a fraction of a pixel.
@@ -363,7 +361,7 @@
         stop(); cv.style.display = 'block'; root.setAttribute('data-ddh-settling', '');
         t0 = last = clock(); draw(0); raf = w.requestAnimationFrame(tick);
       }
-      cleanups.push(function () { stop(); if (cv && cv.parentNode) cv.parentNode.removeChild(cv); });
+      cleanups.push(function () { stop(); if (cv && cv.parentNode) cv.parentNode.removeChild(cv); var lc = gl && gl.getExtension('WEBGL_lose_context'); if (lc) lc.loseContext(); });   // Instant Site re-inits sections: free the GPU context now, not at GC
       return { load: load, play: play, stop: stop };
     })();
 

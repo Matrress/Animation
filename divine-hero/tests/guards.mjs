@@ -28,9 +28,9 @@ const removed = ['Mattresses', 'Toppers', 'Pillows']; // 1.2.0: duplicate menu b
   // 1.6.0: "conception" removed at the owner's request; "Dual Plush" is live text aligned with the mattress
   { const i = a2.indexOf('European production, certified for UK & EU. Dual Plush conception.'); if (i > -1) a2[i] = 'European production, certified for UK & EU. Dual Plush mattress and topper system.'; }
   a2.push('Dual Plush');
-  // 1.7.0: night mode headline + "Latex" in the button labels (shown in night mode)
+  // 1.7.0: night mode headline + "Latex" in the button labels (1.9.4: always shown)
   for (const t of ['Shop Your Mattress', 'Shop Your Topper']) { const i = a2.indexOf(t); if (i > -1) a2.splice(i, 1); }
-  a2.push('Improve', 'the', 'Quality', 'of Your', 'Sleep', 'Night mode: improve the quality of your sleep', 'Shop Your', 'Latex', 'Mattress', 'Shop Your', 'Latex', 'Topper');
+  a2.push('Improve', 'the', 'Quality', 'of Your', 'Sleep', 'Night mode: improve the quality of your sleep', 'Shop Your', 'Latex Mattress', 'Shop Your', 'Latex Topper');   // 1.9.4: "Latex" shown always, one bold phrase
   const A = JSON.stringify(a2.slice().sort()), C = JSON.stringify(c.slice().sort()); // 1.2.0 reorders markup (visible parts first)
   ok(A === C, `copy identical to v26 apart from the removed menu bar, the 1.4.1 SEO heading, the 1.5.0 points, the 1.6.0 Dual Plush line and 1.7.0 night mode (${c.length} text nodes, order-independent)` + (A === C ? '' : '\n' + a2.filter((x) => !c.includes(x)).concat(c.filter((x) => !a2.includes(x))).join(' / ')));
 ok(!c.some((s) => /No More Overheating/i.test(s)), '"No More Overheating" absent');

@@ -1,5 +1,22 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.9.4 (final) — the shop buttons; review pass (2026-10-04)
+
+Owner: "Latex" inside both buttons. "Latex Mattress" / "Latex Topper" heavier, as on the night picture. The outline keeps the same space on both sides of the label. Keep the hover effect. Make the buttons beautiful. Review and polish everything for a final version.
+
+**Buttons**
+* Markup is now `<span class="ddh__cta-a">Shop Your</span> <span class="ddh__cta-k">Latex Mattress</span>`. The old trick that showed "Latex" only at night is gone, so "Latex" shows in every state.
+* "Shop Your" is regular weight (400). "Latex Mattress" / "Latex Topper" is 600 plus a fine 0.022em stroke, the same technique as the night line's bold words, so it reads thicker with no faux-bold fallback.
+* Fixed minimum widths are removed. Each button is sized by its label with the same padding (0.62em × 1.45em), so the space on both sides of the text is identical in both buttons: 22 / 24 / 19 px on desktop / tablet / phone.
+* On phones (≤700 px) the label goes onto two lines, "Shop Your" small over "Latex Mattress" bold, so the full name fits side by side down to 360 px.
+* Hover, press, focus and the night styles are unchanged: graphite fill on hover/press/focus; light outline and cream fill on hover at night.
+
+**Review**
+* Two unused helpers removed from hero.js: `bump()` and the scale helper `sc()`.
+* The settle animation's WebGL context is now released when a section is destroyed. Instant Site re-initialises sections as tiles load and unload, and browsers cap live contexts.
+* `hero-band-3554.webp` is re-encoded back to its original size (234 KB) after the elbow retouch.
+* No CSS selector without matching markup. No horizontal overflow at any of the 20 matrix viewports, from a 360 px phone to a 4K screen.
+
 ## 1.9.4 — a settling, not a performance; the elbow rounded (2026-10-03)
 
 Owner, on the first 1.9.4 preview (the arm rolling in behind her body and back out):
