@@ -6,7 +6,7 @@ Owner: brown is not a favourite; stay in the graphite range.
 
 * The mattress preview's stage is now graphite (#1e2225 → #363c41) with a soft cool light. Accents are pale silver-blue instead of gold, and the CTA is light grey.
 * Cards and photo panels are cool white; the Bio Comfort cards are pale sky. The Premium/Exclusive/Innovation and Orthopaedic tags are in cool tones.
-* Tests: 346–347 per harness, guards, axe 0.
+* Tests: 346–347 per harness, guards, axe 0. Pinned: `ecwid/section-1.10.3-jsdelivr.html` (commit `66b161b`).
 
 ## 1.10.2: product-page data; premium skins (2026-10-05)
 
