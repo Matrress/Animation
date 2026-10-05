@@ -640,7 +640,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__sheet i.ddh__f-s,.ddh .ddh__sheet i.ddh__f-m,.ddh .ddh__sheet i.ddh__f-f,.ddh .ddh__sheet i.ddh__f-x{font-style:normal;font-weight:600}
 .ddh .ddh__sheet i.ddh__f-s{color:#1f6fb2}
 .ddh .ddh__sheet i.ddh__f-m{color:#0b7d80}
-.ddh .ddh__sheet i.ddh__f-f{color:#a56500}
+.ddh .ddh__sheet i.ddh__f-f{color:#8f5700}
 .ddh .ddh__sheet i.ddh__f-x{color:#b8402a}
 .ddh .ddh__sheet--topper i.ddh__f-x{color:#ff9d80;text-transform:uppercase;letter-spacing:.06em}
 .ddh .ddh__sheet--mattress .ddh__spec i.ddh__f-s,.ddh .ddh__sheet--mattress .ddh__spec i.ddh__f-m,.ddh .ddh__sheet--mattress .ddh__spec i.ddh__f-f,.ddh .ddh__sheet--mattress .ddh__spec i.ddh__f-x{letter-spacing:.02em}
