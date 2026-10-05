@@ -181,7 +181,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.11.1/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.11.2/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -378,6 +378,18 @@ async function sheets() {
       k = await page.evaluate(() => [document.querySelector('#ddh-sizes').hidden, document.activeElement && document.activeElement.className]);
       ok(k[0] && /ddh__sz/.test(k[1]), 'Escape closes it, focus back on its trigger: ' + k);
     }
+    { // 1.11.2 a picture that fails to load is retried, then hidden quietly (no broken-image icon)
+      const ctx2 = await browser.newContext({ viewport: { width: 1440, height: 900 } }); const p2 = await ctx2.newPage(); const tries = [];
+      await p2.route(/assets\/m-bio\.webp/, (r) => { tries.push(r.request().url().split('/').pop()); r.abort(); });
+      await p2.goto(url, { waitUntil: 'load' }); await p2.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 8000 }); await p2.waitForTimeout(4500);
+      const bad = await p2.evaluate(() => [...document.querySelectorAll('.ddh__sheets img[src*="m-bio.webp"]')].map((i) => i.hasAttribute('data-ddh-bad') + ':' + getComputedStyle(i).visibility).join());
+      ok(tries.length >= 3 && /true:hidden/.test(bad), '1.11.2: a picture that keeps failing is asked for 3 times, then hidden quietly: ' + tries.join(',') + ' | ' + bad);
+      const ctx3 = await browser.newContext({ viewport: { width: 1440, height: 900 } }); const p3 = await ctx3.newPage(); let first = true;
+      await p3.route(/assets\/m-bio\.webp/, (r) => { if (first) { first = false; r.abort(); } else r.continue(); });
+      await p3.goto(url, { waitUntil: 'load' }); await p3.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 8000 }); await p3.waitForTimeout(3500);
+      ok(await p3.evaluate(() => [...document.querySelectorAll('.ddh__sheets img[src*="m-bio.webp"]')].every((i) => i.complete && i.naturalWidth > 0 && !i.hasAttribute('data-ddh-bad'))), '1.11.2: one failed request is recovered by the retry: the picture shows');
+      await ctx2.close(); await ctx3.close();
+    }
     { // 1.11.1 the Dual Plush reveal: the lifted mattress shows the card; it holds while the pointer travels to it
       const c = await centre(page, 'system'); await page.mouse.move(c.x + 40, c.y - 30); await page.mouse.move(c.x, c.y, { steps: 4 }); await page.waitForTimeout(900);
       let k = await page.evaluate(() => { const e = document.querySelector('#ddh-dpc'); return { state: document.querySelector('.ddh').getAttribute('data-ddh-state'), vis: e && getComputedStyle(e).display, href: e && e.querySelector('.ddh__pv-cta').getAttribute('href'), alt: e && e.querySelector('.ddh__dpc-alt').getAttribute('href'), combos: e && e.querySelectorAll('.ddh__dpc-c li').length, ov: e && (e.querySelector('.ddh__dpc-in').scrollHeight - e.querySelector('.ddh__dpc-in').clientHeight) }; });
@@ -388,7 +400,8 @@ async function sheets() {
       await page.mouse.move(r.x - 300, 200, { steps: 3 }); await page.waitForTimeout(900);
       ok(!(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-state'))), 'leaving the card returns the hero to its first state');
       const sz = await page.evaluate(() => { const b = document.querySelector('.ddh__sz').getBoundingClientRect(), t = document.querySelectorAll('.ddh__cta')[1].getBoundingClientRect(); return { right: Math.round(innerWidth - b.right), afterTopper: Math.round(b.left - t.right), mid: Math.round((b.top + b.bottom) / 2 - (t.top + t.bottom) / 2) }; });
-      ok(sz.right >= 120 && sz.afterTopper > 0 && Math.abs(sz.mid) <= 2, 'the size pill sits right of the Shop buttons, clear of a chat bubble in the corner: ' + JSON.stringify(sz));
+      ok(sz.right >= 150 && sz.afterTopper >= 60 && Math.abs(sz.mid) <= 2, '1.11.2: the size badge sits well apart from the Topper button (>= 60 px) and from the corner chat bubble (>= 150 px from the edge): ' + JSON.stringify(sz));
+      ok(await page.evaluate(() => getComputedStyle(document.querySelector('.ddh__sz')).borderTopWidth === '0px' && getComputedStyle(document.querySelector('.ddh__sz i')).borderRadius.startsWith('50%')), '1.11.2: the size trigger is a round badge with a plain label, not a bordered button like the two Shop buttons');
     }
     { // 1.11.1 bridge: the site header's own "Mattresses" link opens the same selector under the header; its click is untouched
       const link = (await page.evaluateHandle(() => [...document.querySelectorAll('.ins-tile--header a')].find((a) => a.textContent.trim() === 'Mattresses') || null)).asElement();

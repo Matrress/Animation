@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.11.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.11.2 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.11.1';
+  var VERSION = '1.11.2';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -381,6 +381,16 @@
           root.appendChild(sheetBox);
           cleanups.push(function () { closeSheet(true); if (sheetBox && sheetBox.parentNode) sheetBox.parentNode.removeChild(sheetBox); sheetBox = null; });
           wireSheets();
+      // 1.11.2: a picture that fails to load (a CDN hiccup, a dropped connection) is asked for again, twice, with a short pause;
+      // if it still fails it is hidden quietly (the card keeps its soft background) instead of showing a broken-image icon
+      on(sheetBox, 'error', function (ev) {
+        var im = ev.target; if (!im || im.tagName !== 'IMG') return;
+        var n = +im.getAttribute('data-ddh-r') || 0;
+        if (n >= 2) { im.setAttribute('data-ddh-bad', ''); return; }
+        im.setAttribute('data-ddh-r', String(n + 1));
+        var u = (im.getAttribute('src') || '').replace(/[?&]ddhr=\d+$/, '');
+        w.setTimeout(function () { if (sheetBox && sheetBox.contains(im)) im.src = u + (u.indexOf('?') > -1 ? '&' : '?') + 'ddhr=' + (n + 1); }, 700 * (n + 1));
+      }, { capture: true });   // error events do not bubble: listen on the way down
           if (!phoneMQ.matches && !lean()) eager(sheetBox);              // the rest of the pictures, low priority, right after
           if (sheetWait) { var f = sheetWait; sheetWait = null; f(); }
         })

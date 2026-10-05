@@ -993,3 +993,27 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__dpc-fig{gap:10px}
 .ddh .ddh__dpc-l{align-self:center}.ddh .ddh__dpc-l--t{align-self:start;margin-top:8%}.ddh .ddh__dpc-l--m{align-self:end;margin-bottom:14%}
 @media not all and (min-width:1051px) and (any-hover:hover){.ddh .ddh__mc--cube{grid-template-rows:auto auto}.ddh .ddh__mc--cube .ddh__mc-img{height:clamp(96px,14vh,130px)}.ddh .ddh__mc--cube .ddh__mc-img--photo img,.ddh .ddh__mc--cube .ddh__mc-img img{object-fit:contain}}
+/* ===== 1.11.2 ===== */
+/* pictures that cannot load stay quiet (see hero.js) */
+.ddh img[data-ddh-bad]{visibility:hidden}
+/* size guide trigger: no longer a bordered pill like the two Shop buttons: a round ruler badge with a plain label, set well apart from the Topper button and from a chat bubble in the corner */
+.ddh .ddh__shop .ddh__sz{gap:.7em;padding:0;border:0;border-radius:0;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;color:#1f4a45;white-space:normal;text-align:left;line-height:1.2;overflow:visible;text-overflow:clip}
+.ddh .ddh__sz i{flex:0 0 auto;width:38px;height:38px;border:0;border-radius:50%;background:#24514b;box-shadow:0 8px 16px -10px rgba(20,50,50,.7);transition:background .2s ease,transform .2s ease}
+.ddh .ddh__sz i::before{content:"";position:absolute;left:50%;top:50%;width:18px;height:9px;margin:-4.5px 0 0 -9px;border:1.5px solid #fff;border-radius:2px;background:repeating-linear-gradient(90deg,#fff 0 1.5px,transparent 1.5px 4px) 2px 0/calc(100% - 3px) 45% no-repeat}
+.ddh .ddh__sz>span{padding-bottom:1px;border-bottom:1px solid rgba(31,74,69,.32);transition:border-color .2s ease}
+@media (any-hover:hover){.ddh .ddh__shop .ddh__sz:hover{background:none;border:0}.ddh .ddh__shop .ddh__sz:hover i{background:#1a3f3a;transform:scale(1.06)}.ddh .ddh__shop .ddh__sz:hover>span{border-bottom-color:#1f4a45}}
+.ddh[data-ddh-sizes] .ddh__shop .ddh__sz{background:none;border:0}.ddh[data-ddh-sizes] .ddh__sz i{background:#1a3f3a}.ddh[data-ddh-sizes] .ddh__sz>span{border-bottom-color:#1f4a45}
+.ddh[data-ddh-state=night] .ddh__shop .ddh__sz{background:none;border:0;color:#f4efe4}
+.ddh[data-ddh-state=night] .ddh__sz i{background:#f4efe4}
+.ddh[data-ddh-state=night] .ddh__sz i::before{border-color:#0a1120;background:repeating-linear-gradient(90deg,#0a1120 0 1.5px,transparent 1.5px 4px) 2px 0/calc(100% - 3px) 45% no-repeat}
+.ddh[data-ddh-state=night] .ddh__sz>span{border-bottom-color:rgba(244,239,228,.45)}
+@media (min-width:1051px){
+.ddh{--ddh-szw:14em;--ddh-szg:clamp(36px,4vw,64px)}
+.ddh .ddh__shop .ddh__sz{width:var(--ddh-szw);margin-left:var(--ddh-szg);font-size:13px;font-weight:600;letter-spacing:.02em}
+.ddh .ddh__shop:has(.ddh__sz:not([hidden]))::before{width:calc(var(--ddh-szw) + var(--ddh-szg))}
+}
+@media (min-width:1051px) and (max-width:1240px){.ddh{--ddh-szw:12em;--ddh-szg:32px}.ddh .ddh__shop .ddh__sz{font-size:12.5px;padding:0}.ddh .ddh__sz i{width:34px;height:34px}}
+@media (max-width:1050px){.ddh .ddh__shop .ddh__sz{order:3;flex:0 0 auto;margin:6px auto 0;font-size:13.5px;font-weight:600;text-decoration:none;padding:0}.ddh .ddh__sz i{width:32px;height:32px}}
+/* narrow computers / iPads in landscape: the label sits under the round badge, so the badge stays well clear of a chat bubble */
+@media (min-width:1051px) and (max-width:1320px){.ddh{--ddh-szw:8.6em;--ddh-szg:28px}.ddh .ddh__shop .ddh__sz{flex-direction:column;align-items:center;justify-content:center;gap:.4em;text-align:center;font-size:12px}.ddh .ddh__sz i{width:34px;height:34px}.ddh .ddh__sz>span{border-bottom:0;padding:0}}
+.ddh .ddh__sz>span{display:block;line-height:1.25}

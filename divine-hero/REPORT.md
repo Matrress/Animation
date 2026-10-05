@@ -1,5 +1,15 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.11.2: Bio Comfort picture recovers on its own; size trigger becomes a round badge, set well apart (2026-10-06)
+
+Owner (on the live iPad): the Bio Comfort model did not show its picture (a broken-image icon in its list card and in the large preview); the "All UK & EU Sizes" button sat too close to the Topper button and to the chat bubble and looked like the two main buttons.
+
+Done:
+1. Bio Comfort picture: the file `m-bio.webp` is intact and encoded exactly like the pictures that load (checked: identical blob in the pinned commit, same WebP structure as the other model pictures), and the sandbox cannot reach jsDelivr, so a one-off failed fetch from the CDN is the most likely cause. Every picture in the screens is now asked for again, twice, with a short pause, if its first load fails; if it still fails it is hidden quietly (the card keeps its soft background, name and text) instead of showing a broken-image icon. Tested in a browser: first request blocked → the picture still shows after one retry; always blocked → 3 requests, then a calm empty panel.
+2. Size trigger: no longer a bordered pill. It is a round dark-teal ruler badge with a plain underlined label. Placed at least 74 px from the Topper button (typically 80-95 px) and at least 130 px from the right edge on every computer width (iPad Pro landscape included; the chat bubble occupies about the last 118 px). On widths 1051-1320 px the label sits under the badge so it stays clear of the chat; on tablets and phones it is its own centred line under the Shop buttons. The two Shop buttons stay exactly centred.
+3. Bug caught by the new retry test before release: the first draft passed a bare `true` to the hero's `on()` helper (it takes an options object), which would have loaded the screens twice and broken them; fixed to `{ capture: true }`.
+Tests: interaction (incl. new tests for the retry, the quiet fallback and the badge distances), panels, guards, axe, perf, fit matrix.
+
 ## 1.11.1: cube model cards with family accents, richer topper preview, Dual Plush reveal card, size pill clear of the chat (2026-10-05)
 
 Owner (on 1.11.0, approved direction): calmer, more precise "configurator" feel; 2 mattress cards per row, closer to cubes, little text; family colour accents; topper preview too empty (on the live iPad its picture had been hidden on a low panel) and header text showed through it; a Dual Plush explanation card with the lifted mattress; the size pill clashed with the chat bubble.
