@@ -1,5 +1,19 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.11.0: model selector (direct product links + large preview), global size guide, header bridge (2026-10-05)
+
+Brief: upgrade (not redesign) the product layer: browse every mattress and topper quickly, see the differences, go straight to
+a model or to the collection; one global "All UK & EU Sizes" guide; optional bridge from the native header; no prices; Ecwid-safe.
+
+Done (details, data structures, performance and the URLs to verify: `UPGRADE-1.11.0.md`):
+1. Shop Mattress / Shop Topper panels are now a model selector: a compact list (about 38%) and one large preview (about 62%). Rows and "View model" link straight to the 11 product pages (Ambient Topper excluded); "View the collection" stays once per panel. Data: `src/models.json`; the build generates the rows and checks every preview links to the same URL.
+2. Global size guide: a quiet pill beside the Shop buttons; 22 sizes + Custom, two columns (one on phones, as a bottom sheet), no prices. Data: `src/sizes.json`.
+3. Prices removed from the hero (the topper's "Cashmere +£77"); the build refuses any price in the panels.
+4. Keyboard: focus on a Shop button opens its selector, Tab enters the list, focus previews, Escape returns to the button. Touch: first tap previews, second opens. Phones keep the 1.10.1 decision (no selectors), the size guide works there.
+5. Header bridge: hovering / tabbing to the site header's own "Mattresses" / "Toppers" opens the same selector under the header; the header is never modified; mouse on a computer only.
+6. Fixed while building: a touch first focuses a link, which counted as "already previewed", so the first tap navigated; and Escape's return of focus reopened the panel.
+Tests: interaction 370/370 (366 on the bare harnesses), panels 792, guards, axe 0, perf unchanged; fit matrix (5 languages × 5 screen sizes × every preview) clean.
+
 ## 1.10.9: equal cards, tags off the pictures, Botanic Dual Plush inside its card, no English leftovers (2026-10-05)
 
 Owner: the Botanic Dual Plush firmness block spilled out of its card; the tags (Exclusive...) sat over the pictures and the model's head; the top row cards were bigger than the bottom row.

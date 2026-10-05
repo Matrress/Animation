@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const VERSION = '1.10.9';
+const VERSION = '1.11.0';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const esbuild = process.env.ESBUILD || 'esbuild';
 const rel = path.join(root, 'release', VERSION);
@@ -21,7 +21,30 @@ for (const f of fs.readdirSync(path.join(root, 'src/i18n'))) fs.writeFileSync(pa
 // src/sheets.html is the English source; data-t / data-ta mark the text (inner HTML) / alt-or-aria-label to translate,
 // from src/sheets-i18n/<lang>.txt ("key = value" lines). Every language must cover every key.
 {
-  const src = fs.readFileSync(path.join(root, 'src/sheets.html'), 'utf8');
+  let src = fs.readFileSync(path.join(root, 'src/sheets.html'), 'utf8');
+  // 1.11.0: the model selector's list cards and the global size guide are generated from src/models.json and
+  // src/sizes.json; every model must have its preview (data-ddh-pv) with the same direct product link.
+  {
+    const { models } = JSON.parse(fs.readFileSync(path.join(root, 'src/models.json'), 'utf8'));
+    const sz = JSON.parse(fs.readFileSync(path.join(root, 'src/sizes.json'), 'utf8'));
+    const esc = (s) => s.replace(/&/g, '&amp;');
+    const card = (m, first) => `<li><a class="ddh__mc" href="${m.url}" data-ddh-m="${m.id}"${first ? ' aria-current="true"' : ''}><span class="ddh__mc-img"><img src="{{BASE}}${m.image.src}" width="${m.image.width}" height="${m.image.height}" loading="lazy" decoding="async" alt=""></span><span class="ddh__mc-tx"><b class="ddh__mc-n"${m.nameKey ? ` data-t="${m.nameKey}"` : ''}>${esc(m.name)}</b><span class="ddh__mc-p" data-t="${m.positioning.key}">${esc(m.positioning.en)}</span><span class="ddh__mc-b">${m.benefits.slice(0, 2).map((b) => `<span data-t="${b.key}">${esc(b.en)}</span>`).join('')}</span></span><span class="ddh__mc-go"><span data-t="view_model">View model</span><i aria-hidden="true"></i></span></a></li>`;
+    const list = (pick) => models.filter(pick).map((m, i) => card(m, i === 0 && (m.row !== 'purpose'))).join('\n');
+    src = src.replace('<!--MODELS:core-->', list((m) => m.row === 'core')).replace('<!--MODELS:purpose-->', list((m) => m.row === 'purpose')).replace('<!--MODELS:topper-->', list((m) => m.group === 'topper'));
+    for (const m of models) {
+      const at = src.split(`data-ddh-pv="${m.id}"`).length - 1;
+      if (at !== 1) throw new Error(`model ${m.id}: ${at} previews`);
+      const pv = src.slice(src.indexOf(`data-ddh-pv="${m.id}"`)), href = /class="ddh__pv-cta" href="([^"]+)"/.exec(pv)[1];
+      if (href !== m.url) throw new Error(`model ${m.id}: preview links ${href}, data says ${m.url}`);
+    }
+    const row = (s) => `<li><span>${s.name}</span><b>${s.cm[0]} × ${s.cm[1]} cm</b><small>${s.in[0]}″ × ${s.in[1]}″</small></li>`;
+    const contact = sz.contactUrl ? `<a href="${sz.contactUrl}" data-t="sz_contact">Contact us</a>` : '<b data-t="sz_contact">Contact us</b>';
+    src = src.replace('<!--SIZES-->', `<section class="ddh__szp" id="ddh-sizes" role="dialog" aria-modal="false" aria-labelledby="ddh-sz-t" tabindex="-1" hidden>\n<div class="ddh__szp-in">\n<button class="ddh__sh-x" type="button" data-ddh-close aria-label="Close" data-ta="close"><i aria-hidden="true"></i></button>\n<h2 class="ddh__szp-h" id="ddh-sz-t" data-t="sz_h">All UK &amp; EU sizes</h2><p class="ddh__szp-s" data-t="sz_s">Width × length, the same for every mattress and topper</p>\n<ul class="ddh__szl">${sz.sizes.map(row).join('')}<li class="ddh__szl-c"><span data-t="sz_custom">Custom size</span>${contact}</li></ul>\n<p class="ddh__szp-n" data-t="sz_note">Need a custom size, custom depth or special shape? Contact us and we will help configure it.</p>\n</div>\n</section>`);
+    if (/£|\$\d|€\d/.test(src)) throw new Error('a price in the sheets: the hero carries none');
+    // the same key must carry the same English everywhere (generated list cards vs authored previews)
+    const seen = {};
+    for (const m of src.matchAll(/<(\w+)\b[^>]*?\sdata-t="(\w+)"[^>]*>([\s\S]*?)<\/\1>/g)) { if (m[2] in seen && seen[m[2]] !== m[3]) throw new Error(`key ${m[2]}: two different English texts`); seen[m[2]] = m[3]; }
+  }
   const keys = new Set([...src.matchAll(/\sdata-ta?="(\w+)"/g)].map((m) => m[1]));
   const out = path.join(rel, 'sheets'); fs.mkdirSync(out, { recursive: true });
   const finish = (h, lang) => h.replace(/\s(data-ta?)="\w+"/g, '').replace('<div class="ddh__sheets">', `<div class="ddh__sheets" lang="${lang}">`).replace(/>\s*\n\s*</g, '><').trim() + '\n';

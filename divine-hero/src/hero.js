@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.10.9 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.11.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.10.9';
+  var VERSION = '1.11.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -354,6 +354,7 @@
     // still goes to the collection. Touch / narrow screens: the first tap opens the sheet full screen (its own button
     // leads on); Escape, the close button or a click outside closes it.
     var sheetBox = null, sheetReq = false, sheet = null, sheetMode = '', sheetFrom = null, sheetWait = null, hoverT = 0, lastPT = '', openedAt = 0;
+    var pvT = 0, sheetPT = '', backFocus = false, szBtn = root.querySelector('.ddh__sz'), szEl = null, szMode = '', szT = 0;   // 1.11.0 model previews, size guide
     var ctas = [].slice.call(root.querySelectorAll('[data-ddh-sheet]')), bioPoint = group.querySelector('[data-ddh-point=bio]');
     var deskMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (any-hover:hover)') : { matches: true };
     // 1.10.1: tablets, laptops and monitors only. On a phone (either way up) the screens never open: the Bio point is
@@ -384,15 +385,16 @@
       if (!portal) { portal = d.createElement('div'); portal.className = 'ddh ddh__portal'; d.body.appendChild(portal); cleanups.push(function () { if (portal && portal.parentNode) portal.parentNode.removeChild(portal); portal = null; }); }
       return portal;
     }
-    function eager(el) { [].forEach.call(el.querySelectorAll('img'), function (im) { if (im.loading !== 'eager') { im.setAttribute('fetchpriority', 'low'); im.loading = 'eager'; } }); }
+    function eager(el) { [].forEach.call(el.querySelectorAll('img'), function (im) { if (im.loading !== 'eager' && !im.closest('[data-ddh-pv][hidden]')) { im.setAttribute('fetchpriority', 'low'); im.loading = 'eager'; } }); }
     function lock(on) { var s = d.documentElement.style; if (on) { if (!root.hasAttribute('data-ddh-lock')) { root.setAttribute('data-ddh-lock', s.overflow || ''); s.overflow = 'hidden'; } } else if (root.hasAttribute('data-ddh-lock')) { s.overflow = root.getAttribute('data-ddh-lock'); root.removeAttribute('data-ddh-lock'); } }
-    function openSheet(name, mode, from) {
+    function openSheet(name, mode, from, via) {
       if (phoneMQ.matches) return;
-      if (!sheetBox) { sheetWait = function () { openSheet(name, mode, from); }; loadSheets(); return; }
+      if (!sheetBox) { sheetWait = function () { openSheet(name, mode, from, via); }; loadSheets(); return; }
       var el = sheetBox.querySelector('#ddh-sheet-' + name); if (!el) return;
       w.clearTimeout(hoverT);
       if (sheet === el) { if (mode === 'modal' && sheetMode !== 'modal') { sheetMode = 'modal'; el.focus({ preventScroll: true }); } return; }
-      closeSheet(true); show(null);
+      closeSheet(true); szClose(); show(null);
+      if (via) root.setAttribute('data-ddh-via', via); else root.removeAttribute('data-ddh-via');
       sheet = el; sheetMode = mode; sheetFrom = from || null; openedAt = Date.now();
       var h = host(!deskMQ.matches); if (sheetBox.parentNode !== h) h.appendChild(sheetBox);
       if (sheetBox.getAttribute('lang') !== (lang || 'en')) sheetBox.setAttribute('lang', lang || 'en');
@@ -406,10 +408,11 @@
       w.clearTimeout(hoverT);
       if (!sheet) return;
       var from = sheetFrom, modal = sheetMode === 'modal';
-      sheet.hidden = true; root.removeAttribute('data-ddh-open-sheet'); lock(false);
+      var inside = sheet.contains(d.activeElement);
+      sheet.hidden = true; root.removeAttribute('data-ddh-open-sheet'); root.removeAttribute('data-ddh-via'); lock(false);
       if (from) from.setAttribute('aria-expanded', 'false');
       sheet = null; sheetFrom = null; sheetMode = '';
-      if (modal && !quiet && from && from.offsetWidth) from.focus({ preventScroll: true });
+      if ((modal || inside) && !quiet && from && from.offsetWidth) { backFocus = true; from.focus({ preventScroll: true }); backFocus = false; }   // focus comes back without reopening
     }
     function later() { w.clearTimeout(hoverT); if (sheetMode === 'hover') hoverT = w.setTimeout(function () { closeSheet(true); }, 280); }
     function pick(btn) {
@@ -419,15 +422,26 @@
       var panel = el.querySelector('[role=tabpanel]'); if (panel) panel.setAttribute('aria-labelledby', btn.id);
     }
     function wireSheets() {
+      on(sheetBox, 'pointerdown', function (ev) { sheetPT = ev.pointerType; }, { passive: true });
       on(sheetBox, 'click', function (ev) {
         var t = ev.target;
-        if (t.closest('[data-ddh-close]')) { closeSheet(); return; }
+        if (t.closest('[data-ddh-close]')) { if (t.closest('#ddh-sizes')) szClose(true); else closeSheet(); return; }
+        // 1.11.0: a model card is a plain link to its product. A touch on a card that is not the one previewed shows its
+        // preview first (the preview's own button, or a second touch, leads on); a mouse click goes straight there.
+        var c = t.closest('[data-ddh-m]'), pt = sheetPT; sheetPT = '';
+        if (c && pt === 'touch' && c.getAttribute('aria-current') !== 'true' && !ev.ctrlKey && !ev.metaKey) { ev.preventDefault(); pickModel(c, true); return; }
         var v = t.closest('[data-ddh-v]'); if (v) { pick(v); return; }
         if (sheet && sheetMode === 'modal' && t === sheet && !deskMQ.matches) closeSheet();   // the backdrop of a full-screen sheet
       });
       on(sheetBox, 'keydown', function (ev) {
         var v = ev.target.closest && ev.target.closest('[data-ddh-v]');
         if (v && (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft')) { var all = [].slice.call(v.parentNode.querySelectorAll('[data-ddh-v]')), n = all[(all.indexOf(v) + (ev.key === 'ArrowRight' ? 1 : all.length - 1)) % all.length]; pick(n); n.focus(); ev.preventDefault(); return; }
+        if (ev.key === 'Tab' && sheet && sheetMode === 'hover' && sheetFrom) {                         // 1.11.0: a preview opened from the keyboard: Tab leads back out next to its button
+          var g = focusables(sheet), at0 = d.activeElement;
+          if (!ev.shiftKey && at0 === g[g.length - 1]) { var nx = after(sheetFrom); if (nx) { ev.preventDefault(); closeSheet(true); nx.focus(); } }
+          else if (ev.shiftKey && at0 === g[0]) { ev.preventDefault(); sheetFrom.focus(); }
+          return;
+        }
         if (ev.key === 'Tab' && sheet && sheetMode === 'modal') {                                       // keep keyboard focus inside the dialog
           var f = [].filter.call(sheet.querySelectorAll('a[href],button:not([tabindex="-1"])'), function (x) { return x.offsetWidth > 0; });
           if (!f.length) return;
@@ -438,7 +452,36 @@
       });
       on(sheetBox, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') w.clearTimeout(hoverT); });
       on(sheetBox, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch') later(); });
+      // 1.11.0 model selector: pointing at a card (after a short pause, so crossing the list does not flicker) or focusing it
+      // shows its preview; the preview area keeps whatever was shown last.
+      on(sheetBox, 'pointerover', function (ev) {
+        if (ev.pointerType === 'touch') return;
+        var c = ev.target.closest && ev.target.closest('[data-ddh-m]'); w.clearTimeout(pvT);
+        if (c && c.getAttribute('aria-current') !== 'true') pvT = w.setTimeout(function () { pickModel(c); }, 90);
+      }, { passive: true });
+      on(sheetBox, 'focusin', function (ev) { var c = ev.target.closest && ev.target.closest('[data-ddh-m]'); if (c && fv(c)) pickModel(c); });   // keyboard focus only: a touch focuses the link before its click
+      on(sheetBox, 'focusout', function (ev) {
+        var to = ev.relatedTarget; if (!to) return;
+        if (sheet && sheetMode === 'hover' && !sheet.contains(to) && to !== sheetFrom && !isCta(to)) closeSheet(true);
+        if (szEl && !szEl.hidden && !szEl.contains(to) && to !== szBtn) szClose();
+      });
+      szEl = sheetBox.querySelector('#ddh-sizes');
+      if (szEl) {
+        on(szEl, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') w.clearTimeout(szT); });
+        on(szEl, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode === 'hover') szT = w.setTimeout(szClose, 280); });
+      }
     }
+    function pickModel(card, reveal) {
+      var sh = card.closest('.ddh__sheet'), id = card.getAttribute('data-ddh-m'), pv = null; if (!sh) return;
+      [].forEach.call(sh.querySelectorAll('[data-ddh-m]'), function (c) { if (c === card) c.setAttribute('aria-current', 'true'); else c.removeAttribute('aria-current'); });
+      [].forEach.call(sh.querySelectorAll('[data-ddh-pv]'), function (p) { var on1 = p.getAttribute('data-ddh-pv') === id; p.hidden = !on1; if (on1) pv = p; });
+      if (reveal && pv && !deskMQ.matches && pv.scrollIntoView) pv.scrollIntoView({ block: 'nearest', behavior: calm() ? 'auto' : 'smooth' });
+    }
+    function calm() { return !!(w.matchMedia && w.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+    function focusables(el) { return [].filter.call(el.querySelectorAll('a[href],button:not([tabindex="-1"])'), function (x) { return x.offsetWidth > 0 && !x.closest('[hidden]'); }); }
+    function after(el) { var all = focusables(root).filter(function (x) { return !(sheetBox && sheetBox.contains(x)); }); return all[all.indexOf(el) + 1] || null; }
+    function isCta(el) { return ctas.indexOf(el) > -1; }
+    function fv(el) { try { return el.matches(':focus-visible'); } catch (e) { return true; } }
     ctas.forEach(function (a) {
       var name = a.getAttribute('data-ddh-sheet');
       on(a, 'pointerdown', function (ev) { lastPT = ev.pointerType; }, { passive: true });
@@ -448,6 +491,13 @@
         hoverT = w.setTimeout(function () { openSheet(name, 'hover', a); }, sheet ? 0 : 140);
       }, { passive: true });
       on(a, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch') { if (!sheet) w.clearTimeout(hoverT); later(); } }, { passive: true });
+      // 1.11.0 keyboard: focusing the button shows its preview; Tab steps into the model list, Enter still opens the collection
+      on(a, 'focus', function () { if (!backFocus && deskMQ.matches && fv(a) && !(sheet && sheetMode === 'modal')) openSheet(name, 'hover', a); });
+      on(a, 'keydown', function (ev) {
+        if (ev.key !== 'Tab' || ev.shiftKey || !sheet || sheetFrom !== a) return;
+        var f = sheet.querySelector('[data-ddh-m][aria-current=true]') || focusables(sheet)[0]; if (f) { ev.preventDefault(); f.focus(); }
+      });
+      on(a, 'blur', function (ev) { var to = ev.relatedTarget; if (to && sheet && sheetFrom === a && sheetMode === 'hover' && !sheet.contains(to) && !isCta(to)) closeSheet(true); });
       on(a, 'click', function (ev) {
         if (ev.detail === 0 || ev.ctrlKey || ev.metaKey || ev.shiftKey || phoneMQ.matches) return;                          // keyboard / new tab: straight to the collection
         var touchy = lastPT === 'touch' || !deskMQ.matches; lastPT = '';
@@ -456,7 +506,7 @@
     });
     if (bioPoint) {
       on(bioPoint, 'pointerenter', loadSheets, { passive: true });
-      // 1.10.9: on computers the Bio Comfort point opens its screen on hover too (click still pins it open); touch is unchanged
+      // 1.11.0: on computers the Bio Comfort point opens its screen on hover too (click still pins it open); touch is unchanged
       on(bioPoint, 'pointerenter', function (ev) {
         if (ev.pointerType === 'touch' || !deskMQ.matches || (sheet && sheetMode === 'modal')) return;
         w.clearTimeout(hoverT);
@@ -465,6 +515,63 @@
       on(bioPoint, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch') { if (!sheet) w.clearTimeout(hoverT); later(); } }, { passive: true });
     }
     on(root.querySelector('.ddh__shop') || root, 'pointerenter', loadSheets, { passive: true });
+    // 1.11.0 global size guide: one quiet trigger by the Shop buttons, a compact list of every UK & EU size (no prices).
+    // Pointer: opens on hover, closes on leaving; click / tap / Enter pins it; Escape, a click outside or focus moving
+    // away closes it. Phones get it too (a bottom sheet): it is light, text only.
+    function szOpen(mode) {
+      if (!sheetBox) { sheetWait = function () { szOpen(mode); }; loadSheets(); return; }
+      if (!szEl) return;
+      w.clearTimeout(szT); if (sheet) closeSheet(true);
+      var h = host(!deskMQ.matches); if (sheetBox.parentNode !== h) h.appendChild(sheetBox);
+      if (sheetBox.getAttribute('lang') !== (lang || 'en')) sheetBox.setAttribute('lang', lang || 'en');
+      szEl.hidden = false; szMode = mode; szBtn.setAttribute('aria-expanded', 'true'); root.setAttribute('data-ddh-sizes', '');
+      if (mode === 'pin' && !deskMQ.matches) szEl.focus({ preventScroll: true });
+    }
+    function szClose(back) {
+      w.clearTimeout(szT); if (!szEl || szEl.hidden) return;
+      szEl.hidden = true; szMode = ''; szBtn.setAttribute('aria-expanded', 'false'); root.removeAttribute('data-ddh-sizes');
+      if (back) szBtn.focus({ preventScroll: true });
+    }
+    if (szBtn) {
+      szBtn.hidden = false;
+      on(szBtn, 'pointerdown', function (ev) { lastPT = ev.pointerType; }, { passive: true });
+      on(szBtn, 'pointerenter', function (ev) {
+        if (ev.pointerType === 'touch' || !deskMQ.matches || (sheet && sheetMode === 'modal')) return;
+        loadSheets(); w.clearTimeout(szT); szT = w.setTimeout(function () { szOpen('hover'); }, 120);
+      }, { passive: true });
+      on(szBtn, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode !== 'pin') { w.clearTimeout(szT); szT = w.setTimeout(szClose, 280); } }, { passive: true });
+      on(szBtn, 'click', function () { if (szEl && !szEl.hidden && szMode === 'pin') szClose(); else if (szEl && !szEl.hidden) szMode = 'pin'; else szOpen('pin'); });
+    }
+    // 1.11.0 bridge from the site's own header: pointing at (or tabbing to) its "Mattresses" / "Toppers" links opens the
+    // same preview under the header, while the hero is on screen. Read-only: nothing in the header is changed, clicks go
+    // where they always went, touch is left alone, and the hero still works if the header changes.
+    var navA = null;
+    function navSheet(a) {
+      if (!a || root.contains(a) || (sheetBox && sheetBox.contains(a)) || (portal && portal.contains(a))) return '';
+      var href = (a.getAttribute('href') || '').toLowerCase(), t = (a.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      var name = (/latex-mattresses-collection/.test(href) || t === 'mattresses') ? 'mattress' : (/latex-toppers-collection/.test(href) || t === 'toppers') ? 'topper' : '';
+      if (!name) return '';
+      var r = a.getBoundingClientRect(), hr = root.getBoundingClientRect(), safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 120;
+      return (hr.top > -40 && hr.top < w.innerHeight * .35 && r.bottom <= hr.top + safe + 8 && r.bottom > 0) ? name : '';
+    }
+    on(d, 'pointerover', function (ev) {
+      if (ev.pointerType !== 'mouse' || !deskMQ.matches || (sheet && sheetMode === 'modal')) return;
+      var a = ev.target.closest && ev.target.closest('a'); if (!a || a === navA) return;
+      var name = navSheet(a); if (!name) return;
+      navA = a; loadSheets(); w.clearTimeout(hoverT);
+      hoverT = w.setTimeout(function () { openSheet(name, 'hover', null, 'nav'); }, sheet ? 0 : 160);
+    }, { passive: true });
+    on(d, 'pointerout', function (ev) {
+      if (!navA || (ev.relatedTarget && navA.contains(ev.relatedTarget)) || !(ev.target.closest && ev.target.closest('a') === navA)) return;
+      navA = null; if (!sheet) w.clearTimeout(hoverT); later();
+    }, { passive: true });
+    on(d, 'focusin', function (ev) {
+      var a = ev.target; if (!deskMQ.matches || !a || a.tagName !== 'A' || !fv(a)) return;
+      var name = navSheet(a); if (name && !(sheet && sheetMode === 'modal')) openSheet(name, 'hover', null, 'nav');
+      else if (sheet && sheetMode === 'hover' && root.getAttribute('data-ddh-via') === 'nav' && !sheet.contains(a)) closeSheet(true);
+    });
+    on(d, 'keydown', function (ev) { if ((ev.key === 'Escape' || ev.key === 'Esc') && szEl && !szEl.hidden) { szClose(true); ev.stopPropagation(); } });
+    on(d, 'click', function (ev) { if (szEl && !szEl.hidden && !szEl.contains(ev.target) && !(szBtn && szBtn.contains(ev.target))) szClose(); });
     on(d, 'keydown', function (ev) { if (sheet && (ev.key === 'Escape' || ev.key === 'Esc')) closeSheet(); });
     on(d, 'click', function (ev) { if (sheet && sheetMode === 'modal' && Date.now() - openedAt > 300 && !sheet.contains(ev.target) && !(sheetFrom && sheetFrom.contains(ev.target)) && !(bioPoint && bioPoint.contains(ev.target))) closeSheet(true); });
     on(w, 'resize', function () { if (sheet && (phoneMQ.matches || (sheetMode === 'hover' && !deskMQ.matches))) closeSheet(true); }, { passive: true });
@@ -479,7 +586,7 @@
       cleanups.push(function () { w.clearTimeout(t); });
     }
     if (d.readyState === 'complete') stage2(); else on(w, 'load', stage2, { once: true });
-    cleanups.push(function () { w.clearTimeout(hoverT); lock(false); });
+    cleanups.push(function () { w.clearTimeout(hoverT); w.clearTimeout(pvT); w.clearTimeout(szT); lock(false); if (szBtn) { szBtn.hidden = true; szBtn.setAttribute('aria-expanded', 'false'); } root.removeAttribute('data-ddh-sizes'); root.removeAttribute('data-ddh-via'); });
 
     // Roving tabindex: one Tab stop, arrows move between the points.
     function rove(t) { points.forEach(function (p) { p.tabIndex = p === t ? 0 : -1; }); t.focus(); }
