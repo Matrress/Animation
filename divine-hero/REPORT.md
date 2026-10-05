@@ -25,6 +25,7 @@ Owner:
   * New images: the cutaway (52 KB) and the cells (18 KB); two unused pictures were removed.
 * **British English pass:** "It shapes itself to you", "Seven-zone" spelled out, "A natural upgrade for added comfort", "Plush, dual-layer comfort", "A dual-comfort concept with two layers of regulation", "Available depths", "Each one has a reason to exist", "Shredded latex designed for hospitality", "Extra firm support, reinforced with coconut coir", "Two comfort levels, joined by a bridge topper".
 * Checked at 1920×1080, 1440×900, 1366×768 and 1280×720: no sheet scrolls.
+* Tests: 346–347 per harness, panels 792/792, guards, axe 0 (hero and every sheet). Pinned: `ecwid/section-1.10.5-jsdelivr.html` (commit `e6e9fe3`).
 
 ## 1.10.4: Partners badges, clear topper layers, a calmer cloud (2026-10-05)
 
