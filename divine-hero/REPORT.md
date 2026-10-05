@@ -35,6 +35,8 @@ Owner:
 
 **Short laptop screens:** the mattress preview tightens its header so the eight cards keep visible pictures at 1366×768 and 1280×720.
 
+* Tests: 346–347 per harness, panels 792/792, guards, axe 0. Pinned: `ecwid/section-1.10.1-jsdelivr.html` (commit `a628ecd`).
+
 ## 1.10.0: the Bio Comfort screen and the collection previews; the settle animation removed (2026-10-05)
 
 Owner's brief:
