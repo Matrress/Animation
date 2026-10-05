@@ -1,5 +1,16 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.10.8: the mattress panel covers the header; graphite restored; more text contrast (2026-10-05)
+
+Owner: pull the panel up over the bar and the logo to use the whole screen; more font contrast; bring back the old colour of the main card.
+
+Done:
+1. The mattress panel starts 10 px under the top of the hero and covers the logo and the menu while it is open (the hero is lifted above the header only while the mattress panel is open: `.ddh[data-ddh-open-sheet=mattress]{z-index:2147483000}`; desktop pointers only). It keeps a clear gap above the Shop buttons at every width. The cards gain about 110 px of height.
+2. The main card colour is the old graphite gradient again (#003136 removed).
+3. Contrast and size: eyebrow, lede, steps and group labels are brighter; card titles, descriptions and specs are darker; with a roomy panel (cqh >= 690) title, lede, card titles, descriptions and specs are larger, the Firmness label sits on its own line above the values (one clear scan line per card), "Extra Firm" / "Super Firm" never split.
+4. Small panels keep the compaction from 1.10.7 (it follows the panel height).
+Tests: interaction 348/348 (347 harness), panels 792, guards, axe 0 violations, perf unchanged. If the live header still shows through, send its z-index/stacking (the hero must be able to rise above it).
+
 ## 1.10.7: mattress panel #003136, taller and self-fitting; Bio Comfort opens on hover (2026-10-05)
 
 Owner: panel background #003136; panel higher with more room for the eight cards, readable and not cramped; Bio Comfort point opens on hover (not only click); inspect everything as a senior designer.

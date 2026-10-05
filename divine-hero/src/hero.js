@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.10.7 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.10.8 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.10.7';
+  var VERSION = '1.10.8';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -456,7 +456,7 @@
     });
     if (bioPoint) {
       on(bioPoint, 'pointerenter', loadSheets, { passive: true });
-      // 1.10.7: on computers the Bio Comfort point opens its screen on hover too (click still pins it open); touch is unchanged
+      // 1.10.8: on computers the Bio Comfort point opens its screen on hover too (click still pins it open); touch is unchanged
       on(bioPoint, 'pointerenter', function (ev) {
         if (ev.pointerType === 'touch' || !deskMQ.matches || (sheet && sheetMode === 'modal')) return;
         w.clearTimeout(hoverT);

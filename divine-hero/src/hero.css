@@ -521,7 +521,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__sheet--bio .ddh__sh-x{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.9)}
 
 /* --- Mattresses: graphite stage, light cards --- */
-.ddh .ddh__sheet--mattress .ddh__sh-in{background:#003136;color:#e9edf0}
+.ddh .ddh__sheet--mattress .ddh__sh-in{background:radial-gradient(70% 60% at 88% -10%,rgba(255,255,255,.10) 0,rgba(255,255,255,0) 60%),radial-gradient(60% 50% at 0% 110%,rgba(150,175,190,.12) 0,rgba(150,175,190,0) 60%),linear-gradient(160deg,#1e2225 0,#2a2f33 50%,#363c41 100%);color:#e9edf0}
 .ddh .ddh__sheet--mattress .ddh__sh-eye{color:#b9c6cd}
 .ddh .ddh__sheet--mattress .ddh__sh-h{color:#fff}
 .ddh .ddh__sheet--mattress .ddh__sh-h em{color:#cfdde3}
@@ -714,8 +714,35 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 /* 1.10.7: Bio Comfort Dual Plush pairs, one clear line each */
 .ddh .ddh__pr{display:block;white-space:nowrap}
 /* 1.10.7: on the Partners mattress the Her / Him badges sit on the lower edge, clear of the Partners tag */
-.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:78px}
+.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:66px}
 .ddh .ddh__sheet--mattress .ddh__zb-flank{align-items:flex-end}
 @container ddsh (max-height:600px){.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:64px}}
 @container ddsh (max-height:530px){.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:58px}}
 @container ddsh (max-height:530px){.ddh .ddh__sheet--mattress .ddh__zb-flank .ddh__zb small{display:none}.ddh .ddh__sheet--mattress .ddh__zb-flank .ddh__zb{padding:3px 4px}}
+/* 1.10.8: the mattress panel rises over the header (logo and menu), so the cards get the whole screen height; more text contrast */
+@media (min-width:1051px) and (any-hover:hover){.ddh .ddh__sheet--mattress{z-index:2147483000;top:10px;bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + var(--ddh-shop-b) + var(--ddh-cta-h) + 22px + clamp(0px,(100vw - 1500px) * .03,16px))}.ddh.ddh[data-ddh-open-sheet=mattress]{z-index:2147483000}}
+.ddh .ddh__sheet--mattress .ddh__spec:not(.ddh__spec--combos3) i{white-space:nowrap;letter-spacing:0}
+.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-cta{flex:none;white-space:nowrap}
+.ddh .ddh__sheet--mattress .ddh__sh-eye{color:#dbe5e9}
+.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-lede{color:#eef3f5}
+.ddh .ddh__sheet--mattress .ddh__steps{color:#dde5e9}
+.ddh .ddh__sheet--mattress .ddh__sh-row{color:#e6edf0}
+.ddh .ddh__sheet--mattress .ddh__card-t{color:#0d1418}
+.ddh .ddh__sheet--mattress .ddh__card-s,.ddh .ddh__sheet--mattress .ddh__spec{color:#36424a}
+.ddh .ddh__sheet--mattress .ddh__spec b{color:#0d1418}
+.ddh .ddh__sheet--mattress .ddh__pairs>em,.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{color:#3d4a52}
+@container ddsh (min-height:690px){
+.ddh .ddh__sheet--mattress .ddh__sh-h{font-size:clamp(30px,2.6vw,40px)}
+.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-lede{font-size:15.5px}
+.ddh .ddh__sheet--mattress .ddh__steps{font-size:13.5px}
+.ddh .ddh__sheet--mattress .ddh__sh-in{row-gap:clamp(12px,2cqh,22px)}
+.ddh .ddh__sheet--mattress .ddh__card-t{font-size:clamp(17.5px,1.4vw,22px)}
+.ddh .ddh__sheet--mattress .ddh__card-s{font-size:14.5px}
+.ddh .ddh__sheet--mattress .ddh__spec{font-size:13px}
+.ddh .ddh__sheet--mattress .ddh__spec--f>b{display:block;margin:2px 0 1px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+.ddh .ddh__sheet--mattress .ddh__pairs>i.ddh__ly{font-size:12.5px;padding:6px 3px}
+.ddh .ddh__sheet--mattress .ddh__pairs>em,.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{font-size:10.5px}
+}
+.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{letter-spacing:0}
+@container ddsh (min-height:690px){.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{font-size:9.5px}}
+@container ddsh (max-height:530px){.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{font-size:8px}.ddh .ddh__sheet--mattress .ddh__pairs>b{font-size:9px;letter-spacing:.02em}}
