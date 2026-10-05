@@ -49,6 +49,7 @@ Sources: the owner's three SVG resource boards (Bio Comfort; mattresses; toppers
 * Interaction: 341–342 checks per harness, including a new sheets suite covering desktop hover, click-through, the Bio dialog, phone and iPad full screen, and French.
 * panels 792/792, guards, axe 0 (hero and every sheet, desktop and phone).
 * LCP and CLS unchanged: phone CLS 0, because the phone link's space is reserved.
+* Pinned: `ecwid/section-1.10.0-jsdelivr.html` (commit `d01e702`). Screenshots: `reports/compare/1.10.0-*.jpg`.
 
 ## 1.9.4 (final) — the shop buttons; review pass (2026-10-04)
 
