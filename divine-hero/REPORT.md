@@ -1,5 +1,23 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.10.6: clear Botanic Dual Plush pairings, violet Firm, solid topper edges (2026-10-05)
+
+Owner:
+1. Botanic Dual Plush: the three firmness combinations looked mixed; show which firmness plays with which.
+2. The Firm colour (amber) is disliked: use another.
+3. The topper pictures show holes and torn-off pieces along their sides.
+4. Bio Comfort Dual Plush has no Extra Firm + Firm.
+
+Done:
+1. Botanic Dual Plush now shows a small table: Option 1 / 2 / 3 as three columns, each a two-layer stack (Topper over Mattress): Soft on Medium, Medium on Firm, Firm on Extra Firm. Labels are translated (new keys `opt_3`, `l_tp`, `l_mt`, `w_x`).
+2. Firm is violet (#6b46c1 on light cards, #cdb8ff on dark panels, lavender layer chips); Soft blue, Medium teal and Extra/Super Firm vermilion are unchanged. axe contrast: 0 violations.
+3. `t-bio.webp`, `t-bio-dual.webp`: the silhouette is rebuilt as the convex hull of the cleaned cut-out (a latex slab is convex), dents filled from the nearest real pixels, edge antialiased (`tests/clean-topper-edge.py`). `t-partners.webp`: stray strip and specks below the picture removed.
+4. Bio Comfort Dual Plush (card and Bio screen) lists only Medium + Soft and Firm + Medium (new key `f_bdp`; `f_dp` retired).
+Fit: on computers the pictures give way first, so no card spills at 1920x1080, 1440x900, 1366x768, 1280x720; at about 720 px high the lists/helper lines give way to the pairings. Checked in all 8 languages (no overflow of the pair chips).
+Tests: interaction 347/347 (346/346 harness), panels 792, guards, axe 0 violations (all screens), perf unchanged. Screenshots: `reports/compare/1.10.6-*.png`.
+
+Note: the owner's message ended mid-sentence ("The goal is…"); nothing was assumed.
+
 ## 1.10.5: coloured firmness, a cleaner Bio Comfort, clean toppers, the core as the feature (2026-10-05)
 
 Owner:

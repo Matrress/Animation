@@ -15,7 +15,7 @@ height = Épaisseur
 firmness = Fermeté
 f_sm_m_f = <i class="ddh__f-s">Souple</i> · <i class="ddh__f-m">Medium</i> · <i class="ddh__f-f">Ferme</i>
 v_dp = Le même cœur Bio Comfort surmonté d’un surmatelas plush en latex naturel, réunis dans une seule housse : un premier contact plus doux sur le même soutien zoné.
-f_dp = <i class="ddh__f-m">Medium</i> + <i class="ddh__f-s">Souple</i> · <i class="ddh__f-f">Ferme</i> + <i class="ddh__f-m">Medium</i> · <i class="ddh__f-x">Extra ferme</i> + <i class="ddh__f-f">Ferme</i>
+f_bdp = <i class="ddh__f-m">Medium</i> + <i class="ddh__f-s">Souple</i> · <i class="ddh__f-f">Ferme</i> + <i class="ddh__f-m">Medium</i>
 bio_cta = Découvrir Bio Comfort
 a_bio = Femme allongée sur le matelas en latex naturel Bio Comfort, dont les cellules suivent la courbe de son corps
 a_bio_dp = Femme allongée sur Bio Comfort Dual Plush : le cœur en latex zoné surmonté d’un surmatelas plush en latex naturel
@@ -97,12 +97,16 @@ f_tpart = <i class="ddh__f-m">Medium</i> d’un côté · <i class="ddh__f-f">Fe
 w_s = Souple
 w_m = Medium
 w_f = Ferme
+w_x = Extra ferme
 zone_her = Zone pour Elle
 zone_him = Zone pour Lui
 l_top = Couche du dessus
 l_base = Couche du dessous
 opt_1 = Option 1
 opt_2 = Option 2
+opt_3 = Option 3
+l_tp = Surmatelas
+l_mt = Matelas
 cc_h = Cloud Comfort : il vous maintient au-dessus de la surface
 cc_d = Adaptation anatomique sans s’enfoncer, soutien orthopédique sans tension : vous reposez sur la surface, jamais dedans.
 zn = Sept zones du corps

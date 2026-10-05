@@ -15,7 +15,7 @@ height = Korkeus
 firmness = Kovuus
 f_sm_m_f = <i class="ddh__f-s">Pehmeä</i> · <i class="ddh__f-m">Keskikova</i> · <i class="ddh__f-f">Kova</i>
 v_dp = Sama Bio Comfort -ydin, jonka päällä on luonnonlateksinen plush-petauspatja samassa päällisessä: pehmeämpi ensikosketus saman vyöhyketuen päällä.
-f_dp = <i class="ddh__f-m">Keskikova</i> + <i class="ddh__f-s">Pehmeä</i> · <i class="ddh__f-f">Kova</i> + <i class="ddh__f-m">Keskikova</i> · <i class="ddh__f-x">Erittäin kova</i> + <i class="ddh__f-f">Kova</i>
+f_bdp = <i class="ddh__f-m">Keskikova</i> + <i class="ddh__f-s">Pehmeä</i> · <i class="ddh__f-f">Kova</i> + <i class="ddh__f-m">Keskikova</i>
 bio_cta = Tutustu Bio Comfortiin
 a_bio = Nainen lepää Bio Comfort -luonnonlateksipatjalla, jonka solut seuraavat vartalon kaarta
 a_bio_dp = Nainen lepää Bio Comfort Dual Plush -patjalla: vyöhykkeellinen lateksiydin ja luonnonlateksinen plush-petauspatja
@@ -97,12 +97,16 @@ f_tpart = <i class="ddh__f-m">Keskikova</i> toisella puolella · <i class="ddh__
 w_s = Pehmeä
 w_m = Keskikova
 w_f = Kova
+w_x = Erittäin kova
 zone_her = Naisen vyöhyke
 zone_him = Miehen vyöhyke
 l_top = Päällikerros
 l_base = Alakerros
 opt_1 = Vaihtoehto 1
 opt_2 = Vaihtoehto 2
+opt_3 = Vaihtoehto 3
+l_tp = Pehmuste
+l_mt = Patja
 cc_h = Cloud Comfort: kannattelee sinua pinnan päällä
 cc_d = Anatominen mukautuvuus ilman vajoamista, ortopedinen tuki ilman jännitystä: lepäät pinnalla, et sen sisällä.
 zn = Seitsemän vartalovyöhykettä

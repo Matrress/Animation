@@ -15,7 +15,7 @@ height = Höhe
 firmness = Härtegrad
 f_sm_m_f = <i class="ddh__f-s">Weich</i> · <i class="ddh__f-m">Mittel</i> · <i class="ddh__f-f">Fest</i>
 v_dp = Derselbe Bio-Comfort-Kern mit einem Plush-Topper aus Naturlatex darüber, in einem Bezug vereint: eine weichere erste Berührung über derselben zonierten Stützkraft.
-f_dp = <i class="ddh__f-m">Mittel</i> + <i class="ddh__f-s">Weich</i> · <i class="ddh__f-f">Fest</i> + <i class="ddh__f-m">Mittel</i> · <i class="ddh__f-x">Extra fest</i> + <i class="ddh__f-f">Fest</i>
+f_bdp = <i class="ddh__f-m">Mittel</i> + <i class="ddh__f-s">Weich</i> · <i class="ddh__f-f">Fest</i> + <i class="ddh__f-m">Mittel</i>
 bio_cta = Bio Comfort entdecken
 a_bio = Frau ruht auf der Bio-Comfort-Naturlatexmatratze, deren Zellen der Kurve ihres Körpers folgen
 a_bio_dp = Frau ruht auf Bio Comfort Dual Plush: zonierter Latexkern mit Plush-Topper aus Naturlatex
@@ -97,12 +97,16 @@ f_tpart = <i class="ddh__f-m">Mittel</i> auf einer Seite · <i class="ddh__f-f">
 w_s = Weich
 w_m = Mittel
 w_f = Fest
+w_x = Extra fest
 zone_her = Zone für Sie
 zone_him = Zone für Ihn
 l_top = Obere Schicht
 l_base = Untere Schicht
 opt_1 = Variante 1
 opt_2 = Variante 2
+opt_3 = Variante 3
+l_tp = Topper
+l_mt = Matratze
 cc_h = Cloud Comfort: Es trägt Sie über der Oberfläche
 cc_d = Anatomische Anpassung ohne Einsinken, orthopädische Stützkraft ohne Verspannung: Sie liegen auf der Oberfläche, nie darin.
 zn = Sieben Körperzonen

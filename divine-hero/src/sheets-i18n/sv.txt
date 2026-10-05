@@ -15,7 +15,7 @@ height = Höjd
 firmness = Fasthet
 f_sm_m_f = <i class="ddh__f-s">Mjuk</i> · <i class="ddh__f-m">Medium</i> · <i class="ddh__f-f">Fast</i>
 v_dp = Samma Bio Comfort-kärna med en plush-bäddmadrass av naturlatex ovanpå, förenade i ett överdrag: en mjukare första beröring över samma zonindelade stöd.
-f_dp = <i class="ddh__f-m">Medium</i> + <i class="ddh__f-s">Mjuk</i> · <i class="ddh__f-f">Fast</i> + <i class="ddh__f-m">Medium</i> · <i class="ddh__f-x">Extra fast</i> + <i class="ddh__f-f">Fast</i>
+f_bdp = <i class="ddh__f-m">Medium</i> + <i class="ddh__f-s">Mjuk</i> · <i class="ddh__f-f">Fast</i> + <i class="ddh__f-m">Medium</i>
 bio_cta = Upptäck Bio Comfort
 a_bio = Kvinna vilar på naturlatexmadrassen Bio Comfort, vars celler följer kroppens kurva
 a_bio_dp = Kvinna vilar på Bio Comfort Dual Plush: zonindelad latexkärna med plush-bäddmadrass av naturlatex
@@ -97,12 +97,16 @@ f_tpart = <i class="ddh__f-m">Medium</i> på ena sidan · <i class="ddh__f-f">Fa
 w_s = Mjuk
 w_m = Medium
 w_f = Fast
+w_x = Extra fast
 zone_her = Zon för henne
 zone_him = Zon för honom
 l_top = Övre lager
 l_base = Undre lager
 opt_1 = Alternativ 1
 opt_2 = Alternativ 2
+opt_3 = Alternativ 3
+l_tp = Topper
+l_mt = Madrass
 cc_h = Cloud Comfort: den bär dig ovanpå ytan
 cc_d = Anatomisk anpassning utan att sjunka, ortopediskt stöd utan spänning: du vilar på ytan, aldrig i den.
 zn = Sju kroppszoner

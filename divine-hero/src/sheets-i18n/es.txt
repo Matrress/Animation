@@ -15,7 +15,7 @@ height = Altura
 firmness = Firmeza
 f_sm_m_f = <i class="ddh__f-s">Suave</i> · <i class="ddh__f-m">Media</i> · <i class="ddh__f-f">Firme</i>
 v_dp = El mismo núcleo Bio Comfort con un topper plush de látex natural encima, unidos en una sola funda: un primer contacto más suave sobre el mismo soporte zonificado.
-f_dp = <i class="ddh__f-m">Media</i> + <i class="ddh__f-s">Suave</i> · <i class="ddh__f-f">Firme</i> + <i class="ddh__f-m">Media</i> · <i class="ddh__f-x">Extra firme</i> + <i class="ddh__f-f">Firme</i>
+f_bdp = <i class="ddh__f-m">Media</i> + <i class="ddh__f-s">Suave</i> · <i class="ddh__f-f">Firme</i> + <i class="ddh__f-m">Media</i>
 bio_cta = Descubre Bio Comfort
 a_bio = Mujer descansando sobre el colchón de látex natural Bio Comfort, cuyas células siguen la curva de su cuerpo
 a_bio_dp = Mujer descansando sobre Bio Comfort Dual Plush: núcleo de látex zonificado con topper plush de látex natural
@@ -97,12 +97,16 @@ f_tpart = <i class="ddh__f-m">Media</i> en un lado · <i class="ddh__f-f">Firme<
 w_s = Suave
 w_m = Media
 w_f = Firme
+w_x = Extra firme
 zone_her = Zona para Ella
 zone_him = Zona para Él
 l_top = Capa superior
 l_base = Capa inferior
 opt_1 = Opción 1
 opt_2 = Opción 2
+opt_3 = Opción 3
+l_tp = Topper
+l_mt = Colchón
 cc_h = Cloud Comfort: te mantiene sobre la superficie
 cc_d = Adaptación anatómica sin hundirse, soporte ortopédico sin tensión: descansas sobre la superficie, nunca dentro.
 zn = Siete zonas del cuerpo

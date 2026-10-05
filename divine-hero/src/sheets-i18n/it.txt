@@ -15,7 +15,7 @@ height = Altezza
 firmness = Rigidità
 f_sm_m_f = <i class="ddh__f-s">Morbido</i> · <i class="ddh__f-m">Medio</i> · <i class="ddh__f-f">Rigido</i>
 v_dp = Lo stesso nucleo Bio Comfort con un topper plush in lattice naturale sopra, uniti in un’unica fodera: un primo contatto più morbido sullo stesso sostegno zonato.
-f_dp = <i class="ddh__f-m">Medio</i> + <i class="ddh__f-s">Morbido</i> · <i class="ddh__f-f">Rigido</i> + <i class="ddh__f-m">Medio</i> · <i class="ddh__f-x">Extra rigido</i> + <i class="ddh__f-f">Rigido</i>
+f_bdp = <i class="ddh__f-m">Medio</i> + <i class="ddh__f-s">Morbido</i> · <i class="ddh__f-f">Rigido</i> + <i class="ddh__f-m">Medio</i>
 bio_cta = Scopri Bio Comfort
 a_bio = Donna distesa sul materasso in lattice naturale Bio Comfort, le cui cellule seguono la curva del corpo
 a_bio_dp = Donna distesa su Bio Comfort Dual Plush: nucleo in lattice zonato con topper plush in lattice naturale
@@ -97,12 +97,16 @@ f_tpart = <i class="ddh__f-m">Medio</i> da un lato · <i class="ddh__f-f">Rigido
 w_s = Morbido
 w_m = Medio
 w_f = Rigido
+w_x = Extra rigido
 zone_her = Zona per Lei
 zone_him = Zona per Lui
 l_top = Strato superiore
 l_base = Strato inferiore
 opt_1 = Opzione 1
 opt_2 = Opzione 2
+opt_3 = Opzione 3
+l_tp = Topper
+l_mt = Materasso
 cc_h = Cloud Comfort: ti sostiene sopra la superficie
 cc_d = Adattamento anatomico senza affondare, sostegno ortopedico senza tensione: riposi sulla superficie, mai dentro.
 zn = Sette zone del corpo

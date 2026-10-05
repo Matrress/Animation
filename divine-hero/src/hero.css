@@ -683,3 +683,30 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__sheet--topper i.ddh__f-s,.ddh .ddh__sheet--topper i.ddh__f-m,.ddh .ddh__sheet--topper i.ddh__f-f{text-transform:uppercase;letter-spacing:.06em}
 @media (min-width:1051px) and (any-hover:hover){.ddh .ddh__sheet--topper .ddh__card-img{flex:0 0 auto;height:clamp(84px,15.5vh,140px);min-height:0}}
 @media (min-width:1051px) and (any-hover:hover){.ddh .ddh__bio-fig{min-height:0}.ddh .ddh__bio-fig img{max-height:100%;min-height:0}.ddh .ddh__bio-stage{grid-template-rows:minmax(0,1fr) auto auto}}
+/* 1.10.6: Firm turns violet; Botanic Dual Plush shows its three pairings as labelled two-layer stacks (topper over mattress) */
+.ddh .ddh__sheet i.ddh__f-f{color:#6b46c1}
+.ddh .ddh__sheet--topper i.ddh__f-f,.ddh .ddh__sheet--topper .ddh__f-f{color:#cdb8ff}
+.ddh .ddh__ly--f{background:linear-gradient(180deg,#dccdff,#c0a6ff)}
+.ddh .ddh__ly--x{background:linear-gradient(180deg,#ffc0ad,#ff9d80)}
+.ddh .ddh__spec--combos3{display:block;padding:9px 0 0;margin:auto 4px 0;border-top:1px solid var(--sh-line)}
+.ddh .ddh__pairs{display:grid;grid-template-columns:auto repeat(3,minmax(0,1fr));gap:2px 5px;align-items:stretch}
+.ddh .ddh__pairs>b{align-self:end;margin:0;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sh-ink)}
+.ddh .ddh__pairs>.ddh__pn{display:block;text-align:center;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#51606f;margin-bottom:2px}
+.ddh .ddh__pairs>em{align-self:center;font-style:normal;font-size:10.5px;color:#51606f;padding-right:3px}
+.ddh .ddh__pairs>i.ddh__ly{display:block;padding:4px 3px;text-align:center;font-size:11px;font-weight:600;font-style:normal;letter-spacing:.02em;line-height:1.15;color:#0f2236;border-radius:3px}
+.ddh .ddh__pairs>i.ddh__ly:nth-of-type(-n+3){border-radius:9px 9px 3px 3px}
+.ddh .ddh__pairs>i.ddh__ly:nth-of-type(n+4){border-radius:3px 3px 9px 9px}
+/* 1.10.6 fit: the pictures give way first, so the pairings never spill out of their cards */
+@media (min-width:1051px) and (any-hover:hover){
+.ddh .ddh__sheet--topper .ddh__card-img{flex:1 1 auto;height:auto;min-height:44px;max-height:clamp(84px,15.5vh,140px)}
+.ddh .ddh__sheet--mattress .ddh__card-img{min-height:38px}
+.ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto auto minmax(0,1.22fr) auto minmax(0,1fr)}}
+.ddh .ddh__pairs>i.ddh__ly{display:flex;align-items:center;justify-content:center;white-space:normal;overflow-wrap:anywhere}.ddh .ddh__pairs>.ddh__pn{letter-spacing:.04em;line-height:1.1}
+/* 1.10.6 low screens (about 720 px high): the lists give way to the pairings */
+@media (min-width:1051px) and (any-hover:hover) and (max-height:760px){
+.ddh .ddh__sheet--topper .ddh__benefit-list,.ddh .ddh__sheet--topper .ddh__depths p{display:none}
+.ddh .ddh__sheet--topper .ddh__covers{flex-wrap:nowrap;gap:6px}.ddh .ddh__sheet--topper .ddh__covers li{padding:4px 8px;font-size:12px;white-space:nowrap}
+.ddh .ddh__sheet--mattress .ddh__sh-row{display:none}
+.ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto minmax(0,1.15fr) minmax(0,1fr)}
+.ddh .ddh__pairs>i.ddh__ly{font-size:10.5px;padding:3px 2px}
+.ddh .ddh__pairs>em,.ddh .ddh__pairs>.ddh__pn{font-size:9px}.ddh .ddh__pairs{gap:2px 4px}.ddh .ddh__pairs>b{font-size:10px;letter-spacing:.04em}.ddh .ddh__pairs>.ddh__pn{letter-spacing:0}}
