@@ -22,13 +22,13 @@ async function desktop(w, h) {
   await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(300);
   ok(plates.length === 0, 'interaction graphics must not load before intent (' + plates.length + ')');
   // links
-  const hrefs = await page.$$eval('.ddh a', (as) => as.map((a) => [a.textContent.trim(), a.getAttribute('href')]));
+  const hrefs = await page.$$eval('.ddh__shop a', (as) => as.map((a) => [a.textContent.trim(), a.getAttribute('href')]));
   for (const [t, hr] of hrefs) ok(LINKS[t] === hr, `link ${t} -> ${hr}`);
   ok(hrefs.length === 2, '2 shopping links (Mattress, Topper); the duplicate menu bar was removed in 1.2.0');
   // pulse
   const anim = await page.evaluate(() => { const b = document.querySelector('.ddh__point'); const a = getComputedStyle(b, '::after'), be = getComputedStyle(b, '::before'); return [a.animationName, be.animationName, a.animationPlayState]; });
   ok(anim[0] === 'ddh-point-beat' && anim[1] === 'ddh-twinkle' && anim[2] === 'running', 'pulse running ' + anim);
-  ok((await page.$$('.ddh__point')).length === 10, '9 hotspots + the night point');
+  ok((await page.$$('.ddh__point')).length === 11, '9 hotspots + Bio Comfort + the night point');
   // hover each
   for (const k of KEYS) {
     const c = await centre(page, k); await page.mouse.move(c.x, c.y, { steps: 2 }); await page.waitForTimeout(60);
@@ -180,7 +180,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.9.4/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.10.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -202,7 +202,7 @@ async function nojs() {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, javaScriptEnabled: false });
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(200);
-  const hrefs = await page.$$eval('.ddh a', (as) => as.map((a) => a.getAttribute('href')));
+  const hrefs = await page.$$eval('.ddh__shop a', (as) => as.map((a) => a.getAttribute('href')));
   ok(hrefs.length === 2 && hrefs.every((h) => /^https:\/\/divinedunlop\.com\/products\//.test(h)), 'links work without JS');
   const c = await centre(page, 'system'); await page.mouse.move(c.x, c.y);
   await page.waitForTimeout(100);
@@ -299,46 +299,77 @@ async function sunrise() {
   await ph.close();
 }
 
-// 1.9.0: "Natural Adaptation" — the sleeper settles (WebGL warp of the photo), then is exactly the photo again
-async function settle() {
-  console.log('Natural Adaptation settle');
-  const gb = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
-  for (const [w, h, touch, reduce] of [[1440, 900, false, false], [1024, 768, true, false], [1440, 900, false, true]]) {
-    const ctx = await gb.newContext({ viewport: { width: w, height: h }, hasTouch: touch, reducedMotion: reduce ? 'reduce' : 'no-preference' });
-    // this lab has no GPU: let the hero accept the software renderer (production refuses it: failIfMajorPerformanceCaveat)
-    await ctx.addInitScript(() => { const g = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function (t, o) { return g.call(this, t, o && Object.assign({}, o, { failIfMajorPerformanceCaveat: false })); }; });
-    const page = await ctx.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
-    await page.clock.install();
-    await page.goto(url, { waitUntil: 'load' }); await page.evaluate(() => document.fonts.ready); await page.clock.runFor(600);
-    const c = await centre(page, 'firmness');
-    const box = await page.evaluate(() => { const r = document.querySelector('.ddh__plane').getBoundingClientRect(); return [r.left, r.top, r.width]; });
-    const k = box[2] / 3554, clipOf = (x0, y0, x1, y1) => ({ x: box[0] + x0 * k, y: box[1] + y0 * k, width: (x1 - x0) * k, height: (y1 - y0) * k });
-    const body = clipOf(1250, 1000, 2900, 2050), words = clipOf(1760, 1640, 2290, 1705);
-    if (!touch) { await page.mouse.move(c.x - 160, c.y - 140); }                        // first intent warms (loads the layers)
-    else await page.evaluate(() => document.querySelector('.ddh__art').dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })));
-    await page.clock.runFor(100);
-    for (let i = 0; i < 50 && !reduce && !(await page.evaluate(() => !!document.querySelector('.ddh__settle'))); i++) { await page.waitForTimeout(100); await page.clock.runFor(50); }
-    await page.clock.runFor(100);
-    await page.clock.pauseAt(new Date(Date.now() + 5000));
-    if (touch) await page.touchscreen.tap(c.x, c.y); else await page.mouse.move(c.x, c.y, { steps: 2 });
-    await page.clock.runFor(900); await page.waitForTimeout(1200);              // warp frozen at 0.9 s; CSS fades finish (real time)
-    const mid = await page.evaluate(() => { const cv = document.querySelector('.ddh__settle'); return { state: document.querySelector('.ddh').getAttribute('data-ddh-state'), on: !!cv && getComputedStyle(cv).display === 'block' }; });
-    const b1 = await page.screenshot({ clip: body }), w1 = await page.screenshot({ clip: words });
-    await page.clock.runFor(2600); await page.waitForTimeout(300);
-    const end = await page.evaluate(() => { const cv = document.querySelector('.ddh__settle'); return { on: !!cv && getComputedStyle(cv).display === 'block', settling: document.querySelector('.ddh').hasAttribute('data-ddh-settling') }; });
-    const b2 = await page.screenshot({ clip: body }), w2 = await page.screenshot({ clip: words });
-    const tag = `${w}x${h}${touch ? ' touch' : ''}${reduce ? ' reduced-motion' : ''}`;
-    ok(mid.state === 'firmness', `${tag}: Natural Adaptation open`);
-    if (reduce) ok(!mid.on, `${tag}: no movement (the warp layer is never shown)`);
-    else {
-      ok(mid.on && !b1.equals(b2), `${tag}: the sleeper moves at 0.9 s: ${JSON.stringify(mid)}`);
-      ok(w1.equals(w2), `${tag}: the "Engineering" lettering never moves`);
-    }
-    ok(!end.on && !end.settling, `${tag}: after 3.5 s she is exactly the photo again (layer off): ${JSON.stringify(end)}`);
-    ok(errs.length === 0, `${tag}: no script errors: ${errs.join(' | ')}`);
+// 1.10.0: Bio Comfort screen + the collection previews behind the Shop buttons
+async function sheets() {
+  console.log('sheets (Bio Comfort, collection previews)');
+  { // desktop with a mouse: hover previews, click on the button still navigates; Bio point opens its dialog
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } }); const page = await ctx.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
+    const req = []; page.on('request', (r) => /sheets\/|assets\/(m|t|b)-/.test(r.url()) && req.push(r.url().split('/').slice(-2).join('/')));
+    await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(300);
+    ok(req.length === 0, 'nothing of the sheets loads with the page: ' + req.join(','));
+    await page.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 6000 });
+    ok(req.filter((u) => u.startsWith('sheets/')).length === 1 && req.every((u) => u.startsWith('sheets/')), 'after load: one sheets file, no pictures yet: ' + req.join(','));
+    const ctas = await page.$$('.ddh__cta');
+    await ctas[0].hover(); await page.waitForTimeout(500);
+    let st = await page.evaluate(() => ({ s: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), cards: document.querySelectorAll('#ddh-sheet-mattress .ddh__card').length, exp: document.querySelector('[data-ddh-sheet=mattress]').getAttribute('aria-expanded') }));
+    ok(st.s === 'mattress' && st.cards === 8 && st.exp === 'true', 'hover Shop Mattress -> the collection preview, 8 models: ' + JSON.stringify(st));
+    const box = await page.evaluate(() => { const r = document.querySelector('#ddh-sheet-mattress .ddh__sh-in').getBoundingClientRect(), c = document.querySelector('.ddh__shop').getBoundingClientRect(), h = document.querySelector('#ddh-sheet-mattress .ddh__sh-in'); return { gap: Math.round(c.top - r.bottom), scroll: h.scrollHeight - h.clientHeight }; });
+    ok(box.gap >= 6, 'preview ends above the Shop buttons: ' + JSON.stringify(box));
+    ok(box.scroll <= 2, 'all 8 models fit without scrolling at 1440x900: ' + JSON.stringify(box));
+    const cardBox = await page.$eval('#ddh-sheet-mattress .ddh__card', (e) => { const r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
+    await page.mouse.move(cardBox[0], cardBox[1], { steps: 6 }); await page.waitForTimeout(450);
+    ok(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-open-sheet')) === 'mattress', 'the preview stays open while the pointer moves onto it');
+    await ctas[1].hover(); await page.waitForTimeout(450);
+    st = await page.evaluate(() => ({ s: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), cards: document.querySelectorAll('#ddh-sheet-topper .ddh__card').length }));
+    ok(st.s === 'topper' && st.cards === 3, 'hover Shop Topper -> toppers, 3 models: ' + JSON.stringify(st));
+    await page.mouse.move(20, 880, { steps: 4 }); await page.waitForTimeout(600);
+    ok(!(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'))), 'leaving closes the preview');
+    await ctas[0].hover(); await page.waitForTimeout(400);
+    const [nav] = await Promise.all([page.waitForRequest((r) => r.isNavigationRequest(), { timeout: 4000 }).catch(() => null), ctas[0].click()]);
+    ok(nav && /latex-mattresses-collection/.test(nav.url()), 'click on Shop Mattress still opens the collection');
+    await page.goto(url, { waitUntil: 'load' }); await page.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 6000 });
+    const c = await centre(page, 'bio'); await page.mouse.move(c.x + 30, c.y + 20); await page.mouse.move(c.x, c.y, { steps: 3 }); await page.waitForTimeout(200);
+    ok((await state(page)).s === 'bio', 'hover Bio point -> teaser');
+    await page.mouse.click(c.x, c.y); await page.waitForTimeout(600);
+    st = await page.evaluate(() => { const s = document.querySelector('#ddh-sheet-bio'); return { open: !s.hidden, modal: s.getAttribute('aria-modal'), focus: document.activeElement === s, state: document.querySelector('.ddh').getAttribute('data-ddh-state') }; });
+    ok(st.open && st.modal === 'true' && st.focus && !st.state, 'click Bio point -> Bio Comfort dialog, focused, hotspot state cleared: ' + JSON.stringify(st));
+    await page.click('[data-ddh-v=dp]'); await page.waitForTimeout(200);
+    st = await page.evaluate(() => ({ fig: [...document.querySelectorAll('#ddh-sheet-bio .ddh__bio-fig')].map((f) => f.hidden).join(), sel: document.querySelector('[data-ddh-v=dp]').getAttribute('aria-selected') }));
+    ok(st.fig === 'true,false' && st.sel === 'true', 'Dual Plush tab swaps picture and specs: ' + JSON.stringify(st));
+    await page.keyboard.press('ArrowLeft');
+    ok(await page.evaluate(() => document.querySelector('[data-ddh-v=bio]').getAttribute('aria-selected')) === 'true', 'arrow keys move between the versions');
+    for (let i = 0; i < 12; i++) await page.keyboard.press('Tab');
+    ok(await page.evaluate(() => document.querySelector('#ddh-sheet-bio').contains(document.activeElement)), 'Tab stays inside the dialog');
+    await page.keyboard.press('Escape'); await page.waitForTimeout(200);
+    st = await page.evaluate(() => ({ open: !document.querySelector('#ddh-sheet-bio').hidden, focus: document.activeElement && document.activeElement.getAttribute('data-ddh-point') }));
+    ok(!st.open && st.focus === 'bio', 'Escape closes, focus back on the Bio point: ' + JSON.stringify(st));
+    ok(errs.length === 0, 'no script errors: ' + errs.join(' | '));
     await ctx.close();
   }
-  await gb.close();
+  for (const [w, h, label] of [[390, 844, 'phone'], [1024, 1366, 'iPad']]) { // touch: first tap opens full screen, its own button leads on
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: true, isMobile: true }); const page = await ctx.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
+    await page.goto(url, { waitUntil: 'load' }); await page.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 6000 });
+    const before = page.url(); await (await page.$('.ddh__cta')).tap(); await page.waitForTimeout(500);
+    let st = await page.evaluate(() => { const s = document.querySelector('#ddh-sheet-mattress'), r = s.getBoundingClientRect(), at = document.elementFromPoint(innerWidth / 2, 30); return { open: !s.hidden, full: r.top <= 0 && r.height >= innerHeight - 1 && r.width >= innerWidth - 1, top: !!at && s.contains(at), lock: document.documentElement.style.overflow }; });
+    ok(page.url() === before && st.open && st.full && st.top && st.lock === 'hidden', `${label}: tap Shop Mattress -> full-screen preview over the header, page locked: ` + JSON.stringify(st));
+    await page.tap('#ddh-sheet-mattress [data-ddh-close]'); await page.waitForTimeout(250);
+    st = await page.evaluate(() => ({ open: !document.querySelector('#ddh-sheet-mattress').hidden, lock: document.documentElement.style.overflow }));
+    ok(!st.open && st.lock === '', `${label}: close button closes and unlocks: ` + JSON.stringify(st));
+    const bl = await page.$('.ddh__bio-link');
+    if (w < 701) { ok(await bl.isVisible(), `${label}: Bio Comfort entry under the Shop buttons`); await bl.tap(); }
+    else { const c = await centre(page, 'bio'); await page.touchscreen.tap(c.x, c.y); }
+    await page.waitForTimeout(500);
+    ok(await page.evaluate(() => !document.querySelector('#ddh-sheet-bio').hidden), `${label}: Bio Comfort opens`);
+    ok(errs.length === 0, `${label}: no script errors: ` + errs.join(' | '));
+    await ctx.close();
+  }
+  { // translations reach the sheets
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } }); const page = await ctx.newPage();
+    await page.goto(url + (url.includes('?') ? '&' : '?') + 'ddh-lang=fr', { waitUntil: 'load' }); await page.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 6000 });
+    const t = await page.evaluate(() => ({ lang: document.querySelector('.ddh__sheets').getAttribute('lang'), h: document.querySelector('#ddh-mat-t').textContent, z: document.querySelector('.ddh__zones li').textContent, alt: document.querySelector('#ddh-sheet-bio img').alt }));
+    ok(t.lang === 'fr' && /matelas en latex/.test(t.h) && t.z === 'Tête' && /Femme/.test(t.alt), 'French sheets: ' + JSON.stringify(t));
+    await ctx.close();
+  }
 }
 
 // 1.9.1: the points keep working after the display sleeps / the tab is frozen (a lost animation frame used to
@@ -410,7 +441,7 @@ await nojs();
 await i18n();
 await night();
 await sunrise();
-await settle();
+await sheets();
 await wakeup();
 await browser.close();
 console.log(`\n${passes} passed, ${fails} failed`);

@@ -1,12 +1,12 @@
-/*! Divine DunlopDreams Hero 1.9.4 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.10.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.9.4';
+  var VERSION = '1.10.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
-  var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07 };
+  var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
   // 1.8.0: 'immersive' states take over the whole scene; while one is open only its own point is live
   function immersive(k, w) { return k === 'night' || (k === 'system' && w.innerWidth > 700); }
   var NIGHT = 'night'; // 1.7.0: night mode (pointer screens >=1051px); 1.7.1: hover in/out like every other point
@@ -186,190 +186,14 @@
       lazyImgs.forEach(function (img) { img.loading = 'eager'; });
       root.setAttribute('data-ddh-warm', '');                       // lets the mattress / night layers render (and load)
       if (nightImg && nightMQ.matches) nightImg.loading = 'eager';
-      settle.load();
     }
 
-    // 1.9.2 "Natural Adaptation": the sleeper resettles, 3 s. Only the woman moves; the bed and the pillow give under
-    // her weight; the sky and every letter stay where they are. Three layers, composited per pixel (WebGL): her (the
-    // lettering lifted off her), the clean background behind her contour, and the original lettering laid back on top:
-    //   out = W(q) + (1 − A(q))·(Bg(p') − B(q)),  q = p − D(p)  (A: her alpha; Bg: the clean background; B: the photo's
-    //   own background at q, i.e. the photo outside her, the rebuilt one under her edge; p': the mattress's/pillow's give)
-    // D is not a set of local blobs: it is a small skeleton (linear-blend skinning). Rigid segments turn about real
-    // joints (the lumbar spine, C7, the shoulder blade, the shoulder joint, the head's contact with the pillow)
-    // and pass their motion down the chain, so a movement is carried by the whole body, never a swelling in one spot.
-    // The sequence (owner's brief, latex support: the foam holds her up and gives back, it does not swallow her):
-    // a breath in opens the chest; the head presses into the pillow (the pillow gives) and the neck follows; the back
-    // muscles carry it; the upper shoulder lifts and opens, then lets go under gravity, a touch below rest, and is held
-    // by the latex; the lower shoulder sinks into the mattress, which takes the weight and gives it back; the head
-    // releases onto the pillow; a last tremor in the shoulder blade settles; one long exhale returns her to rest.
-    var settle = (function () {
-      var img = root.querySelector('.ddh__img'), plane = root.querySelector('.ddh__plane');
-      var MW = 3554, MH = 2744, RX = 0, RY = 660, RW = 2960, RH = 1500, DUR = 3.2;
-      // segments (master px): capsule a→b, radius, soft falloff
-      var BONES = [
-        [700, 1360, 1600, 1440, 300, 260],     // 0 thorax (the back, between hips and shoulders)
-        [700, 1090, 1660, 1240, 95, 115],      // 1 shoulder girdle: shoulder blade, strap, neck-shoulder slope (below the shoulder joint)
-        [60, 880, 1380, 930, 170, 240],        // 2 upper arm and the deltoid (wide soft falloff: everything stays round)
-        [1700, 1290, 2060, 1340, 120, 130],    // 3 neck
-        [2150, 1350, 2620, 1330, 235, 110],    // 4 head
-        [1450, 1880, 1700, 1820, 100, 230],    // 5 the lower side, on the mattress, against the pillow (fades out before the small mattress)
-        [80, 1660, 650, 1620, 250, 220]        // 6 pelvis and hip
-      ];
-      var LUMBAR = [900, 1660], SCAP = [1180, 1150], SHOULDER = [1440, 880], HIP = [560, 1700], C7 = [1700, 1300], CONTACT = [2420, 1575];
-      var reduce = w.matchMedia ? w.matchMedia('(prefers-reduced-motion:reduce)') : { matches: false };
-      var cv, gl, U, srcs = [], built = false, failed = !img || !plane || !w.WebGLRenderingContext, raf = 0, last = 0, t0 = 0, pending = 0, loading = false;
-      function clock() { return w.performance && performance.now ? performance.now() : Date.now(); }
-      function load() {
-        if (failed || loading) return; loading = true;
-        var base = (img.getAttribute('src') || '').replace(/[^\/]*$/, ''), left = 3;
-        [img.currentSrc || img.src, base + 'sleeper-plate.webp', base + 'sleeper-mask.webp'].forEach(function (u, i) {
-          var im = new Image(); im.crossOrigin = 'anonymous';
-          im.onload = function () { if (!--left) setTimeout(build, 0); };
-          im.onerror = function () { failed = true; };
-          im.src = u; srcs[i] = im;
-        });
-      }
-      function texture(unit, source) {
-        gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());   // stays bound to its unit
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, source);
-        [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]].forEach(function (x) { gl.texParameteri(gl.TEXTURE_2D, x[0], x[1]); });
-      }
-      function build() {
-        if (built || failed) return;
-        try {
-          cv = d.createElement('canvas'); cv.className = 'ddh__settle'; cv.setAttribute('aria-hidden', 'true');
-          gl = cv.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false, failIfMajorPerformanceCaveat: true }); // no GPU: no settle
-          var hp = gl && gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT);
-          if (!gl || !hp || !hp.precision) throw 0;
-          var vs = 'attribute vec2 a;varying vec2 v;void main(){v=a;gl_Position=vec4(a.x*2.-1.,1.-a.y*2.,0.,1.);}';
-          var fs = 'precision highp float;uniform sampler2D T,P,K;uniform vec4 C,R,Z;uniform vec2 HO;uniform vec4 S[7];uniform vec2 F[7];uniform vec3 X[7],Y[7];uniform vec4 V[2];uniform vec3 VD[2];uniform float O;varying vec2 v;' +
-            'vec2 u(vec2 x){return(x-Z.xy)/Z.zw;}vec2 r(vec2 x){return(x+HO-R.xy)/R.zw;}' +
-            'vec2 skin(vec2 p){vec2 D=vec2(0.);float ws=0.;for(int i=0;i<7;i++){vec2 a=S[i].xy,b=S[i].zw,ab=b-a;float h=clamp(dot(p-a,ab)/dot(ab,ab),0.,1.);' +
-            'float w=1.-smoothstep(F[i].x,F[i].x+F[i].y,length(p-a-ab*h));D+=w*(vec2(dot(X[i].xy,p)+X[i].z,dot(Y[i].xy,p)+Y[i].z)-p);ws+=w;}D/=max(ws,1.);return D;}' +
-            'vec2 give(vec2 p){vec2 D=vec2(0.);for(int i=0;i<2;i++){vec4 g=V[i];D+=(1.-smoothstep(1.,1.+VD[i].z,length((p-g.xy)/g.zw)))*VD[i].xy;}return D*smoothstep(1160.,1320.,p.x)*(1.-smoothstep(1600.,1622.,p.y)*step(1700.,p.x)*(1.-step(2100.,p.y)));}' +
-            'vec3 bg(vec2 x){vec2 t=u(x);return mix(texture2D(T,r(x)).rgb,texture2D(P,t).rgb,min(texture2D(K,t).b*2.,1.)*(1.-step(.52,texture2D(K,t).b)));}' +
-            'void main(){vec2 p=C.xy+v*C.zw;vec2 e=min(p-Z.xy+vec2(step(Z.x,0.)*1e4,0.),Z.xy+Z.zw-p);float f=smoothstep(0.,60.,min(e.x,e.y));' +
-            'vec2 q=p-skin(p)*(1.-(1.-smoothstep(1090.,1320.,p.x))*smoothstep(1870.,1940.,p.y));vec2 tp=u(p);vec3 Kp=texture2D(K,tp).rgb;vec2 pm=p-give(p)*(1.-Kp.r);' +
-            'vec2 tq=u(q);vec3 Kq=texture2D(K,tq).rgb;float lift=max(smoothstep(.9,1.,Kq.g),smoothstep(.505,.53,Kq.b));' +
-            'vec3 Wq=mix(texture2D(T,r(q)).rgb,texture2D(P,tq).rgb,clamp(lift,0.,1.));' +
-            'vec3 bt=mix(texture2D(T,r(q)).rgb,bg(q),smoothstep(0.,.05,Kq.r));vec3 o=Wq+(1.-Kq.r)*(bg(pm)-bt);' +
-            'float cov=max(max(smoothstep(.0,.03,max(Kp.r,Kq.r)),smoothstep(.05,.3,length(p-pm))),smoothstep(0.,.06,Kp.b)*(1.-step(.52,Kp.b)));' +
-            'float a=f*O*cov*(1.-Kp.g);gl_FragColor=vec4(o*a,a);}';
-          var pr = gl.createProgram();
-          [[gl.VERTEX_SHADER, vs], [gl.FRAGMENT_SHADER, fs]].forEach(function (x) { var sh = gl.createShader(x[0]); gl.shaderSource(sh, x[1]); gl.compileShader(sh); gl.attachShader(pr, sh); });
-          gl.linkProgram(pr);
-          if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) throw 0;
-          gl.useProgram(pr);
-          gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);
-          var a = gl.getAttribLocation(pr, 'a'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
-          // her pixels at the photo file's own resolution (no browser resampling: the GPU samples them at exact positions)
-          var ph = srcs[0], kx = ph.naturalWidth / MW, ky = ph.naturalHeight / MH, sx = Math.max(0, Math.floor(RX * kx) - 2), sy = Math.max(0, Math.floor(RY * ky) - 2);
-          var sw = Math.min(ph.naturalWidth - sx, Math.ceil(RW * kx) + 4), sh = Math.min(ph.naturalHeight - sy, Math.ceil(RH * ky) + 4), c2 = d.createElement('canvas');
-          c2.width = sw; c2.height = sh; c2.getContext('2d').drawImage(ph, sx, sy, sw, sh, 0, 0, sw, sh);
-          texture(0, c2); texture(1, srcs[1]); texture(2, srcs[2]); photoAt = '';
-          U = {}; ['T', 'P', 'K', 'C', 'R', 'Z', 'O', 'HO'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n); });
-          ['S', 'F', 'X', 'Y', 'V', 'VD'].forEach(function (n) { U[n] = gl.getUniformLocation(pr, n + '[0]'); });
-          gl.uniform1i(U.T, 0); gl.uniform1i(U.P, 1); gl.uniform1i(U.K, 2);
-          gl.uniform4f(U.Z, RX, RY, RW, RH); gl.uniform4f(U.R, sx / kx, sy / ky, sw / kx, sh / ky);
-          gl.uniform2f(U.HO, .5 / kx, .5 / ky);   // browsers draw a picture half a file pixel on (measured): match it
-          gl.uniform4fv(U.S, [].concat.apply([], BONES.map(function (q) { return q.slice(0, 4); })));
-          gl.uniform2fv(U.F, [].concat.apply([], BONES.map(function (q) { return q.slice(4, 6); })));
-          gl.uniform4fv(U.V, [1350, 2095, 700, 120, 2430, 1590, 190, 26]);           // the mattress under her side; the pillow under her head (its surface only: the lettering on it never moves)
-          plane.insertBefore(cv, img.parentNode.nextSibling);               // right over the photo, under the logo plate and everything else
-          built = true;
-          if (pending && clock() - pending < 1500) play();
-        } catch (e) { failed = true; if (cv && cv.parentNode) cv.parentNode.removeChild(cv); }
-      }
-      // the choreography: keyframes [s, value, shape], eased (zero speed at every key: holds and turns, never jerks);
-      // shape > 1: the segment starts slowly and lands (letting go under gravity); < 1: it starts at once and eases out long (the latex giving back)
-      function key(t, k) {
-        if (t <= k[0][0]) return k[0][1];
-        for (var i = 1; i < k.length; i++) if (t <= k[i][0]) { var u = (t - k[i - 1][0]) / (k[i][0] - k[i - 1][0]); if (k[i][2]) u = Math.pow(u, k[i][2]); u = u * u * u * (u * (u * 6 - 15) + 10); return k[i - 1][1] + (k[i][1] - k[i - 1][1]) * u; }
-        return k[k.length - 1][1];
-      }
-      var DEG = Math.PI / 180;
-      // 1.9.4: a settling, not a performance. Five small movements, each with its own moment, speed and weight, one
-      // handing over to the next across the whole 3 s; the arm does not move on its own (it rides with the shoulder):
-      //  1 the head sinks into the pillow and lets go (the pillow takes it)                         0.15–1.6 s
-      //  2 the lower shoulder unloads into the mattress; the latex takes it, holds, gives it back   0.7–2.9 s
-      //  3 the pelvis follows it down a beat later, softer and longer                               1.05–2.95 s
-      //  4 the upper shoulder rolls forward over the chest, a few px, and stays relaxed            1.35–2.85 s
-      //  5 a small twitch in the back with the exhale                                               2.15–2.75 s
-      // underneath, one slow breath: in at the start, out across the second half.
-      var K_THORAX = [[0, 0], [.6, -.1, .9], [1.6, -.04], [2.6, .1, 1.2], [3.0, 0, .8]];                  // deg: breath in, long exhale
-      var K_PRESS = [[0, 0], [.15, 0], [.8, 4, 1.35], [1.15, 1.5, .75], [1.7, 0, .8]];                    // px: head into the pillow, release
-      var K_ROLL = [[0, 0], [.2, 0], [.85, .6, 1.35], [1.2, .2, .75], [1.7, 0, .8]];                      // deg: on its contact point, a touch after the press
-      var K_SINK = [[0, 0], [.75, 0], [1.65, 11, 1.45], [1.95, 8.5, .7], [2.25, 9.2], [2.95, 0, .7]];    // px: lower shoulder lets go into the latex, held, given back
-      var K_PELVIS = [[0, 0], [1.1, 0], [1.95, 8, 1.4], [2.3, 6.6, .7], [2.95, 0, .75]];                 // px: pelvis follows it down, softer
-      var K_FWD = [[0, 0], [1.4, 0], [2.15, 1, 1.25], [2.9, 0, .8]];                                     // the upper shoulder rolls forward
-      var K_TWITCH = [[0, 0], [2.15, 0], [2.27, 1, .7], [2.42, -.35], [2.58, .12], [2.75, 0]];          // a twitch in the back, damped
-      function pose(t) {
-        var th = key(t, K_THORAX) * DEG, roll = key(t, K_ROLL) * DEG, press = key(t, K_PRESS), neck = .5 * key(t - .12, K_ROLL) * DEG;
-        var sink = key(t, K_SINK), pel = key(t, K_PELVIS), fwd = key(t, K_FWD), tw = key(t, K_TWITCH);
-        var base = rot(LUMBAR, .3 * th), thorax = mul(rot(LUMBAR, th), tr(0, -.8 * tw));
-        // the shoulder girdle and the arm on it: one rigid piece (no bend anywhere: the elbow stays as round as it is)
-        var girdle = mul(base, mul(tr(1.2 * fwd, 2.6 * fwd - 1.1 * tw + .25 * sink), rot(SCAP, .25 * fwd * DEG)));
-        var neckM = mul(base, rot(C7, neck));
-        var headM = mul(neckM, mul(tr(0, press), rot(CONTACT, roll - neck)));
-        var low = mul(base, tr(.2 * sink, sink));
-        var pelvis = mul(base, mul(tr(0, pel), rot(HIP, .02 * pel * DEG)));
-        // the latex is slower than the body: it follows her down a little late and lifts her back
-        return { bones: [thorax, girdle, girdle, neckM, headM, low, pelvis], give: [.8 * (.6 * key(t - .1, K_SINK) + .4 * key(t - .1, K_PELVIS)), .6 * key(t - .06, K_PRESS)] };
-      }
-      // 2×3 affine helpers: [a, b, c, d, e, f] maps (x, y) → (a·x + b·y + c, d·x + e·y + f)
-      function rot(o, a) { var c = Math.cos(a), s = Math.sin(a); return [c, -s, o[0] - c * o[0] + s * o[1], s, c, o[1] - s * o[0] - c * o[1]]; }
-      function tr(x, y) { return [1, 0, x, 0, 1, y]; }
-      function mul(m, n) { return [m[0] * n[0] + m[1] * n[3], m[0] * n[1] + m[1] * n[4], m[0] * n[2] + m[1] * n[5] + m[2], m[3] * n[0] + m[4] * n[3], m[3] * n[1] + m[4] * n[4], m[3] * n[2] + m[4] * n[5] + m[5]]; }
-      // The layer is snapped to the device-pixel grid around the sleeper's area; each of its pixels samples the photo at
-      // exactly the point the picture shows there, so she registers with the photo to a fraction of a pixel.
-      var photoAt;
-      function draw(t) {
-        // where the browser actually puts the picture: object-fit:cover of this file (its own rounded size) in the box
-        var dpr = Math.min(w.devicePixelRatio || 1, 3), ib = img.getBoundingClientRect(), nw = img.naturalWidth || srcs[0].naturalWidth, nh = img.naturalHeight || srcs[0].naturalHeight;
-        if (!ib.width || !nw) return;
-        var sc = Math.max(ib.width / nw, ib.height / nh), ox = ib.left + (ib.width - nw * sc) / 2, oy = ib.top + (ib.height - nh * sc) / 2;
-        var fx = sc * nw / MW, fy = sc * nh / MH;                                   // css px per master px, per axis
-        var L = Math.floor((ox + RX * fx) * dpr), T = Math.floor((oy + RY * fy) * dpr), Rr = Math.ceil((ox + (RX + RW) * fx) * dpr), B = Math.ceil((oy + (RY + RH) * fy) * dpr);
-        var Wd = Rr - L, Hd = B - T, mx = (L / dpr - ox) / fx, my = (T / dpr - oy) / fy, mw = Wd / dpr / fx, mh = Hd / dpr / fy, pr = plane.getBoundingClientRect();
-        var at = [Wd, Hd, mx.toFixed(3), my.toFixed(3), mw.toFixed(3)].join();
-        if (photoAt !== at) {
-          var st = cv.style; st.left = (L / dpr - pr.left) + 'px'; st.top = (T / dpr - pr.top) + 'px'; st.width = Wd / dpr + 'px'; st.height = Hd / dpr + 'px';
-          if (cv.width !== Wd || cv.height !== Hd) { cv.width = Wd; cv.height = Hd; }
-          gl.viewport(0, 0, Wd, Hd); gl.uniform4f(U.C, mx, my, mw, mh);
-          photoAt = at;
-        }
-        var ps = pose(t), X = [], Y = [];
-        ps.bones.forEach(function (m) { X.push(m[0], m[1], m[2]); Y.push(m[3], m[4], m[5]); });
-        gl.uniform3fv(U.X, X); gl.uniform3fv(U.Y, Y);
-        gl.uniform3fv(U.VD, [0, ps.give[0], 1.2, 0, ps.give[1], 1]);
-        gl.uniform1f(U.O, Math.min(1, t / .15, (DUR - t) / .2));                   // the layer fades in/out while she is at rest
-        gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      }
-      function stop() { if (raf) w.cancelAnimationFrame(raf); raf = 0; if (cv) cv.style.display = ''; root.removeAttribute('data-ddh-settling'); photoAt = ''; }
-      function tick() {
-        var t = (clock() - t0) / 1000; last = clock();
-        if (t >= DUR || t < 0) { stop(); return; }
-        draw(t); raf = w.requestAnimationFrame(tick);
-      }
-      function play() {
-        if (reduce.matches || failed) return;
-        if (!built) { pending = clock(); load(); return; }
-        pending = 0;
-        if (raf && clock() - last < 250) return;                                   // one at a time; a stalled frame never blocks the next
-        stop(); cv.style.display = 'block'; root.setAttribute('data-ddh-settling', '');
-        t0 = last = clock(); draw(0); raf = w.requestAnimationFrame(tick);
-      }
-      cleanups.push(function () { stop(); if (cv && cv.parentNode) cv.parentNode.removeChild(cv); var lc = gl && gl.getExtension('WEBGL_lose_context'); if (lc) lc.loseContext(); });   // Instant Site re-inits sections: free the GPU context now, not at GC
-      return { load: load, play: play, stop: stop };
-    })();
 
     function show(key, announce) {
-      if (key && pointsOff()) key = null;
+      if (key && (pointsOff() || sheet)) key = null;
       if (key === active) { if (key && announce) live.textContent = txtOf(key); return; }
       active = key;
-      if (key) { warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : key === NIGHT ? NIGHT : 'brand'); fit(key); if (key === 'firmness') settle.play(); }
+      if (key) { warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : key === NIGHT ? NIGHT : 'brand'); fit(key); }
       else { root.removeAttribute('data-ddh-state'); root.removeAttribute('data-ddh-screen'); }
       var txt = '';
       copies.forEach(function (c) { var isOn = c.getAttribute('data-ddh-copy') === key; c.setAttribute('aria-hidden', String(!isOn)); if (isOn) txt = speak(c); });
@@ -439,7 +263,7 @@
       if (mRaf) { w.cancelAnimationFrame(mRaf); mRaf = 0; }
       invalidate(); layout();
     }
-    function wake() { unstick(); settle.stop(); if (active && !group.contains(d.activeElement)) show(null); }
+    function wake() { unstick(); if (active && !group.contains(d.activeElement)) show(null); }
     on(d, 'visibilitychange', function () { if (!d.hidden) wake(); });
     on(w, 'pageshow', function (ev) { if (ev.persisted) wake(); else unstick(); });
     on(d, 'resume', wake);
@@ -462,6 +286,7 @@
       var btn = ev.target.closest && ev.target.closest('[data-ddh-point]');
       var precise = ev.pointerType === 'mouse' || ev.pointerType === 'pen' || (!ev.pointerType && fine.matches);
       var key = btn ? btn.getAttribute('data-ddh-point') : hit(ev.clientX, ev.clientY, precise ? 1 : 1.7);
+      if (key === 'bio') { openSheet('bio', 'modal', btn || bioPoint); return; }       // 1.10.0: Bio Comfort opens its screen
       if (ev.detail === 0) { if (key) show(key, true); return; } // keyboard activation
       if (!precise && key && key === active) key = null;           // second tap closes
       if (precise && !key) return;
@@ -507,6 +332,7 @@
         slots.forEach(function (sl, i) { fill(sl, lines[i]); });
         c.setAttribute('lang', lang);
       });
+      [].forEach.call(root.querySelectorAll('[data-ddh-t]'), function (el) { var v = dict[el.getAttribute('data-ddh-t')]; if (typeof v === 'string') fill(el, v); });
       root.setAttribute('data-ddh-lang', lang);
       if (active) fit(active);
     }
@@ -520,6 +346,118 @@
       };
       if (d.readyState === 'complete') load(); else on(w, 'load', load, { once: true });
     }
+
+    // 1.10.0 Sheets: the Bio Comfort screen (from its point) and the collection previews (hovering the Shop buttons).
+    // Their markup is one small HTML file per language next to hero.js (<base>sheets/<lang>.html), fetched once the page
+    // has loaded (search engines render it too) or at the first sign of intent, whichever comes first. Desktop with a
+    // pointer: the previews open on hover and stay while the pointer is on the button or the sheet; a click on the button
+    // still goes to the collection. Touch / narrow screens: the first tap opens the sheet full screen (its own button
+    // leads on); Escape, the close button or a click outside closes it.
+    var sheetBox = null, sheetReq = false, sheet = null, sheetMode = '', sheetFrom = null, sheetWait = null, hoverT = 0, lastPT = '', openedAt = 0;
+    var ctas = [].slice.call(root.querySelectorAll('[data-ddh-sheet]')), bioPoint = group.querySelector('[data-ddh-point=bio]');
+    var bioLink = root.querySelector('[data-ddh-open=bio]');
+    var deskMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (any-hover:hover)') : { matches: true };
+    function base() { return (img && img.getAttribute('src') || '').replace(/assets\/[^\/]*$/, ''); }
+    function loadSheets() {
+      if (sheetReq || !w.fetch || !img) return; sheetReq = true;
+      w.fetch(base() + 'sheets/' + (lang || 'en') + '.html', { signal: signal }).then(function (r) { if (!r.ok) throw r; return r.text(); })
+        .then(function (html) {
+          if (!root.hasAttribute('data-ddh-ready')) return;
+          var t = d.createElement('template'); t.innerHTML = html.replace(/\{\{BASE\}\}/g, base());
+          sheetBox = t.content.firstElementChild; if (!sheetBox) return;
+          root.appendChild(sheetBox);
+          cleanups.push(function () { closeSheet(true); if (sheetBox && sheetBox.parentNode) sheetBox.parentNode.removeChild(sheetBox); sheetBox = null; });
+          wireSheets();
+          if (bioLink) bioLink.hidden = false;
+          if (sheetWait) { var f = sheetWait; sheetWait = null; f(); }
+        })
+        .catch(function () { sheetReq = false; });
+    }
+    // Full screen (touch / narrow): the sheets move to a wrapper at the end of <body> (class "ddh", so the styles still
+    // apply) — inside the section they would stay under the site header (the section is its own stacking context).
+    var portal = null;
+    function host(full) {
+      if (!full) return root;
+      if (!portal) { portal = d.createElement('div'); portal.className = 'ddh ddh__portal'; d.body.appendChild(portal); cleanups.push(function () { if (portal && portal.parentNode) portal.parentNode.removeChild(portal); portal = null; }); }
+      return portal;
+    }
+    function eager(el) { [].forEach.call(el.querySelectorAll('img'), function (im) { im.loading = 'eager'; }); }
+    function lock(on) { var s = d.documentElement.style; if (on) { if (!root.hasAttribute('data-ddh-lock')) { root.setAttribute('data-ddh-lock', s.overflow || ''); s.overflow = 'hidden'; } } else if (root.hasAttribute('data-ddh-lock')) { s.overflow = root.getAttribute('data-ddh-lock'); root.removeAttribute('data-ddh-lock'); } }
+    function openSheet(name, mode, from) {
+      if (!sheetBox) { sheetWait = function () { openSheet(name, mode, from); }; loadSheets(); return; }
+      var el = sheetBox.querySelector('#ddh-sheet-' + name); if (!el) return;
+      w.clearTimeout(hoverT);
+      if (sheet === el) { if (mode === 'modal' && sheetMode !== 'modal') { sheetMode = 'modal'; el.focus({ preventScroll: true }); } return; }
+      closeSheet(true); show(null);
+      sheet = el; sheetMode = mode; sheetFrom = from || null; openedAt = Date.now();
+      var h = host(!deskMQ.matches); if (sheetBox.parentNode !== h) h.appendChild(sheetBox);
+      if (sheetBox.getAttribute('lang') !== (lang || 'en')) sheetBox.setAttribute('lang', lang || 'en');
+      eager(el); el.hidden = false; root.setAttribute('data-ddh-open-sheet', name);
+      el.setAttribute('aria-modal', String(mode === 'modal'));
+      if (sheetFrom) sheetFrom.setAttribute('aria-expanded', 'true');
+      if (!deskMQ.matches) lock(true);
+      if (mode === 'modal') el.focus({ preventScroll: true });
+    }
+    function closeSheet(quiet) {
+      w.clearTimeout(hoverT);
+      if (!sheet) return;
+      var from = sheetFrom, modal = sheetMode === 'modal';
+      sheet.hidden = true; root.removeAttribute('data-ddh-open-sheet'); lock(false);
+      if (from) from.setAttribute('aria-expanded', 'false');
+      sheet = null; sheetFrom = null; sheetMode = '';
+      if (modal && !quiet && from && from.offsetWidth) from.focus({ preventScroll: true });
+    }
+    function later() { w.clearTimeout(hoverT); if (sheetMode === 'hover') hoverT = w.setTimeout(function () { closeSheet(true); }, 280); }
+    function pick(btn) {
+      var el = btn.closest('.ddh__sheet'), v = btn.getAttribute('data-ddh-v');
+      [].forEach.call(el.querySelectorAll('[data-ddh-v]'), function (b) { var on = b === btn; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+      [].forEach.call(el.querySelectorAll('[data-v]'), function (x) { x.hidden = x.getAttribute('data-v') !== v; });
+      var panel = el.querySelector('[role=tabpanel]'); if (panel) panel.setAttribute('aria-labelledby', btn.id);
+    }
+    function wireSheets() {
+      on(sheetBox, 'click', function (ev) {
+        var t = ev.target;
+        if (t.closest('[data-ddh-close]')) { closeSheet(); return; }
+        var v = t.closest('[data-ddh-v]'); if (v) { pick(v); return; }
+        if (sheet && sheetMode === 'modal' && t === sheet && !deskMQ.matches) closeSheet();   // the backdrop of a full-screen sheet
+      });
+      on(sheetBox, 'keydown', function (ev) {
+        var v = ev.target.closest && ev.target.closest('[data-ddh-v]');
+        if (v && (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft')) { var all = [].slice.call(v.parentNode.querySelectorAll('[data-ddh-v]')), n = all[(all.indexOf(v) + (ev.key === 'ArrowRight' ? 1 : all.length - 1)) % all.length]; pick(n); n.focus(); ev.preventDefault(); return; }
+        if (ev.key === 'Tab' && sheet && sheetMode === 'modal') {                                       // keep keyboard focus inside the dialog
+          var f = [].filter.call(sheet.querySelectorAll('a[href],button:not([tabindex="-1"])'), function (x) { return x.offsetWidth > 0; });
+          if (!f.length) return;
+          var first = f[0], last = f[f.length - 1], at = d.activeElement;
+          if (ev.shiftKey && (at === first || at === sheet)) { last.focus(); ev.preventDefault(); }
+          else if (!ev.shiftKey && at === last) { first.focus(); ev.preventDefault(); }
+        }
+      });
+      on(sheetBox, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') w.clearTimeout(hoverT); });
+      on(sheetBox, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch') later(); });
+    }
+    ctas.forEach(function (a) {
+      var name = a.getAttribute('data-ddh-sheet');
+      on(a, 'pointerdown', function (ev) { lastPT = ev.pointerType; }, { passive: true });
+      on(a, 'pointerenter', function (ev) {
+        if (ev.pointerType === 'touch' || !deskMQ.matches || (sheet && sheetMode === 'modal')) return;
+        loadSheets(); w.clearTimeout(hoverT);
+        hoverT = w.setTimeout(function () { openSheet(name, 'hover', a); }, sheet ? 0 : 140);
+      }, { passive: true });
+      on(a, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch') { if (!sheet) w.clearTimeout(hoverT); later(); } }, { passive: true });
+      on(a, 'click', function (ev) {
+        if (ev.detail === 0 || ev.ctrlKey || ev.metaKey || ev.shiftKey) return;                          // keyboard / new tab: straight to the collection
+        var touchy = lastPT === 'touch' || !deskMQ.matches; lastPT = '';
+        if (touchy && !(sheet && sheetFrom === a)) { ev.preventDefault(); openSheet(name, 'modal', a); }
+      });
+    });
+    if (bioLink) on(bioLink, 'click', function () { openSheet('bio', 'modal', bioLink); });
+    if (bioPoint) on(bioPoint, 'pointerenter', loadSheets, { passive: true });
+    on(root.querySelector('.ddh__shop') || root, 'pointerenter', loadSheets, { passive: true });
+    on(d, 'keydown', function (ev) { if (sheet && (ev.key === 'Escape' || ev.key === 'Esc')) closeSheet(); });
+    on(d, 'click', function (ev) { if (sheet && sheetMode === 'modal' && Date.now() - openedAt > 300 && !sheet.contains(ev.target) && !(sheetFrom && sheetFrom.contains(ev.target)) && !(bioPoint && bioPoint.contains(ev.target))) closeSheet(true); });
+    on(w, 'resize', function () { if (sheet && sheetMode === 'hover' && !deskMQ.matches) closeSheet(true); }, { passive: true });
+    if (d.readyState === 'complete') w.setTimeout(loadSheets, 1200); else on(w, 'load', function () { w.setTimeout(loadSheets, 1200); }, { once: true });
+    cleanups.push(function () { w.clearTimeout(hoverT); lock(false); });
 
     // Roving tabindex: one Tab stop, arrows move between the points.
     function rove(t) { points.forEach(function (p) { p.tabIndex = p === t ? 0 : -1; }); t.focus(); }

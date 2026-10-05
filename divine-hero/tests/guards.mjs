@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { chromium } from 'playwright';
 let fail = 0; const ok = (c, m) => { console.log((c ? '  ok   ' : '  FAIL ') + m); if (!c) fail++; };
 // 1. CSS scoping: every selector must start with .ddh (or be @font-face/@keyframes internals)
-for (const f of ['release/1.9.4/hero.css', 'variants/variant-a-tone.css', 'variants/variant-b-large-display.css']) {
+for (const f of ['release/1.10.0/hero.css', 'variants/variant-a-tone.css', 'variants/variant-b-large-display.css']) {
   const css = fs.readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/@keyframes[^{]+\{([^{}]*\{[^}]*\})*[^}]*\}/g, '').replace(/@font-face\{[^}]*\}/g, '');
   const sels = [...css.matchAll(/([^{}@;]+)\{[^{}]*\}/g)].map((m) => m[1].trim()).filter((s) => s && !/^(from|to|\d+%)/.test(s));
   const split = (s) => { const out = []; let d = 0, cur = ''; for (const ch of s) { if (ch === '(') d++; if (ch === ')') d--; if (ch === ',' && !d) { out.push(cur); cur = ''; } else cur += ch; } out.push(cur); return out; };
@@ -30,13 +30,15 @@ const removed = ['Mattresses', 'Toppers', 'Pillows']; // 1.2.0: duplicate menu b
   a2.push('Dual Plush');
   // 1.7.0: night mode headline + "Latex" in the button labels (1.9.4: always shown)
   for (const t of ['Shop Your Mattress', 'Shop Your Topper']) { const i = a2.indexOf(t); if (i > -1) a2.splice(i, 1); }
-  a2.push('Improve', 'the', 'Quality', 'of Your', 'Sleep', 'Night mode: improve the quality of your sleep', 'Shop Your', 'Latex Mattress', 'Shop Your', 'Latex Topper');   // 1.9.4: "Latex" shown always, one bold phrase
+  a2.push('Improve', 'the', 'Quality', 'of Your', 'Sleep', 'Night mode: improve the quality of your sleep', 'Shop Your', 'Latex Mattress', 'Shop Your', 'Latex Topper');
+  // 1.10.0: the Bio Comfort point (screen-reader label + hover teaser) and its entry under the Shop buttons on phones
+  a2.push('Bio Comfort: our innovation, the finest latex mattress we make', 'Bio Comfort', 'Our innovation ·', 'Discover', 'Bio Comfort', 'Our innovation');   // 1.9.4: "Latex" shown always, one bold phrase
   const A = JSON.stringify(a2.slice().sort()), C = JSON.stringify(c.slice().sort()); // 1.2.0 reorders markup (visible parts first)
   ok(A === C, `copy identical to v26 apart from the removed menu bar, the 1.4.1 SEO heading, the 1.5.0 points, the 1.6.0 Dual Plush line and 1.7.0 night mode (${c.length} text nodes, order-independent)` + (A === C ? '' : '\n' + a2.filter((x) => !c.includes(x)).concat(c.filter((x) => !a2.includes(x))).join(' / ')));
 ok(!c.some((s) => /No More Overheating/i.test(s)), '"No More Overheating" absent');
 ok(!c.some((s) => /conception/i.test(s)), '"conception" absent (1.6.0)');
 // 1.4.3: CTA hover must use any-hover so iPads with a trackpad/mouse darken on hover, not only on press
-ok(/@media ?\(any-hover:hover\)\{\.ddh \.ddh__shop \.ddh__cta:hover/.test(fs.readFileSync('release/1.9.4/hero.css', 'utf8')), 'CTA hover gated by any-hover');
+ok(/@media ?\(any-hover:hover\)\{\.ddh \.ddh__shop \.ddh__cta:hover/.test(fs.readFileSync('release/1.10.0/hero.css', 'utf8')), 'CTA hover gated by any-hover');
 for (const s of ['High Support', 'Anatomical Balance', 'Orthopaedic Comfort', 'High Adaptability', 'Balance & Relief', 'Spinal Alignment', 'Original Dunlop Technology', '100% EU-UK Certified', 'Latex (Rubber) Foam', 'Dual Plush System', 'Natural Adaptation', 'Keeps Your Body on the Surface', 'Best Air Ventilation', 'Temperature Comfort']) ok(c.includes(s), 'copy present: ' + s);
 const p = await b.newPage(); await p.goto('http://127.0.0.1:8765/preview/harness-polished-h50.html');
 const bold = await p.$$eval('[data-ddh-copy=system] b', (bs) => bs.map((x) => x.textContent + ':' + getComputedStyle(x).fontWeight));

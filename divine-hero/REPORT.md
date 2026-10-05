@@ -1,5 +1,55 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.10.0: the Bio Comfort screen and the collection previews; the settle animation removed (2026-10-05)
+
+Owner's brief:
+1. A new point that opens a whole screen presenting the innovation, our finest and most expensive model, in its two versions: Bio Comfort and Bio Comfort Dual Plush. Both share one core; Dual Plush adds a topper mixed over the mattress.
+2. The Shop Your Latex Mattress / Topper buttons keep their hover and show the collection on hover, like a welcome page to the collection: why each model exists, a map to all of them, Scandinavian-warm.
+3. Mattresses: eight models.
+4. Toppers: the three main ones, with Bio Support (the original) and its depths.
+5. Chillax everywhere; organised for Google and the translations.
+6. Drop the movement animation if the code gets heavy.
+
+Sources: the owner's three SVG resource boards (Bio Comfort; mattresses; toppers) and the two mockups. The product cut-outs are extracted from the boards (`release/1.10.0/assets/m-*`, `t-*`, `b-*`, 11–70 KB WebP each, with transparency).
+
+**Bio Comfort point** (green, on her back by the pillow)
+* Hover: the teaser "Bio Comfort · Our innovation · Discover" in the logo window, like the other points.
+* Click or tap: the Bio Comfort screen, a dialog with focus management, Tab kept inside, Escape and a close button, and focus returned to the point.
+* Upright phones, which show no points: a quiet "Bio Comfort · Our innovation" link under the Shop buttons opens it.
+
+**The Bio Comfort screen**
+* The message: Bio Comfort completes and improves everything a natural latex mattress already does.
+* Copy: lede, then the board's three lines "More natural Support / Reflection / Adaptation", each with one explaining sentence.
+* A version switch, Bio Comfort | Bio Comfort Dual Plush (accessible tabs with arrow keys). It swaps the main picture (the woman on each version) and the specs: heights 20/24/26 cm or 25 cm, and firmness.
+* The 7-zone bar (Head … Ankles), plus three details: responsive cells (close-up), light & airy support (airflow), anatomical-orthopaedic comfort.
+
+**Collection previews (hover the Shop buttons)**
+* Desktop with a pointer: the preview opens over the picture, between the header and the buttons. It stays open while the pointer is on the button or on the preview, and closes on leaving or Escape. A click on the button still goes to the collection, and every card links to it too.
+* Touch and narrow screens: the first tap opens the preview full screen (above the site header, page scroll locked), and its own button leads on to the collection.
+
+**Mattresses**
+* "Find your ideal latex mattress": eight cards in two rows, *The core line* (Botanic, Botanic Dual Plush, Bio Comfort, Bio Comfort Dual Plush) and *Made for a purpose* (Orthopaedic, Mattress for Partners, Ambient, Hotel Line).
+* Each card: tag, name, why-line, heights, firmness. All eight fit at 1366×768 without scrolling.
+
+**Toppers**
+* "Improve your current mattress": six benefits, then Bio Support (Original), Bio Support Dual and Partners Topper, each with its explanation and firmness options.
+* Footer: available depths 8/10/12/14 cm, the four covers (cashmere +£77), and the CTA.
+
+**Google and translations**
+* The section stays under the paste limit: 9.2k characters. The three screens live in one small HTML file per language (`release/1.10.0/sheets/<lang>.html`, 14 KB), 3 KB compressed, fetched 1.2 s after page load or on first intent.
+* They are real HTML headings, text and alt text, rendered into the page, so Google indexes them.
+* The source is `src/sheets.html` (English), with `data-t` / `data-ta` keys translated in `src/sheets-i18n/<lang>.txt` for the eight languages. The build fails if a language misses a key.
+* The teaser and the phone link use the existing i18n JSON.
+
+**Removed: the Natural Adaptation settle animation**
+* As the owner allowed, the WebGL module, its masks/plates (65 KB) and its test are gone.
+* hero.js is 22 KB → 19 KB with all the new logic; hero.css grows to 44 KB (10 KB compressed). The "Natural Adaptation" point keeps its copy.
+
+**Checks**
+* Interaction: 341–342 checks per harness, including a new sheets suite covering desktop hover, click-through, the Bio dialog, phone and iPad full screen, and French.
+* panels 792/792, guards, axe 0 (hero and every sheet, desktop and phone).
+* LCP and CLS unchanged: phone CLS 0, because the phone link's space is reserved.
+
 ## 1.9.4 (final) — the shop buttons; review pass (2026-10-04)
 
 Owner: "Latex" inside both buttons. "Latex Mattress" / "Latex Topper" heavier, as on the night picture. The outline keeps the same space on both sides of the label. Keep the hover effect. Make the buttons beautiful. Review and polish everything for a final version.

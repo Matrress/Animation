@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const VERSION = '1.9.4';
+const VERSION = '1.10.0';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const esbuild = process.env.ESBUILD || 'esbuild';
 const rel = path.join(root, 'release', VERSION);
@@ -15,6 +15,27 @@ execFileSync(esbuild, [path.join(root, 'src/hero.js'), '--minify', '--legal-comm
 // 1.5.0: hotspot copy translations, minified JSON, fetched on demand (hero.js: <base>i18n/<lang>.json)
 fs.mkdirSync(path.join(rel, 'i18n'), { recursive: true });
 for (const f of fs.readdirSync(path.join(root, 'src/i18n'))) fs.writeFileSync(path.join(rel, 'i18n', f), JSON.stringify(JSON.parse(fs.readFileSync(path.join(root, 'src/i18n', f), 'utf8'))));
+
+// 1.10.0: the Bio Comfort screen and the two collection previews ("sheets") live outside the pasted section (the live
+// editor cuts pastes at ~20k characters): one HTML file per language, fetched by hero.js after page load.
+// src/sheets.html is the English source; data-t / data-ta mark the text (inner HTML) / alt-or-aria-label to translate,
+// from src/sheets-i18n/<lang>.txt ("key = value" lines). Every language must cover every key.
+{
+  const src = fs.readFileSync(path.join(root, 'src/sheets.html'), 'utf8');
+  const keys = new Set([...src.matchAll(/\sdata-ta?="(\w+)"/g)].map((m) => m[1]));
+  const out = path.join(rel, 'sheets'); fs.mkdirSync(out, { recursive: true });
+  const finish = (h, lang) => h.replace(/\s(data-ta?)="\w+"/g, '').replace('<div class="ddh__sheets">', `<div class="ddh__sheets" lang="${lang}">`).replace(/>\s*\n\s*</g, '><').trim() + '\n';
+  fs.writeFileSync(path.join(out, 'en.html'), finish(src, 'en'));
+  for (const f of fs.readdirSync(path.join(root, 'src/sheets-i18n'))) {
+    const lang = f.replace('.txt', ''), dict = {};
+    for (const line of fs.readFileSync(path.join(root, 'src/sheets-i18n', f), 'utf8').split('\n')) { const m = /^(\w+) = (.+)$/.exec(line.trim()); if (m) dict[m[1]] = m[2]; }
+    const missing = [...keys].filter((k) => !(k in dict)), extra = Object.keys(dict).filter((k) => !keys.has(k));
+    if (missing.length || extra.length) throw new Error(`sheets ${lang}: missing ${missing.join(',')} extra ${extra.join(',')}`);
+    let h = src.replace(/(<(\w+)\b[^>]*?\sdata-t="(\w+)"[^>]*>)([\s\S]*?)(<\/\2>)/g, (m0, open, tag, k, inner, close) => open + dict[k] + close);
+    h = h.replace(/\s(alt|aria-label)="[^"]*"([^>]*?)\sdata-ta="(\w+)"/g, (m0, attr, mid, k) => ` ${attr}="${dict[k].replace(/"/g, '&quot;')}"${mid}`);
+    fs.writeFileSync(path.join(out, lang + '.html'), finish(h, lang));
+  }
+}
 
 const tpl = fs.readFileSync(path.join(root, 'src/section.html'), 'utf8');
 const render = (base) => tpl.replaceAll('{{BASE}}', base).replaceAll('{{ORIGIN}}', new URL(base, 'http://local.test/').origin);
@@ -52,7 +73,7 @@ for (const h of [0, 50]) {
 }
 
 const sizes = {};
-for (const f of ['hero.css', 'hero.js']) sizes[f] = fs.statSync(path.join(rel, f)).size;
+for (const f of ['hero.css', 'hero.js', 'sheets/en.html']) sizes[f] = fs.statSync(path.join(rel, f)).size;
 const sec = fs.readFileSync(path.join(root, 'ecwid', `section-${VERSION}.html`), 'utf8');
 sizes['section chars'] = [...sec].length;
 sizes['section bytes'] = Buffer.byteLength(sec);

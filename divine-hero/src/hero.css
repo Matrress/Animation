@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.9.4 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.10.0 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -76,7 +76,7 @@
 .ddh .ddh__spine img{display:block;width:100%;height:auto}
 .ddh .ddh__spine span{display:block;color:#fff;font-size:1.72cqw;font-weight:400;letter-spacing:.57em;white-space:nowrap;opacity:.93}
 .ddh .ddh__spine b{font-weight:600;opacity:1}
-.ddh[data-ddh-state=shoulder] [data-ddh-copy=shoulder],.ddh[data-ddh-state=zones] [data-ddh-copy=zones],.ddh[data-ddh-state=head] [data-ddh-copy=head],.ddh[data-ddh-state=system] [data-ddh-copy=system],.ddh[data-ddh-state=firmness] [data-ddh-copy=firmness],.ddh[data-ddh-state=temperature] [data-ddh-copy=temperature],.ddh[data-ddh-state=back] [data-ddh-copy=back],.ddh[data-ddh-state=sizes] [data-ddh-copy=sizes],.ddh[data-ddh-state=weight] [data-ddh-copy=weight]{display:flex}
+.ddh[data-ddh-state=shoulder] [data-ddh-copy=shoulder],.ddh[data-ddh-state=zones] [data-ddh-copy=zones],.ddh[data-ddh-state=head] [data-ddh-copy=head],.ddh[data-ddh-state=system] [data-ddh-copy=system],.ddh[data-ddh-state=firmness] [data-ddh-copy=firmness],.ddh[data-ddh-state=temperature] [data-ddh-copy=temperature],.ddh[data-ddh-state=back] [data-ddh-copy=back],.ddh[data-ddh-state=sizes] [data-ddh-copy=sizes],.ddh[data-ddh-state=weight] [data-ddh-copy=weight],.ddh[data-ddh-state=bio] [data-ddh-copy=bio]{display:flex}
 .ddh--translated .ddh__benefits{position:absolute!important;width:auto!important;height:auto!important;margin:0!important;overflow:visible!important;clip:auto!important;clip-path:none!important;white-space:normal!important;inset:48.03% 54.87% 36.63% 2.17%!important;z-index:2;display:grid;grid-template-columns:1fr 1fr;align-content:center;gap:12% 6%;padding:0;color:#fff;font:600 1.62cqw/1.12 DDHChillax,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase}
 .ddh--translated .ddh__benefits li::before{content:"• ";letter-spacing:0}
 .ddh--translated[data-ddh-screen] .ddh__benefits{visibility:hidden}
@@ -145,7 +145,7 @@
 
 /* Desktop / landscape: framed hero, CTAs inside the artwork. */
 @media (min-width:1051px){
-.ddh{--ddh-safe:136px;--ddh-sky-height:clamp(92px,6.4vw,112px);
+.ddh{--ddh-safe:136px;--ddh-sky-height:clamp(92px,6.4vw,112px);--ddh-shop-b:clamp(20px,2.6vh,34px);--ddh-cta-h:clamp(44px,2.4vw,54px);
 /* 1.3.0 crop rule. P = picture height (100cqw·.772088). In the picture: DIVINE logo ink starts at 27.33% of P, the
    "Dual Plush conception" lettering ends at 84.2% (keep 85.5% visible).
    - h0 = screen − announcement bar (the hero fills the screen exactly);
@@ -164,10 +164,10 @@
 /* Keep all seven hotspots inside the visible frame and clear of the centred Shop buttons: a point is lifted only if it
    would sit within 96px of the bottom edge of what is on screen. */
 .ddh .ddh__points .ddh__point{top:min(var(--y),calc(var(--ddh-h0) - var(--ddh-plane-top) - 96px))}
-.ddh .ddh__shop{position:absolute;left:0;right:0;justify-content:center;gap:clamp(18px,1.8vw,30px);bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + clamp(20px,2.6vh,34px))}
-.ddh .ddh__shop .ddh__cta{min-height:clamp(44px,2.4vw,54px);font-size:clamp(14.5px,1vw,18px)}
+.ddh .ddh__shop{position:absolute;left:0;right:0;justify-content:center;gap:clamp(18px,1.8vw,30px);bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + var(--ddh-shop-b))}
+.ddh .ddh__shop .ddh__cta{min-height:var(--ddh-cta-h);font-size:clamp(14.5px,1vw,18px)}
 }
-@media (min-width:1051px) and (max-height:650px){.ddh{--ddh-sky-height:84px}.ddh .ddh__shop{bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + 14px)}.ddh .ddh__shop .ddh__cta{min-height:40px}.ddh .ddh__sky-cert{font-size:10px}}
+@media (min-width:1051px) and (max-height:650px){.ddh{--ddh-sky-height:84px;--ddh-shop-b:14px;--ddh-cta-h:40px}.ddh .ddh__sky-cert{font-size:10px}}
 
 /* Tablet */
 @media (min-width:701px) and (max-width:1050px){
@@ -326,6 +326,169 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 }
 @media (prefers-reduced-motion:reduce){.ddh .ddh__copy,.ddh .ddh__spine{animation:none}.ddh .ddh__wash,.ddh .ddh__art::after,.ddh .ddh__shop .ddh__cta{transition:none}.ddh .ddh__shop .ddh__cta:hover{transform:none}.ddh .ddh__point::before,.ddh .ddh__point::after{animation:none}.ddh .ddh__point::before{opacity:.28;transform:translate(-50%,-50%) scale(1)}.ddh .ddh__point::after{opacity:1;transform:translate(-50%,-50%)}}
 @media (forced-colors:active){.ddh .ddh__point::before{display:none}.ddh .ddh__point::after{border-color:CanvasText;background:Canvas}.ddh .ddh__shop .ddh__cta{border-color:LinkText;color:LinkText}}
-/* 1.9.0–1.9.2: the settle layer (hero.js) lies exactly over the sleeper's area of the photo (pixel-snapped by hero.js);
-   it draws only where she is, right over the photo and under every other layer */
-.ddh .ddh__settle{position:absolute;display:none;left:0;top:24.052%;width:83.287%;height:54.665%;margin:0;pointer-events:none}
+
+/* ===== 1.10.0 Bio Comfort point + sheets (Bio Comfort screen, mattress & topper collection previews) =====
+   Scandinavian-warm: paper, oak, sage; Chillax only. The sheets' markup comes from release/<v>/sheets/<lang>.html. */
+.ddh{--sh-paper:#f8f5ef;--sh-card:#fffdf9;--sh-line:#e7ded1;--sh-ink:#22292a;--sh-mute:#655f58;--sh-soft:#6b655d;--sh-oak:#83602f;--sh-sage:#3f6a5e;--sh-teal:#24514b}
+.ddh .ddh__point[data-ddh-point=bio]{--x:45.6%;--y:60.4%;--i:10}
+.ddh .ddh__point[data-ddh-point=bio]::before{border-color:rgba(150,205,128,.95);background:rgba(186,228,160,.16)}
+.ddh .ddh__point[data-ddh-point=bio]::after{background:radial-gradient(circle,#fbfff4 0 2.5px,#78b462 3.5px);box-shadow:0 0 0 1.2px rgba(52,104,52,.62),0 0 12px rgba(150,212,120,.55)}
+.ddh .ddh__screen--brand [data-ddh-copy=bio] b{font-weight:600}
+.ddh .ddh__bio-leaf{display:inline-block;flex:0 0 auto;width:.5em;height:.34em;border-radius:100% 0 100% 0;background:linear-gradient(135deg,#a4d873,#5fb35f);transform:rotate(-28deg);vertical-align:.12em}
+.ddh .ddh__bio-link{display:none}
+@media (max-width:700px) and (orientation:portrait){
+.ddh .ddh__shop{flex-wrap:wrap}
+.ddh .ddh__bio-link[hidden]{visibility:hidden}
+.ddh .ddh__bio-link{display:inline-flex;flex:0 0 100%;justify-content:center;align-items:center;gap:.45em;margin:4px 0 0;padding:6px 8px;border:0;background:none;color:var(--ddh-ink);font:400 13px/1.2 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:.02em;cursor:pointer}
+.ddh .ddh__bio-link b{font-weight:600}
+.ddh .ddh__bio-link span{text-decoration:underline;text-decoration-color:rgba(36,81,75,.35);text-underline-offset:3px}
+}
+
+.ddh.ddh__portal{position:static;width:0;height:0;margin:0;padding:0;overflow:visible;isolation:auto;background:none}
+.ddh .ddh__sheet{position:fixed;inset:0;z-index:2147483000;display:block;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;margin:0;padding:0;background:rgba(28,36,36,.4);color:var(--sh-ink);font:400 15px/1.45 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:0;text-align:left;outline:0;animation:ddh-sheet-in .3s cubic-bezier(.2,.7,.2,1) both}
+.ddh .ddh__sheet[hidden],.ddh .ddh__sheet [hidden]{display:none!important}
+.ddh .ddh__sheet :where(h2,h3,h4,p,ul,ol,li,dl,dt,dd,div,figure,figcaption,header,footer,a,button,img,b,em,span,i,small){margin:0;padding:0;border:0;background:none;font:inherit;color:inherit;letter-spacing:inherit;text-transform:none;text-decoration:none;text-shadow:none;box-shadow:none;list-style:none;float:none;max-width:none;min-width:0;line-height:inherit;text-align:inherit;font-style:normal}
+.ddh .ddh__sheet img{display:block;max-width:100%;height:auto}
+.ddh .ddh__sheet a,.ddh .ddh__sheet button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ddh .ddh__sheet a:focus-visible,.ddh .ddh__sheet button:focus-visible{outline:2px solid var(--sh-oak);outline-offset:3px}
+@keyframes ddh-sheet-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.ddh .ddh__sh-in{position:relative;min-height:100%;padding:58px 18px 32px;background:var(--sh-paper);align-content:start}
+.ddh .ddh__sh-x{position:absolute;z-index:3;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:1px solid var(--sh-line);background:rgba(255,253,249,.9);transition:background .2s,transform .2s}
+.ddh .ddh__sh-x i,.ddh .ddh__sh-x i::after{position:absolute;left:50%;top:50%;width:16px;height:1.6px;margin:-.8px 0 0 -8px;border-radius:2px;background:var(--sh-ink);transform:rotate(45deg)}
+.ddh .ddh__sh-x i::after{content:"";left:0;top:0;margin:0;transform:rotate(-90deg)}
+.ddh .ddh__sh-x:hover{background:#fff;transform:rotate(90deg)}
+.ddh .ddh__sh-eye{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sh-oak)}
+.ddh .ddh__sh-h{margin-top:.3em;font-size:clamp(26px,2.3vw,40px);font-weight:600;line-height:1.08;letter-spacing:-.005em;color:var(--sh-ink)}
+.ddh .ddh__sh-h em{color:var(--sh-oak)}
+.ddh .ddh__sh-lede{margin-top:.6em;max-width:44em;font-size:clamp(13.5px,.95vw,15.5px);line-height:1.5;color:var(--sh-mute)}
+.ddh .ddh__sh-cta{display:inline-flex;align-items:center;justify-content:center;gap:.7em;min-height:46px;padding:.62em 1.35em;border-radius:999px;background:var(--sh-ink);color:#fff;font-size:14.5px;font-weight:600;letter-spacing:.02em;white-space:nowrap;transition:background .2s ease,transform .2s ease,box-shadow .2s ease}
+.ddh .ddh__sh-cta i{position:relative;width:16px;height:1.6px;border-radius:2px;background:currentColor;transition:transform .2s ease}
+.ddh .ddh__sh-cta i::after{content:"";position:absolute;right:0;top:50%;width:7px;height:7px;border:solid currentColor;border-width:1.6px 1.6px 0 0;transform:translateY(-50%) rotate(45deg)}
+@media (any-hover:hover){.ddh .ddh__sh-cta:hover{background:#3a4547;box-shadow:0 10px 24px -12px rgba(20,30,30,.55);transform:translateY(-1px)}.ddh .ddh__sh-cta:hover i{transform:translateX(3px)}}
+.ddh .ddh__sh-row{display:flex;align-items:center;gap:14px;font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sh-soft)}
+.ddh .ddh__sh-row::after{content:"";flex:1 1 auto;height:1px;background:var(--sh-line)}
+.ddh .ddh__sh-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 28px}
+
+/* cards */
+.ddh .ddh__cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,235px),1fr));gap:12px}
+.ddh .ddh__cards>li{display:flex;min-height:0}
+.ddh .ddh__card{position:relative;display:flex;flex-direction:column;width:100%;min-height:0;padding:9px 9px 13px;border:1px solid var(--sh-line);border-radius:18px;background:var(--sh-card);color:var(--sh-ink);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+@media (any-hover:hover){.ddh .ddh__card:hover{transform:translateY(-3px);border-color:#d8c8b1;box-shadow:0 20px 36px -24px rgba(48,44,36,.5)}.ddh .ddh__card:hover .ddh__card-img img{transform:scale(1.035)}}
+.ddh .ddh__card-img{display:flex;align-items:center;justify-content:center;aspect-ratio:16/8.6;margin-bottom:9px;border-radius:12px;background:radial-gradient(120% 95% at 50% 38%,#fefcf9 0,#f4eee6 62%,#ece4d8 100%);overflow:hidden}
+.ddh .ddh__card-img img{width:90%;height:86%;object-fit:contain;transition:transform .45s ease}
+.ddh .ddh__card-img--photo img{width:100%;height:100%;object-fit:cover}
+.ddh .ddh__chip{position:absolute;top:16px;left:16px;z-index:1;margin:0;box-shadow:0 2px 6px -3px rgba(40,30,20,.25);padding:.3em .85em;border-radius:999px;background:#ece7df;color:#5b554d;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;line-height:1.25}
+.ddh .ddh__chip--orig{background:#e2e9d9;color:#465734}
+.ddh .ddh__chip--dp{background:#dbe7e9;color:#2c5860}
+.ddh .ddh__chip--prem{background:linear-gradient(90deg,#f2e4c8,#e9d4ad);color:#694a1b}
+.ddh .ddh__chip--ortho{background:#f0dfca;color:#764b20}
+.ddh .ddh__chip--part{background:#f2dcd7;color:#834335}
+.ddh .ddh__chip--val{background:#dfe5ee;color:#394a66}
+.ddh .ddh__chip--hotel{background:#e7e2dc;color:#544e47}
+.ddh .ddh__card-t{padding:0 4px;font-size:clamp(15px,1.06vw,17.5px);font-weight:600;line-height:1.2;color:var(--sh-ink)}
+.ddh .ddh__card-s{padding:3px 4px 0;font-size:13px;line-height:1.35;color:var(--sh-mute)}
+.ddh .ddh__card-d{padding:7px 4px 0;font-size:12.5px;line-height:1.45;color:var(--sh-mute)}
+.ddh .ddh__spec{display:block;padding:0 4px;font-size:12px;line-height:1.45;color:var(--sh-mute)}
+.ddh .ddh__spec b{margin-right:.35em;font-weight:600;color:var(--sh-ink)}
+.ddh .ddh__card-s+.ddh__spec,.ddh .ddh__card-d+.ddh__spec{margin:auto 4px 0;padding:9px 0 0;border-top:1px solid var(--sh-line)}
+.ddh .ddh__card-s{margin-bottom:10px}.ddh .ddh__card-s+.ddh__card-d{margin-top:-6px}
+.ddh .ddh__sheet .ddh__bio-leaf{display:inline-block;background:linear-gradient(135deg,#a4d873,#5fb35f)}
+.ddh .ddh__sheet--topper .ddh__card-img{background:#fff}
+.ddh .ddh__card--bio{border-color:#e5d4b6;background:linear-gradient(180deg,#fffdf8,#fbf5ea)}
+.ddh .ddh__card--bio .ddh__card-img{background:radial-gradient(120% 95% at 50% 38%,#fbfdfc 0,#eef3f1 62%,#e3ebe8 100%)}
+
+/* mattress preview */
+.ddh .ddh__sheet--mattress .ddh__sh-in{display:grid;grid-template-rows:auto auto auto auto auto;row-gap:14px}
+/* topper preview */
+.ddh .ddh__sheet--topper .ddh__sh-in{display:grid;row-gap:16px}
+.ddh .ddh__benefit-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px 22px;margin-top:14px}
+.ddh .ddh__benefit-list li{position:relative;padding-left:17px;font-size:13px;line-height:1.35;color:var(--sh-ink)}
+.ddh .ddh__benefit-list li::before{content:"";position:absolute;left:0;top:.42em;width:7px;height:7px;border-radius:50%;background:#8db57a;box-shadow:0 0 0 3px rgba(141,181,122,.18)}
+.ddh .ddh__top-roll{display:block;flex:0 1 300px;align-self:center}
+.ddh .ddh__top-roll img{width:100%;max-height:140px;object-fit:contain;filter:drop-shadow(0 16px 18px rgba(80,60,30,.14))}
+.ddh .ddh__top-foot{display:grid;grid-template-columns:1fr;gap:16px;padding-top:14px;border-top:1px solid var(--sh-line)}
+.ddh .ddh__depths p{margin-top:4px;font-size:12.5px;color:var(--sh-mute)}
+.ddh .ddh__depths ul,.ddh .ddh__covers ul{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:9px}
+.ddh .ddh__depths li{display:flex;flex-direction:column;align-items:center;min-width:64px;padding:6px 10px;border:1px solid var(--sh-line);border-radius:12px;background:var(--sh-card);font-size:11.5px;color:var(--sh-soft)}
+.ddh .ddh__depths li b{font-size:16px;font-weight:600;color:var(--sh-ink)}
+.ddh .ddh__covers li{display:inline-flex;align-items:center;gap:7px;padding:5px 12px 5px 5px;border:1px solid var(--sh-line);border-radius:999px;background:var(--sh-card);font-size:12.5px;color:var(--sh-ink)}
+.ddh .ddh__covers small{font-size:11px;color:var(--sh-oak);font-weight:600}
+.ddh .ddh__sw{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08),inset 0 -3px 6px rgba(0,0,0,.06)}
+.ddh .ddh__sw--cotton{background:radial-gradient(circle at 35% 30%,#fff 0,#f4f1ea 70%)}
+.ddh .ddh__sw--wool{background:radial-gradient(circle at 30% 30%,#fbf3e6 0 18%,transparent 19%) 0 0/8px 8px,#ecdcc4}
+.ddh .ddh__sw--aloe{background:radial-gradient(circle at 35% 30%,#f2f8ea 0,#cfe2bd 75%)}
+.ddh .ddh__sw--cash{background:linear-gradient(135deg,#efe4d4,#d8c4a8)}
+.ddh .ddh__top-foot .ddh__sh-cta{justify-self:start}
+
+/* Bio Comfort screen */
+.ddh .ddh__sheet--bio .ddh__sh-in{display:grid;gap:22px;background:linear-gradient(160deg,#f9f6f0 0,#f4f2ec 45%,#eaf1ef 100%)}
+.ddh .ddh__bio-copy{display:flex;flex-direction:column;align-items:flex-start;gap:12px;min-height:0}
+.ddh .ddh__bio-h{display:flex;align-items:center;gap:.28em;margin-top:.12em;font-size:clamp(36px,3.3vw,56px);line-height:1;color:var(--sh-teal);letter-spacing:-.01em}
+.ddh .ddh__bio-h .ddh__bio-leaf{width:.42em;height:.29em;margin-right:.04em}
+.ddh .ddh__bio-tag{font-size:clamp(12.5px,.95vw,15px);font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--sh-sage)}
+.ddh .ddh__bio-copy .ddh__sh-lede{margin-top:0;max-width:34em;color:#4f4a44}
+.ddh .ddh__bio-more{display:grid;gap:9px;width:100%}
+.ddh .ddh__bio-more li{display:grid;gap:1px;padding-left:14px;border-left:2px solid #c9ddcf}
+.ddh .ddh__bio-more b{font-size:15px;font-weight:400;color:var(--sh-ink)}
+.ddh .ddh__bio-more em{font-weight:600;color:var(--sh-teal)}
+.ddh .ddh__bio-more span{font-size:12.8px;color:var(--sh-mute)}
+.ddh .ddh__bio-pick{display:inline-flex;flex-wrap:wrap;gap:3px;padding:4px;border-radius:999px;background:#ebe5da}
+.ddh .ddh__bio-pick button{padding:.55em 1.1em;border-radius:999px;color:var(--sh-mute);font-size:13.5px;font-weight:600;transition:background .2s,color .2s,box-shadow .2s}
+.ddh .ddh__bio-pick button span{color:var(--sh-sage)}
+.ddh .ddh__bio-pick button[aria-selected=true]{background:#fff;color:var(--sh-ink);box-shadow:0 3px 10px -4px rgba(30,40,30,.3)}
+.ddh .ddh__bio-spec{width:100%}
+.ddh .ddh__bio-spec p{font-size:13.5px;line-height:1.45;color:var(--sh-mute);max-width:36em}
+.ddh .ddh__bio-spec dl{display:flex;flex-wrap:wrap;gap:6px 28px;margin-top:9px}
+.ddh .ddh__bio-spec dt{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sh-oak)}
+.ddh .ddh__bio-spec dd{font-size:14.5px;font-weight:600;color:var(--sh-ink)}
+.ddh .ddh__sheet--bio .ddh__sh-cta{background:var(--sh-teal)}
+@media (any-hover:hover){.ddh .ddh__sheet--bio .ddh__sh-cta:hover{background:#1b403b}}
+.ddh .ddh__bio-stage{display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:12px;min-height:0}
+.ddh .ddh__bio-fig{display:flex;align-items:center;justify-content:center;min-height:0;border-radius:20px;background:radial-gradient(70% 70% at 50% 58%,rgba(255,255,255,.95) 0,rgba(255,255,255,.4) 55%,rgba(255,255,255,0) 75%),linear-gradient(180deg,#e5eef0,#f3f1ec)}
+.ddh .ddh__bio-fig img{width:96%;height:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 22px 26px rgba(40,70,70,.18))}
+.ddh .ddh__zones{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));overflow:hidden;border-radius:12px;counter-reset:z}
+.ddh .ddh__zones li{counter-increment:z;padding:6px 2px 7px;background:#2e6a6e;color:#eaf4f2;font-size:clamp(9px,.68vw,11px);font-weight:600;letter-spacing:.04em;text-align:center;text-transform:uppercase;line-height:1.15;overflow-wrap:anywhere}
+.ddh .ddh__zones li:nth-child(even){background:#27595e}
+.ddh .ddh__zones li::before{content:counter(z);display:block;font-size:1.55em;font-weight:400;letter-spacing:0;color:#fff}
+.ddh .ddh__bio-details{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.ddh .ddh__bio-details figure{display:flex;align-items:center;gap:10px;padding:7px 12px 7px 7px;border:1px solid var(--sh-line);border-radius:14px;background:rgba(255,253,249,.85)}
+.ddh .ddh__bio-details img{flex:0 0 48px;width:48px;height:48px;border-radius:50%;object-fit:cover}
+.ddh .ddh__bio-ortho>span{flex:0 0 48px;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#3b7a72,#24514b);color:#fff;font-size:24px;font-weight:600;line-height:48px;text-align:center}
+.ddh .ddh__bio-details figcaption{display:grid;gap:1px;line-height:1.25}
+.ddh .ddh__bio-details b{font-size:13px;font-weight:600;color:var(--sh-ink)}
+.ddh .ddh__bio-details figcaption span{font-size:11.5px;color:var(--sh-mute)}
+
+/* full-screen sheets (touch / narrow): roomier stacking */
+@media (min-width:701px){.ddh .ddh__sh-in{padding:64px 36px 40px}.ddh .ddh__sheet--bio .ddh__sh-in{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:start}.ddh .ddh__bio-fig{min-height:260px}.ddh .ddh__top-foot{grid-template-columns:auto 1fr auto;align-items:end}}
+@media (max-width:700px){.ddh .ddh__bio-fig{min-height:170px}.ddh .ddh__sheet--bio .ddh__bio-stage{display:contents}.ddh .ddh__bio-fig{order:-2}.ddh .ddh__zones{order:-1;margin-top:-10px}.ddh .ddh__bio-details{order:1;grid-template-columns:1fr}.ddh .ddh__zones li{font-size:8.6px;text-transform:none;letter-spacing:0;overflow-wrap:normal}.ddh .ddh__chip{top:12px;left:12px;max-width:calc(100% - 24px);font-size:9.5px;letter-spacing:.04em}.ddh .ddh__cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.ddh .ddh__card{padding:7px 7px 11px;border-radius:15px}.ddh .ddh__card-t{font-size:14.5px}.ddh .ddh__card-s{font-size:12px}.ddh .ddh__spec{font-size:11px}.ddh .ddh__cards--3{grid-template-columns:1fr}.ddh .ddh__sh-head .ddh__sh-cta{width:100%}}
+@media (max-width:380px){.ddh .ddh__cards{grid-template-columns:1fr}}
+
+/* desktop with a pointer: the sheet sits over the picture, between the header and the Shop buttons */
+@media (min-width:1051px) and (any-hover:hover){
+.ddh .ddh__sheet{position:absolute;inset:auto;top:calc(var(--ddh-safe) + 2px);left:clamp(16px,2.6vw,52px);right:clamp(16px,2.6vw,52px);bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + var(--ddh-shop-b) + var(--ddh-cta-h) + 14px);z-index:20;overflow:visible;background:none}
+.ddh .ddh__sh-in{height:100%;min-height:0;overflow:auto;scrollbar-width:thin;padding:clamp(18px,2.6vh,30px) clamp(22px,2.4vw,42px);border-radius:26px;background:rgba(249,246,240,.95);-webkit-backdrop-filter:blur(20px) saturate(1.15);backdrop-filter:blur(20px) saturate(1.15);box-shadow:0 36px 90px -36px rgba(18,32,32,.6),inset 0 0 0 1px rgba(255,255,255,.6),0 0 0 1px rgba(50,60,50,.07)}
+.ddh .ddh__sh-x{top:14px;right:14px;width:36px;height:36px}
+.ddh .ddh__sh-head{padding-right:46px}
+.ddh .ddh__sheet--mattress .ddh__sh-in{align-content:stretch;grid-template-rows:auto auto minmax(0,1fr) auto minmax(0,1fr);row-gap:clamp(8px,1.4vh,14px)}
+.ddh .ddh__sheet--mattress .ddh__cards{grid-template-columns:repeat(4,minmax(0,1fr));min-height:0;gap:clamp(10px,.9vw,16px)}
+.ddh .ddh__sheet--mattress .ddh__card-img{flex:1 1 auto;aspect-ratio:auto;min-height:48px;margin-bottom:8px}
+.ddh .ddh__sheet--mattress .ddh__sh-head>div{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(20px,2.4vw,44px);align-items:end}
+.ddh .ddh__sheet--mattress .ddh__sh-eye{grid-column:1}.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-h{grid-column:1;white-space:nowrap}
+.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-lede{grid-column:2;grid-row:1/3;max-width:34em;margin:0 0 .2em}
+.ddh .ddh__sheet--mattress .ddh__sh-head{flex-wrap:nowrap}
+.ddh .ddh__sheet--topper .ddh__sh-in{align-content:stretch;grid-template-rows:auto minmax(0,1fr) auto;row-gap:clamp(10px,1.6vh,18px)}
+.ddh .ddh__sheet--topper .ddh__cards{grid-template-columns:repeat(3,minmax(0,1fr));min-height:0;gap:clamp(12px,1.1vw,20px)}
+.ddh .ddh__sheet--topper .ddh__card-img{flex:1 1 auto;aspect-ratio:auto;min-height:56px}
+.ddh .ddh__sheet--topper .ddh__sh-head{flex-wrap:nowrap;align-items:center}
+.ddh .ddh__sheet--topper .ddh__benefit-list{grid-template-columns:repeat(3,auto)}
+.ddh .ddh__top-foot{grid-template-columns:auto 1fr auto;align-items:end;gap:28px}
+.ddh .ddh__sheet--bio .ddh__sh-in{grid-template-columns:minmax(0,.92fr) minmax(0,1.12fr);gap:clamp(20px,2.6vw,48px);align-items:stretch;background:linear-gradient(115deg,rgba(250,247,241,.97) 0,rgba(245,243,237,.96) 46%,rgba(233,241,239,.95) 100%)}
+.ddh .ddh__bio-copy{justify-content:center;gap:clamp(8px,1.3vh,14px);overflow:auto;padding-right:4px}
+.ddh .ddh__bio-stage{padding-top:30px}
+}
+@media (min-width:1051px) and (any-hover:hover) and (max-height:820px){
+.ddh .ddh__sh-h{font-size:clamp(24px,2vw,32px)}.ddh .ddh__sh-lede{font-size:13px}.ddh .ddh__bio-h{font-size:clamp(32px,2.7vw,44px)}
+.ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto}.ddh .ddh__sheet--mattress .ddh__card-img{flex:0 0 auto;aspect-ratio:16/6.4;min-height:90px}.ddh .ddh__bio-more span{display:none}.ddh .ddh__bio-details figcaption span{display:none}.ddh .ddh__card-s{font-size:12.3px}.ddh .ddh__card-d{font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){.ddh .ddh__sheet{animation:none}.ddh .ddh__card,.ddh .ddh__card-img img,.ddh .ddh__sh-cta,.ddh .ddh__sh-x{transition:none}}
+@media (forced-colors:active){.ddh .ddh__sh-in{border:1px solid CanvasText}.ddh .ddh__card{border-color:CanvasText}.ddh .ddh__bio-pick button[aria-selected=true]{outline:2px solid Highlight}}
