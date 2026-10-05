@@ -1,6 +1,6 @@
 # Divine DunlopDreams Hero 1.10.0 — installation (Ecwid Instant Site)
 
-> **Use the SHORT section** `ecwid/section-1.10.0-jsdelivr.html` (9769 characters). The live site cut longer pastes at about 20–22k characters, which lost the hotspots, the Shop buttons and the script. Do not use the all-in-one files on Instant Site.
+> **Use the SHORT section** `ecwid/section-1.10.0-jsdelivr.html` (9,769 characters). The live site cut longer pastes at about 20–22k characters, which lost the hotspots, the Shop buttons and the script. Do not use the all-in-one files on Instant Site.
 
 > **1.1.0** fits the live header: the Instant Site header is transparent and lies over the first section. The hero measures it on the page and keeps the lockup, DIVINE logo, hotspots and Shop buttons below it, while the sky and clouds run up behind the menu. Nothing needs adjusting by hand.
 
@@ -15,9 +15,9 @@ Ecwid's documented 4,000-symbol limit belongs to the **site-wide body "Custom Ja
 
 | Form | File | Paste size | What must be hosted |
 |---|---|---|---|
-| All-in-one (over the ~20k paste limit: not for the live editor) | `ecwid/section-1.10.0-allinone-jsdelivr.html` | 34,611 characters | Nothing: CSS + JS are inside the section; images/fonts come from jsDelivr (pinned commit `d01e702`) |
-| All-in-one, own domain | `ecwid/section-1.10.0-allinone.html` | 33,967 characters | images + fonts on `assets.divinedunlop.com` (§2) |
-| External CSS/JS (leanest page HTML) | `ecwid/section-1.10.0.html` | 8,400 characters | everything in `release/1.10.0/` on `assets.divinedunlop.com` (§2) |
+| All-in-one (over the ~20k paste limit: not for the live editor) | `ecwid/section-1.10.0-allinone-jsdelivr.html` | 53,503 characters | Nothing: CSS + JS are inside the section; images/fonts come from jsDelivr (pinned commit `d01e702`) |
+| All-in-one, own domain | `ecwid/section-1.10.0-allinone.html` | 52,859 characters | images + fonts on `assets.divinedunlop.com` (§2) |
+| External CSS/JS (leanest page HTML) | `ecwid/section-1.10.0.html` | 9,156 characters | everything in `release/1.10.0/` on `assets.divinedunlop.com` (§2) |
 
 All three produce identical output (verified: same geometry, same 156 interaction checks). The all-in-one is about the size of the v26 reference file (28,761 characters) that was planned for one section. Its CSS/JS aren't cached separately, which costs about 6 KB compressed per homepage view.
 
