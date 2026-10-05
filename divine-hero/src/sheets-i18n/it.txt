@@ -13,7 +13,7 @@ v_bio = Il nucleo zonato Bio Comfort da solo: sostegno diretto e reattivo fin da
 heights = Altezze
 height = Altezza
 firmness = Rigidità
-f_sm_m_f = Morbido · Medio · Rigido
+f_sm_m_f = <i class="ddh__f-s">Morbido</i> · <i class="ddh__f-m">Medio</i> · <i class="ddh__f-f">Rigido</i>
 v_dp = Lo stesso nucleo Bio Comfort con un topper plush in lattice naturale sopra, uniti in un’unica fodera: un primo contatto più morbido sullo stesso sostegno zonato.
 f_dp = Medio + Morbido · Rigido + Medio · Extra rigido + Rigido
 bio_cta = Scopri Bio Comfort
@@ -61,7 +61,6 @@ a_partners = Materasso per coppie: due nuclei in lattice, ognuno con la sua rigi
 c_part = Coppie
 n_partners = Materasso per coppie
 s_partners = Due esigenze di comfort, una superficie continua
-v_config = Configurabile
 f_split = Lato di lei e lato di lui, scelti separatamente
 a_ambient = Nucleo in lattice naturale Ambient
 c_val = Convenienza · Miglior prezzo lattice
@@ -88,12 +87,11 @@ a_t_dual = Bio Support Dual: due strati di lattice naturale zonato
 s_t_dual = Due livelli di comfort in un topper
 d_t_dual = Concetto doppio comfort con regolazione a due strati per una sensazione più personale.
 combos = Combinazioni
-f_combo = Medio / Morbido · Rigido / Medio
+f_combo = <i class="ddh__f-f">Rigido</i> sotto + <i class="ddh__f-m">Medio</i> sopra<br><i class="ddh__f-m">Medio</i> sotto + <i class="ddh__f-s">Morbido</i> sopra
 a_t_part = Topper per coppie: metà media e metà rigida sotto un topper ponte a tutta larghezza
 n_t_part = Topper per coppie
 s_t_part = Due livelli di comfort con topper ponte
 d_t_part = Due topper singoli sotto un topper ponte a tutta larghezza: una superficie continua, senza fessure, per coppie con esigenze diverse.
-firm_each = Rigidità per lato
 depth_h = Altezze disponibili
 depth_s = Scegli l’altezza in base al livello di adattamento di cui hai bisogno.
 covers_h = Quattro fodere raffinate
@@ -106,3 +104,4 @@ c_inno_dp = Innovazione · Dual Plush
 f_mt = materasso + topper
 n_ortho = Ortopedico in fibra di cocco
 mat_steps = <b>Scegli il modello</b> → misura, rigidità, altezza e fodera → acquista
+f_tpart = <i class="ddh__f-m">Medio</i> da un lato · <i class="ddh__f-f">Rigido</i> dall’altro

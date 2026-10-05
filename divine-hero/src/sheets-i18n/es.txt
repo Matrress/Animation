@@ -13,7 +13,7 @@ v_bio = El núcleo zonificado Bio Comfort por sí solo: soporte directo y reacti
 heights = Alturas
 height = Altura
 firmness = Firmeza
-f_sm_m_f = Suave · Media · Firme
+f_sm_m_f = <i class="ddh__f-s">Suave</i> · <i class="ddh__f-m">Media</i> · <i class="ddh__f-f">Firme</i>
 v_dp = El mismo núcleo Bio Comfort con un topper plush de látex natural encima, unidos en una sola funda: un primer contacto más suave sobre el mismo soporte zonificado.
 f_dp = Media + Suave · Firme + Media · Extra firme + Firme
 bio_cta = Descubre Bio Comfort
@@ -61,7 +61,6 @@ a_partners = Colchón para parejas: dos núcleos de látex, cada uno con su firm
 c_part = Parejas
 n_partners = Colchón para parejas
 s_partners = Dos necesidades de confort, una superficie continua
-v_config = Configurable
 f_split = Lado de ella y lado de él, elegidos por separado
 a_ambient = Núcleo de látex natural Ambient
 c_val = Valor · Mejor precio en látex
@@ -88,12 +87,11 @@ a_t_dual = Bio Support Dual: dos capas de látex natural zonificado
 s_t_dual = Dos niveles de confort en un topper
 d_t_dual = Concepto de doble confort con regulación en dos capas para una sensación más personal.
 combos = Combinaciones
-f_combo = Media / Suave · Firme / Media
+f_combo = <i class="ddh__f-f">Firme</i> abajo + <i class="ddh__f-m">Media</i> arriba<br><i class="ddh__f-m">Media</i> abajo + <i class="ddh__f-s">Suave</i> arriba
 a_t_part = Topper para parejas: mitad media y mitad firme bajo un topper puente de tamaño completo
 n_t_part = Topper para parejas
 s_t_part = Dos niveles de confort con topper puente
 d_t_part = Dos toppers individuales bajo un topper puente de tamaño completo: una superficie continua y sin huecos para parejas con necesidades distintas.
-firm_each = Firmeza de cada lado
 depth_h = Alturas disponibles
 depth_s = Elige la altura según el nivel de adaptación que necesitas.
 covers_h = Cuatro fundas refinadas
@@ -106,3 +104,4 @@ c_inno_dp = Innovación · Dual Plush
 f_mt = colchón + topper
 n_ortho = Ortopédico con fibra de coco
 mat_steps = <b>Elige tu modelo</b> → medida, firmeza, altura y funda → compra
+f_tpart = <i class="ddh__f-m">Media</i> en un lado · <i class="ddh__f-f">Firme</i> en el otro

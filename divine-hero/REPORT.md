@@ -1,5 +1,36 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.10.2: product-page data; premium skins (2026-10-05)
+
+Owner, with screenshots of the product pages: correct heights and firmness everywhere; a more premium feel; Bio Comfort light and heavenly like its product page; the collection previews premium with contrast and cards, following the mockups (bold type on dark cards).
+
+**Data, from the product pages**
+
+| Model | Heights / firmness |
+|---|---|
+| Botanic | 20 · 24 · 26 cm |
+| Botanic Dual Plush | 23 cm (18 + 5) · 28 cm (20 + 8) |
+| Bio Comfort | 23 · 26 cm |
+| Bio Comfort Dual Plush | 28 cm only |
+| Orthopaedic Coconut Coir | 17 · 20 · 25 cm |
+| Partners | 21 cm (2 × 16 + 5) · 25 cm (2 × 20 + 5) |
+| Bio Support Dual (topper) | Firm base + Medium top, or Medium base + Soft top |
+| Partners Topper | one version: Medium on one side, Firm on the other |
+
+All of it is in the 8 languages.
+
+**Skins**
+* **Bio Comfort:** pale sky gradient, the board's own cloud (16 KB), white glass detail cards, deep navy type and zone bar.
+* **Mattresses:** dark warm bedroom tone with a soft lamp glow, light cards for contrast, warm-gold accents and a light CTA.
+* **Toppers:**
+  * Night navy with dark glass cards and bold white names.
+  * The product photos sit on light studio panels, because the source cut-outs carry white halos.
+  * Firmness words are coloured SOFT (sky) / MEDIUM (cyan) / FIRM (gold), as in the mockup.
+  * Gold CTA.
+* **Tablets:** the eight mattress cards go 2 per row, so each group of four is a 2×2.
+
+* Tests: 346–347 per harness, panels 792/792, guards, axe 0 (every sheet, desktop and phone). LCP and CLS unchanged.
+
 ## 1.10.1: tablets and computers only; collection data; loading in two stages (2026-10-05)
 
 Owner:

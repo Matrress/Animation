@@ -13,7 +13,7 @@ v_bio = Le cœur zoné Bio Comfort seul : un soutien direct et réactif dès le 
 heights = Épaisseurs
 height = Épaisseur
 firmness = Fermeté
-f_sm_m_f = Souple · Medium · Ferme
+f_sm_m_f = <i class="ddh__f-s">Souple</i> · <i class="ddh__f-m">Medium</i> · <i class="ddh__f-f">Ferme</i>
 v_dp = Le même cœur Bio Comfort surmonté d’un surmatelas plush en latex naturel, réunis dans une seule housse : un premier contact plus doux sur le même soutien zoné.
 f_dp = Medium + Souple · Ferme + Medium · Extra ferme + Ferme
 bio_cta = Découvrir Bio Comfort
@@ -61,7 +61,6 @@ a_partners = Matelas pour couples : deux cœurs en latex, chacun avec sa fermet�
 c_part = Couples
 n_partners = Matelas pour couples
 s_partners = Deux besoins de confort, une surface sans rupture
-v_config = Sur mesure
 f_split = Son côté à elle, son côté à lui, choisis séparément
 a_ambient = Cœur en latex naturel Ambient
 c_val = Accessible · Meilleur prix latex
@@ -88,12 +87,11 @@ a_t_dual = Bio Support Dual : deux couches de latex naturel zoné
 s_t_dual = Deux niveaux de confort en un surmatelas
 d_t_dual = Concept double confort avec réglage sur deux couches pour une sensation plus personnalisée.
 combos = Combinaisons
-f_combo = Medium / Souple · Ferme / Medium
+f_combo = <i class="ddh__f-f">Ferme</i> dessous + <i class="ddh__f-m">Medium</i> dessus<br><i class="ddh__f-m">Medium</i> dessous + <i class="ddh__f-s">Souple</i> dessus
 a_t_part = Surmatelas pour couples : moitiés medium et ferme sous un surmatelas pont pleine taille
 n_t_part = Surmatelas pour couples
 s_t_part = Deux niveaux de confort avec surmatelas pont
 d_t_part = Deux surmatelas individuels sous un surmatelas pont pleine taille : une surface continue, sans espace, pour les couples aux besoins différents.
-firm_each = Fermeté de chaque côté
 depth_h = Épaisseurs disponibles
 depth_s = Choisissez l’épaisseur selon le niveau d’adaptation souhaité.
 covers_h = Quatre housses raffinées
@@ -106,3 +104,4 @@ c_inno_dp = Innovation · Dual Plush
 f_mt = matelas + surmatelas
 n_ortho = Orthopédique fibre de coco
 mat_steps = <b>Choisissez votre modèle</b> → taille, fermeté, épaisseur et housse → achat
+f_tpart = <i class="ddh__f-m">Medium</i> d’un côté · <i class="ddh__f-f">Ferme</i> de l’autre

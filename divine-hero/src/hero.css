@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.10.1 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.10.2 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -491,3 +491,93 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__steps b{font-weight:600;color:var(--sh-ink)}
 .ddh .ddh__spec small,.ddh .ddh__bio-spec dt small{font-size:.9em;font-weight:400;color:var(--sh-soft);letter-spacing:0;text-transform:none}
 @media (min-width:1051px) and (any-hover:hover){.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__steps{grid-column:2;margin:.2em 0 0}}
+
+/* ===== 1.10.2 premium skins (owner's mockups) =====
+   Bio Comfort: light, airy, heavenly — pale sky, clouds, deep navy type.
+   Mattresses: light cards on a dark, warm bedroom tone (contrast). Toppers: deep night navy, dark glass cards,
+   bold light type, firmness coloured Soft / Medium / Firm. */
+.ddh .ddh__f-s,.ddh .ddh__f-m,.ddh .ddh__f-f{font-style:normal}
+
+/* --- Bio Comfort: sky --- */
+.ddh .ddh__sheet--bio{--sh-teal:#174a78;--sh-sage:#3c6f9a;--sh-oak:#5b7fa3;--sh-ink:#14324f;--sh-mute:#3f5a73;--sh-line:rgba(31,79,122,.16)}
+.ddh .ddh__sheet--bio .ddh__sh-in{background:url(assets/b-cloud.webp) no-repeat right -6% top -40px/min(62%,760px) auto,url(assets/b-cloud.webp) no-repeat left -12% bottom -70px/min(46%,560px) auto,radial-gradient(90% 70% at 70% 30%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 60%),linear-gradient(180deg,#bcd3e4 0,#d6e5f0 34%,#ebf2f8 70%,#f6f9fc 100%)}
+.ddh .ddh__sheet--bio .ddh__bio-h{font-weight:600;letter-spacing:.01em;color:#16457a;text-shadow:0 2px 24px rgba(255,255,255,.7)}
+.ddh .ddh__sheet--bio .ddh__sh-eye{color:#3d6a94}
+.ddh .ddh__sheet--bio .ddh__bio-tag{color:#2c5d8c}
+.ddh .ddh__sheet--bio .ddh__sh-lede{color:#2f4a63}
+.ddh .ddh__sheet--bio .ddh__bio-more li{border-left-color:rgba(31,88,140,.28)}
+.ddh .ddh__sheet--bio .ddh__bio-more em{color:#16457a}
+.ddh .ddh__sheet--bio .ddh__bio-pick{background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 6px 18px -12px rgba(20,60,100,.35)}
+.ddh .ddh__sheet--bio .ddh__bio-pick button span{color:#2c5d8c}
+.ddh .ddh__sheet--bio .ddh__bio-spec dt{color:#3d6a94}
+.ddh .ddh__sheet--bio .ddh__bio-fig{background:radial-gradient(64% 70% at 50% 60%,rgba(255,255,255,.95) 0,rgba(255,255,255,.35) 55%,rgba(255,255,255,0) 76%)}
+.ddh .ddh__sheet--bio .ddh__bio-fig img{filter:drop-shadow(0 26px 30px rgba(30,70,110,.22))}
+.ddh .ddh__sheet--bio .ddh__zones li{background:#1f4f80}
+.ddh .ddh__sheet--bio .ddh__zones li:nth-child(even){background:#1a4573}
+.ddh .ddh__sheet--bio .ddh__bio-details figure{background:rgba(255,255,255,.62);border-color:rgba(255,255,255,.9);box-shadow:0 10px 24px -18px rgba(20,60,100,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ddh .ddh__sheet--bio .ddh__bio-ortho>span{background:linear-gradient(135deg,#3a78b5,#16457a)}
+.ddh .ddh__sheet--bio .ddh__sh-cta{background:#16457a;box-shadow:0 12px 26px -14px rgba(22,69,122,.8)}
+@media (any-hover:hover){.ddh .ddh__sheet--bio .ddh__sh-cta:hover{background:#0f3561}}
+.ddh .ddh__sheet--bio .ddh__sh-x{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.9)}
+
+/* --- Mattresses: dark warm stage, light cards --- */
+.ddh .ddh__sheet--mattress .ddh__sh-in{background:radial-gradient(70% 60% at 88% -10%,rgba(255,210,150,.20) 0,rgba(255,210,150,0) 60%),radial-gradient(60% 50% at 0% 110%,rgba(120,150,170,.16) 0,rgba(120,150,170,0) 60%),linear-gradient(160deg,#2a2521 0,#352e28 50%,#433930 100%);color:#efe8de}
+.ddh .ddh__sheet--mattress .ddh__sh-eye{color:#d8b384}
+.ddh .ddh__sheet--mattress .ddh__sh-h{color:#fff}
+.ddh .ddh__sheet--mattress .ddh__sh-h em{color:#e6c393}
+.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-lede{color:#d6ccbf}
+.ddh .ddh__sheet--mattress .ddh__steps{color:#c4b8a9}
+.ddh .ddh__sheet--mattress .ddh__steps b{color:#fff}
+.ddh .ddh__sheet--mattress .ddh__sh-row{color:#cdbfae}
+.ddh .ddh__sheet--mattress .ddh__sh-row::after{background:rgba(255,255,255,.14)}
+.ddh .ddh__sheet--mattress .ddh__card{border-color:rgba(255,255,255,.5);background:#fbf8f3;box-shadow:0 18px 34px -22px rgba(0,0,0,.6)}
+.ddh .ddh__sheet--mattress .ddh__card-t{font-size:clamp(15.5px,1.12vw,18.5px)}
+.ddh .ddh__sheet--mattress .ddh__card--bio{border-color:#e6cf9f;background:linear-gradient(180deg,#fffdf8,#f8efdd)}
+.ddh .ddh__sheet--mattress .ddh__sh-cta{background:#f3e7d3;color:#231d18}
+@media (any-hover:hover){.ddh .ddh__sheet--mattress .ddh__sh-cta:hover{background:#fff}.ddh .ddh__sheet--mattress .ddh__card:hover{border-color:#fff;box-shadow:0 26px 44px -22px rgba(0,0,0,.75)}}
+.ddh .ddh__sheet--mattress .ddh__sh-x{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22)}
+.ddh .ddh__sheet--mattress .ddh__sh-x i,.ddh .ddh__sheet--mattress .ddh__sh-x i::after,.ddh .ddh__sheet--topper .ddh__sh-x i,.ddh .ddh__sheet--topper .ddh__sh-x i::after{background:#fff}
+
+/* --- Toppers: night navy, dark glass cards, coloured firmness --- */
+.ddh .ddh__sheet--topper .ddh__sh-in{background:radial-gradient(60% 55% at 92% 0%,rgba(255,206,130,.16) 0,rgba(255,206,130,0) 60%),linear-gradient(165deg,#0d1a2a 0,#132538 50%,#1a3249 100%);color:#e6edf4}
+.ddh .ddh__sheet--topper .ddh__sh-eye{color:#e9edf2;letter-spacing:.28em}
+.ddh .ddh__sheet--topper .ddh__sh-h{color:#fff}
+.ddh .ddh__sheet--topper .ddh__sh-h em{color:#f2c97a}
+.ddh .ddh__sheet--topper .ddh__benefit-list li{color:#dbe4ec}
+.ddh .ddh__sheet--topper .ddh__benefit-list li::before{background:#57b9e8;box-shadow:0 0 0 3px rgba(87,185,232,.2)}
+.ddh .ddh__sheet--topper .ddh__top-roll img{filter:drop-shadow(0 18px 24px rgba(0,0,0,.45))}
+.ddh .ddh__sheet--topper .ddh__card{border-color:rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));color:#fff;box-shadow:0 22px 40px -26px rgba(0,0,0,.8)}
+@media (any-hover:hover){.ddh .ddh__sheet--topper .ddh__card:hover{border-color:rgba(255,255,255,.3);box-shadow:0 28px 48px -24px rgba(0,0,0,.9)}}
+.ddh .ddh__sheet--topper .ddh__card-img{background:radial-gradient(90% 90% at 50% 40%,#ffffff 0,#f3f1ec 62%,#e2ded6 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+.ddh .ddh__sheet--topper .ddh__card-t{color:#fff;font-size:clamp(18px,1.45vw,24px);font-weight:600}
+.ddh .ddh__sheet--topper .ddh__card-s{color:#cfdbe6}
+.ddh .ddh__sheet--topper .ddh__card-d{color:#b7c5d3}
+.ddh .ddh__sheet--topper .ddh__chip{background:rgba(16,32,50,.82);color:#fff;box-shadow:0 4px 10px -6px rgba(0,0,0,.5)}
+.ddh .ddh__sheet--topper .ddh__spec{color:#fff}
+.ddh .ddh__sheet--topper .ddh__card-s+.ddh__spec,.ddh .ddh__sheet--topper .ddh__card-d+.ddh__spec{border-top-color:rgba(255,255,255,.14);padding-top:11px}
+.ddh .ddh__sheet--topper .ddh__spec>b{display:block;margin:0 0 5px;font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#c4d0dc}
+.ddh .ddh__sheet--topper .ddh__spec>span{font-size:clamp(12.5px,.95vw,14.5px);font-weight:600;letter-spacing:.02em;color:#e8eef4}
+.ddh .ddh__sheet--topper .ddh__f-s{color:#8fcbff}
+.ddh .ddh__sheet--topper .ddh__f-m{color:#4fdbe3}
+.ddh .ddh__sheet--topper .ddh__f-f{color:#f3bd52}
+.ddh .ddh__sheet--topper .ddh__f-s,.ddh .ddh__sheet--topper .ddh__f-m,.ddh .ddh__sheet--topper .ddh__f-f{text-transform:uppercase;letter-spacing:.06em}
+.ddh .ddh__sheet--topper .ddh__top-foot{border-top-color:rgba(255,255,255,.14)}
+.ddh .ddh__sheet--topper .ddh__sh-row{color:#e3eaf1}
+.ddh .ddh__sheet--topper .ddh__sh-row::after{background:rgba(255,255,255,.14)}
+.ddh .ddh__sheet--topper .ddh__depths p{color:#b9c7d4}
+.ddh .ddh__sheet--topper .ddh__depths li{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#b9c7d4}
+.ddh .ddh__sheet--topper .ddh__depths li b{color:#fff}
+.ddh .ddh__sheet--topper .ddh__covers li{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#eef3f7}
+.ddh .ddh__sheet--topper .ddh__covers small{color:#f3bd52}
+.ddh .ddh__sheet--topper .ddh__sh-cta{background:linear-gradient(180deg,#f6d38c,#e7b65e);color:#1b1a16;box-shadow:0 14px 28px -16px rgba(240,185,90,.7)}
+@media (any-hover:hover){.ddh .ddh__sheet--topper .ddh__sh-cta:hover{background:linear-gradient(180deg,#fadc9e,#edc06c)}}
+.ddh .ddh__sheet--topper .ddh__sh-x{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22)}
+.ddh .ddh__sheet--mattress .ddh__sh-cta:focus-visible,.ddh .ddh__sheet--topper a:focus-visible,.ddh .ddh__sheet--topper button:focus-visible,.ddh .ddh__sheet--mattress .ddh__sh-x:focus-visible{outline-color:#f3d39a}
+@media (min-width:1051px) and (any-hover:hover){
+.ddh .ddh__sheet--mattress .ddh__sh-in{box-shadow:0 40px 100px -36px rgba(0,0,0,.75),inset 0 0 0 1px rgba(255,255,255,.08)}
+.ddh .ddh__sheet--topper .ddh__sh-in{box-shadow:0 40px 100px -36px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.08)}
+.ddh .ddh__sheet--bio .ddh__sh-in{box-shadow:0 40px 100px -40px rgba(20,60,100,.55),inset 0 0 0 1px rgba(255,255,255,.7)}
+}
+@media (min-width:1051px) and (any-hover:hover) and (max-height:820px){.ddh .ddh__sheet--topper .ddh__card-d{display:none}.ddh .ddh__sheet--topper .ddh__top-roll img{max-height:96px}.ddh .ddh__sheet--topper .ddh__benefit-list{margin-top:8px}.ddh .ddh__sheet--topper .ddh__sh-in{row-gap:10px;padding-top:16px;padding-bottom:16px}.ddh .ddh__sheet--topper .ddh__card-t{font-size:19px}}
+@media (min-width:701px) and (max-width:1050px),(min-width:701px) and (any-hover:none){.ddh .ddh__sheet--mattress .ddh__cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px) and (any-hover:none){.ddh .ddh__sheet--mattress .ddh__cards{grid-template-columns:repeat(4,minmax(0,1fr))}}

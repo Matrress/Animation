@@ -13,7 +13,7 @@ v_bio = Vyöhykkeellinen Bio Comfort -ydin sellaisenaan: suoraa, reagoivaa tukea
 heights = Korkeudet
 height = Korkeus
 firmness = Kovuus
-f_sm_m_f = Pehmeä · Keskikova · Kova
+f_sm_m_f = <i class="ddh__f-s">Pehmeä</i> · <i class="ddh__f-m">Keskikova</i> · <i class="ddh__f-f">Kova</i>
 v_dp = Sama Bio Comfort -ydin, jonka päällä on luonnonlateksinen plush-petauspatja samassa päällisessä: pehmeämpi ensikosketus saman vyöhyketuen päällä.
 f_dp = Keskikova + Pehmeä · Kova + Keskikova · Erittäin kova + Kova
 bio_cta = Tutustu Bio Comfortiin
@@ -61,7 +61,6 @@ a_partners = Pariskunnan patja: kaksi lateksiydintä omalla kovuudellaan saman p
 c_part = Pariskunnille
 n_partners = Pariskunnan patja
 s_partners = Kaksi mukavuustarvetta, yksi saumaton pinta
-v_config = Muokattavissa
 f_split = Kummallekin puolelle oma kovuus
 a_ambient = Ambient-luonnonlateksiydin
 c_val = Edullinen · Paras lateksihinta
@@ -88,12 +87,11 @@ a_t_dual = Bio Support Dual: kaksi kerrosta vyöhykkeellistä luonnonlateksia
 s_t_dual = Kaksi mukavuustasoa yhdessä petauspatjassa
 d_t_dual = Kaksoismukavuus kahden kerroksen säädöllä yksilöllisempään tuntumaan.
 combos = Yhdistelmät
-f_combo = Keskikova / Pehmeä · Kova / Keskikova
+f_combo = <i class="ddh__f-f">Kova</i> alla + <i class="ddh__f-m">Keskikova</i> päällä<br><i class="ddh__f-m">Keskikova</i> alla + <i class="ddh__f-s">Pehmeä</i> päällä
 a_t_part = Pariskunnan petauspatja: keskikova ja kova puolisko täysikokoisen siltapatjan alla
 n_t_part = Pariskunnan petauspatja
 s_t_part = Kaksi mukavuustasoa ja siltapatja
 d_t_part = Kaksi erillistä petauspatjaa täysikokoisen siltapatjan alla: yksi saumaton, rakoton pinta pariskunnille, joilla on erilaiset tarpeet.
-firm_each = Kovuus kummallakin puolella
 depth_h = Saatavilla olevat korkeudet
 depth_s = Valitse korkeus tarvitsemasi mukautuvuuden mukaan.
 covers_h = Neljä hienostunutta päällistä
@@ -106,3 +104,4 @@ c_inno_dp = Innovaatio · Dual Plush
 f_mt = patja + petauspatja
 n_ortho = Ortopedinen kookoskuitupatja
 mat_steps = <b>Valitse malli</b> → koko, kovuus, korkeus ja päällinen → osta
+f_tpart = <i class="ddh__f-m">Keskikova</i> toisella puolella · <i class="ddh__f-f">Kova</i> toisella
