@@ -166,12 +166,27 @@ b3_ambient = Quattro rigidità
 b1_hotel = Lattice Dunlop sminuzzato
 b2_hotel = Pensato per l’ospitalità
 b3_hotel = 18 cm, sensazione sostenuta
-b1_t_bio = Lattice 100% biologico
-b2_t_bio = Sostegno a sette zone
-b3_t_bio = Morbido, medio o rigido
 b1_t_dual = Due strati di lattice naturale
-b2_t_dual = Due combinazioni di strati
-b3_t_dual = Una sensazione più personale
 b1_t_part = Medio da un lato, rigido dall’altro
 b2_t_part = Topper ponte senza fessure
 b3_t_part = Pensato per le coppie
+b2_t_dual = Due combinazioni di rigidità
+b3_t_dual = Regolazione del comfort più flessibile
+b4_t_dual = Migliore adattamento ai materassi esistenti
+b4_t_part = Un’unica superficie condivisa
+dpc_eye = Il sistema Dual Plush
+dpc_h = Che cos’è Dual Plush?
+dpc_x1 = Un sistema di riposo completo: un materasso in lattice e un topper in lattice separato. Il materasso dà il sostegno, il topper affina comfort e scarico della pressione.
+dpc_x2 = Due strati di rigidità lavorano insieme, così la sensazione finale si adatta meglio a peso, proporzioni e modo di dormire.
+dpc_t = Topper in lattice
+dpc_tc = comfort
+dpc_m = Materasso in lattice
+dpc_ms = sostegno
+dpc_hgt = Altezza 23 o 28 cm
+dpc_ch = Combinazioni comuni
+dpc_cta = Vedi Dual Plush
+dpc_alt = Anche con il nucleo Bio Comfort
+w_sx = Super rigido
+dpc_c1 = Materasso <i class="ddh__f-m">Medio</i> + topper <i class="ddh__f-s">Morbido</i>
+dpc_c2 = Materasso <i class="ddh__f-f">Rigido</i> + topper <i class="ddh__f-m">Medio</i>
+dpc_c3 = Materasso <i class="ddh__f-x">Extra rigido</i> + topper <i class="ddh__f-f">Rigido</i>

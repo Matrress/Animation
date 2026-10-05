@@ -151,3 +151,19 @@ The working prototype is the release itself. `reports/compare/1.11.0-*.png` show
 | `sizes` | the global size guide |
 | `tablet` | full-screen selector, preview first |
 | `phone-sizes` | the size guide as a bottom sheet on a phone |
+
+---
+
+## 1.11.1 addendum (refinement on the approved 1.11.0)
+
+| Brief item | Result |
+|---|---|
+| Cube mattress grid | 2 cards per row; each card: picture, family tag (Premium, Exclusive, Innovation, Orthopaedic, Partners, Best value, Hotel), name, positioning line, heights + firmness marks; benefits moved to the preview |
+| Family colours | Botanic `#5d9a6c`, Bio Comfort `#35a7b6`, Orthopaedic `#a47a4c`, Partners teal `#3fae9f` + violet `#8a76cf`, Ambient / Hotel `#6f8599`; used as a 3 px top line, the active ring and a very light tint behind the picture |
+| Topper preview | picture beside one text column, never hidden; Bio Support: 100% natural latex · seven-zone anatomical support · pressure relief · ventilation · durable; Bio Support Dual: two layers · two firmness combinations · flexible comfort tuning · adaptation for existing mattresses; Partners Topper: Medium / Firm sides · gap-free bridge · for couples · one shared surface |
+| Dual Plush card | revealed by the lifted mattress (state `system`), right side of the hero, translated in 8 languages; CTA → Botanic Dual Plush, secondary → Bio Comfort Dual Plush |
+| Size pill vs chat | right of the Shop buttons, ≥ 120 px from the right edge (tested); own line on tablets / phones |
+| Ambient details | soft family light, floor line and shadow in the previews; no new colours outside these accents |
+
+Data: `src/models.json` gains `family`, `tag` and `facts` (`heights`; `firmness.levels` / `pairs` / `split`).
+Weight: no new images (the card reuses `m-botanic-dp.webp`); CSS and sheets grow by about 2 KB gzip.

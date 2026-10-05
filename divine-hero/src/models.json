@@ -1,5 +1,5 @@
 {
- "_doc": "1.11.0 model selector data. The build generates the list cards from this file and checks that every model has a preview (src/sheets.html, data-ddh-pv) whose 'View model' link is the same URL. English text lives here; translations in src/sheets-i18n/<lang>.txt under the same keys. No prices, by design.",
+ "_doc": "1.11.0 model selector data. The build generates the list cards from this file and checks that every model has a preview (src/sheets.html, data-ddh-pv) whose 'View model' link is the same URL. English text lives here; translations in src/sheets-i18n/<lang>.txt under the same keys. No prices, by design. 1.11.1: family (accent colour), tag (the preview chip key), facts (heights + firmness family: levels s/m/f/x/sx, pairs [topper, mattress], or split [one side, other side]).",
  "collections": {
   "mattress": "https://divinedunlop.com/products/latex-mattresses-collection",
   "topper": "https://divinedunlop.com/products/latex-toppers-collection",
@@ -38,6 +38,21 @@
    "explanation": {
     "key": "x_botanic",
     "en": "Our original 100% organic Dunlop latex mattress: seven comfort zones give clean, natural support that suits most sleepers."
+   },
+   "family": "botanic",
+   "tag": {
+    "key": "c_prem"
+   },
+   "facts": {
+    "heights": "20 · 24 · 26 cm",
+    "firmness": {
+     "levels": [
+      "s",
+      "m",
+      "f",
+      "x"
+     ]
+    }
    }
   },
   {
@@ -72,6 +87,29 @@
    "explanation": {
     "key": "x_botanic_dp",
     "en": "Support comes from the mattress, comfort from the organic latex topper above it, joined in one quilted cover."
+   },
+   "family": "botanic",
+   "tag": {
+    "key": "c_prem"
+   },
+   "facts": {
+    "heights": "23 · 28 cm",
+    "firmness": {
+     "pairs": [
+      [
+       "s",
+       "m"
+      ],
+      [
+       "m",
+       "f"
+      ],
+      [
+       "f",
+       "x"
+      ]
+     ]
+    }
    }
   },
   {
@@ -107,7 +145,21 @@
     "key": "x_bio",
     "en": "Responsive natural latex cells across seven body zones, so support, pressure relief and fresh air follow your body."
    },
-   "claimNote": "'Highest ventilation in natural latex' is the owner's own approved claim (1.10.5)."
+   "claimNote": "'Highest ventilation in natural latex' is the owner's own approved claim (1.10.5).",
+   "family": "bio",
+   "tag": {
+    "key": "c_excl"
+   },
+   "facts": {
+    "heights": "23 · 26 cm",
+    "firmness": {
+     "levels": [
+      "s",
+      "m",
+      "f"
+     ]
+    }
+   }
   },
   {
    "id": "bio_dp",
@@ -141,6 +193,25 @@
    "explanation": {
     "key": "x_bio_dp",
     "en": "The Bio Comfort core with a plush natural latex topper above it, in one cover: support, comfort and adaptation in one layered system."
+   },
+   "family": "bio",
+   "tag": {
+    "key": "c_inno"
+   },
+   "facts": {
+    "heights": "28 cm",
+    "firmness": {
+     "pairs": [
+      [
+       "s",
+       "m"
+      ],
+      [
+       "m",
+       "f"
+      ]
+     ]
+    }
    }
   },
   {
@@ -176,6 +247,19 @@
    "explanation": {
     "key": "x_ortho",
     "en": "Organic latex layered with natural coconut coir for a firmer, more stable feel, for sleepers who need extra firm support."
+   },
+   "family": "ortho",
+   "tag": {
+    "key": "c_ortho"
+   },
+   "facts": {
+    "heights": "17 · 20 · 25 cm",
+    "firmness": {
+     "levels": [
+      "f",
+      "x"
+     ]
+    }
    }
   },
   {
@@ -212,7 +296,20 @@
     "key": "x_partners",
     "en": "Two individual sides in one seamless mattress, for couples with different body weights or firmness needs."
    },
-   "claimNote": "Firmness per side is configurable on the product page; the hero does not fix it."
+   "claimNote": "Firmness per side is configurable on the product page; the hero does not fix it.",
+   "family": "partners",
+   "tag": {
+    "key": "c_part"
+   },
+   "facts": {
+    "heights": "21 · 25 cm",
+    "firmness": {
+     "split": [
+      "m",
+      "f"
+     ]
+    }
+   }
   },
   {
    "id": "ambient",
@@ -246,6 +343,21 @@
    "explanation": {
     "key": "x_ambient",
     "en": "Clean, simple natural Dunlop latex comfort at our most accessible level, in four depths and four firmnesses."
+   },
+   "family": "value",
+   "tag": {
+    "key": "c_val"
+   },
+   "facts": {
+    "heights": "16 · 18 · 20 · 26 cm",
+    "firmness": {
+     "levels": [
+      "s",
+      "m",
+      "f",
+      "sx"
+     ]
+    }
    }
   },
   {
@@ -281,7 +393,15 @@
     "key": "x_hotel",
     "en": "Shredded Dunlop latex in a practical, optimised construction, designed for hospitality and hard-working rooms."
    },
-   "claimNote": "No seven-zone claim: not every Hotel Line configuration has the same zoned structure."
+   "claimNote": "No seven-zone claim: not every Hotel Line configuration has the same zoned structure.",
+   "family": "value",
+   "tag": {
+    "key": "c_hotel"
+   },
+   "facts": {
+    "heights": "18 cm",
+    "firmness": {}
+   }
   },
   {
    "id": "t_bio",
@@ -299,21 +419,33 @@
    },
    "benefits": [
     {
-     "key": "b1_t_bio",
-     "en": "100% organic latex"
+     "key": "tb1",
+     "en": "100% natural latex, Dunlop technology"
     },
     {
-     "key": "b2_t_bio",
-     "en": "Seven-zone support"
+     "key": "tb2",
+     "en": "Seven-zone anatomical support"
     },
     {
-     "key": "b3_t_bio",
-     "en": "Soft, Medium or Firm"
+     "key": "tb3",
+     "en": "Better pressure relief"
+    },
+    {
+     "key": "tb4",
+     "en": "Enhanced ventilation"
+    },
+    {
+     "key": "tb5",
+     "en": "Durable and long-lasting"
     }
    ],
    "explanation": {
     "key": "d_t_bio",
     "note": "existing topper description"
+   },
+   "family": "bio",
+   "tag": {
+    "key": "c_orig"
    }
   },
   {
@@ -337,16 +469,24 @@
     },
     {
      "key": "b2_t_dual",
-     "en": "Two layer combinations"
+     "en": "Two firmness combinations"
     },
     {
      "key": "b3_t_dual",
-     "en": "A more personal feel"
+     "en": "More flexible comfort tuning"
+    },
+    {
+     "key": "b4_t_dual",
+     "en": "Better adaptation for existing mattress systems"
     }
    ],
    "explanation": {
     "key": "d_t_dual",
     "note": "existing topper description"
+   },
+   "family": "bio",
+   "tag": {
+    "key": "c_prem"
    }
   },
   {
@@ -375,12 +515,20 @@
     {
      "key": "b3_t_part",
      "en": "Made for couples"
+    },
+    {
+     "key": "b4_t_part",
+     "en": "One shared sleeping surface"
     }
    ],
    "nameKey": "n_t_part",
    "explanation": {
     "key": "d_t_part",
     "note": "existing topper description"
+   },
+   "family": "partners",
+   "tag": {
+    "key": "c_part"
    }
   }
  ]

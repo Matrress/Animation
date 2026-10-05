@@ -1,5 +1,17 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.11.1: cube model cards with family accents, richer topper preview, Dual Plush reveal card, size pill clear of the chat (2026-10-05)
+
+Owner (on 1.11.0, approved direction): calmer, more precise "configurator" feel; 2 mattress cards per row, closer to cubes, little text; family colour accents; topper preview too empty (on the live iPad its picture had been hidden on a low panel) and header text showed through it; a Dual Plush explanation card with the lifted mattress; the size pill clashed with the chat bubble.
+
+Done:
+1. Mattress cards: 2 per row, picture on top, family tag, name, one/two-line positioning, heights and firmness marks (dots in the firmness colours; Dual Plush pairs as small two-layer marks; Partners as one split mark). Family accents (thin top line, active ring, soft picture light): Botanic green, Bio Comfort aqua, Orthopaedic coconut brown, Partners teal + violet, Ambient / Hotel Line slate.
+2. Previews: a soft family light behind the product, a quiet floor line, a product shadow, a thin family accent on top.
+3. Toppers: the picture never hides any more and sits beside one clear text column; Bio Support shows its five benefits from the brief (the topper header list moved into it), Bio Support Dual four, Partners Topper four. All screens opened from the hero now rise over the site header (the topper and Bio screens had header text showing through on the live site).
+4. Dual Plush reveal: with the lifted mattress (desktop and tablet; not phones) a light card explains the system: topper / mattress picture, two short paragraphs, the three combinations as layered marks, height 23 or 28 cm, "View Dual Plush" (Botanic Dual Plush) and "Also with the Bio Comfort core" (Bio Comfort Dual Plush). The lift holds while the pointer travels towards the card ("safe triangle"), stays while on it, and closes at once in any other direction.
+5. "All UK & EU Sizes" sits just right of the Shop buttons (they stay centred), at least 120 px from the right edge on computers; on tablets and phones it is its own centred line under the buttons.
+Tests: interaction 374/374 (370 on the bare harnesses), panels, guards, axe, perf; fit matrix clean.
+
 ## 1.11.0: model selector (direct product links + large preview), global size guide, header bridge (2026-10-05)
 
 Brief: upgrade (not redesign) the product layer: browse every mattress and topper quickly, see the differences, go straight to

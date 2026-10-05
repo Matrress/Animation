@@ -166,12 +166,27 @@ b3_ambient = Fyra fastheter
 b1_hotel = Strimlad Dunlop-latex
 b2_hotel = Utvecklad för hotell
 b3_hotel = 18 cm, stödjande känsla
-b1_t_bio = 100 % ekologisk latex
-b2_t_bio = Stöd i sju zoner
-b3_t_bio = Mjuk, medium eller fast
 b1_t_dual = Två skikt naturlatex
-b2_t_dual = Två skiktkombinationer
-b3_t_dual = En mer personlig känsla
 b1_t_part = Medium på ena sidan, fast på den andra
 b2_t_part = Skarvfri brygg-bäddmadrass
 b3_t_part = Gjord för par
+b2_t_dual = Två fasthetskombinationer
+b3_t_dual = Mer flexibel komfortjustering
+b4_t_dual = Bättre anpassning till befintliga madrasser
+b4_t_part = En gemensam liggyta
+dpc_eye = Dual Plush-systemet
+dpc_h = Vad är Dual Plush?
+dpc_x1 = Ett komplett sömnsystem av en latexmadrass och en separat bäddmadrass i latex. Madrassen ger stödet, bäddmadrassen förfinar komfort och tryckavlastning.
+dpc_x2 = Två fasthetsskikt samverkar, så att känslan kan anpassas närmare efter kroppsvikt, proportioner och sovvanor.
+dpc_t = Bäddmadrass i latex
+dpc_tc = komfort
+dpc_m = Latexmadrass
+dpc_ms = stöd
+dpc_hgt = Höjd 23 eller 28 cm
+dpc_ch = Vanliga kombinationer
+dpc_cta = Visa Dual Plush
+dpc_alt = Även med Bio Comfort-kärnan
+w_sx = Superfast
+dpc_c1 = <i class="ddh__f-m">Medium</i> madrass + <i class="ddh__f-s">Mjuk</i> bäddmadrass
+dpc_c2 = <i class="ddh__f-f">Fast</i> madrass + <i class="ddh__f-m">Medium</i> bäddmadrass
+dpc_c3 = <i class="ddh__f-x">Extra fast</i> madrass + <i class="ddh__f-f">Fast</i> bäddmadrass

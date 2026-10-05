@@ -166,12 +166,27 @@ b3_ambient = Quatro firmezas
 b1_hotel = Látex Dunlop triturado
 b2_hotel = Criado para hotelaria
 b3_hotel = 18 cm, sensação de apoio
-b1_t_bio = Látex 100 % biológico
-b2_t_bio = Suporte em sete zonas
-b3_t_bio = Suave, médio ou firme
 b1_t_dual = Duas camadas de látex natural
-b2_t_dual = Duas combinações de camadas
-b3_t_dual = Uma sensação mais pessoal
 b1_t_part = Médio de um lado, firme do outro
 b2_t_part = Topper ponte sem folgas
 b3_t_part = Pensado para casais
+b2_t_dual = Duas combinações de firmeza
+b3_t_dual = Ajuste de conforto mais flexível
+b4_t_dual = Melhor adaptação a colchões existentes
+b4_t_part = Uma superfície de descanso partilhada
+dpc_eye = O sistema Dual Plush
+dpc_h = O que é Dual Plush?
+dpc_x1 = Um sistema de sono completo: um colchão de látex e um topper de látex separado. O colchão dá o suporte; o topper afina o conforto e o alívio de pressão.
+dpc_x2 = Duas camadas de firmeza trabalham em conjunto para ajustar a sensação final ao peso, às proporções e à forma de dormir.
+dpc_t = Topper de látex
+dpc_tc = conforto
+dpc_m = Colchão de látex
+dpc_ms = suporte
+dpc_hgt = Altura 23 ou 28 cm
+dpc_ch = Combinações habituais
+dpc_cta = Ver Dual Plush
+dpc_alt = Também com o núcleo Bio Comfort
+w_sx = Super firme
+dpc_c1 = Colchão <i class="ddh__f-m">Médio</i> + topper <i class="ddh__f-s">Macio</i>
+dpc_c2 = Colchão <i class="ddh__f-f">Firme</i> + topper <i class="ddh__f-m">Médio</i>
+dpc_c3 = Colchão <i class="ddh__f-x">Extra firme</i> + topper <i class="ddh__f-f">Firme</i>

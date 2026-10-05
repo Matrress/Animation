@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.11.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.11.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.11.0';
+  var VERSION = '1.11.1';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -251,7 +251,14 @@
     // the hit-test runs at once; waking the page resets everything (see below).
     var raf = 0, rafAt = 0, lastX = 0, lastY = 0;
     function now() { return w.performance && performance.now ? performance.now() : Date.now(); }
-    function frame() { raf = 0; show(hit(lastX, lastY, 1)); }
+    function frame() {
+      raf = 0; var k = hit(lastX, lastY, 1);
+      // 1.11.1: while the Dual Plush card is up, leaving the lifted mattress does not drop it at once: the pointer gets a
+      // moment to travel across to the card (on the card it stays; anywhere else it closes as before)
+      if (active === 'system' && k !== 'system' && dpcLive() && towardDpc(lastX, lastY)) { if (!dpcT) dpcT = w.setTimeout(function () { dpcT = 0; if (!overDpc && active === 'system') show(hit(lastX, lastY, 1)); }, 500); return; }
+      if (dpcT) { w.clearTimeout(dpcT); dpcT = 0; }
+      show(k);
+    }
     on(art, 'pointermove', function (ev) {
       if (ev.pointerType === 'touch') return;
       lastX = ev.clientX; lastY = ev.clientY;
@@ -271,6 +278,7 @@
     cleanups.push(function () { if (raf) w.cancelAnimationFrame(raf); });
     on(art, 'pointerleave', function (ev) {
       if (ev.pointerType === 'touch' || group.contains(d.activeElement)) return;
+      if (ev.relatedTarget && dpc && dpc.contains(ev.relatedTarget)) return;   // onto the Dual Plush card
       if (raf) { w.cancelAnimationFrame(raf); raf = 0; }
       show(null);
     }, { passive: true });
@@ -295,7 +303,7 @@
     points.forEach(function (p) {
       on(p, 'pointerenter', function (ev) { var k = p.getAttribute('data-ddh-point'); if (ev.pointerType !== 'touch' && (!active || !immersive(active, w) || k === active)) show(k); }, { passive: true });
     });
-    on(d, 'click', function (ev) { if (active && !viewport.contains(ev.target)) show(null); });
+    on(d, 'click', function (ev) { if (active && !viewport.contains(ev.target) && !(dpc && dpc.contains(ev.target))) show(null); });
     on(d, 'keydown', function (ev) { if (active && (ev.key === 'Escape' || ev.key === 'Esc')) show(null); });
     on(w, 'resize', function () { if (active && pointsOff()) show(null); }, { passive: true }); // rotated to upright phone
 
@@ -354,7 +362,8 @@
     // still goes to the collection. Touch / narrow screens: the first tap opens the sheet full screen (its own button
     // leads on); Escape, the close button or a click outside closes it.
     var sheetBox = null, sheetReq = false, sheet = null, sheetMode = '', sheetFrom = null, sheetWait = null, hoverT = 0, lastPT = '', openedAt = 0;
-    var pvT = 0, sheetPT = '', backFocus = false, szBtn = root.querySelector('.ddh__sz'), szEl = null, szMode = '', szT = 0;   // 1.11.0 model previews, size guide
+    var dpc = null, overDpc = false, dpcT = 0;   // 1.11.1 the Dual Plush card (revealed with the lifted mattress)
+    var pvT = 0, sheetPT = '', backFocus = false, szBtn = root.querySelector('.ddh__sz'), szEl = null, szMode = '', szT = 0;   // 1.11.1 model previews, size guide
     var ctas = [].slice.call(root.querySelectorAll('[data-ddh-sheet]')), bioPoint = group.querySelector('[data-ddh-point=bio]');
     var deskMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (any-hover:hover)') : { matches: true };
     // 1.10.1: tablets, laptops and monitors only. On a phone (either way up) the screens never open: the Bio point is
@@ -426,7 +435,7 @@
       on(sheetBox, 'click', function (ev) {
         var t = ev.target;
         if (t.closest('[data-ddh-close]')) { if (t.closest('#ddh-sizes')) szClose(true); else closeSheet(); return; }
-        // 1.11.0: a model card is a plain link to its product. A touch on a card that is not the one previewed shows its
+        // 1.11.1: a model card is a plain link to its product. A touch on a card that is not the one previewed shows its
         // preview first (the preview's own button, or a second touch, leads on); a mouse click goes straight there.
         var c = t.closest('[data-ddh-m]'), pt = sheetPT; sheetPT = '';
         if (c && pt === 'touch' && c.getAttribute('aria-current') !== 'true' && !ev.ctrlKey && !ev.metaKey) { ev.preventDefault(); pickModel(c, true); return; }
@@ -436,7 +445,7 @@
       on(sheetBox, 'keydown', function (ev) {
         var v = ev.target.closest && ev.target.closest('[data-ddh-v]');
         if (v && (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft')) { var all = [].slice.call(v.parentNode.querySelectorAll('[data-ddh-v]')), n = all[(all.indexOf(v) + (ev.key === 'ArrowRight' ? 1 : all.length - 1)) % all.length]; pick(n); n.focus(); ev.preventDefault(); return; }
-        if (ev.key === 'Tab' && sheet && sheetMode === 'hover' && sheetFrom) {                         // 1.11.0: a preview opened from the keyboard: Tab leads back out next to its button
+        if (ev.key === 'Tab' && sheet && sheetMode === 'hover' && sheetFrom) {                         // 1.11.1: a preview opened from the keyboard: Tab leads back out next to its button
           var g = focusables(sheet), at0 = d.activeElement;
           if (!ev.shiftKey && at0 === g[g.length - 1]) { var nx = after(sheetFrom); if (nx) { ev.preventDefault(); closeSheet(true); nx.focus(); } }
           else if (ev.shiftKey && at0 === g[0]) { ev.preventDefault(); sheetFrom.focus(); }
@@ -452,7 +461,7 @@
       });
       on(sheetBox, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') w.clearTimeout(hoverT); });
       on(sheetBox, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch') later(); });
-      // 1.11.0 model selector: pointing at a card (after a short pause, so crossing the list does not flicker) or focusing it
+      // 1.11.1 model selector: pointing at a card (after a short pause, so crossing the list does not flicker) or focusing it
       // shows its preview; the preview area keeps whatever was shown last.
       on(sheetBox, 'pointerover', function (ev) {
         if (ev.pointerType === 'touch') return;
@@ -465,12 +474,33 @@
         if (sheet && sheetMode === 'hover' && !sheet.contains(to) && to !== sheetFrom && !isCta(to)) closeSheet(true);
         if (szEl && !szEl.hidden && !szEl.contains(to) && to !== szBtn) szClose();
       });
+      // 1.11.1 the Dual Plush card lives in the hero itself (not in the screens), shown by the lifted-mattress state
+      dpc = sheetBox.querySelector('#ddh-dpc');
+      if (dpc) {
+        root.appendChild(dpc); root.setAttribute('data-ddh-dpc', '');
+        cleanups.push(function () { if (dpc && dpc.parentNode) dpc.parentNode.removeChild(dpc); root.removeAttribute('data-ddh-dpc'); dpc = null; });
+        on(dpc, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') { overDpc = true; if (dpcT) { w.clearTimeout(dpcT); dpcT = 0; } } });
+        on(dpc, 'pointerleave', function (ev) {
+          if (ev.pointerType === 'touch') return; overDpc = false;
+          var to = ev.relatedTarget; if (to && art.contains(to)) return;      // back over the picture: the hit-test decides
+          dpcT = w.setTimeout(function () { dpcT = 0; if (!overDpc && active === 'system') show(null); }, 280);
+        });
+      }
       szEl = sheetBox.querySelector('#ddh-sizes');
       if (szEl) {
         on(szEl, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') w.clearTimeout(szT); });
         on(szEl, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode === 'hover') szT = w.setTimeout(szClose, 280); });
       }
     }
+    // the "safe triangle": from the lifted mattress's point to the card's left edge (any other direction closes at once)
+    function towardDpc(x, y) {
+      var pt = group.querySelector('[data-ddh-point=system]'); if (!pt || !dpc) return false;
+      var a = pt.getBoundingClientRect(), r = dpc.getBoundingClientRect(), ax = a.left + a.width / 2, ay = a.top + a.height / 2, bx = r.left + 2, m = 40;
+      if (x < ax - m || x > bx) return false;
+      var t = (x - ax) / Math.max(1, bx - ax), top = ay + (r.top - m - ay) * t, bot = ay + (r.bottom + m - ay) * t;
+      return y >= Math.min(top, ay - m) && y <= Math.max(bot, ay + m);
+    }
+    function dpcLive() { return !!(dpc && w.innerWidth > 700 && root.hasAttribute('data-ddh-dpc')); }
     function pickModel(card, reveal) {
       var sh = card.closest('.ddh__sheet'), id = card.getAttribute('data-ddh-m'), pv = null; if (!sh) return;
       [].forEach.call(sh.querySelectorAll('[data-ddh-m]'), function (c) { if (c === card) c.setAttribute('aria-current', 'true'); else c.removeAttribute('aria-current'); });
@@ -491,7 +521,7 @@
         hoverT = w.setTimeout(function () { openSheet(name, 'hover', a); }, sheet ? 0 : 140);
       }, { passive: true });
       on(a, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch') { if (!sheet) w.clearTimeout(hoverT); later(); } }, { passive: true });
-      // 1.11.0 keyboard: focusing the button shows its preview; Tab steps into the model list, Enter still opens the collection
+      // 1.11.1 keyboard: focusing the button shows its preview; Tab steps into the model list, Enter still opens the collection
       on(a, 'focus', function () { if (!backFocus && deskMQ.matches && fv(a) && !(sheet && sheetMode === 'modal')) openSheet(name, 'hover', a); });
       on(a, 'keydown', function (ev) {
         if (ev.key !== 'Tab' || ev.shiftKey || !sheet || sheetFrom !== a) return;
@@ -506,7 +536,7 @@
     });
     if (bioPoint) {
       on(bioPoint, 'pointerenter', loadSheets, { passive: true });
-      // 1.11.0: on computers the Bio Comfort point opens its screen on hover too (click still pins it open); touch is unchanged
+      // 1.11.1: on computers the Bio Comfort point opens its screen on hover too (click still pins it open); touch is unchanged
       on(bioPoint, 'pointerenter', function (ev) {
         if (ev.pointerType === 'touch' || !deskMQ.matches || (sheet && sheetMode === 'modal')) return;
         w.clearTimeout(hoverT);
@@ -515,7 +545,7 @@
       on(bioPoint, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch') { if (!sheet) w.clearTimeout(hoverT); later(); } }, { passive: true });
     }
     on(root.querySelector('.ddh__shop') || root, 'pointerenter', loadSheets, { passive: true });
-    // 1.11.0 global size guide: one quiet trigger by the Shop buttons, a compact list of every UK & EU size (no prices).
+    // 1.11.1 global size guide: one quiet trigger by the Shop buttons, a compact list of every UK & EU size (no prices).
     // Pointer: opens on hover, closes on leaving; click / tap / Enter pins it; Escape, a click outside or focus moving
     // away closes it. Phones get it too (a bottom sheet): it is light, text only.
     function szOpen(mode) {
@@ -542,7 +572,7 @@
       on(szBtn, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode !== 'pin') { w.clearTimeout(szT); szT = w.setTimeout(szClose, 280); } }, { passive: true });
       on(szBtn, 'click', function () { if (szEl && !szEl.hidden && szMode === 'pin') szClose(); else if (szEl && !szEl.hidden) szMode = 'pin'; else szOpen('pin'); });
     }
-    // 1.11.0 bridge from the site's own header: pointing at (or tabbing to) its "Mattresses" / "Toppers" links opens the
+    // 1.11.1 bridge from the site's own header: pointing at (or tabbing to) its "Mattresses" / "Toppers" links opens the
     // same preview under the header, while the hero is on screen. Read-only: nothing in the header is changed, clicks go
     // where they always went, touch is left alone, and the hero still works if the header changes.
     var navA = null;

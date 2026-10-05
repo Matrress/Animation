@@ -166,12 +166,27 @@ b3_ambient = Neljä kovuutta
 b1_hotel = Silputtu Dunlop-lateksi
 b2_hotel = Suunniteltu majoitusalalle
 b3_hotel = 18 cm, tukeva tuntuma
-b1_t_bio = 100 % luomulateksia
-b2_t_bio = Seitsemän vyöhykkeen tuki
-b3_t_bio = Pehmeä, keskikova tai kova
 b1_t_dual = Kaksi luonnonlateksikerrosta
-b2_t_dual = Kaksi kerrosyhdistelmää
-b3_t_dual = Henkilökohtaisempi tuntuma
 b1_t_part = Keskikova toisella puolella, kova toisella
 b2_t_part = Saumaton siltasijauspatja
 b3_t_part = Tehty pariskunnille
+b2_t_dual = Kaksi kovuusyhdistelmää
+b3_t_dual = Joustavampi mukavuuden säätö
+b4_t_dual = Parempi mukautuminen nykyisiin patjoihin
+b4_t_part = Yksi yhteinen nukkumapinta
+dpc_eye = Dual Plush -järjestelmä
+dpc_h = Mikä on Dual Plush?
+dpc_x1 = Täydellinen unijärjestelmä: lateksipatja ja erillinen lateksinen sijauspatja. Patja antaa tuen, sijauspatja hienosäätää mukavuutta ja paineen keventämistä.
+dpc_x2 = Kaksi kovuuskerrosta toimii yhdessä, joten tuntuma voidaan sovittaa tarkemmin painon, mittasuhteiden ja nukkumistavan mukaan.
+dpc_t = Lateksinen sijauspatja
+dpc_tc = mukavuus
+dpc_m = Lateksipatja
+dpc_ms = tuki
+dpc_hgt = Korkeus 23 tai 28 cm
+dpc_ch = Yleiset yhdistelmät
+dpc_cta = Katso Dual Plush
+dpc_alt = Myös Bio Comfort -ytimellä
+w_sx = Superkova
+dpc_c1 = <i class="ddh__f-m">Keskikova</i> patja + <i class="ddh__f-s">Pehmeä</i> sijauspatja
+dpc_c2 = <i class="ddh__f-f">Kova</i> patja + <i class="ddh__f-m">Keskikova</i> sijauspatja
+dpc_c3 = <i class="ddh__f-x">Erittäin kova</i> patja + <i class="ddh__f-f">Kova</i> sijauspatja

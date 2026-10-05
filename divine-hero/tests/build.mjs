@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const VERSION = '1.11.0';
+const VERSION = '1.11.1';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const esbuild = process.env.ESBUILD || 'esbuild';
 const rel = path.join(root, 'release', VERSION);
@@ -22,13 +22,33 @@ for (const f of fs.readdirSync(path.join(root, 'src/i18n'))) fs.writeFileSync(pa
 // from src/sheets-i18n/<lang>.txt ("key = value" lines). Every language must cover every key.
 {
   let src = fs.readFileSync(path.join(root, 'src/sheets.html'), 'utf8');
-  // 1.11.0: the model selector's list cards and the global size guide are generated from src/models.json and
+  // 1.11.1: the model selector's list cards and the global size guide are generated from src/models.json and
   // src/sizes.json; every model must have its preview (data-ddh-pv) with the same direct product link.
   {
     const { models } = JSON.parse(fs.readFileSync(path.join(root, 'src/models.json'), 'utf8'));
     const sz = JSON.parse(fs.readFileSync(path.join(root, 'src/sizes.json'), 'utf8'));
     const esc = (s) => s.replace(/&/g, '&amp;');
-    const card = (m, first) => `<li><a class="ddh__mc" href="${m.url}" data-ddh-m="${m.id}"${first ? ' aria-current="true"' : ''}><span class="ddh__mc-img"><img src="{{BASE}}${m.image.src}" width="${m.image.width}" height="${m.image.height}" loading="lazy" decoding="async" alt=""></span><span class="ddh__mc-tx"><b class="ddh__mc-n"${m.nameKey ? ` data-t="${m.nameKey}"` : ''}>${esc(m.name)}</b><span class="ddh__mc-p" data-t="${m.positioning.key}">${esc(m.positioning.en)}</span><span class="ddh__mc-b">${m.benefits.slice(0, 2).map((b) => `<span data-t="${b.key}">${esc(b.en)}</span>`).join('')}</span></span><span class="ddh__mc-go"><span data-t="view_model">View model</span><i aria-hidden="true"></i></span></a></li>`;
+    const W = { s: ['w_s', 'Soft'], m: ['w_m', 'Medium'], f: ['w_f', 'Firm'], x: ['w_x', 'Extra Firm'], sx: ['w_sx', 'Super Firm'] };
+    const fw = (l) => `<span data-t="${W[l][0]}">${W[l][1]}</span>`, dot = (l) => `<i class="ddh__fd ddh__fd--${l}"></i>`;
+    const firm = (fs) => !fs ? '' : fs.levels ? `<span class="ddh__fds" aria-hidden="true">${fs.levels.map(dot).join('')}</span><span class="ddh__sr">${fs.levels.map(fw).join(', ')}</span>`
+      : fs.pairs ? `<span class="ddh__fds ddh__fds--pairs" aria-hidden="true">${fs.pairs.map(([t, m]) => `<i class="ddh__fp">${dot(t)}${dot(m)}</i>`).join('')}</span><span class="ddh__sr">${fs.pairs.map(([t, m]) => fw(m) + ' + ' + fw(t)).join(', ')}</span>`
+      : fs.split ? `<span class="ddh__fds" aria-hidden="true"><i class="ddh__fd ddh__fd--split"></i></span><span class="ddh__sr">${fs.split.map(fw).join(' | ')}</span>` : '';
+    const chipEn = (k) => { const r = new RegExp(`data-t="${k}">([^<]*)<`).exec(src); if (!r) throw new Error('no chip text for ' + k); return r[1]; };
+    const img = (m) => `<span class="ddh__mc-img"><img src="{{BASE}}${m.image.src}" width="${m.image.width}" height="${m.image.height}" loading="lazy" decoding="async" alt=""></span>`;
+    const go = '<span class="ddh__mc-go"><span data-t="view_model">View model</span><i aria-hidden="true"></i></span>';
+    const name = (m) => `<b class="ddh__mc-n"${m.nameKey ? ` data-t="${m.nameKey}"` : ''}>${esc(m.name)}</b>`;
+    // 1.11.1: mattresses are "cubes" (picture, family tag, name, one line, heights + firmness marks); toppers stay a linear list
+    const card = (m, first) => `<li><a class="ddh__mc${m.facts ? ' ddh__mc--cube' : ''}" href="${m.url}" data-ddh-m="${m.id}" data-fam="${m.family}"${first ? ' aria-current="true"' : ''}>${img(m)}<span class="ddh__mc-tx">`
+      + (m.facts ? `<small class="ddh__mc-tag" data-t="${m.tag.key}">${chipEn(m.tag.key)}</small>${name(m)}<span class="ddh__mc-p" data-t="${m.positioning.key}">${esc(m.positioning.en)}</span><span class="ddh__mc-f"><span class="ddh__mc-h">${m.facts.heights}</span>${firm(m.facts.firmness)}</span>`
+        : `${name(m)}<span class="ddh__mc-p" data-t="${m.positioning.key}">${esc(m.positioning.en)}</span><span class="ddh__mc-b">${m.benefits.slice(0, 2).map((b) => `<span data-t="${b.key}">${esc(b.en)}</span>`).join('')}</span>`)
+      + `</span>${go}</a></li>`;
+    // the previews take their family and their benefits from the same data
+    for (const m of models) {
+      const at = src.indexOf(`data-ddh-pv="${m.id}"`); if (at < 0) continue;
+      const end = src.indexOf('</article>', at), seg = src.slice(at, end);
+      const seg2 = seg.replace(`data-ddh-pv="${m.id}"`, `data-ddh-pv="${m.id}" data-fam="${m.family}"`).replace(/<ul class="ddh__pv-b">[\s\S]*?<\/ul>/, `<ul class="ddh__pv-b">${m.benefits.map((b) => `<li data-t="${b.key}">${esc(b.en)}</li>`).join('')}</ul>`);
+      src = src.slice(0, at) + seg2 + src.slice(end);
+    }
     const list = (pick) => models.filter(pick).map((m, i) => card(m, i === 0 && (m.row !== 'purpose'))).join('\n');
     src = src.replace('<!--MODELS:core-->', list((m) => m.row === 'core')).replace('<!--MODELS:purpose-->', list((m) => m.row === 'purpose')).replace('<!--MODELS:topper-->', list((m) => m.group === 'topper'));
     for (const m of models) {

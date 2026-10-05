@@ -181,7 +181,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.11.0/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.11.1/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -286,7 +286,7 @@ async function sunrise() {
     ok(v.lockup < .02 && v.others < .02 && v.back === 'block' && v.spine === 'none', `${w}x${h}: every other text steps back`);
     ok(v.dp > .98 && v.copy === 'flex', `${w}x${h}: "Dual Plush" and its copy stay`);
     ok(Math.abs(v.dpBox[0] - DP_UP[0]) < .5 && Math.abs(v.dpBox[1] - DP_UP[1]) < .5 && Math.abs(v.dpBox[2] - DP_UP[2]) < .5 && v.dpColor === 'rgb(255, 255, 255)', `${w}x${h}: "Dual Plush" rose with the mattress to the mockup's spot, white: ${JSON.stringify([v.dpBox, v.dpColor])}`);
-    if (touch) await page.touchscreen.tap(c.x, c.y); else await page.mouse.move(c.x + 420, c.y - 380, { steps: 5 });
+    if (touch) await page.touchscreen.tap(c.x, c.y); else await page.mouse.move(Math.max(4, c.x - 120), c.y - 380, { steps: 5 });   // 1.11.1: away from the Dual Plush card (towards it, the card holds)
     await page.waitForTimeout(1000);
     const after = await page.evaluate(() => ({ s: document.querySelector('.ddh').getAttribute('data-ddh-state'), op: +getComputedStyle(document.querySelector('.ddh__mat')).opacity, lockup: +getComputedStyle(document.querySelector('.ddh__sky-lockup')).opacity, dp: getComputedStyle(document.querySelector('.ddh__dp')).transform }));
     ok(after.s !== 'system' && after.op === 0 && after.lockup > .98, `${w}x${h}: back to default: ${JSON.stringify(after)}`);
@@ -321,7 +321,7 @@ async function sheets() {
     const cardBox = await page.$eval('#ddh-sheet-mattress .ddh__mc', (e) => { const r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
     await page.mouse.move(cardBox[0], cardBox[1], { steps: 6 }); await page.waitForTimeout(450);
     ok(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-open-sheet')) === 'mattress', 'the preview stays open while the pointer moves onto it');
-    // 1.11.0 model selector: direct product links, one preview per model, pointing at a card shows its preview
+    // 1.11.1 model selector: direct product links, one preview per model, pointing at a card shows its preview
     const MODELS = JSON.parse(fs.readFileSync(new URL('../src/models.json', import.meta.url), 'utf8')).models;
     st = await page.evaluate(() => [...document.querySelectorAll('.ddh__sheets [data-ddh-m]')].map((a) => [a.dataset.ddhM, a.getAttribute('href'), document.querySelector(`[data-ddh-pv="${a.dataset.ddhM}"] .ddh__pv-cta`).getAttribute('href')]));
     ok(st.length === 11 && st.every(([id, h, h2]) => { const m = MODELS.find((x) => x.id === id); return m && h === m.url && h2 === m.url; }), '11 model cards, each card and its preview link straight to the product page: ' + st.map((x) => x[0]).join());
@@ -378,7 +378,19 @@ async function sheets() {
       k = await page.evaluate(() => [document.querySelector('#ddh-sizes').hidden, document.activeElement && document.activeElement.className]);
       ok(k[0] && /ddh__sz/.test(k[1]), 'Escape closes it, focus back on its trigger: ' + k);
     }
-    { // 1.11.0 bridge: the site header's own "Mattresses" link opens the same selector under the header; its click is untouched
+    { // 1.11.1 the Dual Plush reveal: the lifted mattress shows the card; it holds while the pointer travels to it
+      const c = await centre(page, 'system'); await page.mouse.move(c.x + 40, c.y - 30); await page.mouse.move(c.x, c.y, { steps: 4 }); await page.waitForTimeout(900);
+      let k = await page.evaluate(() => { const e = document.querySelector('#ddh-dpc'); return { state: document.querySelector('.ddh').getAttribute('data-ddh-state'), vis: e && getComputedStyle(e).display, href: e && e.querySelector('.ddh__pv-cta').getAttribute('href'), alt: e && e.querySelector('.ddh__dpc-alt').getAttribute('href'), combos: e && e.querySelectorAll('.ddh__dpc-c li').length, ov: e && (e.querySelector('.ddh__dpc-in').scrollHeight - e.querySelector('.ddh__dpc-in').clientHeight) }; });
+      ok(k.state === 'system' && k.vis === 'block' && /botanic-dual-plush/.test(k.href) && /bio-comfort-dual-plush/.test(k.alt) && k.combos === 3 && k.ov <= 1, 'the lifted Dual Plush mattress reveals its card (3 combinations, View Dual Plush): ' + JSON.stringify(k));
+      const r = await page.evaluate(() => { const b = document.querySelector('#ddh-dpc').getBoundingClientRect(); return { x: b.left + 40, y: b.top + b.height / 2 }; });
+      await page.mouse.move(r.x, r.y, { steps: 10 }); await page.waitForTimeout(450);
+      ok(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-state')) === 'system', 'the card stays while the pointer travels across to it');
+      await page.mouse.move(r.x - 300, 200, { steps: 3 }); await page.waitForTimeout(900);
+      ok(!(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-state'))), 'leaving the card returns the hero to its first state');
+      const sz = await page.evaluate(() => { const b = document.querySelector('.ddh__sz').getBoundingClientRect(), t = document.querySelectorAll('.ddh__cta')[1].getBoundingClientRect(); return { right: Math.round(innerWidth - b.right), afterTopper: Math.round(b.left - t.right), mid: Math.round((b.top + b.bottom) / 2 - (t.top + t.bottom) / 2) }; });
+      ok(sz.right >= 120 && sz.afterTopper > 0 && Math.abs(sz.mid) <= 2, 'the size pill sits right of the Shop buttons, clear of a chat bubble in the corner: ' + JSON.stringify(sz));
+    }
+    { // 1.11.1 bridge: the site header's own "Mattresses" link opens the same selector under the header; its click is untouched
       const link = (await page.evaluateHandle(() => [...document.querySelectorAll('.ins-tile--header a')].find((a) => a.textContent.trim() === 'Mattresses') || null)).asElement();
       if (link) {
       await page.mouse.move(5, 400); await link.hover(); await page.waitForTimeout(500);
@@ -392,9 +404,9 @@ async function sheets() {
     }
     const c = await centre(page, 'bio'); await page.mouse.move(c.x + 30, c.y + 20); await page.mouse.move(c.x, c.y, { steps: 3 }); await page.waitForTimeout(600);
     st = await page.evaluate(() => { const s = document.querySelector('#ddh-sheet-bio'); return { open: !s.hidden, modal: s.getAttribute('aria-modal'), root: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet') }; });
-    ok(st.open && st.modal === 'false' && st.root === 'bio', '1.11.0: hovering the Bio point opens its screen without a click: ' + JSON.stringify(st));
+    ok(st.open && st.modal === 'false' && st.root === 'bio', '1.11.1: hovering the Bio point opens its screen without a click: ' + JSON.stringify(st));
     await page.mouse.move(5, 5); await page.waitForTimeout(600);
-    ok(await page.evaluate(() => document.querySelector('#ddh-sheet-bio').hidden), '1.11.0: leaving the Bio point and its screen closes it again');
+    ok(await page.evaluate(() => document.querySelector('#ddh-sheet-bio').hidden), '1.11.1: leaving the Bio point and its screen closes it again');
     await page.mouse.click(c.x, c.y); await page.waitForTimeout(600);
     st = await page.evaluate(() => { const s = document.querySelector('#ddh-sheet-bio'); return { open: !s.hidden, modal: s.getAttribute('aria-modal'), focus: document.activeElement === s, state: document.querySelector('.ddh').getAttribute('data-ddh-state') }; });
     ok(st.open && st.modal === 'true' && st.focus && !st.state, 'click Bio point -> Bio Comfort dialog, focused, hotspot state cleared: ' + JSON.stringify(st));
@@ -440,7 +452,7 @@ async function sheets() {
     await page.tap('#ddh-sheet-mattress [data-ddh-close]'); await page.waitForTimeout(250);
     st = await page.evaluate(() => ({ open: !document.querySelector('#ddh-sheet-mattress').hidden, lock: document.documentElement.style.overflow, sheet: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet') }));
     ok(!st.open && st.lock === '' && !st.sheet, 'iPad: close returns to the scene: ' + JSON.stringify(st));
-    { // 1.11.0: in the full-screen selector the first tap on a model previews it, the second goes to the product
+    { // 1.11.1: in the full-screen selector the first tap on a model previews it, the second goes to the product
       await (await page.$('.ddh__cta')).tap(); await page.waitForTimeout(500);
       await page.tap('#ddh-sheet-mattress [data-ddh-m=ortho]'); await page.waitForTimeout(500);
       const k = await page.evaluate(() => ({ cur: document.querySelector('#ddh-sheet-mattress [aria-current=true]').dataset.ddhM, shown: [...document.querySelectorAll('#ddh-sheet-mattress .ddh__pv')].filter((x) => !x.hidden).map((x) => x.dataset.ddhPv).join(), top: Math.round(document.querySelector('[data-ddh-pv=ortho]').getBoundingClientRect().top) }));

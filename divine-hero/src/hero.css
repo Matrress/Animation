@@ -877,5 +877,119 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 @media not all and (min-width:1051px) and (any-hover:hover){.ddh .ddh__sheet .ddh__pv>.ddh__card-img{height:clamp(200px,34vh,340px)}.ddh .ddh__sheet .ddh__pv>.ddh__card-img>img{max-height:94%}}
 /* 1.11.0 low topper panels: the large picture steps aside (the list keeps its thumbnail), the text stays whole */
 @container ddsh (max-height:680px){.ddh .ddh__sheet--topper .ddh__pv-x{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.ddh .ddh__sheet--topper .ddh__pv-k{display:none}}
-@container ddsh (max-height:620px){.ddh .ddh__sheet--topper .ddh__pv{grid-template-rows:auto}.ddh .ddh__sheet--topper .ddh__pv>.ddh__card-img{display:none}}
 @media (min-width:1051px) and (max-height:820px){.ddh .ddh__szl li{padding:3px 0;font-size:12.5px}.ddh .ddh__szl li>small{font-size:10.5px}.ddh .ddh__szp-in{padding:14px 18px 12px}}
+/* ===== 1.11.1 refinement: family accents, cube mattress cards, richer topper preview, Dual Plush reveal ===== */
+.ddh [data-fam=botanic]{--fam-c:#5d9a6c;--fam-b:#5d9a6c;--fam-t:#e9f3eb;--fam-ink:#3d7350}
+.ddh [data-fam=bio]{--fam-c:#35a7b6;--fam-b:#35a7b6;--fam-t:#e2f4f6;--fam-ink:#1d7a86}
+.ddh [data-fam=ortho]{--fam-c:#a47a4c;--fam-b:#a47a4c;--fam-t:#f4ede4;--fam-ink:#7c5932}
+.ddh [data-fam=partners]{--fam-c:#5aa9a6;--fam-b:linear-gradient(90deg,#3fae9f 0 50%,#8a76cf 50% 100%);--fam-t:#edf1f6;--fam-ink:#3d7a78}
+.ddh [data-fam=value]{--fam-c:#6f8599;--fam-b:#6f8599;--fam-t:#edf1f4;--fam-ink:#4b5f72}
+/* firmness family marks (same colours as the firmness words) */
+.ddh .ddh__fds{display:inline-flex;align-items:center;gap:3px;flex:0 0 auto}
+.ddh .ddh__fd{display:inline-block;width:8px;height:8px;border-radius:50%}
+.ddh .ddh__fd--s{background:#4e9fe0}.ddh .ddh__fd--m{background:#19aeb4}.ddh .ddh__fd--f{background:#8a6fdc}.ddh .ddh__fd--x,.ddh .ddh__fd--sx{background:#df6448}
+.ddh .ddh__fp{display:inline-flex;flex-direction:column;gap:1.5px}
+.ddh .ddh__fp .ddh__fd{width:12px;height:4px;border-radius:2px}
+.ddh .ddh__fd--split{width:16px;border-radius:4px;background:linear-gradient(90deg,#19aeb4 0 50%,#8a6fdc 50% 100%)}
+/* cube cards */
+.ddh .ddh__mc--cube{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;align-items:stretch;row-gap:7px;column-gap:0;padding:9px 11px 9px;border:1px solid rgba(255,255,255,.75);background:#f4f6f6}
+.ddh .ddh__mc--cube::before{content:"";position:absolute;left:14px;right:14px;top:0;height:3px;border-radius:0 0 3px 3px;background:var(--fam-b);opacity:.85}
+.ddh .ddh__mc--cube .ddh__mc-img{width:auto;height:auto;min-height:34px;max-height:none;border-radius:10px;background:radial-gradient(75% 85% at 50% 55%,#fff 0,var(--fam-t) 78%,#eef1f1 100%)}
+.ddh .ddh__mc--cube .ddh__mc-img img{width:84%;height:84%;filter:drop-shadow(0 6px 6px rgba(30,40,40,.12))}
+.ddh .ddh__mc--cube .ddh__mc-tx{gap:1px}
+.ddh .ddh__mc-tag{font-size:9.5px;font-weight:600;letter-spacing:.15em;line-height:1.3;text-transform:uppercase;color:var(--fam-ink)}
+.ddh .ddh__mc--cube .ddh__mc-n{font-size:clamp(14px,1vw,15.5px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ddh .ddh__mc--cube .ddh__mc-p{font-size:11.8px}
+.ddh .ddh__mc-f{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px;padding-top:5px;border-top:1px solid rgba(20,40,40,.08)}
+.ddh .ddh__mc-h{font-size:11.5px;font-weight:600;letter-spacing:.02em;color:#36424a;white-space:nowrap}
+.ddh .ddh__mc--cube .ddh__mc-go{position:absolute;top:12px;right:12px;width:24px;height:24px;background:rgba(255,255,255,.9)}
+.ddh .ddh__mc--cube[aria-current=true]{background:#fff;border-color:#fff;box-shadow:0 0 0 2px var(--fam-c),0 16px 30px -18px rgba(0,0,0,.65)}
+.ddh .ddh__mc--cube[aria-current=true] .ddh__mc-go{background:var(--fam-c);border-color:var(--fam-c);color:#fff}
+@media (any-hover:hover){.ddh .ddh__mc--cube:hover{background:#fff;transform:translateY(-1px)}}
+.ddh .ddh__mc--cube:focus-visible{outline-color:var(--fam-c)}
+.ddh .ddh__sheet--topper .ddh__mc[aria-current=true]{box-shadow:0 0 0 2px var(--fam-c)}
+/* previews: a soft family light behind the product, a quiet floor line, a thin family accent on top */
+.ddh .ddh__sheet .ddh__pv>.ddh__card-img{position:relative;background:radial-gradient(62% 72% at 50% 52%,#fff 0,var(--fam-t,#f3f5f4) 70%,#f2f4f4 100%)}
+.ddh .ddh__sheet .ddh__pv>.ddh__card-img::after{content:"";position:absolute;left:12%;right:12%;bottom:9%;height:1px;background:linear-gradient(90deg,transparent,rgba(31,74,69,.18),transparent);pointer-events:none}
+.ddh .ddh__sheet .ddh__pv>.ddh__card-img>img{filter:drop-shadow(0 18px 18px rgba(30,40,40,.14))}
+.ddh .ddh__sheet .ddh__pv>.ddh__card-img--photo>img{filter:none}
+.ddh .ddh__pv{box-shadow:inset 0 3px 0 var(--fam-c,transparent),0 22px 44px -26px rgba(0,0,0,.65)}
+.ddh .ddh__sheet--topper .ddh__pv{box-shadow:inset 0 3px 0 var(--fam-c,transparent),0 22px 40px -26px rgba(0,0,0,.8)}
+.ddh .ddh__sheet--topper .ddh__pv>.ddh__card-img{background:radial-gradient(60% 70% at 50% 52%,rgba(255,255,255,.2) 0,rgba(255,255,255,.06) 62%,rgba(255,255,255,.02) 100%)}
+.ddh .ddh__sheet--topper .ddh__pv>.ddh__card-img::after{background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent)}
+.ddh .ddh__sheet--topper .ddh__pv>.ddh__card-img>img{filter:drop-shadow(0 18px 20px rgba(0,0,0,.45))}
+@media (min-width:1051px) and (any-hover:hover){
+.ddh .ddh__sel{grid-template-columns:minmax(0,40fr) minmax(0,60fr)}
+.ddh .ddh__sel--t{grid-template-columns:minmax(0,30fr) minmax(0,70fr)}
+.ddh .ddh__sheet--mattress .ddh__mcs{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+/* toppers: the picture beside the text, so it stays large on any panel height; the header list moves into Bio Support */
+.ddh .ddh__sheet--topper .ddh__benefit-list{display:none}
+.ddh .ddh__sheet--topper .ddh__pv{grid-template-columns:minmax(0,1.05fr) minmax(0,1.6fr);grid-template-rows:minmax(0,1fr)}
+.ddh .ddh__sheet--topper .ddh__pv>.ddh__card-img{min-height:0;height:100%}
+.ddh .ddh__sheet--topper .ddh__pv-tx{align-content:center;overflow:hidden}
+/* every screen opened from the hero rises over the header like the mattress one (1.10.8); from the header's own links it stays under it */
+.ddh .ddh__sheet--topper,.ddh .ddh__sheet--bio{z-index:2147483000;top:10px;bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + var(--ddh-shop-b) + var(--ddh-cta-h) + 22px + clamp(0px,(100vw - 1500px) * .03,16px))}
+.ddh.ddh[data-ddh-open-sheet]{z-index:2147483000}
+.ddh[data-ddh-via=nav] .ddh__sheet{top:calc(var(--ddh-safe) + 2px)}
+.ddh.ddh[data-ddh-via=nav][data-ddh-open-sheet]{z-index:auto}
+}
+@container ddsh (max-height:640px){.ddh .ddh__mc--cube{padding:7px 9px;row-gap:5px}.ddh .ddh__mc-tag{display:none}.ddh .ddh__mc--cube .ddh__mc-go{top:9px;right:9px;width:22px;height:22px}}
+@container ddsh (max-height:540px){.ddh .ddh__mc--cube .ddh__mc-p{display:none}}
+@container ddsh (max-height:600px){.ddh .ddh__sheet--topper .ddh__pv-b li:nth-child(n+4){display:none}}
+/* size guide pill: right of the Shop buttons (the buttons stay centred), away from a chat bubble in the corner */
+@media (min-width:1051px){
+.ddh{--ddh-szw:15.5em}
+.ddh .ddh__shop .ddh__sz{position:static;transform:none;align-self:center;flex:0 0 auto;width:var(--ddh-szw);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ddh .ddh__shop:has(.ddh__sz:not([hidden]))::before{content:"";flex:0 0 auto;width:var(--ddh-szw);font-size:13px;order:-1}
+}
+@media (min-width:1051px) and (max-width:1240px){.ddh{--ddh-szw:12.5em}.ddh .ddh__shop .ddh__sz,.ddh .ddh__shop::before{font-size:12px}.ddh .ddh__shop .ddh__sz{padding:.5em .8em}}
+/* --- the Dual Plush reveal: with the lifted mattress, one calm card explains the system --- */
+.ddh .ddh__dpc{display:none;position:absolute;z-index:8;right:var(--ddh-edge-r,clamp(20px,3.6vw,64px));top:calc(var(--ddh-safe) + clamp(12px,2vh,26px));bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + var(--ddh-shop-b) + var(--ddh-cta-h) + 18px);width:clamp(430px,41vw,660px);container:dpc/size;border:1px solid rgba(255,255,255,.88);border-radius:26px;background:linear-gradient(160deg,rgba(244,251,251,.95) 0,rgba(228,244,244,.92) 100%);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);box-shadow:0 30px 70px -34px rgba(18,52,52,.5);color:#1f3b38;font:400 14px/1.45 DDHChillax,"Comfortaa",system-ui,sans-serif;text-align:left}
+.ddh[data-ddh-state=system] .ddh__dpc{display:block;animation:ddh-dpc .55s .2s cubic-bezier(.22,1,.36,1) both}
+@keyframes ddh-dpc{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.ddh[data-ddh-dpc][data-ddh-state=system] .ddh__screen--brand{visibility:hidden}
+.ddh .ddh__dpc-in{height:100%;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);grid-template-rows:auto auto minmax(0,1fr) auto;grid-template-areas:"eye eye" "h h" "fig fig" "x c" "cta cta";column-gap:clamp(16px,2vw,28px);row-gap:clamp(6px,1.4cqh,12px);padding:clamp(16px,3cqh,30px) clamp(18px,2.2vw,32px)}
+.ddh .ddh__dpc-eye{grid-area:eye;margin:0;font-size:10.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:#2f6b64}
+.ddh .ddh__dpc-h{grid-area:h;margin:0;font-size:clamp(22px,1.9vw,30px);font-weight:600;line-height:1.1;color:#12302c}
+.ddh .ddh__dpc-fig{grid-area:fig;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:stretch;gap:14px;min-height:0;margin:0}
+.ddh .ddh__dpc-fig img{grid-column:2;grid-row:1;width:100%;height:100%;min-height:0;object-fit:contain;filter:drop-shadow(0 16px 16px rgba(20,50,50,.18))}
+.ddh .ddh__dpc-fig figcaption{display:contents}
+.ddh .ddh__dpc-l{grid-column:1;grid-row:1;display:flex;flex-direction:column;padding-left:10px;border-left:3px solid #79c9d2}
+.ddh .ddh__dpc-l--t{align-self:start}.ddh .ddh__dpc-l--m{align-self:end;border-left-color:#2f8a8f}
+.ddh .ddh__dpc-l b{font-size:14px;font-weight:600;color:#12302c}.ddh .ddh__dpc-l small{font-size:12px;color:#40625e}
+.ddh .ddh__dpc-hgt{grid-column:2;grid-row:1;align-self:end;justify-self:end;font-size:12.5px;font-weight:600;color:#12302c;background:rgba(255,255,255,.7);padding:.2em .6em;border-radius:999px}
+.ddh .ddh__dpc-x{grid-area:x;margin:0;font-size:13.2px;line-height:1.5;color:#2e4a47}
+.ddh .ddh__dpc-x2{grid-area:x;align-self:end}
+.ddh .ddh__dpc-in>.ddh__dpc-x:first-of-type{align-self:start}
+.ddh .ddh__dpc-c{grid-area:c;min-width:0}
+.ddh .ddh__dpc-c h4{margin:0 0 6px;font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#2f6b64}
+.ddh .ddh__dpc-c ul{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.ddh .ddh__dpc-c li{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:12px;background:rgba(255,255,255,.78);box-shadow:inset 0 0 0 1px rgba(31,74,69,.08);font-size:13px;line-height:1.25;color:#1d3532}
+.ddh .ddh__dpc-c li i:not(.ddh__ly2):not(.ddh__ly2-t):not(.ddh__ly2-m){font-style:normal;font-weight:600}
+.ddh .ddh__dpc-c .ddh__f-s{color:#1f6fb2}.ddh .ddh__dpc-c .ddh__f-m{color:#0b7d80}.ddh .ddh__dpc-c .ddh__f-f{color:#6b46c1}.ddh .ddh__dpc-c .ddh__f-x{color:#b8402a}
+.ddh .ddh__ly2{display:inline-flex;flex-direction:column;gap:2px;flex:0 0 auto}
+.ddh .ddh__ly2-t,.ddh .ddh__ly2-m{display:block;width:26px;border-radius:3px}
+.ddh .ddh__ly2-t{height:6px}.ddh .ddh__ly2-m{height:11px}
+.ddh .ddh__dpc-cta{grid-area:cta;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.ddh .ddh__dpc-alt{font-size:13px;font-weight:600;color:#1d6f6a;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.ddh .ddh__dpc a:focus-visible{outline:2px solid #12302c;outline-offset:3px}
+@container dpc (max-height:560px){.ddh .ddh__dpc-x2{display:none}}
+@container dpc (max-height:470px){.ddh .ddh__dpc-eye{display:none}.ddh .ddh__dpc-c li{padding:5px 9px;font-size:12.5px}.ddh .ddh__dpc-x{font-size:12.6px}}
+@media (max-width:700px){.ddh .ddh__dpc{display:none!important}}
+@media (prefers-reduced-motion:reduce){.ddh[data-ddh-state=system] .ddh__dpc{animation:none}.ddh .ddh__mc--cube:hover{transform:none}}
+.ddh .ddh__mc--cube .ddh__mc-p{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.3}
+@media (min-width:1051px) and (any-hover:hover){
+.ddh .ddh__sheet--topper .ddh__pv{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.ddh .ddh__sheet--topper .ddh__pv-tx{grid-template-columns:minmax(0,1fr);gap:clamp(8px,1.4cqh,14px);align-content:center}
+.ddh .ddh__sheet--topper .ddh__pv-a{display:contents}
+.ddh .ddh__sheet--topper .ddh__pv-a>.ddh__pv-cta{order:3}
+}
+@container ddsh (max-height:640px){.ddh .ddh__mc--cube .ddh__mc-p{-webkit-line-clamp:1}}
+@media (min-width:1051px) and (any-hover:hover){.ddh .ddh__sheet--topper .ddh__pv-tx .ddh__chip,.ddh .ddh__sheet--topper .ddh__pv-tx .ddh__pv-cta{justify-self:start}}
+.ddh .ddh__dpc-in{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr)}
+.ddh .ddh__dpc-xs{grid-area:x;display:grid;align-content:start;gap:8px}
+.ddh .ddh__dpc-xs .ddh__dpc-x,.ddh .ddh__dpc-xs .ddh__dpc-x2{grid-area:auto;align-self:auto}
+.ddh .ddh__dpc-c li{font-size:12.6px;white-space:nowrap}
+.ddh .ddh__dpc-fig{gap:10px}
+.ddh .ddh__dpc-l{align-self:center}.ddh .ddh__dpc-l--t{align-self:start;margin-top:8%}.ddh .ddh__dpc-l--m{align-self:end;margin-bottom:14%}
+@media not all and (min-width:1051px) and (any-hover:hover){.ddh .ddh__mc--cube{grid-template-rows:auto auto}.ddh .ddh__mc--cube .ddh__mc-img{height:clamp(96px,14vh,130px)}.ddh .ddh__mc--cube .ddh__mc-img--photo img,.ddh .ddh__mc--cube .ddh__mc-img img{object-fit:contain}}

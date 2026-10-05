@@ -166,12 +166,27 @@ b3_ambient = Quatre fermetés
 b1_hotel = Latex Dunlop effiloché
 b2_hotel = Conçu pour l’hôtellerie
 b3_hotel = 18 cm, sensation soutenante
-b1_t_bio = Latex 100 % bio
-b2_t_bio = Soutien en sept zones
-b3_t_bio = Souple, medium ou ferme
 b1_t_dual = Deux couches de latex naturel
-b2_t_dual = Deux combinaisons de couches
-b3_t_dual = Une sensation plus personnelle
 b1_t_part = Medium d’un côté, ferme de l’autre
 b2_t_part = Surmatelas pont sans écart
 b3_t_part = Pensé pour les couples
+b2_t_dual = Deux combinaisons de fermeté
+b3_t_dual = Un réglage du confort plus souple
+b4_t_dual = Meilleure adaptation aux matelas existants
+b4_t_part = Une seule surface de couchage partagée
+dpc_eye = Le système Dual Plush
+dpc_h = Qu’est-ce que Dual Plush ?
+dpc_x1 = Un système de sommeil complet : un matelas en latex et un surmatelas en latex séparé. Le matelas apporte le soutien, le surmatelas affine le confort et le soulagement des points de pression.
+dpc_x2 = Deux couches de fermeté travaillent ensemble : la sensation finale s’accorde plus précisément au poids, à la morphologie et à la façon de dormir.
+dpc_t = Surmatelas en latex
+dpc_tc = confort
+dpc_m = Matelas en latex
+dpc_ms = soutien
+dpc_hgt = Épaisseur 23 ou 28 cm
+dpc_ch = Combinaisons courantes
+dpc_cta = Voir Dual Plush
+dpc_alt = Aussi avec le cœur Bio Comfort
+w_sx = Super ferme
+dpc_c1 = Matelas <i class="ddh__f-m">Medium</i> + surmatelas <i class="ddh__f-s">Souple</i>
+dpc_c2 = Matelas <i class="ddh__f-f">Ferme</i> + surmatelas <i class="ddh__f-m">Medium</i>
+dpc_c3 = Matelas <i class="ddh__f-x">Extra ferme</i> + surmatelas <i class="ddh__f-f">Ferme</i>

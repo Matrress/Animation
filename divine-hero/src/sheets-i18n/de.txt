@@ -166,12 +166,27 @@ b3_ambient = Vier Härtegrade
 b1_hotel = Dunlop-Latexflocken
 b2_hotel = Für die Hotellerie entwickelt
 b3_hotel = 18 cm, stützendes Gefühl
-b1_t_bio = 100 % Bio-Latex
-b2_t_bio = Halt in sieben Zonen
-b3_t_bio = Weich, mittel oder fest
 b1_t_dual = Zwei Naturlatex-Schichten
-b2_t_dual = Zwei Schicht-Kombinationen
-b3_t_dual = Ein persönlicheres Gefühl
 b1_t_part = Eine Seite mittel, die andere fest
 b2_t_part = Fugenloser Brücken-Topper
 b3_t_part = Für Paare gemacht
+b2_t_dual = Zwei Härte-Kombinationen
+b3_t_dual = Flexiblere Komfort-Abstimmung
+b4_t_dual = Bessere Anpassung an vorhandene Matratzen
+b4_t_part = Eine gemeinsame Liegefläche
+dpc_eye = Dual-Plush-System
+dpc_h = Was ist Dual Plush?
+dpc_x1 = Ein komplettes Schlafsystem aus einer Latexmatratze und einem separaten Latex-Topper. Die Matratze gibt den Halt, der Topper verfeinert Komfort und Druckentlastung.
+dpc_x2 = Zwei Härteschichten arbeiten zusammen, so lässt sich das Liegegefühl genauer auf Körpergewicht, Proportionen und Schlafgewohnheit abstimmen.
+dpc_t = Latex-Topper
+dpc_tc = Komfort
+dpc_m = Latexmatratze
+dpc_ms = Halt
+dpc_hgt = Höhe 23 oder 28 cm
+dpc_ch = Übliche Kombinationen
+dpc_cta = Dual Plush ansehen
+dpc_alt = Auch mit dem Bio-Comfort-Kern
+w_sx = Super fest
+dpc_c1 = <i class="ddh__f-m">Mittel</i>-Matratze + <i class="ddh__f-s">Weich</i>-Topper
+dpc_c2 = <i class="ddh__f-f">Fest</i>-Matratze + <i class="ddh__f-m">Mittel</i>-Topper
+dpc_c3 = <i class="ddh__f-x">Extra fest</i>-Matratze + <i class="ddh__f-f">Fest</i>-Topper
