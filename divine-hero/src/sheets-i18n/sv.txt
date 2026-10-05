@@ -15,7 +15,7 @@ height = Höjd
 firmness = Fasthet
 f_sm_m_f = <i class="ddh__f-s">Mjuk</i> · <i class="ddh__f-m">Medium</i> · <i class="ddh__f-f">Fast</i>
 v_dp = Samma Bio Comfort-kärna med en plush-bäddmadrass av naturlatex ovanpå, förenade i ett överdrag: en mjukare första beröring över samma zonindelade stöd.
-f_bdp = <span class="ddh__pr"><i class="ddh__f-m">Medium</i> + <i class="ddh__f-s">Mjuk</i></span><span class="ddh__pr"><i class="ddh__f-f">Fast</i> + <i class="ddh__f-m">Medium</i></span>
+f_bdp = <em class="ddh__pr"><i class="ddh__f-m">Medium</i> + <i class="ddh__f-s">Mjuk</i></em><em class="ddh__pr"><i class="ddh__f-f">Fast</i> + <i class="ddh__f-m">Medium</i></em>
 bio_cta = Upptäck Bio Comfort
 a_bio = Kvinna vilar på naturlatexmadrassen Bio Comfort, vars celler följer kroppens kurva
 a_bio_dp = Kvinna vilar på Bio Comfort Dual Plush: zonindelad latexkärna med plush-bäddmadrass av naturlatex

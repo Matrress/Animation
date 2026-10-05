@@ -15,7 +15,7 @@ height = Korkeus
 firmness = Kovuus
 f_sm_m_f = <i class="ddh__f-s">Pehmeä</i> · <i class="ddh__f-m">Keskikova</i> · <i class="ddh__f-f">Kova</i>
 v_dp = Sama Bio Comfort -ydin, jonka päällä on luonnonlateksinen plush-petauspatja samassa päällisessä: pehmeämpi ensikosketus saman vyöhyketuen päällä.
-f_bdp = <span class="ddh__pr"><i class="ddh__f-m">Keskikova</i> + <i class="ddh__f-s">Pehmeä</i></span><span class="ddh__pr"><i class="ddh__f-f">Kova</i> + <i class="ddh__f-m">Keskikova</i></span>
+f_bdp = <em class="ddh__pr"><i class="ddh__f-m">Keskikova</i> + <i class="ddh__f-s">Pehmeä</i></em><em class="ddh__pr"><i class="ddh__f-f">Kova</i> + <i class="ddh__f-m">Keskikova</i></em>
 bio_cta = Tutustu Bio Comfortiin
 a_bio = Nainen lepää Bio Comfort -luonnonlateksipatjalla, jonka solut seuraavat vartalon kaarta
 a_bio_dp = Nainen lepää Bio Comfort Dual Plush -patjalla: vyöhykkeellinen lateksiydin ja luonnonlateksinen plush-petauspatja

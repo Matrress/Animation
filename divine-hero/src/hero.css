@@ -701,23 +701,23 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 @media (min-width:1051px) and (any-hover:hover){
 .ddh .ddh__sheet--topper .ddh__card-img{flex:1 1 auto;height:auto;min-height:44px;max-height:clamp(84px,15.5vh,140px)}
 .ddh .ddh__sheet--mattress .ddh__card-img{min-height:38px}
-.ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto auto minmax(0,1.22fr) auto minmax(0,1fr)}}
+.ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto auto minmax(0,1fr) auto minmax(0,1fr)}}
 .ddh .ddh__pairs>i.ddh__ly{display:flex;align-items:center;justify-content:center;white-space:normal;overflow-wrap:anywhere}.ddh .ddh__pairs>.ddh__pn{letter-spacing:.04em;line-height:1.1}
 /* 1.10.6 low screens (about 720 px high): the lists give way to the pairings */
 @container ddsh (max-height:530px){
 .ddh .ddh__sheet--topper .ddh__benefit-list,.ddh .ddh__sheet--topper .ddh__depths p{display:none}
 .ddh .ddh__sheet--topper .ddh__covers{flex-wrap:nowrap;gap:6px}.ddh .ddh__sheet--topper .ddh__covers li{padding:4px 8px;font-size:12px;white-space:nowrap}
-.ddh .ddh__sheet--mattress .ddh__sh-row{display:none}
-.ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto minmax(0,1.15fr) minmax(0,1fr)}
+.ddh .ddh__sheet--mattress .ddh__sh-row{position:absolute;width:1px;height:1px;margin:0;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto minmax(0,1fr) minmax(0,1fr)}
 .ddh .ddh__pairs>i.ddh__ly{font-size:10.5px;padding:3px 2px}
 .ddh .ddh__pairs>em,.ddh .ddh__pairs>.ddh__pn{font-size:9px}.ddh .ddh__pairs{gap:2px 4px}.ddh .ddh__pairs>b{font-size:10px;letter-spacing:.04em}.ddh .ddh__pairs>.ddh__pn{letter-spacing:0}}
 /* 1.10.7: Bio Comfort Dual Plush pairs, one clear line each */
-.ddh .ddh__pr{display:block;white-space:nowrap}
+.ddh .ddh__pr{display:block;white-space:nowrap;font-style:normal}
 /* 1.10.7: on the Partners mattress the Her / Him badges sit on the lower edge, clear of the Partners tag */
-.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:66px}
-.ddh .ddh__sheet--mattress .ddh__zb-flank{align-items:flex-end}
-@container ddsh (max-height:600px){.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:64px}}
-@container ddsh (max-height:530px){.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:58px}}
+.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:52px}
+.ddh .ddh__sheet--mattress .ddh__zb-flank{align-items:center}
+@container ddsh (max-height:600px){.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:48px}}
+@container ddsh (max-height:530px){.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:44px}}
 @container ddsh (max-height:530px){.ddh .ddh__sheet--mattress .ddh__zb-flank .ddh__zb small{display:none}.ddh .ddh__sheet--mattress .ddh__zb-flank .ddh__zb{padding:3px 4px}}
 /* 1.10.8: the mattress panel rises over the header (logo and menu), so the cards get the whole screen height; more text contrast */
 @media (min-width:1051px) and (any-hover:hover){.ddh .ddh__sheet--mattress{z-index:2147483000;top:10px;bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + var(--ddh-shop-b) + var(--ddh-cta-h) + 22px + clamp(0px,(100vw - 1500px) * .03,16px))}.ddh.ddh[data-ddh-open-sheet=mattress]{z-index:2147483000}}
@@ -731,7 +731,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__sheet--mattress .ddh__card-s,.ddh .ddh__sheet--mattress .ddh__spec{color:#36424a}
 .ddh .ddh__sheet--mattress .ddh__spec b{color:#0d1418}
 .ddh .ddh__sheet--mattress .ddh__pairs>em,.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{color:#3d4a52}
-@container ddsh (min-height:690px){
+@container ddsh (min-height:790px){
 .ddh .ddh__sheet--mattress .ddh__sh-h{font-size:clamp(30px,2.6vw,40px)}
 .ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-lede{font-size:15.5px}
 .ddh .ddh__sheet--mattress .ddh__steps{font-size:13.5px}
@@ -744,5 +744,16 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__sheet--mattress .ddh__pairs>em,.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{font-size:10.5px}
 }
 .ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{letter-spacing:0}
-@container ddsh (min-height:690px){.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{font-size:9.5px}}
+@container ddsh (min-height:790px){.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{font-size:9.5px}}
 @container ddsh (max-height:530px){.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{font-size:8px}.ddh .ddh__sheet--mattress .ddh__pairs>b{font-size:9px;letter-spacing:.02em}}
+/* 1.10.9: the tag (Exclusive, Premium...) sits on its own line above the picture, never over a visual or a head; all eight cards the same size */
+@media (min-width:1051px) and (any-hover:hover){
+.ddh .ddh__sheet--mattress .ddh__chip{position:static;order:-1;align-self:flex-start;margin:1px 0 7px 3px;padding:.28em .8em;font-size:10px}
+}
+@container ddsh (max-height:600px){.ddh .ddh__sheet--mattress .ddh__chip{margin-bottom:5px;padding:.2em .7em;font-size:9.5px}}
+/* 1.10.9: below a roomy panel the two group labels give way, so every card keeps all its lines */
+@container ddsh (max-height:789px){.ddh .ddh__sheet--mattress .ddh__sh-row{position:absolute;width:1px;height:1px;margin:0;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto minmax(0,1fr) minmax(0,1fr)}}
+@container ddsh (max-height:640px){.ddh .ddh__sheet--mattress .ddh__pairs>i.ddh__ly{padding:3px 2px;font-size:11px}.ddh .ddh__sheet--mattress .ddh__spec--combos3{padding-top:6px}.ddh .ddh__sheet--mattress .ddh__card-s{margin-bottom:6px}}
+/* 1.10.9: panels under about 790 px: the firmness word is the picture's own caption, its label stays for readers but takes no room; the pairs get the width */
+@container ddsh (max-height:789px){.ddh .ddh__sheet--mattress .ddh__pairs>b{font-size:0;line-height:0;letter-spacing:0}.ddh .ddh__sheet--mattress .ddh__pairs>.ddh__pn{font-size:8.5px}}
+@container ddsh (max-height:530px){.ddh .ddh__sheet--mattress .ddh__card:has(.ddh__spec--combos3) .ddh__card-s{display:none}}

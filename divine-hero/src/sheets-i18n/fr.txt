@@ -15,7 +15,7 @@ height = Épaisseur
 firmness = Fermeté
 f_sm_m_f = <i class="ddh__f-s">Souple</i> · <i class="ddh__f-m">Medium</i> · <i class="ddh__f-f">Ferme</i>
 v_dp = Le même cœur Bio Comfort surmonté d’un surmatelas plush en latex naturel, réunis dans une seule housse : un premier contact plus doux sur le même soutien zoné.
-f_bdp = <span class="ddh__pr"><i class="ddh__f-m">Medium</i> + <i class="ddh__f-s">Souple</i></span><span class="ddh__pr"><i class="ddh__f-f">Ferme</i> + <i class="ddh__f-m">Medium</i></span>
+f_bdp = <em class="ddh__pr"><i class="ddh__f-m">Medium</i> + <i class="ddh__f-s">Souple</i></em><em class="ddh__pr"><i class="ddh__f-f">Ferme</i> + <i class="ddh__f-m">Medium</i></em>
 bio_cta = Découvrir Bio Comfort
 a_bio = Femme allongée sur le matelas en latex naturel Bio Comfort, dont les cellules suivent la courbe de son corps
 a_bio_dp = Femme allongée sur Bio Comfort Dual Plush : le cœur en latex zoné surmonté d’un surmatelas plush en latex naturel

@@ -1,5 +1,16 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.10.9: equal cards, tags off the pictures, Botanic Dual Plush inside its card, no English leftovers (2026-10-05)
+
+Owner: the Botanic Dual Plush firmness block spilled out of its card; the tags (Exclusive...) sat over the pictures and the model's head; the top row cards were bigger than the bottom row.
+
+Done:
+1. All eight cards are exactly the same size (both rows weigh the same; measured: height difference 0 at 30 window sizes from 1280x700 to 1920x1080).
+2. The tag sits on its own line above the picture on every card; nothing covers a visual or a face. The Partners Her/Him badges are centred again.
+3. Botanic Dual Plush: the pairs table fits inside the card at every panel height: below about 790 px of panel the two group labels become screen-reader-only (headings stay), the "Firmness" caption of the table is read-only too, the pairs get the width, and on very low panels the model's subtitle steps aside. Checked in 6 languages and at emulated panel heights down to about 500 px.
+4. Bug found and fixed (since 1.10.7): in every language but English the Bio Comfort Dual Plush card showed an extra English pair ("Firm + Medium") because the translation renderer stops at the first closing span; the pairs are now `<em>` lines. New guard: every language keeps the same number of firmness words, pair lines, cards and layer chips as English.
+Tests: interaction 348/348 (347 harness), panels 792, guards (incl. the new language-structure guard), axe 0 violations, perf unchanged. Screenshots `reports/compare/1.10.9-*.png`.
+
 ## 1.10.8: the mattress panel covers the header; graphite restored; more text contrast (2026-10-05)
 
 Owner: pull the panel up over the bar and the logo to use the whole screen; more font contrast; bring back the old colour of the main card.
