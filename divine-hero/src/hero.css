@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.10.3 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.10.4 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -500,7 +500,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 
 /* --- Bio Comfort: sky --- */
 .ddh .ddh__sheet--bio{--sh-teal:#174a78;--sh-sage:#3c6f9a;--sh-oak:#5b7fa3;--sh-ink:#14324f;--sh-mute:#3f5a73;--sh-line:rgba(31,79,122,.16)}
-.ddh .ddh__sheet--bio .ddh__sh-in{background:url(assets/b-cloud.webp) no-repeat right -6% top -40px/min(62%,760px) auto,url(assets/b-cloud.webp) no-repeat left -12% bottom -70px/min(46%,560px) auto,radial-gradient(90% 70% at 70% 30%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 60%),linear-gradient(180deg,#bcd3e4 0,#d6e5f0 34%,#ebf2f8 70%,#f6f9fc 100%)}
+.ddh .ddh__sheet--bio .ddh__sh-in{background:url(assets/b-cloud.webp) no-repeat right 6% top -34px/min(30%,360px) auto,url(assets/b-cloud.webp) no-repeat left -6% bottom -52px/min(20%,250px) auto,radial-gradient(90% 70% at 70% 30%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 60%),linear-gradient(180deg,#bcd3e4 0,#d6e5f0 34%,#ebf2f8 70%,#f6f9fc 100%)}
 .ddh .ddh__sheet--bio .ddh__bio-h{font-weight:600;letter-spacing:.01em;color:#16457a;text-shadow:0 2px 24px rgba(255,255,255,.7)}
 .ddh .ddh__sheet--bio .ddh__sh-eye{color:#3d6a94}
 .ddh .ddh__sheet--bio .ddh__bio-tag{color:#2c5d8c}
@@ -585,3 +585,54 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__sheet--mattress .ddh__card--bio .ddh__card-img{background:radial-gradient(120% 95% at 50% 38%,#fbfdfe 0,#eaf1f6 62%,#dde8f0 100%)}
 .ddh .ddh__sheet--mattress .ddh__chip--prem{background:linear-gradient(90deg,#dfe9f1,#cfdde8);color:#1f4466}
 .ddh .ddh__sheet--mattress .ddh__chip--ortho{background:#e4e7e9;color:#3a4248}
+
+/* ===== 1.10.4 ===== */
+/* Partners: Zone for Her / Medium (orange) and Zone for Him / Firm (teal), as on the product pictures */
+.ddh .ddh__card-img--zones{flex-direction:column;justify-content:space-between;gap:6px;padding:8px 8px 8px}
+.ddh .ddh__card-img--zones img{flex:1 1 auto;min-height:0;width:92%;height:auto;max-height:68%}
+.ddh .ddh__zb-row{display:flex;flex:0 0 auto;gap:10px;justify-content:center;width:100%}
+.ddh .ddh__zb{display:grid;gap:1px;flex:1 1 0;max-width:46%;padding:5px 8px 6px;border-radius:11px;text-align:center;color:#fff;box-shadow:0 5px 12px -7px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.35)}
+.ddh .ddh__zb small{font-size:clamp(9.5px,.72vw,11.5px);font-weight:400;letter-spacing:.02em;line-height:1.1;opacity:.96}
+.ddh .ddh__zb b{font-size:clamp(11px,.9vw,13.5px);font-weight:600;letter-spacing:.2em;line-height:1.15;text-transform:uppercase}
+.ddh .ddh__zb--her{background:linear-gradient(180deg,#f7a64a,#ea7b2c)}
+.ddh .ddh__zb--him{background:linear-gradient(180deg,#34b0a4,#1f8a82)}
+/* Bio Support Dual: two options, each a clear two-layer stack */
+.ddh .ddh__spec--combos{display:block}
+.ddh .ddh__combos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}
+.ddh .ddh__combo{display:grid;gap:3px}
+.ddh .ddh__combo small{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#aebdcb;margin-bottom:1px}
+.ddh .ddh__ly{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 9px;color:#0f2236;font-size:11px;line-height:1.15}
+.ddh .ddh__ly em{font-style:normal;font-weight:400;font-size:10.5px;opacity:.85}
+.ddh .ddh__ly b{font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.ddh .ddh__ly:nth-of-type(1){border-radius:10px 10px 3px 3px}
+.ddh .ddh__ly:nth-of-type(2){border-radius:3px 3px 10px 10px;padding-top:9px;padding-bottom:9px}
+.ddh .ddh__ly--s{background:linear-gradient(180deg,#bfe0ff,#8fcbff)}
+.ddh .ddh__ly--m{background:linear-gradient(180deg,#7fe9ee,#4fdbe3)}
+.ddh .ddh__ly--f{background:linear-gradient(180deg,#f8cd78,#f3bd52)}
+/* Bio Comfort: Cloud Comfort note */
+.ddh .ddh__bio-cloud{display:flex;align-items:flex-start;gap:12px;width:100%;max-width:34em;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.66);box-shadow:0 12px 26px -20px rgba(20,60,100,.5),inset 0 0 0 1px rgba(255,255,255,.9);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ddh .ddh__cloud-ic{flex:0 0 34px;width:34px;height:22px;margin-top:3px;background:url(assets/b-cloud.webp) center/contain no-repeat;filter:drop-shadow(0 3px 5px rgba(40,90,140,.28))}
+.ddh .ddh__cloud-tx{display:grid;gap:2px}
+.ddh .ddh__cloud-tx b{font-size:14.5px;font-weight:600;line-height:1.25;color:#16457a}
+.ddh .ddh__cloud-tx span{font-size:12.6px;line-height:1.4;color:#3b566f}
+@media (min-width:1051px) and (any-hover:hover) and (max-height:820px){.ddh .ddh__cloud-tx span{display:none}.ddh .ddh__bio-cloud{padding:8px 12px}}
+.ddh .ddh__sheet--topper .ddh__card--dual .ddh__spec--combos>b{margin-bottom:6px}
+/* 1.10.4 fit: compact Her/Him badges; the Bio Comfort screen drops the three sub-lines on computers (the Cloud Comfort note carries the message) */
+.ddh .ddh__card-img--zones{gap:4px;padding:6px 8px}
+.ddh .ddh__card-img--zones img{max-height:none}
+.ddh .ddh__zb{padding:3px 8px 4px;border-radius:9px}
+.ddh .ddh__zb small{font-size:clamp(9px,.66vw,10.5px)}
+.ddh .ddh__zb b{font-size:clamp(10.5px,.8vw,12.5px);letter-spacing:.18em}
+@media (min-width:1051px) and (any-hover:hover){
+.ddh .ddh__bio-more span{display:none}
+.ddh .ddh__bio-more{gap:6px}
+.ddh .ddh__bio-more b{font-size:14px}
+.ddh .ddh__bio-copy{gap:clamp(7px,1.1vh,12px)}
+}
+@media (min-width:1051px) and (any-hover:hover) and (max-height:820px){.ddh .ddh__bio-more{display:none}.ddh .ddh__sheet--bio .ddh__sh-lede{font-size:12.6px;line-height:1.42}}
+.ddh .ddh__zb-flank{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:100%}
+.ddh .ddh__zb-flank img{flex:1 1 0;min-width:0;width:auto;max-width:56%;height:auto;max-height:100%;object-fit:contain}
+.ddh .ddh__zb-flank .ddh__zb{flex:0 0 25%;max-width:25%;padding:5px 4px 6px}
+.ddh .ddh__zb-flank .ddh__zb small{font-size:clamp(8.5px,.62vw,10px);line-height:1.15}
+.ddh .ddh__zb-flank .ddh__zb b{font-size:clamp(10px,.75vw,12px);letter-spacing:.14em}
+.ddh .ddh__card-img--zones:has(.ddh__zb-flank){flex-direction:row;padding:6px 8px}

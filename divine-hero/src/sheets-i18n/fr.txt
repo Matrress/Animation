@@ -61,7 +61,7 @@ a_partners = Matelas pour couples : deux cœurs en latex, chacun avec sa fermet�
 c_part = Couples
 n_partners = Matelas pour couples
 s_partners = Deux besoins de confort, une surface sans rupture
-f_split = Son côté à elle, son côté à lui, choisis séparément
+f_split = Côté elle : <i class="ddh__f-m">Medium</i> · côté lui : <i class="ddh__f-f">Ferme</i>
 a_ambient = Cœur en latex naturel Ambient
 c_val = Accessible · Meilleur prix latex
 s_ambient = Le confort du latex naturel, accessible
@@ -87,7 +87,6 @@ a_t_dual = Bio Support Dual : deux couches de latex naturel zoné
 s_t_dual = Deux niveaux de confort en un surmatelas
 d_t_dual = Concept double confort avec réglage sur deux couches pour une sensation plus personnalisée.
 combos = Combinaisons
-f_combo = <i class="ddh__f-f">Ferme</i> dessous + <i class="ddh__f-m">Medium</i> dessus<br><i class="ddh__f-m">Medium</i> dessous + <i class="ddh__f-s">Souple</i> dessus
 a_t_part = Surmatelas pour couples : moitiés medium et ferme sous un surmatelas pont pleine taille
 n_t_part = Surmatelas pour couples
 s_t_part = Deux niveaux de confort avec surmatelas pont
@@ -105,3 +104,14 @@ f_mt = matelas + surmatelas
 n_ortho = Orthopédique fibre de coco
 mat_steps = <b>Choisissez votre modèle</b> → taille, fermeté, épaisseur et housse → achat
 f_tpart = <i class="ddh__f-m">Medium</i> d’un côté · <i class="ddh__f-f">Ferme</i> de l’autre
+w_s = Souple
+w_m = Medium
+w_f = Ferme
+zone_her = Zone pour Elle
+zone_him = Zone pour Lui
+l_top = Couche du dessus
+l_base = Couche du dessous
+opt_1 = Option 1
+opt_2 = Option 2
+cc_h = Cloud Comfort : il vous maintient au-dessus de la surface
+cc_d = Adaptation anatomique sans s’enfoncer, soutien orthopédique sans tension : vous reposez sur la surface, jamais dedans.

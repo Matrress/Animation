@@ -61,7 +61,7 @@ a_partners = Madrass för par: två latexkärnor med var sin fasthet under en b�
 c_part = Par
 n_partners = Madrass för par
 s_partners = Två komfortbehov, en sömlös yta
-f_split = Hennes sida och hans sida, valda var för sig
+f_split = Hennes sida: <i class="ddh__f-m">Medium</i> · hans sida: <i class="ddh__f-f">Fast</i>
 a_ambient = Ambient, kärna av naturlatex
 c_val = Prisvärd · Bästa pris på latex
 s_ambient = Tillgänglig naturlatexkomfort
@@ -87,7 +87,6 @@ a_t_dual = Bio Support Dual: två lager zonindelad naturlatex
 s_t_dual = Två komfortnivåer i en bäddmadrass
 d_t_dual = Dubbelt komfortkoncept med reglering i två lager för en mer personlig känsla.
 combos = Kombinationer
-f_combo = <i class="ddh__f-f">Fast</i> nederst + <i class="ddh__f-m">Medium</i> överst<br><i class="ddh__f-m">Medium</i> nederst + <i class="ddh__f-s">Mjuk</i> överst
 a_t_part = Bäddmadrass för par: medium och fast halva under en bryggbäddmadrass i full storlek
 n_t_part = Bäddmadrass för par
 s_t_part = Två komfortnivåer med bryggbäddmadrass
@@ -105,3 +104,14 @@ f_mt = madrass + bäddmadrass
 n_ortho = Ortopedisk med kokosfiber
 mat_steps = <b>Välj modell</b> → storlek, fasthet, höjd och överdrag → köp
 f_tpart = <i class="ddh__f-m">Medium</i> på ena sidan · <i class="ddh__f-f">Fast</i> på den andra
+w_s = Mjuk
+w_m = Medium
+w_f = Fast
+zone_her = Zon för henne
+zone_him = Zon för honom
+l_top = Övre lager
+l_base = Undre lager
+opt_1 = Alternativ 1
+opt_2 = Alternativ 2
+cc_h = Cloud Comfort: den bär dig ovanpå ytan
+cc_d = Anatomisk anpassning utan att sjunka, ortopediskt stöd utan spänning: du vilar på ytan, aldrig i den.

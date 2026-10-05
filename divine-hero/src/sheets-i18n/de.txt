@@ -61,7 +61,7 @@ a_partners = Matratze für Paare: zwei Latexkerne mit eigenem Härtegrad unter e
 c_part = Für Paare
 n_partners = Matratze für Paare
 s_partners = Zwei Komfortbedürfnisse, eine nahtlose Fläche
-f_split = Ihre und seine Seite, getrennt gewählt
+f_split = Ihre Seite: <i class="ddh__f-m">Mittel</i> · seine Seite: <i class="ddh__f-f">Fest</i>
 a_ambient = Ambient-Kern aus Naturlatex
 c_val = Preiswert · Bester Latexpreis
 s_ambient = Erschwinglicher Naturlatex-Komfort
@@ -87,7 +87,6 @@ a_t_dual = Bio Support Dual: zwei Schichten zonierter Naturlatex
 s_t_dual = Zwei Komfortstufen in einem Topper
 d_t_dual = Duales Komfortkonzept mit Zwei-Schicht-Regulierung für ein persönlicheres Liegegefühl.
 combos = Kombinationen
-f_combo = <i class="ddh__f-f">Fest</i> unten + <i class="ddh__f-m">Mittel</i> oben<br><i class="ddh__f-m">Mittel</i> unten + <i class="ddh__f-s">Weich</i> oben
 a_t_part = Topper für Paare: mittlere und feste Hälfte unter einem durchgehenden Brücken-Topper
 n_t_part = Topper für Paare
 s_t_part = Zwei Komfortstufen mit Brücken-Topper
@@ -105,3 +104,14 @@ f_mt = Matratze + Topper
 n_ortho = Orthopädisch mit Kokosfaser
 mat_steps = <b>Modell wählen</b> → Größe, Härtegrad, Höhe &amp; Bezug festlegen → kaufen
 f_tpart = <i class="ddh__f-m">Mittel</i> auf einer Seite · <i class="ddh__f-f">Fest</i> auf der anderen
+w_s = Weich
+w_m = Mittel
+w_f = Fest
+zone_her = Zone für Sie
+zone_him = Zone für Ihn
+l_top = Obere Schicht
+l_base = Untere Schicht
+opt_1 = Variante 1
+opt_2 = Variante 2
+cc_h = Cloud Comfort: Es trägt Sie über der Oberfläche
+cc_d = Anatomische Anpassung ohne Einsinken, orthopädische Stützkraft ohne Verspannung: Sie liegen auf der Oberfläche, nie darin.

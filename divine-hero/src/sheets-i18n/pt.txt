@@ -61,7 +61,7 @@ a_partners = Colchão para casais: dois núcleos de látex, cada um com a sua fi
 c_part = Casais
 n_partners = Colchão para casais
 s_partners = Duas necessidades de conforto, uma superfície contínua
-f_split = O lado dela e o lado dele, escolhidos à parte
+f_split = Lado dela: <i class="ddh__f-m">Médio</i> · lado dele: <i class="ddh__f-f">Firme</i>
 a_ambient = Núcleo de látex natural Ambient
 c_val = Valor · Melhor preço em látex
 s_ambient = Conforto de látex natural acessível
@@ -87,7 +87,6 @@ a_t_dual = Bio Support Dual: duas camadas de látex natural zonado
 s_t_dual = Dois níveis de conforto num só topper
 d_t_dual = Conceito de duplo conforto com regulação em duas camadas para uma sensação mais pessoal.
 combos = Combinações
-f_combo = <i class="ddh__f-f">Firme</i> em baixo + <i class="ddh__f-m">Médio</i> em cima<br><i class="ddh__f-m">Médio</i> em baixo + <i class="ddh__f-s">Macio</i> em cima
 a_t_part = Topper para casais: metade média e metade firme sob um topper ponte de tamanho completo
 n_t_part = Topper para casais
 s_t_part = Dois níveis de conforto com topper ponte
@@ -105,3 +104,14 @@ f_mt = colchão + topper
 n_ortho = Ortopédico com fibra de coco
 mat_steps = <b>Escolha o modelo</b> → tamanho, firmeza, altura e capa → compre
 f_tpart = <i class="ddh__f-m">Médio</i> de um lado · <i class="ddh__f-f">Firme</i> do outro
+w_s = Macio
+w_m = Médio
+w_f = Firme
+zone_her = Zona para Ela
+zone_him = Zona para Ele
+l_top = Camada superior
+l_base = Camada inferior
+opt_1 = Opção 1
+opt_2 = Opção 2
+cc_h = Cloud Comfort: mantém-no acima da superfície
+cc_d = Adaptação anatómica sem afundar, suporte ortopédico sem tensão: descansa sobre a superfície, nunca dentro dela.

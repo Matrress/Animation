@@ -61,7 +61,7 @@ a_partners = Pariskunnan patja: kaksi lateksiydintä omalla kovuudellaan saman p
 c_part = Pariskunnille
 n_partners = Pariskunnan patja
 s_partners = Kaksi mukavuustarvetta, yksi saumaton pinta
-f_split = Kummallekin puolelle oma kovuus
+f_split = Naisen puoli: <i class="ddh__f-m">Keskikova</i> · miehen puoli: <i class="ddh__f-f">Kova</i>
 a_ambient = Ambient-luonnonlateksiydin
 c_val = Edullinen · Paras lateksihinta
 s_ambient = Luonnonlateksin mukavuutta edullisesti
@@ -87,7 +87,6 @@ a_t_dual = Bio Support Dual: kaksi kerrosta vyöhykkeellistä luonnonlateksia
 s_t_dual = Kaksi mukavuustasoa yhdessä petauspatjassa
 d_t_dual = Kaksoismukavuus kahden kerroksen säädöllä yksilöllisempään tuntumaan.
 combos = Yhdistelmät
-f_combo = <i class="ddh__f-f">Kova</i> alla + <i class="ddh__f-m">Keskikova</i> päällä<br><i class="ddh__f-m">Keskikova</i> alla + <i class="ddh__f-s">Pehmeä</i> päällä
 a_t_part = Pariskunnan petauspatja: keskikova ja kova puolisko täysikokoisen siltapatjan alla
 n_t_part = Pariskunnan petauspatja
 s_t_part = Kaksi mukavuustasoa ja siltapatja
@@ -105,3 +104,14 @@ f_mt = patja + petauspatja
 n_ortho = Ortopedinen kookoskuitupatja
 mat_steps = <b>Valitse malli</b> → koko, kovuus, korkeus ja päällinen → osta
 f_tpart = <i class="ddh__f-m">Keskikova</i> toisella puolella · <i class="ddh__f-f">Kova</i> toisella
+w_s = Pehmeä
+w_m = Keskikova
+w_f = Kova
+zone_her = Naisen vyöhyke
+zone_him = Miehen vyöhyke
+l_top = Päällikerros
+l_base = Alakerros
+opt_1 = Vaihtoehto 1
+opt_2 = Vaihtoehto 2
+cc_h = Cloud Comfort: kannattelee sinua pinnan päällä
+cc_d = Anatominen mukautuvuus ilman vajoamista, ortopedinen tuki ilman jännitystä: lepäät pinnalla, et sen sisällä.

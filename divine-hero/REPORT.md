@@ -1,5 +1,20 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.10.4: Partners badges, clear topper layers, a calmer cloud (2026-10-05)
+
+Owner:
+1. On the Partners mattress and topper pictures, one side is Firm and the other Medium. Show that marking visibly, as on the product pictures.
+2. Bio Support Dual: make clear which layer is Firm and which Medium, and that there are two options.
+3. Bio Comfort: the cloud was huge. Keep a cloud, but small. Say it holds you above the surface and that it is Cloud Comfort.
+
+**Changes**
+* **Partners:** visible badges "Zone for Her · MEDIUM" (orange) and "Zone for Him · FIRM" (teal). On the mattress card they flank the picture; on the topper card they sit under it. The firmness line says "Her side Medium · his side Firm".
+* **Bio Support Dual:** two labelled options, each a two-layer stack (top layer / bottom layer), coloured by firmness.
+  * Option 1: Medium on top of Firm.
+  * Option 2: Soft on top of Medium.
+* **Bio Comfort:** the clouds are now small (about a third of their former size), and a new "Cloud Comfort: it holds you above the surface" note explains that it adapts without sinking and supports without tension, so you rest on the surface, never in it. The note is in the 8 languages. On computers the three sub-lines under it are hidden so the screen fits without scrolling (checked at 1920×1080, 1440×900, 1366×768 and 1280×720); they remain on tablets.
+* Tests: 346–347 per harness, panels 792/792, guards, axe 0.
+
 ## 1.10.3: graphite instead of brown (2026-10-05)
 
 Owner: brown is not a favourite; stay in the graphite range.
