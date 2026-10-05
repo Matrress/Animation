@@ -44,7 +44,7 @@ async function desktop(w, h) {
   for (const k of KEYS) { const c = await centre(page, k); await page.mouse.click(c.x, c.y); await page.waitForTimeout(40); const s = await state(page); ok(s.s === k, `click ${k} -> ${s.s}`); }
   // ventilation "cooling": full-frame blue wash visible only in the temperature state
   { const t = await centre(page, 'temperature'); await page.mouse.click(t.x, t.y); }
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(800);                                   // .45 s fade; stage-2 loading may run alongside
   const wash = await page.evaluate(() => { const w = document.querySelector('.ddh__wash'); const a = document.querySelector('.ddh__art').getBoundingClientRect(); const r = w.getBoundingClientRect(); return { op: +getComputedStyle(w).opacity, covers: r.top <= a.top + 1 && r.bottom >= a.bottom - 1 && r.left <= 0 && r.right >= a.right - 1 }; });
   ok(wash.op > .98 && wash.covers, 'ventilation turns the whole artwork blue: ' + JSON.stringify(wash));
   // live region: should announce last clicked copy
@@ -180,7 +180,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.10.0/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.10.1/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -308,7 +308,8 @@ async function sheets() {
     await page.goto(url, { waitUntil: 'load' }); await page.waitForTimeout(300);
     ok(req.length === 0, 'nothing of the sheets loads with the page: ' + req.join(','));
     await page.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 6000 });
-    ok(req.filter((u) => u.startsWith('sheets/')).length === 1 && req.every((u) => u.startsWith('sheets/')), 'after load: one sheets file, no pictures yet: ' + req.join(','));
+    await page.waitForFunction(() => [...document.querySelectorAll('.ddh__sheets img')].every((i) => i.complete), null, { timeout: 15000 }).catch(() => {});
+    ok(req.filter((u) => u.startsWith('sheets/')).length === 1 && req.filter((u) => /assets\/[mtb]-/.test(u)).length >= 15, 'stage 2 after load: one sheets file, then the screens\' pictures: ' + req.length);
     const ctas = await page.$$('.ddh__cta');
     await ctas[0].hover(); await page.waitForTimeout(500);
     let st = await page.evaluate(() => ({ s: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), cards: document.querySelectorAll('#ddh-sheet-mattress .ddh__card').length, exp: document.querySelector('[data-ddh-sheet=mattress]').getAttribute('aria-expanded') }));
@@ -323,7 +324,8 @@ async function sheets() {
     st = await page.evaluate(() => ({ s: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), cards: document.querySelectorAll('#ddh-sheet-topper .ddh__card').length }));
     ok(st.s === 'topper' && st.cards === 3, 'hover Shop Topper -> toppers, 3 models: ' + JSON.stringify(st));
     await page.mouse.move(20, 880, { steps: 4 }); await page.waitForTimeout(600);
-    ok(!(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'))), 'leaving closes the preview');
+    st = await page.evaluate(() => ({ sheet: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), state: document.querySelector('.ddh').getAttribute('data-ddh-state'), open: [...document.querySelectorAll('.ddh__sheet')].filter((x) => !x.hidden).length, exp: [...document.querySelectorAll('.ddh__cta')].map((a) => a.getAttribute('aria-expanded')).join() }));
+    ok(!st.sheet && !st.state && !st.open && st.exp === 'false,false', 'leaving without a click returns the hero to its first state: ' + JSON.stringify(st));
     await ctas[0].hover(); await page.waitForTimeout(400);
     const [nav] = await Promise.all([page.waitForRequest((r) => r.isNavigationRequest(), { timeout: 4000 }).catch(() => null), ctas[0].click()]);
     ok(nav && /latex-mattresses-collection/.test(nav.url()), 'click on Shop Mattress still opens the collection');
@@ -346,21 +348,30 @@ async function sheets() {
     ok(errs.length === 0, 'no script errors: ' + errs.join(' | '));
     await ctx.close();
   }
-  for (const [w, h, label] of [[390, 844, 'phone'], [1024, 1366, 'iPad']]) { // touch: first tap opens full screen, its own button leads on
+  for (const [w, h, label] of [[390, 844, 'phone'], [844, 390, 'phone landscape']]) { // 1.10.1: phones: no screens, no pictures; buttons go straight on; text still in the page
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: true, isMobile: true }); const page = await ctx.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
-    await page.goto(url, { waitUntil: 'load' }); await page.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 6000 });
-    const before = page.url(); await (await page.$('.ddh__cta')).tap(); await page.waitForTimeout(500);
-    let st = await page.evaluate(() => { const s = document.querySelector('#ddh-sheet-mattress'), r = s.getBoundingClientRect(), at = document.elementFromPoint(innerWidth / 2, 30); return { open: !s.hidden, full: r.top <= 0 && r.height >= innerHeight - 1 && r.width >= innerWidth - 1, top: !!at && s.contains(at), lock: document.documentElement.style.overflow }; });
-    ok(page.url() === before && st.open && st.full && st.top && st.lock === 'hidden', `${label}: tap Shop Mattress -> full-screen preview over the header, page locked: ` + JSON.stringify(st));
-    await page.tap('#ddh-sheet-mattress [data-ddh-close]'); await page.waitForTimeout(250);
-    st = await page.evaluate(() => ({ open: !document.querySelector('#ddh-sheet-mattress').hidden, lock: document.documentElement.style.overflow }));
-    ok(!st.open && st.lock === '', `${label}: close button closes and unlocks: ` + JSON.stringify(st));
-    const bl = await page.$('.ddh__bio-link');
-    if (w < 701) { ok(await bl.isVisible(), `${label}: Bio Comfort entry under the Shop buttons`); await bl.tap(); }
-    else { const c = await centre(page, 'bio'); await page.touchscreen.tap(c.x, c.y); }
-    await page.waitForTimeout(500);
-    ok(await page.evaluate(() => !document.querySelector('#ddh-sheet-bio').hidden), `${label}: Bio Comfort opens`);
+    const req = []; page.on('request', (r) => /assets\/(m|t|b)-|plate-|night-/.test(r.url()) && req.push(r.url().split('/').pop()));
+    await page.goto(url, { waitUntil: 'load' }); await page.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 8000 }); await page.waitForTimeout(1500);
+    ok(req.length === 0, `${label}: no heavy pictures load on a phone: ` + req.join(','));
+    ok(await page.evaluate(() => /latex mattress/i.test(document.querySelector('.ddh__sheets').textContent)), `${label}: the screens' text is in the page (indexing)`);
+    ok(!(await page.evaluate(() => { const b = document.querySelector('[data-ddh-point=bio]'); return b && b.offsetWidth > 0; })), `${label}: no Bio point`);
+    const [nav] = await Promise.all([page.waitForRequest((r) => r.isNavigationRequest(), { timeout: 4000 }).catch(() => null), (await page.$('.ddh__cta')).tap()]);
+    ok(nav && /latex-mattresses-collection/.test(nav.url()), `${label}: tap on Shop Mattress goes straight to the collection`);
     ok(errs.length === 0, `${label}: no script errors: ` + errs.join(' | '));
+    await ctx.close();
+  }
+  { // iPad: the first tap opens the preview full screen (no navigation); closing returns to the scene
+    const ctx = await browser.newContext({ viewport: { width: 1024, height: 1366 }, hasTouch: true, isMobile: true }); const page = await ctx.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
+    await page.goto(url, { waitUntil: 'load' }); await page.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 8000 });
+    const before = page.url(); await (await page.$('.ddh__cta')).tap(); await page.waitForTimeout(500);
+    let st = await page.evaluate(() => { const s = document.querySelector('#ddh-sheet-mattress'), r = s.getBoundingClientRect(), at = document.elementFromPoint(innerWidth / 2, 30); return { open: !s.hidden, full: r.top <= 0 && r.height >= innerHeight - 1, top: !!at && s.contains(at), lock: document.documentElement.style.overflow }; });
+    ok(page.url() === before && st.open && st.full && st.top && st.lock === 'hidden', 'iPad: tap Shop Mattress -> full-screen preview, page locked: ' + JSON.stringify(st));
+    await page.tap('#ddh-sheet-mattress [data-ddh-close]'); await page.waitForTimeout(250);
+    st = await page.evaluate(() => ({ open: !document.querySelector('#ddh-sheet-mattress').hidden, lock: document.documentElement.style.overflow, sheet: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet') }));
+    ok(!st.open && st.lock === '' && !st.sheet, 'iPad: close returns to the scene: ' + JSON.stringify(st));
+    const c = await centre(page, 'bio'); await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(500);
+    ok(await page.evaluate(() => !document.querySelector('#ddh-sheet-bio').hidden), 'iPad: Bio Comfort opens');
+    ok(errs.length === 0, 'iPad: no script errors: ' + errs.join(' | '));
     await ctx.close();
   }
   { // translations reach the sheets

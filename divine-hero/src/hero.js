@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.10.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.10.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.10.0';
+  var VERSION = '1.10.1';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -355,8 +355,11 @@
     // leads on); Escape, the close button or a click outside closes it.
     var sheetBox = null, sheetReq = false, sheet = null, sheetMode = '', sheetFrom = null, sheetWait = null, hoverT = 0, lastPT = '', openedAt = 0;
     var ctas = [].slice.call(root.querySelectorAll('[data-ddh-sheet]')), bioPoint = group.querySelector('[data-ddh-point=bio]');
-    var bioLink = root.querySelector('[data-ddh-open=bio]');
     var deskMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (any-hover:hover)') : { matches: true };
+    // 1.10.1: tablets, laptops and monitors only. On a phone (either way up) the screens never open: the Bio point is
+    // hidden (CSS, same query) and the Shop buttons go straight to the collections. The screens' text is still loaded
+    // into the page there (hidden), so Google's smartphone crawler indexes it; their pictures are not.
+    var phoneMQ = w.matchMedia ? w.matchMedia('(max-width:700px),(max-height:500px) and (pointer:coarse)') : { matches: false };
     function base() { return (img && img.getAttribute('src') || '').replace(/assets\/[^\/]*$/, ''); }
     function loadSheets() {
       if (sheetReq || !w.fetch || !img) return; sheetReq = true;
@@ -368,7 +371,7 @@
           root.appendChild(sheetBox);
           cleanups.push(function () { closeSheet(true); if (sheetBox && sheetBox.parentNode) sheetBox.parentNode.removeChild(sheetBox); sheetBox = null; });
           wireSheets();
-          if (bioLink) bioLink.hidden = false;
+          if (!phoneMQ.matches && !lean()) eager(sheetBox);              // the rest of the pictures, low priority, right after
           if (sheetWait) { var f = sheetWait; sheetWait = null; f(); }
         })
         .catch(function () { sheetReq = false; });
@@ -381,9 +384,10 @@
       if (!portal) { portal = d.createElement('div'); portal.className = 'ddh ddh__portal'; d.body.appendChild(portal); cleanups.push(function () { if (portal && portal.parentNode) portal.parentNode.removeChild(portal); portal = null; }); }
       return portal;
     }
-    function eager(el) { [].forEach.call(el.querySelectorAll('img'), function (im) { im.loading = 'eager'; }); }
+    function eager(el) { [].forEach.call(el.querySelectorAll('img'), function (im) { if (im.loading !== 'eager') { im.setAttribute('fetchpriority', 'low'); im.loading = 'eager'; } }); }
     function lock(on) { var s = d.documentElement.style; if (on) { if (!root.hasAttribute('data-ddh-lock')) { root.setAttribute('data-ddh-lock', s.overflow || ''); s.overflow = 'hidden'; } } else if (root.hasAttribute('data-ddh-lock')) { s.overflow = root.getAttribute('data-ddh-lock'); root.removeAttribute('data-ddh-lock'); } }
     function openSheet(name, mode, from) {
+      if (phoneMQ.matches) return;
       if (!sheetBox) { sheetWait = function () { openSheet(name, mode, from); }; loadSheets(); return; }
       var el = sheetBox.querySelector('#ddh-sheet-' + name); if (!el) return;
       w.clearTimeout(hoverT);
@@ -445,18 +449,27 @@
       }, { passive: true });
       on(a, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch') { if (!sheet) w.clearTimeout(hoverT); later(); } }, { passive: true });
       on(a, 'click', function (ev) {
-        if (ev.detail === 0 || ev.ctrlKey || ev.metaKey || ev.shiftKey) return;                          // keyboard / new tab: straight to the collection
+        if (ev.detail === 0 || ev.ctrlKey || ev.metaKey || ev.shiftKey || phoneMQ.matches) return;                          // keyboard / new tab: straight to the collection
         var touchy = lastPT === 'touch' || !deskMQ.matches; lastPT = '';
         if (touchy && !(sheet && sheetFrom === a)) { ev.preventDefault(); openSheet(name, 'modal', a); }
       });
     });
-    if (bioLink) on(bioLink, 'click', function () { openSheet('bio', 'modal', bioLink); });
     if (bioPoint) on(bioPoint, 'pointerenter', loadSheets, { passive: true });
     on(root.querySelector('.ddh__shop') || root, 'pointerenter', loadSheets, { passive: true });
     on(d, 'keydown', function (ev) { if (sheet && (ev.key === 'Escape' || ev.key === 'Esc')) closeSheet(); });
     on(d, 'click', function (ev) { if (sheet && sheetMode === 'modal' && Date.now() - openedAt > 300 && !sheet.contains(ev.target) && !(sheetFrom && sheetFrom.contains(ev.target)) && !(bioPoint && bioPoint.contains(ev.target))) closeSheet(true); });
-    on(w, 'resize', function () { if (sheet && sheetMode === 'hover' && !deskMQ.matches) closeSheet(true); }, { passive: true });
-    if (d.readyState === 'complete') w.setTimeout(loadSheets, 1200); else on(w, 'load', function () { w.setTimeout(loadSheets, 1200); }, { once: true });
+    on(w, 'resize', function () { if (sheet && (phoneMQ.matches || (sheetMode === 'hover' && !deskMQ.matches))) closeSheet(true); }, { passive: true });
+    // 1.10.1 loading in two stages: the first paint is the plain scene (photo, lettering, buttons) and nothing else.
+    // Once the page has loaded and the browser is idle, the other modes follow at low priority: the screens' text
+    // (every device: it is what search engines index), then on tablets/computers the hotspot graphics, the night
+    // picture and the screens' pictures, so every mode opens instantly. Data-saver / 2G connections wait for intent.
+    function lean() { var c = w.navigator.connection; return !!(c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ''))); }
+    function stage2() {
+      var go = function () { if (!root.hasAttribute('data-ddh-ready')) return; loadSheets(); if (!phoneMQ.matches && !lean()) warm(); };
+      var t = w.setTimeout(function () { if (w.requestIdleCallback) w.requestIdleCallback(go, { timeout: 2000 }); else go(); }, 900);
+      cleanups.push(function () { w.clearTimeout(t); });
+    }
+    if (d.readyState === 'complete') stage2(); else on(w, 'load', stage2, { once: true });
     cleanups.push(function () { w.clearTimeout(hoverT); lock(false); });
 
     // Roving tabindex: one Tab stop, arrows move between the points.

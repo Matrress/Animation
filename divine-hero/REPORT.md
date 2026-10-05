@@ -1,5 +1,40 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.10.1: tablets and computers only; collection data; loading in two stages (2026-10-05)
+
+Owner:
+1. The screens are for tablets, laptops and monitors, not phones.
+2. The collection page is the reference.
+3. Botanic Dual Plush firmness: Medium mattress + Soft topper / Firm + Medium / Extra Firm + Firm.
+4. Ambient also comes at 26 cm.
+5. The previews open by hovering the buttons without pressing; leaving without pressing returns the hero to its first state.
+6. The first load must stay light; everything else should load straight after, so Google can index it.
+
+**Phones (≤700 px wide, or a touch screen ≤500 px high, either way up)**
+* No Bio point, no screens, and the Shop buttons go straight to the collections.
+* The phone link under the buttons is removed.
+* The screens' text is still loaded into the page there, hidden, so Google's smartphone crawler indexes it; their pictures are not loaded.
+
+**Data, aligned with the collection page**
+* Tags: Botanic *Premium*; Botanic Dual Plush *Premium · Dual Plush*; Bio Comfort *Exclusive*; Bio Comfort Dual Plush *Innovation · Dual Plush*.
+* Card name: *Orthopaedic Coconut Coir*.
+* Botanic Dual Plush shows the same mattress + topper firmness pairs as Bio Comfort Dual Plush, labelled "mattress + topper".
+* Ambient: 16 · 18 · 20 · 26 cm, four firmnesses.
+* The collection page's path "Pick your model → set size, firmness, depth & cover → buy" sits under the heading.
+* All of this is in 8 languages.
+
+**Hover**
+* Leaving the button or the preview without a click closes it after 0.28 s. The hero is then exactly as before: no state, no open screen, buttons collapsed. This is tested.
+* Tablets: a tap opens the preview full screen, and closing it returns to the scene.
+
+**Loading**
+* Stage 1 is the plain scene.
+* Stage 2 starts 0.9 s after load, when the browser is idle, at low priority. It brings the screens' text (every device), then on tablets and computers the hotspot graphics, the night picture and the screens' pictures, so every mode opens instantly.
+* On data-saver or 2G connections, stage 2 waits for intent.
+* LCP and CLS are unchanged (desktop LCP 0.39 s, phone 0.84 s; phone stays at 97 KB).
+
+**Short laptop screens:** the mattress preview tightens its header so the eight cards keep visible pictures at 1366×768 and 1280×720.
+
 ## 1.10.0: the Bio Comfort screen and the collection previews; the settle animation removed (2026-10-05)
 
 Owner's brief:

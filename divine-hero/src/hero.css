@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.10.0 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.10.1 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -335,14 +335,8 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__point[data-ddh-point=bio]::after{background:radial-gradient(circle,#fbfff4 0 2.5px,#78b462 3.5px);box-shadow:0 0 0 1.2px rgba(52,104,52,.62),0 0 12px rgba(150,212,120,.55)}
 .ddh .ddh__screen--brand [data-ddh-copy=bio] b{font-weight:600}
 .ddh .ddh__bio-leaf{display:inline-block;flex:0 0 auto;width:.5em;height:.34em;border-radius:100% 0 100% 0;background:linear-gradient(135deg,#a4d873,#5fb35f);transform:rotate(-28deg);vertical-align:.12em}
-.ddh .ddh__bio-link{display:none}
-@media (max-width:700px) and (orientation:portrait){
-.ddh .ddh__shop{flex-wrap:wrap}
-.ddh .ddh__bio-link[hidden]{visibility:hidden}
-.ddh .ddh__bio-link{display:inline-flex;flex:0 0 100%;justify-content:center;align-items:center;gap:.45em;margin:4px 0 0;padding:6px 8px;border:0;background:none;color:var(--ddh-ink);font:400 13px/1.2 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:.02em;cursor:pointer}
-.ddh .ddh__bio-link b{font-weight:600}
-.ddh .ddh__bio-link span{text-decoration:underline;text-decoration-color:rgba(36,81,75,.35);text-underline-offset:3px}
-}
+/* 1.10.1: no Bio Comfort screen on phones (hero.js uses the same query) */
+@media (max-width:700px),(max-height:500px) and (pointer:coarse){.ddh .ddh__points .ddh__point[data-ddh-point=bio]{display:none!important}}
 
 .ddh.ddh__portal{position:static;width:0;height:0;margin:0;padding:0;overflow:visible;isolation:auto;background:none}
 .ddh .ddh__sheet{position:fixed;inset:0;z-index:2147483000;display:block;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;margin:0;padding:0;background:rgba(28,36,36,.4);color:var(--sh-ink);font:400 15px/1.45 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:0;text-align:left;outline:0;animation:ddh-sheet-in .3s cubic-bezier(.2,.7,.2,1) both}
@@ -488,7 +482,12 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 }
 @media (min-width:1051px) and (any-hover:hover) and (max-height:820px){
 .ddh .ddh__sh-h{font-size:clamp(24px,2vw,32px)}.ddh .ddh__sh-lede{font-size:13px}.ddh .ddh__bio-h{font-size:clamp(32px,2.7vw,44px)}
-.ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto}.ddh .ddh__sheet--mattress .ddh__card-img{flex:0 0 auto;aspect-ratio:16/6.4;min-height:90px}.ddh .ddh__bio-more span{display:none}.ddh .ddh__bio-details figcaption span{display:none}.ddh .ddh__card-s{font-size:12.3px}.ddh .ddh__card-d{font-size:12px}
+.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-lede{display:none}.ddh .ddh__sheet--mattress .ddh__sh-eye{display:none}.ddh .ddh__sheet--mattress .ddh__sh-in{row-gap:6px;padding-top:16px;padding-bottom:16px}.ddh .ddh__sheet--mattress .ddh__sh-row{font-size:10.5px}.ddh .ddh__sheet--mattress .ddh__spec small{display:none}.ddh .ddh__sheet--mattress .ddh__card{padding-bottom:9px}.ddh .ddh__sheet--mattress .ddh__card-s{margin-bottom:6px}.ddh .ddh__sheet--mattress .ddh__card-s+.ddh__spec{padding-top:6px}.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__steps{grid-row:1/3;align-self:end;margin:0 0 .3em}.ddh .ddh__bio-more span{display:none}.ddh .ddh__bio-details figcaption span{display:none}.ddh .ddh__card-s{font-size:12.3px}.ddh .ddh__card-d{font-size:12px}
 }
 @media (prefers-reduced-motion:reduce){.ddh .ddh__sheet{animation:none}.ddh .ddh__card,.ddh .ddh__card-img img,.ddh .ddh__sh-cta,.ddh .ddh__sh-x{transition:none}}
 @media (forced-colors:active){.ddh .ddh__sh-in{border:1px solid CanvasText}.ddh .ddh__card{border-color:CanvasText}.ddh .ddh__bio-pick button[aria-selected=true]{outline:2px solid Highlight}}
+
+.ddh .ddh__steps{margin-top:.45em;font-size:12.5px;letter-spacing:.02em;color:var(--sh-soft)}
+.ddh .ddh__steps b{font-weight:600;color:var(--sh-ink)}
+.ddh .ddh__spec small,.ddh .ddh__bio-spec dt small{font-size:.9em;font-weight:400;color:var(--sh-soft);letter-spacing:0;text-transform:none}
+@media (min-width:1051px) and (any-hover:hover){.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__steps{grid-column:2;margin:.2em 0 0}}
