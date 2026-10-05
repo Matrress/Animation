@@ -180,7 +180,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.10.6/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.10.7/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -330,8 +330,11 @@ async function sheets() {
     const [nav] = await Promise.all([page.waitForRequest((r) => r.isNavigationRequest(), { timeout: 4000 }).catch(() => null), ctas[0].click()]);
     ok(nav && /latex-mattresses-collection/.test(nav.url()), 'click on Shop Mattress still opens the collection');
     await page.goto(url, { waitUntil: 'load' }); await page.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 6000 });
-    const c = await centre(page, 'bio'); await page.mouse.move(c.x + 30, c.y + 20); await page.mouse.move(c.x, c.y, { steps: 3 }); await page.waitForTimeout(200);
-    ok((await state(page)).s === 'bio', 'hover Bio point -> teaser');
+    const c = await centre(page, 'bio'); await page.mouse.move(c.x + 30, c.y + 20); await page.mouse.move(c.x, c.y, { steps: 3 }); await page.waitForTimeout(600);
+    st = await page.evaluate(() => { const s = document.querySelector('#ddh-sheet-bio'); return { open: !s.hidden, modal: s.getAttribute('aria-modal'), root: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet') }; });
+    ok(st.open && st.modal === 'false' && st.root === 'bio', '1.10.7: hovering the Bio point opens its screen without a click: ' + JSON.stringify(st));
+    await page.mouse.move(5, 5); await page.waitForTimeout(600);
+    ok(await page.evaluate(() => document.querySelector('#ddh-sheet-bio').hidden), '1.10.7: leaving the Bio point and its screen closes it again');
     await page.mouse.click(c.x, c.y); await page.waitForTimeout(600);
     st = await page.evaluate(() => { const s = document.querySelector('#ddh-sheet-bio'); return { open: !s.hidden, modal: s.getAttribute('aria-modal'), focus: document.activeElement === s, state: document.querySelector('.ddh').getAttribute('data-ddh-state') }; });
     ok(st.open && st.modal === 'true' && st.focus && !st.state, 'click Bio point -> Bio Comfort dialog, focused, hotspot state cleared: ' + JSON.stringify(st));

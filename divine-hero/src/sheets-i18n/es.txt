@@ -15,7 +15,7 @@ height = Altura
 firmness = Firmeza
 f_sm_m_f = <i class="ddh__f-s">Suave</i> · <i class="ddh__f-m">Media</i> · <i class="ddh__f-f">Firme</i>
 v_dp = El mismo núcleo Bio Comfort con un topper plush de látex natural encima, unidos en una sola funda: un primer contacto más suave sobre el mismo soporte zonificado.
-f_bdp = <i class="ddh__f-m">Media</i> + <i class="ddh__f-s">Suave</i> · <i class="ddh__f-f">Firme</i> + <i class="ddh__f-m">Media</i>
+f_bdp = <span class="ddh__pr"><i class="ddh__f-m">Media</i> + <i class="ddh__f-s">Suave</i></span><span class="ddh__pr"><i class="ddh__f-f">Firme</i> + <i class="ddh__f-m">Media</i></span>
 bio_cta = Descubre Bio Comfort
 a_bio = Mujer descansando sobre el colchón de látex natural Bio Comfort, cuyas células siguen la curva de su cuerpo
 a_bio_dp = Mujer descansando sobre Bio Comfort Dual Plush: núcleo de látex zonificado con topper plush de látex natural

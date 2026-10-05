@@ -1,5 +1,17 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.10.7: mattress panel #003136, taller and self-fitting; Bio Comfort opens on hover (2026-10-05)
+
+Owner: panel background #003136; panel higher with more room for the eight cards, readable and not cramped; Bio Comfort point opens on hover (not only click); inspect everything as a senior designer.
+
+Done:
+1. Mattress panel: solid #003136 (cards stay light); starts 2 px above the previous top and ends 4 px lower, so the cards get about 8 px more height.
+2. Fit follows the PANEL's own height, not the window's: the desktop sheet is a size container (`container:ddsh/size`) and the low-height compaction rules (formerly `@media (max-height:820/760px)`) are now `@container ddsh (max-height:600px / 530px)`. A tall window with a tall site header (small panel, as on the owner's iPad screenshot) no longer squeezes the cards into overlapping text.
+3. Card spacing: gap 9-14 px, card padding 8/12, text line-heights opened a little (Chillax only).
+4. Bio Comfort point: hover opens the screen after 140 ms (desktop pointers only), leaving closes it after 280 ms, click or keyboard pins it as a dialog; touch is unchanged (tap opens full-screen). New tests.
+5. Designer fixes: the Partners tag no longer overlaps the Her/Him badges (badges sit on the lower edge; at about 720 px high the small "Zone for Her/Him" caption is dropped, the firmness line below still says it); Bio Comfort Dual Plush pairs are one line each (Medium + Soft / Firm + Medium).
+Tests: interaction 348/348 (347 harness), panels 792, guards, axe 0 violations on every screen, perf unchanged. Screenshots: `reports/compare/1.10.7-*.png`.
+
 ## 1.10.6: clear Botanic Dual Plush pairings, violet Firm, solid topper edges (2026-10-05)
 
 Owner:

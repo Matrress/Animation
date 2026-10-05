@@ -459,8 +459,9 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 
 /* desktop with a pointer: the sheet sits over the picture, between the header and the Shop buttons */
 @media (min-width:1051px) and (any-hover:hover){
-.ddh .ddh__sheet{position:absolute;inset:auto;top:calc(var(--ddh-safe) + 2px);left:clamp(16px,2.6vw,52px);right:clamp(16px,2.6vw,52px);bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + var(--ddh-shop-b) + var(--ddh-cta-h) + 14px);z-index:20;overflow:visible;background:none}
+.ddh .ddh__sheet{container:ddsh/size;position:absolute;inset:auto;top:calc(var(--ddh-safe) + 2px);left:clamp(16px,2.6vw,52px);right:clamp(16px,2.6vw,52px);bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + var(--ddh-shop-b) + var(--ddh-cta-h) + 14px);z-index:20;overflow:visible;background:none}
 .ddh .ddh__sh-in{height:100%;min-height:0;overflow:auto;scrollbar-width:thin;padding:clamp(18px,2.6vh,30px) clamp(22px,2.4vw,42px);border-radius:26px;background:rgba(249,246,240,.95);-webkit-backdrop-filter:blur(20px) saturate(1.15);backdrop-filter:blur(20px) saturate(1.15);box-shadow:0 36px 90px -36px rgba(18,32,32,.6),inset 0 0 0 1px rgba(255,255,255,.6),0 0 0 1px rgba(50,60,50,.07)}
+.ddh .ddh__sheet--mattress{top:calc(var(--ddh-safe) - 2px);bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + var(--ddh-shop-b) + var(--ddh-cta-h) + 10px)}
 .ddh .ddh__sh-x{top:14px;right:14px;width:36px;height:36px}
 .ddh .ddh__sh-head{padding-right:46px}
 .ddh .ddh__sheet--mattress .ddh__sh-in{align-content:stretch;grid-template-rows:auto auto minmax(0,1fr) auto minmax(0,1fr);row-gap:clamp(8px,1.4vh,14px);padding-top:clamp(14px,1.8vh,22px)}
@@ -480,7 +481,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__bio-copy{justify-content:center;gap:clamp(8px,1.3vh,14px);overflow:auto;padding-right:4px}
 .ddh .ddh__bio-stage{padding-top:30px}
 }
-@media (min-width:1051px) and (any-hover:hover) and (max-height:820px){
+@container ddsh (max-height:600px){
 .ddh .ddh__sh-h{font-size:clamp(24px,2vw,32px)}.ddh .ddh__sh-lede{font-size:13px}.ddh .ddh__bio-h{font-size:clamp(32px,2.7vw,44px)}
 .ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-lede{display:none}.ddh .ddh__sheet--mattress .ddh__sh-eye{display:none}.ddh .ddh__sheet--mattress .ddh__sh-in{row-gap:6px;padding-top:16px;padding-bottom:16px}.ddh .ddh__sheet--mattress .ddh__sh-row{font-size:10.5px}.ddh .ddh__sheet--mattress .ddh__spec small{display:none}.ddh .ddh__sheet--mattress .ddh__card{padding-bottom:9px}.ddh .ddh__sheet--mattress .ddh__card-s{margin-bottom:6px}.ddh .ddh__sheet--mattress .ddh__card-s+.ddh__spec{padding-top:6px}.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__steps{grid-row:1/3;align-self:end;margin:0 0 .3em}.ddh .ddh__bio-more span{display:none}.ddh .ddh__bio-details figcaption span{display:none}.ddh .ddh__card-s{font-size:12.3px}.ddh .ddh__card-d{font-size:12px}
 }
@@ -577,7 +578,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__sheet--topper .ddh__sh-in{box-shadow:0 40px 100px -36px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.08)}
 .ddh .ddh__sheet--bio .ddh__sh-in{box-shadow:0 40px 100px -40px rgba(20,60,100,.55),inset 0 0 0 1px rgba(255,255,255,.7)}
 }
-@media (min-width:1051px) and (any-hover:hover) and (max-height:820px){.ddh .ddh__sheet--topper .ddh__card-d{display:none}.ddh .ddh__sheet--topper .ddh__top-roll img{max-height:96px}.ddh .ddh__sheet--topper .ddh__benefit-list{margin-top:8px}.ddh .ddh__sheet--topper .ddh__sh-in{row-gap:10px;padding-top:16px;padding-bottom:16px}.ddh .ddh__sheet--topper .ddh__card-t{font-size:19px}}
+@container ddsh (max-height:600px){.ddh .ddh__sheet--topper .ddh__card-d{display:none}.ddh .ddh__sheet--topper .ddh__top-roll img{max-height:96px}.ddh .ddh__sheet--topper .ddh__benefit-list{margin-top:8px}.ddh .ddh__sheet--topper .ddh__sh-in{row-gap:10px;padding-top:16px;padding-bottom:16px}.ddh .ddh__sheet--topper .ddh__card-t{font-size:19px}}
 @media (min-width:701px) and (max-width:1050px),(min-width:701px) and (any-hover:none){.ddh .ddh__sheet--mattress .ddh__cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:1100px) and (any-hover:none){.ddh .ddh__sheet--mattress .ddh__cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .ddh .ddh__sheet--mattress .ddh__card-img{background:radial-gradient(120% 95% at 50% 38%,#ffffff 0,#f0f2f3 62%,#e3e7e9 100%)}
@@ -613,7 +614,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__cloud-tx{display:grid;gap:2px}
 .ddh .ddh__cloud-tx b{font-size:14.5px;font-weight:600;line-height:1.25;color:#16457a}
 .ddh .ddh__cloud-tx span{font-size:12.6px;line-height:1.4;color:#3b566f}
-@media (min-width:1051px) and (any-hover:hover) and (max-height:820px){.ddh .ddh__cloud-tx span{display:none}.ddh .ddh__bio-cloud{padding:8px 12px}}
+@container ddsh (max-height:600px){.ddh .ddh__cloud-tx span{display:none}.ddh .ddh__bio-cloud{padding:8px 12px}}
 .ddh .ddh__sheet--topper .ddh__card--dual .ddh__spec--combos>b{margin-bottom:6px}
 /* 1.10.4 fit: compact Her/Him badges; the Bio Comfort screen drops the three sub-lines on computers (the Cloud Comfort note carries the message) */
 .ddh .ddh__card-img--zones{gap:4px;padding:6px 8px}
@@ -627,7 +628,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__bio-more b{font-size:14px}
 .ddh .ddh__bio-copy{gap:clamp(7px,1.1vh,12px)}
 }
-@media (min-width:1051px) and (any-hover:hover) and (max-height:820px){.ddh .ddh__bio-more{display:none}.ddh .ddh__sheet--bio .ddh__sh-lede{font-size:12.6px;line-height:1.42}}
+@container ddsh (max-height:600px){.ddh .ddh__bio-more{display:none}.ddh .ddh__sheet--bio .ddh__sh-lede{font-size:12.6px;line-height:1.42}}
 .ddh .ddh__zb-flank{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:100%}
 .ddh .ddh__zb-flank img{flex:1 1 0;min-width:0;width:auto;max-width:56%;height:auto;max-height:100%;object-fit:contain}
 .ddh .ddh__zb-flank .ddh__zb{flex:0 0 25%;max-width:25%;padding:5px 4px 6px}
@@ -672,7 +673,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__core-tx h3{font-size:clamp(15px,1.15vw,19px);font-weight:600;line-height:1.2;color:#16457a}
 .ddh .ddh__core-tx p{font-size:12.8px;line-height:1.42;color:#3b566f}
 .ddh .ddh__core-chip{justify-self:start;margin-top:2px;padding:3px 11px;border-radius:999px;background:#e5f0fa;color:#16457a;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
-@media (min-width:1051px) and (any-hover:hover) and (max-height:820px){.ddh .ddh__core-tx p{display:none}.ddh .ddh__core-vis{height:clamp(104px,20vh,170px)}.ddh .ddh__bio-core{padding:8px}}
+@container ddsh (max-height:600px){.ddh .ddh__core-tx p{display:none}.ddh .ddh__core-vis{height:clamp(104px,20vh,170px)}.ddh .ddh__bio-core{padding:8px}}
 @media (max-width:700px){.ddh .ddh__sheet--bio .ddh__zfact{order:-1;margin-top:-10px}.ddh .ddh__bio-core{order:1}.ddh .ddh__core-vis{height:auto;grid-template-columns:1fr}.ddh .ddh__core-main,.ddh .ddh__core-cells{aspect-ratio:16/9}}
 /* toppers on dark glass now that the cut-outs are clean */
 .ddh .ddh__sheet--topper .ddh__card-img{background:radial-gradient(80% 90% at 50% 46%,rgba(255,255,255,.17) 0,rgba(255,255,255,.05) 62%,rgba(255,255,255,0) 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
@@ -703,10 +704,18 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto auto minmax(0,1.22fr) auto minmax(0,1fr)}}
 .ddh .ddh__pairs>i.ddh__ly{display:flex;align-items:center;justify-content:center;white-space:normal;overflow-wrap:anywhere}.ddh .ddh__pairs>.ddh__pn{letter-spacing:.04em;line-height:1.1}
 /* 1.10.6 low screens (about 720 px high): the lists give way to the pairings */
-@media (min-width:1051px) and (any-hover:hover) and (max-height:760px){
+@container ddsh (max-height:530px){
 .ddh .ddh__sheet--topper .ddh__benefit-list,.ddh .ddh__sheet--topper .ddh__depths p{display:none}
 .ddh .ddh__sheet--topper .ddh__covers{flex-wrap:nowrap;gap:6px}.ddh .ddh__sheet--topper .ddh__covers li{padding:4px 8px;font-size:12px;white-space:nowrap}
 .ddh .ddh__sheet--mattress .ddh__sh-row{display:none}
 .ddh .ddh__sheet--mattress .ddh__sh-in{grid-template-rows:auto minmax(0,1.15fr) minmax(0,1fr)}
 .ddh .ddh__pairs>i.ddh__ly{font-size:10.5px;padding:3px 2px}
 .ddh .ddh__pairs>em,.ddh .ddh__pairs>.ddh__pn{font-size:9px}.ddh .ddh__pairs{gap:2px 4px}.ddh .ddh__pairs>b{font-size:10px;letter-spacing:.04em}.ddh .ddh__pairs>.ddh__pn{letter-spacing:0}}
+/* 1.10.7: Bio Comfort Dual Plush pairs, one clear line each */
+.ddh .ddh__pr{display:block;white-space:nowrap}
+/* 1.10.7: on the Partners mattress the Her / Him badges sit on the lower edge, clear of the Partners tag */
+.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:78px}
+.ddh .ddh__sheet--mattress .ddh__zb-flank{align-items:flex-end}
+@container ddsh (max-height:600px){.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:64px}}
+@container ddsh (max-height:530px){.ddh .ddh__sheet--mattress .ddh__card-img--zones:has(.ddh__zb-flank){min-height:58px}}
+@container ddsh (max-height:530px){.ddh .ddh__sheet--mattress .ddh__zb-flank .ddh__zb small{display:none}.ddh .ddh__sheet--mattress .ddh__zb-flank .ddh__zb{padding:3px 4px}}

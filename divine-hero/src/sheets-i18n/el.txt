@@ -15,7 +15,7 @@ height = Ύψος
 firmness = Σκληρότητα
 f_sm_m_f = <i class="ddh__f-s">Μαλακό</i> · <i class="ddh__f-m">Μέτριο</i> · <i class="ddh__f-f">Σκληρό</i>
 v_dp = Ο ίδιος πυρήνας Bio Comfort με ένα plush ανώστρωμα από φυσικό λάτεξ από πάνω, ενωμένα σε ένα κάλυμμα: πιο απαλό πρώτο άγγιγμα πάνω στην ίδια ζωνική στήριξη.
-f_bdp = <i class="ddh__f-m">Μέτριο</i> + <i class="ddh__f-s">Μαλακό</i> · <i class="ddh__f-f">Σκληρό</i> + <i class="ddh__f-m">Μέτριο</i>
+f_bdp = <span class="ddh__pr"><i class="ddh__f-m">Μέτριο</i> + <i class="ddh__f-s">Μαλακό</i></span><span class="ddh__pr"><i class="ddh__f-f">Σκληρό</i> + <i class="ddh__f-m">Μέτριο</i></span>
 bio_cta = Ανακαλύψτε το Bio Comfort
 a_bio = Γυναίκα ξαπλωμένη στο στρώμα φυσικού λάτεξ Bio Comfort, του οποίου τα κύτταρα ακολουθούν την καμπύλη του σώματός της
 a_bio_dp = Γυναίκα ξαπλωμένη στο Bio Comfort Dual Plush: ζωνικός πυρήνας λάτεξ με plush ανώστρωμα από φυσικό λάτεξ

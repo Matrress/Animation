@@ -15,7 +15,7 @@ height = Altezza
 firmness = Rigidità
 f_sm_m_f = <i class="ddh__f-s">Morbido</i> · <i class="ddh__f-m">Medio</i> · <i class="ddh__f-f">Rigido</i>
 v_dp = Lo stesso nucleo Bio Comfort con un topper plush in lattice naturale sopra, uniti in un’unica fodera: un primo contatto più morbido sullo stesso sostegno zonato.
-f_bdp = <i class="ddh__f-m">Medio</i> + <i class="ddh__f-s">Morbido</i> · <i class="ddh__f-f">Rigido</i> + <i class="ddh__f-m">Medio</i>
+f_bdp = <span class="ddh__pr"><i class="ddh__f-m">Medio</i> + <i class="ddh__f-s">Morbido</i></span><span class="ddh__pr"><i class="ddh__f-f">Rigido</i> + <i class="ddh__f-m">Medio</i></span>
 bio_cta = Scopri Bio Comfort
 a_bio = Donna distesa sul materasso in lattice naturale Bio Comfort, le cui cellule seguono la curva del corpo
 a_bio_dp = Donna distesa su Bio Comfort Dual Plush: nucleo in lattice zonato con topper plush in lattice naturale
