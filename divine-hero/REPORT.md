@@ -13,7 +13,7 @@ Owner:
   * Option 1: Medium on top of Firm.
   * Option 2: Soft on top of Medium.
 * **Bio Comfort:** the clouds are now small (about a third of their former size), and a new "Cloud Comfort: it holds you above the surface" note explains that it adapts without sinking and supports without tension, so you rest on the surface, never in it. The note is in the 8 languages. On computers the three sub-lines under it are hidden so the screen fits without scrolling (checked at 1920×1080, 1440×900, 1366×768 and 1280×720); they remain on tablets.
-* Tests: 346–347 per harness, panels 792/792, guards, axe 0.
+* Tests: 346–347 per harness, panels 792/792, guards, axe 0. Pinned: `ecwid/section-1.10.4-jsdelivr.html` (commit `c786b5a`).
 
 ## 1.10.3: graphite instead of brown (2026-10-05)
 
