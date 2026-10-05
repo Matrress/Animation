@@ -180,7 +180,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.10.4/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.10.5/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -377,7 +377,7 @@ async function sheets() {
   { // translations reach the sheets
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } }); const page = await ctx.newPage();
     await page.goto(url + (url.includes('?') ? '&' : '?') + 'ddh-lang=fr', { waitUntil: 'load' }); await page.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 6000 });
-    const t = await page.evaluate(() => ({ lang: document.querySelector('.ddh__sheets').getAttribute('lang'), h: document.querySelector('#ddh-mat-t').textContent, z: document.querySelector('.ddh__zones li').textContent, alt: document.querySelector('#ddh-sheet-bio img').alt }));
+    const t = await page.evaluate(() => ({ lang: document.querySelector('.ddh__sheets').getAttribute('lang'), h: document.querySelector('#ddh-mat-t').textContent, z: document.querySelector('.ddh__zlist span').textContent, alt: document.querySelector('#ddh-sheet-bio img').alt }));
     ok(t.lang === 'fr' && /matelas en latex/.test(t.h) && t.z === 'Tête' && /Femme/.test(t.alt), 'French sheets: ' + JSON.stringify(t));
     await ctx.close();
   }

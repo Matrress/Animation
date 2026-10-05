@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.10.4 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.10.5 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -500,7 +500,6 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 
 /* --- Bio Comfort: sky --- */
 .ddh .ddh__sheet--bio{--sh-teal:#174a78;--sh-sage:#3c6f9a;--sh-oak:#5b7fa3;--sh-ink:#14324f;--sh-mute:#3f5a73;--sh-line:rgba(31,79,122,.16)}
-.ddh .ddh__sheet--bio .ddh__sh-in{background:url(assets/b-cloud.webp) no-repeat right 6% top -34px/min(30%,360px) auto,url(assets/b-cloud.webp) no-repeat left -6% bottom -52px/min(20%,250px) auto,radial-gradient(90% 70% at 70% 30%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 60%),linear-gradient(180deg,#bcd3e4 0,#d6e5f0 34%,#ebf2f8 70%,#f6f9fc 100%)}
 .ddh .ddh__sheet--bio .ddh__bio-h{font-weight:600;letter-spacing:.01em;color:#16457a;text-shadow:0 2px 24px rgba(255,255,255,.7)}
 .ddh .ddh__sheet--bio .ddh__sh-eye{color:#3d6a94}
 .ddh .ddh__sheet--bio .ddh__bio-tag{color:#2c5d8c}
@@ -611,7 +610,6 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__ly--f{background:linear-gradient(180deg,#f8cd78,#f3bd52)}
 /* Bio Comfort: Cloud Comfort note */
 .ddh .ddh__bio-cloud{display:flex;align-items:flex-start;gap:12px;width:100%;max-width:34em;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.66);box-shadow:0 12px 26px -20px rgba(20,60,100,.5),inset 0 0 0 1px rgba(255,255,255,.9);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.ddh .ddh__cloud-ic{flex:0 0 34px;width:34px;height:22px;margin-top:3px;background:url(assets/b-cloud.webp) center/contain no-repeat;filter:drop-shadow(0 3px 5px rgba(40,90,140,.28))}
 .ddh .ddh__cloud-tx{display:grid;gap:2px}
 .ddh .ddh__cloud-tx b{font-size:14.5px;font-weight:600;line-height:1.25;color:#16457a}
 .ddh .ddh__cloud-tx span{font-size:12.6px;line-height:1.4;color:#3b566f}
@@ -636,3 +634,52 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__zb-flank .ddh__zb small{font-size:clamp(8.5px,.62vw,10px);line-height:1.15}
 .ddh .ddh__zb-flank .ddh__zb b{font-size:clamp(10px,.75vw,12px);letter-spacing:.14em}
 .ddh .ddh__card-img--zones:has(.ddh__zb-flank){flex-direction:row;padding:6px 8px}
+
+/* ===== 1.10.5 ===== */
+/* every firmness word has its own colour: Soft blue, Medium teal, Firm amber, Extra/Super Firm vermilion */
+.ddh .ddh__sheet i.ddh__f-s,.ddh .ddh__sheet i.ddh__f-m,.ddh .ddh__sheet i.ddh__f-f,.ddh .ddh__sheet i.ddh__f-x{font-style:normal;font-weight:600}
+.ddh .ddh__sheet i.ddh__f-s{color:#1f6fb2}
+.ddh .ddh__sheet i.ddh__f-m{color:#0b7d80}
+.ddh .ddh__sheet i.ddh__f-f{color:#a56500}
+.ddh .ddh__sheet i.ddh__f-x{color:#b8402a}
+.ddh .ddh__sheet--topper i.ddh__f-x{color:#ff9d80;text-transform:uppercase;letter-spacing:.06em}
+.ddh .ddh__sheet--mattress .ddh__spec i.ddh__f-s,.ddh .ddh__sheet--mattress .ddh__spec i.ddh__f-m,.ddh .ddh__sheet--mattress .ddh__spec i.ddh__f-f,.ddh .ddh__sheet--mattress .ddh__spec i.ddh__f-x{letter-spacing:.02em}
+/* mattress cards: fresh latex white, no blue cast (Bio Comfort included) */
+.ddh .ddh__sheet--mattress .ddh__card--bio{border-color:rgba(255,255,255,.5);background:#faf9f6}
+.ddh .ddh__sheet--mattress .ddh__card-img,.ddh .ddh__sheet--mattress .ddh__card--bio .ddh__card-img{background:radial-gradient(120% 95% at 50% 38%,#ffffff 0,#f6f5f1 62%,#ebe9e3 100%)}
+.ddh .ddh__sheet--mattress .ddh__chip--prem{background:#ecebe6;color:#3f4549}
+.ddh .ddh__sheet--mattress .ddh__chip--dp{background:#e9ece9;color:#2f4a45}
+/* Bio Comfort: natural mist instead of a pasted cloud: soft fog in the corners and a cloud bank the mattress floats over */
+.ddh .ddh__sheet--bio .ddh__sh-in{background:radial-gradient(58% 44% at 88% -6%,rgba(255,255,255,.92) 0,rgba(255,255,255,0) 72%),radial-gradient(46% 38% at 4% 106%,rgba(255,255,255,.9) 0,rgba(255,255,255,0) 72%),linear-gradient(180deg,#c4d9e8 0,#dbe8f2 36%,#eef4f9 72%,#f7fafc 100%)}
+.ddh .ddh__sheet--bio .ddh__bio-fig{position:relative;padding-bottom:7%;background:none;isolation:isolate}
+.ddh .ddh__sheet--bio .ddh__bio-fig::before{content:"";position:absolute;inset:-6% -8%;z-index:-1;background:radial-gradient(46% 11% at 44% 100%,rgba(112,152,196,.30),rgba(112,152,196,0) 100%),radial-gradient(30% 9% at 84% 98%,rgba(112,152,196,.22),rgba(112,152,196,0) 100%),radial-gradient(34% 19% at 18% 90%,rgba(255,255,255,.95),rgba(255,255,255,0) 100%),radial-gradient(42% 23% at 45% 95%,#fff,rgba(255,255,255,0) 100%),radial-gradient(36% 21% at 74% 91%,rgba(255,255,255,.96),rgba(255,255,255,0) 100%),radial-gradient(30% 17% at 96% 82%,rgba(255,255,255,.8),rgba(255,255,255,0) 100%),radial-gradient(26% 15% at 3% 78%,rgba(255,255,255,.7),rgba(255,255,255,0) 100%),radial-gradient(68% 58% at 50% 52%,rgba(255,255,255,.5),rgba(255,255,255,0) 76%);-webkit-mask-image:radial-gradient(58% 60% at 50% 56%,#000 38%,rgba(0,0,0,0) 100%);mask-image:radial-gradient(58% 60% at 50% 56%,#000 38%,rgba(0,0,0,0) 100%);pointer-events:none}
+.ddh .ddh__sheet--bio .ddh__bio-fig img{filter:drop-shadow(0 34px 26px rgba(48,90,130,.16))}
+.ddh .ddh__cloud-ic{flex:0 0 36px;width:36px;height:24px;margin-top:2px;background:radial-gradient(46% 62% at 28% 62%,#fff 0,rgba(255,255,255,0) 100%),radial-gradient(52% 74% at 54% 46%,#fff 0,rgba(255,255,255,0) 100%),radial-gradient(44% 58% at 78% 64%,#fff 0,rgba(255,255,255,0) 100%);filter:drop-shadow(0 3px 5px rgba(40,90,140,.3))}
+
+/* ===== 1.10.5 Bio Comfort: the core is the feature; the seven zones are one slim fact line ===== */
+.ddh .ddh__zfact{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0;padding:6px 14px;border-radius:999px;background:#1f4f80;color:#fff;font-size:11px;line-height:1.3;box-shadow:0 8px 18px -12px rgba(15,50,95,.7)}
+.ddh .ddh__zfact b{font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:10.5px;color:#cfe3f6}
+.ddh .ddh__zlist{display:flex;flex-wrap:wrap}
+.ddh .ddh__zlist span+span::before{content:"·";margin:0 .55em;opacity:.55}
+.ddh .ddh__bio-core{display:grid;gap:8px;padding:10px;border-radius:20px;background:rgba(255,255,255,.72);box-shadow:0 14px 30px -22px rgba(20,60,100,.55),inset 0 0 0 1px rgba(255,255,255,.95);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.ddh .ddh__core-vis{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:10px;height:clamp(118px,19vh,210px)}
+.ddh .ddh__core-main,.ddh .ddh__core-cells{position:relative;min-height:0;border-radius:14px;overflow:hidden}
+.ddh .ddh__core-main{background:radial-gradient(80% 90% at 50% 42%,#ffffff 0,#f1f5f9 70%,#e6edf4 100%)}
+.ddh .ddh__core-main img{width:100%;height:100%;object-fit:contain;padding:4px 6px 10px}
+.ddh .ddh__core-cells img{width:100%;height:100%;object-fit:cover}
+.ddh .ddh__core-vis figcaption{position:absolute;left:8px;bottom:8px;max-width:calc(100% - 16px);padding:4px 11px;border-radius:999px;background:rgba(18,56,102,.88);color:#fff;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;line-height:1.25}
+.ddh .ddh__core-tx{display:grid;gap:3px;padding:0 4px}
+.ddh .ddh__core-tx h3{font-size:clamp(15px,1.15vw,19px);font-weight:600;line-height:1.2;color:#16457a}
+.ddh .ddh__core-tx p{font-size:12.8px;line-height:1.42;color:#3b566f}
+.ddh .ddh__core-chip{justify-self:start;margin-top:2px;padding:3px 11px;border-radius:999px;background:#e5f0fa;color:#16457a;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+@media (min-width:1051px) and (any-hover:hover) and (max-height:820px){.ddh .ddh__core-tx p{display:none}.ddh .ddh__core-vis{height:clamp(104px,20vh,170px)}.ddh .ddh__bio-core{padding:8px}}
+@media (max-width:700px){.ddh .ddh__sheet--bio .ddh__zfact{order:-1;margin-top:-10px}.ddh .ddh__bio-core{order:1}.ddh .ddh__core-vis{height:auto;grid-template-columns:1fr}.ddh .ddh__core-main,.ddh .ddh__core-cells{aspect-ratio:16/9}}
+/* toppers on dark glass now that the cut-outs are clean */
+.ddh .ddh__sheet--topper .ddh__card-img{background:radial-gradient(80% 90% at 50% 46%,rgba(255,255,255,.17) 0,rgba(255,255,255,.05) 62%,rgba(255,255,255,0) 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.ddh .ddh__sheet--topper .ddh__card-img img{filter:drop-shadow(0 14px 14px rgba(0,0,0,.45))}
+.ddh .ddh__sheet--topper i.ddh__f-s{color:#8fcbff}
+.ddh .ddh__sheet--topper i.ddh__f-m{color:#4fdbe3}
+.ddh .ddh__sheet--topper i.ddh__f-f{color:#f3bd52}
+.ddh .ddh__sheet--topper i.ddh__f-s,.ddh .ddh__sheet--topper i.ddh__f-m,.ddh .ddh__sheet--topper i.ddh__f-f{text-transform:uppercase;letter-spacing:.06em}
+@media (min-width:1051px) and (any-hover:hover){.ddh .ddh__sheet--topper .ddh__card-img{flex:0 0 auto;height:clamp(84px,15.5vh,140px);min-height:0}}
+@media (min-width:1051px) and (any-hover:hover){.ddh .ddh__bio-fig{min-height:0}.ddh .ddh__bio-fig img{max-height:100%;min-height:0}.ddh .ddh__bio-stage{grid-template-rows:minmax(0,1fr) auto auto}}

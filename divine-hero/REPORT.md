@@ -1,5 +1,31 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.10.5: coloured firmness, a cleaner Bio Comfort, clean toppers, the core as the feature (2026-10-05)
+
+Owner:
+1. In the mattress section every firmness gets its own colour.
+2. Bio Comfort looked blue: clean it to a fresher latex white.
+3. The cloud was stuck at the top and looked painted. Make it natural, not a drawn cloud.
+4. Ambient must clearly read "best value latex mattress".
+5. All English must be correct British English.
+6. "Dual Plush" must not appear twice in a card (tag and title).
+7. Make the mattress and topper colours match; no strange shapes at the topper's sides.
+8. Seven zones as a plain fact; show the core, the concept behind Bio Comfort (special support, Anatomical Cloud design), not tiny icons.
+
+**Changes**
+* **Firmness colours (all cards, all 8 languages):** Soft blue, Medium teal, Firm amber, Extra Firm and Super Firm vermilion. On the dark topper panel the brighter variants are used.
+* **Mattress cards:** Bio Comfort cards are fresh latex white (no blue cast); tags are cool neutral.
+* **Cloud:** replaced by soft natural mist: fog in the corners and a feathered cloud bank under the mattress, so it floats on it. There is no pasted cloud shape, and the cloud image is gone from the release.
+* **Ambient:** tag "Best value"; line "Best value latex mattress".
+* **Tags:** Botanic Dual Plush "Premium"; Bio Comfort Dual Plush "Innovation"; Bio Support Dual "Premium". "Dual Plush" appears once per card, in the title.
+* **Toppers:** the slab is cut out of the opaque white "shadow plate" that came with the source pictures (that plate was the odd rounded shape at the sides). The outline is smoothed, and the cut-outs sit on dark glass. Topper and Ambient pictures are graded to Botanic's latex tone (measured from the Botanic mattress), so the range matches. All three topper pictures have the same height.
+* **Bio Comfort screen:**
+  * The seven zones are one slim line: "Seven body zones · Head · Shoulders · …".
+  * The three mini icons are replaced by a core panel: the cutaway of the mattress (cover, cellular-capsule core, base; tagged "Anatomical Cloud design"), a large close-up of the cells ("Cellular-capsule core"), the headline "The core is the concept", a sentence on the seven-zone core with its own Synchroniser layer, and a "Highest ventilation in natural latex" tag.
+  * New images: the cutaway (52 KB) and the cells (18 KB); two unused pictures were removed.
+* **British English pass:** "It shapes itself to you", "Seven-zone" spelled out, "A natural upgrade for added comfort", "Plush, dual-layer comfort", "A dual-comfort concept with two layers of regulation", "Available depths", "Each one has a reason to exist", "Shredded latex designed for hospitality", "Extra firm support, reinforced with coconut coir", "Two comfort levels, joined by a bridge topper".
+* Checked at 1920×1080, 1440×900, 1366×768 and 1280×720: no sheet scrolls.
+
 ## 1.10.4: Partners badges, clear topper layers, a calmer cloud (2026-10-05)
 
 Owner:
