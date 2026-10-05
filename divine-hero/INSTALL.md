@@ -15,11 +15,11 @@ Ecwid's documented 4,000-symbol limit belongs to the **site-wide body "Custom Ja
 
 | Form | File | Paste size | What must be hosted |
 |---|---|---|---|
-| All-in-one (over the ~20k paste limit: not for the live editor) | `ecwid/section-1.10.1-allinone-jsdelivr.html` | 8,906 characters | Nothing: CSS + JS are inside the section; images/fonts come from jsDelivr (pinned commit `a628ecd`) |
-| All-in-one, own domain | `ecwid/section-1.10.1-allinone.html` | 8,906 characters | images + fonts on `assets.divinedunlop.com` (§2) |
+| All-in-one (over the ~20k paste limit: not for the live editor) | `ecwid/section-1.10.1-allinone-jsdelivr.html` | 53,655 characters | Nothing: CSS + JS are inside the section; images/fonts come from jsDelivr (pinned commit `a628ecd`) |
+| All-in-one, own domain | `ecwid/section-1.10.1-allinone.html` | 53,011 characters | images + fonts on `assets.divinedunlop.com` (§2) |
 | External CSS/JS (leanest page HTML) | `ecwid/section-1.10.1.html` | 8,906 characters | everything in `release/1.10.1/` on `assets.divinedunlop.com` (§2) |
 
-All three produce identical output (verified: same geometry, same 156 interaction checks). The all-in-one is about the size of the v26 reference file (9,519 characters) that was planned for one section. Its CSS/JS aren't cached separately, which costs about 6 KB compressed per homepage view.
+All three produce identical output (verified: same geometry, same 156 interaction checks). The all-in-one is about the size of the v26 reference file (28,761 characters) that was planned for one section. Its CSS/JS aren't cached separately, which costs about 6 KB compressed per homepage view.
 
 ## 2. Where the external files live (choose one host)
 
