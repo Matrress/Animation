@@ -29,7 +29,7 @@ All of it is in the 8 languages.
   * Gold CTA.
 * **Tablets:** the eight mattress cards go 2 per row, so each group of four is a 2×2.
 
-* Tests: 346–347 per harness, panels 792/792, guards, axe 0 (every sheet, desktop and phone). LCP and CLS unchanged.
+* Tests: 346–347 per harness, panels 792/792, guards, axe 0 (every sheet, desktop and phone). LCP and CLS unchanged. Pinned: `ecwid/section-1.10.2-jsdelivr.html` (commit `cd21377`).
 
 ## 1.10.1: tablets and computers only; collection data; loading in two stages (2026-10-05)
 
