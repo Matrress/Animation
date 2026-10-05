@@ -1,5 +1,13 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.10.3: graphite instead of brown (2026-10-05)
+
+Owner: brown is not a favourite; stay in the graphite range.
+
+* The mattress preview's stage is now graphite (#1e2225 → #363c41) with a soft cool light. Accents are pale silver-blue instead of gold, and the CTA is light grey.
+* Cards and photo panels are cool white; the Bio Comfort cards are pale sky. The Premium/Exclusive/Innovation and Orthopaedic tags are in cool tones.
+* Tests: 346–347 per harness, guards, axe 0.
+
 ## 1.10.2: product-page data; premium skins (2026-10-05)
 
 Owner, with screenshots of the product pages: correct heights and firmness everywhere; a more premium feel; Bio Comfort light and heavenly like its product page; the collection previews premium with contrast and cards, following the mockups (bold type on dark cards).

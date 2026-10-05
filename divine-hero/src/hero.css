@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams Hero 1.10.2 | namespaced .ddh | baseline = approved v26 */
+/*! Divine DunlopDreams Hero 1.10.3 | namespaced .ddh | baseline = approved v26 */
 /* Fonts: Chillax 400/600 subset to Latin + Latin-1 + Latin Extended-A + typographic punctuation. */
 @font-face{font-family:DDHChillax;src:url(assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDHChillax;src:url(assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -494,7 +494,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 
 /* ===== 1.10.2 premium skins (owner's mockups) =====
    Bio Comfort: light, airy, heavenly — pale sky, clouds, deep navy type.
-   Mattresses: light cards on a dark, warm bedroom tone (contrast). Toppers: deep night navy, dark glass cards,
+   Mattresses: light cards on graphite (contrast). Toppers: deep night navy, dark glass cards,
    bold light type, firmness coloured Soft / Medium / Firm. */
 .ddh .ddh__f-s,.ddh .ddh__f-m,.ddh .ddh__f-f{font-style:normal}
 
@@ -520,20 +520,20 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 @media (any-hover:hover){.ddh .ddh__sheet--bio .ddh__sh-cta:hover{background:#0f3561}}
 .ddh .ddh__sheet--bio .ddh__sh-x{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.9)}
 
-/* --- Mattresses: dark warm stage, light cards --- */
-.ddh .ddh__sheet--mattress .ddh__sh-in{background:radial-gradient(70% 60% at 88% -10%,rgba(255,210,150,.20) 0,rgba(255,210,150,0) 60%),radial-gradient(60% 50% at 0% 110%,rgba(120,150,170,.16) 0,rgba(120,150,170,0) 60%),linear-gradient(160deg,#2a2521 0,#352e28 50%,#433930 100%);color:#efe8de}
-.ddh .ddh__sheet--mattress .ddh__sh-eye{color:#d8b384}
+/* --- Mattresses: graphite stage, light cards --- */
+.ddh .ddh__sheet--mattress .ddh__sh-in{background:radial-gradient(70% 60% at 88% -10%,rgba(255,255,255,.10) 0,rgba(255,255,255,0) 60%),radial-gradient(60% 50% at 0% 110%,rgba(150,175,190,.12) 0,rgba(150,175,190,0) 60%),linear-gradient(160deg,#1e2225 0,#2a2f33 50%,#363c41 100%);color:#e9edf0}
+.ddh .ddh__sheet--mattress .ddh__sh-eye{color:#b9c6cd}
 .ddh .ddh__sheet--mattress .ddh__sh-h{color:#fff}
-.ddh .ddh__sheet--mattress .ddh__sh-h em{color:#e6c393}
-.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-lede{color:#d6ccbf}
-.ddh .ddh__sheet--mattress .ddh__steps{color:#c4b8a9}
+.ddh .ddh__sheet--mattress .ddh__sh-h em{color:#cfdde3}
+.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__sh-lede{color:#cdd4d9}
+.ddh .ddh__sheet--mattress .ddh__steps{color:#b8c1c7}
 .ddh .ddh__sheet--mattress .ddh__steps b{color:#fff}
-.ddh .ddh__sheet--mattress .ddh__sh-row{color:#cdbfae}
+.ddh .ddh__sheet--mattress .ddh__sh-row{color:#bfc8ce}
 .ddh .ddh__sheet--mattress .ddh__sh-row::after{background:rgba(255,255,255,.14)}
-.ddh .ddh__sheet--mattress .ddh__card{border-color:rgba(255,255,255,.5);background:#fbf8f3;box-shadow:0 18px 34px -22px rgba(0,0,0,.6)}
+.ddh .ddh__sheet--mattress .ddh__card{border-color:rgba(255,255,255,.5);background:#f9fafa;box-shadow:0 18px 34px -22px rgba(0,0,0,.6)}
 .ddh .ddh__sheet--mattress .ddh__card-t{font-size:clamp(15.5px,1.12vw,18.5px)}
-.ddh .ddh__sheet--mattress .ddh__card--bio{border-color:#e6cf9f;background:linear-gradient(180deg,#fffdf8,#f8efdd)}
-.ddh .ddh__sheet--mattress .ddh__sh-cta{background:#f3e7d3;color:#231d18}
+.ddh .ddh__sheet--mattress .ddh__card--bio{border-color:#c9d9e6;background:linear-gradient(180deg,#ffffff,#eaf1f7)}
+.ddh .ddh__sheet--mattress .ddh__sh-cta{background:#eef2f4;color:#1e2225}
 @media (any-hover:hover){.ddh .ddh__sheet--mattress .ddh__sh-cta:hover{background:#fff}.ddh .ddh__sheet--mattress .ddh__card:hover{border-color:#fff;box-shadow:0 26px 44px -22px rgba(0,0,0,.75)}}
 .ddh .ddh__sheet--mattress .ddh__sh-x{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22)}
 .ddh .ddh__sheet--mattress .ddh__sh-x i,.ddh .ddh__sheet--mattress .ddh__sh-x i::after,.ddh .ddh__sheet--topper .ddh__sh-x i,.ddh .ddh__sheet--topper .ddh__sh-x i::after{background:#fff}
@@ -572,7 +572,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__sheet--topper .ddh__sh-cta{background:linear-gradient(180deg,#f6d38c,#e7b65e);color:#1b1a16;box-shadow:0 14px 28px -16px rgba(240,185,90,.7)}
 @media (any-hover:hover){.ddh .ddh__sheet--topper .ddh__sh-cta:hover{background:linear-gradient(180deg,#fadc9e,#edc06c)}}
 .ddh .ddh__sheet--topper .ddh__sh-x{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22)}
-.ddh .ddh__sheet--mattress .ddh__sh-cta:focus-visible,.ddh .ddh__sheet--topper a:focus-visible,.ddh .ddh__sheet--topper button:focus-visible,.ddh .ddh__sheet--mattress .ddh__sh-x:focus-visible{outline-color:#f3d39a}
+.ddh .ddh__sheet--mattress .ddh__sh-cta:focus-visible,.ddh .ddh__sheet--topper a:focus-visible,.ddh .ddh__sheet--topper button:focus-visible,.ddh .ddh__sheet--mattress .ddh__sh-x:focus-visible{outline-color:#dfe8ec}
 @media (min-width:1051px) and (any-hover:hover){
 .ddh .ddh__sheet--mattress .ddh__sh-in{box-shadow:0 40px 100px -36px rgba(0,0,0,.75),inset 0 0 0 1px rgba(255,255,255,.08)}
 .ddh .ddh__sheet--topper .ddh__sh-in{box-shadow:0 40px 100px -36px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.08)}
@@ -581,3 +581,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 @media (min-width:1051px) and (any-hover:hover) and (max-height:820px){.ddh .ddh__sheet--topper .ddh__card-d{display:none}.ddh .ddh__sheet--topper .ddh__top-roll img{max-height:96px}.ddh .ddh__sheet--topper .ddh__benefit-list{margin-top:8px}.ddh .ddh__sheet--topper .ddh__sh-in{row-gap:10px;padding-top:16px;padding-bottom:16px}.ddh .ddh__sheet--topper .ddh__card-t{font-size:19px}}
 @media (min-width:701px) and (max-width:1050px),(min-width:701px) and (any-hover:none){.ddh .ddh__sheet--mattress .ddh__cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:1100px) and (any-hover:none){.ddh .ddh__sheet--mattress .ddh__cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.ddh .ddh__sheet--mattress .ddh__card-img{background:radial-gradient(120% 95% at 50% 38%,#ffffff 0,#f0f2f3 62%,#e3e7e9 100%)}
+.ddh .ddh__sheet--mattress .ddh__card--bio .ddh__card-img{background:radial-gradient(120% 95% at 50% 38%,#fbfdfe 0,#eaf1f6 62%,#dde8f0 100%)}
+.ddh .ddh__sheet--mattress .ddh__chip--prem{background:linear-gradient(90deg,#dfe9f1,#cfdde8);color:#1f4466}
+.ddh .ddh__sheet--mattress .ddh__chip--ortho{background:#e4e7e9;color:#3a4248}
