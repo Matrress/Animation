@@ -1,5 +1,21 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.13.0: dark cards with white type, graphite selectors, real covers, exact weight ranges (2026-10-06)
+
+Owner corrections after 1.12.0 (Bulgarian brief, 6 points) and the follow-up (darker green, no Dual Plush change, ugly blue behind the seven zones, see-through head, closing behaviour, firmness colours, bigger type for people who wear glasses).
+
+Done:
+1. Mattress selector: blue graphite (#101c2a to #213a50), every surface dark glass with white type; list cards keep picture, family, name and facts (the description lives in the preview). Topper selector: much darker graphite with only a faint green sheen (#090e0d to #16211e), mint accents, gold call to action.
+2. Context cards redesigned: deep petrol graphite, white letters, mint accents, almost opaque (nothing behind them shows through, which also removes the reflection of the lettering and the hair). Type 17 px body, 27-34 px titles; cards are wider (up to 600/680 px). On short screens optional lines drop out in tiers (never smaller type); the Natural Adaptation strip becomes 4 + 3 when narrow.
+3. Natural Adaptation uses the owner's cut-out picture flattened on a solid dark panel (no transparency, no blue panel) over seven numbered, translatable zone tiles.
+4. Original Dunlop Technology: no mention of layers (guarded in 9 languages); the message is custom made and fine tuning.
+5. Firmness Regulation: exact ranges, no "approximately" (guarded): Soft up to 48 kg (confirmed), Medium 47-83 kg, Firm 85-110 kg, Extra Firm from 120 kg; the small "sometimes up to about" notes are gone. The four levels use the blue-graphite steps of the mattress selector.
+6. Cover Options from the owner's source picture: 100% Organic Cotton, Cotton & Wool, Aloe Vera Cotton, Cashmere with Silver Ions (no cotton blend), with their photographs; "Every cover has a durable zip for easy removal and maintenance"; "Washable at up to 40 C, non-toxic, non-sprayed".
+7. Closing: a card closes when the pointer leaves its point and the card, with the X, with Escape, and on touch with a tap outside; a tap on the card text no longer closes it. Points under an open card are hidden and out of reach until it is closed.
+8. Dual Plush: unchanged from 1.12.0 (the 1.13 tweaks were reverted); awaiting the owner's answer on what to restore.
+9. Also fixed: the header-bridge grace (450 ms) after a rare race under load; short-screen fits of the topper selector (guide and preview).
+Tests: interaction 379 / 379 / 375 / 375, panels 792, guards (new: no layers, no approximation, real covers), axe, perf, fit matrix. Screenshots: reports/compare/1.13.0-*.png.
+
 ## 1.12.0: orientation guides in the selectors, five context cards, Dual Plush card without heights, no gendered wording (2026-10-06)
 
 Owner brief ("Complete Implementation Brief", 5 iPad screenshots): selectors open on a guide (no preselected model); light liquid-glass context cards for the hotspots; Firmness Regulation and Cover Options replace two points; Dual Plush card explains the system per model; no "Her/Him"; nothing covers the CTAs, LATEX block, navigation, the size control or the chat.

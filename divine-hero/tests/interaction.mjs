@@ -43,7 +43,7 @@ async function desktop(w, h) {
   await page.mouse.move(5, h - 5); await page.mouse.move(w / 2, h + 50); await page.evaluate(() => window.scrollTo(0, 0));
   await page.mouse.move(2, 2); await page.waitForTimeout(80);
   // click each
-  for (const k of KEYS) { const c = await centre(page, k); await page.mouse.click(c.x, c.y); await page.waitForTimeout(40); const s = await state(page); ok(s.s === k, `click ${k} -> ${s.s}`); }
+  for (const k of KEYS) { await page.keyboard.press('Escape'); await page.mouse.move(5, 5); await page.waitForTimeout(30); const c = await centre(page, k); await page.mouse.click(c.x, c.y); await page.waitForTimeout(40); const s = await state(page); ok(s.s === k, `click ${k} -> ${s.s}`); }
   // ventilation "cooling": full-frame blue wash visible only in the temperature state
   { const t = await centre(page, 'temperature'); await page.mouse.click(t.x, t.y); }
   await page.waitForTimeout(800);                                   // .45 s fade; stage-2 loading may run alongside
@@ -100,13 +100,13 @@ async function touch(w, h, dpr, label) {
   for (const k of KEYS) {
     // short landscape screens: the user scrolls a point into view before tapping it
     await page.evaluate((k) => { const b = document.querySelector(`[data-ddh-point=${k}]`), r = b.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) b.scrollIntoView({ block: 'center' }); }, k);
-    await page.waitForTimeout(120);
+    await page.keyboard.press('Escape'); await page.waitForTimeout(120);   // 1.13.0: a point under an open context card is out of reach: the card is closed first (its X, a tap outside, Escape)
     const c = await centre(page, k); await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(60);
     const s = await state(page); ok(s.s === k && s.exp.length === 1, `tap ${k} -> ${JSON.stringify(s)}`);
   }
   await page.evaluate(() => document.querySelector('[data-ddh-point=weight]').scrollIntoView({ block: 'center' })); await page.waitForTimeout(120);
-  const c = await centre(page, 'weight'); await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(60);
-  ok((await state(page)).s === null, 'second tap on same hotspot closes');
+  { const x = await page.$('[data-ddh-card=weight] [data-ddh-hcx]'); if (x && await x.isVisible()) await x.tap(); else { const c = await centre(page, 'weight'); await page.touchscreen.tap(c.x, c.y); } await page.waitForTimeout(60); }
+  ok((await state(page)).s === null, 'second tap on the same hotspot (or the card\'s X) closes');
   await page.evaluate(() => document.querySelector('[data-ddh-point=zones]').scrollIntoView({ block: 'center' })); await page.waitForTimeout(120);
   const c2 = await centre(page, 'zones'); await page.touchscreen.tap(c2.x, c2.y); await page.waitForTimeout(60);
   ok((await state(page)).s === 'zones', 'tap opens zones');
@@ -413,7 +413,7 @@ async function sheets() {
       let k = await page.evaluate(() => { const l = [...document.querySelectorAll('.ins-tile--header a')].find((a) => a.textContent.trim() === 'Mattresses').getBoundingClientRect(); const s = document.querySelector('#ddh-sheet-mattress .ddh__sh-in').getBoundingClientRect(); return { open: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), via: document.querySelector('.ddh').getAttribute('data-ddh-via'), below: Math.round(s.top - l.bottom), hit: document.elementFromPoint(l.left + l.width / 2, l.top + l.height / 2).textContent.trim() }; });
       ok(k.open === 'mattress' && k.via === 'nav' && k.below >= 0 && k.hit === 'Mattresses', 'hovering the header\'s Mattresses opens the selector below the header, the link stays clickable: ' + JSON.stringify(k));
       await page.mouse.move(700, 160, { steps: 4 }); await page.mouse.move(700, 600, { steps: 6 }); await page.waitForTimeout(450);
-      ok(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-open-sheet')) === 'mattress', '…and stays open while the pointer moves down into it');
+      { const o = await page.evaluate(() => [document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), document.querySelector('.ddh').getAttribute('data-ddh-state'), document.querySelector('.ddh').getAttribute('data-ddh-via')]); ok(o[0] === 'mattress', '…and stays open while the pointer moves down into it ' + JSON.stringify(o)); }
       await page.mouse.move(5, 880, { steps: 4 }); await page.waitForTimeout(600);
       ok(!(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'))), '…and closes when the pointer leaves');
       }

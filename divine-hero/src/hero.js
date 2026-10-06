@@ -438,7 +438,7 @@
       sheet = null; sheetFrom = null; sheetMode = '';
       if ((modal || inside) && !quiet && from && from.offsetWidth) { backFocus = true; from.focus({ preventScroll: true }); backFocus = false; }   // focus comes back without reopening
     }
-    function later() { w.clearTimeout(hoverT); if (sheetMode === 'hover') hoverT = w.setTimeout(function () { closeSheet(true); }, 280); }
+    function later() { w.clearTimeout(hoverT); if (sheetMode === 'hover') hoverT = w.setTimeout(function () { closeSheet(true); }, root.getAttribute('data-ddh-via') === 'nav' ? 450 : 280); }   // from the site header the pointer has a gap to cross
     function pick(btn) {
       var el = btn.closest('.ddh__sheet'), v = btn.getAttribute('data-ddh-v');
       [].forEach.call(el.querySelectorAll('[data-ddh-v]'), function (b) { var on = b === btn; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
@@ -549,7 +549,7 @@
       var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;   // the Shop row below the fold: the card still ends on screen
       c.style.top = Math.round(top) + 'px'; c.style.maxHeight = Math.max(160, Math.round(bottom - top)) + 'px';
       c.removeAttribute('data-tight');                                                         // low hero: optional lines step aside (type never shrinks)
-      if (c.scrollHeight > c.clientHeight + 1) { c.setAttribute('data-tight', '1'); if (c.scrollHeight > c.clientHeight + 1) c.setAttribute('data-tight', '2'); }
+      if (c.scrollHeight > c.clientHeight + 1) { c.setAttribute('data-tight', '1'); if (c.scrollHeight > c.clientHeight + 1) { c.setAttribute('data-tight', '2'); if (c.scrollHeight > c.clientHeight + 1) c.setAttribute('data-tight', '3'); } }
       // points the open card covers step aside (they would otherwise catch the pointer resting on the card)
       var r = c.getBoundingClientRect();
       points.forEach(function (p) { var q = p.getBoundingClientRect(), x = q.left + q.width / 2, y = q.top + q.height / 2; p.toggleAttribute('data-ddh-under', !!q.width && x > r.left - 6 && x < r.right + 6 && y > r.top - 6 && y < r.bottom + 6); });
