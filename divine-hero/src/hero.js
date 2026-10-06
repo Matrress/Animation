@@ -549,6 +549,7 @@
       var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;   // the Shop row below the fold: the card still ends on screen
       c.style.top = Math.round(top) + 'px'; c.style.maxHeight = Math.max(160, Math.round(bottom - top)) + 'px';
       c.toggleAttribute('data-tight', bottom - top < 470); if (c.scrollHeight > c.clientHeight + 1) c.setAttribute('data-tight', '');   // compact when the copy would not fit
+      if (c.scrollHeight > c.clientHeight + 1) c.setAttribute('data-tight', '2'); // short screens: lead line and example rows step aside
       // points the open card covers step aside (they would otherwise catch the pointer resting on the card)
       var r = c.getBoundingClientRect();
       points.forEach(function (p) { var q = p.getBoundingClientRect(), x = q.left + q.width / 2, y = q.top + q.height / 2; p.toggleAttribute('data-ddh-under', !!q.width && x > r.left - 6 && x < r.right + 6 && y > r.top - 6 && y < r.bottom + 6); });

@@ -1078,6 +1078,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__hc[data-tight] .ddh__hc-l{font-size:12.8px;margin-bottom:7px}
 .ddh .ddh__hc[data-tight] .ddh__hcf small{display:none}
 .ddh .ddh__hc[data-tight] .ddh__hc-chips li{font-size:11px}
+.ddh .ddh__hc[data-tight="2"] .ddh__hc-l,.ddh .ddh__hc[data-tight="2"] .ddh__hc-dp ul{display:none}
 @media (prefers-reduced-motion:reduce){.ddh .ddh__hc{animation:none!important}}
 @media (forced-colors:active){.ddh .ddh__hc{border:1px solid CanvasText;background:Canvas}}
 /* --- selector orientation guides (nothing preselected) --- */
