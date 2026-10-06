@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.11.2 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.12.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.11.2';
+  var VERSION = '1.12.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -193,8 +193,9 @@
       if (key && (pointsOff() || sheet)) key = null;
       if (key === active) { if (key && announce) live.textContent = txtOf(key); return; }
       active = key;
-      if (key) { warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : key === NIGHT ? NIGHT : 'brand'); fit(key); }
+      if (key) { warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : key === NIGHT ? NIGHT : 'brand'); fit(key); placeCard(key); }
       else { root.removeAttribute('data-ddh-state'); root.removeAttribute('data-ddh-screen'); }
+      if (typeof unplace === 'function' && (!key || !cardOf(key))) unplace();
       var txt = '';
       copies.forEach(function (c) { var isOn = c.getAttribute('data-ddh-copy') === key; c.setAttribute('aria-hidden', String(!isOn)); if (isOn) txt = speak(c); });
       screens.forEach(function (s) { var isBack = s.classList.contains('ddh__screen--back'); s.setAttribute('aria-hidden', String(!key || (key === 'back' ? !isBack : isBack))); });
@@ -219,7 +220,7 @@
       if (!b.width || !b.height) { centres = null; return; }
       centres = points.filter(function (p) { return p.offsetWidth > 0; }).map(function (p) { // hidden points (night on touch) never hit
         var r = p.getBoundingClientRect();
-        return { key: p.getAttribute('data-ddh-point'), x: (r.left + r.width / 2 - b.left) / b.width, y: (r.top + r.height / 2 - b.top) / b.height };
+        return { key: p.getAttribute('data-ddh-point'), el: p, x: (r.left + r.width / 2 - b.left) / b.width, y: (r.top + r.height / 2 - b.top) / b.height };
       });
     }
     function invalidate() { centres = null; }
@@ -236,7 +237,9 @@
       if (x < -.02 || x > 1.02 || y < -.02 || y > 1.02) return null;
       var ratio = b.height / b.width, best = null, bd = Infinity, e = scale > 1 ? .02 : 0;
       centres.forEach(function (p) {
+        p.under = p.el.hasAttribute('data-ddh-under');
         if (active && immersive(active, w) && p.key !== active) return; // immersive: only its own point is live
+        if (p.under) return;                                           // 1.12.0: under the open card
         var dd = Math.hypot(x - p.x, (y - p.y) * ratio), r = R[p.key] * scale;
         if (active === p.key) r += immersive(p.key, w) ? .05 : .02; // immersive states hold a little wider
         if (dd < r && dd < bd) { best = p.key; bd = dd; }
@@ -255,7 +258,9 @@
       raf = 0; var k = hit(lastX, lastY, 1);
       // 1.11.1: while the Dual Plush card is up, leaving the lifted mattress does not drop it at once: the pointer gets a
       // moment to travel across to the card (on the card it stays; anywhere else it closes as before)
-      if (active === 'system' && k !== 'system' && dpcLive() && towardDpc(lastX, lastY)) { if (!dpcT) dpcT = w.setTimeout(function () { dpcT = 0; if (!overDpc && active === 'system') show(hit(lastX, lastY, 1)); }, 500); return; }
+      var oc = cardOf(active);
+      if (oc && k !== active && inBox(oc, lastX, lastY)) { if (dpcT) { w.clearTimeout(dpcT); dpcT = 0; } return; }   // reading the card (perhaps over a point it covers)
+      if (oc && k !== active && toward(oc, lastX, lastY)) { if (!dpcT) { var was = active; dpcT = w.setTimeout(function () { dpcT = 0; if (!overDpc && active === was) show(hit(lastX, lastY, 1)); }, 500); } return; }
       if (dpcT) { w.clearTimeout(dpcT); dpcT = 0; }
       show(k);
     }
@@ -278,7 +283,7 @@
     cleanups.push(function () { if (raf) w.cancelAnimationFrame(raf); });
     on(art, 'pointerleave', function (ev) {
       if (ev.pointerType === 'touch' || group.contains(d.activeElement)) return;
-      if (ev.relatedTarget && dpc && dpc.contains(ev.relatedTarget)) return;   // onto the Dual Plush card
+      if (inCards(ev.relatedTarget)) return;   // onto the open card (1.11.1 Dual Plush, 1.12.0 context cards)
       if (raf) { w.cancelAnimationFrame(raf); raf = 0; }
       show(null);
     }, { passive: true });
@@ -301,9 +306,9 @@
       show(key, true);
     });
     points.forEach(function (p) {
-      on(p, 'pointerenter', function (ev) { var k = p.getAttribute('data-ddh-point'); if (ev.pointerType !== 'touch' && (!active || !immersive(active, w) || k === active)) show(k); }, { passive: true });
+      on(p, 'pointerenter', function (ev) { var k = p.getAttribute('data-ddh-point'); if (ev.pointerType !== 'touch' && !p.hasAttribute('data-ddh-under') && (!active || !immersive(active, w) || k === active)) show(k); }, { passive: true });   // 1.12.0: a point under the open card opens by click/tap, not by hover
     });
-    on(d, 'click', function (ev) { if (active && !viewport.contains(ev.target) && !(dpc && dpc.contains(ev.target))) show(null); });
+    on(d, 'click', function (ev) { if (active && !viewport.contains(ev.target) && !inCards(ev.target)) show(null); });
     on(d, 'keydown', function (ev) { if (active && (ev.key === 'Escape' || ev.key === 'Esc')) show(null); });
     on(w, 'resize', function () { if (active && pointsOff()) show(null); }, { passive: true }); // rotated to upright phone
 
@@ -362,7 +367,7 @@
     // still goes to the collection. Touch / narrow screens: the first tap opens the sheet full screen (its own button
     // leads on); Escape, the close button or a click outside closes it.
     var sheetBox = null, sheetReq = false, sheet = null, sheetMode = '', sheetFrom = null, sheetWait = null, hoverT = 0, lastPT = '', openedAt = 0;
-    var dpc = null, overDpc = false, dpcT = 0;   // 1.11.1 the Dual Plush card (revealed with the lifted mattress)
+    var dpc = null, overDpc = false, dpcT = 0, hcs = null;   // 1.11.1 the Dual Plush card (revealed with the lifted mattress)
     var pvT = 0, sheetPT = '', backFocus = false, szBtn = root.querySelector('.ddh__sz'), szEl = null, szMode = '', szT = 0;   // 1.11.1 model previews, size guide
     var ctas = [].slice.call(root.querySelectorAll('[data-ddh-sheet]')), bioPoint = group.querySelector('[data-ddh-point=bio]');
     var deskMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (any-hover:hover)') : { matches: true };
@@ -417,7 +422,7 @@
       sheet = el; sheetMode = mode; sheetFrom = from || null; openedAt = Date.now();
       var h = host(!deskMQ.matches); if (sheetBox.parentNode !== h) h.appendChild(sheetBox);
       if (sheetBox.getAttribute('lang') !== (lang || 'en')) sheetBox.setAttribute('lang', lang || 'en');
-      eager(el); el.hidden = false; root.setAttribute('data-ddh-open-sheet', name);
+      showGuide(el); eager(el); el.hidden = false; root.setAttribute('data-ddh-open-sheet', name);
       el.setAttribute('aria-modal', String(mode === 'modal'));
       if (sheetFrom) sheetFrom.setAttribute('aria-expanded', 'true');
       if (!deskMQ.matches) lock(true);
@@ -447,6 +452,8 @@
         if (t.closest('[data-ddh-close]')) { if (t.closest('#ddh-sizes')) szClose(true); else closeSheet(); return; }
         // 1.11.1: a model card is a plain link to its product. A touch on a card that is not the one previewed shows its
         // preview first (the preview's own button, or a second touch, leads on); a mouse click goes straight there.
+        var g = t.closest('[data-ddh-go]'); if (g) { var gc = g.closest('.ddh__sheet').querySelector('[data-ddh-m="' + g.getAttribute('data-ddh-go') + '"]'); if (gc) { pickModel(gc, true); if (fv(g)) gc.focus({ preventScroll: true }); } return; }
+        var bk = t.closest('[data-ddh-guide]'); if (bk) { var sh0 = bk.closest('.ddh__sheet'); showGuide(sh0); var gb = sh0.querySelector('[data-ddh-go]'); if (gb && fv(bk)) gb.focus({ preventScroll: true }); return; }
         var c = t.closest('[data-ddh-m]'), pt = sheetPT; sheetPT = '';
         if (c && pt === 'touch' && c.getAttribute('aria-current') !== 'true' && !ev.ctrlKey && !ev.metaKey) { ev.preventDefault(); pickModel(c, true); return; }
         var v = t.closest('[data-ddh-v]'); if (v) { pick(v); return; }
@@ -489,12 +496,23 @@
       if (dpc) {
         root.appendChild(dpc); root.setAttribute('data-ddh-dpc', '');
         cleanups.push(function () { if (dpc && dpc.parentNode) dpc.parentNode.removeChild(dpc); root.removeAttribute('data-ddh-dpc'); dpc = null; });
-        on(dpc, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') { overDpc = true; if (dpcT) { w.clearTimeout(dpcT); dpcT = 0; } } });
-        on(dpc, 'pointerleave', function (ev) {
-          if (ev.pointerType === 'touch') return; overDpc = false;
-          var to = ev.relatedTarget; if (to && art.contains(to)) return;      // back over the picture: the hit-test decides
-          dpcT = w.setTimeout(function () { dpcT = 0; if (!overDpc && active === 'system') show(null); }, 280);
+        wireCard(dpc);
+      }
+      // 1.12.0 context cards for five points (Natural Adaptation, Original Dunlop Technology, Firmness Regulation, Cover
+      // Options, Balance & Relief): one at a time, in one slot on the right; the short copy in the section stays as the
+      // fallback (before this file arrives, on phones in landscape) and as the screen-reader text
+      hcs = sheetBox.querySelector('.ddh__hcs');
+      if (hcs) {
+        root.appendChild(hcs); root.setAttribute('data-ddh-cards', '');
+        [].forEach.call(hcs.querySelectorAll('[data-ddh-card]'), function (c) {
+          wireCard(c); var p = group.querySelector('[data-ddh-point="' + c.getAttribute('data-ddh-card') + '"]');
+          if (p) { p.setAttribute('data-ddh-ctl', p.getAttribute('aria-controls') || ''); p.setAttribute('aria-controls', c.id); }
         });
+        cleanups.push(function () {
+          [].forEach.call(group.querySelectorAll('[data-ddh-ctl]'), function (p) { p.setAttribute('aria-controls', p.getAttribute('data-ddh-ctl')); p.removeAttribute('data-ddh-ctl'); });
+          if (hcs && hcs.parentNode) hcs.parentNode.removeChild(hcs); root.removeAttribute('data-ddh-cards'); hcs = null;
+        });
+        if (active) placeCard(active);
       }
       szEl = sheetBox.querySelector('#ddh-sizes');
       if (szEl) {
@@ -502,15 +520,57 @@
         on(szEl, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode === 'hover') szT = w.setTimeout(szClose, 280); });
       }
     }
-    // the "safe triangle": from the lifted mattress's point to the card's left edge (any other direction closes at once)
-    function towardDpc(x, y) {
-      var pt = group.querySelector('[data-ddh-point=system]'); if (!pt || !dpc) return false;
-      var a = pt.getBoundingClientRect(), r = dpc.getBoundingClientRect(), ax = a.left + a.width / 2, ay = a.top + a.height / 2, bx = r.left + 2, m = 40;
-      if (x < ax - m || x > bx) return false;
-      var t = (x - ax) / Math.max(1, bx - ax), top = ay + (r.top - m - ay) * t, bot = ay + (r.bottom + m - ay) * t;
+    // the "safe triangle": from the open point towards the facing edge of its card (any other direction closes at once)
+    function toward(c, x, y) {
+      var pt = group.querySelector('[data-ddh-point="' + active + '"]'); if (!pt || !c) return false;
+      var a = pt.getBoundingClientRect(), r = c.getBoundingClientRect(), ax = a.left + a.width / 2, ay = a.top + a.height / 2, m = 40;
+      if (ax >= r.left && ax <= r.right && ay >= r.top && ay <= r.bottom) return x >= r.left - m && x <= r.right + m && y >= r.top - m && y <= r.bottom + m;   // the point lies under its card
+      var bx = ax < r.left ? r.left + 2 : ax > r.right ? r.right - 2 : null;
+      if (bx === null) { var by = ay < r.top ? r.top + 2 : r.bottom - 2, ty = (y - ay) / (by - ay); if (ty < -.1 || ty > 1.05) return false; return x >= Math.min(ax + (r.left - m - ax) * ty, ax - m) && x <= Math.max(ax + (r.right + m - ax) * ty, ax + m); }
+      var t = (x - ax) / (bx - ax); if (t < -.1 || t > 1.05) return false;
+      var top = ay + (r.top - m - ay) * t, bot = ay + (r.bottom + m - ay) * t;
       return y >= Math.min(top, ay - m) && y <= Math.max(bot, ay + m);
     }
+    function inBox(c, x, y) { var r = c.getBoundingClientRect(); return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom; }
+    function inCards(el) { return !!(el && el.nodeType === 1 && ((dpc && dpc.contains(el)) || (hcs && hcs.contains(el)))); }
+    function cardsLive() { return !!(hcs && w.innerWidth > 700 && w.innerHeight > 500); }
+    function cardOf(k) { if (!k) return null; if (k === 'system') return dpcLive() ? dpc : null; return cardsLive() ? hcs.querySelector('[data-ddh-card="' + k + '"]') : null; }
+    // a context card sits on the right, below the LATEX lockup and above the Shop buttons (never over them)
+    function placeCard(k) {
+      if (k === 'system') {                                           // the Dual Plush card ends above the measured Shop row (its height varies)
+        var dc = cardOf(k), shp = root.querySelector('.ddh__shop'); if (!dc || !shp) return;
+        dc.style.bottom = Math.round(root.getBoundingClientRect().bottom - shp.getBoundingClientRect().top + 16) + 'px'; return;
+      }
+      var c = cardOf(k); if (!c) return;
+      var rr = root.getBoundingClientRect(), lk = root.querySelector('.ddh__sky-lockup'), sh = root.querySelector('.ddh__shop');
+      var safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 64;
+      var top = Math.max(safe + 10, lk ? lk.getBoundingClientRect().bottom - rr.top + 16 : 0);
+      var bottom = sh ? sh.getBoundingClientRect().top - rr.top - 16 : rr.height - 16;
+      var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;   // the Shop row below the fold: the card still ends on screen
+      c.style.top = Math.round(top) + 'px'; c.style.maxHeight = Math.max(160, Math.round(bottom - top)) + 'px';
+      c.toggleAttribute('data-tight', bottom - top < 470); if (c.scrollHeight > c.clientHeight + 1) c.setAttribute('data-tight', '');   // compact when the copy would not fit
+      // points the open card covers step aside (they would otherwise catch the pointer resting on the card)
+      var r = c.getBoundingClientRect();
+      points.forEach(function (p) { var q = p.getBoundingClientRect(), x = q.left + q.width / 2, y = q.top + q.height / 2; p.toggleAttribute('data-ddh-under', !!q.width && x > r.left - 6 && x < r.right + 6 && y > r.top - 6 && y < r.bottom + 6); });
+    }
+    function unplace() { points.forEach(function (p) { p.removeAttribute('data-ddh-under'); }); }
+    function wireCard(c) {
+      on(c, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') { overDpc = true; if (dpcT) { w.clearTimeout(dpcT); dpcT = 0; } } });
+      on(c, 'pointerleave', function (ev) {
+        if (ev.pointerType === 'touch') return; overDpc = false;
+        var to = ev.relatedTarget; if (to && (art.contains(to) || inCards(to))) return;   // back over the picture: the hit-test decides
+        var was = active; dpcT = w.setTimeout(function () { dpcT = 0; if (!overDpc && active === was) show(null); }, 280);
+      });
+      on(c, 'click', function (ev) { var x = ev.target.closest && ev.target.closest('[data-ddh-hcx]'); if (!x) return; var p = group.querySelector('[data-ddh-point="' + active + '"]'); show(null); if (p && fv(x)) p.focus({ preventScroll: true }); });
+      on(c, 'focusout', function (ev) { var to = ev.relatedTarget; if (to ? !c.contains(to) && !group.contains(to) : !c.matches(':hover')) show(null); });
+      on(c, 'keydown', function (ev) { if (ev.key === 'Tab' && ev.shiftKey && ev.target === c.querySelector('button,a[href]')) { var p = group.querySelector('[data-ddh-point="' + active + '"]'); if (p) { ev.preventDefault(); p.focus({ preventScroll: true }); } } });
+    }
     function dpcLive() { return !!(dpc && w.innerWidth > 700 && root.hasAttribute('data-ddh-dpc')); }
+    function showGuide(sh) {
+      if (!sh.querySelector('[data-ddh-pv="guide"]')) return;
+      [].forEach.call(sh.querySelectorAll('[data-ddh-m]'), function (c) { c.removeAttribute('aria-current'); });
+      [].forEach.call(sh.querySelectorAll('[data-ddh-pv]'), function (p) { p.hidden = p.getAttribute('data-ddh-pv') !== 'guide'; });
+    }
     function pickModel(card, reveal) {
       var sh = card.closest('.ddh__sheet'), id = card.getAttribute('data-ddh-m'), pv = null; if (!sh) return;
       [].forEach.call(sh.querySelectorAll('[data-ddh-m]'), function (c) { if (c === card) c.setAttribute('aria-current', 'true'); else c.removeAttribute('aria-current'); });
@@ -535,7 +595,7 @@
       on(a, 'focus', function () { if (!backFocus && deskMQ.matches && fv(a) && !(sheet && sheetMode === 'modal')) openSheet(name, 'hover', a); });
       on(a, 'keydown', function (ev) {
         if (ev.key !== 'Tab' || ev.shiftKey || !sheet || sheetFrom !== a) return;
-        var f = sheet.querySelector('[data-ddh-m][aria-current=true]') || focusables(sheet)[0]; if (f) { ev.preventDefault(); f.focus(); }
+        var f = sheet.querySelector('[data-ddh-m][aria-current=true]') || sheet.querySelector('[data-ddh-m]'); if (f) { ev.preventDefault(); f.focus(); }
       });
       on(a, 'blur', function (ev) { var to = ev.relatedTarget; if (to && sheet && sheetFrom === a && sheetMode === 'hover' && !sheet.contains(to) && !isCta(to)) closeSheet(true); });
       on(a, 'click', function (ev) {
@@ -614,7 +674,7 @@
     on(d, 'click', function (ev) { if (szEl && !szEl.hidden && !szEl.contains(ev.target) && !(szBtn && szBtn.contains(ev.target))) szClose(); });
     on(d, 'keydown', function (ev) { if (sheet && (ev.key === 'Escape' || ev.key === 'Esc')) closeSheet(); });
     on(d, 'click', function (ev) { if (sheet && sheetMode === 'modal' && Date.now() - openedAt > 300 && !sheet.contains(ev.target) && !(sheetFrom && sheetFrom.contains(ev.target)) && !(bioPoint && bioPoint.contains(ev.target))) closeSheet(true); });
-    on(w, 'resize', function () { if (sheet && (phoneMQ.matches || (sheetMode === 'hover' && !deskMQ.matches))) closeSheet(true); }, { passive: true });
+    on(w, 'resize', function () { if (sheet && (phoneMQ.matches || (sheetMode === 'hover' && !deskMQ.matches))) closeSheet(true); if (active) placeCard(active); }, { passive: true });
     // 1.10.1 loading in two stages: the first paint is the plain scene (photo, lettering, buttons) and nothing else.
     // Once the page has loaded and the browser is idle, the other modes follow at low priority: the screens' text
     // (every device: it is what search engines index), then on tablets/computers the hotspot graphics, the night
@@ -642,7 +702,12 @@
     // click that follows read as a "second tap" and close it again.
     function kbFocus(el) { try { return el.matches(':focus-visible'); } catch (e) { return true; } }
     on(group, 'focusin', function (ev) { var p = ev.target.closest('[data-ddh-point]'), k = p && p.getAttribute('data-ddh-point'); if (p && kbFocus(p)) show(k, true); });
-    on(group, 'focusout', function (ev) { if (!group.contains(ev.relatedTarget)) show(null); });
+    on(group, 'focusout', function (ev) { if (!group.contains(ev.relatedTarget) && !inCards(ev.relatedTarget)) show(null); });
+    // 1.12.0: with a context card open, Tab from its point steps into the card (its close button); Escape returns
+    on(group, 'keydown', function (ev) {
+      var c = cardOf(active); if (ev.key !== 'Tab' || ev.shiftKey || !c) return;
+      var f = c.querySelector('button,a[href]'); if (f) { ev.preventDefault(); f.focus(); }
+    });
 
     // Out of view: close any open state and pause the pulses.
     if (w.IntersectionObserver) {

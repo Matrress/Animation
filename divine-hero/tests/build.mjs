@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const VERSION = '1.11.2';
+const VERSION = '1.12.0';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const esbuild = process.env.ESBUILD || 'esbuild';
 const rel = path.join(root, 'release', VERSION);
@@ -49,7 +49,7 @@ for (const f of fs.readdirSync(path.join(root, 'src/i18n'))) fs.writeFileSync(pa
       const seg2 = seg.replace(`data-ddh-pv="${m.id}"`, `data-ddh-pv="${m.id}" data-fam="${m.family}"`).replace(/<ul class="ddh__pv-b">[\s\S]*?<\/ul>/, `<ul class="ddh__pv-b">${m.benefits.map((b) => `<li data-t="${b.key}">${esc(b.en)}</li>`).join('')}</ul>`);
       src = src.slice(0, at) + seg2 + src.slice(end);
     }
-    const list = (pick) => models.filter(pick).map((m, i) => card(m, i === 0 && (m.row !== 'purpose'))).join('\n');
+    const list = (pick) => models.filter(pick).map((m) => card(m, false)).join('\n');   // 1.12.0: nothing preselected: the selector opens on its guide
     src = src.replace('<!--MODELS:core-->', list((m) => m.row === 'core')).replace('<!--MODELS:purpose-->', list((m) => m.row === 'purpose')).replace('<!--MODELS:topper-->', list((m) => m.group === 'topper'));
     for (const m of models) {
       const at = src.split(`data-ddh-pv="${m.id}"`).length - 1;

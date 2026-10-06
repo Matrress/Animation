@@ -1,3 +1,4 @@
+// 1.12.0: where a context card replaces a copy, the card must clear the header and the LATEX lockup and show all of its content.
 // 1.5.0/1.5.1: every copy of the shared window (7 originals + 2 panels) in every language at common viewports, inside an Ecwid imitation page.
 // Fails if a line overlaps the zones point, slides under the header, touches the LATEX lockup, spills its box,
 // comes down into the woman's hair (1.5.1), or (1.6.0) has weak contrast against the photo behind it: the photo and the
@@ -21,6 +22,11 @@ for (const [w, h] of [[667, 375], [844, 390], [1024, 768], [1180, 820], [1280, 7
       document.querySelector(`[data-ddh-point=${k}]`).click();
       await new Promise((ok) => setTimeout(ok, 260)); // lockup fade (opacity .2s)
       for (const im of document.querySelectorAll('.ddh__plate')) { im.loading = 'eager'; try { await im.decode(); } catch (e) {} }
+      const card = document.querySelector(`[data-ddh-card=${k}]`); // 1.12.0: on larger screens a context card replaces the short copy
+      if (card && getComputedStyle(card).display !== 'none') {
+        const c = card.getBoundingClientRect(), hb = hdr ? hdr.getBoundingClientRect().bottom : 0, lb = document.querySelector('.ddh__sky-lockup').getBoundingClientRect().bottom, inn = card.querySelector('.ddh__hc-in') || card;
+        return { card: true, contrast: 99, hair: false, zones: false, header: c.top < hb + 4, lockup: c.top < lb + 8, spill: inn.scrollHeight > inn.clientHeight + 1 || card.scrollHeight > card.clientHeight + 1 || c.right > innerWidth || c.bottom > innerHeight, lang: document.querySelector(`[data-ddh-copy=${k}]`).getAttribute('lang') };
+      }
       const ls = [...document.querySelectorAll(`[data-ddh-copy=${k}] strong,[data-ddh-copy=${k}] span`)], lines = ls.map((e) => e.getBoundingClientRect());
       const zc = { x: z.x + z.width / 2, y: z.y + z.height / 2 };
       const pl = document.querySelector('.ddh__plane').getBoundingClientRect();

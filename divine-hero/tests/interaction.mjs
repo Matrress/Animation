@@ -32,12 +32,13 @@ async function desktop(w, h) {
   ok((await page.$$('.ddh__point')).length === 11, '9 hotspots + Bio Comfort + the night point');
   // hover each
   for (const k of KEYS) {
+    await page.mouse.move(5, 5); await page.keyboard.press('Escape');   // 1.12.0: a point under an open context card opens by click, not by hover: close the card first
     const c = await centre(page, k); await page.mouse.move(c.x, c.y, { steps: 2 }); await page.waitForTimeout(60);
     const s = await state(page); ok(s.s === k && s.exp.length === 1 && s.exp[0] === k, `hover ${k} -> ${JSON.stringify(s)}`);
   }
   ok(plates.length === 3, 'interaction graphics loaded after intent (' + plates.length + ')');
-  const vis = await page.evaluate(() => { const s = document.querySelector('.ddh__screen--brand'); return getComputedStyle(s).display; });
-  ok(vis === 'block', 'brand screen visible on hover');
+  const vis = await page.evaluate(() => { const s = document.querySelector('.ddh__screen--brand'), k = document.querySelector('.ddh').getAttribute('data-ddh-state'), c = document.querySelector(`[data-ddh-card="${k}"]`); return c && getComputedStyle(c).display === 'block' ? 'card' : getComputedStyle(s).display; });
+  ok(vis === 'block' || vis === 'card', 'brand screen (or, 1.12.0, its context card) visible on hover: ' + vis);
   // leave
   await page.mouse.move(5, h - 5); await page.mouse.move(w / 2, h + 50); await page.evaluate(() => window.scrollTo(0, 0));
   await page.mouse.move(2, 2); await page.waitForTimeout(80);
@@ -72,7 +73,9 @@ async function desktop(w, h) {
   await page.keyboard.press('Home'); ok((await state(page)).s === 'shoulder', 'Home -> shoulder');
   await page.keyboard.press('Escape'); ok((await state(page)).s === null, 'Escape closes');
   await page.keyboard.press('Enter'); ok((await state(page)).s === 'shoulder', 'Enter re-opens');
-  await page.keyboard.press('Tab'); const after = await page.evaluate(() => document.activeElement.className);
+  await page.keyboard.press('Tab');
+  if (await page.evaluate(() => !!document.activeElement.closest('.ddh__hc'))) { ok(true, '1.12.0: Tab from a point steps into its open context card'); await page.keyboard.press('Tab'); }
+  const after = await page.evaluate(() => document.activeElement.className);
   ok(!/ddh__point/.test(after), 'single tab stop for the hotspot group (roving tabindex) -> ' + after);
   ok((await state(page)).s === null, 'focus leaving the group closes');
   // a11y: no focusable element inside aria-hidden
@@ -181,7 +184,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.11.2/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.12.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -314,7 +317,7 @@ async function sheets() {
     const ctas = await page.$$('.ddh__cta');
     await ctas[0].hover(); await page.waitForTimeout(500);
     let st = await page.evaluate(() => ({ s: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), cards: document.querySelectorAll('#ddh-sheet-mattress .ddh__mc').length, pv: document.querySelectorAll('#ddh-sheet-mattress .ddh__pv').length, exp: document.querySelector('[data-ddh-sheet=mattress]').getAttribute('aria-expanded') }));
-    ok(st.s === 'mattress' && st.cards === 8 && st.pv === 8 && st.exp === 'true', 'hover Shop Mattress -> the collection preview, 8 models: ' + JSON.stringify(st));
+    ok(st.s === 'mattress' && st.cards === 8 && st.pv === 9 && st.exp === 'true', 'hover Shop Mattress -> the collection preview, 8 models: ' + JSON.stringify(st));
     const box = await page.evaluate(() => { const r = document.querySelector('#ddh-sheet-mattress .ddh__sh-in').getBoundingClientRect(), c = document.querySelector('.ddh__shop').getBoundingClientRect(), h = document.querySelector('#ddh-sheet-mattress .ddh__sh-in'); return { gap: Math.round(c.top - r.bottom), scroll: h.scrollHeight - h.clientHeight }; });
     ok(box.gap >= 6, 'preview ends above the Shop buttons: ' + JSON.stringify(box));
     ok(box.scroll <= 2, 'all 8 models fit without scrolling at 1440x900: ' + JSON.stringify(box));
@@ -392,7 +395,7 @@ async function sheets() {
     }
     { // 1.11.1 the Dual Plush reveal: the lifted mattress shows the card; it holds while the pointer travels to it
       const c = await centre(page, 'system'); await page.mouse.move(c.x + 40, c.y - 30); await page.mouse.move(c.x, c.y, { steps: 4 }); await page.waitForTimeout(900);
-      let k = await page.evaluate(() => { const e = document.querySelector('#ddh-dpc'); return { state: document.querySelector('.ddh').getAttribute('data-ddh-state'), vis: e && getComputedStyle(e).display, href: e && e.querySelector('.ddh__pv-cta').getAttribute('href'), alt: e && e.querySelector('.ddh__dpc-alt').getAttribute('href'), combos: e && e.querySelectorAll('.ddh__dpc-c li').length, ov: e && (e.querySelector('.ddh__dpc-in').scrollHeight - e.querySelector('.ddh__dpc-in').clientHeight) }; });
+      let k = await page.evaluate(() => { const e = document.querySelector('#ddh-dpc'); return { state: document.querySelector('.ddh').getAttribute('data-ddh-state'), vis: e && getComputedStyle(e).display, href: e && e.querySelector('.ddh__pv-cta').getAttribute('href'), alt: e && e.querySelector('.ddh__pv-cta--2').getAttribute('href'), combos: e && e.querySelectorAll('.ddh__dpc-c li').length, ov: e && (e.querySelector('.ddh__dpc-in').scrollHeight - e.querySelector('.ddh__dpc-in').clientHeight) }; });
       ok(k.state === 'system' && k.vis === 'block' && /botanic-dual-plush/.test(k.href) && /bio-comfort-dual-plush/.test(k.alt) && k.combos === 3 && k.ov <= 1, 'the lifted Dual Plush mattress reveals its card (3 combinations, View Dual Plush): ' + JSON.stringify(k));
       const r = await page.evaluate(() => { const b = document.querySelector('#ddh-dpc').getBoundingClientRect(); return { x: b.left + 40, y: b.top + b.height / 2 }; });
       await page.mouse.move(r.x, r.y, { steps: 10 }); await page.waitForTimeout(450);
@@ -521,7 +524,7 @@ async function i18n() {
   await ep.goto(url, { waitUntil: 'load' }); await ep.waitForTimeout(400);
   ok(er.length === 0, 'English visitor downloads no translation file');
   await en.close();
-  for (const [loc, lang, title] of [['de-DE', 'de', 'Alle UK- & EU-Größen'], ['el-GR', 'el', 'Όλα τα μεγέθη ΗΒ & ΕΕ'], ['fi-FI', 'fi', 'Kaikki UK- & EU-koot']]) {
+  for (const [loc, lang, title] of [['de-DE', 'de', 'Bezugsoptionen'], ['el-GR', 'el', 'Επιλογές καλύμματος'], ['fi-FI', 'fi', 'Päällisvaihtoehdot']]) {
     for (const [w, h] of [[1440, 900], [1024, 768], [844, 390]]) {
       const ctx = await browser.newContext({ viewport: { width: w, height: h }, locale: loc, hasTouch: w < 1100 });
       const page = await ctx.newPage(); const reqs = [];

@@ -1,5 +1,19 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.12.0: orientation guides in the selectors, five context cards, Dual Plush card without heights, no gendered wording (2026-10-06)
+
+Owner brief ("Complete Implementation Brief", 5 iPad screenshots): selectors open on a guide (no preselected model); light liquid-glass context cards for the hotspots; Firmness Regulation and Cover Options replace two points; Dual Plush card explains the system per model; no "Her/Him"; nothing covers the CTAs, LATEX block, navigation, the size control or the chat.
+
+Done:
+1. Selectors: the Mattress selector opens on "Which 100% latex mattress is right for you?" (5 groups, model buttons, "Choose a model to preview"); the Topper selector opens on its made-to-order intro, Bio Support / Bio Support Dual / Partners Topper. No model is preselected. Hover / focus / tap previews a model, the last preview stays, "Back to the overview" returns to the guide. No prices.
+2. Context cards (one at a time, close button, Escape, keyboard and touch): A Natural Adaptation with the 7 support zones (Head · Shoulders · Back · Pelvis · Knees · Legs · Ankles); B Original Dunlop Technology → Custom Made Sleep Systems; C Firmness Regulation (four weight ranges, "Selection guidelines, not medical rules.", Dual Plush examples); D Cover Options (four covers, "Every cover has a zip"); E Balance & Relief. Each card sits 16 px under the LATEX lockup and ends 16 px above the Shop row, or on screen when the Shop row is below the fold (then a compact layout). Points under an open card dim and stay clickable.
+3. Point repurposing: the upper right point (was "sizes" copy) now opens Firmness Regulation; the lower one (old weight spot) opens Cover Options. The global "All UK & EU Sizes" control is unchanged, away from the chat.
+4. Dual Plush card: "What is Dual Plush?", topper above / mattress below, combinations marked "Botanic · Bio Comfort" or "Botanic only", "View Botanic Dual Plush" and "View Bio Comfort Dual Plush". The 23 / 28 cm heights were removed from this card (unverified).
+5. Partners: "One side" / "Other side" instead of Her / Him, in 8 languages.
+6. Cards are on above 700 × 500 px; phones keep the short copy (no selectors, as before).
+Needs owner confirmation: the second Organic Cotton cover's name (shown neutrally as "100% Organic Cotton, second option"); the topper selector footer still lists "Cotton & wool" and "Cashmere"; Bio Support Dual vs Bio Support Plus naming (URL says plus); Dual Plush heights on the selector cards (23 · 28 cm, from the 1.10.2 product screenshots); the Dual Plush combination availability per model; live product links (divinedunlop.com is blocked from the build sandbox).
+Tests: interaction (4 previews), panels (now also checks each card clears the header and the lockup and shows all of its content), guards, axe, perf, fit matrix. Screenshots: `reports/compare/1.12.0-*.png`.
+
 ## 1.11.2: Bio Comfort picture recovers on its own; size trigger becomes a round badge, set well apart (2026-10-06)
 
 Owner (on the live iPad): the Bio Comfort model did not show its picture (a broken-image icon in its list card and in the large preview); the "All UK & EU Sizes" button sat too close to the Topper button and to the chat bubble and looked like the two main buttons.
