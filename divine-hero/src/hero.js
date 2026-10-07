@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.13.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.14.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.13.0';
+  var VERSION = '1.14.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -239,7 +239,7 @@
       centres.forEach(function (p) {
         p.under = p.el.hasAttribute('data-ddh-under');
         if (active && immersive(active, w) && p.key !== active) return; // immersive: only its own point is live
-        if (p.under) return;                                           // 1.13.0: under the open card
+        if (p.under) return;                                           // 1.14.0: under the open card
         var dd = Math.hypot(x - p.x, (y - p.y) * ratio), r = R[p.key] * scale;
         if (active === p.key) r += immersive(p.key, w) ? .05 : .02; // immersive states hold a little wider
         if (dd < r && dd < bd) { best = p.key; bd = dd; }
@@ -283,7 +283,7 @@
     cleanups.push(function () { if (raf) w.cancelAnimationFrame(raf); });
     on(art, 'pointerleave', function (ev) {
       if (ev.pointerType === 'touch' || group.contains(d.activeElement)) return;
-      if (inCards(ev.relatedTarget)) return;   // onto the open card (1.11.1 Dual Plush, 1.13.0 context cards)
+      if (inCards(ev.relatedTarget)) return;   // onto the open card (1.11.1 Dual Plush, 1.14.0 context cards)
       if (raf) { w.cancelAnimationFrame(raf); raf = 0; }
       show(null);
     }, { passive: true });
@@ -306,7 +306,7 @@
       show(key, true);
     });
     points.forEach(function (p) {
-      on(p, 'pointerenter', function (ev) { var k = p.getAttribute('data-ddh-point'); if (ev.pointerType !== 'touch' && !p.hasAttribute('data-ddh-under') && (!active || !immersive(active, w) || k === active)) show(k); }, { passive: true });   // 1.13.0: a point under the open card opens by click/tap, not by hover
+      on(p, 'pointerenter', function (ev) { var k = p.getAttribute('data-ddh-point'); if (ev.pointerType !== 'touch' && !p.hasAttribute('data-ddh-under') && (!active || !immersive(active, w) || k === active)) show(k); }, { passive: true });   // 1.14.0: a point under the open card opens by click/tap, not by hover
     });
     on(d, 'click', function (ev) { if (active && !viewport.contains(ev.target) && !inCards(ev.target)) show(null); });
     on(d, 'keydown', function (ev) { if (active && (ev.key === 'Escape' || ev.key === 'Esc')) show(null); });
@@ -498,7 +498,7 @@
         cleanups.push(function () { if (dpc && dpc.parentNode) dpc.parentNode.removeChild(dpc); root.removeAttribute('data-ddh-dpc'); dpc = null; });
         wireCard(dpc);
       }
-      // 1.13.0 context cards for five points (Natural Adaptation, Original Dunlop Technology, Firmness Regulation, Cover
+      // 1.14.0 context cards for five points (Natural Adaptation, Original Dunlop Technology, Firmness Regulation, Cover
       // Options, Balance & Relief): one at a time, in one slot on the right; the short copy in the section stays as the
       // fallback (before this file arrives, on phones in landscape) and as the screen-reader text
       hcs = sheetBox.querySelector('.ddh__hcs');
@@ -549,7 +549,7 @@
       var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;   // the Shop row below the fold: the card still ends on screen
       c.style.top = Math.round(top) + 'px'; c.style.maxHeight = Math.max(160, Math.round(bottom - top)) + 'px';
       c.removeAttribute('data-tight');                                                         // low hero: optional lines step aside (type never shrinks)
-      if (c.scrollHeight > c.clientHeight + 1) { c.setAttribute('data-tight', '1'); if (c.scrollHeight > c.clientHeight + 1) { c.setAttribute('data-tight', '2'); if (c.scrollHeight > c.clientHeight + 1) c.setAttribute('data-tight', '3'); } }
+      for (var tier = 0; tier <= 3 && c.scrollHeight > c.clientHeight + 1; tier++) c.setAttribute('data-tight', String(tier));   // 0 tightens the spacing, 1-3 let optional lines step aside
       // points the open card covers step aside (they would otherwise catch the pointer resting on the card)
       var r = c.getBoundingClientRect();
       points.forEach(function (p) { var q = p.getBoundingClientRect(), x = q.left + q.width / 2, y = q.top + q.height / 2; p.toggleAttribute('data-ddh-under', !!q.width && x > r.left - 6 && x < r.right + 6 && y > r.top - 6 && y < r.bottom + 6); });
@@ -705,7 +705,7 @@
     function kbFocus(el) { try { return el.matches(':focus-visible'); } catch (e) { return true; } }
     on(group, 'focusin', function (ev) { var p = ev.target.closest('[data-ddh-point]'), k = p && p.getAttribute('data-ddh-point'); if (p && kbFocus(p)) show(k, true); });
     on(group, 'focusout', function (ev) { if (!group.contains(ev.relatedTarget) && !inCards(ev.relatedTarget) && !(!ev.relatedTarget && Date.now() - cardDownAt < 500)) show(null); });
-    // 1.13.0: with a context card open, Tab from its point steps into the card (its close button); Escape returns
+    // 1.14.0: with a context card open, Tab from its point steps into the card (its close button); Escape returns
     on(group, 'keydown', function (ev) {
       var c = cardOf(active); if (ev.key !== 'Tab' || ev.shiftKey || !c) return;
       var f = c.querySelector('button,a[href]'); if (f) { ev.preventDefault(); f.focus(); }

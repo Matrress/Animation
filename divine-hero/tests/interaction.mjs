@@ -32,20 +32,20 @@ async function desktop(w, h) {
   ok((await page.$$('.ddh__point')).length === 11, '9 hotspots + Bio Comfort + the night point');
   // hover each
   for (const k of KEYS) {
-    await page.mouse.move(5, 5); await page.keyboard.press('Escape');   // 1.13.0: a point under an open context card opens by click, not by hover: close the card first
+    await page.mouse.move(5, 5); await page.keyboard.press('Escape');   // 1.14.0: a point under an open context card opens by click, not by hover: close the card first
     const c = await centre(page, k); await page.mouse.move(c.x, c.y, { steps: 2 }); await page.waitForTimeout(60);
     const s = await state(page); ok(s.s === k && s.exp.length === 1 && s.exp[0] === k, `hover ${k} -> ${JSON.stringify(s)}`);
   }
   ok(plates.length === 3, 'interaction graphics loaded after intent (' + plates.length + ')');
   const vis = await page.evaluate(() => { const s = document.querySelector('.ddh__screen--brand'), k = document.querySelector('.ddh').getAttribute('data-ddh-state'), c = document.querySelector(`[data-ddh-card="${k}"]`); return c && getComputedStyle(c).display === 'block' ? 'card' : getComputedStyle(s).display; });
-  ok(vis === 'block' || vis === 'card', 'brand screen (or, 1.13.0, its context card) visible on hover: ' + vis);
+  ok(vis === 'block' || vis === 'card', 'brand screen (or, 1.14.0, its context card) visible on hover: ' + vis);
   // leave
   await page.mouse.move(5, h - 5); await page.mouse.move(w / 2, h + 50); await page.evaluate(() => window.scrollTo(0, 0));
   await page.mouse.move(2, 2); await page.waitForTimeout(80);
   // click each
   for (const k of KEYS) { await page.keyboard.press('Escape'); await page.mouse.move(5, 5); await page.waitForTimeout(30); const c = await centre(page, k); await page.mouse.click(c.x, c.y); await page.waitForTimeout(40); const s = await state(page); ok(s.s === k, `click ${k} -> ${s.s}`); }
   // ventilation "cooling": full-frame blue wash visible only in the temperature state
-  { const t = await centre(page, 'temperature'); await page.mouse.click(t.x, t.y); }
+  { await page.keyboard.press('Escape'); await page.mouse.move(5, 5); await page.waitForTimeout(60); const t = await centre(page, 'temperature'); await page.mouse.click(t.x, t.y); }   // a wide context card may still cover the point: close it first
   await page.waitForTimeout(800);                                   // .45 s fade; stage-2 loading may run alongside
   const wash = await page.evaluate(() => { const w = document.querySelector('.ddh__wash'); const a = document.querySelector('.ddh__art').getBoundingClientRect(); const r = w.getBoundingClientRect(); return { op: +getComputedStyle(w).opacity, covers: r.top <= a.top + 1 && r.bottom >= a.bottom - 1 && r.left <= 0 && r.right >= a.right - 1 }; });
   ok(wash.op > .98 && wash.covers, 'ventilation turns the whole artwork blue: ' + JSON.stringify(wash));
@@ -74,7 +74,7 @@ async function desktop(w, h) {
   await page.keyboard.press('Escape'); ok((await state(page)).s === null, 'Escape closes');
   await page.keyboard.press('Enter'); ok((await state(page)).s === 'shoulder', 'Enter re-opens');
   await page.keyboard.press('Tab');
-  if (await page.evaluate(() => !!document.activeElement.closest('.ddh__hc'))) { ok(true, '1.13.0: Tab from a point steps into its open context card'); await page.keyboard.press('Tab'); }
+  if (await page.evaluate(() => !!document.activeElement.closest('.ddh__hc'))) { ok(true, '1.14.0: Tab from a point steps into its open context card'); await page.keyboard.press('Tab'); }
   const after = await page.evaluate(() => document.activeElement.className);
   ok(!/ddh__point/.test(after), 'single tab stop for the hotspot group (roving tabindex) -> ' + after);
   ok((await state(page)).s === null, 'focus leaving the group closes');
@@ -100,7 +100,7 @@ async function touch(w, h, dpr, label) {
   for (const k of KEYS) {
     // short landscape screens: the user scrolls a point into view before tapping it
     await page.evaluate((k) => { const b = document.querySelector(`[data-ddh-point=${k}]`), r = b.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) b.scrollIntoView({ block: 'center' }); }, k);
-    await page.keyboard.press('Escape'); await page.waitForTimeout(120);   // 1.13.0: a point under an open context card is out of reach: the card is closed first (its X, a tap outside, Escape)
+    await page.keyboard.press('Escape'); await page.waitForTimeout(120);   // 1.14.0: a point under an open context card is out of reach: the card is closed first (its X, a tap outside, Escape)
     const c = await centre(page, k); await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(60);
     const s = await state(page); ok(s.s === k && s.exp.length === 1, `tap ${k} -> ${JSON.stringify(s)}`);
   }
@@ -184,7 +184,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.13.0/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.14.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);

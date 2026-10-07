@@ -1,5 +1,17 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.14.0: one light palette for the selectors and every context card, Dual Plush combinations named (2026-10-07)
+
+Owner brief: take the two colour combinations he supplied (the Bio Comfort screen: lilac-grey canvas with steel-blue tiles and white type; the Partners anatomy cards: white cards on a pale blue canvas with a steel-blue band and navy type) and use them for the mattress selector, the topper selector and all the new cards; name the mixed firmness combinations as Dual Plush combinations; polish the cards as logical, comfortable, easy-to-read visualisations with no size limit.
+
+Done:
+1. Palette (tokens `--pl-*`): canvas #e4e8f2 to #f1f4f9, white cards, navy #1d2c47 type, steel-blue band (#3e7093 to #29506f), blue tiles #2a638e, the soft-to-dark firmness steps of the Bio screen (#e8eefa, #d3dbe6, #2a638e, #1d4468). Applied to both selectors (list cards, guides, previews, buttons, firmness blocks, topper footer) and the five context cards. The Dual Plush card is untouched.
+2. Context cards: a steel-blue band carries the title and subtitle (with the close X), white panels carry the information. Natural Adaptation: the owner's cut-out on a pale panel over seven blue numbered tiles. Original Dunlop: three numbered steps (Pure natural latex, Custom solutions, Fine tuning) with a one-line goal. Firmness Regulation: four tiles soft to dark with exact ranges, then a Dual Plush combinations panel (heading, one sentence, three pairs). Cover Options: four photographed covers in a row, the zip band, the washing and non-toxic line. Balance and Relief: the mission as a white quote card.
+3. Dual Plush wording: "Dual Plush combinations" on the firmness card, "Dual Plush mix" on the pair tables of Botanic Dual Plush and Bio Comfort Dual Plush; the sentence says a mattress and a topper, each with its own firmness, are combined to fine-tune the feel (8 languages).
+4. Size: cards are wider (up to 800 px) and type is 16.5 to 19 px; on lower screens the spacing tightens first, then optional lines step aside in tiers 1-3 (the card also widens), never a smaller type than 15 px for text. Every card fits in all 8 languages down to 1280 x 720.
+5. Behaviour unchanged from 1.13.0: hover opens, the card closes when the pointer leaves, the X, Escape, a tap outside on touch.
+Tests: interaction 379 / 379 / 375 / 375, panels 792, guards (new: the firmness card names its Dual Plush combinations), axe, perf, fit matrix. Screenshots: reports/compare/1.14.0-*.png.
+
 ## 1.13.0: dark cards with white type, graphite selectors, real covers, exact weight ranges (2026-10-06)
 
 Owner corrections after 1.12.0 (Bulgarian brief, 6 points) and the follow-up (darker green, no Dual Plush change, ugly blue behind the seven zones, see-through head, closing behaviour, firmness colours, bigger type for people who wear glasses).
