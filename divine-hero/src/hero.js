@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.14.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.15.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.14.0';
+  var VERSION = '1.15.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -176,6 +176,18 @@
     root.appendChild(live);
     cleanups.push(function () { if (live.parentNode) live.parentNode.removeChild(live); });
     var active = null;
+    // 1.15.0: a quiet invitation to explore the points (upper left, mirroring the LATEX lockup). It retires for the rest of the visit once three
+    // different points have been opened; it never shows on an upright phone (no points there) and steps aside while any card, screen or selector is open.
+    var hintEl = root.querySelector('.ddh__hint'), hintSeen = {}, hintN = 0, hintT = 0;
+    function hintDone() { try { return w.sessionStorage.getItem('ddh-hint') === '1'; } catch (e) { return false; } }
+    function hintNote(key) {
+      if (!hintEl || !key || hintSeen[key]) return; hintSeen[key] = 1;
+      if (++hintN >= 3) { hintEl.setAttribute('data-gone', ''); try { w.sessionStorage.setItem('ddh-hint', '1'); } catch (e) { /* private mode: the invitation simply returns on the next page */ } }
+    }
+    if (hintEl && !hintDone()) {
+      hintEl.hidden = false; hintT = w.setTimeout(function () { hintEl.setAttribute('data-on', ''); }, 60);
+      cleanups.push(function () { w.clearTimeout(hintT); hintEl.hidden = true; hintEl.removeAttribute('data-on'); hintEl.removeAttribute('data-gone'); });
+    }
 
     // Interaction graphics (~15 KB) load on first sign of intent, not with the page.
     var warmed = false;
@@ -193,7 +205,7 @@
       if (key && (pointsOff() || sheet)) key = null;
       if (key === active) { if (key && announce) live.textContent = txtOf(key); return; }
       active = key;
-      if (key) { warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : key === NIGHT ? NIGHT : 'brand'); fit(key); placeCard(key); }
+      if (key) { hintNote(key); warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : key === NIGHT ? NIGHT : 'brand'); fit(key); placeCard(key); }
       else { root.removeAttribute('data-ddh-state'); root.removeAttribute('data-ddh-screen'); }
       if (typeof unplace === 'function' && (!key || !cardOf(key))) unplace();
       var txt = '';
@@ -420,6 +432,7 @@
       closeSheet(true); szClose(); show(null);
       if (via) root.setAttribute('data-ddh-via', via); else root.removeAttribute('data-ddh-via');
       sheet = el; sheetMode = mode; sheetFrom = from || null; openedAt = Date.now();
+      navGrace = via === 'nav';
       var h = host(!deskMQ.matches); if (sheetBox.parentNode !== h) h.appendChild(sheetBox);
       if (sheetBox.getAttribute('lang') !== (lang || 'en')) sheetBox.setAttribute('lang', lang || 'en');
       showGuide(el); eager(el); el.hidden = false; root.setAttribute('data-ddh-open-sheet', name);
@@ -433,12 +446,14 @@
       if (!sheet) return;
       var from = sheetFrom, modal = sheetMode === 'modal';
       var inside = sheet.contains(d.activeElement);
-      sheet.hidden = true; root.removeAttribute('data-ddh-open-sheet'); root.removeAttribute('data-ddh-via'); lock(false);
+      sheet.hidden = true; root.removeAttribute('data-ddh-open-sheet'); root.removeAttribute('data-ddh-via'); lock(false); navGrace = false; navOrigin = null;
       if (from) from.setAttribute('aria-expanded', 'false');
       sheet = null; sheetFrom = null; sheetMode = '';
       if ((modal || inside) && !quiet && from && from.offsetWidth) { backFocus = true; from.focus({ preventScroll: true }); backFocus = false; }   // focus comes back without reopening
     }
-    function later() { w.clearTimeout(hoverT); if (sheetMode === 'hover') hoverT = w.setTimeout(function () { closeSheet(true); }, root.getAttribute('data-ddh-via') === 'nav' ? 450 : 280); }   // from the site header the pointer has a gap to cross
+    // 1.15.0: from the site menu the selector rises over the menu itself, so it appears under a pointer that has not moved (Safari sends no boundary event then): no closing until the pointer moves
+    var navGrace = false, navOrigin = null;   // navOrigin: the site-menu link the selector rose from; a click on the panel exactly over it still follows that link
+    function later() { w.clearTimeout(hoverT); if (navGrace) return; if (sheetMode === 'hover') hoverT = w.setTimeout(function () { closeSheet(true); }, root.getAttribute('data-ddh-via') === 'nav' ? 450 : 280); }   // from the site header the pointer has a gap to cross
     function pick(btn) {
       var el = btn.closest('.ddh__sheet'), v = btn.getAttribute('data-ddh-v');
       [].forEach.call(el.querySelectorAll('[data-ddh-v]'), function (b) { var on = b === btn; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
@@ -656,12 +671,18 @@
       var r = a.getBoundingClientRect(), hr = root.getBoundingClientRect(), safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 120;
       return (hr.top > -40 && hr.top < w.innerHeight * .35 && r.bottom <= hr.top + safe + 8 && r.bottom > 0) ? name : '';
     }
+    on(d, 'click', function (ev) {
+      if (!sheet || !navOrigin || !sheet.contains(ev.target) || (ev.target.closest && ev.target.closest('a,button'))) return;
+      var r = navOrigin.getBoundingClientRect(); if (ev.clientX < r.left || ev.clientX > r.right || ev.clientY < r.top || ev.clientY > r.bottom) return;
+      var a = navOrigin; ev.preventDefault(); closeSheet(true); a.click();
+    });
+    on(d, 'pointermove', function (ev) { if (!navGrace) return; navGrace = false; if (sheet && !sheet.contains(ev.target)) later(); }, { passive: true });
     on(d, 'pointerover', function (ev) {
       if (ev.pointerType !== 'mouse' || !deskMQ.matches || (sheet && sheetMode === 'modal')) return;
       var a = ev.target.closest && ev.target.closest('a'); if (!a || a === navA) return;
       var name = navSheet(a); if (!name) return;
       navA = a; loadSheets(); w.clearTimeout(hoverT);
-      hoverT = w.setTimeout(function () { openSheet(name, 'hover', null, 'nav'); }, sheet ? 0 : 160);
+      hoverT = w.setTimeout(function () { openSheet(name, 'hover', null, 'nav'); navOrigin = a; }, sheet ? 0 : 160);
     }, { passive: true });
     on(d, 'pointerout', function (ev) {
       if (!navA || (ev.relatedTarget && navA.contains(ev.relatedTarget)) || !(ev.target.closest && ev.target.closest('a') === navA)) return;

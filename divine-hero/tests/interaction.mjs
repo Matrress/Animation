@@ -184,7 +184,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.14.0/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.15.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -411,7 +411,19 @@ async function sheets() {
       if (link) {
       await page.mouse.move(5, 400); await link.hover(); await page.waitForTimeout(500);
       let k = await page.evaluate(() => { const l = [...document.querySelectorAll('.ins-tile--header a')].find((a) => a.textContent.trim() === 'Mattresses').getBoundingClientRect(); const s = document.querySelector('#ddh-sheet-mattress .ddh__sh-in').getBoundingClientRect(); return { open: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), via: document.querySelector('.ddh').getAttribute('data-ddh-via'), below: Math.round(s.top - l.bottom), hit: document.elementFromPoint(l.left + l.width / 2, l.top + l.height / 2).textContent.trim() }; });
-      ok(k.open === 'mattress' && k.via === 'nav' && k.below >= 0 && k.hit === 'Mattresses', 'hovering the header\'s Mattresses opens the selector below the header, the link stays clickable: ' + JSON.stringify(k));
+      ok(k.open === 'mattress' && k.via === 'nav', 'hovering the header\'s Mattresses opens the selector: ' + JSON.stringify(k));
+      { // 1.15.0: the same size and place as when opened from the hero button; a click right over the menu link still follows the link
+        const nav = await page.evaluate(() => { const r = document.querySelector('#ddh-sheet-mattress .ddh__sh-in').getBoundingClientRect(); return [Math.round(r.top), Math.round(r.height)]; });
+        await page.mouse.move(5, 880); await page.waitForTimeout(700); await (await page.$('.ddh__cta')).hover(); await page.waitForTimeout(600);
+        const cta = await page.evaluate(() => { const r = document.querySelector('#ddh-sheet-mattress .ddh__sh-in').getBoundingClientRect(); return [Math.round(r.top), Math.round(r.height)]; });
+        ok(nav[0] === cta[0] && nav[1] === cta[1], '1.15.0: the selector is the same size and in the same place from the site menu and from the hero button: ' + JSON.stringify({ nav, cta }));
+        await page.mouse.move(5, 880); await page.waitForTimeout(700);
+        await page.evaluate(() => { window.__navClicks = 0; const a = [...document.querySelectorAll('.ins-tile--header a')].find((x) => x.textContent.trim() === 'Mattresses'); a.addEventListener('click', (e) => { e.preventDefault(); window.__navClicks++; }); });
+        await page.mouse.move(5, 400); await link.hover(); await page.waitForTimeout(500);
+        const box = await link.boundingBox(); await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2); await page.waitForTimeout(300);
+        ok(await page.evaluate(() => window.__navClicks === 1), '1.15.0: a click on the menu link still goes to its page although the selector covers it');
+        await page.mouse.move(5, 880); await page.waitForTimeout(700); await page.mouse.move(5, 400); await link.hover(); await page.waitForTimeout(500);
+      }
       await page.mouse.move(700, 160, { steps: 4 }); await page.mouse.move(700, 600, { steps: 6 }); await page.waitForTimeout(450);
       { const o = await page.evaluate(() => [document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), document.querySelector('.ddh').getAttribute('data-ddh-state'), document.querySelector('.ddh').getAttribute('data-ddh-via')]); ok(o[0] === 'mattress', '…and stays open while the pointer moves down into it ' + JSON.stringify(o)); }
       await page.mouse.move(5, 880, { steps: 4 }); await page.waitForTimeout(600);
@@ -470,7 +482,7 @@ async function sheets() {
     ok(!st.open && st.lock === '' && !st.sheet, 'iPad: close returns to the scene: ' + JSON.stringify(st));
     { // 1.11.1: in the full-screen selector the first tap on a model previews it, the second goes to the product
       await (await page.$('.ddh__cta')).tap(); await page.waitForTimeout(500);
-      await page.tap('#ddh-sheet-mattress [data-ddh-m=ortho]'); await page.waitForTimeout(500);
+      await page.tap('#ddh-sheet-mattress [data-ddh-m=ortho]'); await page.waitForTimeout(1200);
       const k = await page.evaluate(() => ({ cur: document.querySelector('#ddh-sheet-mattress [aria-current=true]').dataset.ddhM, shown: [...document.querySelectorAll('#ddh-sheet-mattress .ddh__pv')].filter((x) => !x.hidden).map((x) => x.dataset.ddhPv).join(), top: Math.round(document.querySelector('[data-ddh-pv=ortho]').getBoundingClientRect().top) }));
       ok(page.url() === before && k.cur === 'ortho' && k.shown === 'ortho' && k.top >= -2 && k.top < 1366, 'iPad: first tap on a model shows its preview (scrolled into view), no navigation: ' + JSON.stringify(k));
       const [nv] = await Promise.all([page.waitForRequest((r) => r.isNavigationRequest(), { timeout: 4000 }).catch(() => null), page.tap('#ddh-sheet-mattress [data-ddh-m=ortho]')]);
