@@ -1,5 +1,19 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.16.0: one readability standard for every section (2026-10-09)
+
+Owner rule (after seeing 1.15.1 on his iPad): good readability, good contrast, quality of spacing and arrangement are one rule for ALL sections, not fixed section by section; there are no screen limits, the layout may adapt to the rules; the result must give clarity and navigation.
+
+Standard applied everywhere: ink #14223b / #2b3b58 / #1f4568 (>= 8-9:1), body 16 px, secondary 15 px, labels 13-14 px, no light greys, 8 px spacing grid, nothing hidden by a smaller window except optional lines (and nothing cut mid-word or mid-sentence), generous air under title bands.
+Done (beyond 1.15.0 / 1.15.1): 
+1. Pairing tables (Botanic Dual Plush, topper Bio Support Dual) rebuilt: the Botanic table is transposed (Option 1-3 down the side, Topper | Mattress across) with 15 px tiles that no longer wrap or overflow; the topper combinations are two cards with 13.5 / 16 px labels. Partners Topper: the faint "on one side / on the other" is now readable.
+2. Global size guide: wider (up to 980 px), three columns, 15.5 px names and sizes, 13.5 px inches, title and subtitle on one line, rises over the site header like the selectors; all 23 rows visible on a 668 px window.
+3. Dual Plush card: same structure, content and pictures; wider (up to 900 px), 16 px copy, 15.5 px combinations on one line each, 13 px tags, light palette, both buttons visible (they were cut off on short windows).
+4. The hero's own small lines: darker ink for "100% EU-UK Certified / Latex (Rubber) Foam", "Best Air Ventilation / Temperature Comfort", "Spinal Alignment / Stretching Effect" (with a soft shadow) and the "European Production / Certified for UK & EU" lines (second line now semi-bold).
+5. Bio Comfort screen: ink and sizes as in 1.15.0, labels 12.5 px and up.
+6. Panels test: lowest line contrast 8.71:1 (1.14.0: 4.86).
+Tests: interaction 381 / 381 / 375 / 375, panels 792, guards, axe 0, fit15 (selectors, size guide, Dual Plush card, Bio screen; 9 languages; 1080x668, 1280x720, 1440x900): 0 problems, cardfit15 (context cards): English clean, Spanish / Portuguese Original Dunlop 12 px over at 1080x668 (scrolls). New: tests/gallery15.mjs (every section as one screenshot). Screenshots: reports/compare/1.16.0-*.png.
+
 ## 1.15.1: context cards keep their air and their content on a 668 px iPad window (2026-10-09)
 
 Owner report (two iPad screenshots of the live site): Natural Adaptation opened with an empty picture area and the seven zone tiles missing; Firmness Regulation had its title band squeezed against the tiles, no air between the band and the firmness tiles.

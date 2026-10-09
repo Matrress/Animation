@@ -36,10 +36,16 @@ for (const lang of langs) for (const [w, h] of list) {
       if (r.out.length) { bad++; console.log(lang, w + 'x' + h, name, via, i < 0 ? 'guide' : 'model#' + i, '\n   ' + [...new Set(r.out)].slice(0, 6).join('\n   ')); }
     }
   }
-    // the Bio Comfort screen, both tabs, opened from its point
+    // the global size guide and the Dual Plush card
+  { await p.mouse.move(2, h - 2); await p.keyboard.press('Escape'); await p.waitForTimeout(350); await p.hover('.ddh__sz'); await p.waitForTimeout(900);
+    const r = await p.evaluate(() => { const e = document.querySelector('#ddh-sizes'); if (!e || e.hidden) return 'closed'; return e.scrollHeight > e.clientHeight + 1 ? 'size guide scrolls ' + e.scrollHeight + '>' + e.clientHeight : ''; }); checks++; if (r) { bad++; console.log(lang, w + 'x' + h, 'sizeguide', r); } }
+  { await p.mouse.move(2, h - 2); await p.keyboard.press('Escape'); await p.waitForTimeout(350);
+    const bb = await (await p.$('.ddh__point[data-ddh-point=system]')).boundingBox(); await p.mouse.move(bb.x + bb.width / 2, bb.y + bb.height / 2, { steps: 4 }); await p.waitForTimeout(1300);
+    const r = await p.evaluate(() => { const c = document.querySelector('#ddh-dpc'); if (!c || getComputedStyle(c).display === 'none') return 'closed'; const i = c.querySelector('.ddh__dpc-in'); const bad = []; if (i.scrollHeight > i.clientHeight + 1) bad.push('dpc clips ' + i.scrollHeight + '>' + i.clientHeight); const R = i.getBoundingClientRect(); for (const e of i.querySelectorAll('li,a,h3,p')) { const q = e.getBoundingClientRect(); if (q.width && (q.bottom > R.bottom + 1 || q.right > R.right + 1)) bad.push('outside ' + (e.className || e.tagName)); } return bad.join('; '); }); checks++; if (r && r !== 'closed') { bad++; console.log(lang, w + 'x' + h, 'dpc', r); } }
+  // the Bio Comfort screen, both tabs, opened from its point
   for (const tab of ['bio', 'dp']) {
-    await p.mouse.move(2, h - 2); await p.keyboard.press('Escape'); await p.waitForTimeout(350);
-    const bb = await (await p.$('.ddh__point[data-ddh-point=bio]')).boundingBox(); await p.mouse.move(bb.x + 8, bb.y + 8, { steps: 4 }); await p.waitForTimeout(900);
+    await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(2200); await p.mouse.move(2, h - 2); await p.waitForTimeout(300);
+    const bb = await (await p.$('.ddh__point[data-ddh-point=bio]')).boundingBox(); await p.mouse.move(bb.x + 8, bb.y + 8); await p.waitForTimeout(1200);
     if (tab === 'dp') { const t = await p.$('#ddh-bio-tab-dp'); if (t) { await t.click(); await p.waitForTimeout(400); } }
     const r = await p.evaluate(probe); checks++;
     if (r.err) { bad++; console.log(lang, w + 'x' + h, 'bio', tab, r.err); } else if (r.out.length) { bad++; console.log(lang, w + 'x' + h, 'bio', tab, '\n   ' + [...new Set(r.out)].slice(0, 6).join('\n   ')); }

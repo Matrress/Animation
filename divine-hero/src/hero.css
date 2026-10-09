@@ -1378,3 +1378,91 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__hc--dunlop[data-tight="3"] .ddh__hc-st li:first-child{padding:8px 14px 9px 64px;gap:1px}
 .ddh .ddh__hc--dunlop[data-tight="3"] .ddh__hc-st li[data-o]{padding:6px 12px 6px 56px}
 .ddh .ddh__hc--dunlop[data-tight="3"] .ddh__hc-st li[data-o]::before{left:12px;width:32px;height:32px;margin-top:-16px;line-height:32px;font-size:16px}
+
+/* ===== 1.16.0: one readability standard for every section. Ink >= 9:1, labels >= 8:1, body 16 px, secondary 15 px, labels 13-14 px, no light greys, 8 px spacing grid.
+   Tables, the size guide, the Dual Plush card and the hero's own small lines follow the same rules as the selectors and the cards. ===== */
+/* --- pairing tables (Botanic Dual Plush; topper Bio Support Dual) --- */
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs{grid-template-columns:auto repeat(3,minmax(0,1fr));gap:6px;align-items:stretch}
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>b{align-self:end;max-width:92px;font-size:13px;line-height:1.25;letter-spacing:.08em;white-space:normal;color:var(--pl-blue)}
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>.ddh__pn{font-size:13px;letter-spacing:.02em;line-height:1.2;white-space:nowrap;color:var(--pl-label)}
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>em{font-size:15px;color:var(--pl-soft);padding-right:8px}
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>i.ddh__ly{display:flex;align-items:center;justify-content:center;min-width:0;padding:10px 4px;font-size:15px;line-height:1.2;letter-spacing:0;white-space:normal;overflow-wrap:anywhere}
+.ddh .ddh__sheet--topper .ddh__combos{gap:12px}
+.ddh .ddh__sheet--topper .ddh__combo{gap:4px}
+.ddh .ddh__sheet--topper .ddh__combo small{font-size:13px;letter-spacing:.14em;color:var(--pl-label)}
+.ddh .ddh__sheet--topper .ddh__combo .ddh__ly{display:grid;justify-items:start;gap:2px;padding:9px 12px}
+.ddh .ddh__sheet--topper .ddh__combo .ddh__ly em{font-size:13.5px;line-height:1.2}
+.ddh .ddh__sheet--topper .ddh__combo .ddh__ly b{font-size:16px;letter-spacing:.04em;line-height:1.2}
+.ddh .ddh__sheet--topper .ddh__spec--combos>b,.ddh .ddh__sheet--topper .ddh__spec--f>b{font-size:13px;letter-spacing:.12em;color:var(--pl-label)}
+.ddh .ddh__sheet--topper .ddh__spec--f>span,.ddh .ddh__sheet--mattress .ddh__spec--f>span{font-size:16px;line-height:1.5;color:var(--pl-soft)}
+.ddh .ddh__sheet .ddh__spec--f i{font-size:16px;letter-spacing:.02em}
+/* --- size guide --- */
+.ddh .ddh__szp{width:min(920px,calc(100vw - 32px));max-height:calc(var(--ddh-h0) - var(--ddh-shop-b) - var(--ddh-cta-h) - 44px);background:#fff;border-color:var(--pl-line,#d3dbe6);color:#14223b}
+.ddh.ddh[data-ddh-sizes]{z-index:2147483000}
+.ddh .ddh__szp-in{padding:18px 28px 18px}
+.ddh .ddh__szp-h{display:inline-block;margin:0 12px 0 0;font-size:25px;color:#14223b}
+.ddh .ddh__szp-s{display:inline-block;margin:0 0 12px;font-size:16px;color:#2b3b58}
+.ddh .ddh__szl{columns:3;column-gap:30px}
+.ddh .ddh__szl li{padding:5px 0;border-bottom-color:#d3dbe6;font-size:15.5px;line-height:1.3}
+.ddh .ddh__szl li>span{color:#14223b}
+.ddh .ddh__szl li>b{font-size:15.5px;color:#14223b}
+.ddh .ddh__szl li>small{font-size:13.5px;color:#3a4d5f}
+.ddh .ddh__szl .ddh__szl-c>b,.ddh .ddh__szl .ddh__szl-c>a{color:#1f4568}
+.ddh .ddh__szp-n{margin-top:10px;font-size:15px;line-height:1.45;color:#2b3b58}
+@media (max-width:900px){.ddh .ddh__szl{columns:2}}
+/* --- Dual Plush card: same structure and pictures, readable type and darker ink --- */
+.ddh .ddh__dpc{width:clamp(560px,60vw,840px);background:linear-gradient(160deg,#f6f9fd 0,#e8eef7 100%);border-color:#d3dbe6;color:#14223b}
+.ddh .ddh__dpc-in{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);column-gap:28px}
+.ddh .ddh__dpc-eye{font-size:13px;letter-spacing:.2em;color:#1f4568}
+.ddh .ddh__dpc-h{font-size:clamp(26px,2.3vw,32px);color:#14223b}
+.ddh .ddh__dpc-x{font-size:16px;line-height:1.5;color:#2b3b58}
+.ddh .ddh__dpc-xs{gap:10px}
+.ddh .ddh__dpc-c h4{font-size:13px;letter-spacing:.16em;color:#1f4568}
+.ddh .ddh__dpc-c li{font-size:15.5px;padding:9px 12px;color:#14223b;background:#fff;box-shadow:inset 0 0 0 1px #d3dbe6}
+.ddh .ddh__dpc-av{font-size:13px;color:#1f4568;background:#e8eefa}
+.ddh .ddh__dpc-l b{font-size:16px;color:#14223b}.ddh .ddh__dpc-l small{font-size:14px;color:#2b3b58}
+.ddh .ddh__dpc-hgt{font-size:14px;color:#14223b}
+.ddh .ddh__dpc-cta .ddh__pv-cta{min-height:44px;font-size:15.5px;background:var(--pl-blue,#1f4f78);color:#fff}
+.ddh .ddh__dpc-cta .ddh__pv-cta--2{background:transparent;color:#173c5c;box-shadow:inset 0 0 0 1.5px #1f4f78}
+@container dpc (max-height:470px){.ddh .ddh__dpc-eye{display:none}.ddh .ddh__dpc-c li{padding:7px 12px;font-size:15.5px}.ddh .ddh__dpc-x{font-size:16px}}
+
+/* pairing table, transposed: Option 1-3 down the side, Topper | Mattress across (readable tiles instead of three cramped columns) */
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs{grid-template-columns:auto repeat(2,minmax(0,1fr));grid-template-rows:auto;gap:5px 6px;align-items:stretch}
+.ddh .ddh__pairs>b{grid-column:1;grid-row:1;max-width:none}
+.ddh .ddh__pairs>em:nth-child(5){grid-column:2;grid-row:1;text-align:center;align-self:end;padding:0}
+.ddh .ddh__pairs>em:nth-child(9){grid-column:3;grid-row:1;text-align:center;align-self:end;padding:0}
+.ddh .ddh__pairs>.ddh__pn:nth-child(2){grid-column:1;grid-row:2}.ddh .ddh__pairs>.ddh__pn:nth-child(3){grid-column:1;grid-row:3}.ddh .ddh__pairs>.ddh__pn:nth-child(4){grid-column:1;grid-row:4}
+.ddh .ddh__pairs>.ddh__pn{align-self:center;text-align:left;white-space:nowrap}
+.ddh .ddh__pairs>i.ddh__ly:nth-child(6){grid-column:2;grid-row:2}.ddh .ddh__pairs>i.ddh__ly:nth-child(7){grid-column:2;grid-row:3}.ddh .ddh__pairs>i.ddh__ly:nth-child(8){grid-column:2;grid-row:4}
+.ddh .ddh__pairs>i.ddh__ly:nth-child(10){grid-column:3;grid-row:2}.ddh .ddh__pairs>i.ddh__ly:nth-child(11){grid-column:3;grid-row:3}.ddh .ddh__pairs>i.ddh__ly:nth-child(12){grid-column:3;grid-row:4}
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>i.ddh__ly{padding:7px 6px;border-radius:9px}
+.ddh .ddh__sheet--topper .ddh__pv-tx{padding-top:18px}
+/* Dual Plush card: wider, one-line combinations */
+.ddh .ddh__dpc{width:clamp(620px,68vw,900px)}
+.ddh .ddh__dpc-in{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);padding:clamp(14px,2.4cqh,26px) clamp(18px,2.2vw,30px);row-gap:clamp(6px,1.2cqh,10px)}
+.ddh .ddh__dpc-c ul{gap:7px}
+.ddh .ddh__dpc-c li{padding:7px 12px;column-gap:12px;row-gap:2px}
+.ddh .ddh__dpc-c li>span:not(.ddh__dpc-av){white-space:nowrap}
+.ddh .ddh__dpc-cta{gap:12px}
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>i.ddh__ly{padding:7px 3px;font-size:14.5px}
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>.ddh__pn{font-size:12.5px;letter-spacing:.02em}
+@container ddsh (max-height:700px){.ddh .ddh__sheet--mattress .ddh__pv-z:has(.ddh__spec--combos3) .ddh__pv-b{display:none}.ddh .ddh__sheet--topper .ddh__pv-tx{padding-top:12px;gap:8px}}
+@container dpc (max-height:560px){.ddh .ddh__dpc-fig{display:none}}
+.ddh .ddh__sheet--mattress .ddh__pv-tx:has(.ddh__spec--combos3){grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr)}
+/* --- the hero's own small lines: darker ink on the light teal, no thin light text on a mid-tone plate --- */
+.ddh .ddh__copy strong,.ddh .ddh__copy span b{color:#0d2a2c}
+.ddh .ddh__copy span{color:#12343a}
+.ddh .ddh__spine strong{color:#0d2f2b}
+.ddh .ddh__spine span{opacity:1;font-weight:600;text-shadow:0 1px 3px rgba(8,44,44,.7)}
+.ddh .ddh__sky-lockup .ddh__sky-cert{color:#1a413c}
+.ddh .ddh__sky-lockup .ddh__sky-cert span{font-weight:600}
+.ddh .ddh__szl li{padding:4px 0}
+.ddh .ddh__szp-in{padding:16px 28px 16px}
+@container ddsh (max-height:800px){.ddh .ddh__sheet--topper .ddh__pv-b li:nth-child(n+4){display:none}}
+@container ddsh (max-height:620px){.ddh .ddh__sheet--topper .ddh__pv-b li{display:none}}
+.ddh .ddh__szp{width:min(980px,calc(100vw - 32px))}
+@media (max-height:760px){.ddh .ddh__szl li{padding:3px 0;font-size:15px}.ddh .ddh__szl li>b{font-size:15px}.ddh .ddh__szp-n{margin-top:8px}}
+@container ddsh (max-height:800px){.ddh .ddh__sheet--topper .ddh__pv-z:has(.ddh__combos) .ddh__pv-b{display:none}}
+@container ddsh (max-height:620px){.ddh .ddh__sheet--topper .ddh__combo .ddh__ly{padding:6px 10px}.ddh .ddh__sheet--topper .ddh__combos{gap:10px}.ddh .ddh__sheet--topper .ddh__pv-tx{gap:6px}.ddh .ddh__sheet--topper .ddh__pv-sp{padding-top:6px}}
+@media (max-width:700px){.ddh .ddh__szl{columns:1}}
+@container ddsh (max-height:620px){.ddh .ddh__sheet--topper .ddh__pv-tx{padding-top:4px}.ddh .ddh__sheet--topper .ddh__spec--combos>b{margin-bottom:2px}}

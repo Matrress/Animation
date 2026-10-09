@@ -184,7 +184,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.15.1/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.16.0/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -370,7 +370,7 @@ async function sheets() {
       const sz = await page.$('.ddh__sz'); ok(!!sz && await sz.isVisible(), 'the size guide trigger is shown (JS on)');
       await page.mouse.move(5, 400); await sz.hover(); await page.waitForTimeout(400);
       let k = await page.evaluate(() => ({ open: !document.querySelector('#ddh-sizes').hidden, exp: document.querySelector('.ddh__sz').getAttribute('aria-expanded'), rows: document.querySelectorAll('#ddh-sizes .ddh__szl li').length, cols: getComputedStyle(document.querySelector('.ddh__szl')).columnCount }));
-      ok(k.open && k.exp === 'true' && k.rows === 23 && k.cols === '2', 'hover opens the size guide: 22 sizes + custom, two columns: ' + JSON.stringify(k));
+      ok(k.open && k.exp === 'true' && k.rows === 23 && k.cols === '3', 'hover opens the size guide: 22 sizes + custom, three columns (1.16.0): ' + JSON.stringify(k));
       const r = await page.evaluate(() => { const a = document.querySelector('#ddh-sizes').getBoundingClientRect(), b = [...document.querySelectorAll('.ddh__cta')].map((x) => x.getBoundingClientRect()); return b.some((x) => !(a.right < x.left || a.left > x.right || a.bottom < x.top || a.top > x.bottom)); });
       ok(!r, 'the size guide does not cover the Shop buttons');
       await page.mouse.move(5, 400, { steps: 3 }); await page.waitForTimeout(500);
