@@ -1,0 +1,535 @@
+{
+ "_doc": "1.11.0 model selector data. The build generates the list cards from this file and checks that every model has a preview (src/sheets.html, data-ddh-pv) whose 'View model' link is the same URL. English text lives here; translations in src/sheets-i18n/<lang>.txt under the same keys. No prices, by design. 1.11.1: family (accent colour), tag (the preview chip key), facts (heights + firmness family: levels s/m/f/x/sx, pairs [topper, mattress], or split [one side, other side]).",
+ "collections": {
+  "mattress": "https://divinedunlop.com/products/latex-mattresses-collection",
+  "topper": "https://divinedunlop.com/products/latex-toppers-collection",
+  "pillows": "https://divinedunlop.com/products/latex-pillows"
+ },
+ "models": [
+  {
+   "id": "botanic",
+   "group": "mattress",
+   "name": "Botanic",
+   "url": "https://divinedunlop.com/products/botanic-100-organic-latex-mattress-dunlop-technology-831592302",
+   "image": {
+    "src": "assets/m-botanic.webp",
+    "width": 560,
+    "height": 207
+   },
+   "positioning": {
+    "key": "p_botanic",
+    "en": "Original Dunlop latex, clean natural support"
+   },
+   "benefits": [
+    {
+     "key": "b1_botanic",
+     "en": "100% organic Dunlop latex"
+    },
+    {
+     "key": "b2_botanic",
+     "en": "Seven comfort zones"
+    },
+    {
+     "key": "b3_botanic",
+     "en": "Four firmness options"
+    }
+   ],
+   "row": "core",
+   "explanation": {
+    "key": "x_botanic",
+    "en": "Our original 100% organic Dunlop latex mattress: seven comfort zones give clean, natural support that suits most sleepers."
+   },
+   "family": "botanic",
+   "tag": {
+    "key": "c_prem"
+   },
+   "facts": {
+    "heights": "20 · 24 · 26 cm",
+    "firmness": {
+     "levels": [
+      "s",
+      "m",
+      "f",
+      "x"
+     ]
+    }
+   }
+  },
+  {
+   "id": "botanic_dp",
+   "group": "mattress",
+   "name": "Botanic Dual Plush",
+   "url": "https://divinedunlop.com/products/botanic-dual-plush-100-organic-latex-mattress-organic-latex-topper-dunlop-technology",
+   "image": {
+    "src": "assets/m-botanic-dp.webp",
+    "width": 560,
+    "height": 248
+   },
+   "positioning": {
+    "key": "p_botanic_dp",
+    "en": "Mattress and topper in one sleep system"
+   },
+   "benefits": [
+    {
+     "key": "b1_botanic_dp",
+     "en": "Mattress + topper system"
+    },
+    {
+     "key": "b2_botanic_dp",
+     "en": "Three firmness pairings"
+    },
+    {
+     "key": "b3_botanic_dp",
+     "en": "23 or 28 cm deep"
+    }
+   ],
+   "row": "core",
+   "explanation": {
+    "key": "x_botanic_dp",
+    "en": "Support comes from the mattress, comfort from the organic latex topper above it, joined in one quilted cover."
+   },
+   "family": "botanic",
+   "tag": {
+    "key": "c_prem"
+   },
+   "facts": {
+    "heights": "23 · 28 cm",
+    "firmness": {
+     "pairs": [
+      [
+       "s",
+       "m"
+      ],
+      [
+       "m",
+       "f"
+      ],
+      [
+       "f",
+       "x"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "bio",
+   "group": "mattress",
+   "name": "Bio Comfort",
+   "url": "https://divinedunlop.com/products/bio-comfort-100-organic-latex-mattress-innovation-cloud-comfort",
+   "image": {
+    "src": "assets/m-bio.webp",
+    "width": 560,
+    "height": 226
+   },
+   "positioning": {
+    "key": "p_bio",
+    "en": "Our innovation: adaptive, refined support"
+   },
+   "benefits": [
+    {
+     "key": "b1_bio",
+     "en": "Seven-zone cellular core"
+    },
+    {
+     "key": "b2_bio",
+     "en": "Cloud Comfort feel"
+    },
+    {
+     "key": "b3_bio",
+     "en": "Highest ventilation in natural latex"
+    }
+   ],
+   "row": "core",
+   "explanation": {
+    "key": "x_bio",
+    "en": "Responsive natural latex cells across seven body zones, so support, pressure relief and fresh air follow your body."
+   },
+   "claimNote": "'Highest ventilation in natural latex' is the owner's own approved claim (1.10.5).",
+   "family": "bio",
+   "tag": {
+    "key": "c_excl"
+   },
+   "facts": {
+    "heights": "23 · 26 cm",
+    "firmness": {
+     "levels": [
+      "s",
+      "m",
+      "f"
+     ]
+    }
+   }
+  },
+  {
+   "id": "bio_dp",
+   "group": "mattress",
+   "name": "Bio Comfort Dual Plush",
+   "url": "https://divinedunlop.com/products/bio-comfort-dual-plush-100-organic-latex-mattress-innovation",
+   "image": {
+    "src": "assets/m-bio-dp.webp",
+    "width": 560,
+    "height": 224
+   },
+   "positioning": {
+    "key": "p_bio_dp",
+    "en": "Our most complete mattress + topper system"
+   },
+   "benefits": [
+    {
+     "key": "b1_bio_dp",
+     "en": "Bio Comfort core + plush topper"
+    },
+    {
+     "key": "b2_bio_dp",
+     "en": "Two firmness pairings"
+    },
+    {
+     "key": "b3_bio_dp",
+     "en": "28 cm, one cover"
+    }
+   ],
+   "row": "core",
+   "explanation": {
+    "key": "x_bio_dp",
+    "en": "The Bio Comfort core with a plush natural latex topper above it, in one cover: support, comfort and adaptation in one layered system."
+   },
+   "family": "bio",
+   "tag": {
+    "key": "c_inno"
+   },
+   "facts": {
+    "heights": "28 cm",
+    "firmness": {
+     "pairs": [
+      [
+       "s",
+       "m"
+      ],
+      [
+       "m",
+       "f"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "ortho",
+   "group": "mattress",
+   "name": "Orthopaedic Coconut Coir",
+   "url": "https://divinedunlop.com/products/orthopaedic-coconut-coirs-100-organic-latex",
+   "image": {
+    "src": "assets/m-ortho.webp",
+    "width": 560,
+    "height": 420
+   },
+   "positioning": {
+    "key": "p_ortho",
+    "en": "Extra firm, with natural coconut coir"
+   },
+   "benefits": [
+    {
+     "key": "b1_ortho",
+     "en": "Coconut coir layers"
+    },
+    {
+     "key": "b2_ortho",
+     "en": "Firm or Extra Firm"
+    },
+    {
+     "key": "b3_ortho",
+     "en": "Stable, supportive feel"
+    }
+   ],
+   "row": "purpose",
+   "nameKey": "n_ortho",
+   "explanation": {
+    "key": "x_ortho",
+    "en": "Organic latex layered with natural coconut coir for a firmer, more stable feel, for sleepers who need extra firm support."
+   },
+   "family": "ortho",
+   "tag": {
+    "key": "c_ortho"
+   },
+   "facts": {
+    "heights": "17 · 20 · 25 cm",
+    "firmness": {
+     "levels": [
+      "f",
+      "x"
+     ]
+    }
+   }
+  },
+  {
+   "id": "partners",
+   "group": "mattress",
+   "name": "Mattress for Partners",
+   "url": "https://divinedunlop.com/products/latex-mattress-for-partners-organic-latex",
+   "image": {
+    "src": "assets/m-partners.webp",
+    "width": 560,
+    "height": 188
+   },
+   "positioning": {
+    "key": "p_partners",
+    "en": "Two sleep sides, one shared bed"
+   },
+   "benefits": [
+    {
+     "key": "b1_partners",
+     "en": "A side for each sleeper"
+    },
+    {
+     "key": "b2_partners",
+     "en": "A different firmness per side"
+    },
+    {
+     "key": "b3_partners",
+     "en": "One seamless surface"
+    }
+   ],
+   "row": "purpose",
+   "nameKey": "n_partners",
+   "explanation": {
+    "key": "x_partners",
+    "en": "Two individual sides in one seamless mattress, for couples with different body weights or firmness needs."
+   },
+   "claimNote": "Firmness per side is configurable on the product page; the hero does not fix it.",
+   "family": "partners",
+   "tag": {
+    "key": "c_part"
+   },
+   "facts": {
+    "heights": "21 · 25 cm",
+    "firmness": {
+     "split": [
+      "m",
+      "f"
+     ]
+    }
+   }
+  },
+  {
+   "id": "ambient",
+   "group": "mattress",
+   "name": "Ambient",
+   "url": "https://divinedunlop.com/products/ambient-best-price-100-natural-dunlop-latex-mattress",
+   "image": {
+    "src": "assets/m-ambient.webp",
+    "width": 560,
+    "height": 277
+   },
+   "positioning": {
+    "key": "p_ambient",
+    "en": "Best-value natural latex mattress"
+   },
+   "benefits": [
+    {
+     "key": "b1_ambient",
+     "en": "Best value in natural latex"
+    },
+    {
+     "key": "b2_ambient",
+     "en": "Four depths, 16 to 26 cm"
+    },
+    {
+     "key": "b3_ambient",
+     "en": "Four firmness options"
+    }
+   ],
+   "row": "purpose",
+   "explanation": {
+    "key": "x_ambient",
+    "en": "Clean, simple natural Dunlop latex comfort at our most accessible level, in four depths and four firmnesses."
+   },
+   "family": "value",
+   "tag": {
+    "key": "c_val"
+   },
+   "facts": {
+    "heights": "16 · 18 · 20 · 26 cm",
+    "firmness": {
+     "levels": [
+      "s",
+      "m",
+      "f",
+      "sx"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hotel",
+   "group": "mattress",
+   "name": "Hotel Line Shredded Latex",
+   "url": "https://divinedunlop.com/products/hotel-line-optimised-value-100-dunlop-latex-mattress",
+   "image": {
+    "src": "assets/m-hotel.webp",
+    "width": 560,
+    "height": 292
+   },
+   "positioning": {
+    "key": "p_hotel",
+    "en": "Optimised value for practical comfort"
+   },
+   "benefits": [
+    {
+     "key": "b1_hotel",
+     "en": "Shredded Dunlop latex"
+    },
+    {
+     "key": "b2_hotel",
+     "en": "Designed for hospitality"
+    },
+    {
+     "key": "b3_hotel",
+     "en": "18 cm, supportive feel"
+    }
+   ],
+   "row": "purpose",
+   "explanation": {
+    "key": "x_hotel",
+    "en": "Shredded Dunlop latex in a practical, optimised construction, designed for hospitality and hard-working rooms."
+   },
+   "claimNote": "No seven-zone claim: not every Hotel Line configuration has the same zoned structure.",
+   "family": "value",
+   "tag": {
+    "key": "c_hotel"
+   },
+   "facts": {
+    "heights": "18 cm",
+    "firmness": {}
+   }
+  },
+  {
+   "id": "t_bio",
+   "group": "topper",
+   "name": "Bio Support",
+   "url": "https://divinedunlop.com/products/bio-support-100-organic-latex-topper-dunlop-technology",
+   "image": {
+    "src": "assets/t-bio.webp",
+    "width": 620,
+    "height": 247
+   },
+   "positioning": {
+    "key": "p_t_bio",
+    "en": "Upgrade the mattress you already have"
+   },
+   "benefits": [
+    {
+     "key": "tb1",
+     "en": "100% natural latex, Dunlop technology"
+    },
+    {
+     "key": "tb2",
+     "en": "Seven-zone anatomical support"
+    },
+    {
+     "key": "tb3",
+     "en": "Better pressure relief"
+    },
+    {
+     "key": "tb4",
+     "en": "Enhanced ventilation"
+    },
+    {
+     "key": "tb5",
+     "en": "Durable and long-lasting"
+    }
+   ],
+   "explanation": {
+    "key": "d_t_bio",
+    "note": "existing topper description"
+   },
+   "family": "bio",
+   "tag": {
+    "key": "c_orig"
+   }
+  },
+  {
+   "id": "t_dual",
+   "group": "topper",
+   "name": "Bio Support Dual",
+   "url": "https://divinedunlop.com/products/bio-support-plus-100-organic-latex-topper",
+   "image": {
+    "src": "assets/t-bio-dual.webp",
+    "width": 620,
+    "height": 291
+   },
+   "positioning": {
+    "key": "p_t_dual",
+    "en": "Two comfort levels in one topper"
+   },
+   "benefits": [
+    {
+     "key": "b1_t_dual",
+     "en": "Two natural latex layers"
+    },
+    {
+     "key": "b2_t_dual",
+     "en": "Two firmness combinations"
+    },
+    {
+     "key": "b3_t_dual",
+     "en": "More flexible comfort tuning"
+    },
+    {
+     "key": "b4_t_dual",
+     "en": "Better adaptation for existing mattress systems"
+    }
+   ],
+   "explanation": {
+    "key": "d_t_dual",
+    "note": "existing topper description"
+   },
+   "family": "bio",
+   "tag": {
+    "key": "c_prem"
+   }
+  },
+  {
+   "id": "t_part",
+   "group": "topper",
+   "name": "Partners Topper",
+   "url": "https://divinedunlop.com/products/topper-for-partners-firm-medium-from-100-organic-latex",
+   "image": {
+    "src": "assets/t-partners.webp",
+    "width": 620,
+    "height": 431
+   },
+   "positioning": {
+    "key": "p_t_part",
+    "en": "Two comfort needs, one shared surface"
+   },
+   "benefits": [
+    {
+     "key": "b1_t_part",
+     "en": "Medium one side, Firm the other"
+    },
+    {
+     "key": "b2_t_part",
+     "en": "Gap-free bridge topper"
+    },
+    {
+     "key": "b3_t_part",
+     "en": "Made for couples"
+    },
+    {
+     "key": "b4_t_part",
+     "en": "One shared sleeping surface"
+    }
+   ],
+   "nameKey": "n_t_part",
+   "explanation": {
+    "key": "d_t_part",
+    "note": "existing topper description"
+   },
+   "family": "partners",
+   "tag": {
+    "key": "c_part"
+   }
+  }
+ ]
+}
