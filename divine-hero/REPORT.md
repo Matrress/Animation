@@ -1,5 +1,17 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.15.1: context cards keep their air and their content on a 668 px iPad window (2026-10-09)
+
+Owner report (two iPad screenshots of the live site): Natural Adaptation opened with an empty picture area and the seven zone tiles missing; Firmness Regulation had its title band squeezed against the tiles, no air between the band and the firmness tiles.
+
+Causes found: (1) the band's breathing space came from the margin of the *next sibling* (`.ddh__hc-hd + *`), and that sibling is the optional intro line, which disappears from tier 1 on, so the tiles touched the band; (2) the card's compaction tier was measured once, when it opened: a picture or the web font arriving a moment later (slow connection) changed the height afterwards and the tiles were pushed out of the card; (3) at tier 3 the Original Dunlop card showed only 1 of its 3 steps.
+Done:
+1. The title band keeps its own margin (16 px, 14 px in the lowest tier) and padding in every tier, independent of what follows it.
+2. The card is measured again when its pictures load or fail, when the font is ready and 0.2 / 0.6 / 1.4 s after opening (`replaceSoon`); its pictures are loaded eagerly when it opens.
+3. Lowest tiers: the zones picture steps down in height (122 / 100 px), the Dual Plush panel's sub-heading steps aside, tiles are slightly tighter; no text gets smaller. Original Dunlop shows all three steps (the first with its sentence, the other two with their titles side by side). If a card is still too tall (longer translations) it widens, and whatever is left scrolls inside it.
+4. New check `tests/cardfit15.mjs` (tier, overflow and band gap for every card, per viewport and language).
+Tests: interaction 381 / 381 / 375 / 375, panels 792, guards, axe 0, fit15 0 problems (en, 1080x668 to 1440x900), cardfit15: English clean from 1080x668; Spanish and Portuguese Original Dunlop over by ~12 px at 1080x668 (scrolls).
+
 ## 1.15.0: readability first, one selector size from every entrance, an invitation to explore the points (2026-10-09)
 
 Owner brief (Bulgarian, with three annotated iPad screenshots): text and contrast of the selector panels, topper guide and model preview are hard to read; the model selector looks smaller when it opens from the site menu (Mattresses) than from the hero button; add a quiet call to explore the points on the start page; everything else is perfect. Design rule from the owner: type must be easy to read for people with or without one-dioptre glasses; visual ease of reading is always a task of great importance.

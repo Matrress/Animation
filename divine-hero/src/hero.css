@@ -1349,3 +1349,32 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 @container ddsh (max-height:560px){.ddh .ddh__sheet--topper:not(:lang(en)) .ddh__mc-p{display:none}}
 @container ddsh (max-width:1200px){.ddh .ddh__sheet--mattress:not(:lang(en)) .ddh__sel{grid-template-columns:minmax(0,50fr) minmax(0,50fr)}}
 @container ddsh (max-height:600px){.ddh .ddh__sheet--mattress:not(:lang(en)) .ddh__spec--combos3{padding-top:2px}.ddh .ddh__sheet--mattress:not(:lang(en)) .ddh__pv-b{display:none}}
+
+/* --- 1.15.0 context cards: the title band always keeps clear air above and below it, in every compaction tier (the paragraph that used to carry the gap steps aside first) --- */
+.ddh .ddh__hc .ddh__hc-hd{margin-bottom:16px;padding:18px 92px 16px 30px}
+.ddh .ddh__hc[data-tight] .ddh__hc-hd,.ddh .ddh__hc[data-tight="2"] .ddh__hc-hd,.ddh .ddh__hc[data-tight="3"] .ddh__hc-hd{padding:16px 92px 14px 30px}
+.ddh .ddh__hc[data-tight] .ddh__hc-hd+*,.ddh .ddh__hc[data-tight="3"] .ddh__hc-hd+*{margin-top:0}
+/* the lowest tiers (a 668 px iPad window): the picture steps down in height, the sub-heading of the Dual Plush panel steps aside, tiles get a little tighter; nothing is clipped, no text gets smaller */
+.ddh .ddh__hc[data-tight="2"] .ddh__hcz-img{max-height:122px;width:auto;max-width:100%;margin-inline:auto;display:block}
+.ddh .ddh__hc[data-tight="3"] .ddh__hcz-img{max-height:100px;width:auto;max-width:100%;margin-inline:auto;display:block}
+.ddh .ddh__hc[data-tight="3"] .ddh__hc-dh{display:none}
+.ddh .ddh__hc[data-tight="3"] .ddh__hcf li{padding:6px 12px 7px}
+.ddh .ddh__hc[data-tight="3"] .ddh__hc-hd{padding:14px 92px 12px 30px}
+.ddh .ddh__hc[data-tight="3"] .ddh__hc-hd{margin-bottom:14px}
+.ddh .ddh__hc[data-tight="3"] .ddh__hc-n{margin-bottom:8px;line-height:1.35}
+.ddh .ddh__hc[data-tight="3"] .ddh__hc-dp{padding:8px 16px 10px}
+.ddh .ddh__hc[data-tight="3"] .ddh__hc-in{padding-bottom:14px}
+.ddh .ddh__hc[data-ddh-wide],.ddh .ddh__hc--zones[data-ddh-wide],.ddh .ddh__hc--firm[data-ddh-wide]{width:clamp(740px,80vw,920px);max-width:calc(100vw - 2 * var(--ddh-edge-r,clamp(20px,3.6vw,64px)))}
+/* Original Dunlop Technology on low windows: all three steps stay (was: only the first one); the first keeps its sentence, the other two show their titles side by side */
+.ddh .ddh__hc--dunlop:is([data-tight="2"],[data-tight="3"]) .ddh__hc-st li[data-o]{display:grid}
+.ddh .ddh__hc--dunlop:is([data-tight="2"],[data-tight="3"]) .ddh__hc-st{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ddh .ddh__hc--dunlop:is([data-tight="2"],[data-tight="3"]) .ddh__hc-st li:first-child{grid-column:1/-1}
+.ddh .ddh__hc--dunlop:is([data-tight="2"],[data-tight="3"]) .ddh__hc-st li[data-o]{padding:11px 14px 11px 64px;align-content:center}
+.ddh .ddh__hc--dunlop:is([data-tight="2"],[data-tight="3"]) .ddh__hc-st li[data-o]::before{left:14px;width:36px;height:36px;margin-top:-18px;line-height:36px;font-size:18px}
+.ddh .ddh__hc--dunlop:is([data-tight="2"],[data-tight="3"]) .ddh__hc-st li[data-o] span{display:none}
+.ddh .ddh__hc--dunlop:is([data-tight="2"],[data-tight="3"]) .ddh__hc-l{margin-bottom:12px}
+.ddh .ddh__hc--dunlop[data-tight="3"] .ddh__hc-st{gap:6px}
+.ddh .ddh__hc--dunlop[data-tight="3"] .ddh__hc-l{margin-bottom:8px;line-height:1.45}
+.ddh .ddh__hc--dunlop[data-tight="3"] .ddh__hc-st li:first-child{padding:8px 14px 9px 64px;gap:1px}
+.ddh .ddh__hc--dunlop[data-tight="3"] .ddh__hc-st li[data-o]{padding:6px 12px 6px 56px}
+.ddh .ddh__hc--dunlop[data-tight="3"] .ddh__hc-st li[data-o]::before{left:12px;width:32px;height:32px;margin-top:-16px;line-height:32px;font-size:16px}

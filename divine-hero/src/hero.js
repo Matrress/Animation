@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.15.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.15.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.15.0';
+  var VERSION = '1.15.1';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -205,7 +205,7 @@
       if (key && (pointsOff() || sheet)) key = null;
       if (key === active) { if (key && announce) live.textContent = txtOf(key); return; }
       active = key;
-      if (key) { hintNote(key); warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : key === NIGHT ? NIGHT : 'brand'); fit(key); placeCard(key); }
+      if (key) { hintNote(key); warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : key === NIGHT ? NIGHT : 'brand'); fit(key); placeCard(key); replaceSoon(key); }
       else { root.removeAttribute('data-ddh-state'); root.removeAttribute('data-ddh-screen'); }
       if (typeof unplace === 'function' && (!key || !cardOf(key))) unplace();
       var txt = '';
@@ -551,6 +551,21 @@
     function cardsLive() { return !!(hcs && w.innerWidth > 700 && w.innerHeight > 500); }
     function cardOf(k) { if (!k) return null; if (k === 'system') return dpcLive() ? dpc : null; return cardsLive() ? hcs.querySelector('[data-ddh-card="' + k + '"]') : null; }
     // a context card sits on the right, below the LATEX lockup and above the Shop buttons (never over them)
+    // 1.15.0: the compaction tier is measured when the card opens; a picture or the web font that arrives a moment later changes the height, so the card is measured again
+    // (a slow connection used to leave the Natural Adaptation picture blank and the seven tiles pushed out of sight)
+    var replaceT = [];
+    function replaceSoon(k) {
+      replaceT.forEach(function (t) { w.clearTimeout(t); }); replaceT = [];
+      var c = cardOf(k); if (!c) return;
+      var again = function () { if (active === k) placeCard(k); };
+      [].forEach.call(c.querySelectorAll('img'), function (im) {
+        if (im.loading !== 'eager') { im.loading = 'eager'; }
+        if (!im.complete) { im.addEventListener('load', again, { once: true }); im.addEventListener('error', again, { once: true }); }
+      });
+      [180, 600, 1400].forEach(function (ms) { replaceT.push(w.setTimeout(again, ms)); });
+      if (w.document.fonts && w.document.fonts.ready) w.document.fonts.ready.then(again);
+    }
+    cleanups.push(function () { replaceT.forEach(function (t) { w.clearTimeout(t); }); });
     function placeCard(k) {
       if (k === 'system') {                                           // the Dual Plush card ends above the measured Shop row (its height varies)
         var dc = cardOf(k), shp = root.querySelector('.ddh__shop'); if (!dc || !shp) return;
@@ -563,8 +578,10 @@
       var bottom = sh ? sh.getBoundingClientRect().top - rr.top - 16 : rr.height - 16;
       var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;   // the Shop row below the fold: the card still ends on screen
       c.style.top = Math.round(top) + 'px'; c.style.maxHeight = Math.max(160, Math.round(bottom - top)) + 'px';
+      c.removeAttribute('data-ddh-wide');
       c.removeAttribute('data-tight');                                                         // low hero: optional lines step aside (type never shrinks)
       for (var tier = 0; tier <= 3 && c.scrollHeight > c.clientHeight + 1; tier++) c.setAttribute('data-tight', String(tier));   // 0 tightens the spacing, 1-3 let optional lines step aside
+      if (c.scrollHeight > c.clientHeight + 1) c.setAttribute('data-ddh-wide', '');                 // 1.15.0: still too tall (longer translations, 668 px windows): the card widens, fewer wrapped lines; what is left scrolls inside it
       // points the open card covers step aside (they would otherwise catch the pointer resting on the card)
       var r = c.getBoundingClientRect();
       points.forEach(function (p) { var q = p.getBoundingClientRect(), x = q.left + q.width / 2, y = q.top + q.height / 2; p.toggleAttribute('data-ddh-under', !!q.width && x > r.left - 6 && x < r.right + 6 && y > r.top - 6 && y < r.bottom + 6); });
