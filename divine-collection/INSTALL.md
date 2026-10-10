@@ -1,7 +1,7 @@
 # Divine DunlopDreams Collection 1.0.0 — installation and rollback
 
 Nothing below is done yet on the live store. Steps 1–2 are safe tests; steps 3–6 wait for Martin's approval.
-Pinned commit for every jsDelivr URL: see `ecwid/loader-1.0.0.html` (the build writes the commit into every file).
+Pinned commit for every jsDelivr URL: `c969a1923d547cfdc8144c33515b3df607d742fc` (written into every file in `ecwid/` by the build).
 
 ## 0. Files
 | File | Where it goes |
@@ -25,7 +25,7 @@ Follow `backup/README.md`: copy the exact HTML of each live description (`<>` mo
 6. Delete or disable the test category.
 
 ## 3. Site-wide loader (after the probe, with approval)
-Instant Site → Settings → the site-wide **custom JavaScript / custom code** field (the one with the 4,000-symbol limit; the exact menu name in your Ecwid version to be confirmed) → paste `ecwid/loader-1.0.0.html` (499 characters) → Save / Publish.
+Instant Site → Settings → the site-wide **custom JavaScript / custom code** field (the one with the 4,000-symbol limit; the exact menu name in your Ecwid version to be confirmed) → paste `ecwid/loader-1.0.0.html` (527 characters) → Save / Publish.
 It loads `ddc.css` (26 KB, cached for a year) and `ddc.js` (6 KB). Pages without the collection interface are not changed: every rule is scoped to `.ddc`, and the script only acts on `.ddc`.
 
 ## 4. Test before replacing anything

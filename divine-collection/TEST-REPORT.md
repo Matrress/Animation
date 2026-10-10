@@ -18,7 +18,7 @@ Environment: Chromium (Playwright 1.56) on `preview/sim.html`, an imitation of a
 | Reduced motion | No animation | Pass |
 | Accessibility (axe-core 4.10) | Overview and a selected model, both collections, 1440 and 390 wide: 0 violations | Pass |
 
-Sizes: `ddc.css` 26.4 KB (≈ 5 KB compressed), `ddc.js` 5.9 KB, loader 499 characters, mattress description 27,134 characters, topper 11,334, one new picture 13.6 KB.
+Sizes: `ddc.css` 26.4 KB (≈ 5 KB compressed), `ddc.js` 5.9 KB, loader 527 characters, mattress description 27,134 characters, topper 11,362, one new picture 13.6 KB.
 
 ## Screenshots
 `reports/<device>-<collection>-<overview|selected>.webp` for desktop 1440, large 1920, iPad landscape 1180, iPad portrait 820 and phone 390 (the selected state is Botanic Dual Plush / Bio Support Dual). Fonts in the screenshots are the real Chillax files.
