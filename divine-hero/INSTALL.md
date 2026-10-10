@@ -1,6 +1,6 @@
 # Divine DunlopDreams Hero 1.17.0 — installation (Ecwid Instant Site)
 
-> **Use the SHORT section** `ecwid/section-1.17.0-jsdelivr.html` (10,553 characters). The live site cut longer pastes at about 20–22k characters, which lost the hotspots, the Shop buttons and the script. Do not use the all-in-one files on Instant Site.
+> **Use the SHORT section** `ecwid/section-1.17.1-jsdelivr.html` (10,553 characters). The live site cut longer pastes at about 20–22k characters, which lost the hotspots, the Shop buttons and the script. Do not use the all-in-one files on Instant Site.
 
 > **1.1.0** fits the live header: the Instant Site header is transparent and lies over the first section. The hero measures it on the page and keeps the lockup, DIVINE logo, hotspots and Shop buttons below it, while the sky and clouds run up behind the menu. Nothing needs adjusting by hand.
 
@@ -15,9 +15,9 @@ Ecwid's documented 4,000-symbol limit belongs to the **site-wide body "Custom Ja
 
 | Form | File | Paste size | What must be hosted |
 |---|---|---|---|
-| All-in-one (over the ~20k paste limit: not for the live editor) | `ecwid/section-1.17.0-allinone-jsdelivr.html` | 128,138 characters | Nothing: CSS + JS are inside the section; images/fonts come from jsDelivr (pinned commit `8c06998`) |
-| All-in-one, own domain | `ecwid/section-1.17.0-allinone.html` | 126,801 characters | images + fonts on `assets.divinedunlop.com` (§2) |
-| External CSS/JS (leanest page HTML) | `ecwid/section-1.17.0.html` | 9,280 characters | everything in `release/1.17.0/` on `assets.divinedunlop.com` (§2) |
+| All-in-one (over the ~20k paste limit: not for the live editor) | `ecwid/section-1.17.1-allinone-jsdelivr.html` | 128,138 characters | Nothing: CSS + JS are inside the section; images/fonts come from jsDelivr (pinned commit `8c06998`) |
+| All-in-one, own domain | `ecwid/section-1.17.1-allinone.html` | 126,801 characters | images + fonts on `assets.divinedunlop.com` (§2) |
+| External CSS/JS (leanest page HTML) | `ecwid/section-1.17.1.html` | 9,280 characters | everything in `release/1.17.0/` on `assets.divinedunlop.com` (§2) |
 
 All three produce identical output (verified: same geometry, same 381 interaction checks). The all-in-one is about the size of the v26 reference file (28,761 characters) that was planned for one section. Its CSS/JS aren't cached separately, which costs about 6 KB compressed per homepage view.
 
@@ -42,7 +42,7 @@ All three produce identical output (verified: same geometry, same 381 interactio
 
 The production section below already points at `https://assets.divinedunlop.com/divine-hero/1.17.0/`.
 
-**Ready now — staging via jsDelivr (no setup):** `ecwid/section-1.17.0-jsdelivr.html` loads the same files from this repository at the pinned commit `8c06998`. It's immutable and CORS-enabled. Use it for the hidden-page test or as an interim host. Swap to the first-party file before launch: that file serves from a GitHub fork of an unrelated project, so it isn't brand-controlled.
+**Ready now — staging via jsDelivr (no setup):** `ecwid/section-1.17.1-jsdelivr.html` loads the same files from this repository at the pinned commit `8c06998`. It's immutable and CORS-enabled. Use it for the hidden-page test or as an interim host. Swap to the first-party file before launch: that file serves from a GitHub fork of an unrelated project, so it isn't brand-controlled.
 
 ## 3. Exact external file URLs (production)
 
@@ -69,14 +69,14 @@ File contents = the files in `release/1.17.0/` of this repository (byte-exact; r
 
 ## 5. Paste-ready code — Section 1 of 1 (Homepage, top)
 
-Source of truth: `ecwid/section-1.17.0.html` (identical to the block below).
+Source of truth: `ecwid/section-1.17.1.html` (identical to the block below).
 
 ```html
-<!-- Divine DunlopDreams Hero 1.17.0 | one Instant Site "Embed & Custom Code" section | CSS/JS/assets: https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/ -->
+<!-- Divine DunlopDreams Hero 1.17.1 | one Instant Site "Embed & Custom Code" section | CSS/JS/assets: https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/ -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="preload" href="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/chillax-600.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/hero.css">
-<script src="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/hero.js" defer></script>
+<link rel="preload" href="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/chillax-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/hero.css">
+<script src="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/hero.js" defer></script>
 <section class="ddh" aria-labelledby="ddh-title" data-ddh-mode="interactive">
 <h1 class="ddh__sr" id="ddh-title">Divine DunlopDreams – 100% Natural Latex Mattresses, Toppers &amp; Pillows. Engineering Natural Latex Sleep System</h1>
 <div class="ddh__scene">
@@ -86,12 +86,12 @@ Source of truth: `ecwid/section-1.17.0.html` (identical to the block below).
 </div>
 <div class="ddh__art">
 <div class="ddh__plane">
-<picture class="ddh__picture"><img class="ddh__img" src="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/hero-band-1640.webp" srcset="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/hero-band-800.webp 800w,https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/hero-band-1200.webp 1200w,https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/hero-band-1640.webp 1640w,https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/hero-band-2048.webp 2048w,https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/hero-band-2560.webp 2560w,https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/hero-band-2880.webp 2880w,https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/hero-band-3554.webp 3554w" sizes="100vw" width="3554" height="2744" alt="Woman sleeping on a natural latex pillow beside the Divine DunlopDreams Dual Plush latex mattress and topper" fetchpriority="high" loading="eager" decoding="async"></picture>
-<span class="ddh__bed" aria-hidden="true"><img src="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/mattress-bed.webp" width="1480" height="720" alt="" loading="lazy" decoding="async"></span>
-<span class="ddh__mat" aria-hidden="true"><img src="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/mattress.webp" width="1072" height="430" alt="" loading="lazy" decoding="async"></span>
+<picture class="ddh__picture"><img class="ddh__img" src="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/hero-band-1640.webp" srcset="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/hero-band-800.webp 800w,https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/hero-band-1200.webp 1200w,https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/hero-band-1640.webp 1640w,https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/hero-band-2048.webp 2048w,https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/hero-band-2560.webp 2560w,https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/hero-band-2880.webp 2880w,https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/hero-band-3554.webp 3554w" sizes="100vw" width="3554" height="2744" alt="Woman sleeping on a natural latex pillow beside the Divine DunlopDreams Dual Plush latex mattress and topper" fetchpriority="high" loading="eager" decoding="async"></picture>
+<span class="ddh__bed" aria-hidden="true"><img src="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/mattress-bed.webp" width="1480" height="720" alt="" loading="lazy" decoding="async"></span>
+<span class="ddh__mat" aria-hidden="true"><img src="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/mattress.webp" width="1072" height="430" alt="" loading="lazy" decoding="async"></span>
 <span class="ddh__dp" aria-hidden="true"><span data-ddh-spread>Dual Plush</span></span>
 <div class="ddh__wash" aria-hidden="true"></div>
-<div class="ddh__night" id="ddh-night" aria-hidden="true"><img class="ddh__night-img" src="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/night-1640.webp" srcset="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/night-1640.webp 1640w,https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/night-2560.webp 2560w" sizes="100vw" width="1640" height="1266" alt="" loading="lazy" decoding="async"><p class="ddh__night-copy" data-ddh-copy="night" aria-hidden="true"><span><b>Improve</b> the <b>Quality</b> of Your <b>Sleep</b></span></p></div>
+<div class="ddh__night" id="ddh-night" aria-hidden="true"><img class="ddh__night-img" src="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/night-1640.webp" srcset="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/night-1640.webp 1640w,https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/night-2560.webp 2560w" sizes="100vw" width="1640" height="1266" alt="" loading="lazy" decoding="async"><p class="ddh__night-copy" data-ddh-copy="night" aria-hidden="true"><span><b>Improve</b> the <b>Quality</b> of Your <b>Sleep</b></span></p></div>
 <div class="ddh__points" role="group" aria-label="Explore the sleep system">
 <button class="ddh__point" type="button" data-ddh-point="shoulder" aria-controls="ddh-screen-brand" aria-expanded="false"><span class="ddh__sr">Shoulder: balance and relief</span></button>
 <button class="ddh__point" type="button" data-ddh-point="back" aria-controls="ddh-screen-back" aria-expanded="false"><span class="ddh__sr">Back: spinal alignment</span></button>
@@ -106,11 +106,11 @@ Source of truth: `ecwid/section-1.17.0.html` (identical to the block below).
 <button class="ddh__point ddh__point--night" type="button" data-ddh-point="night" aria-controls="ddh-night" aria-expanded="false"><span class="ddh__sr">Night mode: improve the quality of your sleep</span></button>
 </div>
 <div class="ddh__screen ddh__screen--back" id="ddh-screen-back" aria-hidden="true">
-<img class="ddh__plate" src="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/plate-back.webp" width="573" height="232" alt="" loading="lazy" decoding="async">
-<div class="ddh__spine" data-ddh-copy="back" aria-hidden="true"><strong>Spinal Alignment</strong><img src="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/spine-graphic.webp" width="1615" height="145" alt="" loading="lazy" decoding="async"><span><b>Stretching</b> Effect</span></div>
+<img class="ddh__plate" src="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/plate-back.webp" width="573" height="232" alt="" loading="lazy" decoding="async">
+<div class="ddh__spine" data-ddh-copy="back" aria-hidden="true"><strong>Spinal Alignment</strong><img src="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/spine-graphic.webp" width="1615" height="145" alt="" loading="lazy" decoding="async"><span><b>Stretching</b> Effect</span></div>
 </div>
 <div class="ddh__screen ddh__screen--brand" id="ddh-screen-brand" aria-hidden="true">
-<img class="ddh__plate" src="https://cdn.jsdelivr.net/gh/Matrress/Animation@8c06998e7fff2a1c962c4b73964d5876f3aedd30/divine-hero/release/1.17.0/assets/plate-logo.webp" width="470" height="175" alt="" loading="lazy" decoding="async">
+<img class="ddh__plate" src="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/plate-logo.webp" width="470" height="175" alt="" loading="lazy" decoding="async">
 <p class="ddh__copy ddh__copy--solo" data-ddh-copy="shoulder" aria-hidden="true"><strong>Balance &amp; Relief</strong></p>
 <p class="ddh__copy ddh__copy--solo" data-ddh-copy="zones" aria-hidden="true"><strong>Original Dunlop Technology</strong></p>
 <p class="ddh__copy" data-ddh-copy="head" data-ddh-claim="review" aria-hidden="true"><strong>100% EU-UK Certified</strong><span>Latex (Rubber) Foam</span></p>
@@ -166,7 +166,7 @@ On desktop Chrome + Safari, iPhone Safari, Android Chrome, iPad (portrait + land
 
 ## 9. If the editor rejects the length (fallback ladder — do not split the hero)
 
-1. Paste `ecwid/section-1.17.0.min.html` (same markup, whitespace removed, 9,025 characters).
+1. Paste `ecwid/section-1.17.1.min.html` (same markup, whitespace removed, 9,025 characters).
 2. If still rejected, tell me the exact limit shown. The next step is a small mount section (≈600 characters) with hero.js rendering the same markup from an external template, keeping one section and one lifecycle. I haven't built it because nothing indicates it's needed, and it costs no-JS fallback and early image discovery.
 
 ## 10. Rollback
