@@ -1,216 +1,121 @@
-/* Divine DunlopDreams Collection — optional enhancement for the category-description interface (.ddc).
-   The description HTML works on its own: every model is a real link, and on wide screens CSS previews a row on hover or keyboard focus.
-   This script only adds what HTML cannot keep: a locked selection, the "Back to the overview" control, the detail panel opening
-   under the chosen row on narrow screens, and a stable stage height (no jumps).
-   Ecwid renders category descriptions itself and recreates them on every in-store navigation, so the script runs from the
-   site-wide custom code (see INSTALL.md), re-scans on Ecwid.OnPageLoaded and on DOM changes, and initialises each .ddc once.
-   Vanilla JS, no globals except window.DDC, no listeners outside the component except one MutationObserver. */
+/* Divine DunlopDreams Collection 2.0.0 — optional enhancement for the one-screen collection map (.ddc).
+   The description HTML works on its own: every tile is a real link to its model page. This script only adds the floating card:
+   - mouse: resting on a tile for a moment opens its card beside it; leaving closes it; a click on the tile goes straight to the model page
+   - keyboard: focusing a tile opens its card, Tab reaches "View model", Escape closes
+   - touch: the first tap opens the card (no navigation), a second tap on the same tile or "View model" opens the model page, a tap elsewhere closes
+   Ecwid renders category descriptions itself and recreates them on every in-store navigation, so the script runs from the site-wide custom code
+   (see INSTALL.md), re-scans on Ecwid.OnPageLoaded and on DOM changes, and initialises each .ddc once.
+   Vanilla JS, no globals except window.DDC. */
 (function () {
   'use strict';
-  var VERSION = '1.1.0';
+  var VERSION = '2.0.0';
   if (window.DDC && window.DDC.version) { window.DDC.scan(); return; }
 
-  var WIDE = 860;             // container width where the split layout starts (same number as ddc.css)
-  var HOVER_IN = 110;         // ms a pointer must rest on a row before it previews (no flicker when crossing rows)
-  var HOVER_OUT = 160;        // ms before the stage falls back after the pointer leaves the component
-  var KEEP = 30 * 60 * 1000;  // a model chosen before opening its page is restored on return for 30 minutes
+  var HOVER_IN = 120;    // ms a pointer must rest on a tile before its card opens (no flicker when crossing tiles)
+  var HOVER_SWITCH = 50; // ms when a card is already open and the pointer moves to another tile
+  var HOVER_OUT = 240;   // ms before the card closes after the pointer left tile and card
+  var CARD_W = 780;
   var count = 0;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function modelOf(el) {
-    var m = /(?:^|\s)ddc-m-([a-z0-9_]+)/.exec(el.className || '');
-    return m ? m[1] : null;
-  }
-  function store(key, val) {
-    try { if (val == null) sessionStorage.removeItem(key); else sessionStorage.setItem(key, JSON.stringify(val)); } catch (e) { /* storage blocked: harmless */ }
-  }
-  function read(key) {
-    try { return JSON.parse(sessionStorage.getItem(key) || 'null'); } catch (e) { return null; }
-  }
-
   function init(root) {
     if (root.getAttribute('data-ddc')) return;
-    var stage = root.querySelector('.ddc__stage');
-    var body = root.querySelector('.ddc__body');
-    var intro = root.querySelector('.ddc__pv--intro');
-    if (!stage || !body || !intro) return;
+    var tiles = root.querySelector('.ddc__tiles');
+    if (!tiles) return;
+    var items = root.querySelectorAll('.ddc__row');
+    if (!items.length) return;
     root.setAttribute('data-ddc', VERSION);
     var uid = 'ddc' + (++count);
-    var kind = /ddc--(\w+)/.exec(root.className); kind = kind ? kind[1] : 'c';
-    var memoryKey = 'ddc-last-' + kind;
-    stage.id = uid + '-stage';
-    stage.setAttribute('role', 'region');
-    stage.setAttribute('aria-label', 'Model preview');
-    var home = stage.parentNode, homeNext = stage.nextSibling;
+    var open = null, inT = 0, outT = 0, lastType = 'mouse', quiet = false, rows = [];
 
-    var live = document.createElement('p');
-    live.className = 'ddc__sr';
-    live.setAttribute('aria-live', 'polite');
-    root.appendChild(live);
-
-    var pvs = {}, rows = {}, order = [];
-    var arts = stage.querySelectorAll('.ddc__pv');
-    for (var i = 0; i < arts.length; i++) { var id = modelOf(arts[i]); if (id) pvs[id] = arts[i]; }
-
-    // rows: the link becomes a selection button (the same link lives on in the preview as "View model")
-    var lis = root.querySelectorAll('.ddc__row');
-    for (var j = 0; j < lis.length; j++) {
-      var li = lis[j], mid = modelOf(li), a = li.querySelector('.ddc__ra');
-      if (!mid || !a || !pvs[mid]) continue;
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'ddc__rb';
-      b.innerHTML = a.innerHTML;
-      b.setAttribute('aria-pressed', 'false');
-      b.setAttribute('aria-controls', stage.id);
-      li.replaceChild(b, a);
-      rows[mid] = { li: li, btn: b, fam: li.closest('.ddc__fam') };
-      order.push(mid);
+    for (var i = 0; i < items.length; i++) {
+      var li = items[i], a = li.querySelector('.ddc__ra'), pop = li.querySelector('.ddc__pop');
+      if (!a || !pop) continue;
+      pop.id = uid + '-p' + i;
+      var what = pop.querySelector('.ddc__what');
+      if (what) { what.id = pop.id + '-d'; a.setAttribute('aria-describedby', what.id); }
+      var x = document.createElement('button');
+      x.type = 'button'; x.className = 'ddc__pop-x'; x.setAttribute('aria-label', 'Close preview');
+      pop.insertBefore(x, pop.firstChild);
+      rows.push({ li: li, a: a, pop: pop, x: x });
     }
-    if (!order.length) return;
-
-    // "Back to the overview" beside "View model" in every preview
-    order.forEach(function (mid) {
-      var acts = pvs[mid].querySelector('.ddc__acts');
-      if (!acts || acts.querySelector('.ddc__back')) return;
-      var back = document.createElement('button');
-      back.type = 'button';
-      back.className = 'ddc__back';
-      back.textContent = 'Back to the overview';
-      back.addEventListener('click', function () { unlock(true); });
-      acts.appendChild(back);
-      var cta = acts.querySelector('.ddc__cta');
-      if (cta) cta.addEventListener('click', function () { store(memoryKey, { id: mid, t: Date.now() }); });
-    });
-
+    if (!rows.length) return;
     root.classList.add('ddc--js');
-    var shown = 'intro', locked = null, inTimer = 0, outTimer = 0, minH = 0, slot = null;
 
-    function wide() { return root.clientWidth >= WIDE; }
-
-    function place() {
-      // narrow: the stage sits right after the selected row; wide (or nothing selected): back in its own column
-      if (!wide() && locked && rows[locked]) {
-        if (!slot) { slot = document.createElement('li'); slot.className = 'ddc__slot'; }
-        var list = rows[locked].li.parentNode;          // the family's two-column grid: the detail spans both columns under its last card
-        if (list.lastChild !== slot) list.appendChild(slot);
-        if (stage.parentNode !== slot) slot.appendChild(stage);
-      } else {
-        if (stage.parentNode !== home) home.insertBefore(stage, homeNext);
-        if (slot && slot.parentNode) slot.parentNode.removeChild(slot);
-      }
+    function place(r) {
+      // the card sits under the tile, or above it when there is no room; sideways it is clamped inside the component
+      var pop = r.pop, C = tiles.getBoundingClientRect(), T = r.a.getBoundingClientRect(), W = C.width;
+      var pw = Math.min(CARD_W, W - 16);
+      var sheet = W < 640;   // phones: the card is a sheet at the bottom of the screen (it would otherwise cover the whole map)
+      pop.classList.toggle('is-sheet', sheet);
+      if (sheet) { pop.classList.remove('is-wide'); ['width', 'max-height', 'left', 'top'].forEach(function (k) { pop.style.removeProperty(k); }); return; }
+      var st = function (k, v) { pop.style.setProperty(k, v, 'important'); };   // the stylesheet is !important: inline values must be too
+      pop.classList.toggle('is-wide', pw >= 560);
+      st('width', pw + 'px'); st('max-height', 'none'); st('left', '0px'); st('top', '0px');
+      var ph = pop.offsetHeight, vh = window.innerHeight;
+      var below = vh - T.bottom - 10, above = T.top - 10, top, mh = '';
+      if (ph <= below) top = T.bottom - C.top - 6;
+      else if (ph <= above) top = T.top - C.top - ph + 6;
+      else if (below >= above) { mh = Math.max(260, below); top = T.bottom - C.top - 6; }
+      else { mh = Math.max(260, above); top = T.top - C.top - Math.min(ph, mh) + 6; }
+      var left = Math.max(8, Math.min(T.left - C.left + T.width / 2 - pw / 2, W - pw - 8));
+      st('left', Math.round(left) + 'px');
+      st('top', Math.round(top) + 'px');
+      st('max-height', mh ? Math.round(mh) + 'px' : 'none');
     }
 
-    function show(id, animate) {
-      if (!pvs[id] && id !== 'intro') id = 'intro';
-      if (id === shown && stage.parentNode) { place(); return; }
-      var prev = shown === 'intro' ? intro : pvs[shown];
-      var next = id === 'intro' ? intro : pvs[id];
-      prev.hidden = true; prev.classList.remove('is-in');
-      next.hidden = false;
-      if (animate && !reduce) { next.classList.remove('is-in'); void next.offsetWidth; next.classList.add('is-in'); }
-      shown = id;
-      for (var k = 0; k < order.length; k++) {
-        var r = rows[order[k]];
-        r.li.classList.toggle('is-show', order[k] === id);
-        if (r.fam) r.fam.classList.toggle('is-on', false);
-      }
-      if (rows[id] && rows[id].fam) rows[id].fam.classList.add('is-on');
-      root.setAttribute('data-ddc-show', id);
-      place();
-      steady();
+    function show(r) {
+      if (open === r) return;
+      if (open) hide(false);
+      r.li.classList.add('is-open');
+      r.pop.classList.remove('is-in');
+      place(r);
+      if (!reduce) { void r.pop.offsetWidth; r.pop.classList.add('is-in'); }
+      open = r;
     }
-
-    function steady() {
-      // the stage never shrinks while the visitor explores on a wide screen, so nothing below it jumps
-      if (!wide()) { stage.style.minHeight = ''; minH = 0; return; }
-      var h = stage.offsetHeight;
-      if (h > minH) { minH = h; stage.style.minHeight = h + 'px'; }
+    function hide(returnFocus) {
+      if (!open) return;
+      var r = open; open = null;
+      r.li.classList.remove('is-open'); r.pop.classList.remove('is-in');
+      if (returnFocus && r.li.contains(document.activeElement)) { quiet = true; r.a.focus(); quiet = false; }
     }
+    function later(fn, ms) { return setTimeout(fn, ms); }
 
-    function lock(id, fromRestore) {
-      // narrow: the open detail may close above the tapped row; keep that row where the finger left it
-      var anchor = !wide() && !fromRestore ? rows[id].li.getBoundingClientRect().top : null;
-      locked = id;
-      for (var k = 0; k < order.length; k++) {
-        var on = order[k] === id;
-        rows[order[k]].li.classList.toggle('is-sel', on);
-        rows[order[k]].btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      }
-      show(id, !fromRestore);
-      live.textContent = pvs[id].querySelector('.ddc__pv-n').textContent + ': preview shown';
-      if (anchor !== null) {
-        var moved = rows[id].li.getBoundingClientRect().top - anchor;
-        if (Math.abs(moved) > 1) window.scrollBy(0, moved);
-        var top = rows[id].li.getBoundingClientRect().top;
-        if (top < 0 || top > window.innerHeight * 0.6) rows[id].li.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
-      }
-    }
-
-    function unlock(focusRow) {
-      var was = locked;
-      locked = null;
-      store(memoryKey, null);
-      for (var k = 0; k < order.length; k++) { rows[order[k]].li.classList.remove('is-sel'); rows[order[k]].btn.setAttribute('aria-pressed', 'false'); }
-      show('intro', true);
-      live.textContent = 'Collection overview shown';
-      if (focusRow && was && rows[was]) {
-        rows[was].btn.focus({ preventScroll: !wide() ? false : true });
-        if (!wide()) rows[was].li.scrollIntoView({ block: 'nearest' });
-      }
-    }
-
-    function settle() { show(locked || 'intro', true); }
-
-    order.forEach(function (mid, idx) {
-      var btn = rows[mid].btn;
-      btn.addEventListener('click', function () {
-        if (!wide() && locked === mid) { unlock(false); return; }   // narrow: a second tap on the open row closes it
-        lock(mid);
+    rows.forEach(function (r) {
+      r.li.addEventListener('pointerenter', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        clearTimeout(outT); clearTimeout(inT);
+        if (open === r) return;
+        inT = later(function () { show(r); }, open ? HOVER_SWITCH : HOVER_IN);
       });
-      btn.addEventListener('pointerenter', function (e) {
-        if (e.pointerType !== 'mouse' || !wide()) return;
-        clearTimeout(outTimer); clearTimeout(inTimer);
-        var img = pvs[mid].querySelector('img');
-        if (img && img.loading === 'lazy') img.loading = 'eager';   // start the picture while the pointer rests
-        inTimer = setTimeout(function () { show(mid, true); }, HOVER_IN);
+      r.li.addEventListener('pointerleave', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        clearTimeout(inT); clearTimeout(outT);
+        outT = later(function () { if (open && !open.li.matches(':hover')) hide(false); }, HOVER_OUT);
       });
-      btn.addEventListener('pointerleave', function () { clearTimeout(inTimer); });
-      btn.addEventListener('focus', function () { if (wide() && btn.matches(':focus-visible')) show(mid, true); });
-      btn.addEventListener('keydown', function (e) {
-        var to = null;
-        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') to = order[Math.min(order.length - 1, idx + 1)];
-        else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') to = order[Math.max(0, idx - 1)];
-        else if (e.key === 'Home') to = order[0];
-        else if (e.key === 'End') to = order[order.length - 1];
-        if (to) { e.preventDefault(); rows[to].btn.focus(); }
+      r.a.addEventListener('focus', function () { if (!quiet && r.a.matches(':focus-visible')) { clearTimeout(outT); show(r); } });
+      r.li.addEventListener('focusout', function (e) {
+        if (e.relatedTarget && r.li.contains(e.relatedTarget)) return;
+        later(function () { if (open === r && !r.li.contains(document.activeElement) && !r.li.matches(':hover')) hide(false); }, 0);
       });
+      // touch and pen: the first tap previews, the second tap (or "View model") opens the model page; mouse and keyboard go straight through.
+      // Capture phase + stopPropagation: the storefront's own link router (a delegated listener) must not follow the link on the first tap.
+      r.a.addEventListener('click', function (e) {
+        if ((lastType === 'touch' || lastType === 'pen') && open !== r) { e.preventDefault(); e.stopPropagation(); show(r); }
+      }, true);
+      r.x.addEventListener('click', function () { hide(true); });
     });
 
-    body.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') clearTimeout(outTimer); });
-    body.addEventListener('pointerleave', function (e) {
-      if (e.pointerType !== 'mouse' || !wide()) return;
-      clearTimeout(inTimer); clearTimeout(outTimer);
-      outTimer = setTimeout(function () { if (!root.contains(document.activeElement) || locked) settle(); }, HOVER_OUT);
+    root.addEventListener('pointerdown', function (e) { lastType = e.pointerType || 'mouse'; }, true);
+    root.addEventListener('keydown', function () { lastType = 'key'; }, true);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && open) { e.preventDefault(); hide(true); }
     });
-    root.addEventListener('focusout', function (e) {
-      if (e.relatedTarget && root.contains(e.relatedTarget)) return;
-      setTimeout(function () { if (!root.contains(document.activeElement) && !root.matches(':hover')) settle(); }, 0);
-    });
-
-    if (window.ResizeObserver) {
-      var lastWide = wide();
-      new ResizeObserver(function () {
-        var w = wide();
-        if (w !== lastWide) { lastWide = w; minH = 0; stage.style.minHeight = ''; if (!locked && shown !== 'intro') show('intro'); place(); }
-        steady();
-      }).observe(root);
-    }
-
-    // returning from a model page (browser Back) within the visit: show the model the visitor had chosen
-    var last = read(memoryKey);
-    if (last && pvs[last.id] && Date.now() - last.t < KEEP) lock(last.id, true);
-    else steady();
+    document.addEventListener('pointerdown', function (e) {
+      if (open && !open.li.contains(e.target)) hide(false);
+    }, true);
+    window.addEventListener('resize', function () { if (open) hide(false); });
+    window.addEventListener('pagehide', function () { hide(false); });
   }
 
   function scan() {

@@ -1,9 +1,11 @@
-/* Divine DunlopDreams Collection — shared stylesheet for the Latex Mattresses and Latex Toppers category descriptions.
-   Namespace: .ddc / .ddc__* / .ddc-m-* only. Nothing here selects an Ecwid element or anything outside .ddc.
+/* Divine DunlopDreams Collection 2.0.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+   Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
-   Layout follows the width of the description itself (container queries), not the window: the module works at whatever width Ecwid gives it.
-   Visual language from Hero 1.17.1: Chillax 400/600, ink #14223b, the owner's Pantone sets, firmness colours with white type, flat fills, no heavy outlines. */
+   Layout follows the width of the description itself (container queries) and, for density, the window height (media queries).
+   Visual language from Hero 1.17.1: Chillax 400/600, ink #14223b, the owner's Pantone sets, firmness colours with white type, flat fills.
+   Structure: header (question, who-is-it-for guide, selection path) · tiles (families side by side, two or one pictures each) · footer line.
+   A tile is a real link to the model page. Hover / keyboard focus (tap on touch) opens a floating card (.ddc__pop) beside the tile. */
 
 @font-face{font-family:DDCChillax;src:url(https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:DDCChillax;src:url(https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
@@ -11,11 +13,11 @@
 /* ---------- tokens and reset (inside .ddc only) ---------- */
 .ddc{--ink:#14223b;--ink2:#2b3b58;--lab:#1f4568;--line:#d3dbe0;--pale:#f3f6f8;--nav:#eef2f5;--hov:#e1e9ef;--sel:#313d4c;--btn:#1f4f78;
   --fz-s:#2f7da8;--fz-m:#25648a;--fz-f:#4a5664;--fz-x:#313d4c;
-  --fam:#6c9bad;--ff:DDCChillax,system-ui,-apple-system,"Segoe UI",sans-serif;
-  container:ddc/inline-size;display:block;box-sizing:border-box;width:100%;max-width:1240px;margin:0 auto 32px;padding:0;
+  --fam:#2e7a68;--ff:DDCChillax,system-ui,-apple-system,"Segoe UI",sans-serif;
+  container:ddc/inline-size;display:block;box-sizing:border-box;width:100%;max-width:1240px;margin:0 auto 28px;padding:0;
   font-family:var(--ff);font-size:16px;font-weight:400;line-height:1.45;color:var(--ink);text-align:left;letter-spacing:0;text-transform:none;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .ddc *,.ddc *::before,.ddc *::after{box-sizing:border-box}
-.ddc :is(h2,h3,p,ul,ol,li,dl,dt,dd,figure){margin:0;padding:0;border:0;background:none;font-family:var(--ff);font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit;letter-spacing:0;text-transform:none;text-align:left}
+.ddc :is(h2,h3,h4,p,ul,ol,li,figure){margin:0;padding:0;border:0;background:none;font-family:var(--ff);font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit;letter-spacing:0;text-transform:none;text-align:left}
 .ddc :is(ul,ol){list-style:none}
 .ddc li{list-style:none;text-indent:0}
 .ddc li::before,.ddc li::after{content:none}
@@ -29,219 +31,171 @@
 .ddc :is(a,button):focus-visible{outline:3px solid #2f7da8;outline-offset:2px;border-radius:12px}
 .ddc .ddc__sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
-/* families: one quiet accent each, from the hero palette */
-.ddc :is(.ddc__fam--classic,.ddc__fs--classic,.ddc-f-classic){--fam:#2e7a68}
-.ddc :is(.ddc__fam--innov,.ddc__fs--innov,.ddc-f-innov){--fam:#2f78a6}
-.ddc :is(.ddc__fam--ortho,.ddc__fs--ortho,.ddc-f-ortho){--fam:#4a5664}
-.ddc :is(.ddc__fam--value,.ddc__fs--value,.ddc-f-value){--fam:#6a579b}
-.ddc :is(.ddc__fam--partners,.ddc__fs--partners,.ddc-f-partners,.ddc__fam--tpartners,.ddc__fs--tpartners,.ddc-f-tpartners){--fam:#1f7a86}
-.ddc :is(.ddc__fam--single,.ddc__fs--single,.ddc-f-single){--fam:#2e7a68}
-.ddc :is(.ddc__fam--dual,.ddc__fs--dual,.ddc-f-dual){--fam:#2f78a6}
+/* families: one colour each, from the hero's approved cool palette (white type passes on all of them) */
+.ddc :is(.ddc__fam--classic,.ddc-f-classic){--fam:#2e7a68}
+.ddc :is(.ddc__fam--innov,.ddc-f-innov){--fam:#2f78a6}
+.ddc :is(.ddc__fam--ortho,.ddc-f-ortho){--fam:#4a5664}
+.ddc :is(.ddc__fam--value,.ddc-f-value){--fam:#6a579b}
+.ddc :is(.ddc__fam--partners,.ddc-f-partners,.ddc__fam--tpartners,.ddc-f-tpartners){--fam:#1f7a86}
+.ddc :is(.ddc__fam--single,.ddc-f-single){--fam:#2e7a68}
+.ddc :is(.ddc__fam--dual,.ddc-f-dual){--fam:#2f78a6}
 
-/* ---------- frame ---------- */
-.ddc .ddc__in{border-radius:24px;background:#fff;box-shadow:0 0 0 1px var(--line),0 18px 40px -28px rgba(20,34,59,.35);overflow:hidden}
-
-/* ---------- header: question, lede, the selection path ---------- */
-.ddc .ddc__hd{padding:24px 20px 20px;background:linear-gradient(180deg,#f3f6f8,#fff);border-bottom:1px solid var(--line)}
-.ddc .ddc__eye{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--lab)}
-.ddc .ddc__q{margin-top:6px;font-size:24px;font-weight:600;line-height:1.2;color:var(--ink)}
-.ddc .ddc__lede{margin-top:8px;max-width:68ch;font-size:16px;line-height:1.5;color:var(--ink2)}
-.ddc .ddc__path{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.ddc .ddc__st{position:relative;display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px var(--line);font-size:15px;line-height:1.25;color:var(--ink2)}
+/* ---------- frame + header: the "which model is for whom" guide and the selection path ---------- */
+.ddc .ddc__in{position:relative;border-radius:22px;background:#fff;box-shadow:0 0 0 1px var(--line),0 18px 40px -28px rgba(20,34,59,.35)}
+.ddc .ddc__hd{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 28px;padding:18px 20px 16px;border-radius:22px 22px 0 0;background:linear-gradient(180deg,#f3f6f8,#fff);border-bottom:1px solid var(--line)}
+.ddc .ddc__ht{flex:1 1 340px;min-width:0}
+.ddc .ddc__q{font-size:24px;font-weight:600;line-height:1.2;color:var(--ink);text-wrap:balance}
+.ddc .ddc__lede{margin-top:6px;max-width:62ch;font-size:15.5px;line-height:1.45;color:var(--ink2)}
+.ddc .ddc__path{display:flex;flex:1 1 520px;flex-wrap:wrap;gap:6px;min-width:0}
+.ddc .ddc__st{position:relative;display:flex;flex:1 1 150px;align-items:center;gap:10px;min-width:0;padding:8px 14px 8px 8px;border-radius:14px;background:#e7edf1;font-size:15px;line-height:1.25;color:var(--ink2)}
 .ddc .ddc__st-n{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:#dde3e3;color:var(--ink);font-size:14px;font-weight:600}
+.ddc .ddc__st-x{display:flex;flex-direction:column;min-width:0}
 .ddc .ddc__st-t{font-weight:600;color:var(--ink)}
 .ddc .ddc__st-w{display:block;font-size:13px;color:var(--lab)}
-.ddc .ddc__st--now{background:var(--sel);box-shadow:none;color:#fff}
+.ddc .ddc__st--now{background:var(--sel);color:#fff}
 .ddc .ddc__st--now :is(.ddc__st-t,.ddc__st-w){color:#fff}
 .ddc .ddc__st--now .ddc__st-n{background:#8ab1c0;color:var(--ink)}
-.ddc .ddc__st-x{display:flex;flex-direction:column}
 @container ddc (min-width:700px){
-  .ddc .ddc__hd{padding:28px 32px 24px}
-  .ddc .ddc__q{font-size:28px}
   .ddc .ddc__path{flex-wrap:nowrap;gap:0}
-  .ddc .ddc__st{flex:1 1 0;padding-right:28px;border-radius:0;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%,14px 50%);padding-left:26px;box-shadow:none;background:#e7edf1}
-  .ddc .ddc__st:first-child{clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%);padding-left:10px;border-radius:14px 0 0 14px}
-  .ddc .ddc__st:last-child{clip-path:polygon(0 0,100% 0,100% 100%,0 100%,14px 50%);border-radius:0 14px 14px 0}
+  .ddc .ddc__st{flex:1 1 0;padding:8px 26px 8px 26px;border-radius:0;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%,14px 50%)}
+  .ddc .ddc__st:first-child{padding-left:10px;border-radius:14px 0 0 14px;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%)}
+  .ddc .ddc__st:last-child{border-radius:0 14px 14px 0;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,14px 50%)}
   .ddc .ddc__st+.ddc__st{margin-left:-8px}
-  .ddc .ddc__st--now{background:var(--sel)}
 }
 
-/* ---------- body: map / navigator + stage ---------- */
-.ddc .ddc__body{display:block}
-.ddc .ddc__map{padding:16px 12px 12px;background:var(--nav)}
-.ddc .ddc__map-h{padding:0 2px 14px;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--lab)}
-.ddc .ddc__fam{position:relative;margin:0 0 18px;padding:0}
-.ddc .ddc__fam-h{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding:0 2px 7px;border-bottom:4px solid var(--fam)}
-.ddc .ddc__fam-n{display:block;font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
-.ddc .ddc__fam-h::before{content:"";flex:none;width:14px;height:14px;border-radius:5px;background:var(--fam)}
-.ddc .ddc__rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.ddc .ddc__row{display:block;min-width:0;scroll-margin-top:96px}
-.ddc :is(.ddc__ra,.ddc__rb){position:relative;display:flex;flex-direction:column;gap:2px;width:100%;height:100%;padding:8px 8px 10px;border-radius:14px;background:#fff;color:var(--ink);box-shadow:inset 0 -4px 0 var(--fam);transition:background-color .16s ease,color .16s ease,transform .16s ease}
-.ddc .ddc__th{display:grid;place-items:center;aspect-ratio:16/9;margin-bottom:6px;border-radius:10px;background:radial-gradient(120% 90% at 50% 40%,#f6f8fa,#e4eaee);overflow:hidden}
+/* ---------- tiles: families side by side; a family of two takes two columns, a family of one takes one ---------- */
+.ddc .ddc__tiles{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 14px;padding:16px 18px 18px;background:var(--nav)}
+.ddc .ddc__fam{min-width:0}
+.ddc .ddc__n2{grid-column:span 2}
+.ddc .ddc__n1{grid-column:span 1}
+.ddc .ddc__fam-h{display:block;margin:0 0 8px;padding:0 2px 6px;border-bottom:4px solid var(--fam)}
+.ddc .ddc__fam-n{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.11em;line-height:1.3;text-transform:uppercase;color:var(--ink)}
+.ddc .ddc__fam-n::before{content:"";flex:none;width:12px;height:12px;border-radius:4px;background:var(--fam)}
+.ddc .ddc__fam-s{display:block;margin-top:1px;padding-left:20px;font-size:14.5px;line-height:1.3;color:var(--ink2)}
+.ddc .ddc__rows{display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));gap:10px}
+.ddc .ddc__n1 .ddc__rows{--n:1}
+.ddc .ddc__row{display:block;min-width:0}
+.ddc .ddc__ra{display:flex;flex-direction:column;gap:2px;width:100%;height:100%;padding:8px 8px 10px;border-radius:14px;background:#fff;color:var(--ink);box-shadow:inset 0 -4px 0 var(--fam);transition:background-color .16s ease,box-shadow .16s ease}
+@media (any-hover:hover){.ddc .ddc__ra:hover{background:var(--hov)}}
+.ddc .ddc__row.is-open .ddc__ra{background:var(--hov);box-shadow:inset 0 -4px 0 var(--fam),0 8px 20px -12px rgba(20,34,59,.55)}
+.ddc .ddc__th{display:grid;place-items:center;aspect-ratio:var(--thr,3/1);margin-bottom:6px;border-radius:10px;background:radial-gradient(120% 90% at 50% 40%,#f6f8fa,#e4eaee);overflow:hidden}
 .ddc .ddc__th img{width:94%;height:92%;object-fit:contain}
+.ddc .ddc__th--photo img{width:100%;height:100%;object-fit:cover;object-position:50% 62%}
 .ddc .ddc__rn{display:flex;flex-wrap:wrap;align-items:center;gap:3px 8px;padding:0 4px;font-size:17px;font-weight:600;line-height:1.25}
 .ddc .ddc__rd{display:block;padding:0 4px;font-size:15px;line-height:1.3;color:var(--ink2)}
 .ddc .ddc__dp{display:inline-block;padding:2px 8px;border-radius:8px;background:#dde3e3;color:var(--ink);font-size:12.5px;font-weight:600;letter-spacing:.06em;line-height:1.35;text-transform:uppercase;white-space:nowrap;vertical-align:middle}
-@media (any-hover:hover){.ddc :is(.ddc__ra,.ddc__rb):hover{background:var(--hov)}}
-.ddc .ddc__row.is-show :is(.ddc__ra,.ddc__rb){background:var(--hov)}
-.ddc .ddc__row.is-sel :is(.ddc__ra,.ddc__rb),.ddc .ddc__row.is-sel.is-show :is(.ddc__ra,.ddc__rb){background:var(--sel);color:#fff;box-shadow:inset 0 -4px 0 var(--fam)}
-.ddc .ddc__row.is-sel :is(.ddc__rd,.ddc__rn){color:#fff}
-.ddc .ddc__row.is-sel .ddc__dp{background:#8ab1c0;color:var(--ink)}
-.ddc .ddc__row.is-sel .ddc__rn::before{content:"";flex:none;width:18px;height:18px;border-radius:50%;background:#8ab1c0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%2314223b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/13px no-repeat}
-.ddc .ddc__fnote{display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:0;padding:10px 12px;border-radius:14px;background:#e1e8ed}
-.ddc .ddc__fnote-s{font-size:15px;font-weight:600;line-height:1.3;color:var(--ink)}
-.ddc .ddc__fnote-l{font-size:15px;line-height:1.35;color:var(--ink2)}
 
-/* ---------- stage ---------- */
-.ddc .ddc__stage{container:ddcs/inline-size;position:relative;padding:20px;background:#fff}
-.ddc .ddc__pv{display:block}
-.ddc .ddc__pv[hidden]{display:none}
-.ddc .ddc__k{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--lab)}
-.ddc .ddc__pv-h{margin-top:6px;font-size:22px;font-weight:600;line-height:1.25}
-.ddc .ddc__pv-p{margin-top:8px;max-width:64ch;color:var(--ink2)}
+/* footer line: the three facts that apply to the whole collection */
+.ddc .ddc__foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 22px;padding:12px 20px 14px;border-top:1px solid var(--line);border-radius:0 0 22px 22px;background:#fff;font-size:15px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__foot li{position:relative;padding-left:22px}
+.ddc .ddc__foot li::before{content:"";position:absolute;left:2px;top:4px;width:6px;height:11px;border-right:2.5px solid #25648a;border-bottom:2.5px solid #25648a;transform:rotate(40deg)}
 
-/* intro: the families at a glance */
-.ddc .ddc__fams{display:grid;gap:10px;margin-top:16px}
-.ddc .ddc__fs{position:relative;padding:12px 14px 12px 20px;border-radius:14px;background:var(--pale)}
-.ddc .ddc__fs::before{content:"";position:absolute;left:8px;top:12px;bottom:12px;width:4px;border-radius:4px;background:var(--fam)}
-.ddc .ddc__fs-s{display:block;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--lab)}
-.ddc .ddc__fs-n{display:block;margin-top:2px;font-size:17px;font-weight:600;color:var(--ink)}
-.ddc .ddc__fs-m{display:block;margin-top:2px;font-size:15px;font-weight:600;color:var(--ink2)}
-.ddc .ddc__fs-l{display:block;margin-top:4px;font-size:15px;line-height:1.4;color:var(--ink2)}
-.ddc .ddc__dpx{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;margin-top:14px;padding:14px 16px;border-radius:14px;background:#e9f0f4}
-.ddc .ddc__dpx-h{font-size:16px;font-weight:600}
-.ddc .ddc__dpx-p{margin-top:2px;font-size:15px;line-height:1.45;color:var(--ink2)}
-.ddc .ddc__prs{display:grid;gap:8px;margin-top:14px}
-.ddc .ddc__pr{position:relative;padding-left:26px;font-size:15px;line-height:1.4;color:var(--ink2)}
-.ddc .ddc__pr::before{content:"";position:absolute;left:2px;top:4px;width:7px;height:12px;border-right:2.5px solid #25648a;border-bottom:2.5px solid #25648a;transform:rotate(40deg)}
-.ddc .ddc__pr b{color:var(--ink)}
-.ddc .ddc__pick{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:16px;font-weight:600;color:var(--ink)}
-.ddc .ddc__pick::before{content:"";flex:none;width:30px;height:30px;border-radius:50%;background:var(--sel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 18V6M6.5 11.5 12 6l5.5 5.5' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
-@container ddcs (min-width:560px){.ddc .ddc__fams{grid-template-columns:1fr 1fr}.ddc .ddc__prs{grid-template-columns:repeat(3,1fr);gap:14px}}
-@container ddc (min-width:860px){.ddc .ddc__pick::before{transform:rotate(-90deg)}}
-
-/* model preview */
-.ddc .ddc__crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--lab)}
+/* ---------- the floating card: hidden without JavaScript; the script places it beside the tile ---------- */
+.ddc .ddc__pop{display:none;position:absolute;z-index:40;top:0;left:0;width:min(780px,calc(100% - 16px));overflow:auto;padding:16px 18px 18px;border-radius:18px;background:#fff;color:var(--ink);box-shadow:0 0 0 1px var(--line),0 26px 50px -14px rgba(20,34,59,.5)}
+.ddc .ddc__row.is-open .ddc__pop{display:block}
+.ddc.ddc--js .ddc__row.is-open .ddc__pop.is-in{animation:ddc-in .16s ease-out both}
+@keyframes ddc-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.ddc .ddc__pop-x{position:absolute;top:10px;right:10px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--pale);color:var(--ink)}
+.ddc .ddc__pop-x::before,.ddc .ddc__pop-x::after{content:"";position:absolute;width:16px;height:2.5px;border-radius:2px;background:currentColor;transform:rotate(45deg)}
+.ddc .ddc__pop-x::after{transform:rotate(-45deg)}
+@media (any-hover:hover){.ddc .ddc__pop-x{display:none}}
+.ddc .ddc__crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding-right:48px;font-size:12.5px;font-weight:600;letter-spacing:.09em;line-height:1.3;text-transform:uppercase;color:var(--lab)}
 .ddc .ddc__crumb-f{display:inline-flex;align-items:center;gap:8px}
 .ddc .ddc__crumb-f::before{content:"";width:12px;height:12px;border-radius:4px;background:var(--fam)}
-.ddc .ddc__pv-n{margin-top:6px;font-size:26px;font-weight:600;line-height:1.15;color:var(--ink)}
-.ddc .ddc__pv-t{margin-top:4px;font-size:18px;font-weight:600;line-height:1.3;color:var(--lab)}
-.ddc .ddc__what{margin-top:10px;font-size:16px;line-height:1.5;color:var(--ink2)}
-.ddc .ddc__fig{display:grid;place-items:center;margin-top:14px;aspect-ratio:2/1;border-radius:16px;background:radial-gradient(120% 90% at 50% 40%,#f6f8fa,#e6ecf0);overflow:hidden}
-.ddc .ddc__fig img{width:92%;max-height:92%;object-fit:contain}
-.ddc .ddc__facts{display:grid;gap:12px;margin-top:16px}
-.ddc .ddc__fact-k{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--lab)}
-.ddc .ddc__fact-v{margin-top:3px;font-size:16px;line-height:1.45;color:var(--ink2)}
-.ddc .ddc__vs{display:grid;gap:4px;margin-top:3px}
-.ddc .ddc__vs li{font-size:16px;line-height:1.45;color:var(--ink2)}
-.ddc .ddc__vs b{color:var(--ink)}
-.ddc .ddc__spec{display:grid;gap:10px;margin-top:16px}
-.ddc .ddc__sp{padding:12px 14px;border-radius:14px;background:var(--pale)}
-.ddc .ddc__sp-h{margin-bottom:8px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--lab)}
-.ddc .ddc__build{font-size:15px;line-height:1.4;color:var(--ink2)}
-.ddc .ddc__dl{display:flex;flex-wrap:wrap;gap:6px}
-.ddc .ddc__d{display:inline-block;padding:4px 10px;border-radius:9px;background:#fff;box-shadow:inset 0 0 0 1px var(--line);font-size:15px;font-weight:600;line-height:1.3;color:var(--ink);white-space:nowrap}
-
-/* firmness: flat fills, white type (hero 1.17.1 rule) */
-.ddc .ddc__fz{display:flex;flex-wrap:wrap;gap:6px}
-.ddc .ddc__f{display:inline-block;padding:4px 11px;border-radius:9px;color:#fff;font-size:15px;font-weight:600;line-height:1.3;white-space:nowrap}
+.ddc .ddc__pn{margin-top:4px;font-size:24px;font-weight:600;line-height:1.15;color:var(--ink)}
+.ddc .ddc__pt{margin-top:3px;font-size:16.5px;font-weight:600;line-height:1.3;color:var(--lab)}
+.ddc .ddc__what{margin-top:8px;font-size:15px;line-height:1.45;color:var(--ink2)}
+.ddc .ddc__who{margin-top:6px;font-size:15px;line-height:1.45;color:var(--ink2)}
+.ddc .ddc__who b{color:var(--ink)}
+.ddc .ddc__dpn{display:flex;align-items:center;gap:8px;margin-top:8px;padding:4px 12px 4px 0;border-radius:12px;background:#e9f0f4;font-size:14px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__dpn b{color:var(--ink)}
+.ddc .ddc__pf{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0;padding:10px 12px;border-radius:12px;background:var(--pale)}
+.ddc .ddc__pk{margin-bottom:5px;font-size:12.5px;font-weight:600;letter-spacing:.11em;line-height:1.3;text-transform:uppercase;color:var(--lab)}
+.ddc .ddc__dl,.ddc .ddc__fz{display:flex;flex-wrap:wrap;gap:5px}
+.ddc .ddc__d{display:inline-block;padding:3px 9px;border-radius:9px;background:#fff;box-shadow:inset 0 0 0 1px var(--line);font-size:14.5px;font-weight:600;line-height:1.3;color:var(--ink);white-space:nowrap}
+.ddc .ddc__f{display:inline-block;padding:3px 10px;border-radius:9px;color:#fff;font-size:14.5px;font-weight:600;line-height:1.3;white-space:nowrap}
 .ddc .ddc__f--s{background:var(--fz-s)}.ddc .ddc__f--m{background:var(--fz-m)}.ddc .ddc__f--f{background:var(--fz-f)}.ddc .ddc__f--x{background:var(--fz-x)}
-.ddc .ddc__f *{color:#fff}
-.ddc .ddc__mixes{display:grid;gap:8px}
-.ddc .ddc__mix{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:4px;align-items:center;padding:8px 12px 8px 8px;border-radius:12px;background:#fff}
-.ddc .ddc__mix-o{grid-column:1/-1;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--lab)}
-.ddc .ddc__mix-rs{display:grid;gap:4px;min-width:0}
-.ddc .ddc__mix-r{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;font-size:15px;line-height:1.25;color:var(--ink)}
-.ddc .ddc__mix-r b{font-weight:600;white-space:nowrap}
-.ddc .ddc__sides{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.ddc .ddc__side{display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:12px;color:#fff;font-size:15px;font-weight:600;line-height:1.25}
-.ddc .ddc__side small{font-size:13px;font-weight:400;letter-spacing:.04em}
-.ddc .ddc__side *{color:#fff}
-.ddc .ddc__pairs{display:grid;gap:6px}
-.ddc .ddc__pair{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.ddc .ddc__pair .ddc__f{display:block;text-align:center;border-radius:9px}
-.ddc .ddc__pairs-n{font-size:14px;line-height:1.35;color:var(--ink2)}
+.ddc .ddc__mc{display:grid;gap:5px}
+.ddc .ddc__mc li{display:flex;flex-wrap:wrap;align-items:center;gap:3px 6px;font-size:14.5px;line-height:1.3;color:var(--ink)}
+.ddc .ddc__buy{margin-top:10px;padding:10px 12px;border-radius:12px;background:#e1e8ed;font-size:15px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__buy b{color:var(--ink)}
+.ddc .ddc__acts{position:sticky;bottom:-18px;z-index:1;margin-top:10px;padding:8px 0 0;background:#fff}
+.ddc .ddc__pop.is-sheet{position:fixed;left:8px;right:8px;top:auto;bottom:calc(8px + env(safe-area-inset-bottom,0px));width:auto;max-height:82vh;z-index:2147483000;box-shadow:0 0 0 1px var(--line),0 -10px 40px -8px rgba(20,34,59,.55)}
+.ddc .ddc__pop.is-sheet .ddc__dpn{display:none}
+.ddc .ddc__cta{display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:10px 20px;border-radius:999px;background:var(--btn);color:#fff;font-size:16px;font-weight:600;line-height:1.2}
+.ddc .ddc__cta *{color:#fff}
+.ddc .ddc__cta::after{content:"";width:8px;height:8px;border-right:2px solid #fff;border-top:2px solid #fff;transform:rotate(45deg)}
+@media (any-hover:hover){.ddc .ddc__cta:hover{background:#163c5e}}
 
-/* Dual Plush icon: an exploded isometric pair (thin slab = latex topper over thick slab = latex mattress), pure CSS, no SVG needed */
+/* a wide card (set by the script when it is at least 560 px wide) has two columns: the explanation, then the facts and the way to buy */
+.ddc .ddc__row.is-open .ddc__pop.is-wide{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);column-gap:22px;align-items:start}
+.ddc .ddc__pop.is-wide .ddc__pc2{padding-top:30px}
+.ddc .ddc__pop:not(.is-wide) .ddc__pc2{margin-top:10px}
+/* Dual Plush icon: an exploded isometric pair (thin slab = latex topper over thick slab = latex mattress), pure CSS */
 .ddc .ddc__iso{position:relative;display:block;flex:none;width:64px;height:56px}
 .ddc .ddc__sl{position:absolute;left:15px;width:34px;height:34px;border-radius:2px;transform:rotateX(58deg) rotateZ(45deg);background:var(--t)}
 .ddc .ddc__sl--top{top:-2px;box-shadow:1px 1px 0 var(--d),2px 2px 0 var(--d),3px 3px 0 var(--d)}
 .ddc .ddc__sl--bot{top:14px;box-shadow:1px 1px 0 var(--d),2px 2px 0 var(--d),3px 3px 0 var(--d),4px 4px 0 var(--d),5px 5px 0 var(--d),6px 6px 0 var(--d),7px 7px 0 var(--d),8px 8px 0 var(--d),12px 12px 6px rgba(20,34,59,.18)}
-.ddc .ddc__iso--thin .ddc__sl--bot{box-shadow:1px 1px 0 var(--d),2px 2px 0 var(--d),3px 3px 0 var(--d),4px 4px 0 var(--d),8px 8px 6px rgba(20,34,59,.16)}
 .ddc .ddc__sl.ddc__f--s{--t:#5d9abb;--d:#245f80}.ddc .ddc__sl.ddc__f--m{--t:#5586a4;--d:#1c4c69}.ddc .ddc__sl.ddc__f--f{--t:#727b86;--d:#38414c}.ddc .ddc__sl.ddc__f--x{--t:#5e6873;--d:#252e3a}
 .ddc .ddc__sl.ddc__f--s,.ddc .ddc__sl.ddc__f--m,.ddc .ddc__sl.ddc__f--f,.ddc .ddc__sl.ddc__f--x{padding:0;background:var(--t)}
 
-/* actions: View model + Back to the overview side by side, never on the picture */
-.ddc .ddc__acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:18px}
-.ddc .ddc__cta{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:10px 20px;border-radius:999px;background:var(--btn);color:#fff;font-size:16px;font-weight:600;line-height:1.2}
-.ddc .ddc__cta *{color:#fff}
-.ddc .ddc__cta::after{content:"";width:8px;height:8px;border-right:2px solid #fff;border-top:2px solid #fff;transform:rotate(45deg)}
-@media (any-hover:hover){.ddc .ddc__cta:hover{background:#163c5e}}
-.ddc .ddc__back{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 18px;border-radius:999px;background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--btn);font-size:15px;font-weight:600;line-height:1.2}
-.ddc .ddc__back::before{content:"";width:8px;height:8px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg)}
-@media (any-hover:hover){.ddc .ddc__back:hover{background:#eef4f6}}
+/* ---------- toppers: three families of one, one row on wide screens ---------- */
+.ddc .ddc--topper .ddc__tiles,.ddc.ddc--topper .ddc__tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ddc.ddc--topper{--thr:5/2}
 
-@container ddcs (min-width:600px){
-  .ddc .ddc__pv-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:4px 24px;align-items:center}
-  .ddc .ddc__pv-top .ddc__fig{grid-column:2;grid-row:1/5;margin-top:0}
-  .ddc .ddc__facts{grid-template-columns:1fr 1fr;column-gap:24px}
-  .ddc .ddc__facts .ddc__fact--vs{grid-column:1/-1}
-  .ddc .ddc__spec{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:auto 1fr;align-items:start}
-  .ddc .ddc__spec>.ddc__sp:first-child{grid-row:span 2;align-self:start}
+/* ---------- density: shorter windows get flatter pictures and drop the optional lines, so the whole map stays on one screen ---------- */
+@media (max-height:900px){
+  .ddc{--thr:3.4/1}
+  .ddc.ddc--topper{--thr:3/1}
+  .ddc .ddc__fam-s{display:none}
+  .ddc .ddc__hd{padding:14px 18px 12px}
+  .ddc .ddc__tiles{padding:12px 16px 14px;gap:10px 12px}
+  .ddc .ddc__foot{display:none}
 }
+@media (max-height:800px){.ddc .ddc__lede{display:none}.ddc .ddc__rn{font-size:16px}}
+@media (min-height:1000px){.ddc{--thr:2.4/1}.ddc.ddc--topper{--thr:2/1}}
 
-/* ---------- split layout: the map stays on the left while the stage changes ---------- */
-@container ddc (min-width:860px){
-  .ddc .ddc__body{display:grid;grid-template-columns:minmax(340px,40%) minmax(0,1fr);align-items:stretch}
-  .ddc .ddc__map{padding:20px 14px 16px;border-right:1px solid var(--line)}
-  .ddc .ddc__stage{padding:28px 32px 28px;align-self:start;position:sticky;top:90px}
-  .ddc .ddc__pv-n{font-size:30px}
-}
-@container ddc (min-width:1100px){.ddc .ddc__map{padding:22px 18px 18px}.ddc .ddc__stage{padding:32px 40px}}
+/* family headers keep one height so that tiles of different families start on the same line even when a name wraps */
+@container ddc (max-width:1099px){.ddc .ddc__fam-h{min-height:46px}}
+@container ddc (max-width:859px){.ddc .ddc__fam-h{min-height:46px}}
 
-/* ---------- without JavaScript: hover or keyboard focus on a row still previews it (CSS :has), the row link opens the model page ---------- */
-.ddc:not(.ddc--js) .ddc__stage .ddc__acts .ddc__back{display:none}
-@container ddc (min-width:860px){
-  .ddc:not(.ddc--js):has(.ddc__row:is(:hover,:focus-within)) .ddc__pv--intro{display:none}
-  .ddc:not(.ddc--js):has(.ddc-m-botanic:is(:hover,:focus-within)) .ddc__pv.ddc-m-botanic,
-  .ddc:not(.ddc--js):has(.ddc-m-botanic_dp:is(:hover,:focus-within)) .ddc__pv.ddc-m-botanic_dp,
-  .ddc:not(.ddc--js):has(.ddc-m-bio:is(:hover,:focus-within)) .ddc__pv.ddc-m-bio,
-  .ddc:not(.ddc--js):has(.ddc-m-bio_dp:is(:hover,:focus-within)) .ddc__pv.ddc-m-bio_dp,
-  .ddc:not(.ddc--js):has(.ddc-m-ortho:is(:hover,:focus-within)) .ddc__pv.ddc-m-ortho,
-  .ddc:not(.ddc--js):has(.ddc-m-ambient:is(:hover,:focus-within)) .ddc__pv.ddc-m-ambient,
-  .ddc:not(.ddc--js):has(.ddc-m-hotel:is(:hover,:focus-within)) .ddc__pv.ddc-m-hotel,
-  .ddc:not(.ddc--js):has(.ddc-m-partners:is(:hover,:focus-within)) .ddc__pv.ddc-m-partners,
-  .ddc:not(.ddc--js):has(.ddc-m-t_bio:is(:hover,:focus-within)) .ddc__pv.ddc-m-t_bio,
-  .ddc:not(.ddc--js):has(.ddc-m-t_dual:is(:hover,:focus-within)) .ddc__pv.ddc-m-t_dual,
-  .ddc:not(.ddc--js):has(.ddc-m-t_part:is(:hover,:focus-within)) .ddc__pv.ddc-m-t_part{display:block}
-  .ddc:not(.ddc--js) .ddc__stage{min-height:640px}
-}
-
-/* ---------- narrow widths with JavaScript: the detail opens right after the chosen row, the map stays around it ---------- */
-.ddc .ddc__slot{display:block;grid-column:1/-1;margin:2px 0 4px}
-.ddc .ddc__slot .ddc__stage{padding:14px 12px 16px;border-radius:14px;background:#fff;box-shadow:inset 0 3px 0 var(--fam)}
+/* ---------- tablets in portrait and narrow windows: still four columns, tighter tiles ---------- */
 @container ddc (max-width:859px){
-  .ddc .ddc__slot .ddc__sp{padding:10px}
-  .ddc .ddc__slot .ddc__mix{padding:6px 8px 6px 4px;column-gap:8px}
-  .ddc .ddc__slot .ddc__iso{transform:scale(.8);transform-origin:center;margin:-4px -6px}
-}
-@container ddc (max-width:479px){
-  .ddc .ddc__map{padding:14px 6px 10px}
+  .ddc .ddc__tiles{gap:12px 10px;padding:12px 12px 14px}
   .ddc .ddc__rows{gap:8px}
-  .ddc :is(.ddc__ra,.ddc__rb){padding:6px 6px 9px}
+  .ddc .ddc__ra{padding:6px 6px 9px}
   .ddc .ddc__rn{font-size:16px;padding:0 3px}
-  .ddc .ddc__rd{padding:0 3px}
-  .ddc .ddc__fnote{padding:8px 10px}
-  .ddc .ddc__slot .ddc__stage{padding:12px 10px 14px}
-  .ddc .ddc__slot .ddc__sp{padding:10px 8px}
-  .ddc .ddc__slot .ddc__mix{padding:6px 6px 6px 2px;column-gap:6px}
-  .ddc .ddc__slot .ddc__iso{transform:scale(.7);margin:-8px -10px}
-  .ddc .ddc__slot .ddc__mix-r{flex-wrap:nowrap;gap:6px;font-size:14px}
-  .ddc .ddc__slot .ddc__mix-r .ddc__f{padding:3px 8px;font-size:14px}
+  .ddc .ddc__rd{font-size:14.5px;padding:0 3px}
+  .ddc .ddc__fam-s{display:none}
+  .ddc .ddc__foot{grid-template-columns:1fr;padding:10px 14px 12px}
 }
-.ddc .ddc__slot .ddc__pv-n{font-size:24px}
 
-/* motion: the preview settles in; nothing moves for people who asked for less motion */
-.ddc.ddc--js .ddc__pv.is-in{animation:ddc-in .22s ease-out both}
-@keyframes ddc-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* ---------- phones: one column of compact picture rows, families still underlined in their own colour; the path becomes three short columns ---------- */
+@container ddc (max-width:639px){
+  .ddc .ddc__in{border-radius:18px}
+  .ddc .ddc__hd{padding:12px 12px 10px;gap:8px;border-radius:18px 18px 0 0}
+  .ddc .ddc__q{font-size:17px}
+  .ddc .ddc__lede,.ddc .ddc__foot{display:none}
+  .ddc .ddc__ht{flex-basis:100%}
+  .ddc .ddc__path{flex:1 1 100%;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.5fr) auto;gap:6px}
+  .ddc .ddc__st{flex:none;gap:6px;padding:6px 5px;border-radius:10px;font-size:12.5px;line-height:1.2;align-items:flex-start}
+  .ddc .ddc__st-n{width:20px;height:20px;border-radius:7px;font-size:12px}
+  .ddc .ddc__st-w{display:none}
+  .ddc .ddc__st-t{font-size:12.5px;line-height:1.2}
+  .ddc .ddc__tiles,.ddc.ddc--topper .ddc__tiles{grid-template-columns:minmax(0,1fr);gap:6px;padding:8px 10px 10px}
+  .ddc .ddc__n2,.ddc .ddc__n1{grid-column:span 1}
+  .ddc .ddc__rows,.ddc .ddc__n1 .ddc__rows{grid-template-columns:minmax(0,1fr);gap:4px}
+  .ddc .ddc__fam-h{min-height:0;margin-bottom:3px;padding-bottom:2px;border-bottom-width:3px}
+  .ddc .ddc__fam-n{font-size:11.5px;letter-spacing:.07em;gap:6px}
+  .ddc .ddc__fam-n::before{width:10px;height:10px;border-radius:3px}
+  .ddc .ddc__ra{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;align-content:center;align-items:center;padding:3px 10px 5px 3px;border-radius:12px;box-shadow:inset 0 -3px 0 var(--fam)}
+  .ddc .ddc__th{grid-row:1/3;margin:0;border-radius:8px;aspect-ratio:1.55/1}
+  .ddc .ddc__rn{font-size:15.5px;padding:0;align-self:end;line-height:1.2}
+  .ddc .ddc__rd{font-size:14px;padding:0;align-self:start;line-height:1.25}
+  .ddc .ddc__ra .ddc__dp{display:none}
+  .ddc .ddc__pop{padding:14px 14px 16px}
+  .ddc .ddc__pn{font-size:21px}
+}
+
+/* ---------- motion ---------- */
 @media (prefers-reduced-motion:reduce){.ddc *,.ddc *::before,.ddc *::after{animation:none;transition:none}}

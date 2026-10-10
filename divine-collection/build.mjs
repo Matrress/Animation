@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collections, FIRM, HERO_ASSETS } from './src/data.mjs';
 
-const VERSION = '1.1.0';
+const VERSION = '2.0.0';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DDC_REF || 'main-preview';
 const CDN = `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-collection/release/${VERSION}/`;
@@ -18,73 +18,54 @@ const out = (p, s) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.w
 const f = (k) => `<span class="ddc__f ddc__f--${k}">${FIRM[k]}</span>`;
 const iso = (top, bot, thin) => `<span class="ddc__iso${thin ? ' ddc__iso--thin' : ''}" aria-hidden="true"><span class="ddc__sl ddc__sl--bot ddc__f--${bot}"></span><span class="ddc__sl ddc__sl--top ddc__f--${top}"></span></span>`;
 
-function firmness(m) {
-  const F = m.firm;
-  if (F.levels) return `<div class="ddc__sp"><p class="ddc__sp-h">Firmness</p><p class="ddc__fz">${F.levels.map(f).join(' ')}</p></div>`;
-  if (F.pairs) return `<div class="ddc__sp"><p class="ddc__sp-h">Dual Plush mixes</p><ul class="ddc__mixes">${F.pairs.map(([t, b]) =>
-    `<li class="ddc__mix">${iso(t, b)}<span class="ddc__mix-rs"><span class="ddc__mix-r"><b>Latex topper</b>${f(t)}</span><span class="ddc__mix-r"><b>Latex mattress</b>${f(b)}</span></span></li>`).join('')}</ul></div>`;
-  if (F.layers) return `<div class="ddc__sp"><p class="ddc__sp-h">Layer combinations</p><ul class="ddc__mixes">${F.layers.map(([t, b]) =>
-    `<li class="ddc__mix"><span class="ddc__mix-o">${FIRM[b]}–${FIRM[t]}</span>${iso(t, b, true)}<span class="ddc__mix-rs"><span class="ddc__mix-r"><b>Upper layer</b>${f(t)}</span><span class="ddc__mix-r"><b>Lower layer</b>${f(b)}</span></span></li>`).join('')}</ul></div>`;
-  if (F.split) return `<div class="ddc__sp"><p class="ddc__sp-h">Firmness, side by side</p><ul class="ddc__pairs">${F.split.map(([a, b]) =>
-    `<li class="ddc__pair">${f(a)}${f(b)}</li>`).join('')}</ul><p class="ddc__pairs-n">Each side regulated for one person.</p></div>`;
-  if (F.sides) return `<div class="ddc__sp"><p class="ddc__sp-h">Firmness</p><p class="ddc__sides">${F.sides.map((k, i) =>
-    `<span class="ddc__side ddc__f--${k}"><small>${F.sideNames[i]}</small>${FIRM[k]}</span>`).join('')}</p></div>`;
-  if (F.text) return `<div class="ddc__sp"><p class="ddc__sp-h">Firmness</p><p class="ddc__fz">${F.text.map(([k, t]) => `<span class="ddc__f ddc__f--${k}">${esc(t)}</span>`).join(' ')}</p></div>`;
-  throw new Error(`${m.id}: no firmness data`);
+// compact firmness / depth facts for the floating preview card
+function facts(m) {
+  const F = m.firm; let h;
+  if (F.levels) h = `<p class="ddc__pk">Firmness</p><p class="ddc__fz">${F.levels.map(f).join(' ')}</p>`;
+  else if (F.pairs) h = `<p class="ddc__pk">Dual Plush mixes</p><ul class="ddc__mc">${F.pairs.map(([t, b]) => `<li>${f(t)} topper + ${f(b)} mattress</li>`).join('')}</ul>`;
+  else if (F.layers) h = `<p class="ddc__pk">Layer combinations</p><ul class="ddc__mc">${F.layers.map(([t, b]) => `<li>${f(t)} upper layer over ${f(b)} lower layer</li>`).join('')}</ul>`;
+  else if (F.split) h = `<p class="ddc__pk">Firmness, one for each side</p><ul class="ddc__mc">${F.split.map(([a, b]) => `<li>${f(a)} + ${f(b)}</li>`).join('')}</ul>`;
+  else if (F.sides) h = `<p class="ddc__pk">Firmness</p><ul class="ddc__mc">${F.sides.map((k, i) => `<li>${f(k)} ${F.sideNames[i].toLowerCase()}</li>`).join('')}</ul>`;
+  else if (F.text) h = `<p class="ddc__pk">Firmness</p><p class="ddc__fz">${F.text.map(([k, t]) => `<span class="ddc__f ddc__f--${k}">${esc(t)}</span>`).join(' ')}</p>`;
+  else throw new Error(`${m.id}: no firmness data`);
+  return `<div class="ddc__pf"><div>${h}</div><div><p class="ddc__pk">${esc(m.depth.label)}</p><p class="ddc__dl">${m.depth.items.map((d) => `<span class="ddc__d">${esc(d)}</span>`).join(' ')}</p></div></div>`;
 }
 
-function preview(c, m, fam, imgBase, ownBase) {
-  const src = (m.img.own ? ownBase : imgBase) + m.img.src;
-  return `<article class="ddc__pv ddc-m-${m.id} ddc-f-${fam.id}" hidden>
-<div class="ddc__pv-top"><p class="ddc__crumb"><span class="ddc__crumb-f">${esc(fam.name)}</span>${m.dp ? '<span class="ddc__dp">Dual Plush</span>' : ''}</p>
-<h3 class="ddc__pv-n">${esc(m.name)}</h3>
-<p class="ddc__pv-t">${esc(m.title)}</p>
+// the floating card: opens on hover / focus (tap on touch), explains the model, then sends the visitor to the model page to buy
+function pop(c, m, fam) {
+  const dp = m.dp && c.dualPlush ? `<p class="ddc__dpn">${iso('s', 'm')}<span><b>Dual Plush.</b> ${esc(c.dualPlush.p)}</span></p>` : '';
+  return `<div class="ddc__pop ddc-f-${fam.id}" role="group" aria-label="${esc(m.name)}: preview">
+<div class="ddc__pc1">
+<p class="ddc__crumb"><span class="ddc__crumb-f">${esc(fam.name)}</span>${m.dp ? '<span class="ddc__dp">Dual Plush</span>' : ''}</p>
+<h4 class="ddc__pn">${esc(m.name)}</h4>
+<p class="ddc__pt">${esc(m.title)}</p>
 <p class="ddc__what">${esc(m.what)}</p>
-<figure class="ddc__fig"><img src="${src}" width="${m.img.w}" height="${m.img.h}" loading="lazy" decoding="async" alt="${esc(m.img.alt)}"></figure></div>
-<div class="ddc__facts"><div class="ddc__fact"><p class="ddc__fact-k">Why it exists</p><p class="ddc__fact-v">${esc(m.why)}</p></div><div class="ddc__fact"><p class="ddc__fact-k">Who it suits</p><p class="ddc__fact-v">${esc(m.who)}</p></div><div class="ddc__fact ddc__fact--vs"><p class="ddc__fact-k">How it differs</p><ul class="ddc__vs">${m.differs.map(([n, t]) => `<li><b>${esc(n)}</b> ${esc(t)}</li>`).join('')}</ul></div></div>
-<div class="ddc__spec">${firmness(m)}<div class="ddc__sp"><p class="ddc__sp-h">${esc(m.depth.label)}</p><p class="ddc__dl">${m.depth.items.map((d) => `<span class="ddc__d">${esc(d)}</span>`).join(' ')}</p></div><div class="ddc__sp ddc__sp--b"><p class="ddc__sp-h">Construction</p><p class="ddc__build">${esc(m.build)}</p></div></div>
+<p class="ddc__who"><b>Who it suits.</b> ${esc(m.who)}</p>
+${dp}</div>
+<div class="ddc__pc2">${facts(m)}
+<p class="ddc__buy"><b>You buy on the model page.</b> ${esc(c.buy)}</p>
 <p class="ddc__acts"><a class="ddc__cta" href="${m.url}">View model<span class="ddc__sr"> ${esc(m.name)}</span></a></p>
-</article>`;
+</div>
+</div>`;
 }
 
 function description(c, imgBase, ownBase) {
   const byId = Object.fromEntries(c.models.map((m) => [m.id, m]));
-  const famOf = {};
-  c.families.forEach((fa) => fa.models.forEach((id) => { famOf[id] = fa; }));
   const steps = c.steps.map((s, i) => `<li class="ddc__st${i === 0 ? ' ddc__st--now' : ''}"><span class="ddc__st-n">${i + 1}</span><span class="ddc__st-x"><span class="ddc__st-t">${esc(s)}</span><span class="ddc__st-w">${esc(c.stepNotes[i])}</span></span></li>`).join('');
-  // the family map: one row per family, two columns, every model a picture card; a family with one model gets a note beside it
-  const card = (m) => `<li class="ddc__row ddc-m-${m.id}"><a class="ddc__ra" href="${m.url}"><span class="ddc__th"><img src="${(m.img.own ? ownBase : imgBase) + m.img.src}" width="${m.img.w}" height="${m.img.h}" loading="lazy" decoding="async" alt=""></span><span class="ddc__rn">${esc(m.name)}${m.dp ? ' <span class="ddc__dp">Dual Plush</span>' : ''}</span><span class="ddc__rd">${esc(m.row)}</span></a></li>`;
-  const map = c.families.map((fa) => `<div class="ddc__fam ddc__fam--${fa.id}"><h3 class="ddc__fam-h"><span class="ddc__fam-n">${esc(fa.name)}</span></h3><ul class="ddc__rows">${fa.models.map((id) => card(byId[id])).join('')}${fa.models.length === 1 ? `<li class="ddc__fnote"><span class="ddc__fnote-s">${esc(fa.says)}</span><span class="ddc__fnote-l">${esc(fa.line)}</span></li>` : ''}</ul></div>`).join('\n');
-  const fams = c.families.map((fa) => `<li class="ddc__fs ddc__fs--${fa.id}"><span class="ddc__fs-s">${esc(fa.says)}</span><span class="ddc__fs-n">${esc(fa.name)}</span><span class="ddc__fs-m">${fa.models.map((id) => esc(byId[id].name)).join(' · ')}</span><span class="ddc__fs-l">${esc(fa.line)}</span></li>`).join('');
-  const dpx = c.dualPlush ? `<div class="ddc__dpx">${iso('s', 'm')}<div><p class="ddc__dpx-h">${esc(c.dualPlush.h)}</p><p class="ddc__dpx-p">${esc(c.dualPlush.p)}</p></div></div>` : '';
-  const prs = c.principles.map(([h, p]) => `<li class="ddc__pr"><b>${esc(h)}.</b> ${esc(p)}</li>`).join('');
-  const introH = c.key === 'mattress' ? `${c.families.length} answers, ${c.models.length} latex mattresses` : `${c.models.length} toppers, ${c.families.length} ways to regulate comfort`;
+  const tile = (m, fa) => `<li class="ddc__row ddc-m-${m.id}"><a class="ddc__ra" href="${m.url}"><span class="ddc__th${m.img.photo ? ' ddc__th--photo' : ''}"><img src="${(m.img.own ? ownBase : imgBase) + m.img.src}" width="280" height="${Math.round(m.img.h * 280 / m.img.w)}" loading="lazy" decoding="async" alt=""></span><span class="ddc__rn">${esc(m.name)}${m.dp ? ' <span class="ddc__dp">Dual Plush</span>' : ''}</span><span class="ddc__rd">${esc(m.row)}</span></a>${pop(c, m, fa)}</li>`;
+  const fams = c.families.map((fa) => `<div class="ddc__fam ddc__fam--${fa.id} ddc__n${fa.models.length}"><h3 class="ddc__fam-h"><span class="ddc__fam-n">${esc(fa.name)}</span><span class="ddc__fam-s">${esc(fa.says)}</span></h3><ul class="ddc__rows">${fa.models.map((id) => tile(byId[id], fa)).join('')}</ul></div>`).join('\n');
+  const foot = c.footer.map((t) => `<li>${esc(t)}</li>`).join('');
   return `<!-- Divine DunlopDreams Collection ${VERSION} · ${c.key} · generated by divine-collection/build.mjs: edit src/data.mjs, not this file -->
 <div class="ddc ddc--${c.key}">
 <div class="ddc__in">
 <div class="ddc__hd">
-<p class="ddc__eye">${esc(c.label)}</p>
-<h2 class="ddc__q">${esc(c.question)}</h2>
-<p class="ddc__lede">${esc(c.lede)}</p>
+<div class="ddc__ht"><h2 class="ddc__q">${esc(c.question)}</h2><p class="ddc__lede">${esc(c.lede)}</p></div>
 <ol class="ddc__path">${steps}</ol>
 </div>
-<div class="ddc__body">
-<div class="ddc__map">
-<p class="ddc__map-h">${esc(c.navLabel)}</p>
-${map}
+<div class="ddc__tiles">
+${fams}
 </div>
-<div class="ddc__stage">
-<article class="ddc__pv ddc__pv--intro">
-<p class="ddc__k">The collection at a glance</p>
-<h3 class="ddc__pv-h">${esc(introH)}</h3>
-<ul class="ddc__fams">${fams}</ul>
-${dpx}
-<ul class="ddc__prs">${prs}</ul>
-<p class="ddc__pick">${esc(c.pick)}</p>
-</article>
-${c.models.map((m) => preview(c, m, famOf[m.id], imgBase, ownBase)).join('\n')}
-</div>
-</div>
+<ul class="ddc__foot">${foot}</ul>
 </div>
 </div>
 `;
@@ -94,7 +75,7 @@ ${c.models.map((m) => preview(c, m, famOf[m.id], imgBase, ownBase)).join('\n')}
 const expected = { mattress: ['Botanic', 'Botanic Dual Plush', 'Bio Comfort', 'Bio Comfort Dual Plush', 'Orthopaedic Coconut Coir', 'Ambient', 'Hotel Line', 'Mattress for Partners'], topper: ['Bio Support', 'Bio Support Dual', 'Latex Topper for Partners'] };
 function guard(c, html) {
   const names = c.models.map((m) => m.name);
-  if (JSON.stringify(names) !== JSON.stringify(expected[c.key])) throw new Error(`${c.key}: models ${names.join(', ')}`);
+  if (JSON.stringify([...names].sort()) !== JSON.stringify([...expected[c.key]].sort())) throw new Error(`${c.key}: models ${names.join(', ')}`);
   const grouped = c.families.flatMap((fa) => fa.models).sort().join();
   if (grouped !== c.models.map((m) => m.id).sort().join()) throw new Error(`${c.key}: every model must sit in exactly one family`);
   for (const m of c.models) {
@@ -105,7 +86,7 @@ function guard(c, html) {
   const text = html.replace(/<[^>]+>/g, ' ');
   const bad = [[/£|\$\s?\d|€\s?\d/, 'a price'], [/\b(her|him|his|hers|women|men|man|woman)\b/i, 'gendered wording'], [/no layers/i, '"No layers"'], [/approximately|approx\.|≈|~\s?\d/i, 'an approximate value'], [/\bcures?\b|pain relief|guarantee/i, 'a medical or guaranteed-outcome claim'], [/Ambient Topper/i, 'an Ambient Topper']];
   for (const [re, what] of bad) if (re.test(text)) throw new Error(`${c.key}: ${what}: …${text.match(re)[0]}…`);
-  if (/<script|<style|<link|\son\w+=|style="|data-|\sid="/i.test(html)) throw new Error(`${c.key}: the description must not rely on scripts, style blocks, inline styles, data- attributes or ids`);
+  if (/<script|<style|<link|\son\w+=|style="|data-|\sid="|\shidden/i.test(html)) throw new Error(`${c.key}: the description must not rely on scripts, style blocks, inline styles, data- attributes or ids`);
 }
 
 // ---------- CSS: !important on every declaration outside @font-face / @keyframes ----------

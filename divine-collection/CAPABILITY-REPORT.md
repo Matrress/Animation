@@ -1,6 +1,6 @@
 # Divine DunlopDreams Collection — research report
 
-Version 1.1.0 · 2026-10-10 · branch `claude/divine-collection` · Hero 1.17.1 (commit `57479ca`) untouched.
+Version 2.0.0 · 2026-10-10 · branch `claude/divine-collection` · Hero 1.17.1 (commit `57479ca`) untouched.
 
 ## 0. What could and could not be checked from here
 
@@ -49,20 +49,20 @@ Status words: **Stable** = expected to work and safe to rely on · **Limited** =
 
 ### Chosen architecture (smallest reliable, Ecwid-compatible)
 1. **Description HTML** (`ecwid/description-*.html`): only classes, semantic elements, `img` and real links. Readable and indexable on its own; all eight (or three) models, the orientation map, the question, the selection path and the real product links are plain HTML.
-2. **One stylesheet + one small script** (`release/1.1.0/ddc.css` 26 KB, `ddc.js` 6 KB) loaded by a 527-character **site-wide custom code** snippet. The stylesheet is tiny once compressed and cached, so it loads on every page to avoid an unstyled flash; the script does nothing on pages without `.ddc`.
-3. **Graceful layers**: no CSS → readable document · CSS without script → full layout, hover/keyboard previews (CSS `:has`), rows are links · CSS + script → locked selection, Back to the overview, detail under the row on narrow screens, stable height, restored choice after browser Back.
+2. **One stylesheet + one small script** (`release/2.0.0/ddc.css` 21 KB, `ddc.js` 4 KB) loaded by a 527-character **site-wide custom code** snippet. The stylesheet is small once compressed and cached, so it loads on every page to avoid an unstyled flash; the script does nothing on pages without `.ddc`.
+3. **Graceful layers**: no CSS → readable document with every model, explanation and link · CSS without script → the full one-screen map; every tile is a real link to its model page · CSS + script → hover / keyboard focus opens the floating card (tap on touch, bottom sheet on phones), "View model" and the "you buy on the model page" text inside it.
 
 If the probe shows that the site-wide code is not available on category pages but `<style>` survives, a fallback is to inline the stylesheet in the description (length permitting). Decide after the probe.
 
 ## 2. Phase-1 probe (for Martin)
-`ecwid/probe-1.1.0.html` is a harmless test fragment: 20 numbered tests, each turns green when the feature works. No event handlers, no forms submitted, no tracking. The optional `ecwid/probe-loader-1.1.0.html` (site-wide, temporary) adds test 18: Ecwid page type, category id, description width and line-height, number of page loads. Steps in INSTALL.md §2.
+`ecwid/probe-2.0.0.html` is a harmless test fragment: 20 numbered tests, each turns green when the feature works. No event handlers, no forms submitted, no tracking. The optional `ecwid/probe-loader-2.0.0.html` (site-wide, temporary) adds test 18: Ecwid page type, category id, description width and line-height, number of page loads. Steps in INSTALL.md §2.
 
 ## 3. Reusable Hero 1.17.1 resources (reused, not copied)
 | Resource | How it is reused |
 |---|---|
 | `assets/m-*.webp` (8 mattress cut-outs), `t-bio.webp`, `t-bio-dual.webp` | Referenced at the pinned Hero URL (`…@57479ca…/divine-hero/release/1.17.1/assets/`): no duplicate files, shared browser cache with the homepage |
 | `assets/chillax-400.woff2`, `chillax-600.woff2` | Same pinned URLs in `@font-face` (`DDCChillax`): the homepage and the collection share one download |
-| `t-partners.webp` | **Not reused as is**: its upper part shows pink and blue male/female silhouettes. A 13.6 KB crop of the topper only (`release/1.1.0/assets/t-partners-sides.webp`, labelled MEDIUM / FIRM) is the only new asset |
+| `t-partners.webp` | **Not reused as is**: its upper part shows pink and blue male/female silhouettes. A 13.6 KB crop of the topper only (`release/2.0.0/assets/t-partners-sides.webp`, labelled MEDIUM / FIRM) is the only new asset |
 | Colour system (HANDOVER §11, hero.css 1.17.x) | Ink #14223b, labels #1f4568, Pantone 7541–7546 / 7457–7460, firmness Soft #2f7da8 · Medium #25648a · Firm #4a5664 · Extra Firm #313d4c with white type, family accents, step strip #313d4c |
 | Rules: white type in dark boxes, flat fills, no heavy outlines, "latex mattress" wording, no prices, no gendered wording, readability (16 px body, ≥13 px labels, ≥8:1 ink) | Applied throughout; the build refuses prices, gendered words, "No layers", approximations, cure claims |
 | Dual Plush exploded isometric pair (thin topper slab over thick mattress slab), "Latex topper / Latex mattress" rows | Rebuilt in pure CSS (no SVG, so nothing for a sanitiser to strip) |

@@ -1,10 +1,10 @@
-// Screenshots of both collections: overview and selected states on the device sizes the brief names.
+// Viewport screenshots: the whole collection on one screen (overview), and with a model's floating card open.
 // usage: node tests/shots.mjs [outdir]
 import { browser, page, BASE, sleep } from './lib.mjs';
 import fs from 'node:fs';
 const out = process.argv[2] || new URL('../reports/', import.meta.url).pathname;
 fs.mkdirSync(out, { recursive: true });
-const sizes = [['desktop-1440', 1440, 900], ['large-1920', 1920, 1080], ['ipad-land-1180', 1180, 820, true], ['ipad-port-820', 820, 1180, true], ['mobile-390', 390, 844, true]];
+const sizes = [['laptop-1280x720', 1280, 720], ['desktop-1440x900', 1440, 900], ['large-1920x1080', 1920, 1080], ['ipad-land-1180x820', 1180, 820, true], ['ipad-port-820x1180', 820, 1180, true], ['iphone-390x844', 390, 844, true], ['phone-360x740', 360, 740, true]];
 const br = await browser();
 for (const [name, w, h, touch] of sizes) {
   for (const kind of ['mattress', 'topper']) {
@@ -12,14 +12,14 @@ for (const [name, w, h, touch] of sizes) {
     await p.goto(`${BASE}sim.html?page=${kind}`);
     await p.waitForSelector('.ddc.ddc--js');
     await p.evaluate(() => document.fonts.ready);
-    await sleep(300);
-    const box = await p.evaluate(() => { const r = document.querySelector('.ddc').getBoundingClientRect(); return { y: r.top + scrollY, height: r.height }; });
-    await p.screenshot({ fullPage: true, animations: 'disabled', path: `${out}/${name}-${kind}-overview.png`, clip: { x: 0, y: Math.max(0, box.y - 160), width: w, height: Math.min(box.height + 200, 3000) } });
-    const pick = kind === 'mattress' ? 'botanic_dp' : 't_dual';
-    await p.locator(`.ddc__row.ddc-m-${pick} .ddc__rb`).click();
-    await sleep(400);
-    const b2 = await p.evaluate(() => { const r = document.querySelector('.ddc').getBoundingClientRect(); return { y: r.top + scrollY, height: r.height }; });
-    await p.screenshot({ fullPage: true, animations: 'disabled', path: `${out}/${name}-${kind}-selected.png`, clip: { x: 0, y: Math.max(0, b2.y - 160), width: w, height: Math.min(b2.height + 200, 3600) } });
+    await p.evaluate(() => { const r = document.querySelector('.ddc').getBoundingClientRect(); scrollTo(0, Math.max(0, r.top + scrollY - (innerWidth < 500 ? 180 : 70))); });
+    await sleep(500);
+    await p.screenshot({ path: `${out}/${name}-${kind}-overview.png`, animations: 'disabled' });
+    const pick = kind === 'mattress' ? 'bio_dp' : 't_dual';
+    const sel = `.ddc-m-${pick} .ddc__ra`;
+    if (touch) await p.tap(sel); else await p.hover(sel);
+    await sleep(500);
+    await p.screenshot({ path: `${out}/${name}-${kind}-card.png`, animations: 'disabled' });
     if (p.errors.length) console.log(name, kind, p.errors);
     await p.context().close();
   }
