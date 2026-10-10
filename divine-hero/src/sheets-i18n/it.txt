@@ -15,7 +15,6 @@ height = Altezza
 firmness = Rigidità
 f_sm_m_f = <i class="ddh__f-s">Morbido</i> · <i class="ddh__f-m">Medio</i> · <i class="ddh__f-f">Rigido</i>
 v_dp = Lo stesso nucleo Bio Comfort con un topper plush in lattice naturale sopra, uniti in un’unica fodera: un primo contatto più morbido sullo stesso sostegno zonato.
-f_bdp = <em class="ddh__pr"><i class="ddh__f-m">Medio</i> + <i class="ddh__f-s">Morbido</i></em><em class="ddh__pr"><i class="ddh__f-f">Rigido</i> + <i class="ddh__f-m">Medio</i></em>
 bio_cta = Scopri Bio Comfort
 a_bio = Donna distesa sul materasso in lattice naturale Bio Comfort, le cui cellule seguono la curva del corpo
 a_bio_dp = Donna distesa su Bio Comfort Dual Plush: nucleo in lattice zonato con topper plush in lattice naturale
@@ -89,7 +88,6 @@ cv2 = Cotone e lana
 cv3 = Aloe vera
 cv4 = Cashmere
 c_excl = Esclusivo
-f_mt = materasso in lattice + topper
 n_ortho = Ortopedico in fibra di cocco
 f_tpart = <i class="ddh__f-m">Medio</i> da un lato · <i class="ddh__f-f">Rigido</i> dall’altro
 w_s = Morbido
@@ -100,8 +98,6 @@ l_top = Strato superiore
 l_base = Strato inferiore
 opt_1 = Opzione 1
 opt_2 = Opzione 2
-opt_3 = Opzione 3
-l_tp = Topper
 l_mt = Materasso in lattice
 cc_h = Cloud Comfort: ti sostiene sopra la superficie
 cc_d = Adattamento anatomico senza affondare, sostegno ortopedico senza tensione: riposi sulla superficie, mai dentro.
@@ -179,10 +175,6 @@ dpc_tc = comfort
 dpc_m = Materasso in lattice
 dpc_ms = sostegno
 dpc_ch = Combinazioni comuni
-w_sx = Super rigido
-dpc_c1 = Materasso in lattice <i class="ddh__f-m">Medio</i> + topper <i class="ddh__f-s">Morbido</i>
-dpc_c2 = Materasso in lattice <i class="ddh__f-f">Rigido</i> + topper <i class="ddh__f-m">Medio</i>
-dpc_c3 = Materasso in lattice <i class="ddh__f-x">Extra rigido</i> + topper <i class="ddh__f-f">Rigido</i>
 zone_her = Un lato
 zone_him = L’altro lato
 dpc_cta = Vedi Botanic Dual Plush

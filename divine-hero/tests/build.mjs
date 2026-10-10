@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const VERSION = '1.17.0';
+const VERSION = '1.17.1';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const esbuild = process.env.ESBUILD || 'esbuild';
 const rel = path.join(root, 'release', VERSION);
@@ -69,8 +69,20 @@ for (const f of fs.readdirSync(path.join(root, 'src/i18n'))) fs.writeFileSync(pa
   src = src.replace(/<article class="ddh__pv\b[\s\S]*?<\/article>/g, (art) => {
     const back = /<button class="ddh__pv-back"[\s\S]*?<\/button>/.exec(art); const cta = /<a class="ddh__pv-cta"[\s\S]*?<\/a>/.exec(art);
     if (!back || !cta) return art;
-    return art.replace(back[0], '').replace(cta[0], `<div class="ddh__pv-acts">${cta[0]}${back[0]}</div>`);
+    // 1.17.1: the buttons form one row at the foot of the text area (spanning both columns), not a stack in the narrow left column
+    const acts = `<div class="ddh__pv-acts">${cta[0]}${back[0]}</div>`;
+    const cut = art.replace(back[0], '').replace(cta[0], '');
+    const end = cut.lastIndexOf('</div></article>');
+    return end < 0 ? art : cut.slice(0, end) + acts + cut.slice(end);
   });
+  // 1.17.1 Dual Plush icons: an isometric exploded pair of slabs (thin latex topper over the latex mattress; two thin layers for a two-layer topper).
+  // The slab colours come from the firmness classes (.ddh__sl--s|m|f|x set --ct / --cl / --cr); no text lives inside the icon.
+  {
+    const slab = (y0, t, k) => { const x = (n) => n, d = 38, w = 38;
+      return `<g class="ddh__sl ddh__sl--${k}"><path class="ddh__sl-l" d="M10 ${y0 + 19}L48 ${y0 + d}V${y0 + d + t}L10 ${y0 + 19 + t}Z"/><path class="ddh__sl-r" d="M48 ${y0 + d}L86 ${y0 + 19}V${y0 + 19 + t}L48 ${y0 + d + t}Z"/><path class="ddh__sl-t" d="M48 ${y0}L86 ${y0 + 19}L48 ${y0 + d}L10 ${y0 + 19}Z"/></g>`; };
+    const icon = (a, b, thin) => `<svg class="ddh__iso" viewBox="0 0 96 74" width="96" height="74" aria-hidden="true" focusable="false"><ellipse class="ddh__iso-sh" cx="48" cy="${thin ? 61 : 67}" rx="30" ry="5"/>${slab(18, thin ? 8 : 16, b)}${slab(2, 7, a)}</svg>`;
+    src = src.replace(/<!--ISO:(\w):(\w)-->/g, (m0, a, b) => icon(a, b, false)).replace(/<!--ISO2:(\w):(\w)-->/g, (m0, a, b) => icon(a, b, true));
+  }
   const keys = new Set([...src.matchAll(/\sdata-ta?="(\w+)"/g)].map((m) => m[1]));
   const out = path.join(rel, 'sheets'); fs.mkdirSync(out, { recursive: true });
   const finish = (h, lang) => h.replace(/\s(data-ta?)="\w+"/g, '').replace('<div class="ddh__sheets">', `<div class="ddh__sheets" lang="${lang}">`).replace(/>\s*\n\s*</g, '><').trim() + '\n';

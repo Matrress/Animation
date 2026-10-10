@@ -15,7 +15,6 @@ height = Korkeus
 firmness = Kovuus
 f_sm_m_f = <i class="ddh__f-s">Pehmeä</i> · <i class="ddh__f-m">Keskikova</i> · <i class="ddh__f-f">Kova</i>
 v_dp = Sama Bio Comfort -ydin, jonka päällä on luonnonlateksinen plush-petauspatja samassa päällisessä: pehmeämpi ensikosketus saman vyöhyketuen päällä.
-f_bdp = <em class="ddh__pr"><i class="ddh__f-m">Keskikova</i> + <i class="ddh__f-s">Pehmeä</i></em><em class="ddh__pr"><i class="ddh__f-f">Kova</i> + <i class="ddh__f-m">Keskikova</i></em>
 bio_cta = Tutustu Bio Comfortiin
 a_bio = Nainen lepää Bio Comfort -luonnonlateksipatjalla, jonka solut seuraavat vartalon kaarta
 a_bio_dp = Nainen lepää Bio Comfort Dual Plush -patjalla: vyöhykkeellinen lateksiydin ja luonnonlateksinen plush-petauspatja
@@ -89,7 +88,6 @@ cv2 = Puuvilla ja villa
 cv3 = Aloe vera
 cv4 = Kashmir
 c_excl = Eksklusiivinen
-f_mt = lateksipatja + petauspatja
 n_ortho = Ortopedinen kookoskuitupatja
 f_tpart = <i class="ddh__f-m">Keskikova</i> toisella puolella · <i class="ddh__f-f">Kova</i> toisella
 w_s = Pehmeä
@@ -100,8 +98,6 @@ l_top = Päällikerros
 l_base = Alakerros
 opt_1 = Vaihtoehto 1
 opt_2 = Vaihtoehto 2
-opt_3 = Vaihtoehto 3
-l_tp = Pehmuste
 l_mt = Lateksipatja
 cc_h = Cloud Comfort: kannattelee sinua pinnan päällä
 cc_d = Anatominen mukautuvuus ilman vajoamista, ortopedinen tuki ilman jännitystä: lepäät pinnalla, et sen sisällä.
@@ -179,10 +175,6 @@ dpc_tc = mukavuus
 dpc_m = Lateksipatja
 dpc_ms = tuki
 dpc_ch = Yleiset yhdistelmät
-w_sx = Superkova
-dpc_c1 = <i class="ddh__f-m">Keskikova</i> lateksipatja + <i class="ddh__f-s">Pehmeä</i> sijauspatja
-dpc_c2 = <i class="ddh__f-f">Kova</i> lateksipatja + <i class="ddh__f-m">Keskikova</i> sijauspatja
-dpc_c3 = <i class="ddh__f-x">Erittäin kova</i> lateksipatja + <i class="ddh__f-f">Kova</i> sijauspatja
 zone_her = Yksi puoli
 zone_him = Toinen puoli
 dpc_cta = Katso Botanic Dual Plush

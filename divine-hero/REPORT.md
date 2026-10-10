@@ -1,5 +1,16 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.17.1: one firmness language (white type on colour), no heavy outlines, Dual Plush icons, seven coloured zones, navigator as an instrument panel (2026-10-10)
+
+Owner brief (5 points, with a car-dashboard photo as an example of contrast and premium feel): Soft and Medium tiles were pale and blurry; outlines made everything heavy; the seven-zone scheme needs one colour per zone and never black letters on blue; Dual Plush needs another kind of icon; the screens may grow where needed; present the mattress like a latest-generation premium car.
+Done:
+1. Firmness colours: Soft #2f7da8 · Medium #25648a (deepened Pantone 7460 / 7459), Firm #4a5664 (7545) and Extra Firm #313d4c (7546) are unchanged; all four carry white type (4.5-11:1). Pale fills with dark type on a firmness box are gone everywhere (tiles, chips, dots, Partners ribbons, side boxes).
+2. Every added outline is removed (1.17.1 draft and earlier): flat fills only.
+3. Seven body zones: one colour each (blue, teal, green, periwinkle, violet, navy, slate; all with white numerals and names, 4.8-7.5:1) plus a seven-segment colour bar under the picture.
+4. New Dual Plush icon: an exploded isometric pair, a thin slab (latex topper) floating over a thick slab (latex mattress), each in its firmness tones, with two text rows "Latex topper · firmness" / "Latex mattress · firmness" (two thin slabs for Bio Support Dual: Top layer / Bottom layer). Built from one macro in tests/build.mjs; used in the Botanic and Bio Comfort Dual Plush previews, Bio Support Dual, the Bio Comfort screen, the Dual Plush card and the navigator.
+5. Firmness navigator as an instrument panel: deep-blue glass, white type, white system cards; the four weight ranges are one segmented gauge; step strip without boxes; assurance line in white on glass.
+Tests: see the 1.17.1 commit message; known: a few long translations scroll a few pixels inside a preview panel on 1080x668.
+
 ## 1.17.0: firmness navigator, owner's Pantone colour system, old Dual Plush visual, latex wording, step strip (2026-10-10)
 
 Owner brief (9 points, Bulgarian, with a Bio cell picture and four Pantone swatch sheets). Rules recorded in HANDOVER.md §11.

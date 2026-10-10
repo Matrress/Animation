@@ -1653,3 +1653,110 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__hc--fn[data-tight="3"] .ddh__hc-in{padding-bottom:12px}
 .ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-col{padding:9px 12px 11px}
 .ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-l{margin-bottom:6px}.ddh .ddh__hc--fn[data-tight="3"] .ddh__hc-hd{padding-top:10px;padding-bottom:9px}
+
+/* ===== 1.17.1 Dual Plush explained by mini sketches. A system = a thin slab (the latex topper) on a thick slab (the latex mattress); each slab carries its
+   firmness colour and a slate outline, topper slabs show a fine perforation, mattress slabs show the seven body zones; the text row beside a slab names it. ===== */
+/* roomier contexts: the navigator, the Dual Plush card and the Bio screen use larger slabs and type */
+.ddh .ddh__sheet .ddh__spec--combos3,.ddh .ddh__sheet .ddh__spec--combos{display:block}
+.ddh .ddh__sheet .ddh__spec--combos3>b,.ddh .ddh__sheet .ddh__spec--combos>b{display:block;margin:0 0 6px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#1f4568}
+/* previews: buttons are one row under both columns; the sketches get the wider column */
+.ddh .ddh__sheet .ddh__pv-tx>.ddh__pv-acts{grid-column:1/-1;margin-top:2px}
+.ddh .ddh__sheet--mattress .ddh__pv-tx:has(.ddh__spec--combos3){grid-template-columns:minmax(0,.74fr) minmax(0,1.26fr)}
+/* two-layer topper: "Option n" stands left of its sketch (saves a row) */
+/* sketches inside the navigator and the Dual Plush card: reset the list styles those containers bring */
+/* the Dual Plush card on lower windows rises over the site header like the selectors and the navigator, so the picture and all three systems fit */
+@media (min-width:701px) and (max-height:830px){.ddh.ddh[data-ddh-state=system]{z-index:2147483000}.ddh.ddh .ddh__dpc{top:10px}}
+.ddh .ddh__bio-dsk{display:grid;gap:6px}
+.ddh .ddh__bio-dsk>dt{margin:0}.ddh .ddh__bio-dsk>dd{margin:0}
+/* navigator: the sketches shrink a notch in the compaction tiers (type stays 14.5 px+) */
+.ddh.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-l{display:none}
+.ddh.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-k{display:none}
+.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-ok{padding:7px 12px}
+
+/* ===== 1.17.1 one calm firmness language: flat fills, no outlines, white type on every coloured box =====
+   Soft #2f7da8 (sky 7460, deepened) · Medium #25648a (7459, deepened) · Firm #4a5664 (7545) · Extra Firm #313d4c (7546): all carry white text (4.5-11:1).
+   Pale tints stay only for plain backgrounds, never for a box with a firmness name on it. */
+.ddh{--fz-s:#2f7da8;--fz-m:#25648a;--fz-f:#4a5664;--fz-x:#313d4c}
+.ddh.ddh.ddh :is(.ddh__ly--s,.ddh__ly--m,.ddh__ly--f,.ddh__ly--x,.ddh__hcf-s,.ddh__hcf-m,.ddh__hcf-f,.ddh__hcf-x,.ddh__zb--her,.ddh__zb--him,.ddh__fn-side){box-shadow:none;color:#fff}
+.ddh.ddh.ddh :is(.ddh__ly--s,.ddh__ly--m,.ddh__ly--f,.ddh__ly--x,.ddh__hcf-s,.ddh__hcf-m,.ddh__hcf-f,.ddh__hcf-x,.ddh__zb--her,.ddh__zb--him,.ddh__fn-side) *{color:#fff;opacity:1}
+.ddh.ddh.ddh .ddh__ly--s,.ddh.ddh.ddh .ddh__hcf-s{background:var(--fz-s);--b:var(--fz-s);--t:#fff}
+.ddh.ddh.ddh .ddh__ly--m,.ddh.ddh.ddh .ddh__hcf-m,.ddh.ddh.ddh .ddh__zb--her,.ddh.ddh.ddh .ddh__fn-side--m{background:var(--fz-m);--b:var(--fz-m);--t:#fff}
+.ddh.ddh.ddh .ddh__fn-side--f{background:var(--fz-f)}
+.ddh.ddh .ddh__fd--s,.ddh.ddh .ddh__fd--m,.ddh.ddh .ddh__fd--f,.ddh.ddh .ddh__fd--x,.ddh.ddh .ddh__fd--sx,.ddh.ddh .ddh__fn-c.is-on{box-shadow:none}
+.ddh.ddh .ddh__fn-c{box-shadow:inset 0 0 0 1.5px #c3ccd2}
+.ddh.ddh .ddh__fn-c.is-on.ddh__fn-c--s{background:var(--fz-s)}.ddh.ddh .ddh__fn-c.is-on.ddh__fn-c--m{background:var(--fz-m)}.ddh.ddh .ddh__fn-c.is-on.ddh__fn-c--f{background:var(--fz-f)}.ddh.ddh .ddh__fn-c.is-on.ddh__fn-c--x{background:var(--fz-x)}
+.ddh.ddh .ddh__fd--split{background:linear-gradient(90deg,var(--fz-m) 0 50%,var(--fz-f) 50% 100%)}
+
+/* ===== 1.17.1 Dual Plush icon: an exploded isometric pair, a thin slab (latex topper) floating over a thick one (latex mattress); each in its firmness tone ===== */
+.ddh__sl--s{--ct:#5d9abb;--cl:#2f7da8;--cr:#245f80}.ddh__sl--m{--ct:#5586a4;--cl:#25648a;--cr:#1c4c69}.ddh__sl--f{--ct:#727b86;--cl:#4a5664;--cr:#38414c}.ddh__sl--x{--ct:#5e6873;--cl:#313d4c;--cr:#252e3a}
+.ddh .ddh__sl-t{fill:var(--ct)}.ddh .ddh__sl-l{fill:var(--cl)}.ddh .ddh__sl-r{fill:var(--cr)}
+.ddh .ddh__iso-sh{fill:rgba(20,34,59,.14)}
+.ddh .ddh__iso{display:block;grid-column:1;grid-row:1/3;align-self:center;width:var(--dr-w,84px);height:auto;overflow:visible}
+.ddh{--dr-w:84px;--dr-f:15px}
+.ddh .ddh__dsks{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.ddh.ddh .ddh__dsk{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:1fr 1fr;column-gap:14px;align-items:center;margin:0;padding:8px 14px 8px 10px;border-radius:16px;background:#f1f4f5;list-style:none;font-size:var(--dr-f);line-height:1.2;white-space:normal;text-align:left}
+.ddh.ddh .ddh__dsk::before,.ddh.ddh .ddh__dsk::after{content:none}
+.ddh.ddh .ddh__dsk-r{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0;padding:0;font-size:var(--dr-f);line-height:1.2;color:#14223b}
+.ddh.ddh .ddh__dsk-r::before{content:none}
+.ddh .ddh__dsk-r b{font-weight:600;white-space:nowrap}
+.ddh.ddh .ddh__fw{display:inline-block;flex:none;padding:3px 11px;border-radius:9px;font-size:var(--dr-f);font-style:normal;font-weight:600;line-height:1.2;white-space:nowrap}
+.ddh .ddh__dsk--tp{position:relative}
+.ddh .ddh__dsk-o{grid-column:1/-1;margin:0 0 -2px;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#1f4568}
+.ddh .ddh__dsk--tp{grid-template-rows:auto 1fr 1fr}
+.ddh .ddh__dsk--tp .ddh__iso{grid-row:2/4}
+.ddh .ddh__dsk>.ddh__dpc-av{grid-column:2;justify-self:start;margin:2px 0 0}
+.ddh .ddh__dpc .ddh__dsk{background:#fff}
+.ddh .ddh__dsks--nav,.ddh .ddh__dsks--card{--dr-w:92px;--dr-f:15.5px}
+.ddh .ddh__dsks--bio{--dr-w:76px;--dr-f:15px}
+@container ddsh (max-height:620px){.ddh .ddh__sheet .ddh__dsks{--dr-w:66px;--dr-f:14.5px;gap:6px}.ddh.ddh .ddh__sheet .ddh__dsk{padding:5px 10px 5px 8px}}
+@container ddsh (min-height:760px){.ddh .ddh__sheet .ddh__dsks{--dr-w:84px;--dr-f:15.5px}}
+@container dpc (max-height:620px){.ddh .ddh__dpc .ddh__dsks{--dr-w:66px;--dr-f:14.5px;gap:6px}.ddh.ddh .ddh__dpc .ddh__dsk{padding:5px 10px 5px 8px}.ddh.ddh .ddh__dpc .ddh__dsk>.ddh__dpc-av{display:none}}
+.ddh .ddh__hc--fn:is([data-tight="1"],[data-tight="2"],[data-tight="3"]) .ddh__dsks--nav{--dr-w:62px;--dr-f:14.5px;gap:5px}
+.ddh.ddh .ddh__hc--fn:is([data-tight="1"],[data-tight="2"],[data-tight="3"]) .ddh__dsk{padding:4px 10px 4px 8px}
+.ddh .ddh__sheet--bio .ddh__dsks--bio{--dr-w:70px}
+@container ddsh (max-height:640px){.ddh .ddh__sheet--bio .ddh__dsks--bio{--dr-w:56px;--dr-f:14px}.ddh .ddh__sheet--bio .ddh__bio-cloud{display:none}}
+
+/* ===== 1.17.1 the seven body zones: one colour each (cool family from the owner's palette), white numerals and names, a matching colour bar under the picture ===== */
+.ddh{--z1:#2f78a6;--z2:#1f7a86;--z3:#2e7a68;--z4:#4a67a8;--z5:#6a579b;--z6:#3d5a80;--z7:#4a5664}
+.ddh .ddh__hcz-bar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;height:8px;margin:8px 0 0;overflow:hidden;border-radius:6px}
+.ddh .ddh__hcz-bar i{display:block}
+.ddh .ddh__hcz-bar i:nth-child(1),.ddh .ddh__hcz-l li:nth-child(1){background:var(--z1)}.ddh .ddh__hcz-bar i:nth-child(2),.ddh .ddh__hcz-l li:nth-child(2){background:var(--z2)}.ddh .ddh__hcz-bar i:nth-child(3),.ddh .ddh__hcz-l li:nth-child(3){background:var(--z3)}.ddh .ddh__hcz-bar i:nth-child(4),.ddh .ddh__hcz-l li:nth-child(4){background:var(--z4)}.ddh .ddh__hcz-bar i:nth-child(5),.ddh .ddh__hcz-l li:nth-child(5){background:var(--z5)}.ddh .ddh__hcz-bar i:nth-child(6),.ddh .ddh__hcz-l li:nth-child(6){background:var(--z6)}.ddh .ddh__hcz-bar i:nth-child(7),.ddh .ddh__hcz-l li:nth-child(7){background:var(--z7)}
+.ddh.ddh .ddh__hcz-l b,.ddh.ddh .ddh__hcz-l span{color:#fff}
+.ddh .ddh__hcz-l{margin-top:8px}
+
+/* ===== 1.17.1 the step strip without heavy boxes: flat chips, the current step dark with white type ===== */
+.ddh .ddh__stp li{box-shadow:none;background:#e3e9ee;color:#14223b}
+.ddh .ddh__stp li i{background:#fff;color:#14223b}
+.ddh .ddh__stp li.is-now{background:#313d4c;color:#fff}
+.ddh .ddh__stp li.is-now i{background:#fff;color:#14223b}
+.ddh .ddh__stp li+li::before{background:#aebebe}
+
+/* ===== 1.17.1 firmness navigator as an instrument panel: deep blue glass, white type, white system cards; the weight ranges are one segmented gauge ===== */
+.ddh.ddh .ddh__hc--fn,.ddh.ddh .ddh__hc--fn[data-tight],.ddh.ddh .ddh__hc--fn[data-ddh-wide]{background:linear-gradient(158deg,#2d6f99 0,#1f4f78 48%,#2b3a4d 100%);border-color:rgba(255,255,255,.22);box-shadow:0 40px 90px -30px rgba(10,24,44,.7)}
+.ddh .ddh__hc--fn .ddh__hc-hd{background:rgba(10,24,44,.28)}
+.ddh .ddh__hc--fn .ddh__hc-t{color:#fff}
+.ddh .ddh__hc--fn .ddh__hc-s{color:#e4eef4}
+.ddh .ddh__hc--fn .ddh__fn-l{color:#fff}
+.ddh .ddh__hc--fn .ddh__fn-col{background:#fff;box-shadow:0 18px 36px -24px rgba(8,20,36,.75)}
+.ddh.ddh .ddh__hc--fn .ddh__fn-ok{background:rgba(255,255,255,.16);color:#fff}
+.ddh.ddh .ddh__hc--fn .ddh__hc-n{color:#dbe8f0}
+.ddh.ddh .ddh__hc--fn .ddh__hc-x{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3)}
+.ddh.ddh .ddh__hc--fn .ddh__hc-x i,.ddh.ddh .ddh__hc--fn .ddh__hc-x i::after{background:#fff}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__hcf{gap:3px;padding:3px;border-radius:16px;background:#e6ecef}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__hcf li{border-radius:0;padding:9px 10px}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__hcf li:first-child{border-radius:13px 0 0 13px}.ddh.ddh.ddh .ddh__hc--fn .ddh__hcf li:last-child{border-radius:0 13px 13px 0}
+.ddh .ddh__hc--fn .ddh__fn-ml li,.ddh .ddh__hc--fn .ddh__fn-pr li{background:#f1f4f5}
+.ddh.ddh .ddh__hc--fn .ddh__fn-side{box-shadow:none}
+/* the narrow preview column: a slimmer icon and tighter chips so "Latex mattress" and "Extra Firm" never touch */
+.ddh .ddh__sheet .ddh__pv .ddh__dsks{--dr-w:60px;--dr-f:14.5px}
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk{column-gap:10px;padding:8px 12px 8px 8px}
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__fw{padding:2px 9px}
+@container ddsh (min-height:760px){.ddh .ddh__sheet .ddh__pv .ddh__dsks{--dr-w:68px;--dr-f:15px}}
+@container ddsh (max-height:620px){.ddh .ddh__sheet .ddh__pv .ddh__dsks{--dr-w:54px;--dr-f:14px}}
+/* two-layer topper: "Option n" stands left of its icon (one row per option) */
+.ddh.ddh .ddh__dsk--tp{grid-template-columns:auto auto minmax(0,1fr);grid-template-rows:1fr 1fr;column-gap:10px}
+.ddh.ddh .ddh__dsk--tp .ddh__dsk-o{grid-column:1;grid-row:1/3;margin:0;align-self:center;white-space:nowrap;font-size:13px}
+.ddh.ddh .ddh__dsk--tp .ddh__iso{grid-column:2;grid-row:1/3}
+.ddh.ddh .ddh__dsk--tp .ddh__dsk-r{grid-column:3}
+.ddh .ddh__dsks--tp{--dr-w:54px}
+@container ddsh (max-height:800px){.ddh .ddh__sheet--topper .ddh__pv-b{display:none}}

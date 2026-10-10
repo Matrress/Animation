@@ -15,7 +15,6 @@ height = Altura
 firmness = Firmeza
 f_sm_m_f = <i class="ddh__f-s">Macio</i> · <i class="ddh__f-m">Médio</i> · <i class="ddh__f-f">Firme</i>
 v_dp = O mesmo núcleo Bio Comfort com um topper plush de látex natural por cima, unidos numa só capa: um primeiro toque mais suave sobre o mesmo suporte zonado.
-f_bdp = <em class="ddh__pr"><i class="ddh__f-m">Médio</i> + <i class="ddh__f-s">Macio</i></em><em class="ddh__pr"><i class="ddh__f-f">Firme</i> + <i class="ddh__f-m">Médio</i></em>
 bio_cta = Descubra o Bio Comfort
 a_bio = Mulher deitada no colchão de látex natural Bio Comfort, cujas células acompanham a curva do seu corpo
 a_bio_dp = Mulher deitada no Bio Comfort Dual Plush: núcleo de látex zonado com topper plush de látex natural
@@ -89,7 +88,6 @@ cv2 = Algodão e lã
 cv3 = Aloé vera
 cv4 = Caxemira
 c_excl = Exclusivo
-f_mt = colchão de látex + topper
 n_ortho = Ortopédico com fibra de coco
 f_tpart = <i class="ddh__f-m">Médio</i> de um lado · <i class="ddh__f-f">Firme</i> do outro
 w_s = Macio
@@ -100,8 +98,6 @@ l_top = Camada superior
 l_base = Camada inferior
 opt_1 = Opção 1
 opt_2 = Opção 2
-opt_3 = Opção 3
-l_tp = Topper
 l_mt = Colchão de látex
 cc_h = Cloud Comfort: mantém-no acima da superfície
 cc_d = Adaptação anatómica sem afundar, suporte ortopédico sem tensão: descansa sobre a superfície, nunca dentro dela.
@@ -179,10 +175,6 @@ dpc_tc = conforto
 dpc_m = Colchão de látex
 dpc_ms = suporte
 dpc_ch = Combinações habituais
-w_sx = Super firme
-dpc_c1 = Colchão de látex <i class="ddh__f-m">Médio</i> + topper <i class="ddh__f-s">Macio</i>
-dpc_c2 = Colchão de látex <i class="ddh__f-f">Firme</i> + topper <i class="ddh__f-m">Médio</i>
-dpc_c3 = Colchão de látex <i class="ddh__f-x">Extra firme</i> + topper <i class="ddh__f-f">Firme</i>
 zone_her = Um lado
 zone_him = O outro lado
 dpc_cta = Ver Botanic Dual Plush
