@@ -1,0 +1,201 @@
+/* Divine DunlopDreams Collection 2.0.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+   Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
+   The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
+   (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
+   Layout follows the width of the description itself (container queries) and, for density, the window height (media queries).
+   Visual language from Hero 1.17.1: Chillax 400/600, ink #14223b, the owner's Pantone sets, firmness colours with white type, flat fills.
+   Structure: header (question, who-is-it-for guide, selection path) · tiles (families side by side, two or one pictures each) · footer line.
+   A tile is a real link to the model page. Hover / keyboard focus (tap on touch) opens a floating card (.ddc__pop) beside the tile. */
+
+@font-face{font-family:DDCChillax;src:url(https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:DDCChillax;src:url(https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
+
+/* ---------- tokens and reset (inside .ddc only) ---------- */
+.ddc{--ink:#14223b;--ink2:#2b3b58;--lab:#1f4568;--line:#d3dbe0;--pale:#f3f6f8;--nav:#eef2f5;--hov:#e1e9ef;--sel:#313d4c;--btn:#1f4f78;
+  --fz-s:#2f7da8;--fz-m:#25648a;--fz-f:#4a5664;--fz-x:#313d4c;
+  --fam:#2e7a68;--ff:DDCChillax,system-ui,-apple-system,"Segoe UI",sans-serif;
+  container:ddc/inline-size;display:block;box-sizing:border-box;width:100%;max-width:1240px;margin:0 auto 28px;padding:0;
+  font-family:var(--ff);font-size:16px;font-weight:400;line-height:1.45;color:var(--ink);text-align:left;letter-spacing:0;text-transform:none;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.ddc *,.ddc *::before,.ddc *::after{box-sizing:border-box}
+.ddc :is(h2,h3,h4,p,ul,ol,li,figure){margin:0;padding:0;border:0;background:none;font-family:var(--ff);font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit;letter-spacing:0;text-transform:none;text-align:left}
+.ddc :is(ul,ol){list-style:none}
+.ddc li{list-style:none;text-indent:0}
+.ddc li::before,.ddc li::after{content:none}
+.ddc li::marker{content:none}
+.ddc :is(b,strong){font-weight:600;color:inherit}
+.ddc :is(span,small,em,i){font-style:normal;color:inherit;font-size:inherit;line-height:inherit}
+.ddc img{display:block;max-width:100%;height:auto;margin:0;padding:0;border:0;box-shadow:none;border-radius:0}
+.ddc a{color:inherit;text-decoration:none;border:0;background:none;box-shadow:none}
+.ddc button{-webkit-appearance:none;appearance:none;margin:0;border:0;border-radius:0;background:none;box-shadow:none;font:inherit;color:inherit;text-align:left;text-transform:none;letter-spacing:0;line-height:inherit;min-height:0;width:auto;height:auto;cursor:pointer}
+.ddc :is(a,button):focus{outline:none}
+.ddc :is(a,button):focus-visible{outline:3px solid #2f7da8;outline-offset:2px;border-radius:12px}
+.ddc .ddc__sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* families: one colour each, from the hero's approved cool palette (white type passes on all of them) */
+.ddc :is(.ddc__fam--classic,.ddc-f-classic){--fam:#2e7a68}
+.ddc :is(.ddc__fam--innov,.ddc-f-innov){--fam:#2f78a6}
+.ddc :is(.ddc__fam--ortho,.ddc-f-ortho){--fam:#4a5664}
+.ddc :is(.ddc__fam--value,.ddc-f-value){--fam:#6a579b}
+.ddc :is(.ddc__fam--partners,.ddc-f-partners,.ddc__fam--tpartners,.ddc-f-tpartners){--fam:#1f7a86}
+.ddc :is(.ddc__fam--single,.ddc-f-single){--fam:#2e7a68}
+.ddc :is(.ddc__fam--dual,.ddc-f-dual){--fam:#2f78a6}
+
+/* ---------- frame + header: the "which model is for whom" guide and the selection path ---------- */
+.ddc .ddc__in{position:relative;border-radius:22px;background:#fff;box-shadow:0 0 0 1px var(--line),0 18px 40px -28px rgba(20,34,59,.35)}
+.ddc .ddc__hd{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 28px;padding:18px 20px 16px;border-radius:22px 22px 0 0;background:linear-gradient(180deg,#f3f6f8,#fff);border-bottom:1px solid var(--line)}
+.ddc .ddc__ht{flex:1 1 340px;min-width:0}
+.ddc .ddc__q{font-size:24px;font-weight:600;line-height:1.2;color:var(--ink);text-wrap:balance}
+.ddc .ddc__lede{margin-top:6px;max-width:62ch;font-size:15.5px;line-height:1.45;color:var(--ink2)}
+.ddc .ddc__path{display:flex;flex:1 1 520px;flex-wrap:wrap;gap:6px;min-width:0}
+.ddc .ddc__st{position:relative;display:flex;flex:1 1 150px;align-items:center;gap:10px;min-width:0;padding:8px 14px 8px 8px;border-radius:14px;background:#e7edf1;font-size:15px;line-height:1.25;color:var(--ink2)}
+.ddc .ddc__st-n{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:#dde3e3;color:var(--ink);font-size:14px;font-weight:600}
+.ddc .ddc__st-x{display:flex;flex-direction:column;min-width:0}
+.ddc .ddc__st-t{font-weight:600;color:var(--ink)}
+.ddc .ddc__st-w{display:block;font-size:13px;color:var(--lab)}
+.ddc .ddc__st--now{background:var(--sel);color:#fff}
+.ddc .ddc__st--now :is(.ddc__st-t,.ddc__st-w){color:#fff}
+.ddc .ddc__st--now .ddc__st-n{background:#8ab1c0;color:var(--ink)}
+@container ddc (min-width:700px){
+  .ddc .ddc__path{flex-wrap:nowrap;gap:0}
+  .ddc .ddc__st{flex:1 1 0;padding:8px 26px 8px 26px;border-radius:0;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%,14px 50%)}
+  .ddc .ddc__st:first-child{padding-left:10px;border-radius:14px 0 0 14px;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%)}
+  .ddc .ddc__st:last-child{border-radius:0 14px 14px 0;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,14px 50%)}
+  .ddc .ddc__st+.ddc__st{margin-left:-8px}
+}
+
+/* ---------- tiles: families side by side; a family of two takes two columns, a family of one takes one ---------- */
+.ddc .ddc__tiles{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 14px;padding:16px 18px 18px;background:var(--nav)}
+.ddc .ddc__fam{min-width:0}
+.ddc .ddc__n2{grid-column:span 2}
+.ddc .ddc__n1{grid-column:span 1}
+.ddc .ddc__fam-h{display:block;margin:0 0 8px;padding:0 2px 6px;border-bottom:4px solid var(--fam)}
+.ddc .ddc__fam-n{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.11em;line-height:1.3;text-transform:uppercase;color:var(--ink)}
+.ddc .ddc__fam-n::before{content:"";flex:none;width:12px;height:12px;border-radius:4px;background:var(--fam)}
+.ddc .ddc__fam-s{display:block;margin-top:1px;padding-left:20px;font-size:14.5px;line-height:1.3;color:var(--ink2)}
+.ddc .ddc__rows{display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));gap:10px}
+.ddc .ddc__n1 .ddc__rows{--n:1}
+.ddc .ddc__row{display:block;min-width:0}
+.ddc .ddc__ra{display:flex;flex-direction:column;gap:2px;width:100%;height:100%;padding:8px 8px 10px;border-radius:14px;background:#fff;color:var(--ink);box-shadow:inset 0 -4px 0 var(--fam);transition:background-color .16s ease,box-shadow .16s ease}
+@media (any-hover:hover){.ddc .ddc__ra:hover{background:var(--hov)}}
+.ddc .ddc__row.is-open .ddc__ra{background:var(--hov);box-shadow:inset 0 -4px 0 var(--fam),0 8px 20px -12px rgba(20,34,59,.55)}
+.ddc .ddc__th{display:grid;place-items:center;aspect-ratio:var(--thr,3/1);margin-bottom:6px;border-radius:10px;background:radial-gradient(120% 90% at 50% 40%,#f6f8fa,#e4eaee);overflow:hidden}
+.ddc .ddc__th img{width:94%;height:92%;object-fit:contain}
+.ddc .ddc__th--photo img{width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+.ddc .ddc__rn{display:flex;flex-wrap:wrap;align-items:center;gap:3px 8px;padding:0 4px;font-size:17px;font-weight:600;line-height:1.25}
+.ddc .ddc__rd{display:block;padding:0 4px;font-size:15px;line-height:1.3;color:var(--ink2)}
+.ddc .ddc__dp{display:inline-block;padding:2px 8px;border-radius:8px;background:#dde3e3;color:var(--ink);font-size:12.5px;font-weight:600;letter-spacing:.06em;line-height:1.35;text-transform:uppercase;white-space:nowrap;vertical-align:middle}
+
+/* footer line: the three facts that apply to the whole collection */
+.ddc .ddc__foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 22px;padding:12px 20px 14px;border-top:1px solid var(--line);border-radius:0 0 22px 22px;background:#fff;font-size:15px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__foot li{position:relative;padding-left:22px}
+.ddc .ddc__foot li::before{content:"";position:absolute;left:2px;top:4px;width:6px;height:11px;border-right:2.5px solid #25648a;border-bottom:2.5px solid #25648a;transform:rotate(40deg)}
+
+/* ---------- the floating card: hidden without JavaScript; the script places it beside the tile ---------- */
+.ddc .ddc__pop{display:none;position:absolute;z-index:40;top:0;left:0;width:min(780px,calc(100% - 16px));overflow:auto;padding:16px 18px 18px;border-radius:18px;background:#fff;color:var(--ink);box-shadow:0 0 0 1px var(--line),0 26px 50px -14px rgba(20,34,59,.5)}
+.ddc .ddc__row.is-open .ddc__pop{display:block}
+.ddc.ddc--js .ddc__row.is-open .ddc__pop.is-in{animation:ddc-in .16s ease-out both}
+@keyframes ddc-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.ddc .ddc__pop-x{position:absolute;top:10px;right:10px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--pale);color:var(--ink)}
+.ddc .ddc__pop-x::before,.ddc .ddc__pop-x::after{content:"";position:absolute;width:16px;height:2.5px;border-radius:2px;background:currentColor;transform:rotate(45deg)}
+.ddc .ddc__pop-x::after{transform:rotate(-45deg)}
+@media (any-hover:hover){.ddc .ddc__pop-x{display:none}}
+.ddc .ddc__crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding-right:48px;font-size:12.5px;font-weight:600;letter-spacing:.09em;line-height:1.3;text-transform:uppercase;color:var(--lab)}
+.ddc .ddc__crumb-f{display:inline-flex;align-items:center;gap:8px}
+.ddc .ddc__crumb-f::before{content:"";width:12px;height:12px;border-radius:4px;background:var(--fam)}
+.ddc .ddc__pn{margin-top:4px;font-size:24px;font-weight:600;line-height:1.15;color:var(--ink)}
+.ddc .ddc__pt{margin-top:3px;font-size:16.5px;font-weight:600;line-height:1.3;color:var(--lab)}
+.ddc .ddc__what{margin-top:8px;font-size:15px;line-height:1.45;color:var(--ink2)}
+.ddc .ddc__who{margin-top:6px;font-size:15px;line-height:1.45;color:var(--ink2)}
+.ddc .ddc__who b{color:var(--ink)}
+.ddc .ddc__dpn{display:flex;align-items:center;gap:8px;margin-top:8px;padding:4px 12px 4px 0;border-radius:12px;background:#e9f0f4;font-size:14px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__dpn b{color:var(--ink)}
+.ddc .ddc__pf{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0;padding:10px 12px;border-radius:12px;background:var(--pale)}
+.ddc .ddc__pk{margin-bottom:5px;font-size:12.5px;font-weight:600;letter-spacing:.11em;line-height:1.3;text-transform:uppercase;color:var(--lab)}
+.ddc .ddc__dl,.ddc .ddc__fz{display:flex;flex-wrap:wrap;gap:5px}
+.ddc .ddc__d{display:inline-block;padding:3px 9px;border-radius:9px;background:#fff;box-shadow:inset 0 0 0 1px var(--line);font-size:14.5px;font-weight:600;line-height:1.3;color:var(--ink);white-space:nowrap}
+.ddc .ddc__f{display:inline-block;padding:3px 10px;border-radius:9px;color:#fff;font-size:14.5px;font-weight:600;line-height:1.3;white-space:nowrap}
+.ddc .ddc__f--s{background:var(--fz-s)}.ddc .ddc__f--m{background:var(--fz-m)}.ddc .ddc__f--f{background:var(--fz-f)}.ddc .ddc__f--x{background:var(--fz-x)}
+.ddc .ddc__mc{display:grid;gap:5px}
+.ddc .ddc__mc li{display:flex;flex-wrap:wrap;align-items:center;gap:3px 6px;font-size:14.5px;line-height:1.3;color:var(--ink)}
+.ddc .ddc__buy{margin-top:10px;padding:10px 12px;border-radius:12px;background:#e1e8ed;font-size:15px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__buy b{color:var(--ink)}
+.ddc .ddc__acts{position:sticky;bottom:-18px;z-index:1;margin-top:10px;padding:8px 0 0;background:#fff}
+.ddc .ddc__pop.is-sheet{position:fixed;left:8px;right:8px;top:auto;bottom:calc(8px + env(safe-area-inset-bottom,0px));width:auto;max-height:82vh;z-index:2147483000;box-shadow:0 0 0 1px var(--line),0 -10px 40px -8px rgba(20,34,59,.55)}
+.ddc .ddc__pop.is-sheet .ddc__dpn{display:none}
+.ddc .ddc__cta{display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:10px 20px;border-radius:999px;background:var(--btn);color:#fff;font-size:16px;font-weight:600;line-height:1.2}
+.ddc .ddc__cta *{color:#fff}
+.ddc .ddc__cta::after{content:"";width:8px;height:8px;border-right:2px solid #fff;border-top:2px solid #fff;transform:rotate(45deg)}
+@media (any-hover:hover){.ddc .ddc__cta:hover{background:#163c5e}}
+
+/* a wide card (set by the script when it is at least 560 px wide) has two columns: the explanation, then the facts and the way to buy */
+.ddc .ddc__row.is-open .ddc__pop.is-wide{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);column-gap:22px;align-items:start}
+.ddc .ddc__pop.is-wide .ddc__pc2{padding-top:30px}
+.ddc .ddc__pop:not(.is-wide) .ddc__pc2{margin-top:10px}
+/* Dual Plush icon: an exploded isometric pair (thin slab = latex topper over thick slab = latex mattress), pure CSS */
+.ddc .ddc__iso{position:relative;display:block;flex:none;width:64px;height:56px}
+.ddc .ddc__sl{position:absolute;left:15px;width:34px;height:34px;border-radius:2px;transform:rotateX(58deg) rotateZ(45deg);background:var(--t)}
+.ddc .ddc__sl--top{top:-2px;box-shadow:1px 1px 0 var(--d),2px 2px 0 var(--d),3px 3px 0 var(--d)}
+.ddc .ddc__sl--bot{top:14px;box-shadow:1px 1px 0 var(--d),2px 2px 0 var(--d),3px 3px 0 var(--d),4px 4px 0 var(--d),5px 5px 0 var(--d),6px 6px 0 var(--d),7px 7px 0 var(--d),8px 8px 0 var(--d),12px 12px 6px rgba(20,34,59,.18)}
+.ddc .ddc__sl.ddc__f--s{--t:#5d9abb;--d:#245f80}.ddc .ddc__sl.ddc__f--m{--t:#5586a4;--d:#1c4c69}.ddc .ddc__sl.ddc__f--f{--t:#727b86;--d:#38414c}.ddc .ddc__sl.ddc__f--x{--t:#5e6873;--d:#252e3a}
+.ddc .ddc__sl.ddc__f--s,.ddc .ddc__sl.ddc__f--m,.ddc .ddc__sl.ddc__f--f,.ddc .ddc__sl.ddc__f--x{padding:0;background:var(--t)}
+
+/* ---------- toppers: three families of one, one row on wide screens ---------- */
+.ddc .ddc--topper .ddc__tiles,.ddc.ddc--topper .ddc__tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ddc.ddc--topper{--thr:5/2}
+
+/* ---------- density: shorter windows get flatter pictures and drop the optional lines, so the whole map stays on one screen ---------- */
+@media (max-height:900px){
+  .ddc{--thr:3.4/1}
+  .ddc.ddc--topper{--thr:3/1}
+  .ddc .ddc__fam-s{display:none}
+  .ddc .ddc__hd{padding:14px 18px 12px}
+  .ddc .ddc__tiles{padding:12px 16px 14px;gap:10px 12px}
+  .ddc .ddc__foot{display:none}
+}
+@media (max-height:800px){.ddc .ddc__lede{display:none}.ddc .ddc__rn{font-size:16px}}
+@media (min-height:1000px){.ddc{--thr:2.4/1}.ddc.ddc--topper{--thr:2/1}}
+
+/* family headers keep one height so that tiles of different families start on the same line even when a name wraps */
+@container ddc (max-width:1099px){.ddc .ddc__fam-h{min-height:46px}}
+@container ddc (max-width:859px){.ddc .ddc__fam-h{min-height:46px}}
+
+/* ---------- tablets in portrait and narrow windows: still four columns, tighter tiles ---------- */
+@container ddc (max-width:859px){
+  .ddc .ddc__tiles{gap:12px 10px;padding:12px 12px 14px}
+  .ddc .ddc__rows{gap:8px}
+  .ddc .ddc__ra{padding:6px 6px 9px}
+  .ddc .ddc__rn{font-size:16px;padding:0 3px}
+  .ddc .ddc__rd{font-size:14.5px;padding:0 3px}
+  .ddc .ddc__fam-s{display:none}
+  .ddc .ddc__foot{grid-template-columns:1fr;padding:10px 14px 12px}
+}
+
+/* ---------- phones: one column of compact picture rows, families still underlined in their own colour; the path becomes three short columns ---------- */
+@container ddc (max-width:639px){
+  .ddc .ddc__in{border-radius:18px}
+  .ddc .ddc__hd{padding:12px 12px 10px;gap:8px;border-radius:18px 18px 0 0}
+  .ddc .ddc__q{font-size:17px}
+  .ddc .ddc__lede,.ddc .ddc__foot{display:none}
+  .ddc .ddc__ht{flex-basis:100%}
+  .ddc .ddc__path{flex:1 1 100%;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.5fr) auto;gap:6px}
+  .ddc .ddc__st{flex:none;gap:6px;padding:6px 5px;border-radius:10px;font-size:12.5px;line-height:1.2;align-items:flex-start}
+  .ddc .ddc__st-n{width:20px;height:20px;border-radius:7px;font-size:12px}
+  .ddc .ddc__st-w{display:none}
+  .ddc .ddc__st-t{font-size:12.5px;line-height:1.2}
+  .ddc .ddc__tiles,.ddc.ddc--topper .ddc__tiles{grid-template-columns:minmax(0,1fr);gap:6px;padding:8px 10px 10px}
+  .ddc .ddc__n2,.ddc .ddc__n1{grid-column:span 1}
+  .ddc .ddc__rows,.ddc .ddc__n1 .ddc__rows{grid-template-columns:minmax(0,1fr);gap:4px}
+  .ddc .ddc__fam-h{min-height:0;margin-bottom:3px;padding-bottom:2px;border-bottom-width:3px}
+  .ddc .ddc__fam-n{font-size:11.5px;letter-spacing:.07em;gap:6px}
+  .ddc .ddc__fam-n::before{width:10px;height:10px;border-radius:3px}
+  .ddc .ddc__ra{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;align-content:center;align-items:center;padding:3px 10px 5px 3px;border-radius:12px;box-shadow:inset 0 -3px 0 var(--fam)}
+  .ddc .ddc__th{grid-row:1/3;margin:0;border-radius:8px;aspect-ratio:1.55/1}
+  .ddc .ddc__rn{font-size:15.5px;padding:0;align-self:end;line-height:1.2}
+  .ddc .ddc__rd{font-size:14px;padding:0;align-self:start;line-height:1.25}
+  .ddc .ddc__ra .ddc__dp{display:none}
+  .ddc .ddc__pop{padding:14px 14px 16px}
+  .ddc .ddc__pn{font-size:21px}
+}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion:reduce){.ddc *,.ddc *::before,.ddc *::after{animation:none;transition:none}}

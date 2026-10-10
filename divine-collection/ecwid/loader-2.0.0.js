@@ -1,0 +1,1 @@
+(function(d,b){if(window.__ddcLoader)return;window.__ddcLoader=1;var l=d.createElement('link');l.rel='stylesheet';l.href=b+'ddc.css';d.head.appendChild(l);var s=d.createElement('script');s.src=b+'ddc.js';s.defer=true;d.head.appendChild(s)})(document,'https://cdn.jsdelivr.net/gh/Matrress/Animation@c87cdae0717d2e32d392f08f69848dabe6df580e/divine-collection/release/2.0.0/');
