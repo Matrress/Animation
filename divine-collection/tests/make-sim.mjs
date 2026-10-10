@@ -18,7 +18,7 @@ const grid = {
 const pages = {
   mattress: { title: 'Latex Mattresses Collection', desc: frag('mattress'), grid: grid.mattress, cat: 101 },
   topper: { title: 'Latex Toppers Collection', desc: frag('topper'), grid: grid.topper, cat: 102 },
-  probe: { title: 'DDC Test (probe)', desc: fs.readFileSync(path.join(root, 'ecwid/probe-1.0.0.html'), 'utf8'), grid: [], cat: 199 },
+  probe: { title: 'DDC Test (probe)', desc: fs.readFileSync(path.join(root, 'ecwid/probe-1.1.0.html'), 'utf8'), grid: [], cat: 199 },
 };
 const html = `<!DOCTYPE html><html lang="en" id="ecwid_html"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ecwid category imitation · Divine DunlopDreams Collection</title>
@@ -62,8 +62,8 @@ html#ecwid_html body#ecwid_body .ec-size .ec-store .grid-product__price{font-wei
   var q=new URLSearchParams(location.search), mode=q.get('mode')||'js', w=q.get('w');
   if(w) document.documentElement.style.setProperty('--descw', w+'px');
   var cbs=[]; window.Ecwid={OnPageLoaded:{add:function(f){cbs.push(f)}},_renders:0};
-  if(mode==='js'||mode==='css'){var l=document.createElement('link');l.rel='stylesheet';l.href='../release/1.0.0/ddc.css';document.head.appendChild(l);}
-  if(mode==='js'){var s=document.createElement('script');s.src='../release/1.0.0/ddc.js';s.defer=true;document.head.appendChild(s);}
+  if(mode==='js'||mode==='css'){var l=document.createElement('link');l.rel='stylesheet';l.href='../release/1.1.0/ddc.css';document.head.appendChild(l);}
+  if(mode==='js'){var s=document.createElement('script');s.src='../release/1.1.0/ddc.js';s.defer=true;document.head.appendChild(s);}
   function render(page){
     var st=document.getElementById('store'), p=P[page];
     if(!p){st.innerHTML='<div class="pp"><p class="ec-breadcrumbs"><a href="?page=mattress" data-route="mattress">Latex Mattresses Collection</a> / Product</p><h1 class="page-title">Product page</h1><p>Configuration and purchase happen here. Use the browser Back button.</p></div>';}

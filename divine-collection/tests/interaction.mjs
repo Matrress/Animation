@@ -16,14 +16,14 @@ const state = (p) => p.evaluate(() => {
 // ---------- 1. content: exact models, real links, no prices, in both the HTML and the rendered page ----------
 for (const kind of ['mattress', 'topper']) {
   const c = collections[kind];
-  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-1.0.0.html`, import.meta.url), 'utf8');
+  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-1.1.0.html`, import.meta.url), 'utf8');
   const p = await page(br);
   await p.goto(S(kind, '&mode=none'));
   const d = await p.evaluate(() => ({ rows: [...document.querySelectorAll('.ddc__row a')].map((a) => [a.querySelector('.ddc__rn').firstChild.textContent.trim(), a.href]), text: document.querySelector('.ddc').innerText, imgs: [...document.querySelectorAll('.ddc img')].map((i) => i.getAttribute('src')) }));
   ok(JSON.stringify(d.rows.map((r) => r[0])) === JSON.stringify(c.models.map((m) => m.name)), `${kind}: row names ${d.rows.map((r) => r[0])}`);
   ok(d.rows.every((r, i) => r[1] === c.models[i].url), `${kind}: row links`);
   ok(!/£|€|\$\d/.test(d.text), `${kind}: no price`);
-  ok(d.imgs.length === c.models.length, `${kind}: one picture per model`);
+  ok(d.imgs.length === 2 * c.models.length, `${kind}: a thumbnail and a preview picture per model (${d.imgs.length})`);
   ok(html.includes(c.question) && html.includes('Pick your model') && html.includes('Set size, firmness, thickness &amp; cover') && html.includes('Buy'), `${kind}: question + selection path`);
   for (const fa of c.families) ok(html.includes(fa.name.replace(/&/g, '&amp;')), `${kind}: family ${fa.name}`);
   ok(!/\b(her|him)\b/i.test(d.text), `${kind}: no gendered wording`);
@@ -54,6 +54,9 @@ for (const [w, h] of [[1440, 900], [1920, 1080], [1280, 720]]) {
   await p.waitForSelector('.ddc--js');
   let s = await state(p);
   ok(s.shown.join() === 'intro' && s.sel.length === 0 && s.pressed === 0, `${w}: no model preselected`);
+  ok(await p.evaluate(() => [...document.querySelectorAll('.ddc__fam')].every((f) => getComputedStyle(f.querySelector('.ddc__fam-h')).borderBottomWidth === '4px' && f.querySelector('.ddc__fam-n').textContent.trim().length > 0)) && await p.evaluate(() => new Set([...document.querySelectorAll('.ddc__fam-h')].map((h) => getComputedStyle(h).borderBottomColor)).size === document.querySelectorAll('.ddc__fam').length), `${w}: every family row carries its name and its own underline colour`);
+  ok(await p.evaluate(() => [...document.querySelectorAll('.ddc__rows')].every((u) => getComputedStyle(u).gridTemplateColumns.split(' ').length === 2)), `${w}: two columns per family row`);
+
   // hover previews temporarily
   await p.hover('.ddc-m-bio .ddc__rb'); await sleep(220);
   s = await state(p); ok(s.shown.join() === 'bio' && s.sel.length === 0 && s.fam.join() === 'innov', `${w}: hover previews bio + family ${JSON.stringify(s)}`);
@@ -112,7 +115,7 @@ for (const [w, h, split] of [[1180, 820, true], [1366, 1024, true], [820, 1180, 
   await p.tap('.ddc-m-ortho .ddc__rb'); await sleep(450);
   let s = await state(p);
   ok(s.shown.join() === 'ortho' && s.sel.join() === 'ortho', `${w}x${h} touch: tap selects ${JSON.stringify(s)}`);
-  const inline = await p.evaluate(() => !!document.querySelector('.ddc__slot .ddc__stage') && document.querySelector('.ddc__slot').previousElementSibling.className.includes('ddc-m-ortho'));
+  const inline = await p.evaluate(() => { const sl = document.querySelector('.ddc__slot'); return !!sl && !!sl.querySelector('.ddc__stage') && sl.parentNode.contains(document.querySelector('.ddc-m-ortho')) && sl === sl.parentNode.lastElementChild; });
   ok(inline === !split, `${w}x${h}: detail ${split ? 'in the stage column' : 'right after the row'}`);
   await p.tap('.ddc-m-ambient .ddc__rb'); await sleep(450);
   s = await state(p); ok(s.sel.join() === 'ambient' && s.shown.join() === 'ambient', `${w}x${h}: tap another row changes the selection`);
@@ -169,11 +172,12 @@ for (const [w, h, split] of [[1180, 820, true], [1366, 1024, true], [820, 1180, 
   await b.goto(S('mattress')); await b.waitForSelector('.ddc--js'); await sleep(800);
   const after = await grab(b);
   ok(JSON.stringify(before) === JSON.stringify(after), 'styles do not leak into Ecwid elements');
-  ok(pics.length === 0, 'no model picture downloaded before a model is previewed: ' + pics.length);
+  const uniq = (a) => new Set(a).size;
+  ok(uniq(pics) <= 8 && pics.length === uniq(pics), 'family cards load each picture at most once (lazy): ' + pics.length);
   const cls = await b.evaluate(() => window.__cls);
   ok(cls < 0.1, 'layout shift on load ' + cls.toFixed(3));
   await b.hover('.ddc-m-bio .ddc__rb'); await sleep(400);
-  ok(pics.length === 1, 'hover loads only that model\'s picture: ' + pics.length);
+  ok(uniq(pics) <= 8 && pics.length === uniq(pics), 'previewing a model never downloads a picture twice: ' + pics.length);
   await b.context().close();
   const r = await page(br, { reduce: true }); await r.goto(S('mattress')); await r.waitForSelector('.ddc--js');
   await r.click('.ddc-m-bio .ddc__rb'); await sleep(60);

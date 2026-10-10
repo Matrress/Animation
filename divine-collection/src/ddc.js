@@ -7,7 +7,7 @@
    Vanilla JS, no globals except window.DDC, no listeners outside the component except one MutationObserver. */
 (function () {
   'use strict';
-  var VERSION = '1.0.0';
+  var VERSION = '1.1.0';
   if (window.DDC && window.DDC.version) { window.DDC.scan(); return; }
 
   var WIDE = 860;             // container width where the split layout starts (same number as ddc.css)
@@ -92,8 +92,8 @@
       // narrow: the stage sits right after the selected row; wide (or nothing selected): back in its own column
       if (!wide() && locked && rows[locked]) {
         if (!slot) { slot = document.createElement('li'); slot.className = 'ddc__slot'; }
-        var li = rows[locked].li;
-        if (li.nextSibling !== slot) li.parentNode.insertBefore(slot, li.nextSibling);
+        var list = rows[locked].li.parentNode;          // the family's two-column grid: the detail spans both columns under its last card
+        if (list.lastChild !== slot) list.appendChild(slot);
         if (stage.parentNode !== slot) slot.appendChild(stage);
       } else {
         if (stage.parentNode !== home) home.insertBefore(stage, homeNext);
@@ -179,8 +179,8 @@
       btn.addEventListener('focus', function () { if (wide() && btn.matches(':focus-visible')) show(mid, true); });
       btn.addEventListener('keydown', function (e) {
         var to = null;
-        if (e.key === 'ArrowDown') to = order[Math.min(order.length - 1, idx + 1)];
-        else if (e.key === 'ArrowUp') to = order[Math.max(0, idx - 1)];
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') to = order[Math.min(order.length - 1, idx + 1)];
+        else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') to = order[Math.max(0, idx - 1)];
         else if (e.key === 'Home') to = order[0];
         else if (e.key === 'End') to = order[order.length - 1];
         if (to) { e.preventDefault(); rows[to].btn.focus(); }

@@ -1,11 +1,12 @@
-# Test report — Divine DunlopDreams Collection 1.0.0 (2026-10-10)
+# Test report — Divine DunlopDreams Collection 1.1.0 (2026-10-10)
 
 Environment: Chromium (Playwright 1.56) on `preview/sim.html`, an imitation of an Ecwid Instant Site category page with Ecwid-style id-prefixed storefront CSS, in-store navigation that re-renders the description through `innerHTML`, a stand-in `Ecwid.OnPageLoaded`, and the native grid with the £0 / £0.90 prices. jsDelivr URLs are served from the local repository (byte-identical pinned files). **Not yet tested on the live Ecwid store, on a physical iPad or in Safari**: that is the Phase-1 probe and the step-4 check in INSTALL.md.
 
-## Result: `node tests/interaction.mjs` → 147 passed, 0 failed (two consecutive runs)
+## Result: `node tests/interaction.mjs` → 153 passed, 0 failed (two consecutive runs)
 
 | Area | What is checked | Result |
 |---|---|---|
+| Family rows | Every family row has its name and its own underline colour (5 distinct colours for mattresses); two columns per row; thumbnails are lazy and each picture downloads at most once | Pass |
 | Content | Exactly 8 mattress / 3 topper models, in the brief's order and names; every row links to its verified product URL; one picture per model; question, selection path and every family present; no price, no gendered words; readable without CSS and JS | Pass |
 | Build guards | Refuses prices, Her/Him wording, "No layers", approximations, cure / guarantee claims, an Ambient Topper, missing links, scripts / styles / ids / data- attributes in the description | Pass |
 | CSS only (no script) | Overview first; hover and keyboard focus preview a model through `:has`; rows stay links | Pass |
@@ -18,7 +19,7 @@ Environment: Chromium (Playwright 1.56) on `preview/sim.html`, an imitation of a
 | Reduced motion | No animation | Pass |
 | Accessibility (axe-core 4.10) | Overview and a selected model, both collections, 1440 and 390 wide: 0 violations | Pass |
 
-Sizes: `ddc.css` 26.4 KB (≈ 5 KB compressed), `ddc.js` 5.9 KB, loader 527 characters, mattress description 27,134 characters, topper 11,362, one new picture 13.6 KB.
+Sizes: `ddc.css` 26.8 KB (≈ 5 KB compressed), `ddc.js` 5.9 KB, loader 527 characters, mattress description 27,134 characters, topper 11,362, one new picture 13.6 KB.
 
 ## Screenshots
 `reports/<device>-<collection>-<overview|selected>.webp` for desktop 1440, large 1920, iPad landscape 1180, iPad portrait 820 and phone 390 (the selected state is Botanic Dual Plush / Bio Support Dual). Fonts in the screenshots are the real Chillax files.

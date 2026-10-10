@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collections, FIRM, HERO_ASSETS } from './src/data.mjs';
 
-const VERSION = '1.0.0';
+const VERSION = '1.1.0';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DDC_REF || 'main-preview';
 const CDN = `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-collection/release/${VERSION}/`;
@@ -52,10 +52,9 @@ function description(c, imgBase, ownBase) {
   const famOf = {};
   c.families.forEach((fa) => fa.models.forEach((id) => { famOf[id] = fa; }));
   const steps = c.steps.map((s, i) => `<li class="ddc__st${i === 0 ? ' ddc__st--now' : ''}"><span class="ddc__st-n">${i + 1}</span><span class="ddc__st-x"><span class="ddc__st-t">${esc(s)}</span><span class="ddc__st-w">${esc(c.stepNotes[i])}</span></span></li>`).join('');
-  const map = c.families.map((fa) => `<div class="ddc__fam ddc__fam--${fa.id}"><h3 class="ddc__fam-h"><span class="ddc__fam-n">${esc(fa.name)}</span></h3><ul class="ddc__rows">${fa.models.map((id) => {
-    const m = byId[id];
-    return `<li class="ddc__row ddc-m-${id}"><a class="ddc__ra" href="${m.url}"><span class="ddc__rn">${esc(m.name)}${m.dp ? ' <span class="ddc__dp">Dual Plush</span>' : ''}</span><span class="ddc__rd">${esc(m.row)}</span></a></li>`;
-  }).join('')}</ul></div>`).join('\n');
+  // the family map: one row per family, two columns, every model a picture card; a family with one model gets a note beside it
+  const card = (m) => `<li class="ddc__row ddc-m-${m.id}"><a class="ddc__ra" href="${m.url}"><span class="ddc__th"><img src="${(m.img.own ? ownBase : imgBase) + m.img.src}" width="${m.img.w}" height="${m.img.h}" loading="lazy" decoding="async" alt=""></span><span class="ddc__rn">${esc(m.name)}${m.dp ? ' <span class="ddc__dp">Dual Plush</span>' : ''}</span><span class="ddc__rd">${esc(m.row)}</span></a></li>`;
+  const map = c.families.map((fa) => `<div class="ddc__fam ddc__fam--${fa.id}"><h3 class="ddc__fam-h"><span class="ddc__fam-n">${esc(fa.name)}</span></h3><ul class="ddc__rows">${fa.models.map((id) => card(byId[id])).join('')}${fa.models.length === 1 ? `<li class="ddc__fnote"><span class="ddc__fnote-s">${esc(fa.says)}</span><span class="ddc__fnote-l">${esc(fa.line)}</span></li>` : ''}</ul></div>`).join('\n');
   const fams = c.families.map((fa) => `<li class="ddc__fs ddc__fs--${fa.id}"><span class="ddc__fs-s">${esc(fa.says)}</span><span class="ddc__fs-n">${esc(fa.name)}</span><span class="ddc__fs-m">${fa.models.map((id) => esc(byId[id].name)).join(' · ')}</span><span class="ddc__fs-l">${esc(fa.line)}</span></li>`).join('');
   const dpx = c.dualPlush ? `<div class="ddc__dpx">${iso('s', 'm')}<div><p class="ddc__dpx-h">${esc(c.dualPlush.h)}</p><p class="ddc__dpx-p">${esc(c.dualPlush.p)}</p></div></div>` : '';
   const prs = c.principles.map(([h, p]) => `<li class="ddc__pr"><b>${esc(h)}.</b> ${esc(p)}</li>`).join('');
