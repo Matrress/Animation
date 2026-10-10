@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const VERSION = '1.16.0';
+const VERSION = '1.17.0';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const esbuild = process.env.ESBUILD || 'esbuild';
 const rel = path.join(root, 'release', VERSION);
@@ -65,6 +65,12 @@ for (const f of fs.readdirSync(path.join(root, 'src/i18n'))) fs.writeFileSync(pa
     const seen = {};
     for (const m of src.matchAll(/<(\w+)\b[^>]*?\sdata-t="(\w+)"[^>]*>([\s\S]*?)<\/\1>/g)) { if (m[2] in seen && seen[m[2]] !== m[3]) throw new Error(`key ${m[2]}: two different English texts`); seen[m[2]] = m[3]; }
   }
+  // 1.17.0: "Back to the overview" leaves the picture and sits beside "View model" (owner request): both buttons share one row under the text
+  src = src.replace(/<article class="ddh__pv\b[\s\S]*?<\/article>/g, (art) => {
+    const back = /<button class="ddh__pv-back"[\s\S]*?<\/button>/.exec(art); const cta = /<a class="ddh__pv-cta"[\s\S]*?<\/a>/.exec(art);
+    if (!back || !cta) return art;
+    return art.replace(back[0], '').replace(cta[0], `<div class="ddh__pv-acts">${cta[0]}${back[0]}</div>`);
+  });
   const keys = new Set([...src.matchAll(/\sdata-ta?="(\w+)"/g)].map((m) => m[1]));
   const out = path.join(rel, 'sheets'); fs.mkdirSync(out, { recursive: true });
   const finish = (h, lang) => h.replace(/\s(data-ta?)="\w+"/g, '').replace('<div class="ddh__sheets">', `<div class="ddh__sheets" lang="${lang}">`).replace(/>\s*\n\s*</g, '><').trim() + '\n';

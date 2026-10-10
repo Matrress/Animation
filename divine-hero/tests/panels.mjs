@@ -25,7 +25,7 @@ for (const [w, h] of [[667, 375], [844, 390], [1024, 768], [1180, 820], [1280, 7
       const card = document.querySelector(`[data-ddh-card=${k}]`); // 1.12.0: on larger screens a context card replaces the short copy
       if (card && getComputedStyle(card).display !== 'none') {
         const c = card.getBoundingClientRect(), hb = hdr ? hdr.getBoundingClientRect().bottom : 0, lb = document.querySelector('.ddh__sky-lockup').getBoundingClientRect().bottom, inn = card.querySelector('.ddh__hc-in') || card;
-        return { card: true, contrast: 99, hair: false, zones: false, header: c.top < hb + 4, lockup: c.top < lb + 8, spill: inn.scrollHeight > inn.clientHeight + 1 || card.scrollHeight > card.clientHeight + 1 || c.right > innerWidth || c.bottom > innerHeight, lang: document.querySelector(`[data-ddh-copy=${k}]`).getAttribute('lang') };
+        return { card: true, contrast: 99, hair: false, zones: false, header: k !== 'weight' && c.top < hb + 4, lockup: k !== 'weight' && c.top < lb + 8, spill: inn.scrollHeight > inn.clientHeight + 1 || card.scrollHeight > card.clientHeight + 1 || c.right > innerWidth || c.bottom > innerHeight, lang: document.querySelector(`[data-ddh-copy=${k}]`).getAttribute('lang') };
       }
       const ls = [...document.querySelectorAll(`[data-ddh-copy=${k}] strong,[data-ddh-copy=${k}] span`)], lines = ls.map((e) => e.getBoundingClientRect());
       const zc = { x: z.x + z.width / 2, y: z.y + z.height / 2 };

@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.16.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.17.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.16.0';
+  var VERSION = '1.17.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -575,8 +575,10 @@
       var rr = root.getBoundingClientRect(), lk = root.querySelector('.ddh__sky-lockup'), sh = root.querySelector('.ddh__shop');
       var safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 64;
       var top = Math.max(safe + 10, lk ? lk.getBoundingClientRect().bottom - rr.top + 16 : 0);
+      if (k === 'weight') top = 10;                                 // 1.17.0: the firmness navigator is a full panel: it rises over the site header like the selectors
       var bottom = sh ? sh.getBoundingClientRect().top - rr.top - 16 : rr.height - 16;
-      var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;   // the Shop row below the fold: the card still ends on screen
+      var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;
+      if (k === 'weight') bottom = Math.min(rr.height, w.innerHeight - rr.top) - 12;   // 1.17.0: the navigator may use the whole window (it has its own close)   // the Shop row below the fold: the card still ends on screen
       c.style.top = Math.round(top) + 'px'; c.style.maxHeight = Math.max(160, Math.round(bottom - top)) + 'px';
       c.removeAttribute('data-ddh-wide');
       c.removeAttribute('data-tight');                                                         // low hero: optional lines step aside (type never shrinks)

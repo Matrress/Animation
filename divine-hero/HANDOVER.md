@@ -232,3 +232,17 @@ Environment notes: Node + `esbuild` + `playwright` (Chromium preinstalled) + Pyt
 - After every change rerun all four interaction pages, panels, guards, a11y, perf and a fit check at 1280×720, 1366×768, 1440×900, 1920×1080 and 1024×768 / 1180×820 tablets, in all 8 languages.
 - Keep type readable (≥15 px for card text); extra space goes to wider cards, not smaller text.
 - Keep the owner's tone: confident, warm, concise Bulgarian; report what changed, what was tested, what still needs his confirmation; always include the pinned code block; never claim unverified facts (heights, cover names, links).
+
+---
+
+## 11. OWNER RULES ADDED 2026-10-09 / 10 (binding for every section, newest wins)
+
+1. **Readability is a law for every section, not fixed section by section.** Good contrast (ink >= 9:1, labels >= 8:1), body 16 px, secondary 15 px, labels 13-14 px, no light greys, generous air (8 px grid), nothing cut mid-word or mid-sentence. Write for a reader with or without one-dioptre glasses. There are no screen limits: layouts may adapt to keep these rules.
+2. **Design language:** minimal, logical, "cubism" (clear blocks, rounded corners; rectangles or circles where they fit better), elegant, easy to scan, information in logical order. Clarity + navigation.
+3. **Colours (owner's Pantone sets):** Nordic blue-grey 7541 #dde3e3 · 7542 #aebebe · 7543 #9fa8af · 7544 #838c95 · 7545 #4a5664 · 7546 #313d4c; sky blue 7457 #c7e0e5 · 7458 #8ab1c0 · 7459 #6c9bad · 7460 #3f8cb8. Indicator / specification colours come ONLY from these (no multi-colour "шарении"). White and dark ink-blue (#14223b) stay the strategic colours for text and key information. Firmness ramp: Soft 7457, Medium 7458, Firm 7545, Extra Firm 7546.
+4. **In a dark box the text is always white.**
+5. **Wording:** our mattresses are always called "latex mattress" (or "organic latex mattress"), never just "mattress". (The customer's own "current mattress" is not ours and stays as is.)
+6. **Dual Plush card:** keep the old visual with the product picture and the "Latex topper / Latex mattress" labels. Combination boxes are all the same size and weight (no thicker box for Extra Firm / Firm).
+7. **"Back to the overview"** sits beside "View model", never on the picture.
+8. **The selector's "Pick your model → size … → buy"** is shown as a clear three-step navigation strip.
+9. **Firmness philosophy (use whenever firmness is discussed):** firmness is not just "Soft / Firm". It is an engineering system that measures the balance between the support of the latex and its adaptation to the body, calculated for each body weight: engineering research, not marketing. Following the weight ranges makes the choice right; when a customer hesitates between two firmnesses, Dual Plush combines them (the latex mattress by the weight rule, the topper by personal comfort): freedom within an engineering regulation, which gives calm and confidence. The firmness point opens a large **firmness navigator** with three systems: Solo firmness (ranges + models Botanic, Bio Comfort, Orthopaedic Coconut Coir, Ambient; topper Bio Support), Dual Plush (three pairs + Botanic Dual Plush, Bio Comfort Dual Plush; topper Bio Support Dual) and Partners comfort (Medium one side / Firm other + Mattress for Partners, Partners Topper). Exact ranges: Soft up to 48 kg, Medium 47-83, Firm 85-110, Extra Firm from 120. Never "approximately".

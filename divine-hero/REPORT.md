@@ -1,5 +1,20 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.17.0: firmness navigator, owner's Pantone colour system, old Dual Plush visual, latex wording, step strip (2026-10-10)
+
+Owner brief (9 points, Bulgarian, with a Bio cell picture and four Pantone swatch sheets). Rules recorded in HANDOVER.md §11.
+Done:
+1. Dual Plush card: the old visual is back (product picture with "Latex topper / Latex mattress" labels, eyebrow, two sentences) on every screen; on short windows title and text sit beside the picture and the three combinations are three equal boxes in one row.
+2. Wording: our mattresses are "latex mattress" everywhere (11 strings × 9 languages: combinations, Dual Plush texts, Partners, table headers, model positioning).
+3. Pair tables: every option row and box is the same size (no larger box for Extra Firm).
+4. Dark boxes always carry white text (Firm / Extra Firm tiles and layers, Bio Support Dual bottom layer, Partners "Firm" side).
+5. Colour system from the owner's Pantone sets (7541-7546 Nordic blue-grey, 7457-7460 sky blue): firmness ramp Soft 7457 · Medium 7458 · Firm 7545 · Extra Firm 7546 for tiles, layers, dots and ribbons; firmness words in ink (no coloured words); family accents from the same palette. White + ink-blue stay the text colours.
+6. "Back to the overview" left the picture: it sits beside "View model" (built into every preview by tests/build.mjs).
+7. Firmness point opens a large firmness navigator (full panel over the header, closes like every card): the engineering statement, three systems side by side (Solo firmness with ranges and models; Dual Plush with the three combinations and models; Partners comfort with Medium/Firm sides and models), every model a direct link, an assurance line and "Selection guidelines, not medical rules". 17 new strings × 8 languages (machine-written).
+8. "Pick your model → set size, firmness, depth & cover → buy" is a three-step strip (current step dark) in both selectors.
+9. Cubist layout: blocks with rounded corners, equal tiles, consistent gaps.
+Tests: see the 1.17.0 commit; guards add a check that the navigator has three systems and 10 model links; panels skip the header/lockup rule for the navigator (it covers them by design); cardfit/fit as before. Known: on 1080x668 a few long translations scroll a few pixels inside a preview panel; the navigator's per-system sentence steps aside below 700 px height.
+
 ## 1.16.0: one readability standard for every section (2026-10-09)
 
 Owner rule (after seeing 1.15.1 on his iPad): good readability, good contrast, quality of spacing and arrangement are one rule for ALL sections, not fixed section by section; there are no screen limits, the layout may adapt to the rules; the result must give clarity and navigation.

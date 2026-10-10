@@ -1442,12 +1442,10 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__dpc-in{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);padding:clamp(14px,2.4cqh,26px) clamp(18px,2.2vw,30px);row-gap:clamp(6px,1.2cqh,10px)}
 .ddh .ddh__dpc-c ul{gap:7px}
 .ddh .ddh__dpc-c li{padding:7px 12px;column-gap:12px;row-gap:2px}
-.ddh .ddh__dpc-c li>span:not(.ddh__dpc-av){white-space:nowrap}
 .ddh .ddh__dpc-cta{gap:12px}
 .ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>i.ddh__ly{padding:7px 3px;font-size:14.5px}
 .ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>.ddh__pn{font-size:12.5px;letter-spacing:.02em}
 @container ddsh (max-height:700px){.ddh .ddh__sheet--mattress .ddh__pv-z:has(.ddh__spec--combos3) .ddh__pv-b{display:none}.ddh .ddh__sheet--topper .ddh__pv-tx{padding-top:12px;gap:8px}}
-@container dpc (max-height:560px){.ddh .ddh__dpc-fig{display:none}}
 .ddh .ddh__sheet--mattress .ddh__pv-tx:has(.ddh__spec--combos3){grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr)}
 /* --- the hero's own small lines: darker ink on the light teal, no thin light text on a mid-tone plate --- */
 .ddh .ddh__copy strong,.ddh .ddh__copy span b{color:#0d2a2c}
@@ -1466,3 +1464,192 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 @container ddsh (max-height:620px){.ddh .ddh__sheet--topper .ddh__combo .ddh__ly{padding:6px 10px}.ddh .ddh__sheet--topper .ddh__combos{gap:10px}.ddh .ddh__sheet--topper .ddh__pv-tx{gap:6px}.ddh .ddh__sheet--topper .ddh__pv-sp{padding-top:6px}}
 @media (max-width:700px){.ddh .ddh__szl{columns:1}}
 @container ddsh (max-height:620px){.ddh .ddh__sheet--topper .ddh__pv-tx{padding-top:4px}.ddh .ddh__sheet--topper .ddh__spec--combos>b{margin-bottom:2px}}
+
+/* ===== 1.17.0 colour system from the owner's Pantone swatches (no more multi-colour accents).
+   Nordic blue-grey: 7541 #dde3e3 · 7542 #aebebe · 7543 #9fa8af · 7544 #838c95 · 7545 #4a5664 · 7546 #313d4c
+   Sky blue:         7457 #c7e0e5 · 7458 #8ab1c0 · 7459 #6c9bad · 7460 #3f8cb8
+   Firmness (light = soft, dark = firm): Soft 7457 · Medium 7458 · Firm 7545 · Extra Firm 7546. In a dark box the text is always white.
+   White and the dark ink-blue stay the strategic colours for text and key information. ===== */
+.ddh{--fz-s:#c7e0e5;--fz-m:#8ab1c0;--fz-f:#4a5664;--fz-x:#313d4c;--p7541:#dde3e3;--p7542:#aebebe;--p7543:#9fa8af;--p7544:#838c95;--p7545:#4a5664;--p7546:#313d4c;--p7457:#c7e0e5;--p7458:#8ab1c0;--p7459:#6c9bad;--p7460:#3f8cb8}
+/* firmness blocks, tiles, layers, dots and glyphs */
+.ddh.ddh .ddh__ly--s,.ddh.ddh i.ddh__ly--s,.ddh.ddh .ddh__hcf-s{background:var(--fz-s);color:#14223b;box-shadow:none}
+.ddh.ddh .ddh__ly--m,.ddh.ddh i.ddh__ly--m,.ddh.ddh .ddh__hcf-m{background:var(--fz-m);color:#14223b;box-shadow:none}
+.ddh.ddh .ddh__ly--f,.ddh.ddh i.ddh__ly--f,.ddh.ddh .ddh__hcf-f{background:var(--fz-f);color:#fff;box-shadow:none}
+.ddh.ddh .ddh__ly--x,.ddh.ddh i.ddh__ly--x,.ddh.ddh .ddh__hcf-x{background:var(--fz-x);color:#fff;box-shadow:none}
+.ddh.ddh .ddh__hcf-s{--b:var(--fz-s);--t:#14223b;--bd:var(--fz-s)}.ddh.ddh .ddh__hcf-m{--b:var(--fz-m);--t:#14223b;--bd:var(--fz-m)}.ddh.ddh .ddh__hcf-f{--b:var(--fz-f);--t:#fff;--bd:var(--fz-f)}.ddh.ddh .ddh__hcf-x{--b:var(--fz-x);--t:#fff;--bd:var(--fz-x)}
+.ddh.ddh :is(.ddh__ly--f,.ddh__ly--x,.ddh__hcf-f,.ddh__hcf-x),.ddh.ddh :is(.ddh__ly--f,.ddh__ly--x,.ddh__hcf-f,.ddh__hcf-x) *{color:#fff;opacity:1}
+.ddh.ddh :is(.ddh__ly--s,.ddh__ly--m,.ddh__hcf-s,.ddh__hcf-m) *{color:#14223b;opacity:1}
+.ddh.ddh .ddh__fd--s{background:var(--fz-s);box-shadow:inset 0 0 0 1px #8ab1c0}.ddh.ddh .ddh__fd--m{background:var(--fz-m)}.ddh.ddh .ddh__fd--f{background:var(--fz-f)}.ddh.ddh .ddh__fd--x,.ddh.ddh .ddh__fd--sx{background:var(--fz-x)}
+.ddh.ddh .ddh__fd--split{background:linear-gradient(90deg,var(--fz-m) 0 50%,var(--fz-f) 50% 100%)}
+/* firmness words in running text: ink, never a coloured word */
+.ddh.ddh :is(.ddh__f-s,.ddh__f-m,.ddh__f-f,.ddh__f-x){color:#14223b}
+/* Partners ribbons on the pictures: Medium / Firm in the firmness colours */
+.ddh.ddh .ddh__zb--her{background:var(--fz-m);color:#14223b}.ddh.ddh .ddh__zb--her *{color:#14223b}
+.ddh.ddh .ddh__zb--him{background:var(--fz-f);color:#fff}.ddh.ddh .ddh__zb--him *{color:#fff}
+/* model families: one quiet accent per family from the palette; family names in the ink-blue */
+.ddh [data-fam=botanic]{--fam-c:#6c9bad;--fam-b:#6c9bad;--fam-t:#eef4f6;--fam-ink:#1f4568}
+.ddh [data-fam=bio]{--fam-c:#3f8cb8;--fam-b:#3f8cb8;--fam-t:#e9f2f8;--fam-ink:#1f4568}
+.ddh [data-fam=ortho]{--fam-c:#838c95;--fam-b:#838c95;--fam-t:#eff1f2;--fam-ink:#1f4568}
+.ddh [data-fam=partners]{--fam-c:#8ab1c0;--fam-b:linear-gradient(90deg,#8ab1c0 0 50%,#4a5664 50% 100%);--fam-t:#eef4f6;--fam-ink:#1f4568}
+.ddh [data-fam=value]{--fam-c:#9fa8af;--fam-b:#9fa8af;--fam-t:#f0f2f3;--fam-ink:#1f4568}
+.ddh [data-fam=hotel]{--fam-c:#4a5664;--fam-b:#4a5664;--fam-t:#eff1f2;--fam-ink:#1f4568}
+/* --- 1.17.0 preview buttons: "View model" and "Back to the overview" side by side under the text, never on the picture --- */
+.ddh .ddh__pv-acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:auto}
+.ddh.ddh .ddh__pv-acts .ddh__pv-back{position:static;order:2;display:inline-flex;align-items:center;gap:.5em;min-height:44px;padding:.5em 1.1em;border-radius:999px;background:#fff;color:#14223b;box-shadow:inset 0 0 0 1.5px #1f4f78;font-size:15px;font-weight:600}
+@media (any-hover:hover){.ddh.ddh .ddh__pv-acts .ddh__pv-back:hover{background:#eef4f6}}
+/* --- 1.17.0 pairing table: every option row and every box the same size, whatever the word length --- */
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs{grid-template-rows:auto repeat(3,minmax(46px,1fr))}
+.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>i.ddh__ly{height:100%;box-sizing:border-box}
+.ddh .ddh__sheet--topper .ddh__combos{grid-auto-rows:1fr}.ddh .ddh__sheet--topper .ddh__combo{grid-template-rows:auto 1fr 1fr}
+/* --- 1.17.0 Dual Plush card: the original picture with its two labels is back on every screen. Short windows: title and text beside the picture,
+   the three combinations as three equal boxes in one row, the two buttons below. Taller windows: the original arrangement (picture across the card). --- */
+.ddh .ddh__dpc-fig{min-height:120px}
+.ddh .ddh__dpc-l b{font-size:16px}.ddh .ddh__dpc-l small{font-size:14px}
+@container dpc (max-height:560px){
+.ddh .ddh__dpc-in{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);grid-template-rows:auto auto auto auto auto;grid-template-areas:"eye eye" "h fig" "x fig" "c c" "cta cta";row-gap:10px;align-content:start}
+.ddh .ddh__dpc-fig{display:grid;grid-template-columns:auto minmax(0,1fr);min-height:0;align-self:center}
+.ddh.ddh .ddh__dpc-l{display:flex}
+.ddh .ddh__dpc-fig img{height:auto;max-height:190px;align-self:center}
+.ddh.ddh .ddh__dpc-fig{min-height:150px}.ddh.ddh .ddh__dpc-l--t{align-self:start;margin:6px 0 0}.ddh.ddh .ddh__dpc-l--m{align-self:end;margin:0 0 6px}.ddh .ddh__dpc-c li{grid-template-rows:1fr auto}
+.ddh .ddh__dpc-xs .ddh__dpc-x2{display:none}
+.ddh .ddh__dpc-c ul{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:8px}
+.ddh .ddh__dpc-c li{grid-template-columns:auto minmax(0,1fr);align-content:center;padding:9px 10px;font-size:15px;white-space:normal}
+}
+@container dpc (max-height:470px){.ddh .ddh__dpc-eye{display:none}.ddh .ddh__dpc-in{grid-template-areas:"h fig" "x fig" "c c" "cta cta";grid-template-rows:auto auto auto auto}}
+.ddh.ddh .ddh__dpc-fig img{grid-column:2;grid-row:1}
+.ddh.ddh .ddh__dpc-fig{grid-template-columns:auto minmax(0,1fr)}
+.ddh.ddh .ddh__pv-acts .ddh__pv-back,.ddh.ddh .ddh__pv-acts .ddh__pv-cta{white-space:nowrap}
+.ddh.ddh .ddh__pv-acts{gap:8px}
+/* toppers: the buttons close the preview (after firmness / combinations) */
+.ddh .ddh__sheet--topper .ddh__pv-tx{display:flex;flex-direction:column;justify-content:center}
+.ddh .ddh__sheet--topper .ddh__pv-a{display:contents}
+.ddh .ddh__sheet--topper .ddh__pv-z{order:5}
+.ddh .ddh__sheet--topper .ddh__pv-acts{order:9;margin-top:4px}
+@container ddsh (max-height:700px){.ddh .ddh__sheet--topper .ddh__pv{grid-template-columns:minmax(0,.72fr) minmax(0,1.9fr)}.ddh .ddh__sheet--topper .ddh__combo .ddh__ly{padding:5px 10px}}
+@container dpc (max-height:560px){.ddh .ddh__dpc-xs .ddh__dpc-x{font-size:15.5px;line-height:1.45}.ddh .ddh__dpc-c li{padding:7px 10px}.ddh .ddh__dpc-in{row-gap:8px;padding-top:14px;padding-bottom:14px}.ddh .ddh__dpc-c h4{margin-bottom:4px}}
+.ddh.ddh .ddh__pv-acts .ddh__pv-back{padding:.5em .95em;min-height:42px}
+.ddh.ddh .ddh__pv-acts .ddh__pv-cta{min-height:42px}
+.ddh.ddh .ddh__pv-acts>*{max-width:100%;box-sizing:border-box}
+.ddh.ddh .ddh__pv-acts .ddh__pv-back{white-space:normal;text-align:left;line-height:1.2}
+.ddh .ddh__sheet--mattress .ddh__pv>.ddh__card-img{min-height:72px}
+@container ddsh (max-height:700px){.ddh .ddh__sheet--mattress .ddh__pv{grid-template-rows:minmax(56px,1fr) auto;gap:10px}.ddh .ddh__sheet--mattress .ddh__pv>.ddh__card-img{min-height:56px}.ddh .ddh__sheet--mattress .ddh__pv-acts{margin-top:8px}.ddh .ddh__sheet--mattress .ddh__pv .ddh__chip{display:none}}
+@container ddsh (max-height:700px){.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs{grid-template-rows:auto repeat(3,minmax(40px,1fr));gap:4px 6px}.ddh .ddh__sheet .ddh__pv .ddh__spec--combos3 .ddh__pairs>i.ddh__ly{padding:5px 3px}.ddh .ddh__sheet--mattress .ddh__pv-tx{gap:14px}.ddh .ddh__sheet--topper .ddh__combo small{margin:0}.ddh .ddh__sheet--topper .ddh__pv-tx{gap:6px}}
+@container dpc (max-height:560px){.ddh.ddh .ddh__dpc-fig{min-height:120px}.ddh .ddh__dpc-fig img{max-height:150px}.ddh .ddh__dpc-c li{font-size:14.5px;padding:6px 10px}.ddh .ddh__dpc-cta .ddh__pv-cta{min-height:40px}}
+/* longer translations on short windows: optional benefit lines step aside first; anything still left scrolls inside its panel (never cut) */
+@container ddsh (max-height:700px){.ddh .ddh__sheet--mattress:not(:lang(en)) .ddh__pv-b{display:none}}
+.ddh .ddh__dpc-in{overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.ddh .ddh__sheet .ddh__pv{overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+
+/* ===== 1.17.0 firmness navigator: one large panel, three systems side by side (solo · Dual Plush · Partners), each with its models as links ===== */
+@media (min-width:701px) and (min-height:501px){.ddh.ddh[data-ddh-state=weight]{z-index:2147483000}}
+.ddh.ddh .ddh__hc--fn,.ddh.ddh .ddh__hc--fn[data-tight],.ddh.ddh .ddh__hc--fn[data-ddh-wide]{left:clamp(16px,2.6vw,52px);right:clamp(16px,2.6vw,52px);width:auto;max-width:none;background:linear-gradient(165deg,#f4f7f8 0,#e9eef1 100%);border-color:#d3dbe0}
+.ddh .ddh__hc--fn .ddh__hc-hd{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:18px;background:#313d4c}
+.ddh .ddh__hc--fn .ddh__hc-s{display:block;margin:0;font-size:16px;color:#dde3e3}
+.ddh .ddh__fn-l{margin:0 30px 14px;max-width:72em;font-size:16px;line-height:1.5;color:#14223b}
+.ddh .ddh__fn{display:grid;grid-template-columns:1.25fr 1.1fr .9fr;gap:12px;margin:0 30px}
+.ddh .ddh__fn-col{display:flex;flex-direction:column;gap:10px;min-width:0;margin:0;padding:16px 18px 18px;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 1px #d3dbe0,0 10px 24px -20px rgba(49,61,76,.5)}
+.ddh.ddh .ddh__fn-col.ddh__hc-dp{display:flex;padding:16px 18px 18px;background:#fff}
+.ddh.ddh .ddh__fn-h{display:flex;align-items:center;gap:10px;margin:0;font-size:19px;font-weight:600;line-height:1.2;letter-spacing:0;text-transform:none;color:#14223b}
+.ddh .ddh__fn-h i{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#313d4c;color:#fff;font-style:normal;font-size:15px}
+.ddh .ddh__fn-x{margin:0;font-size:15.5px;line-height:1.45;color:#2b3b58}
+.ddh .ddh__fn-k{margin:4px 0 0;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#1f4568}
+.ddh.ddh .ddh__hc--fn .ddh__hcf{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0}
+.ddh.ddh .ddh__hc--fn .ddh__hcf li{display:grid;gap:2px;padding:9px 10px;border:0;border-radius:11px;background:var(--b);color:var(--t)}
+.ddh.ddh .ddh__hc--fn .ddh__hcf b{font-size:15px;line-height:1.2}.ddh.ddh .ddh__hc--fn .ddh__hcf span{font-size:14.5px;line-height:1.25;font-weight:600}
+.ddh .ddh__fn-ml{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.ddh .ddh__fn-ml li{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:10px;row-gap:1px;padding:7px 10px;border-radius:10px;background:#f1f4f5}
+.ddh .ddh__fn-ml--dp li,.ddh .ddh__fn-col:last-child .ddh__fn-ml li{grid-template-columns:minmax(0,1fr)}
+.ddh .ddh__fn-m{font-size:15.5px;font-weight:600;line-height:1.25;color:#14223b;text-decoration:none}
+.ddh .ddh__fn-m::after{content:" →";color:#3f8cb8}
+@media (any-hover:hover){.ddh .ddh__fn-m:hover{color:#1f4568;text-decoration:underline;text-underline-offset:3px}}
+.ddh .ddh__fn-m:focus-visible{outline:2px solid #1f4568;outline-offset:2px;border-radius:4px}
+.ddh .ddh__fn-ml small{font-size:14px;line-height:1.3;color:#2b3b58}
+.ddh .ddh__fn-st{display:inline-grid;grid-template-columns:repeat(4,14px);gap:3px}
+.ddh .ddh__fn-c{display:block;height:14px;border-radius:4px;background:transparent;box-shadow:inset 0 0 0 1.5px #c3ccd2}
+.ddh .ddh__fn-c.is-on.ddh__fn-c--s{background:var(--fz-s);box-shadow:inset 0 0 0 1px #8ab1c0}.ddh .ddh__fn-c.is-on.ddh__fn-c--m{background:var(--fz-m);box-shadow:none}.ddh .ddh__fn-c.is-on.ddh__fn-c--f{background:var(--fz-f);box-shadow:none}.ddh .ddh__fn-c.is-on.ddh__fn-c--x{background:var(--fz-x);box-shadow:none}
+.ddh .ddh__fn-plus{grid-column:1/-1;font-size:13.5px;color:#2b3b58}
+.ddh.ddh .ddh__fn-pr{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.ddh.ddh .ddh__fn-pr li{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:#f1f4f5;font-size:15px;line-height:1.3;color:#14223b}
+.ddh .ddh__fn-pr li i:not([class^=ddh__ly2]){font-style:normal;font-weight:600}
+.ddh .ddh__fn-sides{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ddh .ddh__fn-side{display:grid;gap:2px;padding:12px;border-radius:11px}
+.ddh .ddh__fn-side small{font-size:13.5px}.ddh .ddh__fn-side b{font-size:16px}
+.ddh .ddh__fn-side--m{background:var(--fz-m);color:#14223b}.ddh .ddh__fn-side--f{background:var(--fz-f);color:#fff}.ddh .ddh__fn-side--f *{color:#fff}
+.ddh .ddh__fn-ok{margin:14px 30px 0;padding:12px 16px;border-radius:14px;background:#c7e0e5;font-size:16px;font-weight:600;line-height:1.45;color:#14223b}
+.ddh.ddh .ddh__hc--fn .ddh__hc-n{margin:8px 30px 0;font-size:14px;color:#2b3b58}
+/* lower windows: the lead sentence and the assurance stay, spacing tightens; then the tiles shrink in padding, never the type */
+.ddh .ddh__hc--fn[data-tight] .ddh__fn-l{margin-bottom:10px}
+.ddh .ddh__hc--fn[data-tight] .ddh__fn-col{padding:12px 14px 14px;gap:7px}
+.ddh .ddh__hc--fn[data-tight] .ddh__fn-ml li,.ddh .ddh__hc--fn[data-tight] .ddh__fn-pr li{padding:5px 9px}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-ok{margin-top:10px;padding:9px 14px}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__hcf li{padding:6px 9px}
+@media (max-width:980px){.ddh .ddh__fn{grid-template-columns:1fr 1fr}.ddh .ddh__fn-col:last-child{grid-column:1/-1}}
+.ddh.ddh .ddh__hc--fn{z-index:40}
+.ddh.ddh .ddh__hc--fn .ddh__hc-dp ul.ddh__fn-pr,.ddh.ddh .ddh__hc--fn .ddh__hc-dp ul.ddh__fn-ml{display:grid;margin:0}
+.ddh.ddh .ddh__hc--fn .ddh__fn-pr li{grid-template-columns:none}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__fn-pr,.ddh.ddh.ddh .ddh__hc--fn .ddh__fn-ml{grid-template-columns:minmax(0,1fr);gap:6px}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__fn-pr li{display:flex;flex-direction:row;align-items:center;gap:10px;padding:8px 10px;text-align:left}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__fn-ml li{display:grid;flex-direction:row;padding:7px 10px;text-align:left}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__fn-ml--dp li{grid-template-columns:minmax(0,1fr) auto;align-items:baseline}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__fn-ml--dp small{text-align:right}
+.ddh .ddh__hc--fn .ddh__fn-col:last-child .ddh__fn-ml li{grid-template-columns:minmax(0,1fr)}
+.ddh .ddh__hc--fn{scrollbar-gutter:stable}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__fn-h{display:flex}
+.ddh .ddh__hc--fn .ddh__fn-x{display:block}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__fn-ml--dp li{grid-template-columns:minmax(0,1fr)}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__fn-ml--dp small{text-align:left}
+
+/* ===== 1.17.0 how it works: three numbered steps as one navigation strip, the current step highlighted ===== */
+.ddh .ddh__stp{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px;margin:10px 0 0;padding:0;list-style:none;counter-reset:none}
+.ddh .ddh__stp li{position:relative;display:flex;align-items:center;gap:9px;padding:7px 14px 7px 8px;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px #d3dbe0;font-size:15px;font-weight:600;line-height:1.2;color:#2b3b58}
+.ddh .ddh__stp li i{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#dde3e3;color:#14223b;font-style:normal;font-size:14px}
+.ddh .ddh__stp li.is-now{background:#313d4c;color:#fff;box-shadow:none}
+.ddh .ddh__stp li.is-now i{background:#8ab1c0;color:#14223b}
+.ddh .ddh__stp li+li::before{content:"";position:absolute;left:-6px;top:50%;width:6px;height:2px;background:#9fa8af}
+.ddh .ddh__sheet--mattress .ddh__stp{flex-wrap:nowrap;margin-top:8px}
+.ddh .ddh__sheet--mattress .ddh__stp li{white-space:nowrap}
+.ddh.ddh .ddh__sheet--mattress .ddh__sh-head .ddh__stp{grid-column:1/-1;grid-row:auto}
+/* navigator on short windows: tier 1 lays the firmness tiles out on one line and tightens rows; tier 2 turns the model rows into chips that share a line;
+   tier 3 lets the per-system sentence step aside (the lead and the assurance stay). Type never shrinks. */
+.ddh .ddh__hc--fn[data-tight] .ddh__hc-hd{padding:12px 92px 10px 24px}
+.ddh .ddh__hc--fn[data-tight] .ddh__fn-l{margin:0 24px 10px}
+.ddh .ddh__hc--fn[data-tight] .ddh__fn{margin:0 24px;gap:10px}
+.ddh .ddh__hc--fn[data-tight] .ddh__fn-ok{margin:10px 24px 0}
+.ddh .ddh__hc--fn[data-tight] .ddh__hc-n{margin:6px 24px 0}
+.ddh.ddh .ddh__hc--fn:is([data-tight="1"],[data-tight="2"],[data-tight="3"]) .ddh__hcf li{display:flex;flex-direction:column;padding:6px 8px}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-ml{display:flex;flex-wrap:wrap;gap:6px}
+.ddh.ddh.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-ml li{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:5px 9px}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-ml small{flex-basis:100%}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-ml--dp small,.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-col:last-child .ddh__fn-ml small{display:none}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-k{margin:0}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-col{gap:6px;padding:10px 12px 12px}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-pr li{padding:5px 9px}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-side{padding:8px 10px}
+.ddh.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-x{display:none}
+.ddh.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-ok{padding:8px 14px}
+.ddh .ddh__hc--fn[data-tight] .ddh__fn{grid-template-columns:1.32fr 1.18fr .7fr}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-pr li{line-height:1.25}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-sides{grid-template-columns:1fr}
+.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__fn-side{grid-template-columns:auto 1fr;align-items:baseline;column-gap:8px;padding:7px 10px}
+.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-l{line-height:1.4}
+.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-ok{line-height:1.35}
+.ddh.ddh.ddh .ddh__hc--fn:is([data-tight="2"],[data-tight="3"]) .ddh__hc-dp ul.ddh__fn-ml{display:flex;flex-wrap:wrap}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__hcf li{min-height:0;height:auto;justify-content:flex-start;gap:1px}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__hcf span{white-space:nowrap}
+/* the site builder inflates span / p line-height: the navigator sets its own */
+.ddh .ddh__hc--fn :is(span,small,a,b,p,i,em){line-height:1.3!important}
+.ddh .ddh__hc--fn .ddh__fn-l,.ddh .ddh__hc--fn .ddh__fn-ok,.ddh .ddh__hc--fn .ddh__fn-x{line-height:1.45!important}
+.ddh.ddh.ddh .ddh__hc--fn .ddh__hcf-x span{white-space:normal}
+.ddh .ddh__hc--fn[data-tight] .ddh__fn{grid-template-columns:1.5fr 1.12fr .68fr}
+.ddh.ddh.ddh .ddh__hc--fn[data-tight] .ddh__hcf{gap:5px}
+.ddh.ddh.ddh .ddh__hc--fn[data-tight] .ddh__hcf li{padding:6px 7px}
+.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-col:first-child .ddh__fn-k:first-of-type{display:none}
+.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-col > .ddh__fn-ml + .ddh__fn-k + .ddh__fn-ml{margin-top:0}
+.ddh .ddh__sheet .ddh__pv{gap:clamp(8px,1.2cqh,14px);padding:clamp(10px,1vw,16px)}
+.ddh .ddh__sheet .ddh__pv--guide{gap:clamp(6px,1.1cqh,12px);padding:clamp(14px,1.8vw,30px)}
+.ddh .ddh__sheet .ddh__g-l{gap:6px}
+.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-ok{margin-top:8px}
+.ddh.ddh .ddh__hc--fn[data-tight="3"] .ddh__hc-n{margin-top:4px}
+.ddh .ddh__hc--fn[data-tight="3"] .ddh__hc-in{padding-bottom:12px}
+.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-col{padding:9px 12px 11px}
+.ddh .ddh__hc--fn[data-tight="3"] .ddh__fn-l{margin-bottom:6px}.ddh .ddh__hc--fn[data-tight="3"] .ddh__hc-hd{padding-top:10px;padding-bottom:9px}
