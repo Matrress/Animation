@@ -383,4 +383,4 @@
 @media (max-height:900px){.ddc{--thr:2.9/1}.ddc.ddc--topper{--thr:2.5/1}}
 @media (max-height:800px){.ddc{--thr:3.5/1}.ddc.ddc--topper{--thr:3.1/1}}
 @media (min-height:1000px){.ddc{--thr:2.75/1}.ddc.ddc--topper{--thr:2.1/1}}
-@container ddc (max-width:639px){.ddc .ddc__rd{font-size:13px;line-height:1.25;padding:3px 6px}}
+@container ddc (max-width:639px){.ddc .ddc__rd{font-size:13.5px;line-height:1.25;padding:3px 6px}}
