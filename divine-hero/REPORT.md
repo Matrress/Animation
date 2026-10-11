@@ -1,5 +1,12 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.19.3: deeper meditative pulse, outline lower (2026-10-11) - PREVIEW, awaiting owner approval
+
+Owner feedback on 1.19.2: the outline a little lower below the planet; the pulse more intense and deep, like meditation, clearly visible.
+- Outline moved down (gap to the planet 33-50 px, was 15-20), layout reserves the extra height so it still ends above the Shop row.
+- Pulse: 7 s breathing cycle, from a dim ember (34%, faint glow) to full light (100%, four-layer glow up to 60 px), lines 2 px; slow ease-in-out. Static with reduced motion.
+Tests: orb19 35/35, interaction 381/381 (sim110), guards pass.
+
 ## 1.19.2: calmer outline, darker cosmos (2026-10-11) - PREVIEW, awaiting owner approval
 
 Owner feedback on 1.19.1: no travelling light on the outline (only a glow that may pulse), no connecting light cone between planet and outline, a little darker and more cosmic sky.

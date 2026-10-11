@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.19.2 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.19.3 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.19.2';
+  var VERSION = '1.19.3';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -537,7 +537,7 @@
         on(szEl, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode === 'hover') szT = w.setTimeout(szClose, 280); });
       }
     }
-    // 1.19.2 the planet of the certification card. One 2:1 picture of Earth (assets/earth.webp, 34 KB) is mapped onto a sphere by hand: for every pixel
+    // 1.19.3 the planet of the certification card. One 2:1 picture of Earth (assets/earth.webp, 34 KB) is mapped onto a sphere by hand: for every pixel
     // of a small canvas the longitude/latitude are computed once, each frame only the turn is added (a full circle in 26 s, so every continent passes).
     // The light comes from upper left, a thin cloud layer drifts a little faster than the ground. Nothing runs unless the card is open; if the picture
     // cannot be read (no CORS) a flat, turning copy of it is shown instead; with reduced motion Earth stands still, centred on Europe.
@@ -565,7 +565,7 @@
       var pr = art.getBoundingClientRect(), rr = root.getBoundingClientRect(), sh = root.querySelector('.ddh__shop'); if (!pr.width) return;
       var safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 64;
       var top = rr.top + safe + 10, bottom = (sh ? sh.getBoundingClientRect().top : rr.bottom) - 14;
-      var D = Math.max(150, Math.min(pr.width * .25, (bottom - top) / 1.52)), t0 = top + Math.max(0, (bottom - top - D * 1.52) / 2);
+      var D = Math.max(150, Math.min(pr.width * .25, (bottom - top) / 1.62)), t0 = top + Math.max(0, (bottom - top - D * 1.62) / 2);
       orbEl.style.width = Math.round(D) + 'px'; orbEl.style.left = Math.round(pr.width * .0465) + 'px'; orbEl.style.top = Math.round(t0 - pr.top) + 'px';
     }
     function orbPrep() {                                            // per-pixel constants for the current canvas size
@@ -665,7 +665,7 @@
       var rr = root.getBoundingClientRect(), lk = root.querySelector('.ddh__sky-lockup'), sh = root.querySelector('.ddh__shop');
       var safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 64;
       var top = Math.max(safe + 10, lk ? lk.getBoundingClientRect().bottom - rr.top + 16 : 0);
-      if (k === 'head' && !root.hasAttribute('data-ddh-noorb')) top = safe + 10;   // 1.19.2: the lockup steps aside in the cosmos, so the card may start higher (level with the planet)
+      if (k === 'head' && !root.hasAttribute('data-ddh-noorb')) top = safe + 10;   // 1.19.3: the lockup steps aside in the cosmos, so the card may start higher (level with the planet)
       if (k === 'weight') top = 10;                                 // 1.17.0: the firmness navigator is a full panel: it rises over the site header like the selectors
       var bottom = sh ? sh.getBoundingClientRect().top - rr.top - 16 : rr.height - 16;
       var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;

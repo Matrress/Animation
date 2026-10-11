@@ -1833,9 +1833,9 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__orb-t{position:absolute;left:0;right:0;top:50%;margin:0!important;padding:.5em 6% .55em!important;transform:translateY(-50%);text-align:center;background:linear-gradient(90deg,rgba(5,18,38,.30),rgba(5,18,38,.74) 11%,rgba(5,18,38,.74) 89%,rgba(5,18,38,.30));-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
 .ddh .ddh__orb-t b{display:block;margin:0!important;padding:0!important;color:#fff;font:600 max(17px,1.9cqw)/1.22 DDHChillax,"Comfortaa",system-ui,sans-serif!important;letter-spacing:.015em;text-shadow:0 1px 10px rgba(2,10,24,.65);text-wrap:balance}
 .ddh .ddh__orb-t b:first-child{font-weight:400!important;letter-spacing:.07em}
-@media (prefers-reduced-motion:no-preference){.ddh .ddh__orb-g{animation:ddh-lev 7s ease-in-out infinite}.ddh .ddh__orb-sl{animation:ddh-glow 4.6s ease-in-out infinite}}
+@media (prefers-reduced-motion:no-preference){.ddh .ddh__orb-g{animation:ddh-lev 7s ease-in-out infinite}.ddh .ddh__orb-sl{animation:ddh-glow 7s ease-in-out infinite}}
 @keyframes ddh-lev{0%,100%{transform:translateY(0)}50%{transform:translateY(-3.2%)}}
-@keyframes ddh-glow{0%,100%{opacity:.72}50%{opacity:1}}
+@keyframes ddh-glow{0%,100%{opacity:.34;filter:drop-shadow(0 0 1px rgba(190,245,255,.6)) drop-shadow(0 0 5px rgba(70,190,245,.5)) drop-shadow(0 0 12px rgba(60,150,235,.3))}50%{opacity:1;filter:drop-shadow(0 0 3px rgba(225,250,255,1)) drop-shadow(0 0 14px rgba(90,205,255,.95)) drop-shadow(0 0 34px rgba(60,160,245,.8)) drop-shadow(0 0 60px rgba(50,130,235,.5))}}
 @media (min-width:701px) and (min-height:501px){
 .ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb]) .ddh__space{opacity:1;visibility:visible;transition:opacity .8s ease,visibility 0s}
 .ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb]) .ddh__orb[data-ready]{opacity:1;transform:none}
@@ -1861,6 +1861,6 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 
 /* 1.19.1 the Dual Plush mattress in the cosmos is only its outline (the owner's SVG): a thin beam of light that carries the planet like a foundation.
    Two glows, and a short bright stretch that travels along every line. */
-.ddh .ddh__orb-sl{position:absolute;left:-7%;width:114%;top:106%;height:auto;overflow:visible;fill:none;filter:drop-shadow(0 0 2px rgba(190,245,255,.95)) drop-shadow(0 0 9px rgba(70,190,245,.85)) drop-shadow(0 0 22px rgba(60,150,235,.55))}
-.ddh .ddh__orb-sl path{fill:none;stroke:#dff8ff;stroke-width:1.5px;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:.82}
+.ddh .ddh__orb-sl{position:absolute;left:-7%;width:114%;top:114%;height:auto;overflow:visible;fill:none;filter:drop-shadow(0 0 2px rgba(190,245,255,.95)) drop-shadow(0 0 9px rgba(70,190,245,.85)) drop-shadow(0 0 22px rgba(60,150,235,.55))}
+.ddh .ddh__orb-sl path{fill:none;stroke:#dff8ff;stroke-width:2px;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1}
 @media (prefers-reduced-motion:no-preference){
