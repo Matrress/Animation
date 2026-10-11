@@ -1,4 +1,4 @@
-/* Divine DunlopDreams Collection 3.0.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+/* Divine DunlopDreams Collection 3.1.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
    Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
@@ -130,14 +130,14 @@
 .ddc .ddc__crumb-f::before{content:"";width:16px;height:3px;border-radius:2px;background:var(--fl)}
 .ddc .ddc__pn{margin-top:4px;font-size:26px;font-weight:600;line-height:1.15;color:var(--ink)}
 .ddc .ddc__pt{margin-top:3px;font-size:16.5px;font-weight:600;line-height:1.3;color:var(--lab)}
-.ddc .ddc__px{padding:12px 14px;border-radius:16px;background:rgba(244,244,244,.8)}
+.ddc .ddc__px{padding:12px 14px;border-radius:16px;background:rgba(244,244,244,.66)}
 .ddc .ddc__pb .ddc__ph{margin-bottom:10px}
 .ddc .ddc__what{margin-top:0;font-size:15.5px;line-height:1.5;color:var(--ink2)}
 .ddc .ddc__who{margin-top:8px;font-size:15.5px;line-height:1.5;color:var(--ink2)}
 .ddc .ddc__who b{color:var(--ink)}
 .ddc .ddc__dpn{display:flex;align-items:center;gap:8px;margin-top:10px;padding:4px 12px 4px 0;border-radius:14px;background:#fff;font-size:14.5px;line-height:1.4;color:var(--ink2)}
 .ddc .ddc__dpn b{color:var(--ink)}
-.ddc .ddc__pf{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0;padding:10px 12px;border-radius:16px;background:rgba(244,244,244,.8)}
+.ddc .ddc__pf{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0;padding:10px 12px;border-radius:16px;background:rgba(244,244,244,.66)}
 .ddc .ddc__pk{margin-bottom:5px;font-size:12.5px;font-weight:600;letter-spacing:.11em;line-height:1.3;text-transform:uppercase;color:var(--lab)}
 .ddc .ddc__dl,.ddc .ddc__fz{display:flex;flex-wrap:wrap;gap:5px}
 .ddc .ddc__d{display:inline-block;padding:3px 9px;border-radius:9px;background:var(--chip);box-shadow:inset 0 0 0 1px var(--chipl);font-size:14.5px;font-weight:600;line-height:1.3;color:var(--ink);white-space:nowrap}
@@ -146,7 +146,7 @@
 .ddc .ddc__mc{display:grid;gap:5px}
 .ddc .ddc__mc li{display:flex;flex-wrap:wrap;align-items:center;gap:3px 6px;font-size:14.5px;line-height:1.3;color:var(--ink)}
 .ddc .ddc__pfoot{position:sticky;bottom:-16px;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px 0 0;background:rgba(255,255,255,.9)}
-.ddc .ddc__buy{flex:1 1 280px;min-width:0;padding:10px 12px;border-radius:16px;background:rgba(244,244,244,.8);font-size:15px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__buy{flex:1 1 280px;min-width:0;padding:10px 12px;border-radius:16px;background:rgba(244,244,244,.66);font-size:15px;line-height:1.4;color:var(--ink2)}
 .ddc .ddc__buy b{color:var(--ink)}
 .ddc .ddc__acts{flex:0 1 240px;min-width:200px}
 .ddc .ddc__cta{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:10px 22px;border-radius:16px;background:var(--btn);color:#fff;font-size:20px;font-weight:600;letter-spacing:.09em;line-height:1.2;text-transform:uppercase}
@@ -155,13 +155,12 @@
 @media (any-hover:hover){.ddc .ddc__cta:hover{background:var(--btnh)}}
 .ddc .ddc__pop.is-sheet .ddc__acts{flex:1 1 100%}
 
-/* watermark behind the preview card: a single leaf and the words "Natural / Organic / Green", very faint, never in the way (pure CSS, no markup) */
-.ddc :is(.ddc-f-classic,.ddc-f-innov,.ddc-f-ortho,.ddc-f-single,.ddc-f-dual,.ddc-f-tpartners){--wm:"Organic\A Natural\A Green product"}
-.ddc :is(.ddc-f-value,.ddc-f-partners){--wm:"Natural\A Green\A product"}
+/* watermark behind the preview card: a single leaf and the word "Organic", very faint, never in the way (pure CSS, no markup) */
+.ddc{--wm:"Organic"}
 .ddc .ddc__pop{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Cg transform='rotate%2822 100 150%29'%3E%3Cpath d='M100 6C168 70 176 196 100 294C24 196 32 70 100 6Z' fill='rgb%2874,116,72%29' fill-opacity='.11'/%3E%3Cpath d='M100 292V40' stroke='white' stroke-width='3' fill='none'/%3E%3C/g%3E%3C/svg%3E") no-repeat right 18px bottom 80px/150px auto,var(--tile)}
-.ddc .ddc__pop::before{content:var(--wm);position:absolute;z-index:-1;left:6%;right:6%;top:50%;transform:translateY(-50%) rotate(-7deg);white-space:pre-line;text-align:center;font-size:60px;font-weight:600;line-height:1.05;letter-spacing:.04em;text-transform:uppercase;color:rgba(74,116,72,.07);pointer-events:none;user-select:none}
+.ddc .ddc__pop::before{content:var(--wm);position:absolute;z-index:-1;left:6%;right:6%;top:50%;transform:translateY(-50%) rotate(-7deg);white-space:pre-line;text-align:center;font-size:104px;font-weight:600;line-height:1;letter-spacing:.06em;text-transform:uppercase;color:rgba(74,116,72,.13);pointer-events:none;user-select:none}
 .ddc .ddc__pop.is-sheet{background-size:130px auto;background-position:right 8px bottom 90px}
-.ddc .ddc__pop.is-sheet::before{font-size:36px}
+.ddc .ddc__pop.is-sheet::before{font-size:60px}
 
 /* Dual Plush icon: an exploded isometric pair (thin slab = latex topper over thick slab = latex mattress), pure CSS */
 .ddc .ddc__iso{position:relative;display:block;flex:none;width:64px;height:56px}
@@ -255,3 +254,9 @@
 @media (prefers-reduced-motion:reduce){.ddc *,.ddc *::before,.ddc *::after{animation:none;transition:none}}
 @media (max-height:900px){@container ddc (max-width:1099px){.ddc .ddc__fam-h{min-height:0}}}
 @media (any-hover:none){.ddc .ddc__go{min-height:44px}.ddc.ddc--topper .ddc__go{min-height:38px}}
+/* clear separation between the upper and the lower row of mattresses: a wide gap and a rounded divider bar, so a family heading always belongs to the tiles under it */
+.ddc.ddc--mattress .ddc__tiles{row-gap:18px}
+.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:16px;border-top:3px solid var(--chipl);border-radius:3px 3px 0 0}
+@media (max-height:900px){.ddc.ddc--mattress .ddc__tiles{row-gap:14px}.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:13px}}
+@container ddc (max-width:859px){.ddc.ddc--mattress .ddc__tiles{row-gap:14px}.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:12px}}
+@container ddc (max-width:639px){.ddc.ddc--mattress .ddc__tiles{row-gap:8px}.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:0;border-top:0}}

@@ -8,7 +8,7 @@
    Vanilla JS, no globals except window.DDC. */
 (function () {
   'use strict';
-  var VERSION = '3.0.0';
+  var VERSION = '3.1.0';
   if (window.DDC && window.DDC.version) { window.DDC.scan(); return; }
 
   var HOVER_IN = 120;    // ms a pointer must rest on a tile before its card opens (no flicker when crossing tiles)
@@ -110,7 +110,7 @@
       // with the mouse a click anywhere on the card (not on a link or button) also goes to the model page: the card may cover its own tile on a short window
       r.pop.addEventListener('click', function (e) {
         if ((e.target.closest && e.target.closest('a,button')) || String(window.getSelection && window.getSelection()).length) return;
-        if (lastType !== 'mouse') { var t = r.a.getBoundingClientRect(), c = r.pop.getBoundingClientRect(), x = t.left + t.width / 2, y = t.top + t.height / 2; if (!(x > c.left && x < c.right && y > c.top && y < c.bottom)) return; }
+        if (lastType !== 'mouse') { var t = r.a.getBoundingClientRect(), c = r.pop.getBoundingClientRect(); if (t.right <= c.left || t.left >= c.right || t.bottom <= c.top || t.top >= c.bottom) return; }
         r.a.click();
       });
     });

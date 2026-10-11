@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.0 (2026-10-11)
+Owner feedback after 3.0.0.
+- Ambient: tile line "Best Value latex mattress". Hotel Line: tile line "Shredded latex mattress"; the "for hotels" restriction is gone from the tile, card title and text (it now suits the home and hospitality projects).
+- Watermark behind the preview: only the word "Organic" with the single leaf.
+- The upper and the lower row of mattresses are clearly separated: a wider gap plus a rounded divider bar above the lower families, so a family heading never reads as belonging to the row above. Not applied on phones (two blocks per row).
+- Touch: when the card overlaps its own tile, a tap on the card opens the model page.
+- The mattress description changed (texts); the topper description is unchanged.
+
 ## 3.0.0 (2026-10-11)
 Owner direction: everything in cubism (rounded cubes), the model card a cube holding picture and information, **BUY NOW** in big letters at the bottom of the card.
 - Every block is a rounded cube with equal gaps: tile, picture, information, Buy now, selection steps, family headings, footer notes and every section of the preview card. The family colour stays a thin edge (3 px on top of the tile, 3 px under the heading).
