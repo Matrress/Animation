@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.11.0
+
+- Family names (Premium, Essential, Orthopaedic, Partners, Best Value) are bolder and larger (15px, extra stroke) and always in the family colour, in the tile label, the family heading and the card crumb. Only 400/600 font weights are loaded, so extra weight comes from a 0.5px text stroke.
+- Descriptions unchanged in content.
+
 ## 3.10.0
 
 - Clearer separation between the upper and the lower row (bigger row gap, thicker divider) so each View & buy button visibly belongs to its own model.

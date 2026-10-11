@@ -1,4 +1,4 @@
-/* Divine DunlopDreams Collection 3.10.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+/* Divine DunlopDreams Collection 3.11.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
    Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
@@ -432,3 +432,10 @@
 @media (max-height:800px){.ddc.ddc--mattress .ddc__tiles{row-gap:18px}.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:12px}}
 @container ddc (max-width:859px){.ddc.ddc--mattress .ddc__tiles{row-gap:20px}.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:14px}}
 @container ddc (max-width:639px){.ddc.ddc--mattress .ddc__tiles{row-gap:12px}.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:0;border-top:0}.ddc .ddc__rows{gap:12px}}
+
+/* 3.11.0: family names (Premium, Essential, ...) bolder and clearly visible, in the family colour */
+.ddc .ddc__lab,.ddc .ddc__fam-n,.ddc .ddc__crumb-f{font-weight:600;-webkit-text-stroke:.5px currentColor;color:var(--fam)}
+.ddc .ddc__lab{font-size:15px;padding-block:5px 4px;margin-bottom:8px}
+.ddc .ddc__crumb-f{font-size:14.5px}
+@container ddc (max-width:859px){.ddc .ddc__lab{font-size:13.5px}}
+@container ddc (max-width:639px){.ddc .ddc__lab{font-size:13px}}
