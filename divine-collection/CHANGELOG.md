@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0 (2026-10-11)
+Owner feedback after 2.1.0: the colour must be an edge (кант), not a mass; the design should feel like the Tesla in-car menu.
+- Dark, flat, touch-first panel: near-black frame, dark cards with a soft spotlight behind each picture, large type, one blue **Buy now** button style.
+- Family colour is only a thin edge: 3 px along the top of every tile and of the preview card, a 2 px line under each family heading, and a small outlined label (Premium, Essential, Orthopaedic, Partners, Best Value; toppers: Single firmness, Dual firmness, Partners). No colour fills.
+- Preview card in the same dark language; firmness chips keep their colours with white type.
+- Same layout, same one-screen heights, same interaction as 2.1.0. Short windows (up to 800 px high) get a flatter picture in the card so that it does not cover neighbouring tiles.
+
 ## 2.1.0 (2026-10-11)
 Owner feedback after 2.0.0: family names on every model, better pictures and a cubist look, a bigger preview with a picture, a Buy now button.
 - Families are named **Premium** (Botanic, Botanic Dual Plush), **Essential** (Bio Comfort, Bio Comfort Dual Plush), **Orthopaedic**, **Partners**, **Best Value**; every tile carries its family label as a white tag on the family-colour band (toppers: Single firmness, Dual firmness, Partners).
