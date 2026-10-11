@@ -363,3 +363,8 @@
 .ddc .ddc__dpv-w{font-size:15.5px;color:#0b0f14}
 .ddc .ddc__px,.ddc .ddc__pf,.ddc .ddc__buy{background:#f1f3f5}
 @container ddc (max-width:639px){.ddc .ddc__what,.ddc .ddc__who{font-size:17px}.ddc .ddc__pn{font-size:23px}}
+/* a more compact wide card: wider text column (fewer lines) and a flatter picture, so it fits above the second row on common laptop windows */
+.ddc .ddc__row.is-open .ddc__pop.is-wide{grid-template-columns:minmax(0,4.4fr) minmax(0,6.6fr)}
+.ddc .ddc__pop.is-wide .ddc__pfig{aspect-ratio:2.7/1}
+.ddc .ddc__pop.is-wide .ddc__px{padding:10px 14px}
+.ddc .ddc__pop.is-wide .ddc__what,.ddc .ddc__pop.is-wide .ddc__who{line-height:1.5}

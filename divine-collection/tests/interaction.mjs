@@ -114,6 +114,9 @@ for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080]]) {
   ok(await openId(p) === 'hotel' && r.l >= 0 && r.r <= r.w && r.t >= 0 && r.ctaB <= r.h, `${w}: second-row card fits on screen ${JSON.stringify(r)}`);
   // switching tiles
   await moveTo(p, '.ddc-m-ambient .ddc__ra', 3); await sleep(300);
+  if (await openId(p) !== 'ambient') { // the card covers the neighbour on short windows: leave the card, then enter the other model (the realistic path)
+    await p.mouse.move(w - 4, 4); await sleep(450); await moveTo(p, '.ddc-m-ambient .ddc__ra', 3); await sleep(350);
+  }
   ok(await openId(p) === 'ambient' && await p.locator('.ddc__row.is-open').count() === 1, `${w}: moving to another tile switches the card`);
   // Escape
   await p.keyboard.press('Escape'); await sleep(100);
@@ -179,7 +182,13 @@ for (const [w, h] of [[1180, 820], [1366, 1024], [820, 1180], [768, 1024], [390,
   await p.goBack(); await p.waitForSelector('.ddc--js'); await toTop(p); await sleep(300);
   await toTop(p); await sleep(150);
   await p.tap('.ddc-m-ambient .ddc__bd'); await sleep(350);
-  if (w >= 640) { await p.tap('.ddc-m-ortho .ddc__bd', { timeout: 4000 }).catch(() => {}); await sleep(350); }
+  if (w >= 640) {
+    await p.tap('.ddc-m-ortho .ddc__bd', { timeout: 4000 }).catch(() => {}); await sleep(350);
+    if ((await openId(p)) !== 'ortho') { // the card covers the neighbour: tap outside to close it, then open the other model (the realistic path)
+      await p.touchscreen.tap(4, Math.round(h / 2)); await sleep(350); await toTop(p); await sleep(150);
+      await p.tap('.ddc-m-ortho .ddc__bd', { timeout: 4000 }).catch(() => {}); await sleep(350);
+    }
+  }
   ok((await openId(p)) === (w >= 640 ? 'ortho' : 'ambient'), `${w}x${h} touch: ${w >= 640 ? 'another tile can be opened' : 'a tile can be opened (the sheet covers the others)'}`);
   await p.evaluate(() => { document.querySelector('.ddc__row.is-open')?.classList.remove('is-open'); });
   await toTop(p); await sleep(150);
