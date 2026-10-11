@@ -1,4 +1,4 @@
-/* Divine DunlopDreams Collection 3.5.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+/* Divine DunlopDreams Collection 3.6.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
    Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
@@ -368,3 +368,9 @@
 .ddc .ddc__pop.is-wide .ddc__pfig{aspect-ratio:2.7/1}
 .ddc .ddc__pop.is-wide .ddc__px{padding:10px 14px}
 .ddc .ddc__pop.is-wide .ddc__what,.ddc .ddc__pop.is-wide .ddc__who{line-height:1.5}
+
+/* ---------- 3.6.0: the function line of a model (what it is for) is an orientation cube, in the small card and in the big card ---------- */
+.ddc .ddc__rd{display:block;margin-top:5px;padding:5px 9px;border-radius:10px;background:#eef1f4;color:#0b0f14;font-weight:600;line-height:1.3}
+.ddc .ddc__pt{display:block;margin-top:8px;padding:7px 12px;border-radius:12px;background:#e8eef3;font-size:17px;font-weight:600;line-height:1.35;color:#0b0f14}
+@container ddc (max-width:639px){.ddc .ddc__rd{margin-top:3px;padding:4px 7px}.ddc .ddc__pt{font-size:16px}}
+.ddc .ddc__rd{align-self:stretch}
