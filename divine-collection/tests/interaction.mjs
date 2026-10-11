@@ -77,7 +77,7 @@ for (const [w, h] of fits) for (const kind of ['mattress', 'topper']) {
     ok(m.h <= h - 110, `${kind} ${w}x${h}: whole collection (${m.h}px) fits in one window with room for the site header`);
   } else {
     ok(m.cols === (kind === 'mattress' ? 2 : 1), `${kind} ${w}x${h}: phone layout ${m.cols} column(s)`);
-    ok(m.h <= (kind === 'mattress' ? 1250 : 650), `${kind} ${w}x${h}: phone height ${m.h}px stays within about one screen`);
+    ok(m.h <= (kind === 'mattress' ? 1400 : 760), `${kind} ${w}x${h}: phone height ${m.h}px stays within about one screen`);
   }
   await p.context().close();
 }

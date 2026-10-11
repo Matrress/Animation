@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.6.0 (2026-10-11)
+Owner request: a function line for every model, in the small and the big card (what the model is for: an orientation).
+- Botanic: Support and adaptation. Botanic Dual Plush: Cloud effect with support and adaptation. Bio Comfort: Fine support and adaptation. Bio Comfort Dual Plush: Cloud Comfort: highest level, lightest adaptation, Cloud support. Orthopaedic Coconut Coir: Firm comfort. Mattress for Partners: Two different firmnesses for partners. Ambient: Best Value, with adaptation and support. Hotel Line: Supportive comfort.
+- In the small card it is a cube under the name (replacing the old key line); in the big card it is a cube under the title (replacing the old subtitle). Same words in both. Toppers keep their previous lines.
+- Tiles are tighter and pictures a little flatter so the whole map still fits on one screen on laptops, monitors and iPads. On phones the mattress map is about 1280 px long (scroll).
+- Mattress description changed; the topper description is unchanged.
+
 ## 3.5.0 (2026-10-11)
 - Ambient and Hotel Line (family Best Value): the card badge says **NATURAL** instead of ORGANIC; every other model keeps ORGANIC.
 - Preview card text is clearer: near-black (#0b0f14), larger (reading text 17.5 px, labels 14 px, chips 15.5-16 px), slightly stronger grey boxes behind it.
