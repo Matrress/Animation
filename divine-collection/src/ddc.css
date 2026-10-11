@@ -1,4 +1,4 @@
-/* Divine DunlopDreams Collection 2.3.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+/* Divine DunlopDreams Collection 2.4.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
    Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
@@ -11,7 +11,7 @@
 @font-face{font-family:DDCChillax;src:url(https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
 
 /* ---------- tokens and reset (inside .ddc only) ---------- */
-.ddc{--ink:#171a20;--ink2:#5c5e62;--lab:#393c41;--line:#e3e5e7;--pale:#f4f4f4;--nav:#fff;--hov:#f4f4f4;--sel:#171a20;--btn:#3e6ae1;--btnh:#3457b8;--bg:#fff;--tile:#fff;--well:#f4f4f4;--chip:#fff;--chipl:#d0d1d2;
+.ddc{--ink:#171a20;--ink2:#5c5e62;--lab:#393c41;--line:#e3e5e7;--pale:#f4f4f4;--nav:#fff;--hov:#f4f4f4;--sel:#171a20;--btn:#4a7448;--btnh:#38592f;--bg:#fff;--tile:#fff;--well:#f4f4f4;--chip:#fff;--chipl:#d0d1d2;
   --fz-s:#2f7da8;--fz-m:#25648a;--fz-f:#4a5664;--fz-x:#313d4c;
   --fam:#2e7a68;--ff:DDCChillax,system-ui,-apple-system,"Segoe UI",sans-serif;
   container:ddc/inline-size;display:block;box-sizing:border-box;width:100%;max-width:1240px;margin:0 auto 28px;padding:0;
@@ -28,7 +28,7 @@
 .ddc a{color:inherit;text-decoration:none;border:0;background:none;box-shadow:none}
 .ddc button{-webkit-appearance:none;appearance:none;margin:0;border:0;border-radius:0;background:none;box-shadow:none;font:inherit;color:inherit;text-align:left;text-transform:none;letter-spacing:0;line-height:inherit;min-height:0;width:auto;height:auto;cursor:pointer}
 .ddc :is(a,button):focus{outline:none}
-.ddc :is(a,button):focus-visible{outline:3px solid #3e6ae1;outline-offset:2px;border-radius:12px}
+.ddc :is(a,button):focus-visible{outline:3px solid #4a7448;outline-offset:2px;border-radius:12px}
 .ddc .ddc__sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
 /* families: one colour each, from the hero's approved cool palette (white type passes on all of them); --fl is its lighter twin for small text on the dark panel; the colour is only used as a thin edge and a label */
@@ -136,9 +136,9 @@
 .ddc .ddc__what{margin-top:10px;font-size:15.5px;line-height:1.5;color:var(--ink2)}
 .ddc .ddc__who{margin-top:8px;font-size:15.5px;line-height:1.5;color:var(--ink2)}
 .ddc .ddc__who b{color:var(--ink)}
-.ddc .ddc__dpn{display:flex;align-items:center;gap:8px;margin-top:10px;padding:4px 12px 4px 0;border-radius:12px;background:var(--well);font-size:14.5px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__dpn{display:flex;align-items:center;gap:8px;margin-top:10px;padding:4px 12px 4px 0;border-radius:12px;background:rgba(244,244,244,.8);font-size:14.5px;line-height:1.4;color:var(--ink2)}
 .ddc .ddc__dpn b{color:var(--ink)}
-.ddc .ddc__pf{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0;padding:10px 12px;border-radius:12px;background:var(--well)}
+.ddc .ddc__pf{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0;padding:10px 12px;border-radius:12px;background:rgba(244,244,244,.8)}
 .ddc .ddc__pk{margin-bottom:5px;font-size:12.5px;font-weight:600;letter-spacing:.11em;line-height:1.3;text-transform:uppercase;color:var(--lab)}
 .ddc .ddc__dl,.ddc .ddc__fz{display:flex;flex-wrap:wrap;gap:5px}
 .ddc .ddc__d{display:inline-block;padding:3px 9px;border-radius:9px;background:var(--chip);box-shadow:inset 0 0 0 1px var(--chipl);font-size:14.5px;font-weight:600;line-height:1.3;color:var(--ink);white-space:nowrap}
@@ -146,8 +146,8 @@
 .ddc .ddc__f--s{background:var(--fz-s)}.ddc .ddc__f--m{background:var(--fz-m)}.ddc .ddc__f--f{background:var(--fz-f)}.ddc .ddc__f--x{background:var(--fz-x)}
 .ddc .ddc__mc{display:grid;gap:5px}
 .ddc .ddc__mc li{display:flex;flex-wrap:wrap;align-items:center;gap:3px 6px;font-size:14.5px;line-height:1.3;color:var(--ink)}
-.ddc .ddc__pfoot{position:sticky;bottom:-16px;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px 0 0;background:var(--tile)}
-.ddc .ddc__buy{flex:1 1 280px;min-width:0;padding:10px 12px;border-radius:12px;background:var(--well);font-size:15px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__pfoot{position:sticky;bottom:-16px;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px 0 0;background:rgba(255,255,255,.9)}
+.ddc .ddc__buy{flex:1 1 280px;min-width:0;padding:10px 12px;border-radius:12px;background:rgba(244,244,244,.8);font-size:15px;line-height:1.4;color:var(--ink2)}
 .ddc .ddc__buy b{color:var(--ink)}
 .ddc .ddc__acts{flex:0 1 240px;min-width:200px}
 .ddc .ddc__cta{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:10px 22px;border-radius:999px;background:var(--btn);color:#fff;font-size:18px;font-weight:600;line-height:1.2}
@@ -155,6 +155,14 @@
 .ddc .ddc__cta::after{content:"";width:9px;height:9px;border-right:2.5px solid #fff;border-top:2.5px solid #fff;transform:rotate(45deg)}
 @media (any-hover:hover){.ddc .ddc__cta:hover{background:var(--btnh)}}
 .ddc .ddc__pop.is-sheet .ddc__acts{flex:1 1 100%}
+
+/* watermark behind the preview card: an olive branch and the words "Natural / Organic / Green", very faint, never in the way (pure CSS, no markup) */
+.ddc :is(.ddc-f-classic,.ddc-f-innov,.ddc-f-ortho,.ddc-f-single,.ddc-f-dual,.ddc-f-tpartners){--wm:"Organic\A Natural\A Green product"}
+.ddc :is(.ddc-f-value,.ddc-f-partners){--wm:"Natural\A Green\A product"}
+.ddc .ddc__pop{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Cg fill='rgb%2874,116,72%29' fill-opacity='.11'%3E%3Cpath d='M98 296C92 210 108 120 100 30L104 30C112 120 96 210 102 296Z'/%3E%3Cellipse cx='70' cy='250' rx='40' ry='13' transform='rotate%2835 70 250%29'/%3E%3Cellipse cx='130' cy='205' rx='40' ry='13' transform='rotate%28-35 130 205%29'/%3E%3Cellipse cx='70' cy='160' rx='40' ry='13' transform='rotate%2835 70 160%29'/%3E%3Cellipse cx='130' cy='115' rx='40' ry='13' transform='rotate%28-35 130 115%29'/%3E%3Cellipse cx='70' cy='70' rx='40' ry='13' transform='rotate%2835 70 70%29'/%3E%3Cellipse cx='100' cy='28' rx='13' ry='36'/%3E%3C/g%3E%3C/svg%3E") no-repeat right 14px bottom 84px/170px auto,var(--tile)}
+.ddc .ddc__pop::before{content:var(--wm);position:absolute;z-index:-1;left:6%;right:6%;top:50%;transform:translateY(-50%) rotate(-7deg);white-space:pre-line;text-align:center;font-size:60px;font-weight:600;line-height:1.05;letter-spacing:.04em;text-transform:uppercase;color:rgba(74,116,72,.07);pointer-events:none;user-select:none}
+.ddc .ddc__pop.is-sheet{background-size:130px auto;background-position:right 8px bottom 90px}
+.ddc .ddc__pop.is-sheet::before{font-size:36px}
 
 /* Dual Plush icon: an exploded isometric pair (thin slab = latex topper over thick slab = latex mattress), pure CSS */
 .ddc .ddc__iso{position:relative;display:block;flex:none;width:64px;height:56px}

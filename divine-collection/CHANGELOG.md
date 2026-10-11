@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.0 (2026-10-11)
+Owner feedback after 2.3.0: Buy now must not be a toxic blue; Mediterranean leaf green; a watermark behind the preview about natural / organic / green product.
+- **Buy now** (tiles and card) is now olive-leaf green (#4a7448, hover #38592f; white text, contrast 5.4:1).
+- Preview card has a faint watermark behind its content: an olive branch and the words "Organic / Natural / Green product" (Premium, Essential, Orthopaedic, Single, Dual, Topper for Partners) or "Natural / Green / product" (Best Value, Mattress for Partners), matching what the product pages state. Pure CSS (no markup change): descriptions are unchanged.
+- Boxes inside the card are slightly translucent so the watermark shows through; focus outline is green.
+
 ## 2.3.0 (2026-10-11)
 Owner feedback after 2.2.0: the clean, ordered Tesla style, but not dark; the family colours stay, only as edges.
 - Back to a white, airy page: white frame, light-grey picture panels (flat, no spotlight), near-black text, one blue **Buy now** button style, thin hairlines.
