@@ -83,10 +83,10 @@
 .ddc .ddc__th img{position:absolute;left:10px;top:8px;width:calc(100% - 20px);height:calc(100% - 16px);object-fit:contain;filter:drop-shadow(0 8px 9px rgba(23,26,32,.28))}
 .ddc .ddc__th--photo img{left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%;filter:none}
 .ddc .ddc__bd{display:flex;flex:1 1 auto;flex-direction:column;align-items:flex-start;gap:3px;padding:3px 6px 2px}
-.ddc .ddc__tag{display:none;padding:1px 8px;border-radius:7px;background:none;box-shadow:inset 0 0 0 1px var(--fam);color:var(--fl);font-size:12px;font-weight:600;letter-spacing:.09em;line-height:1.35;text-transform:uppercase}
+.ddc .ddc__tag{display:none;padding:1px 8px;border-radius:7px;background:none;box-shadow:inset 0 0 0 1px var(--fam);color:var(--fl);font-size:12px;font-weight:600;letter-spacing:.1em;line-height:1.35;text-transform:uppercase}
 .ddc .ddc__rn{display:block;margin-top:2px;font-size:18px;font-weight:600;line-height:1.2;color:var(--ink)}
 .ddc .ddc__rd{display:block;font-size:15px;line-height:1.3;color:var(--ink2)}
-.ddc .ddc__go{position:relative;z-index:2;display:flex;flex:none;align-items:center;justify-content:center;gap:9px;min-height:40px;padding:8px 14px;border-radius:12px;background:var(--btn);color:#fff;font-size:16px;font-weight:600;letter-spacing:.09em;line-height:1.1;text-transform:uppercase}
+.ddc .ddc__go{position:relative;z-index:2;display:flex;flex:none;align-items:center;justify-content:center;gap:9px;min-height:40px;padding:8px 14px;border-radius:12px;background:var(--btn);color:#fff;font-size:16px;font-weight:600;letter-spacing:.1em;line-height:1.1;text-transform:uppercase}
 .ddc .ddc__go::after{content:"";width:7px;height:7px;border-right:2px solid #fff;border-top:2px solid #fff;transform:rotate(45deg)}
 @media (any-hover:hover){.ddc .ddc__go:hover{background:var(--btnh)}}
 @media (any-hover:none){.ddc .ddc__go{min-height:44px;padding:8px 16px}}
@@ -124,7 +124,7 @@
 .ddc .ddc__pfig{position:relative;margin:0 0 10px;aspect-ratio:2.2/1;border-radius:16px;background:#f4f4f4;overflow:hidden}
 .ddc .ddc__pfig img{position:absolute;left:10px;top:8px;width:calc(100% - 20px);height:calc(100% - 16px);object-fit:contain;filter:drop-shadow(0 9px 10px rgba(23,26,32,.28))}
 .ddc .ddc__pop.is-wide .ddc__pfig{margin-bottom:10px}
-.ddc .ddc__crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding-right:48px;font-size:12.5px;font-weight:600;letter-spacing:.09em;line-height:1.3;text-transform:uppercase;color:var(--ink2)}
+.ddc .ddc__crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding-right:48px;font-size:12.5px;font-weight:600;letter-spacing:.1em;line-height:1.3;text-transform:uppercase;color:var(--ink2)}
 .ddc .ddc__crumb-f{display:inline-flex;align-items:center;gap:8px}
 .ddc .ddc__crumb-f{color:var(--fl)}
 .ddc .ddc__crumb-f::before{content:"";width:16px;height:3px;border-radius:2px;background:var(--fl)}
@@ -149,7 +149,7 @@
 .ddc .ddc__buy{flex:1 1 280px;min-width:0;padding:10px 12px;border-radius:16px;background:rgba(244,244,244,.66);font-size:15px;line-height:1.4;color:var(--ink2)}
 .ddc .ddc__buy b{color:var(--ink)}
 .ddc .ddc__acts{flex:0 1 240px;min-width:200px}
-.ddc .ddc__cta{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:10px 22px;border-radius:16px;background:var(--btn);color:#fff;font-size:20px;font-weight:600;letter-spacing:.09em;line-height:1.2;text-transform:uppercase}
+.ddc .ddc__cta{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:10px 22px;border-radius:16px;background:var(--btn);color:#fff;font-size:20px;font-weight:600;letter-spacing:.1em;line-height:1.2;text-transform:uppercase}
 .ddc .ddc__cta *{color:#fff}
 .ddc .ddc__cta::after{content:"";width:9px;height:9px;border-right:2.5px solid #fff;border-top:2.5px solid #fff;transform:rotate(45deg)}
 @media (any-hover:hover){.ddc .ddc__cta:hover{background:var(--btnh)}}
@@ -307,3 +307,23 @@
 .ddc .ddc__pop{border-top:0;border-bottom:4px solid var(--fam)}
 @container ddc (max-width:639px){.ddc .ddc__tag{display:inline-block}}
 @media (max-height:900px){.ddc .ddc__fam-h{padding-block:6px 5px;margin-bottom:8px}}
+
+/* ---------- 3.4.1: the colour edge sits under the picture, inside the card; nothing coloured along the top ---------- */
+.ddc .ddc__cube::before{display:none}
+.ddc .ddc__fam-h{border-bottom:0}
+.ddc .ddc__bd::before{content:"";display:block;width:100%;height:4px;margin:1px 0 6px;border-radius:2px;background:var(--fam)}
+.ddc .ddc__pop{border-bottom:0}
+.ddc .ddc__pf{box-shadow:inset 0 4px 0 var(--fam)}
+.ddc .ddc__pf{padding-top:14px}
+@container ddc (max-width:639px){
+  .ddc.ddc--topper .ddc__bd::before{display:none}
+  .ddc.ddc--topper .ddc__th{box-shadow:inset 0 -4px 0 var(--fam)}
+}
+/* darker family colour for small text on light grey (contrast) */
+.ddc :is(.ddc__fam--classic,.ddc-f-classic,.ddc__fam--single,.ddc-f-single){--famd:#1f5e4f}
+.ddc :is(.ddc__fam--innov,.ddc-f-innov,.ddc__fam--dual,.ddc-f-dual){--famd:#1f5f87}
+.ddc :is(.ddc__fam--ortho,.ddc-f-ortho){--famd:#3a4450}
+.ddc :is(.ddc__fam--value,.ddc-f-value){--famd:#55447f}
+.ddc :is(.ddc__fam--partners,.ddc-f-partners,.ddc__fam--tpartners,.ddc-f-tpartners){--famd:#17606a}
+.ddc .ddc__fam-n{color:var(--famd)}
+.ddc .ddc__tag{letter-spacing:.1em}

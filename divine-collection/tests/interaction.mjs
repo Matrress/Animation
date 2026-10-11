@@ -63,7 +63,7 @@ for (const [w, h] of fits) for (const kind of ['mattress', 'topper']) {
       of: document.documentElement.scrollWidth - document.documentElement.clientWidth,
       clipped: [...document.querySelectorAll('.ddc .ddc__rn, .ddc .ddc__rd, .ddc .ddc__fam-n, .ddc .ddc__q, .ddc .ddc__st-t, .ddc .ddc__go')].filter((e) => e.offsetParent && (e.scrollWidth > e.clientWidth + 1)).map((e) => e.textContent.trim()),
       small: [...document.querySelectorAll('.ddc .ddc__ra')].filter((a) => a.getBoundingClientRect().height < 44).length + [...document.querySelectorAll('.ddc .ddc__go')].filter((a) => a.getBoundingClientRect().height < 28).length,
-      under: new Set([...document.querySelectorAll('.ddc__fam-h')].map((h) => getComputedStyle(h).borderBottomColor)).size, fams: document.querySelectorAll('.ddc__fam').length,
+      under: new Set([...document.querySelectorAll('.ddc__fam-n')].map((h) => getComputedStyle(h).color)).size, fams: document.querySelectorAll('.ddc__fam').length,
       fs: Math.min(...[...document.querySelectorAll('.ddc__rn,.ddc__rd')].filter((e) => e.offsetParent).map((e) => parseFloat(getComputedStyle(e).fontSize))) };
   });
   info.push(`${kind} ${w}x${h}: component ${m.h}px tall, ${m.cols} column(s), ${m.rows} tile row(s)`);
