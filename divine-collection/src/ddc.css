@@ -1,4 +1,4 @@
-/* Divine DunlopDreams Collection 3.4.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+/* Divine DunlopDreams Collection 3.5.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
    Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
@@ -345,3 +345,21 @@
   .ddc .ddc__go{position:relative;top:auto;right:auto;min-height:40px;padding:6px 8px;font-size:12.5px}
   .ddc.ddc--topper .ddc__go{min-height:38px}
 }
+
+/* ---------- 3.5.0: "Natural" badge on Ambient and Hotel Line (the Best Value models); clearer, higher-contrast text in the preview card ---------- */
+.ddc .ddc-f-value .ddc__ph::after{content:"Natural"}
+/* text of the preview card: near-black, larger, on solid boxes */
+.ddc .ddc__pop{color:#0b0f14;-webkit-font-smoothing:antialiased}
+.ddc .ddc__pn{font-size:28px;color:#0b0f14}
+.ddc .ddc__pt{font-size:18px;color:#0b0f14}
+.ddc .ddc__what,.ddc .ddc__who{font-size:17.5px;line-height:1.6;color:#0b0f14}
+.ddc .ddc__who b{font-weight:600;color:#0b0f14}
+.ddc .ddc__crumb{color:#0b0f14}
+.ddc .ddc__pk,.ddc .ddc__dpg-h{font-size:14px;color:#0b0f14}
+.ddc .ddc__buy{font-size:16.5px;line-height:1.5;color:#0b0f14}
+.ddc .ddc__mc li{font-size:16.5px;color:#0b0f14}
+.ddc .ddc__d{font-size:16px;color:#0b0f14}
+.ddc .ddc__f{font-size:15.5px}
+.ddc .ddc__dpv-w{font-size:15.5px;color:#0b0f14}
+.ddc .ddc__px,.ddc .ddc__pf,.ddc .ddc__buy{background:#f1f3f5}
+@container ddc (max-width:639px){.ddc .ddc__what,.ddc .ddc__who{font-size:17px}.ddc .ddc__pn{font-size:23px}}

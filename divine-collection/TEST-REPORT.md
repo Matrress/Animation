@@ -1,4 +1,4 @@
-# Test report — Divine DunlopDreams Collection 3.4.0 (2026-10-10)
+# Test report — Divine DunlopDreams Collection 3.5.0 (2026-10-10)
 
 Environment: Chromium (Playwright 1.56) on `preview/sim.html`, an imitation of an Ecwid Instant Site category page: id-prefixed storefront CSS (uppercase serif headings, underlined bold links, black uppercase buttons, centred text, bordered images, inflated line-height), in-store navigation that re-renders the description through `innerHTML`, a stand-in `Ecwid.OnPageLoaded`, a sticky site header and the native grid with the £0 / £0.90 prices. jsDelivr URLs are served from the local repository (byte-identical pinned files). **Not yet tested on the live Ecwid store, on a physical iPad or phone, or in Safari / Firefox**: that is the Phase-1 probe and INSTALL.md step 4.
 

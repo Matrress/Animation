@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.5.0 (2026-10-11)
+- Ambient and Hotel Line (family Best Value): the card badge says **NATURAL** instead of ORGANIC; every other model keeps ORGANIC.
+- Preview card text is clearer: near-black (#0b0f14), larger (reading text 17.5 px, labels 14 px, chips 15.5-16 px), slightly stronger grey boxes behind it.
+- The preview card keeps clear of a sticky / fixed site header at the top of the window (it no longer slides under it).
+- Descriptions are unchanged (CSS and script only); only the loader changes.
+
 ## 3.4.0 (2026-10-11)
 Owner feedback: the family colour must not crowd the space above the card; the label only once; capital letters always spaced.
 - The colour edge of every tile moved from its top to its lower part; the space above a tile is clear.

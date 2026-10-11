@@ -8,7 +8,7 @@
    Vanilla JS, no globals except window.DDC. */
 (function () {
   'use strict';
-  var VERSION = '3.4.0';
+  var VERSION = '3.5.0';
   if (window.DDC && window.DDC.version) { window.DDC.scan(); return; }
 
   var HOVER_IN = 120;    // ms a pointer must rest on a tile before its card opens (no flicker when crossing tiles)
@@ -42,6 +42,19 @@
     if (!rows.length) return;
     root.classList.add('ddc--js');
 
+    var inset = 0;   // height of a fixed / sticky site header at the top of the window: the card must not slide under it
+    function headerInset() {
+      var m = 0;
+      [0.25, 0.5, 0.75].forEach(function (f) {
+        var e = document.elementFromPoint(window.innerWidth * f, 2);
+        while (e && e !== document.documentElement) {
+          var pos = getComputedStyle(e).position;
+          if (pos === 'fixed' || pos === 'sticky') { var b = e.getBoundingClientRect().bottom; if (b < 220) m = Math.max(m, b); break; }
+          e = e.parentElement;
+        }
+      });
+      return Math.ceil(m);
+    }
     function place(r) {
       // the card sits under the tile, or above it when there is no room; sideways it is clamped inside the component
       var pop = r.pop, C = tiles.getBoundingClientRect(), T = r.cube.getBoundingClientRect(), W = C.width;
@@ -52,12 +65,12 @@
       var st = function (k, v) { pop.style.setProperty(k, v, 'important'); };   // the stylesheet is !important: inline values must be too
       pop.classList.toggle('is-wide', pw >= 640);
       st('width', pw + 'px'); st('max-height', 'none'); st('left', '0px'); st('top', '0px');
-      var ph = pop.offsetHeight, vh = window.innerHeight, top, mh = '';
+      var ph = pop.offsetHeight, vh = window.innerHeight, top, mh = '', g = Math.max(8, inset + 8);
       // under the tile when it fits on screen, else above it, else as low or as high as the window allows (it may cover part of its own tile)
       var vtop = T.bottom - 6;
       if (vtop + ph > vh - 8) vtop = T.top - ph + 6;
-      if (vtop < 8 || vtop + ph > vh - 8) vtop = Math.max(8, Math.min(T.bottom - 6, vh - ph - 8));
-      if (ph > vh - 16) { mh = vh - 16; vtop = 8; }
+      if (vtop < g || vtop + ph > vh - 8) vtop = Math.max(g, Math.min(T.bottom - 6, vh - ph - 8));
+      if (ph > vh - g - 8) { mh = vh - g - 8; vtop = g; }
       top = vtop - C.top;
       var left = Math.max(8, Math.min(T.left - C.left + T.width / 2 - pw / 2, W - pw - 8));
       st('left', Math.round(left) + 'px');
@@ -68,6 +81,7 @@
     function show(r) {
       if (open === r) return;
       if (open) hide(false);
+      inset = headerInset();
       r.li.classList.add('is-open');
       r.pop.classList.remove('is-in');
       place(r);

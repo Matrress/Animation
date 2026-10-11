@@ -11,3 +11,5 @@
 9. **Rows of mattresses are clearly separated** (gap and a divider bar) so a heading never reads as belonging to the row above.
 10. **Organic badge** (leaf + word) is a clear mark in the preview card, not a faint watermark behind text.
 11. No prices; no "Firm for Him / Soft for Her"; no "No layers"; no unverified product facts or medical claims.
+12. **Badge word follows the product:** "Organic" in the preview card, but "Natural" on Ambient and Hotel Line (the Best Value models).
+13. **Preview card text is near-black (#0b0f14), at least 16.5 px for reading text, on solid boxes.** Contrast and clarity before decoration.

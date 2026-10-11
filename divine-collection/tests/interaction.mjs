@@ -17,7 +17,7 @@ const onProduct = (p) => p.evaluate(() => /page=product/.test(location.search));
 // ---------- 1. content in the HTML itself (no CSS, no script) ----------
 for (const kind of ['mattress', 'topper']) {
   const c = collections[kind];
-  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-3.4.0.html`, import.meta.url), 'utf8');
+  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-3.5.0.html`, import.meta.url), 'utf8');
   const p = await page(br);
   await p.goto(S(kind, '&mode=none'));
   const d = await p.evaluate(() => ({ tiles: [...document.querySelectorAll('.ddc__ra')].map((a) => [a.querySelector('.ddc__rn').firstChild.textContent.trim(), a.href]), links: [...document.querySelectorAll('.ddc a')].map((a) => a.href), text: document.querySelector('.ddc').textContent, imgs: [...document.querySelectorAll('.ddc img')].map((i) => [i.getAttribute('src'), i.alt]), tags: [...document.querySelectorAll('.ddc__row')].map((li) => [(li.className.match(/ddc-m-(\w+)/) || [])[1], li.querySelector('.ddc__lab').textContent.trim(), li.querySelector('.ddc__go').textContent.trim().replace(/\s+/g, ' '), li.querySelector('.ddc__cta').textContent.trim().replace(/\s+/g, ' ')]) }));
