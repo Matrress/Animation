@@ -1,5 +1,15 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.17.2: hero header polish pass (2026-10-11)
+
+Brief: polish only; keep concept, composition and every agreed claim ("European Production", "Certified for UK & EU", "Keeps Your Body on the Surface"). Checked every hotspot on 1440x900, 1180x820, 820x1180 and 390x844 (plus 744/810/834/1024/1194/1366 for the Dual Plush card).
+Findings and fixes (CSS only, no copy, link or JS-logic change):
+1. Dual Plush card on tablets held upright (744-834 wide): the two "View ..." buttons were cut by the card's lower edge (up to 49 px at 744). The card now tightens in two container-query steps (eyebrow, then row padding and type) and keeps >= 10 px under the buttons at every measured size.
+2. Hint pill ("Explore the sleep system") wrapped "SYSTEM" onto a second line on tablets held upright; it now stays on one line.
+3. "All UK & EU Sizes" on 1051-1320 wide windows (iPad landscape) was 12 px and broke as "All UK & EU / Sizes"; now 13 px, balanced two lines, and the spacer that centres the CTAs uses the same size.
+4. Dual Plush icon: the owner's own drawing (dual_olush_latex_mattress_.svg, a thin topper over a thick mattress) replaces the isometric slabs everywhere (card, previews, navigator, Bio screen). Defined once as an invisible SVG at the top of the sheets, filled per row from the firmness tones (Soft #2f7da8, Medium #25648a, Firm #4a5664, Extra Firm #313d4c; lighter tone on the top surface); one hairline white edge separates the layers. Two-layer topper rows use the topper shape twice.
+Already in place, unchanged: the Dual Plush point opens the card with the same isometric Soft/Medium, Medium/Firm, Firm/Extra Firm icons as the mattress collection (1.17.1). Phones held upright keep the calm picture without the certification line (owner rule since 1.4.0); landscape phones bring it back.
+
 ## 1.17.1: one firmness language (white type on colour), no heavy outlines, Dual Plush icons, seven coloured zones, navigator as an instrument panel (2026-10-10)
 
 Owner brief (5 points, with a car-dashboard photo as an example of contrast and premium feel): Soft and Medium tiles were pale and blurry; outlines made everything heavy; the seven-zone scheme needs one colour per zone and never black letters on blue; Dual Plush needs another kind of icon; the screens may grow where needed; present the mattress like a latest-generation premium car.

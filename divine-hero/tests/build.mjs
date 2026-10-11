@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const VERSION = '1.17.1';
+const VERSION = '1.17.2';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const esbuild = process.env.ESBUILD || 'esbuild';
 const rel = path.join(root, 'release', VERSION);
@@ -69,19 +69,26 @@ for (const f of fs.readdirSync(path.join(root, 'src/i18n'))) fs.writeFileSync(pa
   src = src.replace(/<article class="ddh__pv\b[\s\S]*?<\/article>/g, (art) => {
     const back = /<button class="ddh__pv-back"[\s\S]*?<\/button>/.exec(art); const cta = /<a class="ddh__pv-cta"[\s\S]*?<\/a>/.exec(art);
     if (!back || !cta) return art;
-    // 1.17.1: the buttons form one row at the foot of the text area (spanning both columns), not a stack in the narrow left column
+    // 1.17.2: the buttons form one row at the foot of the text area (spanning both columns), not a stack in the narrow left column
     const acts = `<div class="ddh__pv-acts">${cta[0]}${back[0]}</div>`;
     const cut = art.replace(back[0], '').replace(cta[0], '');
     const end = cut.lastIndexOf('</div></article>');
     return end < 0 ? art : cut.slice(0, end) + acts + cut.slice(end);
   });
-  // 1.17.1 Dual Plush icons: an isometric exploded pair of slabs (thin latex topper over the latex mattress; two thin layers for a two-layer topper).
-  // The slab colours come from the firmness classes (.ddh__sl--s|m|f|x set --ct / --cl / --cr); no text lives inside the icon.
+  // 1.17.2 Dual Plush icon: the owner's own drawing (dual_olush_latex_mattress_.svg): a thin latex topper over a thicker latex mattress.
+  // The three outlines are defined once (an invisible <svg> at the top of the sheets) and filled per icon from the firmness classes
+  // (.ddh__sl--s|m|f|x set --ct top / --cl front); ISO:t:m = topper over mattress, ISO2:a:b = two thin layers (two-layer topper).
   {
-    const slab = (y0, t, k) => { const x = (n) => n, d = 38, w = 38;
-      return `<g class="ddh__sl ddh__sl--${k}"><path class="ddh__sl-l" d="M10 ${y0 + 19}L48 ${y0 + d}V${y0 + d + t}L10 ${y0 + 19 + t}Z"/><path class="ddh__sl-r" d="M48 ${y0 + d}L86 ${y0 + 19}V${y0 + 19 + t}L48 ${y0 + d + t}Z"/><path class="ddh__sl-t" d="M48 ${y0}L86 ${y0 + 19}L48 ${y0 + d}L10 ${y0 + 19}Z"/></g>`; };
-    const icon = (a, b, thin) => `<svg class="ddh__iso" viewBox="0 0 96 74" width="96" height="74" aria-hidden="true" focusable="false"><ellipse class="ddh__iso-sh" cx="48" cy="${thin ? 61 : 67}" rx="30" ry="5"/>${slab(18, thin ? 8 : 16, b)}${slab(2, 7, a)}</svg>`;
+    const P1 = 'M1834.22,779.722L1834.6,769.453C1834.6,769.453 1845.4,766.834 1862.62,764.911C1901.54,760.562 1968.87,754.462 1987.17,752.497C1989.07,752.293 1991.01,752.289 1992.92,752.449C2016.47,754.424 2104.82,762.065 2128.48,764.349C2130.68,764.561 2133.63,764.49 2134.87,766.153C2136.1,767.815 2136,772.585 2135.89,774.325C2135.83,775.263 2135.13,776.344 2134.22,776.596C2111.39,782.956 2023.41,806.3 1998.91,812.486C1995.09,813.449 1991.03,814.483 1987.17,813.716C1959.72,808.255 1834.22,779.722 1834.22,779.722Z';
+    const P2 = 'M1997.91,845.653C2023.59,837.687 2111.82,807.097 2135.12,798.503C2136.72,797.911 2137.58,795.787 2137.71,794.085C2137.96,790.983 2136.92,782.659 2136.61,779.895C2136.51,779.061 2136.65,777.694 2135.84,777.5C2134.82,777.26 2132.28,777.991 2130.55,778.454C2108.37,784.396 2025.83,807.043 2002.76,813.15C1999.28,814.072 1995.73,815.068 1992.12,815.092C1987.94,815.12 1982.43,814.33 1977.69,813.317C1951.93,807.816 1861.56,787.472 1837.6,782.086C1836.34,781.804 1834.59,780.72 1833.9,780.999C1833.21,781.279 1833.5,782.831 1833.45,783.764C1833.34,786.302 1833.22,793.306 1833.23,796.225C1833.23,797.912 1833.3,799.883 1833.52,801.279C1833.7,802.422 1833.96,803.864 1834.53,804.599C1835.07,805.297 1836.09,805.45 1836.94,805.692C1861.36,812.641 1954.2,839.636 1981.03,846.297C1986.49,847.653 1992.53,847.321 1997.91,845.653Z';
+    const EDGE = 'M1835.26,769.928L1985.34,798.633C1985.34,798.633 1990.66,799.184 1993.31,798.983C1996.37,798.751 2000.29,798.03 2003.71,797.239C2027.23,791.807 2135.94,766.093 2134.4,766.39L2134.4,700L1835.26,700Z';
+    const defs = `<svg class="ddh__ico-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs><clipPath id="ddh-i-c"><path d="${EDGE}"/></clipPath><g id="ddh-i-t"><path d="${P1}" style="fill:var(--cl)"/><path d="${P1}" clip-path="url(#ddh-i-c)" style="fill:var(--ct)"/><path d="${P1}" style="fill:none;stroke:#fff;stroke-width:1.2px;vector-effect:non-scaling-stroke;stroke-linejoin:round"/></g><path id="ddh-i-m" d="${P2}" style="fill:var(--cl)"/></defs></svg>\n`;
+    const T = '<g transform="matrix(1.09065,0,0,1.35976,-95.9009,-471.421)"><g transform="matrix(3.9566,0,0,3.9566,-7130.96,-2596.56)">', E = '</g></g>';
+    const icon = (a, b, thin) => thin
+      ? `<svg class="ddh__iso" viewBox="30 38 1330 440" aria-hidden="true" focusable="false">${T}<g class="ddh__sl--${b}" transform="translate(0,15.5)"><use href="#ddh-i-t"/></g><g class="ddh__sl--${a}"><use href="#ddh-i-t"/></g>${E}</svg>`
+      : `<svg class="ddh__iso" viewBox="30 38 1330 540" aria-hidden="true" focusable="false"><ellipse class="ddh__iso-sh" cx="695" cy="562" rx="560" ry="14"/>${T}<g class="ddh__sl--${b}"><use href="#ddh-i-m"/></g><g class="ddh__sl--${a}"><use href="#ddh-i-t"/></g>${E}</svg>`;
     src = src.replace(/<!--ISO:(\w):(\w)-->/g, (m0, a, b) => icon(a, b, false)).replace(/<!--ISO2:(\w):(\w)-->/g, (m0, a, b) => icon(a, b, true));
+    src = src.replace('<div class="ddh__sheets">', '<div class="ddh__sheets">' + defs);
   }
   const keys = new Set([...src.matchAll(/\sdata-ta?="(\w+)"/g)].map((m) => m[1]));
   const out = path.join(rel, 'sheets'); fs.mkdirSync(out, { recursive: true });

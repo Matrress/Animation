@@ -1760,3 +1760,17 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh.ddh .ddh__dsk--tp .ddh__dsk-r{grid-column:3}
 .ddh .ddh__dsks--tp{--dr-w:54px}
 @container ddsh (max-height:800px){.ddh .ddh__sheet--topper .ddh__pv-b{display:none}}
+
+/* 1.17.2 header polish (no concept change)
+   - Dual Plush card on tablets held upright (744-834 wide): its last row (the two "View …" buttons) was cut by the card's lower edge.
+     The card is as tall as the free sky, so on short cards the content tightens in steps: the small eyebrow goes first, then row padding. */
+@container dpc (max-height:540px){.ddh .ddh__dpc-eye{display:none}.ddh .ddh__dpc-c li{padding:4px 9px}.ddh .ddh__dpc-c ul{gap:4px}.ddh .ddh__dpc-c h4{margin-bottom:4px}}
+@container dpc (max-height:500px){.ddh .ddh__dpc-in{padding-top:12px;padding-bottom:10px}.ddh .ddh__dpc-h{font-size:21px}.ddh .ddh__dpc-x{font-size:13px;line-height:1.42}.ddh .ddh__dpc-cta{gap:12px}}
+/* - the hint pill keeps "Explore the sleep system" on one line on tablets held upright */
+@media (min-width:701px){.ddh .ddh__hint{max-width:min(370px,46vw)}.ddh .ddh__hint b{white-space:nowrap}}
+/* - "All UK & EU Sizes" (stacked label, 1051-1320 wide): 13px like every other label, balanced two lines, same size as the spacer that centres the buttons */
+@media (min-width:1051px) and (max-width:1320px){.ddh .ddh__shop .ddh__sz,.ddh .ddh__shop:has(.ddh__sz:not([hidden]))::before{font-size:13px}.ddh .ddh__sz>span{text-wrap:balance}}
+
+/* - the Dual Plush icon is the owner's drawing (wide, 2.4:1): wider than the 1.17.1 isometric one so a row keeps its height */
+.ddh .ddh__ico-defs{position:absolute;width:0;height:0;overflow:hidden}
+.ddh .ddh__iso{width:calc(var(--dr-w,84px) * 1.4);height:auto;overflow:visible}
