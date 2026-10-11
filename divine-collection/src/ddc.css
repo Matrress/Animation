@@ -374,3 +374,13 @@
 .ddc .ddc__pt{display:block;margin-top:8px;padding:7px 12px;border-radius:12px;background:#e8eef3;font-size:17px;font-weight:600;line-height:1.35;color:#0b0f14}
 @container ddc (max-width:639px){.ddc .ddc__rd{margin-top:3px;padding:4px 7px}.ddc .ddc__pt{font-size:16px}}
 .ddc .ddc__rd{align-self:stretch}
+/* 3.6.0 density: the function cube costs height, so the rest of the tile is tighter and the pictures a little flatter */
+.ddc .ddc__bd::before{margin:0 0 4px}
+.ddc .ddc__bd{gap:2px;padding-top:2px}
+.ddc .ddc__rd{margin-top:3px;padding:3px 8px;font-size:14px}
+.ddc .ddc__lab{margin-bottom:8px;padding-block:6px 5px}
+.ddc .ddc__cube{padding:6px;gap:4px}
+@media (max-height:900px){.ddc{--thr:2.9/1}.ddc.ddc--topper{--thr:2.5/1}}
+@media (max-height:800px){.ddc{--thr:3.5/1}.ddc.ddc--topper{--thr:3.1/1}}
+@media (min-height:1000px){.ddc{--thr:2.75/1}.ddc.ddc--topper{--thr:2.1/1}}
+@container ddc (max-width:639px){.ddc .ddc__rd{font-size:13px;line-height:1.25;padding:3px 6px}}
