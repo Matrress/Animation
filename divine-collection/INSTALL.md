@@ -1,7 +1,7 @@
 # Divine DunlopDreams Collection 3.0.0 — installation and rollback
 
 Nothing below is done yet on the live store. Steps 1–2 are safe tests; steps 3–6 wait for Martin's approval.
-Pinned commit for every jsDelivr URL: `aa8638c6fa326dfb510eba4c1fcb983af7449afa` (written into every file in `ecwid/` by the build).
+Pinned commit for every jsDelivr URL: `29f910dae32eaef85c9c25142a62f4f29f4d5b42` (written into every file in `ecwid/` by the build).
 
 ## 0. Files
 | File | Where it goes |
