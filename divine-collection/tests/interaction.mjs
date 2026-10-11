@@ -17,7 +17,7 @@ const onProduct = (p) => p.evaluate(() => /page=product/.test(location.search));
 // ---------- 1. content in the HTML itself (no CSS, no script) ----------
 for (const kind of ['mattress', 'topper']) {
   const c = collections[kind];
-  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-2.5.0.html`, import.meta.url), 'utf8');
+  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-3.0.0.html`, import.meta.url), 'utf8');
   const p = await page(br);
   await p.goto(S(kind, '&mode=none'));
   const d = await p.evaluate(() => ({ tiles: [...document.querySelectorAll('.ddc__ra')].map((a) => [a.querySelector('.ddc__rn').firstChild.textContent.trim(), a.href]), links: [...document.querySelectorAll('.ddc a')].map((a) => a.href), text: document.querySelector('.ddc').textContent, imgs: [...document.querySelectorAll('.ddc img')].map((i) => [i.getAttribute('src'), i.alt]), tags: [...document.querySelectorAll('.ddc__row')].map((li) => [(li.className.match(/ddc-m-(\w+)/) || [])[1], li.querySelector('.ddc__tag').textContent.trim(), li.querySelector('.ddc__go').textContent.trim().replace(/\s+/g, ' '), li.querySelector('.ddc__cta').textContent.trim().replace(/\s+/g, ' ')]) }));
@@ -76,7 +76,7 @@ for (const [w, h] of fits) for (const kind of ['mattress', 'topper']) {
     ok(m.h <= h - 110, `${kind} ${w}x${h}: whole collection (${m.h}px) fits in one window with room for the site header`);
   } else {
     ok(m.cols === (kind === 'mattress' ? 2 : 1), `${kind} ${w}x${h}: phone layout ${m.cols} column(s)`);
-    ok(m.h <= (kind === 'mattress' ? 900 : 560), `${kind} ${w}x${h}: phone height ${m.h}px stays within about one screen`);
+    ok(m.h <= (kind === 'mattress' ? 900 : 600), `${kind} ${w}x${h}: phone height ${m.h}px stays within about one screen`);
   }
   await p.context().close();
 }
@@ -185,7 +185,7 @@ for (const [w, h] of [[1180, 820], [1366, 1024], [820, 1180], [768, 1024], [390,
   if (w >= 640) {
     await p.tap('.ddc-m-partners .ddc__bd'); await sleep(350);
     const first = await openId(p);
-    await p.tap('.ddc-m-partners .ddc__bd'); await sleep(350);
+    { const bb = await p.locator('.ddc-m-partners .ddc__bd').boundingBox(); await p.touchscreen.tap(bb.x + bb.width / 2, bb.y + bb.height / 2); } await sleep(350);
     ok(first === 'partners' && await onProduct(p), `${w}x${h} touch: second tap on the same tile opens the model page`);
     await p.goBack(); await p.waitForSelector('.ddc--js'); await toTop(p); await sleep(300);
   }

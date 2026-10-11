@@ -1,9 +1,9 @@
-/* Divine DunlopDreams Collection 2.5.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+/* Divine DunlopDreams Collection 3.0.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
    Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
    Layout follows the width of the description itself (container queries) and, for density, the window height (media queries).
-   Visual language: clean, white, airy, flat (the Tesla web-store feel): Chillax 400/600, near-black text, light-grey picture panels, one blue button; the family colour is only a thin edge (кант) and a small label, never a fill.
+   Cubism: every block (tile, picture, text, facts, buy, step, family heading) is a rounded cube with equal gaps, so the eye sorts the page logically. Visual language: clean, white, airy, flat (the Tesla web-store feel): Chillax 400/600, near-black text, light-grey picture panels, one blue button; the family colour is only a thin edge (кант) and a small label, never a fill.
    Structure: header (question, who-is-it-for guide, selection path) · tiles (families side by side, two or one pictures each) · footer line.
    A tile is a real link to the model page. Hover / keyboard focus (tap on touch) opens a floating card (.ddc__pop) beside the tile. */
 
@@ -56,11 +56,8 @@
 .ddc .ddc__st--now :is(.ddc__st-t,.ddc__st-w){color:#fff}
 .ddc .ddc__st--now .ddc__st-n{background:#fff;color:var(--ink)}
 @container ddc (min-width:700px){
-  .ddc .ddc__path{flex-wrap:nowrap;gap:0}
-  .ddc .ddc__st{flex:1 1 0;padding:8px 26px 8px 26px;border-radius:0;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%,14px 50%)}
-  .ddc .ddc__st:first-child{padding-left:10px;border-radius:14px 0 0 14px;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%)}
-  .ddc .ddc__st:last-child{border-radius:0 14px 14px 0;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,14px 50%)}
-  .ddc .ddc__st+.ddc__st{margin-left:-8px}
+  .ddc .ddc__path{flex-wrap:nowrap;gap:8px}
+  .ddc .ddc__st{flex:1 1 0;padding:8px 14px 8px 10px;border-radius:14px}
 }
 
 /* ---------- tiles: families side by side; a family of two takes two columns, a family of one takes one ---------- */
@@ -68,7 +65,7 @@
 .ddc .ddc__fam{display:flex;flex-direction:column;min-width:0}
 .ddc .ddc__n2{grid-column:span 2}
 .ddc .ddc__n1{grid-column:span 1}
-.ddc .ddc__fam-h{display:block;margin:0 0 8px;padding:0 2px 7px;border-bottom:2px solid var(--fam)}
+.ddc .ddc__fam-h{display:block;margin:0 0 6px;padding:6px 10px 6px;border-radius:12px;background:var(--pale);border-bottom:3px solid var(--fam)}
 .ddc .ddc__fam-n{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.11em;line-height:1.3;text-transform:uppercase;color:var(--ink)}
 .ddc .ddc__fam-n::before{content:"";flex:none;width:16px;height:3px;border-radius:2px;background:var(--fl)}
 .ddc .ddc__fam-s{display:block;margin-top:1px;padding-left:24px;font-size:14.5px;line-height:1.3;color:var(--ink2)}
@@ -76,32 +73,32 @@
 .ddc .ddc__n1 .ddc__rows{--n:1}
 .ddc .ddc__row{display:block;min-width:0}
 /* a tile is a dark card: picture on a dark spotlight, name and key line below, a thin family-colour edge (кант) along the top, Buy now on the picture */
-.ddc .ddc__cube{position:relative;display:flex;flex-direction:column;height:100%;border-radius:16px;background:var(--tile);box-shadow:inset 0 0 0 1px var(--line);overflow:hidden;transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease}
+.ddc .ddc__cube{position:relative;display:flex;flex-direction:column;height:100%;gap:6px;padding:7px;border-radius:20px;background:var(--tile);box-shadow:inset 0 0 0 1px var(--line);overflow:hidden;transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease}
 .ddc .ddc__cube::before{content:"";position:absolute;left:0;right:0;top:0;z-index:2;height:3px;background:var(--fam);pointer-events:none}
 @media (any-hover:hover){.ddc .ddc__cube:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px #c4c6c9,0 14px 26px -14px rgba(23,26,32,.35)}}
 .ddc .ddc__row.is-open .ddc__cube{transform:translateY(-2px);box-shadow:inset 0 0 0 1px var(--fl),0 14px 26px -14px rgba(23,26,32,.35)}
-.ddc .ddc__ra{display:flex;flex-direction:column;flex:1 1 auto;color:var(--ink)}
-.ddc .ddc__ra:focus-visible{outline-offset:-4px;border-radius:16px}
-.ddc .ddc__th{position:relative;display:block;flex:none;aspect-ratio:var(--thr,2.4/1);background:#f4f4f4;overflow:hidden}
+.ddc .ddc__ra{display:flex;flex-direction:column;gap:6px;flex:1 1 auto;color:var(--ink)}
+.ddc .ddc__ra:focus-visible{outline-offset:-3px;border-radius:14px}
+.ddc .ddc__th{position:relative;display:block;flex:none;aspect-ratio:var(--thr,2.4/1);background:#f4f4f4;border-radius:14px;overflow:hidden}
 .ddc .ddc__th img{position:absolute;left:10px;top:8px;width:calc(100% - 20px);height:calc(100% - 16px);object-fit:contain;filter:drop-shadow(0 8px 9px rgba(23,26,32,.28))}
 .ddc .ddc__th--photo img{left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%;filter:none}
-.ddc .ddc__bd{display:flex;flex:1 1 auto;flex-direction:column;align-items:flex-start;gap:3px;padding:10px 12px 12px}
+.ddc .ddc__bd{display:flex;flex:1 1 auto;flex-direction:column;align-items:flex-start;gap:3px;padding:3px 6px 2px}
 .ddc .ddc__tag{display:inline-block;padding:1px 8px;border-radius:7px;background:none;box-shadow:inset 0 0 0 1px var(--fam);color:var(--fl);font-size:12px;font-weight:600;letter-spacing:.09em;line-height:1.35;text-transform:uppercase}
 .ddc .ddc__rn{display:block;margin-top:2px;font-size:18px;font-weight:600;line-height:1.2;color:var(--ink)}
 .ddc .ddc__rd{display:block;font-size:15px;line-height:1.3;color:var(--ink2)}
-.ddc .ddc__go{position:absolute;top:10px;right:10px;z-index:2;display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:6px 14px;border-radius:999px;background:var(--btn);color:#fff;font-size:15px;font-weight:600;line-height:1.1;box-shadow:0 4px 12px -4px rgba(23,26,32,.45)}
+.ddc .ddc__go{position:relative;z-index:2;display:flex;flex:none;align-items:center;justify-content:center;gap:9px;min-height:40px;padding:8px 14px;border-radius:12px;background:var(--btn);color:#fff;font-size:16px;font-weight:600;letter-spacing:.09em;line-height:1.1;text-transform:uppercase}
 .ddc .ddc__go::after{content:"";width:7px;height:7px;border-right:2px solid #fff;border-top:2px solid #fff;transform:rotate(45deg)}
 @media (any-hover:hover){.ddc .ddc__go:hover{background:var(--btnh)}}
 @media (any-hover:none){.ddc .ddc__go{min-height:44px;padding:8px 16px}}
 .ddc .ddc__dp{display:inline-block;padding:2px 8px;border-radius:8px;background:var(--chipl);color:var(--ink);font-size:12.5px;font-weight:600;letter-spacing:.06em;line-height:1.35;text-transform:uppercase;white-space:nowrap;vertical-align:middle}
 
 /* footer line: the three facts that apply to the whole collection */
-.ddc .ddc__foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 22px;padding:12px 20px 14px;border-top:1px solid var(--line);border-radius:0 0 22px 22px;background:var(--bg);font-size:15px;line-height:1.4;color:var(--ink2)}
-.ddc .ddc__foot li{position:relative;padding-left:22px}
-.ddc .ddc__foot li::before{content:"";position:absolute;left:2px;top:4px;width:6px;height:11px;border-right:2.5px solid var(--fl,#6bb4e8);border-bottom:2.5px solid var(--fl,#6bb4e8);transform:rotate(40deg)}
+.ddc .ddc__foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px 18px 14px;border-top:1px solid var(--line);border-radius:0 0 22px 22px;background:var(--bg);font-size:15px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__foot li{position:relative;padding:8px 12px 8px 34px;border-radius:12px;background:var(--pale)}
+.ddc .ddc__foot li::before{content:"";position:absolute;left:14px;top:10px;width:6px;height:11px;border-right:2.5px solid var(--fl,#6bb4e8);border-bottom:2.5px solid var(--fl,#6bb4e8);transform:rotate(40deg)}
 
 /* ---------- the floating card: hidden without JavaScript; the script places it beside the tile ---------- */
-.ddc .ddc__pop{display:none;position:absolute;z-index:40;top:0;left:0;width:min(900px,calc(100% - 16px));overflow:auto;padding:16px 18px 16px;border-radius:18px;border-top:3px solid var(--fam);background:var(--tile);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 26px 56px -16px rgba(23,26,32,.45)}
+.ddc .ddc__pop{display:none;position:absolute;z-index:40;top:0;left:0;width:min(900px,calc(100% - 16px));overflow:auto;padding:16px 18px 16px;border-radius:24px;border-top:3px solid var(--fam);background:var(--tile);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 26px 56px -16px rgba(23,26,32,.45)}
 .ddc .ddc__row.is-open .ddc__pop{display:block;cursor:pointer}
 .ddc.ddc--js .ddc__row.is-open .ddc__pop.is-in{animation:ddc-in .16s ease-out both}
 @keyframes ddc-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
@@ -124,7 +121,7 @@
 .ddc .ddc__pop.is-sheet{position:fixed;left:8px;right:8px;top:auto;bottom:calc(8px + env(safe-area-inset-bottom,0px));width:auto;max-height:84vh;z-index:2147483000;box-shadow:0 0 0 1px var(--line),0 -10px 40px -8px rgba(23,26,32,.4)}
 .ddc .ddc__pop.is-sheet .ddc__dpn{display:none}
 .ddc .ddc__pop.is-sheet .ddc__acts{flex:1 1 100%}
-.ddc .ddc__pfig{position:relative;margin:0 0 10px;aspect-ratio:2.2/1;border-radius:14px;background:#f4f4f4;overflow:hidden}
+.ddc .ddc__pfig{position:relative;margin:0 0 10px;aspect-ratio:2.2/1;border-radius:16px;background:#f4f4f4;overflow:hidden}
 .ddc .ddc__pfig img{position:absolute;left:10px;top:8px;width:calc(100% - 20px);height:calc(100% - 16px);object-fit:contain;filter:drop-shadow(0 9px 10px rgba(23,26,32,.28))}
 .ddc .ddc__pop.is-wide .ddc__pfig{margin-bottom:10px}
 .ddc .ddc__crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding-right:48px;font-size:12.5px;font-weight:600;letter-spacing:.09em;line-height:1.3;text-transform:uppercase;color:var(--ink2)}
@@ -133,12 +130,14 @@
 .ddc .ddc__crumb-f::before{content:"";width:16px;height:3px;border-radius:2px;background:var(--fl)}
 .ddc .ddc__pn{margin-top:4px;font-size:26px;font-weight:600;line-height:1.15;color:var(--ink)}
 .ddc .ddc__pt{margin-top:3px;font-size:16.5px;font-weight:600;line-height:1.3;color:var(--lab)}
-.ddc .ddc__what{margin-top:10px;font-size:15.5px;line-height:1.5;color:var(--ink2)}
+.ddc .ddc__px{padding:12px 14px;border-radius:16px;background:rgba(244,244,244,.8)}
+.ddc .ddc__pb .ddc__ph{margin-bottom:10px}
+.ddc .ddc__what{margin-top:0;font-size:15.5px;line-height:1.5;color:var(--ink2)}
 .ddc .ddc__who{margin-top:8px;font-size:15.5px;line-height:1.5;color:var(--ink2)}
 .ddc .ddc__who b{color:var(--ink)}
-.ddc .ddc__dpn{display:flex;align-items:center;gap:8px;margin-top:10px;padding:4px 12px 4px 0;border-radius:12px;background:rgba(244,244,244,.8);font-size:14.5px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__dpn{display:flex;align-items:center;gap:8px;margin-top:10px;padding:4px 12px 4px 0;border-radius:14px;background:#fff;font-size:14.5px;line-height:1.4;color:var(--ink2)}
 .ddc .ddc__dpn b{color:var(--ink)}
-.ddc .ddc__pf{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0;padding:10px 12px;border-radius:12px;background:rgba(244,244,244,.8)}
+.ddc .ddc__pf{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:0;padding:10px 12px;border-radius:16px;background:rgba(244,244,244,.8)}
 .ddc .ddc__pk{margin-bottom:5px;font-size:12.5px;font-weight:600;letter-spacing:.11em;line-height:1.3;text-transform:uppercase;color:var(--lab)}
 .ddc .ddc__dl,.ddc .ddc__fz{display:flex;flex-wrap:wrap;gap:5px}
 .ddc .ddc__d{display:inline-block;padding:3px 9px;border-radius:9px;background:var(--chip);box-shadow:inset 0 0 0 1px var(--chipl);font-size:14.5px;font-weight:600;line-height:1.3;color:var(--ink);white-space:nowrap}
@@ -147,10 +146,10 @@
 .ddc .ddc__mc{display:grid;gap:5px}
 .ddc .ddc__mc li{display:flex;flex-wrap:wrap;align-items:center;gap:3px 6px;font-size:14.5px;line-height:1.3;color:var(--ink)}
 .ddc .ddc__pfoot{position:sticky;bottom:-16px;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px 0 0;background:rgba(255,255,255,.9)}
-.ddc .ddc__buy{flex:1 1 280px;min-width:0;padding:10px 12px;border-radius:12px;background:rgba(244,244,244,.8);font-size:15px;line-height:1.4;color:var(--ink2)}
+.ddc .ddc__buy{flex:1 1 280px;min-width:0;padding:10px 12px;border-radius:16px;background:rgba(244,244,244,.8);font-size:15px;line-height:1.4;color:var(--ink2)}
 .ddc .ddc__buy b{color:var(--ink)}
 .ddc .ddc__acts{flex:0 1 240px;min-width:200px}
-.ddc .ddc__cta{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:10px 22px;border-radius:999px;background:var(--btn);color:#fff;font-size:18px;font-weight:600;line-height:1.2}
+.ddc .ddc__cta{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:10px 22px;border-radius:16px;background:var(--btn);color:#fff;font-size:20px;font-weight:600;letter-spacing:.09em;line-height:1.2;text-transform:uppercase}
 .ddc .ddc__cta *{color:#fff}
 .ddc .ddc__cta::after{content:"";width:9px;height:9px;border-right:2.5px solid #fff;border-top:2.5px solid #fff;transform:rotate(45deg)}
 @media (any-hover:hover){.ddc .ddc__cta:hover{background:var(--btnh)}}
@@ -178,17 +177,26 @@
 
 /* ---------- density: shorter windows get flatter pictures and drop the optional lines, so the whole map stays on one screen ---------- */
 @media (max-height:900px){
+  .ddc .ddc__go{min-height:34px;padding:6px 12px;font-size:14.5px}
+  .ddc .ddc__fam-h{padding-block:4px}
   .ddc{--thr:2.6/1}
   .ddc.ddc--topper{--thr:2.4/1}
   .ddc .ddc__fam-s,.ddc .ddc__lede,.ddc .ddc__foot{display:none}
   .ddc .ddc__hd{padding:14px 18px 12px}
   .ddc .ddc__tiles{padding:12px 16px 14px;gap:10px 12px}
 }
-@media (max-height:800px){.ddc .ddc__pfig{aspect-ratio:2.7/1}.ddc .ddc__rn{font-size:17px}.ddc{--thr:3.3/1}.ddc.ddc--topper{--thr:3/1}}
-@media (min-height:1000px){.ddc{--thr:2.1/1}.ddc.ddc--topper{--thr:1.9/1}}
+@media (max-height:800px){
+  .ddc .ddc__go{position:absolute;top:13px;right:13px;min-height:30px;padding:4px 10px;border-radius:10px;font-size:13px;letter-spacing:.08em}  .ddc .ddc__cube{padding:6px}
+  .ddc .ddc__st-w{display:none}
+  .ddc .ddc__pfig{aspect-ratio:2.7/1}.ddc .ddc__rn{font-size:17px}.ddc{--thr:3.3/1}.ddc.ddc--topper{--thr:3/1}}
+@media (min-height:1000px){.ddc{--thr:2.35/1}.ddc.ddc--topper{--thr:1.9/1}}
 /* family headers keep one height so that tiles of different families start on the same line even when a name wraps */
 @container ddc (max-width:1099px){
+  .ddc .ddc__go{position:absolute;top:13px;right:13px;min-height:30px;padding:4px 10px;border-radius:10px;font-size:13px;letter-spacing:.08em}
+  .ddc .ddc__cube{padding:6px}
   .ddc .ddc__fam-h{min-height:46px}
+  .ddc .ddc__st-w{display:none}
+  .ddc .ddc__st{padding-block:6px}
   .ddc .ddc__bd{padding:7px 10px 9px}
   .ddc .ddc__rn{font-size:16.5px}
   .ddc .ddc__rd{font-size:14.5px}
@@ -202,7 +210,7 @@
   .ddc .ddc__rn{font-size:16px}
   .ddc .ddc__rd{font-size:14.5px}
   .ddc .ddc__tag{font-size:11px;padding:2px 7px}
-  .ddc .ddc__go{top:6px;right:6px;padding:5px 11px;font-size:14px}
+  .ddc .ddc__go{min-height:36px;padding:6px 10px;font-size:14px}
   .ddc .ddc__fam-s{display:none}
   .ddc .ddc__foot{grid-template-columns:1fr;padding:10px 14px 12px}
 }
@@ -223,25 +231,27 @@
   .ddc .ddc__n2,.ddc .ddc__n1{grid-column:span 1;display:contents}
   .ddc .ddc__rows,.ddc .ddc__n1 .ddc__rows{display:contents}
   .ddc{--thr:2.1/1}
-  .ddc .ddc__cube{border-radius:14px}
+  .ddc .ddc__cube{border-radius:16px;padding:5px;gap:4px}
   .ddc .ddc__bd{gap:1px;padding:6px 8px 8px}
   .ddc .ddc__tag{font-size:10.5px;padding:1px 6px;border-radius:6px}
   .ddc .ddc__rn{margin-top:1px;font-size:15.5px;line-height:1.2}
   .ddc .ddc__rd{font-size:13.5px;line-height:1.25}
-  .ddc .ddc__go{top:5px;right:5px;min-height:30px;padding:3px 9px;font-size:12.5px;box-shadow:0 3px 8px -3px rgba(23,26,32,.45)}
+  .ddc .ddc__go{min-height:34px;padding:4px 8px;font-size:13px;letter-spacing:.06em}
   .ddc .ddc__go::after{display:none}
   .ddc .ddc__pop{padding:14px 14px 16px}
   .ddc .ddc__pn{font-size:21px}
   /* toppers: three wide rows with the Buy now button at the end */
   .ddc.ddc--topper .ddc__tiles{grid-template-columns:minmax(0,1fr)}
-  .ddc.ddc--topper .ddc__cube{flex-direction:row;align-items:stretch}
-  .ddc.ddc--topper .ddc__ra{flex-direction:row;align-items:stretch}
+  .ddc.ddc--topper .ddc__cube{flex-direction:row;flex-wrap:wrap;align-items:stretch}
+  .ddc.ddc--topper .ddc__ra{flex:1 1 100%;flex-direction:row;align-items:stretch}
   .ddc.ddc--topper .ddc__th{flex:none;width:104px;aspect-ratio:auto;min-height:70px}
   .ddc.ddc--topper .ddc__th img{left:6px;top:5px;width:calc(100% - 12px);height:calc(100% - 10px)}
   .ddc.ddc--topper .ddc__bd{justify-content:center;padding:6px 8px 7px 10px}
-  .ddc.ddc--topper .ddc__go{position:static;align-self:center;flex:none;margin:0 8px 0 0;min-height:40px;padding:6px 12px;box-shadow:none}
+  .ddc.ddc--topper .ddc__go{position:relative;top:auto;right:auto;flex:1 1 100%;align-self:stretch;margin:0;min-height:34px;padding:4px 10px;box-shadow:none}
   .ddc.ddc--topper .ddc__go::after{display:none}
 }
 
 /* ---------- motion ---------- */
 @media (prefers-reduced-motion:reduce){.ddc *,.ddc *::before,.ddc *::after{animation:none;transition:none}}
+@media (max-height:900px){@container ddc (max-width:1099px){.ddc .ddc__fam-h{min-height:0}}}
+@media (any-hover:none){.ddc .ddc__go{min-height:44px}.ddc.ddc--topper .ddc__go{min-height:38px}}

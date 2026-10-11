@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.0 (2026-10-11)
+Owner direction: everything in cubism (rounded cubes), the model card a cube holding picture and information, **BUY NOW** in big letters at the bottom of the card.
+- Every block is a rounded cube with equal gaps: tile, picture, information, Buy now, selection steps, family headings, footer notes and every section of the preview card. The family colour stays a thin edge (3 px on top of the tile, 3 px under the heading).
+- **BUY NOW** (uppercase, large) is a full-width block at the bottom of each tile and a large block at the bottom of the preview card.
+- Where the window is short or narrow (up to 800 px high, or a description narrower than 1100 px, and on phones) the button becomes a compact BUY NOW cube in the corner of the picture so that the whole map still fits on one screen; family headings keep a single line there.
+- Touch: when the preview card covers its own tile, a tap on the card opens the model page (like a click with the mouse).
+- Phone toppers: picture and text in a row, BUY NOW as a bar under them.
+- Descriptions are unchanged (CSS and script only).
+
 ## 2.5.0 (2026-10-11)
 Owner feedback after 2.4.0: the green button is toxic, use the blue range; the watermark must be one leaf, not a branch.
 - **Buy now** is a calm deep-sea blue (#23628f, hover #184a6e; white text, contrast 6.5:1); focus outline in the same blue.

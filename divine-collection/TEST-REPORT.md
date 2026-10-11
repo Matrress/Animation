@@ -1,4 +1,4 @@
-# Test report — Divine DunlopDreams Collection 2.5.0 (2026-10-10)
+# Test report — Divine DunlopDreams Collection 3.0.0 (2026-10-10)
 
 Environment: Chromium (Playwright 1.56) on `preview/sim.html`, an imitation of an Ecwid Instant Site category page: id-prefixed storefront CSS (uppercase serif headings, underlined bold links, black uppercase buttons, centred text, bordered images, inflated line-height), in-store navigation that re-renders the description through `innerHTML`, a stand-in `Ecwid.OnPageLoaded`, a sticky site header and the native grid with the £0 / £0.90 prices. jsDelivr URLs are served from the local repository (byte-identical pinned files). **Not yet tested on the live Ecwid store, on a physical iPad or phone, or in Safari / Firefox**: that is the Phase-1 probe and INSTALL.md step 4.
 
@@ -21,17 +21,17 @@ Environment: Chromium (Playwright 1.56) on `preview/sim.html`, an imitation of a
 ## Measured component heights (px), everything on one screen
 | Window | Mattresses | Toppers |
 |---|---|---|
-| Laptop 1280×720 | 551 | 372 |
-| 1366×768 | 560 | 379 |
-| Monitor 1440×900 | 610 | 413 |
-| Monitor 1920×1080 | 874 | 621 |
-| iPad landscape 1180×820 | 640 | 440 |
-| iPad landscape 1024×768 | 650 | 412 |
-| iPad portrait 820×1180 | 871 | 604 |
-| iPad portrait 768×1024 | 859 | 634 |
-| iPhone 390×844 | 789 | 420 |
-| Phone 360×740 | 767 | 514 |
-| Phone 430×932 | 824 | 405 |
+| Laptop 1280×720 | 527 | 354 |
+| 1366×768 | 537 | 361 |
+| Monitor 1440×900 | 680 | 448 |
+| Monitor 1920×1080 | 946 | 678 |
+| iPad landscape 1180×820 | 583 | 392 |
+| iPad landscape 1024×768 | 618 | 367 |
+| iPad portrait 820×1180 | 906 | 646 |
+| iPad portrait 768×1024 | 896 | 676 |
+| iPhone 390×844 | 857 | 514 |
+| Phone 360×740 | 819 | 591 |
+| Phone 430×932 | 889 | 514 |
 
 The test asserts that on windows at least 700 px wide the component is at most (window height − 110 px), which leaves room for the site header. The Ecwid category title and breadcrumbs above the component are not counted. On phones five families, eight models and the path need about 720–750 px: this fits the screen below a compact header and otherwise needs one short swipe; the picture rows are as small as they can be while staying readable and tappable.
 
