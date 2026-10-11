@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.2.0 (2026-10-11)
+Owner feedback from the live test on iPad.
+- **Dual Plush is explained as a graphic**, not a paragraph: the supplied artwork (`src/assets/dual-plush.svg`, from the owner's SVG) with the topper above and the mattress below, a labelled legend with arrows, the firmness of each layer and its thickness (e.g. topper 5 or 8 cm, mattress 18 or 20 cm). The text paragraph is gone. Shown in the two Dual Plush cards.
+- **Button text: "View model & buy"** (big bar on the tile and in the card); where the button is a small corner chip it reads "View & buy". It says there is something to see and choose before buying.
+- **Readability of the card**: darker and larger text (16.5 px), solid grey boxes instead of see-through layers, darker labels.
+- **Organic**: the long faint words are replaced by a clear badge (leaf + "ORGANIC") in the header of every card, plus a faint leaf behind.
+- Mattress and topper descriptions changed (button text, Dual Plush graphic).
+
 ## 3.1.0 (2026-10-11)
 Owner feedback after 3.0.0.
 - Ambient: tile line "Best Value latex mattress". Hotel Line: tile line "Shredded latex mattress"; the "for hotels" restriction is gone from the tile, card title and text (it now suits the home and hospitality projects).

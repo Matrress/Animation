@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collections, FIRM, HERO_ASSETS } from './src/data.mjs';
 
-const VERSION = '3.1.0';
+const VERSION = '3.2.0';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DDC_REF || 'main-preview';
 const CDN = `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-collection/release/${VERSION}/`;
@@ -33,22 +33,29 @@ function facts(m) {
 
 // the floating card: opens on hover / focus (tap on touch); picture, explanation, facts, then the way to buy
 function pop(c, m, fam, imgBase, ownBase) {
-  const dp = m.dp && c.dualPlush ? `<p class="ddc__dpn">${iso('s', 'm')}<span><b>Dual Plush.</b> ${esc(c.dualPlush.p)}</span></p>` : '';
+  // Dual Plush is explained as a graphic: the topper above, the mattress below, each with its firmness and thickness
+  let dp = '';
+  if (m.dp && m.firm.pairs) {
+    const uniq = (a) => [...new Set(a)];
+    const th = m.depth.items.map((d) => d.match(/(\d+) \+ (\d+)/)).filter(Boolean);
+    const cm = (k) => uniq(th.map((x) => x[k])).join(' or ') + ' cm';
+    dp = `<div class="ddc__dpg"><img class="ddc__dpg-i" src="${ownBase}dual-plush.svg" width="300" height="122" loading="lazy" decoding="async" alt="Dual Plush system: a latex topper above, a latex mattress below"><ul class="ddc__dpg-l"><li class="ddc__dpg-t"><span class="ddc__dpg-n">Above: latex topper</span><span class="ddc__dpg-c">${uniq(m.firm.pairs.map((p) => p[0])).map(f).join(' ')}</span><span class="ddc__d">${cm(2)}</span></li><li class="ddc__dpg-b"><span class="ddc__dpg-n">Below: latex mattress</span><span class="ddc__dpg-c">${uniq(m.firm.pairs.map((p) => p[1])).map(f).join(' ')}</span><span class="ddc__d">${cm(1)}</span></li></ul><p class="ddc__dpg-x">Chosen together: one sleep system.</p></div>`;
+  }
   const big = m.img.big ? { src: imgBase + m.img.big, w: m.img.bw, h: m.img.bh } : { src: (m.img.own ? ownBase : imgBase) + m.img.src, w: m.img.w, h: m.img.h };
-  return `<div class="ddc__pop ddc-f-${fam.id}" role="group" aria-label="${esc(m.name)}: preview">
+  return `<div class="ddc__pop ddc-f-${fam.id}${dp ? ' ddc__pop--g' : ''}" role="group" aria-label="${esc(m.name)}: preview">
 <div class="ddc__pb">
 <div class="ddc__ph"><p class="ddc__crumb"><span class="ddc__crumb-f">${esc(fam.name)}</span>${m.dp ? '<span class="ddc__dp">Dual Plush</span>' : ''}</p>
 <h3 class="ddc__pn">${esc(m.name)}</h3>
 <p class="ddc__pt">${esc(m.title)}</p></div>
 <div class="ddc__px"><p class="ddc__what">${esc(m.what)}</p>
 <p class="ddc__who"><b>Who it suits.</b> ${esc(m.who)}</p>
-${dp}</div>
+</div>
 </div>
 <div class="ddc__pa">
 <figure class="ddc__pfig"><img src="${big.src}" width="${Math.min(big.w, 520)}" height="${Math.round(big.h * Math.min(big.w, 520) / big.w)}" loading="lazy" decoding="async" alt="${esc(m.img.alt)}"></figure>
 ${facts(m)}</div>
-<div class="ddc__pfoot"><p class="ddc__buy"><b>You buy on the model page.</b> ${esc(c.buy)}</p>
-<p class="ddc__acts"><a class="ddc__cta" href="${m.url}">Buy now<span class="ddc__sr"> ${esc(m.name)}</span></a></p></div>
+${dp}<div class="ddc__pfoot"><p class="ddc__buy"><b>You buy on the model page.</b> ${esc(c.buy)}</p>
+<p class="ddc__acts"><a class="ddc__cta" href="${m.url}">View model &amp; buy<span class="ddc__sr"> ${esc(m.name)}</span></a></p></div>
 </div>`;
 }
 
@@ -56,7 +63,7 @@ function description(c, imgBase, ownBase) {
   const byId = Object.fromEntries(c.models.map((m) => [m.id, m]));
   const steps = c.steps.map((s, i) => `<li class="ddc__st${i === 0 ? ' ddc__st--now' : ''}"><span class="ddc__st-n">${i + 1}</span><span class="ddc__st-x"><span class="ddc__st-t">${esc(s)}</span><span class="ddc__st-w">${esc(c.stepNotes[i])}</span></span></li>`).join('');
   // a tile is a colour block: picture on a tinted panel, a band in the family colour with the family label, the name and one key line, and a Buy now button
-  const tile = (m, fa) => `<li class="ddc__row ddc-m-${m.id} ddc-f-${fa.id}"><div class="ddc__cube"><a class="ddc__ra" href="${m.url}"><span class="ddc__th${m.img.photo ? ' ddc__th--photo' : ''}"><img src="${(m.img.own ? ownBase : imgBase) + m.img.src}" width="280" height="${Math.round(m.img.h * 280 / m.img.w)}" loading="lazy" decoding="async" alt=""></span><span class="ddc__bd"><span class="ddc__tag">${esc(fa.name)}</span><span class="ddc__rn">${esc(m.name)}</span><span class="ddc__rd">${esc(m.row)}</span></span></a><a class="ddc__go" href="${m.url}">Buy now<span class="ddc__sr"> ${esc(m.name)}</span></a></div>${pop(c, m, fa, imgBase, ownBase)}</li>`;
+  const tile = (m, fa) => `<li class="ddc__row ddc-m-${m.id} ddc-f-${fa.id}"><div class="ddc__cube"><a class="ddc__ra" href="${m.url}"><span class="ddc__th${m.img.photo ? ' ddc__th--photo' : ''}"><img src="${(m.img.own ? ownBase : imgBase) + m.img.src}" width="280" height="${Math.round(m.img.h * 280 / m.img.w)}" loading="lazy" decoding="async" alt=""></span><span class="ddc__bd"><span class="ddc__tag">${esc(fa.name)}</span><span class="ddc__rn">${esc(m.name)}</span><span class="ddc__rd">${esc(m.row)}</span></span></a><a class="ddc__go" href="${m.url}">View<span class="ddc__vm"> model</span> &amp; buy<span class="ddc__sr"> ${esc(m.name)}</span></a></div>${pop(c, m, fa, imgBase, ownBase)}</li>`;
   const fams = c.families.map((fa) => `<div class="ddc__fam ddc__fam--${fa.id} ddc__n${fa.models.length}"><h3 class="ddc__fam-h"><span class="ddc__fam-n">${esc(fa.name)}</span><span class="ddc__fam-s">${esc(fa.says)}</span></h3><ul class="ddc__rows">${fa.models.map((id) => tile(byId[id], fa)).join('')}</ul></div>`).join('\n');
   const foot = c.footer.map((t) => `<li>${esc(t)}</li>`).join('');
   return `<!-- Divine DunlopDreams Collection ${VERSION} · ${c.key} · generated by divine-collection/build.mjs: edit src/data.mjs, not this file -->
