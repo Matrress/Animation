@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.7.0 (2026-10-11)
+Owner feedback: the previous key lines must stay (below), and a new "what it is" line is added above them, in the small and the big card, so a customer always sees that they receive a latex mattress (and for SEO).
+- Small card, top to bottom: name, **type line**, function cube, old key line. Type lines: Botanic: Original Dunlop latex mattress; Botanic Dual Plush: Original Dunlop latex mattress + topper in one system; Bio Comfort: Innovative Dunlop latex mattress; Bio Comfort Dual Plush: Innovative Dunlop latex mattress + topper; Orthopaedic: Latex mattress for heavier people, very firm comfort; Partners: Latex mattress for partners; Ambient: Dunlop latex mattress; Hotel Line: Dunlop shredded latex mattress.
+- Big card: name, type line, function cube, old key line.
+- To keep the whole map on one screen: full on large windows (about 1440x900 and up); on medium windows the old key line shows only in the big card; on tight windows (up to 800 px high, or narrow tablets) the type line too. All lines stay in the page text (SEO).
+- Mattress description changed; the topper description is unchanged.
+
 ## 3.6.0 (2026-10-11)
 Owner request: a function line for every model, in the small and the big card (what the model is for: an orientation).
 - Botanic: Support and adaptation. Botanic Dual Plush: Cloud effect with support and adaptation. Bio Comfort: Fine support and adaptation. Bio Comfort Dual Plush: Cloud Comfort: highest level, lightest adaptation, Cloud support. Orthopaedic Coconut Coir: Firm comfort. Mattress for Partners: Two different firmnesses for partners. Ambient: Best Value, with adaptation and support. Hotel Line: Supportive comfort.

@@ -14,3 +14,5 @@
 12. **Badge word follows the product:** "Organic" in the preview card, but "Natural" on Ambient and Hotel Line (the Best Value models).
 13. **Preview card text is near-black (#0b0f14), at least 16.5 px for reading text, on solid boxes.** Contrast and clarity before decoration.
 14. **Every model shows its function line** (what it is for) in the small card and in the big card, with the same words. It is an orientation, not decoration.
+
+15. **Every model states what it is** ("... latex mattress") above its other lines, in the small and the big card, so a customer is always sure they get a latex mattress; this also serves SEO. Older key lines are never deleted: they stay below the newer lines (where space allows in the small card, always in the big card).
