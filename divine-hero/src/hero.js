@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.19.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.19.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.19.0';
+  var VERSION = '1.19.1';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -537,7 +537,7 @@
         on(szEl, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode === 'hover') szT = w.setTimeout(szClose, 280); });
       }
     }
-    // 1.19.0 the planet of the certification card. One 2:1 picture of Earth (assets/earth.webp, 34 KB) is mapped onto a sphere by hand: for every pixel
+    // 1.19.1 the planet of the certification card. One 2:1 picture of Earth (assets/earth.webp, 34 KB) is mapped onto a sphere by hand: for every pixel
     // of a small canvas the longitude/latitude are computed once, each frame only the turn is added (a full circle in 26 s, so every continent passes).
     // The light comes from upper left, a thin cloud layer drifts a little faster than the ground. Nothing runs unless the card is open; if the picture
     // cannot be read (no CORS) a flat, turning copy of it is shown instead; with reduced motion Earth stands still, centred on Europe.
@@ -559,6 +559,14 @@
         load(cur, function (ci) { try { orbC = read(ci, CW, CH); } catch (e) { orbC = null; } fin(); }, fin);
       }, function () { if (orbEl) { var im2 = new w.Image(); im2.onload = flat; im2.onerror = function () { root.setAttribute('data-ddh-noorb', ''); }; im2.src = url; } }); };
       if (w.requestIdleCallback) w.requestIdleCallback(go, { timeout: 2500 }); else w.setTimeout(go, 900);   // the read-back of the picture waits for an idle moment
+    }
+    function orbLayout() {                                            // the planet and its outline fill the free sky: below the header, above the Shop row
+      if (!orbEl) return;
+      var pr = art.getBoundingClientRect(), rr = root.getBoundingClientRect(), sh = root.querySelector('.ddh__shop'); if (!pr.width) return;
+      var safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 64;
+      var top = rr.top + safe + 10, bottom = (sh ? sh.getBoundingClientRect().top : rr.bottom) - 14;
+      var D = Math.max(150, Math.min(pr.width * .25, (bottom - top) / 1.52)), t0 = top + Math.max(0, (bottom - top - D * 1.52) / 2);
+      orbEl.style.width = Math.round(D) + 'px'; orbEl.style.left = Math.round(pr.width * .0465) + 'px'; orbEl.style.top = Math.round(t0 - pr.top) + 'px';
     }
     function orbPrep() {                                            // per-pixel constants for the current canvas size
       var S = Math.max(120, Math.min(560, Math.round(orbCv.clientWidth * Math.min(w.devicePixelRatio || 1, 1.5)))); if (!orbCv.clientWidth) return false;
@@ -611,6 +619,7 @@
       var want = active === 'head' && !!orbEl && orbEl.hasAttribute('data-ready') && !orbEl.hasAttribute('data-flat') && !root.hasAttribute('data-ddh-noorb') && cardsLive() && !d.hidden;
       if (!want) { orbStop(); return; }
       if (orbOn) return;
+      orbLayout();
       if (!orbE || !orbPrep()) return;
       orbOn = true; orbT0 = w.performance.now(); orbLast = 0;
       if (calm()) { orbDraw(0); orbOn = false; return; }
@@ -656,7 +665,7 @@
       var rr = root.getBoundingClientRect(), lk = root.querySelector('.ddh__sky-lockup'), sh = root.querySelector('.ddh__shop');
       var safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 64;
       var top = Math.max(safe + 10, lk ? lk.getBoundingClientRect().bottom - rr.top + 16 : 0);
-      if (k === 'head' && !root.hasAttribute('data-ddh-noorb')) top = safe + 10;   // 1.19.0: the lockup steps aside in the cosmos, so the card may start higher (level with the planet)
+      if (k === 'head' && !root.hasAttribute('data-ddh-noorb')) top = safe + 10;   // 1.19.1: the lockup steps aside in the cosmos, so the card may start higher (level with the planet)
       if (k === 'weight') top = 10;                                 // 1.17.0: the firmness navigator is a full panel: it rises over the site header like the selectors
       var bottom = sh ? sh.getBoundingClientRect().top - rr.top - 16 : rr.height - 16;
       var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;
@@ -798,7 +807,7 @@
     on(d, 'click', function (ev) { if (szEl && !szEl.hidden && !szEl.contains(ev.target) && !(szBtn && szBtn.contains(ev.target))) szClose(); });
     on(d, 'keydown', function (ev) { if (sheet && (ev.key === 'Escape' || ev.key === 'Esc')) closeSheet(); });
     on(d, 'click', function (ev) { if (sheet && sheetMode === 'modal' && Date.now() - openedAt > 300 && !sheet.contains(ev.target) && !(sheetFrom && sheetFrom.contains(ev.target)) && !(bioPoint && bioPoint.contains(ev.target))) closeSheet(true); });
-    on(w, 'resize', function () { if (sheet && (phoneMQ.matches || (sheetMode === 'hover' && !deskMQ.matches))) closeSheet(true); if (active) placeCard(active); if (orbOn) orbPrep(); }, { passive: true });
+    on(w, 'resize', function () { if (sheet && (phoneMQ.matches || (sheetMode === 'hover' && !deskMQ.matches))) closeSheet(true); if (active) placeCard(active); if (orbOn) { orbLayout(); orbPrep(); } }, { passive: true });
     // 1.10.1 loading in two stages: the first paint is the plain scene (photo, lettering, buttons) and nothing else.
     // Once the page has loaded and the browser is idle, the other modes follow at low priority: the screens' text
     // (every device: it is what search engines index), then on tablets/computers the hotspot graphics, the night

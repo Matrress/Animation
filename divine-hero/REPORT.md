@@ -1,5 +1,14 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.19.1: cosmos refinements (2026-10-11) - PREVIEW, awaiting owner approval
+
+Owner feedback on 1.19.0: no photo of the Dual Plush mattress and no label in the cosmos; use the owner's SVG outline as a light "foundation" that carries the planet; the planet must hang in the air with a gap, not touch it; the slogan band stays inside the planet; a more cosmic, blue sky with clearly visible stars.
+- The mattress photo and the "Dual Plush" label are hidden while the card is open; the owner's SVG (three outlines) is drawn as thin light lines with a layered glow and a short bright stretch travelling along each line; a soft cone of light rises from it to the planet.
+- Planet and outline are laid out by script to fill the free sky (below the header, above the Shop row): the planet hangs about 15-20 px above the outline at every tested window (1024x768 to 1920x1080) and floats gently.
+- Slogan band clipped to the planet (no overhang left or right).
+- Sky: deeper blue-black base, blue-teal nebula glows and a soft diagonal haze behind the middle, ~130 small and ~34 larger bright stars (the larger ones twinkle).
+Tests: orb19 35/35, interaction 381/381/375/375, guards, panels 792/0, axe 0.
+
 ## 1.19.0: the certification card opens a small cosmos with a turning Earth (2026-10-11) - PREVIEW, awaiting owner approval
 
 Owner brief: when the "100% EU & UK Certified" card opens, other texts step aside, Earth turns in a full circle (every continent) in space, levitating over the Dual Plush mattress; "Healthy for Us / Healthy for Our Planet" along its equator; buttons stay; leaving the card closes it; X to close; colours in the hero's family.
