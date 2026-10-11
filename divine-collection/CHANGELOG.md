@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.10.0
+
+- Clearer separation between the upper and the lower row (bigger row gap, thicker divider) so each View & buy button visibly belongs to its own model.
+- Family labels (Premium, Essential, Orthopaedic, Partners, Best Value) are written in the same colour as the family edge; the Essential blue was darkened a little (#2b719d) so label and edge are one colour and still pass contrast.
+- Test limit: whole map fits with 90 px left for the site header (was 110).
+- Descriptions unchanged in content (only the pinned release path differs).
+
 ## 3.9.0
 
 - Text fragments inside tiles and cards are separated by real whitespace/line breaks in the markup (copy, crawlers and no-CSS fallbacks no longer read "mattressSupport and adaptation").

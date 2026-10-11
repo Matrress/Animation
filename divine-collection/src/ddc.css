@@ -1,4 +1,4 @@
-/* Divine DunlopDreams Collection 3.9.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+/* Divine DunlopDreams Collection 3.10.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
    Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
@@ -33,12 +33,12 @@
 
 /* families: one colour each, from the hero's approved cool palette (white type passes on all of them); --fl is its lighter twin for small text on the dark panel; the colour is only used as a thin edge and a label */
 .ddc :is(.ddc__fam--classic,.ddc-f-classic){--fam:#2e7a68;--fl:#2e7a68}
-.ddc :is(.ddc__fam--innov,.ddc-f-innov){--fam:#2f78a6;--fl:#2f78a6}
+.ddc :is(.ddc__fam--innov,.ddc-f-innov){--fam:#2b719d;--fl:#2b719d}
 .ddc :is(.ddc__fam--ortho,.ddc-f-ortho){--fam:#4a5664;--fl:#4a5664}
 .ddc :is(.ddc__fam--value,.ddc-f-value){--fam:#6a579b;--fl:#6a579b}
 .ddc :is(.ddc__fam--partners,.ddc-f-partners,.ddc__fam--tpartners,.ddc-f-tpartners){--fam:#1f7a86;--fl:#1f7a86}
 .ddc :is(.ddc__fam--single,.ddc-f-single){--fam:#2e7a68;--fl:#2e7a68}
-.ddc :is(.ddc__fam--dual,.ddc-f-dual){--fam:#2f78a6;--fl:#2f78a6}
+.ddc :is(.ddc__fam--dual,.ddc-f-dual){--fam:#2b719d;--fl:#2b719d}
 
 /* ---------- frame + header: the "which model is for whom" guide and the selection path ---------- */
 .ddc .ddc__in{position:relative;border-radius:22px;background:var(--bg);box-shadow:0 0 0 1px var(--line),0 18px 40px -30px rgba(23,26,32,.3)}
@@ -423,3 +423,12 @@
 .ddc .ddc__go{margin-top:auto}
 .ddc .ddc__row.is-open .ddc__cube{transform:translateY(-1px);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--fl) 55%,var(--line)),0 10px 22px -16px rgba(23,26,32,.28)}
 @media (any-hover:none){.ddc .ddc__pop:not(.is-sheet) .ddc__ph::after{right:58px}}
+
+/* 3.10.0: clearer upper/lower separation, family labels in the edge colour */
+.ddc .ddc__lab,.ddc .ddc__fam-n{color:var(--fam)}
+.ddc.ddc--mattress .ddc__tiles{row-gap:30px}
+.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:20px;border-top-width:4px}
+@media (max-height:900px){.ddc.ddc--mattress .ddc__tiles{row-gap:22px}.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:15px}}
+@media (max-height:800px){.ddc.ddc--mattress .ddc__tiles{row-gap:18px}.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:12px}}
+@container ddc (max-width:859px){.ddc.ddc--mattress .ddc__tiles{row-gap:20px}.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:14px}}
+@container ddc (max-width:639px){.ddc.ddc--mattress .ddc__tiles{row-gap:12px}.ddc.ddc--mattress .ddc__fam:nth-child(n+3){padding-top:0;border-top:0}.ddc .ddc__rows{gap:12px}}
