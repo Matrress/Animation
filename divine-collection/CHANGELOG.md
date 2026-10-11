@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.4.0 (2026-10-11)
+Owner feedback: the family colour must not crowd the space above the card; the label only once; capital letters always spaced.
+- The colour edge of every tile moved from its top to its lower part; the space above a tile is clear.
+- The family label (Premium, Essential, ...) appears only in the heading above the tiles, in the family colour, with its colour edge under it. It is no longer repeated inside the tiles (it stays in the markup and shows on phones only, where headings are hidden).
+- The preview card's colour edge moved to its lower part as well.
+- **Law: every text in capital letters has letter-spacing of at least 0.1em**; tightened several (Buy chips, Dual Plush badge); checked automatically.
+- New `DESIGN-RULES.md` records the owner's rules for all future work.
+- Descriptions are unchanged (CSS and script only); only the loader changes.
+
 ## 3.3.0 (2026-10-11)
 Owner feedback: one scheme for all variations confuses; the scheme must show each variation, small, and be tied to its explanation.
 - The big generic Dual Plush graphic, its "Above / Below" legend, the caption and the duplicated "mixes" list are removed.

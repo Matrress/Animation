@@ -17,7 +17,7 @@ const onProduct = (p) => p.evaluate(() => /page=product/.test(location.search));
 // ---------- 1. content in the HTML itself (no CSS, no script) ----------
 for (const kind of ['mattress', 'topper']) {
   const c = collections[kind];
-  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-3.3.0.html`, import.meta.url), 'utf8');
+  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-3.4.0.html`, import.meta.url), 'utf8');
   const p = await page(br);
   await p.goto(S(kind, '&mode=none'));
   const d = await p.evaluate(() => ({ tiles: [...document.querySelectorAll('.ddc__ra')].map((a) => [a.querySelector('.ddc__rn').firstChild.textContent.trim(), a.href]), links: [...document.querySelectorAll('.ddc a')].map((a) => a.href), text: document.querySelector('.ddc').textContent, imgs: [...document.querySelectorAll('.ddc img')].map((i) => [i.getAttribute('src'), i.alt]), tags: [...document.querySelectorAll('.ddc__row')].map((li) => [(li.className.match(/ddc-m-(\w+)/) || [])[1], li.querySelector('.ddc__tag').textContent.trim(), li.querySelector('.ddc__go').textContent.trim().replace(/\s+/g, ' '), li.querySelector('.ddc__cta').textContent.trim().replace(/\s+/g, ' ')]) }));
@@ -244,6 +244,17 @@ for (const [w, h] of [[1180, 820], [1366, 1024], [820, 1180], [768, 1024], [390,
   const r = await page(br, { reduce: true }); await r.goto(S('mattress')); await r.waitForSelector('.ddc--js'); await toTop(r); await moveTo(r, '.ddc-m-bio .ddc__ra'); await sleep(350);
   ok(await r.evaluate(() => getComputedStyle(document.querySelector('.ddc__row.is-open .ddc__pop')).animationName === 'none'), 'reduced motion: the card does not animate');
   await r.context().close();
+}
+
+// ---------- 7b. design law: capital letters always carry spacing; the family label appears once ----------
+for (const [w, h] of [[1440, 900], [1280, 720], [390, 844]]) {
+  const p = await page(br, { viewport: { width: w, height: h } });
+  await p.goto(S('mattress')); await p.waitForSelector('.ddc--js'); await toTop(p); await sleep(300);
+  const bad = await p.evaluate(() => [...document.querySelectorAll('.ddc *')].filter((e) => e.offsetParent && [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()) && getComputedStyle(e).textTransform === 'uppercase').map((e) => { const cs = getComputedStyle(e); const ls = parseFloat(cs.letterSpacing) || 0; return [e.className, ls / parseFloat(cs.fontSize)]; }).filter(([c, r]) => r < 0.095));
+  ok(bad.length === 0, `${w}: every uppercase text has letter-spacing of at least 0.1em ${JSON.stringify(bad)}`);
+  const tags = await p.evaluate(() => [...document.querySelectorAll('.ddc__tag')].filter((e) => e.offsetParent).length);
+  ok(w < 640 ? tags === 8 : tags === 0, `${w}: family label shown once (${w < 640 ? 'on phones, where the headings are hidden' : 'only in the heading above, not again inside the tiles'}) (${tags} tags visible)`);
+  await p.context().close();
 }
 
 // ---------- 8. accessibility (axe) ----------

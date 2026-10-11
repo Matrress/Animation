@@ -8,7 +8,7 @@
    Vanilla JS, no globals except window.DDC. */
 (function () {
   'use strict';
-  var VERSION = '3.3.0';
+  var VERSION = '3.4.0';
   if (window.DDC && window.DDC.version) { window.DDC.scan(); return; }
 
   var HOVER_IN = 120;    // ms a pointer must rest on a tile before its card opens (no flicker when crossing tiles)
