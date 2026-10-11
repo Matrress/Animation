@@ -330,3 +330,18 @@
 /* 3.4.2: above the tiles nothing is coloured except the family word itself (no edge, no dash) */
 .ddc .ddc__fam-n::before{display:none}
 .ddc .ddc__fam-h{border:0;box-shadow:none}
+
+/* ---------- 3.4.3: the family label sits above EVERY model (its own cube), even when two models share a family ---------- */
+.ddc .ddc__fam-h{display:none}
+.ddc .ddc__lab{display:block;margin:0 0 10px;padding:8px 12px 7px;border-radius:12px;background:var(--pale);font-size:13px;font-weight:600;letter-spacing:.12em;line-height:1.3;text-transform:uppercase;color:var(--famd)}
+@media (max-height:900px){.ddc .ddc__lab{margin-bottom:8px;padding-block:6px 5px}}
+@container ddc (max-width:859px){.ddc .ddc__lab{padding:6px 9px 5px;font-size:12px}}
+@container ddc (max-width:639px){.ddc .ddc__lab{margin-bottom:6px;padding:5px 8px 4px;font-size:11.5px}.ddc .ddc__tag{display:none}}
+/* the row is a column: label, then the card fills the rest */
+.ddc .ddc__row{display:flex;flex-direction:column}
+.ddc .ddc__cube{flex:1 1 auto;height:auto}
+/* phones: the button is a bar at the bottom of the card, never over the small picture */
+@container ddc (max-width:639px){
+  .ddc .ddc__go{position:relative;top:auto;right:auto;min-height:40px;padding:6px 8px;font-size:12.5px}
+  .ddc.ddc--topper .ddc__go{min-height:38px}
+}

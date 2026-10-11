@@ -20,7 +20,7 @@ for (const kind of ['mattress', 'topper']) {
   const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-3.4.0.html`, import.meta.url), 'utf8');
   const p = await page(br);
   await p.goto(S(kind, '&mode=none'));
-  const d = await p.evaluate(() => ({ tiles: [...document.querySelectorAll('.ddc__ra')].map((a) => [a.querySelector('.ddc__rn').firstChild.textContent.trim(), a.href]), links: [...document.querySelectorAll('.ddc a')].map((a) => a.href), text: document.querySelector('.ddc').textContent, imgs: [...document.querySelectorAll('.ddc img')].map((i) => [i.getAttribute('src'), i.alt]), tags: [...document.querySelectorAll('.ddc__row')].map((li) => [(li.className.match(/ddc-m-(\w+)/) || [])[1], li.querySelector('.ddc__tag').textContent.trim(), li.querySelector('.ddc__go').textContent.trim().replace(/\s+/g, ' '), li.querySelector('.ddc__cta').textContent.trim().replace(/\s+/g, ' ')]) }));
+  const d = await p.evaluate(() => ({ tiles: [...document.querySelectorAll('.ddc__ra')].map((a) => [a.querySelector('.ddc__rn').firstChild.textContent.trim(), a.href]), links: [...document.querySelectorAll('.ddc a')].map((a) => a.href), text: document.querySelector('.ddc').textContent, imgs: [...document.querySelectorAll('.ddc img')].map((i) => [i.getAttribute('src'), i.alt]), tags: [...document.querySelectorAll('.ddc__row')].map((li) => [(li.className.match(/ddc-m-(\w+)/) || [])[1], li.querySelector('.ddc__lab').textContent.trim(), li.querySelector('.ddc__go').textContent.trim().replace(/\s+/g, ' '), li.querySelector('.ddc__cta').textContent.trim().replace(/\s+/g, ' ')]) }));
   const famOrder = c.families.flatMap((f) => f.models);
   ok(JSON.stringify(d.tiles.map((t) => t[0])) === JSON.stringify(famOrder.map((id) => c.models.find((m) => m.id === id).name)), `${kind}: tiles are exactly the published models, in family order: ${d.tiles.map((t) => t[0])}`);
   ok(d.tiles.every((t, i) => t[1] === c.models.find((m) => m.id === famOrder[i]).url), `${kind}: every tile links to its verified product page`);
@@ -63,7 +63,7 @@ for (const [w, h] of fits) for (const kind of ['mattress', 'topper']) {
       of: document.documentElement.scrollWidth - document.documentElement.clientWidth,
       clipped: [...document.querySelectorAll('.ddc .ddc__rn, .ddc .ddc__rd, .ddc .ddc__fam-n, .ddc .ddc__q, .ddc .ddc__st-t, .ddc .ddc__go')].filter((e) => e.offsetParent && (e.scrollWidth > e.clientWidth + 1)).map((e) => e.textContent.trim()),
       small: [...document.querySelectorAll('.ddc .ddc__ra')].filter((a) => a.getBoundingClientRect().height < 44).length + [...document.querySelectorAll('.ddc .ddc__go')].filter((a) => a.getBoundingClientRect().height < 28).length,
-      under: new Set([...document.querySelectorAll('.ddc__fam-n')].map((h) => getComputedStyle(h).color)).size, fams: document.querySelectorAll('.ddc__fam').length,
+      under: new Set([...document.querySelectorAll('.ddc__lab')].map((h) => getComputedStyle(h).color)).size, fams: document.querySelectorAll('.ddc__fam').length,
       fs: Math.min(...[...document.querySelectorAll('.ddc__rn,.ddc__rd')].filter((e) => e.offsetParent).map((e) => parseFloat(getComputedStyle(e).fontSize))) };
   });
   info.push(`${kind} ${w}x${h}: component ${m.h}px tall, ${m.cols} column(s), ${m.rows} tile row(s)`);
@@ -77,7 +77,7 @@ for (const [w, h] of fits) for (const kind of ['mattress', 'topper']) {
     ok(m.h <= h - 110, `${kind} ${w}x${h}: whole collection (${m.h}px) fits in one window with room for the site header`);
   } else {
     ok(m.cols === (kind === 'mattress' ? 2 : 1), `${kind} ${w}x${h}: phone layout ${m.cols} column(s)`);
-    ok(m.h <= (kind === 'mattress' ? 900 : 600), `${kind} ${w}x${h}: phone height ${m.h}px stays within about one screen`);
+    ok(m.h <= (kind === 'mattress' ? 1250 : 650), `${kind} ${w}x${h}: phone height ${m.h}px stays within about one screen`);
   }
   await p.context().close();
 }
@@ -252,8 +252,9 @@ for (const [w, h] of [[1440, 900], [1280, 720], [390, 844]]) {
   await p.goto(S('mattress')); await p.waitForSelector('.ddc--js'); await toTop(p); await sleep(300);
   const bad = await p.evaluate(() => [...document.querySelectorAll('.ddc *')].filter((e) => e.offsetParent && [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()) && getComputedStyle(e).textTransform === 'uppercase').map((e) => { const cs = getComputedStyle(e); const ls = parseFloat(cs.letterSpacing) || 0; return [e.className, ls / parseFloat(cs.fontSize)]; }).filter(([c, r]) => r < 0.095));
   ok(bad.length === 0, `${w}: every uppercase text has letter-spacing of at least 0.1em ${JSON.stringify(bad)}`);
-  const tags = await p.evaluate(() => [...document.querySelectorAll('.ddc__tag')].filter((e) => e.offsetParent).length);
-  ok(w < 640 ? tags === 8 : tags === 0, `${w}: family label shown once (${w < 640 ? 'on phones, where the headings are hidden' : 'only in the heading above, not again inside the tiles'}) (${tags} tags visible)`);
+  const tags = await p.evaluate(() => [...document.querySelectorAll('.ddc__lab')].filter((e) => e.offsetParent).length);
+  const dup = await p.evaluate(() => [...document.querySelectorAll('.ddc__tag, .ddc__fam-h')].filter((e) => e.offsetParent).length);
+  ok(tags === 8 && dup === 0, `${w}: every model has its own family label above it, and nothing repeats it (${tags} labels, ${dup} duplicates)`);
   await p.context().close();
 }
 

@@ -2,7 +2,7 @@
 
 1. **Cubism.** Where there is a choice, organise in rounded cubes with equal gaps (tiles, pictures, texts, facts, steps, headings, buttons). The eye sorts blocks logically.
 2. **Capital letters always carry spacing.** Every uppercase text has letter-spacing of at least 0.1em (checked by `tests/interaction.mjs`, section 7b).
-3. **A label appears once.** The family name (Premium, Essential, ...) sits only in the heading above its tiles, in the family colour. It is not repeated inside the tiles (phones, where headings are hidden, are the only exception).
+3. **Every model has its own family label above it, and it appears once.** Premium above Botanic and again above Botanic Dual Plush; the same for every family, even when two models share it. The label is a small cube in the family colour (text only) directly above the card; it is not repeated inside the card.
 4. **Colour is an edge, never a mass.** The family colour is a thin bar under the picture inside each card. Above the tiles nothing is coloured except the family word itself (no edge, no line, no dash). Nothing coloured along the top of a card.
 5. **Clean and light, like the Tesla web store.** White, airy, flat; not dark.
 6. **Button text:** "View model & buy" (a short "View & buy" where the button is a small chip). Sea-blue, never an electric blue or a green.
