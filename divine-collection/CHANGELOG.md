@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3.0 (2026-10-11)
+Owner feedback: one scheme for all variations confuses; the scheme must show each variation, small, and be tied to its explanation.
+- The big generic Dual Plush graphic, its "Above / Below" legend, the caption and the duplicated "mixes" list are removed.
+- **One small scheme per combination** (3 in Botanic Dual Plush: Soft + Medium, Medium + Firm, Firm + Extra Firm; 2 in Bio Comfort Dual Plush). Each is the owner's artwork with the topper above and the mattress below, coloured with the same firmness colours as the labels next to it ("Soft topper, above" / "Medium mattress, below"), so scheme and words read as one. A heading says how many combinations there are.
+- The card's firmness box keeps only the depths for Dual Plush models.
+- Mattress description changed; topper description changed only in its pinned paths.
+
 ## 3.2.0 (2026-10-11)
 Owner feedback from the live test on iPad.
 - **Dual Plush is explained as a graphic**, not a paragraph: the supplied artwork (`src/assets/dual-plush.svg`, from the owner's SVG) with the topper above and the mattress below, a labelled legend with arrows, the firmness of each layer and its thickness (e.g. topper 5 or 8 cm, mattress 18 or 20 cm). The text paragraph is gone. Shown in the two Dual Plush cards.

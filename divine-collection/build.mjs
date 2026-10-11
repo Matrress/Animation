@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collections, FIRM, HERO_ASSETS } from './src/data.mjs';
 
-const VERSION = '3.2.0';
+const VERSION = '3.3.0';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DDC_REF || 'main-preview';
 const CDN = `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-collection/release/${VERSION}/`;
@@ -15,6 +15,7 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const out = (p, s) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, s); };
 
 // ---------- markup ----------
+const FIRM_HEX = { s: '#2f7da8', m: '#25648a', f: '#4a5664', x: '#313d4c' };
 const f = (k) => `<span class="ddc__f ddc__f--${k}">${FIRM[k]}</span>`;
 const iso = (top, bot, thin) => `<span class="ddc__iso${thin ? ' ddc__iso--thin' : ''}" aria-hidden="true"><span class="ddc__sl ddc__sl--bot ddc__f--${bot}"></span><span class="ddc__sl ddc__sl--top ddc__f--${top}"></span></span>`;
 
@@ -22,24 +23,23 @@ const iso = (top, bot, thin) => `<span class="ddc__iso${thin ? ' ddc__iso--thin'
 function facts(m) {
   const F = m.firm; let h;
   if (F.levels) h = `<p class="ddc__pk">Firmness</p><p class="ddc__fz">${F.levels.map(f).join(' ')}</p>`;
-  else if (F.pairs) h = `<p class="ddc__pk">Dual Plush mixes</p><ul class="ddc__mc">${F.pairs.map(([t, b]) => `<li>${f(t)} topper + ${f(b)} mattress</li>`).join('')}</ul>`;
+  else if (F.pairs) h = '';
   else if (F.layers) h = `<p class="ddc__pk">Layer combinations</p><ul class="ddc__mc">${F.layers.map(([t, b]) => `<li>${f(t)} upper layer over ${f(b)} lower layer</li>`).join('')}</ul>`;
   else if (F.split) h = `<p class="ddc__pk">Firmness, one for each side</p><ul class="ddc__mc">${F.split.map(([a, b]) => `<li>${f(a)} + ${f(b)}</li>`).join('')}</ul>`;
   else if (F.sides) h = `<p class="ddc__pk">Firmness</p><ul class="ddc__mc">${F.sides.map((k, i) => `<li>${f(k)} ${F.sideNames[i].toLowerCase()}</li>`).join('')}</ul>`;
   else if (F.text) h = `<p class="ddc__pk">Firmness</p><p class="ddc__fz">${F.text.map(([k, t]) => `<span class="ddc__f ddc__f--${k}">${esc(t)}</span>`).join(' ')}</p>`;
   else throw new Error(`${m.id}: no firmness data`);
-  return `<div class="ddc__pf"><div>${h}</div><div><p class="ddc__pk">${esc(m.depth.label)}</p><p class="ddc__dl">${m.depth.items.map((d) => `<span class="ddc__d">${esc(d)}</span>`).join(' ')}</p></div></div>`;
+  return `<div class="ddc__pf">${h ? `<div>${h}</div>` : ''}<div><p class="ddc__pk">${esc(m.depth.label)}</p><p class="ddc__dl">${m.depth.items.map((d) => `<span class="ddc__d">${esc(d)}</span>`).join(' ')}</p></div></div>`;
 }
 
 // the floating card: opens on hover / focus (tap on touch); picture, explanation, facts, then the way to buy
 function pop(c, m, fam, imgBase, ownBase) {
-  // Dual Plush is explained as a graphic: the topper above, the mattress below, each with its firmness and thickness
+  // Dual Plush: one small scheme per combination (topper above, mattress below), coloured like the firmness labels beside it
   let dp = '';
   if (m.dp && m.firm.pairs) {
-    const uniq = (a) => [...new Set(a)];
-    const th = m.depth.items.map((d) => d.match(/(\d+) \+ (\d+)/)).filter(Boolean);
-    const cm = (k) => uniq(th.map((x) => x[k])).join(' or ') + ' cm';
-    dp = `<div class="ddc__dpg"><img class="ddc__dpg-i" src="${ownBase}dual-plush.svg" width="300" height="122" loading="lazy" decoding="async" alt="Dual Plush system: a latex topper above, a latex mattress below"><ul class="ddc__dpg-l"><li class="ddc__dpg-t"><span class="ddc__dpg-n">Above: latex topper</span><span class="ddc__dpg-c">${uniq(m.firm.pairs.map((p) => p[0])).map(f).join(' ')}</span><span class="ddc__d">${cm(2)}</span></li><li class="ddc__dpg-b"><span class="ddc__dpg-n">Below: latex mattress</span><span class="ddc__dpg-c">${uniq(m.firm.pairs.map((p) => p[1])).map(f).join(' ')}</span><span class="ddc__d">${cm(1)}</span></li></ul><p class="ddc__dpg-x">Chosen together: one sleep system.</p></div>`;
+    const n = m.firm.pairs.length;
+    const cell = ([t, b]) => `<li class="ddc__dpv"><img class="ddc__dpv-i" src="${ownBase}dual-plush-${t}-${b}.svg" width="150" height="61" loading="lazy" decoding="async" alt="${FIRM[t]} topper above a ${FIRM[b]} mattress"><span class="ddc__dpv-r">${f(t)}<span class="ddc__dpv-w">topper, above</span></span><span class="ddc__dpv-r">${f(b)}<span class="ddc__dpv-w">mattress, below</span></span></li>`;
+    dp = `<div class="ddc__dpg ddc__dpg--${n}"><p class="ddc__dpg-h">Dual Plush: ${n} combinations</p><ul class="ddc__dpg-l">${m.firm.pairs.map(cell).join('')}</ul></div>`;
   }
   const big = m.img.big ? { src: imgBase + m.img.big, w: m.img.bw, h: m.img.bh } : { src: (m.img.own ? ownBase : imgBase) + m.img.src, w: m.img.w, h: m.img.h };
   return `<div class="ddc__pop ddc-f-${fam.id}${dp ? ' ddc__pop--g' : ''}" role="group" aria-label="${esc(m.name)}: preview">
@@ -130,6 +130,16 @@ const js = transformSync(fs.readFileSync(path.join(here, 'src/ddc.js'), 'utf8'),
 out(path.join(rel, 'ddc.js'), js);
 fs.mkdirSync(path.join(rel, 'assets'), { recursive: true });
 for (const a of fs.readdirSync(path.join(here, 'src/assets'))) fs.copyFileSync(path.join(here, 'src/assets', a), path.join(rel, 'assets', a));
+
+// generated Dual Plush schemes: the owner's artwork, one file per firmness combination used by a model
+{
+  const tpl = fs.readFileSync(path.join(here, 'src/dual-plush.svg.tpl'), 'utf8');
+  const seen = new Set();
+  for (const c of Object.values(collections)) for (const m of c.models) for (const [t, bm] of (m.firm && m.firm.pairs) || []) {
+    const k = `${t}-${bm}`; if (seen.has(k)) continue; seen.add(k);
+    out(path.join(rel, 'assets', `dual-plush-${k}.svg`), tpl.replace('{{ALT}}', `${FIRM[t]} topper above a ${FIRM[bm]} mattress`).replace('{{TOP}}', FIRM_HEX[t]).replace('{{BOT}}', FIRM_HEX[bm]));
+  }
+}
 
 const sizes = {};
 for (const c of Object.values(collections)) {
