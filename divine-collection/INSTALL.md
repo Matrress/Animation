@@ -1,7 +1,7 @@
 # Divine DunlopDreams Collection 2.2.0 — installation and rollback
 
 Nothing below is done yet on the live store. Steps 1–2 are safe tests; steps 3–6 wait for Martin's approval.
-Pinned commit for every jsDelivr URL: `e1a7d2b7289771bde97b6a07fa22f3614baa8710` (written into every file in `ecwid/` by the build).
+Pinned commit for every jsDelivr URL: `4f9118eb415a7a50d4ab4a1639ef01ce8fe141a5` (written into every file in `ecwid/` by the build).
 
 ## 0. Files
 | File | Where it goes |
@@ -26,7 +26,7 @@ Follow `backup/README.md`: copy the exact HTML of each live description (`<>` mo
 
 ## 3. Site-wide loader (after the probe, with approval)
 Instant Site → Settings → the site-wide **custom JavaScript / custom code** field (the one with the 4,000-symbol limit; the exact menu name in your Ecwid version to be confirmed) → paste `ecwid/loader-2.2.0.html` (527 characters) → Save / Publish.
-It loads `ddc.css` (25 KB, cached for a year) and `ddc.js` (4 KB). Pages without the collection interface are not changed: every rule is scoped to `.ddc`, and the script only acts on `.ddc`.
+It loads `ddc.css` (27 KB, cached for a year) and `ddc.js` (4 KB). Pages without the collection interface are not changed: every rule is scoped to `.ddc`, and the script only acts on `.ddc`.
 
 ## 4. Test before replacing anything
 Paste `ecwid/description-mattress-2.2.0.html` into the **test category** description first, check desktop, iPad (portrait and landscape, with touch) and phone, navigate away and back, use the browser Back button, reload the page directly. Then the same with the topper file.
