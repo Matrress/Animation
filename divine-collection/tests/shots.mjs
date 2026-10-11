@@ -16,7 +16,7 @@ for (const [name, w, h, touch] of sizes) {
     await sleep(500);
     await p.screenshot({ path: `${out}/${name}-${kind}-overview.png`, animations: 'disabled' });
     const pick = kind === 'mattress' ? 'bio_dp' : 't_dual';
-    const sel = `.ddc-m-${pick} .ddc__ra`;
+    const sel = `.ddc-m-${pick} ${touch ? '.ddc__bd' : '.ddc__ra'}`;
     if (touch) await p.tap(sel); else await p.hover(sel);
     await sleep(500);
     await p.screenshot({ path: `${out}/${name}-${kind}-card.png`, animations: 'disabled' });

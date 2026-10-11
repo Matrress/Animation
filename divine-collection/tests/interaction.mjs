@@ -17,15 +17,17 @@ const onProduct = (p) => p.evaluate(() => /page=product/.test(location.search));
 // ---------- 1. content in the HTML itself (no CSS, no script) ----------
 for (const kind of ['mattress', 'topper']) {
   const c = collections[kind];
-  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-2.0.0.html`, import.meta.url), 'utf8');
+  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-2.1.0.html`, import.meta.url), 'utf8');
   const p = await page(br);
   await p.goto(S(kind, '&mode=none'));
-  const d = await p.evaluate(() => ({ tiles: [...document.querySelectorAll('.ddc__ra')].map((a) => [a.querySelector('.ddc__rn').firstChild.textContent.trim(), a.href]), links: [...document.querySelectorAll('.ddc a')].map((a) => a.href), text: document.querySelector('.ddc').textContent, imgs: [...document.querySelectorAll('.ddc img')].map((i) => [i.getAttribute('src'), i.alt]) }));
+  const d = await p.evaluate(() => ({ tiles: [...document.querySelectorAll('.ddc__ra')].map((a) => [a.querySelector('.ddc__rn').firstChild.textContent.trim(), a.href]), links: [...document.querySelectorAll('.ddc a')].map((a) => a.href), text: document.querySelector('.ddc').textContent, imgs: [...document.querySelectorAll('.ddc img')].map((i) => [i.getAttribute('src'), i.alt]), tags: [...document.querySelectorAll('.ddc__row')].map((li) => [(li.className.match(/ddc-m-(\w+)/) || [])[1], li.querySelector('.ddc__tag').textContent.trim(), li.querySelector('.ddc__go').textContent.trim().replace(/\s+/g, ' '), li.querySelector('.ddc__cta').textContent.trim().replace(/\s+/g, ' ')]) }));
   const famOrder = c.families.flatMap((f) => f.models);
   ok(JSON.stringify(d.tiles.map((t) => t[0])) === JSON.stringify(famOrder.map((id) => c.models.find((m) => m.id === id).name)), `${kind}: tiles are exactly the published models, in family order: ${d.tiles.map((t) => t[0])}`);
   ok(d.tiles.every((t, i) => t[1] === c.models.find((m) => m.id === famOrder[i]).url), `${kind}: every tile links to its verified product page`);
-  ok(c.models.every((m) => d.links.filter((l) => l === m.url).length === 2), `${kind}: each model has a tile link and a View model link`);
-  ok(d.imgs.length === c.models.length && d.imgs.every(([s, a]) => /^https:\/\/cdn\.jsdelivr\.net\/gh\/Matrress\/Animation@[0-9a-f]{40}|main-preview|\.\.\//.test(s) && a === ''), `${kind}: one real picture per model, decorative (the visible name beside it is the link text) (${d.imgs.length})`);
+  ok(c.models.every((m) => d.links.filter((l) => l === m.url).length === 3), `${kind}: each model has a tile link, a Buy now button and a Buy now in its card`);
+  ok(d.imgs.length === 2 * c.models.length && d.imgs.filter(([s, a]) => a === '').length === c.models.length && d.imgs.filter(([s, a]) => a.length > 10).length === c.models.length, `${kind}: a picture in the tile (decorative) and a larger picture with alt text in the card (${d.imgs.length})`);
+  ok(c.families.every((f) => f.models.every((id) => d.tags.find((x) => x[0] === id)[1] === f.name)), `${kind}: every model carries its family label: ${d.tags.map((x) => x[0] + '=' + x[1])}`);
+  ok(d.tags.every((x) => x[2] === 'Buy now ' + c.models.find((m) => m.id === x[0]).name && x[3] === 'Buy now ' + c.models.find((m) => m.id === x[0]).name), `${kind}: Buy now on every tile and in every card`);
   ok(!/£|€|\$\d/.test(d.text), `${kind}: no price`);
   ok(!/\b(her|him|his|hers)\b/i.test(d.text), `${kind}: no gendered wording`);
   ok(!/no layers/i.test(d.text), `${kind}: no "No layers"`);
@@ -43,7 +45,7 @@ for (const kind of ['mattress', 'topper']) {
   await p.waitForFunction(() => getComputedStyle(document.querySelector('.ddc')).fontFamily.includes('DDCChillax'));
   ok(await p.evaluate(() => [...document.querySelectorAll('.ddc__pop')].every((e) => getComputedStyle(e).display === 'none')), 'css-only: cards stay hidden, nothing half-open');
   ok(await p.evaluate(() => getComputedStyle(document.querySelector('.ddc__tiles')).gridTemplateColumns.split(' ').length === 4), 'css-only: four columns');
-  await moveTo(p, '.ddc-m-bio .ddc__ra'); await sleep(300);
+  await moveTo(p, '.ddc-m-bio .ddc__bd'); await sleep(300);
   ok(await p.evaluate(() => !document.querySelector('.ddc__row.is-open')), 'css-only: hover does nothing without the script (the tile is a link)');
   await p.context().close();
 }
@@ -58,8 +60,8 @@ for (const [w, h] of fits) for (const kind of ['mattress', 'topper']) {
     const tops = new Set(tiles.map((t) => Math.round(t.top / 10)));
     return { h: Math.round(r.height), w: r.width, rows: tops.size, cols: getComputedStyle(document.querySelector('.ddc__tiles')).gridTemplateColumns.split(' ').length,
       of: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-      clipped: [...document.querySelectorAll('.ddc .ddc__rn, .ddc .ddc__rd, .ddc .ddc__fam-n, .ddc .ddc__q, .ddc .ddc__st-t')].filter((e) => e.offsetParent && (e.scrollWidth > e.clientWidth + 1)).map((e) => e.textContent.trim()),
-      small: [...document.querySelectorAll('.ddc .ddc__ra')].filter((a) => a.getBoundingClientRect().height < 44).length,
+      clipped: [...document.querySelectorAll('.ddc .ddc__rn, .ddc .ddc__rd, .ddc .ddc__fam-n, .ddc .ddc__q, .ddc .ddc__st-t, .ddc .ddc__go')].filter((e) => e.offsetParent && (e.scrollWidth > e.clientWidth + 1)).map((e) => e.textContent.trim()),
+      small: [...document.querySelectorAll('.ddc .ddc__ra')].filter((a) => a.getBoundingClientRect().height < 44).length + [...document.querySelectorAll('.ddc .ddc__go')].filter((a) => a.getBoundingClientRect().height < 28).length,
       under: new Set([...document.querySelectorAll('.ddc__fam-h')].map((h) => getComputedStyle(h).borderBottomColor)).size, fams: document.querySelectorAll('.ddc__fam').length,
       fs: Math.min(...[...document.querySelectorAll('.ddc__rn,.ddc__rd')].filter((e) => e.offsetParent).map((e) => parseFloat(getComputedStyle(e).fontSize))) };
   });
@@ -73,8 +75,8 @@ for (const [w, h] of fits) for (const kind of ['mattress', 'topper']) {
     ok(m.cols === (kind === 'mattress' ? 4 : 3) && m.rows === (kind === 'mattress' ? 2 : 1), `${kind} ${w}x${h}: ${kind === 'mattress' ? '4 columns, 2 rows' : '3 columns, 1 row'} (${m.cols} x ${m.rows})`);
     ok(m.h <= h - 110, `${kind} ${w}x${h}: whole collection (${m.h}px) fits in one window with room for the site header`);
   } else {
-    ok(m.cols === 1, `${kind} ${w}x${h}: phone layout is one column of picture rows`);
-    ok(m.h <= (kind === 'mattress' ? 800 : 560), `${kind} ${w}x${h}: phone height ${m.h}px stays within about one screen`);
+    ok(m.cols === (kind === 'mattress' ? 2 : 1), `${kind} ${w}x${h}: phone layout ${m.cols} column(s)`);
+    ok(m.h <= (kind === 'mattress' ? 900 : 560), `${kind} ${w}x${h}: phone height ${m.h}px stays within about one screen`);
   }
   await p.context().close();
 }
@@ -85,8 +87,10 @@ for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080]]) {
   await p.goto(S('mattress')); await p.waitForSelector('.ddc--js'); await p.evaluate(() => document.fonts.ready); await toTop(p); await sleep(300);
   ok(await openId(p) === null, `${w}: nothing open at first`);
   // hover opens the card of that tile
-  await moveTo(p, '.ddc-m-bio .ddc__ra'); await sleep(320);
+  await moveTo(p, '.ddc-m-bio .ddc__bd'); await sleep(320);
   ok(await openId(p) === 'bio', `${w}: hover opens Bio Comfort`);
+  await sleep(300);
+  ok(await p.evaluate(() => { const i = document.querySelector('.ddc__row.is-open .ddc__pfig img'); return !!i && i.complete && i.naturalWidth > 0 && i.getBoundingClientRect().width > 200; }), `${w}: the card shows a large loaded picture`);
   let r = await popRect(p);
   ok(r && r.l >= 0 && r.r <= r.w && r.ctaB <= r.h && r.t >= 0, `${w}: card fully on screen with View model visible ${JSON.stringify(r)}`);
   ok(await p.evaluate(() => { const a = document.querySelector('.ddc-m-bio .ddc__ra'); return a.getAttribute('aria-describedby') === document.querySelector('.ddc-m-bio .ddc__what').id; }), `${w}: tile is described by the card text`);
@@ -118,6 +122,14 @@ for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080]]) {
   await moveTo(p, '.ddc-m-botanic .ddc__ra'); await sleep(300);
   await p.mouse.down(); await p.mouse.up(); await sleep(250);
   ok(await onProduct(p), `${w}: a click on the tile opens the model page directly`);
+  await p.goBack(); await p.waitForSelector('.ddc--js', { timeout: 6000 }); await toTop(p); await p.mouse.move(4, 4); await sleep(350);
+  { const tb = await p.locator('.ddc-m-ambient .ddc__th').boundingBox(); const px = tb.x + 24, py = tb.y + tb.height - 14; await p.mouse.move(px, py, { steps: 4 }); await p.mouse.down(); await p.mouse.up(); await sleep(250); }
+  ok(await onProduct(p), `${w}: a click on the small picture opens the model page`);
+  await p.goBack(); await p.waitForSelector('.ddc--js'); await toTop(p); await p.mouse.move(4, 4); await sleep(350);
+  { const covered = await p.evaluate(() => { const g = document.querySelector('.ddc-m-bio_dp .ddc__go'); const r = g.getBoundingClientRect(); const e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !(e === g || g.contains(e)); });
+    ok(!covered, `${w}: the Buy now button on a tile is not covered by anything`);
+    const [bx, by] = await center(p, '.ddc-m-bio_dp .ddc__go'); await p.mouse.move(bx, by, { steps: 4 }); await p.mouse.down(); await p.mouse.up(); await sleep(250); }
+  ok(await onProduct(p), `${w}: Buy now on the tile opens the model page`);
   // card button
   await p.goBack(); await p.waitForSelector('.ddc--js'); await toTop(p); await sleep(300);
   await moveTo(p, '.ddc-m-ortho .ddc__ra'); await sleep(350);
@@ -133,7 +145,9 @@ for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080]]) {
   await p.focus('.ddc__ra'); await p.keyboard.press('Shift+Tab'); await p.keyboard.press('Tab'); await sleep(150);
   ok(await openId(p) === 'botanic', 'keyboard: tabbing onto the first tile opens its card');
   await p.keyboard.press('Tab'); await sleep(100);
-  ok(await p.evaluate(() => document.activeElement.classList.contains('ddc__cta')) && await openId(p) === 'botanic', 'keyboard: Tab moves to View model inside the open card');
+  ok(await p.evaluate(() => document.activeElement.classList.contains('ddc__go')) && await openId(p) === 'botanic', 'keyboard: Tab moves to the Buy now button of the tile, the card stays open');
+  await p.keyboard.press('Tab'); await sleep(100);
+  ok(await p.evaluate(() => document.activeElement.classList.contains('ddc__cta')) && await openId(p) === 'botanic', 'keyboard: Tab moves to Buy now inside the open card');
   await p.keyboard.press('Escape'); await sleep(100);
   ok(await openId(p) === null && await p.evaluate(() => document.activeElement.classList.contains('ddc__ra')), 'keyboard: Escape closes and returns focus to the tile');
   const seen = [];
@@ -148,7 +162,7 @@ for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080]]) {
 for (const [w, h] of [[1180, 820], [1366, 1024], [820, 1180], [768, 1024], [390, 844], [360, 740]]) {
   const p = await page(br, { viewport: { width: w, height: h }, touch: true, mobile: w < 500 });
   await p.goto(S('mattress')); await p.waitForSelector('.ddc--js'); await toTop(p); await sleep(300);
-  await p.tap('.ddc-m-bio_dp .ddc__ra'); await sleep(400);
+  await p.tap('.ddc-m-bio_dp .ddc__bd'); await sleep(400);
   ok(await openId(p) === 'bio_dp' && !(await onProduct(p)), `${w}x${h} touch: first tap opens the card and stays on the page`);
   let r = await popRect(p);
   ok(r && r.l >= 0 && r.r <= r.w && r.t >= 0 && r.b <= r.h + 1 && r.ctaB <= r.h && r.ctaH >= 44, `${w}x${h} touch: card on screen, View model >= 44 px and visible ${JSON.stringify(r)}`);
@@ -156,23 +170,30 @@ for (const [w, h] of [[1180, 820], [1366, 1024], [820, 1180], [768, 1024], [390,
   await p.tap('.ddc__row.is-open .ddc__pop-x'); await sleep(200);
   ok(await openId(p) === null, `${w}x${h} touch: close button works`);
   await toTop(p); await sleep(150);
-  await p.tap('.ddc-m-ambient .ddc__ra'); await sleep(350);
-  if (w >= 640) { await p.tap('.ddc-m-ortho .ddc__ra', { timeout: 4000 }).catch(() => {}); await sleep(350); }
+  await p.tap('.ddc-m-botanic .ddc__th', { position: { x: 14, y: 30 } }); await sleep(300);
+  ok(await onProduct(p), `${w}x${h} touch: a tap on the small picture opens the model page directly`);
+  await p.goBack(); await p.waitForSelector('.ddc--js'); await toTop(p); await sleep(300);
+  await p.tap('.ddc-m-botanic .ddc__go'); await sleep(300);
+  ok(await onProduct(p), `${w}x${h} touch: the Buy now button on the tile opens the model page`);
+  await p.goBack(); await p.waitForSelector('.ddc--js'); await toTop(p); await sleep(300);
+  await toTop(p); await sleep(150);
+  await p.tap('.ddc-m-ambient .ddc__bd'); await sleep(350);
+  if (w >= 640) { await p.tap('.ddc-m-ortho .ddc__bd', { timeout: 4000 }).catch(() => {}); await sleep(350); }
   ok((await openId(p)) === (w >= 640 ? 'ortho' : 'ambient'), `${w}x${h} touch: ${w >= 640 ? 'another tile can be opened' : 'a tile can be opened (the sheet covers the others)'}`);
   await p.evaluate(() => { document.querySelector('.ddc__row.is-open')?.classList.remove('is-open'); });
   await toTop(p); await sleep(150);
   if (w >= 640) {
-    await p.tap('.ddc-m-partners .ddc__ra'); await sleep(350);
+    await p.tap('.ddc-m-partners .ddc__bd'); await sleep(350);
     const first = await openId(p);
-    await p.tap('.ddc-m-partners .ddc__ra'); await sleep(350);
+    await p.tap('.ddc-m-partners .ddc__bd'); await sleep(350);
     ok(first === 'partners' && await onProduct(p), `${w}x${h} touch: second tap on the same tile opens the model page`);
     await p.goBack(); await p.waitForSelector('.ddc--js'); await toTop(p); await sleep(300);
   }
-  await p.tap('.ddc-m-hotel .ddc__ra'); await sleep(350);
+  await p.tap('.ddc-m-hotel .ddc__bd'); await sleep(350);
   await p.tap('.ddc__row.is-open .ddc__cta'); await sleep(300);
   ok(await onProduct(p), `${w}x${h} touch: View model opens the model page`);
   await p.goBack(); await p.waitForSelector('.ddc--js'); await toTop(p); await sleep(300);
-  await p.tap('.ddc-m-hotel .ddc__ra'); await sleep(350);
+  await p.tap('.ddc-m-hotel .ddc__bd'); await sleep(350);
   await p.touchscreen.tap(w - 6, 6); await sleep(250);
   ok(await openId(p) === null, `${w}x${h} touch: a tap elsewhere closes the card`);
   ok(p.errors.length === 0, `${w}x${h} touch: errors ${p.errors}`);

@@ -8,13 +8,13 @@
    Vanilla JS, no globals except window.DDC. */
 (function () {
   'use strict';
-  var VERSION = '2.0.0';
+  var VERSION = '2.1.0';
   if (window.DDC && window.DDC.version) { window.DDC.scan(); return; }
 
   var HOVER_IN = 120;    // ms a pointer must rest on a tile before its card opens (no flicker when crossing tiles)
   var HOVER_SWITCH = 50; // ms when a card is already open and the pointer moves to another tile
   var HOVER_OUT = 240;   // ms before the card closes after the pointer left tile and card
-  var CARD_W = 780;
+  var CARD_W = 900;
   var count = 0;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -29,35 +29,36 @@
     var open = null, inT = 0, outT = 0, lastType = 'mouse', quiet = false, rows = [];
 
     for (var i = 0; i < items.length; i++) {
-      var li = items[i], a = li.querySelector('.ddc__ra'), pop = li.querySelector('.ddc__pop');
-      if (!a || !pop) continue;
+      var li = items[i], a = li.querySelector('.ddc__ra'), pop = li.querySelector('.ddc__pop'), cube = li.querySelector('.ddc__cube');
+      if (!a || !pop || !cube) continue;
       pop.id = uid + '-p' + i;
       var what = pop.querySelector('.ddc__what');
       if (what) { what.id = pop.id + '-d'; a.setAttribute('aria-describedby', what.id); }
       var x = document.createElement('button');
       x.type = 'button'; x.className = 'ddc__pop-x'; x.setAttribute('aria-label', 'Close preview');
       pop.insertBefore(x, pop.firstChild);
-      rows.push({ li: li, a: a, pop: pop, x: x });
+      rows.push({ li: li, a: a, pop: pop, x: x, cube: cube });
     }
     if (!rows.length) return;
     root.classList.add('ddc--js');
 
     function place(r) {
       // the card sits under the tile, or above it when there is no room; sideways it is clamped inside the component
-      var pop = r.pop, C = tiles.getBoundingClientRect(), T = r.a.getBoundingClientRect(), W = C.width;
+      var pop = r.pop, C = tiles.getBoundingClientRect(), T = r.cube.getBoundingClientRect(), W = C.width;
       var pw = Math.min(CARD_W, W - 16);
       var sheet = W < 640;   // phones: the card is a sheet at the bottom of the screen (it would otherwise cover the whole map)
       pop.classList.toggle('is-sheet', sheet);
       if (sheet) { pop.classList.remove('is-wide'); ['width', 'max-height', 'left', 'top'].forEach(function (k) { pop.style.removeProperty(k); }); return; }
       var st = function (k, v) { pop.style.setProperty(k, v, 'important'); };   // the stylesheet is !important: inline values must be too
-      pop.classList.toggle('is-wide', pw >= 560);
+      pop.classList.toggle('is-wide', pw >= 640);
       st('width', pw + 'px'); st('max-height', 'none'); st('left', '0px'); st('top', '0px');
-      var ph = pop.offsetHeight, vh = window.innerHeight;
-      var below = vh - T.bottom - 10, above = T.top - 10, top, mh = '';
-      if (ph <= below) top = T.bottom - C.top - 6;
-      else if (ph <= above) top = T.top - C.top - ph + 6;
-      else if (below >= above) { mh = Math.max(260, below); top = T.bottom - C.top - 6; }
-      else { mh = Math.max(260, above); top = T.top - C.top - Math.min(ph, mh) + 6; }
+      var ph = pop.offsetHeight, vh = window.innerHeight, top, mh = '';
+      // under the tile when it fits on screen, else above it, else as low or as high as the window allows (it may cover part of its own tile)
+      var vtop = T.bottom - 6;
+      if (vtop + ph > vh - 8) vtop = T.top - ph + 6;
+      if (vtop < 8 || vtop + ph > vh - 8) vtop = Math.max(8, Math.min(T.bottom - 6, vh - ph - 8));
+      if (ph > vh - 16) { mh = vh - 16; vtop = 8; }
+      top = vtop - C.top;
       var left = Math.max(8, Math.min(T.left - C.left + T.width / 2 - pw / 2, W - pw - 8));
       st('left', Math.round(left) + 'px');
       st('top', Math.round(top) + 'px');
@@ -98,12 +99,19 @@
         if (e.relatedTarget && r.li.contains(e.relatedTarget)) return;
         later(function () { if (open === r && !r.li.contains(document.activeElement) && !r.li.matches(':hover')) hide(false); }, 0);
       });
-      // touch and pen: the first tap previews, the second tap (or "View model") opens the model page; mouse and keyboard go straight through.
+      // touch and pen: the first tap on the name band previews, the second tap (or "Buy now", or a tap on the picture) opens the model page; mouse and keyboard go straight through.
       // Capture phase + stopPropagation: the storefront's own link router (a delegated listener) must not follow the link on the first tap.
       r.a.addEventListener('click', function (e) {
+        // the small picture is a direct way into the model page, also on touch
+        if (e.target && e.target.closest && e.target.closest('.ddc__th')) return;
         if ((lastType === 'touch' || lastType === 'pen') && open !== r) { e.preventDefault(); e.stopPropagation(); show(r); }
       }, true);
       r.x.addEventListener('click', function () { hide(true); });
+      // with the mouse a click anywhere on the card (not on a link or button) also goes to the model page: the card may cover its own tile on a short window
+      r.pop.addEventListener('click', function (e) {
+        if (lastType !== 'mouse' || (e.target.closest && e.target.closest('a,button')) || String(window.getSelection && window.getSelection()).length) return;
+        r.a.click();
+      });
     });
 
     root.addEventListener('pointerdown', function (e) { lastType = e.pointerType || 'mouse'; }, true);

@@ -31,9 +31,9 @@ export const collections = {
       p: 'A latex mattress for the main support, with a separate latex topper above it for comfort and adaptation. The two are chosen together and work as one sleep system.',
     },
     families: [
-      { id: 'classic', name: 'Classic Premium & Essential', says: 'The classic premium solution', line: 'Our original organic Dunlop latex: one clear firmness, or Dual Plush when you want two.', models: ['botanic', 'botanic_dp'] },
-      { id: 'innov', name: 'Innovative Premium Comfort', says: 'The innovative comfort solution', line: 'A cellular-capsule latex core for Cloud Comfort and the highest ventilation in our range.', models: ['bio', 'bio_dp'] },
-      { id: 'ortho', name: 'Orthopaedic Firmness', says: 'The firmer orthopaedic solution', line: 'Extra Firm latex stabilised with coconut coir, with two firm sides.', models: ['ortho'] },
+      { id: 'classic', name: 'Premium', says: 'The classic premium solution', line: 'Our original organic Dunlop latex: one clear firmness, or Dual Plush when you want two.', models: ['botanic', 'botanic_dp'] },
+      { id: 'innov', name: 'Essential', says: 'The innovative comfort solution', line: 'A cellular-capsule latex core for Cloud Comfort and the highest ventilation in our range.', models: ['bio', 'bio_dp'] },
+      { id: 'ortho', name: 'Orthopaedic', says: 'The firmer orthopaedic solution', line: 'Extra Firm latex stabilised with coconut coir, with two firm sides.', models: ['ortho'] },
       { id: 'partners', name: 'Partners', says: 'The solution for partners', line: 'Two individually regulated latex mattresses under one shared topper.', models: ['partners'] },
       { id: 'value', name: 'Best Value', says: 'The best-value solution', line: 'Optimised 100% latex: Ambient for the home, Hotel Line for hospitality.', models: ['ambient', 'hotel'] },
     ],
@@ -66,7 +66,7 @@ export const collections = {
       },
       {
         id: 'bio', name: 'Bio Comfort', url: 'https://divinedunlop.com/products/bio-comfort-100-organic-latex-mattress-innovation-cloud-comfort',
-        img: { src: 'm-bio.webp', w: 560, h: 226, alt: 'Bio Comfort latex mattress with its cellular-capsule core following a sleeper' },
+        img: { src: 'm-bio.webp', big: 'b-bio.webp', bw: 1200, bh: 485, w: 560, h: 226, alt: 'Bio Comfort latex mattress with its cellular-capsule core following a sleeper' },
         row: 'Capsule core, Cloud Comfort',
         title: 'Our innovative premium comfort',
         what: '100% organic Dunlop latex built around a seven-zone cellular-capsule core with a 7-Zone Synchroniser layer above it.',
@@ -79,7 +79,7 @@ export const collections = {
       },
       {
         id: 'bio_dp', name: 'Bio Comfort Dual Plush', dp: true, url: 'https://divinedunlop.com/products/bio-comfort-dual-plush-100-organic-latex-mattress-innovation',
-        img: { src: 'm-bio-dp.webp', w: 560, h: 224, alt: 'Bio Comfort Dual Plush: capsule-core latex mattress with a plush latex topper above it' },
+        img: { src: 'm-bio-dp.webp', big: 'b-bio-dp.webp', bw: 1082, bh: 433, w: 560, h: 224, alt: 'Bio Comfort Dual Plush: capsule-core latex mattress with a plush latex topper above it' },
         row: 'Capsule core + plush topper',
         title: 'Innovative support with a plush fine-tuning layer',
         what: 'A 20 cm Bio Comfort latex mattress below and a separate seven-zone Plush latex topper above, held in place with elastic straps.',
