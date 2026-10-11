@@ -4,7 +4,7 @@ import { chromium } from 'playwright';
 const args = process.argv.slice(2); let langs = ['en']; const li = args.indexOf('--langs'); if (li > -1) langs = args.splice(li, 2)[1].split(',');
 const [u, ...vps] = args; const list = (vps.length ? vps : ['1080x668', '1180x700', '1280x720', '1366x768', '1440x900']).map((s) => s.split('x').map(Number));
 const b = await chromium.launch(); let bad = 0, n = 0;
-for (const lang of langs) for (const [w, h] of list) for (const k of ['shoulder', 'zones', 'firmness', 'weight', 'sizes']) {
+for (const lang of langs) for (const [w, h] of list) for (const k of ['shoulder', 'zones', 'firmness', 'weight', 'sizes', 'head']) {
   const p = await (await b.newContext({ viewport: { width: w, height: h } })).newPage();
   await p.goto(`http://127.0.0.1:8765/${u}?ddh-lang=${lang}`, { waitUntil: 'load' }); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(2300);
   const bb = await (await p.$(`.ddh__point[data-ddh-point=${k}]`)).boundingBox(); await p.mouse.move(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.waitForTimeout(1900);

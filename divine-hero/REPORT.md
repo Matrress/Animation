@@ -1,5 +1,17 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.18.0: "100% EU & UK Certified" context card on the certification point (2026-10-11) - PREVIEW, awaiting owner approval
+
+Source: owner's SVG "natural latex matreesses and toppers dunlop technology" (1.6 MB, embedded JPEG + icons + raw claims). Only the rubber-tree photograph was used: cropped square on the cup and spout, 480x480 WebP, 19 KB (`assets/latex-source.webp`), lazy, inside the card. The SVG itself is not loaded.
+Card (same context-card system as the five others: band, close, hover/focus/tap, one card at a time, compaction tiers, reduced motion):
+- Title "100% EU & UK Certified" (heading read as "... Certified Natural Latex"), subtitle "Natural Latex: from natural origin to a complete sleep system".
+- Photo + intro (rubber-tree sap, renewable plant-based material, Dunlop process, 100% natural latex rubber foam) + three chips: No hybrid springs / No memory foam / No synthetic foam core.
+- Three steps joined by fine arrows: Natural origin -> Dunlop technology -> Certified production (European production, certified for UK & EU requirements).
+- Closing line (large windows only): cleaner, more natural sleep environment; "Natural at its origin. Engineered for healthier sleep."
+Claims: the SVG's "100% bio recyclable", "no other substance", "100% healthy environment", "organic" were not used. No certificate names or logos: none of OEKO-TEX, ECO Institut, LGA, ISO 9001/14001 or UK fire-safety is documented in this project (HANDOVER: seen only on a cover picture, never verified) - to be added only after the owner confirms which apply to which product.
+Point: screen-reader name "Natural latex origin, Dunlop technology and EU-UK certified production". Phones held upright: no points (unchanged); phones sideways and windows below 701x501: the short copy stays, as for the other cards.
+Translations of the card: machine-written in 8 languages, need native review.
+
 ## 1.17.2: hero header polish pass (2026-10-11)
 
 Brief: polish only; keep concept, composition and every agreed claim ("European Production", "Certified for UK & EU", "Keeps Your Body on the Surface"). Checked every hotspot on 1440x900, 1180x820, 820x1180 and 390x844 (plus 744/810/834/1024/1194/1366 for the Dual Plush card).

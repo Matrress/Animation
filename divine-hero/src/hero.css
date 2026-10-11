@@ -1774,3 +1774,40 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 /* - the Dual Plush icon is the owner's drawing (wide, 2.4:1): wider than the 1.17.1 isometric one so a row keeps its height */
 .ddh .ddh__ico-defs{position:absolute;width:0;height:0;overflow:hidden}
 .ddh .ddh__iso{width:calc(var(--dr-w,84px) * 1.4);height:auto;overflow:visible}
+
+/* ===== 1.18.0 "100% EU & UK Certified": the head point opens a context card like the five others (same glass card, band, close,
+   compaction tiers). One story: the latex-source photograph, then origin -> Dunlop process -> certified production, joined by
+   fine arrows between their markers. Natural green accents only; type follows the readability standard (body 16.5, secondary 15,
+   labels 13.5). ===== */
+@media (min-width:701px) and (min-height:501px){
+.ddh[data-ddh-state=head] [data-ddh-card=head]{display:block;animation:ddh-hc .45s cubic-bezier(.22,1,.36,1) both}
+.ddh.ddh[data-ddh-cards][data-ddh-state=head] .ddh__screen--brand{display:none!important}
+.ddh[data-ddh-cards][data-ddh-state=head] .ddh__point:not([aria-expanded=true]){opacity:.6}
+}
+.ddh .ddh__hc--cert,.ddh .ddh__hc--cert[data-tight]:not([data-ddh-wide]){width:clamp(640px,56vw,820px)}
+.ddh .ddh__crt{display:grid;grid-template-columns:minmax(140px,30%) minmax(0,1fr);gap:20px;align-items:center;margin-bottom:16px}
+.ddh .ddh__crt-fig{margin:0;aspect-ratio:1;border-radius:18px;overflow:hidden;background:#dfe7e2;box-shadow:var(--pl-shadow)}
+.ddh .ddh__crt-fig img{display:block;width:100%;height:100%;object-fit:cover}
+.ddh .ddh__crt-tx .ddh__hc-l{margin-bottom:12px;font-size:16.5px;line-height:1.55}
+.ddh .ddh__crt-no{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.ddh .ddh__crt-no li{margin:0;padding:5px 12px;border-radius:999px;background:#e3efe9;color:#1b473c;font-size:14px;font-weight:600;line-height:1.3}
+.ddh .ddh__crt-no li::before{content:none}
+.ddh .ddh__crt-st{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin:0 30px 14px;padding:12px;border-radius:18px;background:#fff;box-shadow:var(--pl-shadow),inset 0 0 0 1px var(--pl-line);list-style:none}
+
+.ddh .ddh__crt-st li{position:relative;display:grid;grid-template-columns:38px minmax(0,1fr);column-gap:10px;row-gap:2px;align-content:start;min-width:0;margin:0;padding:0;text-align:left}
+.ddh .ddh__crt-st li::before{content:none}
+.ddh .ddh__crt-st li:not(:last-child)::after{content:"";position:absolute;top:14px;right:-20px;width:9px;height:9px;border-top:2px solid #6c9bad;border-right:2px solid #6c9bad;transform:rotate(45deg)}
+.ddh .ddh__crt-st i{grid-row:1/span 4;align-self:start;display:grid;place-items:center;width:38px;height:38px;margin:0;border-radius:50%;background:var(--m);box-shadow:0 0 0 4px #fff}
+.ddh .ddh__crt-st svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ddh .ddh__crt-1{--m:#2e7a68}.ddh .ddh__crt-2{--m:#1f7a86}.ddh .ddh__crt-3{--m:#25648a}
+.ddh .ddh__crt-st b{grid-column:2;justify-self:start;align-self:center;min-height:38px;display:flex;align-items:center;margin:0;font-size:13.5px;font-weight:600;letter-spacing:.08em;line-height:1.2;text-transform:uppercase;color:#14223b}
+.ddh .ddh__crt-st span{grid-column:2;font-size:15px;line-height:1.4;color:var(--pl-soft)}
+.ddh .ddh__crt-end{margin-top:0;margin-bottom:0;font-size:15.5px;line-height:1.5;color:var(--pl-soft)}
+.ddh .ddh__crt-end b{display:block;margin-top:4px;font-weight:600;color:#1b473c}
+/* low windows: the same tiers as the other cards (optional lines step aside first, type never shrinks), then the photograph narrows */
+.ddh .ddh__hc--cert:is([data-tight="2"],[data-tight="3"]) .ddh__crt{grid-template-columns:120px minmax(0,1fr);gap:16px;margin-bottom:12px}
+.ddh .ddh__hc--cert[data-tight="3"] .ddh__crt{grid-template-columns:96px minmax(0,1fr)}
+.ddh .ddh__hc--cert[data-tight="3"] .ddh__crt-tx .ddh__hc-l{margin-bottom:8px;line-height:1.5}
+.ddh .ddh__hc--cert[data-tight="3"] .ddh__crt-st{padding:10px 12px}
+.ddh .ddh__hc--cert[data-tight="3"] .ddh__crt-st span{display:none}
+@media (forced-colors:active){.ddh .ddh__crt-st i{border:1px solid CanvasText}.ddh .ddh__crt-st svg{stroke:CanvasText}}
