@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.3.0 (2026-10-11)
+Owner feedback after 2.2.0: the clean, ordered Tesla style, but not dark; the family colours stay, only as edges.
+- Back to a white, airy page: white frame, light-grey picture panels (flat, no spotlight), near-black text, one blue **Buy now** button style, thin hairlines.
+- Family colour stays a thin edge (3 px along the top of each tile and of the preview card, 2 px under each family heading) plus an outlined label in the family colour. No colour fills.
+- Same layout, one-screen heights and interaction as 2.1.0 / 2.2.0.
+
 ## 2.2.0 (2026-10-11)
 Owner feedback after 2.1.0: the colour must be an edge (кант), not a mass; the design should feel like the Tesla in-car menu.
 - Dark, flat, touch-first panel: near-black frame, dark cards with a soft spotlight behind each picture, large type, one blue **Buy now** button style.
