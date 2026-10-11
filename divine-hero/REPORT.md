@@ -1,5 +1,12 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.19.2: calmer outline, darker cosmos (2026-10-11) - PREVIEW, awaiting owner approval
+
+Owner feedback on 1.19.1: no travelling light on the outline (only a glow that may pulse), no connecting light cone between planet and outline, a little darker and more cosmic sky.
+- Removed the travelling bright strokes and the light cone; the outline now only glows and breathes slowly (opacity 72-100%, 4.6 s; still with reduced motion).
+- Sky darker: base gradient #010712 > #03132a > #06223c > #0a3347, nebula and haze about 25-30% weaker, scene background #041428.
+Tests: orb19 35/35, interaction 381/381 (sim110), guards pass.
+
 ## 1.19.1: cosmos refinements (2026-10-11) - PREVIEW, awaiting owner approval
 
 Owner feedback on 1.19.0: no photo of the Dual Plush mattress and no label in the cosmos; use the owner's SVG outline as a light "foundation" that carries the planet; the planet must hang in the air with a gap, not touch it; the slogan band stays inside the planet; a more cosmic, blue sky with clearly visible stars.
