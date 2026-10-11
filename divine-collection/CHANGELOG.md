@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.8.0
+
+- "Organic" stands before "latex mattress" / "latex topper" in every type line; "Natural" only on Ambient and Hotel Line.
+- Toppers get the type line (Bio Support, Bio Support Dual, Partners) above the older key line, in the small and the big card.
+- Partners topper wording is neutral ("a separate firmness zone for each partner"), no gendered words.
+- Density tiers that hide the type/key lines now apply to the mattress map only; toppers keep the type line (key line hidden on narrow containers).
+
 ## 3.7.0 (2026-10-11)
 Owner feedback: the previous key lines must stay (below), and a new "what it is" line is added above them, in the small and the big card, so a customer always sees that they receive a latex mattress (and for SEO).
 - Small card, top to bottom: name, **type line**, function cube, old key line. Type lines: Botanic: Original Dunlop latex mattress; Botanic Dual Plush: Original Dunlop latex mattress + topper in one system; Bio Comfort: Innovative Dunlop latex mattress; Bio Comfort Dual Plush: Innovative Dunlop latex mattress + topper; Orthopaedic: Latex mattress for heavier people, very firm comfort; Partners: Latex mattress for partners; Ambient: Dunlop latex mattress; Hotel Line: Dunlop shredded latex mattress.

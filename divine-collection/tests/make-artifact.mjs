@@ -9,12 +9,12 @@ const root = path.join(here, '..'), repo = path.join(root, '..');
 const outFile = process.argv[2];
 const b64 = (f, t) => `data:${t};base64,${fs.readFileSync(f).toString('base64')}`;
 const heroAssets = path.join(repo, 'divine-hero/release/1.17.1/assets');
-let css = fs.readFileSync(path.join(root, 'release/3.7.0/ddc.css'), 'utf8')
+let css = fs.readFileSync(path.join(root, 'release/3.8.0/ddc.css'), 'utf8')
   .replace(/url\(https:\/\/cdn\.jsdelivr\.net\/[^)]*?\/(chillax-\d+\.woff2)\)/g, (m, f) => `url(${b64(path.join(heroAssets, f), 'font/woff2')})`);
-const js = fs.readFileSync(path.join(root, 'release/3.7.0/ddc.js'), 'utf8');
+const js = fs.readFileSync(path.join(root, 'release/3.8.0/ddc.js'), 'utf8');
 const frag = (k) => fs.readFileSync(path.join(root, `preview/fragment-${k}.html`), 'utf8')
   .replace(/src="\.\.\/\.\.\/divine-hero\/release\/1\.17\.1\/assets\/([\w-]+\.webp)"/g, (m, f) => `src="${b64(path.join(heroAssets, f), 'image/webp')}"`)
-  .replace(/src="\.\.\/release\/2\.2\.0\/assets\/([\w-]+\.webp)"/g, (m, f) => `src="${b64(path.join(root, 'release/3.7.0/assets', f), 'image/webp')}"`)
+  .replace(/src="\.\.\/release\/2\.2\.0\/assets\/([\w-]+\.webp)"/g, (m, f) => `src="${b64(path.join(root, 'release/3.8.0/assets', f), 'image/webp')}"`)
   .replace(/<a /g, '<a target="_blank" rel="noopener" ');
 const pages = {
   mattress: { title: 'Latex Mattresses Collection', desc: frag('mattress'), n: ['BOTANIC- 100% Organic Latex Mattress -Dunlop Technology', 'BOTANIC DUAL PLUSH 100% Organic Latex Mattress + Organic Latex topper- Dunlop Technology', 'BIO COMFORT 100% Organic Latex Mattress Innovation Cloud Comfort', 'BIO COMFORT DUAL PLUSH 100% Organic Latex Mattress + Organic Latex Topper', 'ORTHOPAEDIC Coconut Coirs + 100% Organic Latex Dunlop Technology', 'AMBIENT- Optimised Value 100% Natural Dunlop latex mattress', 'HOTEL LINE Optimised Value 100% Dunlop latex mattress', 'Dunlop Natural Latex Mattress for PARTNERS'] },
@@ -43,7 +43,7 @@ h1.t{margin:6px 0 18px;font:600 clamp(26px,4vw,34px)/1.2 Georgia,"Times New Roma
 ${css}
 </style>
 <div class="wrap">
-<div class="bar"><span><b>Divine DunlopDreams Collection 3.7.0</b> · review preview, not live</span><div class="tabs" role="group" aria-label="Category"><button type="button" id="tab-m" data-p="mattress" aria-pressed="true">Latex Mattresses</button><button type="button" id="tab-t" data-p="topper" aria-pressed="false">Latex Toppers</button></div></div>
+<div class="bar"><span><b>Divine DunlopDreams Collection 3.8.0</b> · review preview, not live</span><div class="tabs" role="group" aria-label="Category"><button type="button" id="tab-m" data-p="mattress" aria-pressed="true">Latex Mattresses</button><button type="button" id="tab-t" data-p="topper" aria-pressed="false">Latex Toppers</button></div></div>
 <div class="note"><p>This is the new one-screen collection map as it would sit in the category Description, above Ecwid's own product grid (the grey cards below stand in for it). On a computer, rest the pointer on a model to open its card; a click on the picture, the tile or Buy now opens the model page in a new tab. On an iPad or phone, tap the picture or Buy now to go to the model page, or tap the name band once for the card.</p><p>Switching category re-renders the description the way Ecwid does, so the interface starts again from its overview.</p></div>
 <div id="store"></div>
 </div>

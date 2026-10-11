@@ -1,4 +1,4 @@
-/* Divine DunlopDreams Collection 3.7.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+/* Divine DunlopDreams Collection 3.8.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
    Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
@@ -391,10 +391,11 @@
 .ddc .ddc__ph .ddc__ty{margin-top:3px;font-size:17px;line-height:1.35}
 .ddc .ddc__ph .ddc__rw{margin-top:6px;font-size:15.5px}
 /* density tiers for the small card: full on large windows; on medium windows the old key line stays only in the big card; on tight windows the type line too (both stay in the markup and in the big card) */
-@media (max-height:880px){.ddc .ddc__bd .ddc__rw{display:none}}
-@container ddc (max-width:1099px){.ddc .ddc__bd .ddc__rw{display:none}}
-@media (max-height:800px){.ddc .ddc__bd .ddc__ty{display:none}}
-@container ddc (max-width:859px){.ddc .ddc__bd .ddc__ty{display:none}}
+@media (max-height:880px){.ddc.ddc--mattress .ddc__bd .ddc__rw{display:none}}
+@container ddc (max-width:1099px){.ddc.ddc--mattress .ddc__bd .ddc__rw{display:none}}
+@media (max-height:800px){.ddc.ddc--mattress .ddc__bd .ddc__ty{display:none}}
+@container ddc (max-width:859px){.ddc.ddc--mattress .ddc__bd .ddc__ty{display:none}}
 @media (max-height:900px){.ddc{--thr:3.3/1}.ddc.ddc--topper{--thr:2.5/1}}
 @media (max-height:800px){.ddc{--thr:3.6/1}.ddc.ddc--topper{--thr:3.1/1}}
 @media (min-height:1000px){.ddc{--thr:3.6/1}.ddc.ddc--topper{--thr:2.1/1}}
+@container ddc (max-width:699px){.ddc.ddc--topper .ddc__bd .ddc__rw{display:none}}
