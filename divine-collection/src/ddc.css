@@ -327,3 +327,6 @@
 .ddc :is(.ddc__fam--partners,.ddc-f-partners,.ddc__fam--tpartners,.ddc-f-tpartners){--famd:#17606a}
 .ddc .ddc__fam-n{color:var(--famd)}
 .ddc .ddc__tag{letter-spacing:.1em}
+/* 3.4.2: above the tiles nothing is coloured except the family word itself (no edge, no dash) */
+.ddc .ddc__fam-n::before{display:none}
+.ddc .ddc__fam-h{border:0;box-shadow:none}

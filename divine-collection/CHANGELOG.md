@@ -6,6 +6,7 @@ Owner feedback: the family colour must not crowd the space above the card; the l
 - The family label (Premium, Essential, ...) appears only in the heading above the tiles, in the family colour, with its colour edge under it. It is no longer repeated inside the tiles (it stays in the markup and shows on phones only, where headings are hidden).
 - The preview card's colour edge moved to its lower part as well.
 - **Law: every text in capital letters has letter-spacing of at least 0.1em**; tightened several (Buy chips, Dual Plush badge); checked automatically.
+- Above the tiles nothing is coloured except the family word itself: the heading has no edge, no line and no coloured dash. The family colour edge is a thin bar under the picture inside each card (and under the picture in the preview card's facts box).
 - New `DESIGN-RULES.md` records the owner's rules for all future work.
 - Descriptions are unchanged (CSS and script only); only the loader changes.
 
