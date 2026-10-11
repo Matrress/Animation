@@ -8,7 +8,7 @@
    Vanilla JS, no globals except window.DDC. */
 (function () {
   'use strict';
-  var VERSION = '3.8.0';
+  var VERSION = '3.9.0';
   if (window.DDC && window.DDC.version) { window.DDC.scan(); return; }
 
   var HOVER_IN = 120;    // ms a pointer must rest on a tile before its card opens (no flicker when crossing tiles)
@@ -65,12 +65,14 @@
       var st = function (k, v) { pop.style.setProperty(k, v, 'important'); };   // the stylesheet is !important: inline values must be too
       pop.classList.toggle('is-wide', pw >= 640);
       st('width', pw + 'px'); st('max-height', 'none'); st('left', '0px'); st('top', '0px');
+      // bottom safe space: more on touch devices (iPad bottom bar, chat bubble)
+      var bot = window.matchMedia && matchMedia('(any-hover:none)').matches ? 76 : 28;
       var ph = pop.offsetHeight, vh = window.innerHeight, top, mh = '', g = Math.max(8, inset + 8);
       // under the tile when it fits on screen, else above it, else as low or as high as the window allows (it may cover part of its own tile)
       var vtop = T.bottom - 6;
-      if (vtop + ph > vh - 8) vtop = T.top - ph + 6;
-      if (vtop < g || vtop + ph > vh - 8) vtop = Math.max(g, Math.min(T.bottom - 6, vh - ph - 8));
-      if (ph > vh - g - 8) { mh = vh - g - 8; vtop = g; }
+      if (vtop + ph > vh - bot) vtop = T.top - ph + 6;
+      if (vtop < g || vtop + ph > vh - bot) vtop = Math.max(g, Math.min(T.bottom - 6, vh - ph - bot));
+      if (ph > vh - g - bot) { mh = vh - g - bot; vtop = g; }
       top = vtop - C.top;
       var left = Math.max(8, Math.min(T.left - C.left + T.width / 2 - pw / 2, W - pw - 8));
       st('left', Math.round(left) + 'px');

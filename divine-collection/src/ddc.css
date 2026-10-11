@@ -1,4 +1,4 @@
-/* Divine DunlopDreams Collection 3.8.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+/* Divine DunlopDreams Collection 3.9.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
    Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
@@ -399,3 +399,27 @@
 @media (max-height:800px){.ddc{--thr:3.6/1}.ddc.ddc--topper{--thr:3.1/1}}
 @media (min-height:1000px){.ddc{--thr:3.6/1}.ddc.ddc--topper{--thr:2.1/1}}
 @container ddc (max-width:699px){.ddc.ddc--topper .ddc__bd .ddc__rw{display:none}}
+
+/* 3.9.0 polish: spacing, safe areas, badge, hover, CTA */
+.ddc .ddc__ph{display:flex;flex-direction:column;gap:0}
+.ddc .ddc__pn{margin-top:8px;padding-right:132px;overflow-wrap:anywhere}
+.ddc .ddc__ph .ddc__ty{margin-top:8px;font-size:17px;line-height:1.4}
+.ddc .ddc__ph .ddc__pt{margin-top:10px;line-height:1.4}
+.ddc .ddc__ph .ddc__rw{margin-top:10px;line-height:1.4}
+.ddc .ddc__ph::after{top:0;right:0;white-space:nowrap}
+.ddc .ddc__px{margin-top:2px}
+.ddc .ddc__what{line-height:1.55}
+.ddc .ddc__who{margin-top:10px;line-height:1.55}
+.ddc .ddc__pop{padding:20px 22px 18px;overscroll-behavior:contain;max-height:calc(100dvh - 40px)}
+.ddc .ddc__pfoot{padding:14px 0 2px;bottom:-18px;gap:12px 18px}
+.ddc .ddc__acts{margin:0}
+.ddc .ddc__cta{min-height:52px;padding:10px 24px;font-size:17px;box-shadow:0 8px 18px -10px rgba(35,98,143,.7)}
+.ddc .ddc__pop.is-sheet{bottom:calc(72px + env(safe-area-inset-bottom,0px));max-height:calc(100dvh - 130px);padding:18px 16px 14px}
+.ddc .ddc__pop.is-sheet .ddc__pn{padding-right:0}
+.ddc .ddc__pop.is-sheet .ddc__ph::after{position:static;order:-1;align-self:flex-start;margin:0 0 10px}
+.ddc .ddc__pop.is-sheet .ddc__crumb{padding-right:56px}
+.ddc .ddc__pop.is-sheet .ddc__pfoot{bottom:-14px}
+.ddc .ddc__rd,.ddc .ddc__ty,.ddc .ddc__rw{overflow-wrap:anywhere}
+.ddc .ddc__go{margin-top:auto}
+.ddc .ddc__row.is-open .ddc__cube{transform:translateY(-1px);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--fl) 55%,var(--line)),0 10px 22px -16px rgba(23,26,32,.28)}
+@media (any-hover:none){.ddc .ddc__pop:not(.is-sheet) .ddc__ph::after{right:58px}}

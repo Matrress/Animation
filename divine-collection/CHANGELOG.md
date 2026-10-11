@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.9.0
+
+- Text fragments inside tiles and cards are separated by real whitespace/line breaks in the markup (copy, crawlers and no-CSS fallbacks no longer read "mattressSupport and adaptation").
+- Card header rhythm: family, name, definition, benefit, technical line with consistent spacing; badge top-right, name never runs under it; on phone sheets the badge sits above the family line.
+- Popup safe space: bigger bottom reserve on touch (iPad bottom bar / chat bubble), internal scroll only when too tall, CTA stays pinned (sticky), phone sheet lifted above the bottom bar.
+- Subtler hover/open outline; tile CTA pinned to the bottom of every tile; CTA a little smaller with softer shadow.
+
 ## 3.8.0
 
 - "Organic" stands before "latex mattress" / "latex topper" in every type line; "Natural" only on Ambient and Hotel Line.
