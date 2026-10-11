@@ -1,5 +1,15 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.19.0: the certification card opens a small cosmos with a turning Earth (2026-10-11) - PREVIEW, awaiting owner approval
+
+Owner brief: when the "100% EU & UK Certified" card opens, other texts step aside, Earth turns in a full circle (every continent) in space, levitating over the Dual Plush mattress; "Healthy for Us / Healthy for Our Planet" along its equator; buttons stay; leaving the card closes it; X to close; colours in the hero's family.
+- Earth is drawn on a canvas from ONE picture (assets/earth.webp 34 KB + assets/clouds.webp 3 KB), generated from Natural Earth land data (public domain) in the hero's palette: ink/teal ocean, shelf glow, mint-green land, white polar caps, drifting clouds. Per-pixel longitude/latitude are computed once; each frame only the turn is added (26 s per circle after a quick start whirl, 30 fps, only while the card is open). Starts centred on Europe.
+- If the picture cannot be read (no CORS) a flat, turning copy of it is shown; with reduced motion Earth stands still; phones upright, small windows and "save data" connections keep the plain card.
+- Scene: a night-blue sky with two star layers, the picture's own mattress cut-out on top so the Dual Plush mattress stays; the planet floats 3% up and down above it with a soft light on the mattress. The LATEX lockup, hint and the other points step aside (points at 30%). Shop buttons and the size control switch to light type like in night mode. The site header's text turns light while open (colour only, same rule as night mode).
+- The card starts level with the planet (lockup is hidden) and keeps its width; on a 1080x668 window it scrolls 11 px inside.
+- Slogan translated into 8 languages (machine; native review needed). NOTE: "Healthy for Us / Healthy for Our Planet" is an aspirational/health and environmental claim from the owner's SVG; keep an eye on UK/EU green-claims rules (CMA/ASA) before publishing.
+Tests: interaction 381/381/375/375, guards, panels 792/0, axe 0, new tests/orb19.mjs 35/35.
+
 ## 1.18.0: "100% EU & UK Certified" context card on the certification point (2026-10-11) - PREVIEW, awaiting owner approval
 
 Source: owner's SVG "natural latex matreesses and toppers dunlop technology" (1.6 MB, embedded JPEG + icons + raw claims). Only the rubber-tree photograph was used: cropped square on the cup and spout, 480x480 WebP, 19 KB (`assets/latex-source.webp`), lazy, inside the card. The SVG itself is not loaded.

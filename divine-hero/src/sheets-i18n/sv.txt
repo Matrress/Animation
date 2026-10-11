@@ -273,3 +273,7 @@ hcF_3a = Europeisk produktion
 hcF_3b = Certifierad för krav i UK &amp; EU
 hcF_r = Ett tätt, elastiskt och naturligt anpassningsbart material, gjort för stöd, ventilation och en renare, mer naturlig sömnmiljö.
 hcF_c = Naturligt i grunden. Utvecklat för hälsosammare sömn.
+hcF_h1 = Hälsosamt för oss
+hcF_h2 = Hälsosamt för vår planet
+hcF_h1s = Hälsosamt för oss.
+hcF_h2s = Hälsosamt för vår planet.

@@ -273,3 +273,7 @@ hcF_3a = Eurooppalainen tuotanto
 hcF_3b = Sertifioitu UK:n &amp; EU:n vaatimuksiin
 hcF_r = Tiivis, joustava ja luonnollisesti mukautuva materiaali tukea, ilmanvaihtoa ja puhtaampaa, luonnollisempaa uniympäristöä varten.
 hcF_c = Luonnollinen alkuperältään. Suunniteltu terveellisempään uneen.
+hcF_h1 = Terveellistä meille
+hcF_h2 = Terveellistä planeetallemme
+hcF_h1s = Terveellistä meille.
+hcF_h2s = Terveellistä planeetallemme.

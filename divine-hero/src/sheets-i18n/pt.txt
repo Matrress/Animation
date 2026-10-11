@@ -273,3 +273,7 @@ hcF_3a = Produção europeia
 hcF_3b = Certificado segundo os requisitos da UE e do Reino Unido
 hcF_r = Um material denso, elástico e de adaptação natural, pensado para suporte, ventilação e um ambiente de sono mais limpo e natural.
 hcF_c = Natural na origem. Pensado para um sono mais saudável.
+hcF_h1 = Saudável para nós
+hcF_h2 = Saudável para o nosso planeta
+hcF_h1s = Saudável para nós.
+hcF_h2s = Saudável para o nosso planeta.

@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.18.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.19.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.18.0';
+  var VERSION = '1.19.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -208,6 +208,7 @@
       if (key) { hintNote(key); warm(); root.setAttribute('data-ddh-state', key); root.setAttribute('data-ddh-screen', key === 'back' ? 'back' : key === NIGHT ? NIGHT : 'brand'); fit(key); placeCard(key); replaceSoon(key); }
       else { root.removeAttribute('data-ddh-state'); root.removeAttribute('data-ddh-screen'); }
       if (typeof unplace === 'function' && (!key || !cardOf(key))) unplace();
+      if (typeof orbSync === 'function') orbSync();
       var txt = '';
       copies.forEach(function (c) { var isOn = c.getAttribute('data-ddh-copy') === key; c.setAttribute('aria-hidden', String(!isOn)); if (isOn) txt = speak(c); });
       screens.forEach(function (s) { var isBack = s.classList.contains('ddh__screen--back'); s.setAttribute('aria-hidden', String(!key || (key === 'back' ? !isBack : isBack))); });
@@ -288,7 +289,7 @@
       invalidate(); layout();
     }
     function wake() { unstick(); if (active && !group.contains(d.activeElement)) show(null); }
-    on(d, 'visibilitychange', function () { if (!d.hidden) wake(); });
+    on(d, 'visibilitychange', function () { if (!d.hidden) wake(); if (typeof orbSync === 'function') { orbStop(); orbSync(); } });
     on(w, 'pageshow', function (ev) { if (ev.persisted) wake(); else unstick(); });
     on(d, 'resume', wake);
     on(w, 'focus', unstick);
@@ -529,11 +530,91 @@
         });
         if (active) placeCard(active);
       }
+      orbWire();
       szEl = sheetBox.querySelector('#ddh-sizes');
       if (szEl) {
         on(szEl, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') w.clearTimeout(szT); });
         on(szEl, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode === 'hover') szT = w.setTimeout(szClose, 280); });
       }
+    }
+    // 1.19.0 the planet of the certification card. One 2:1 picture of Earth (assets/earth.webp, 34 KB) is mapped onto a sphere by hand: for every pixel
+    // of a small canvas the longitude/latitude are computed once, each frame only the turn is added (a full circle in 26 s, so every continent passes).
+    // The light comes from upper left, a thin cloud layer drifts a little faster than the ground. Nothing runs unless the card is open; if the picture
+    // cannot be read (no CORS) a flat, turning copy of it is shown instead; with reduced motion Earth stands still, centred on Europe.
+    var space = null, orbEl = null, orbCv = null, orbE = null, orbC = null, orbP = null, orbOn = false, orbRaf = 0, orbT0 = 0, orbLast = 0, orbN = 0;
+    var TAU = Math.PI * 2, EW = 1280, EH = 640, CW = 1024, CH = 512, LON0 = 0.2;   // 0.2 rad = 11 deg east: Europe in the middle
+    function orbWire() {
+      space = sheetBox.querySelector('.ddh__space'); if (!space) return;
+      art.appendChild(space); orbEl = space.querySelector('.ddh__orb'); orbCv = space.querySelector('.ddh__orb-cv');
+      cleanups.push(function () { orbStop(); if (space && space.parentNode) space.parentNode.removeChild(space); space = orbEl = orbCv = orbE = orbC = orbP = null; });
+      if (!orbCv || !orbCv.getContext || lean()) { root.setAttribute('data-ddh-noorb', ''); return; }
+      var url = base() + 'assets/earth.webp', cur = base() + 'assets/clouds.webp';
+      var flat = function () { if (!orbEl) return; orbEl.setAttribute('data-flat', ''); orbEl.querySelector('.ddh__orb-fl').style.backgroundImage = 'url("' + url + '")'; orbEl.setAttribute('data-ready', ''); };
+      var load = function (u, ok, bad) { var im = new w.Image(); im.crossOrigin = 'anonymous'; im.onload = function () { ok(im); }; im.onerror = bad; im.src = u; };
+      var read = function (im, ww, hh) { var c = d.createElement('canvas'); c.width = ww; c.height = hh; var x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(im, 0, 0, ww, hh); return x.getImageData(0, 0, ww, hh).data; };
+      var go = function () { if (!orbEl) return; load(url, function (im) {
+        if (!orbEl) return;
+        try { orbE = read(im, EW, EH); } catch (e) { flat(); return; }
+        var fin = function () { if (!orbEl) return; orbEl.setAttribute('data-ready', ''); orbSync(); };
+        load(cur, function (ci) { try { orbC = read(ci, CW, CH); } catch (e) { orbC = null; } fin(); }, fin);
+      }, function () { if (orbEl) { var im2 = new w.Image(); im2.onload = flat; im2.onerror = function () { root.setAttribute('data-ddh-noorb', ''); }; im2.src = url; } }); };
+      if (w.requestIdleCallback) w.requestIdleCallback(go, { timeout: 2500 }); else w.setTimeout(go, 900);   // the read-back of the picture waits for an idle moment
+    }
+    function orbPrep() {                                            // per-pixel constants for the current canvas size
+      var S = Math.max(120, Math.min(560, Math.round(orbCv.clientWidth * Math.min(w.devicePixelRatio || 1, 1.5)))); if (!orbCv.clientWidth) return false;
+      if (orbP && orbP.S === S) return true;
+      orbCv.width = orbCv.height = S; var R = S / 2, n = 0, N = S * S;
+      var P = { S: S, ctx: orbCv.getContext('2d'), idx: new Int32Array(N), lon: new Float32Array(N), row: new Uint16Array(N), crow: new Uint16Array(N), sh: new Float32Array(N), rim: new Float32Array(N), spec: new Float32Array(N) };
+      P.img = P.ctx.createImageData(S, S);
+      var tilt = 0.36, ct = Math.cos(tilt), st = Math.sin(tilt), L = [-0.5, 0.42, 0.76], ll = Math.sqrt(L[0] * L[0] + L[1] * L[1] + L[2] * L[2]); L = [L[0] / ll, L[1] / ll, L[2] / ll];
+      var H = [L[0], L[1], L[2] + 1], hl = Math.sqrt(H[0] * H[0] + H[1] * H[1] + H[2] * H[2]); H = [H[0] / hl, H[1] / hl, H[2] / hl];
+      for (var y = 0; y < S; y++) for (var x = 0; x < S; x++) {
+        var nx = (x + .5 - R) / R, ny = -(y + .5 - R) / R, r2 = nx * nx + ny * ny; if (r2 >= 1) continue;
+        var nz = Math.sqrt(1 - r2), yb = ny * ct + nz * st, zb = -ny * st + nz * ct, lat = Math.asin(yb);
+        var k = n++, i = y * S + x;
+        P.idx[k] = i * 4; P.lon[k] = Math.atan2(nx, zb);
+        P.row[k] = Math.min(EH - 1, Math.max(0, Math.round((.5 - lat / Math.PI) * (EH - 1)))); P.crow[k] = Math.min(CH - 1, Math.max(0, Math.round((.5 - lat / Math.PI) * (CH - 1))));
+        var df = nx * L[0] + ny * L[1] + nz * L[2], lit = Math.max(0, Math.min(1, df * 1.1 + .1));
+        P.sh[k] = .13 + .95 * Math.pow(lit, .85);
+        P.rim[k] = Math.pow(1 - nz, 2.8) * (.35 + .65 * lit);
+        var sd = Math.max(0, nx * H[0] + ny * H[1] + nz * H[2]); P.spec[k] = Math.pow(sd, 46);
+        var a = Math.min(1, (1 - Math.sqrt(r2)) * R / 1.4), o = P.img.data; o[i * 4 + 3] = Math.round(a * 255);
+      }
+      P.n = n; orbP = P; return true;
+    }
+    function orbDraw(t) {
+      var P = orbP, E = orbE; if (!P || !E) return;
+      var C = orbC, o = P.img.data, n = P.n, idx = P.idx, lon = P.lon, row = P.row, crow = P.crow, sh = P.sh, rim = P.rim, spec = P.spec;
+      var spin = calm() ? 0 : (TAU / 26) * t + TAU * .9 * (1 - Math.exp(-t / 1.1));              // a quick whirl that settles into the steady turn
+      var lc = LON0 - spin, lcl = LON0 - spin * 1.05 + .8, inv = 1 / TAU;
+      for (var k = 0; k < n; k++) {
+        var u = (lon[k] + lc) * inv + .5; u -= Math.floor(u); u *= EW;
+        var i0 = u | 0, f = u - i0, i1 = i0 + 1 >= EW ? 0 : i0 + 1, ro = row[k] * EW, a = (ro + i0) * 4, b = (ro + i1) * 4;
+        var r = E[a] + (E[b] - E[a]) * f, g = E[a + 1] + (E[b + 1] - E[a + 1]) * f, bl = E[a + 2] + (E[b + 2] - E[a + 2]) * f;
+        var cl = 0;
+        if (C) { var cu = (lon[k] + lcl) * inv + .5; cu -= Math.floor(cu); cl = C[(crow[k] * CW + ((cu * CW) | 0)) * 4] * .0031; }   // 0..0.8
+        var oc = (bl > r + 18 && bl > g) ? 1 : .12;
+        r += (246 - r) * cl; g += (249 - g) * cl; bl += (250 - bl) * cl;
+        var s = sh[k], m = rim[k], sp = spec[k] * oc * (1 - cl) * 120;
+        var q = idx[k];
+        o[q] = r * s + m * 150 + sp; o[q + 1] = g * s + m * 214 + sp; o[q + 2] = bl * s + m * 226 + sp * .95;
+      }
+      P.ctx.putImageData(P.img, 0, 0);
+    }
+    function orbFrame(now) {
+      orbRaf = 0; if (!orbOn) return;
+      if (now - orbLast >= 32) { orbLast = now; if (!(++orbN % 40)) orbPrep(); orbDraw((now - orbT0) / 1000); }
+      orbRaf = w.requestAnimationFrame(orbFrame);
+    }
+    function orbStop() { orbOn = false; if (orbRaf) { w.cancelAnimationFrame(orbRaf); orbRaf = 0; } }
+    function orbSync() {
+      var want = active === 'head' && !!orbEl && orbEl.hasAttribute('data-ready') && !orbEl.hasAttribute('data-flat') && !root.hasAttribute('data-ddh-noorb') && cardsLive() && !d.hidden;
+      if (!want) { orbStop(); return; }
+      if (orbOn) return;
+      if (!orbE || !orbPrep()) return;
+      orbOn = true; orbT0 = w.performance.now(); orbLast = 0;
+      if (calm()) { orbDraw(0); orbOn = false; return; }
+      orbRaf = w.requestAnimationFrame(orbFrame);
     }
     // the "safe triangle": from the open point towards the facing edge of its card (any other direction closes at once)
     function toward(c, x, y) {
@@ -575,6 +656,7 @@
       var rr = root.getBoundingClientRect(), lk = root.querySelector('.ddh__sky-lockup'), sh = root.querySelector('.ddh__shop');
       var safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 64;
       var top = Math.max(safe + 10, lk ? lk.getBoundingClientRect().bottom - rr.top + 16 : 0);
+      if (k === 'head' && !root.hasAttribute('data-ddh-noorb')) top = safe + 10;   // 1.19.0: the lockup steps aside in the cosmos, so the card may start higher (level with the planet)
       if (k === 'weight') top = 10;                                 // 1.17.0: the firmness navigator is a full panel: it rises over the site header like the selectors
       var bottom = sh ? sh.getBoundingClientRect().top - rr.top - 16 : rr.height - 16;
       var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;
@@ -716,7 +798,7 @@
     on(d, 'click', function (ev) { if (szEl && !szEl.hidden && !szEl.contains(ev.target) && !(szBtn && szBtn.contains(ev.target))) szClose(); });
     on(d, 'keydown', function (ev) { if (sheet && (ev.key === 'Escape' || ev.key === 'Esc')) closeSheet(); });
     on(d, 'click', function (ev) { if (sheet && sheetMode === 'modal' && Date.now() - openedAt > 300 && !sheet.contains(ev.target) && !(sheetFrom && sheetFrom.contains(ev.target)) && !(bioPoint && bioPoint.contains(ev.target))) closeSheet(true); });
-    on(w, 'resize', function () { if (sheet && (phoneMQ.matches || (sheetMode === 'hover' && !deskMQ.matches))) closeSheet(true); if (active) placeCard(active); }, { passive: true });
+    on(w, 'resize', function () { if (sheet && (phoneMQ.matches || (sheetMode === 'hover' && !deskMQ.matches))) closeSheet(true); if (active) placeCard(active); if (orbOn) orbPrep(); }, { passive: true });
     // 1.10.1 loading in two stages: the first paint is the plain scene (photo, lettering, buttons) and nothing else.
     // Once the page has loaded and the browser is idle, the other modes follow at low priority: the screens' text
     // (every device: it is what search engines index), then on tablets/computers the hotspot graphics, the night
