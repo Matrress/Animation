@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.5.0 (2026-10-11)
+Owner feedback after 2.4.0: the green button is toxic, use the blue range; the watermark must be one leaf, not a branch.
+- **Buy now** is a calm deep-sea blue (#23628f, hover #184a6e; white text, contrast 6.5:1); focus outline in the same blue.
+- Watermark behind the preview: a single leaf (no branch) with the words Organic / Natural / Green product (or Natural / Green / product), as in 2.4.0.
+
 ## 2.4.0 (2026-10-11)
 Owner feedback after 2.3.0: Buy now must not be a toxic blue; Mediterranean leaf green; a watermark behind the preview about natural / organic / green product.
 - **Buy now** (tiles and card) is now olive-leaf green (#4a7448, hover #38592f; white text, contrast 5.4:1).

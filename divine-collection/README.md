@@ -7,7 +7,7 @@ One-screen orientation and comparison map for the **Latex Mattresses Collection*
 - Tests and results: [`TEST-REPORT.md`](TEST-REPORT.md)
 - Versions: [`CHANGELOG.md`](CHANGELOG.md)
 
-## What the visitor sees (2.4.0)
+## What the visitor sees (2.5.0)
 - **Top:** the question "Which 100% latex mattress is right for you?" and the selection path *Pick your model → set size, firmness, thickness & cover → buy*, always visible.
 - **The whole collection on one screen:** families side by side, each named and underlined with a thin line in its own colour: **Premium** (Botanic, Botanic Dual Plush), **Essential** (Bio Comfort, Bio Comfort Dual Plush), **Orthopaedic**, **Partners**, **Best Value**. Mattresses: 4 columns × 2 rows; toppers: 3 × 1; phones: mattresses two blocks per row, toppers three wide rows.
 - **Every model is a clean white card** (Tesla-store feel): large picture on a soft spotlight, an outlined family label, the name and one key line, a thin family-colour edge (кант) along the top, and a **Buy now** button on the picture. The whole tile, the small picture and the button are real links to the model page.
