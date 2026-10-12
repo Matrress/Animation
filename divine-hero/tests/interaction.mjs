@@ -184,7 +184,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.19.5/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.19.6/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -251,7 +251,7 @@ async function night() {
   await page.mouse.move(5, 5); await page.waitForTimeout(300);
   ok((await state(page)).s === null, 'pointer leaving the hero ends the night');
   await ctx.close();
-  // 1.19.5: touch tablets (>=701x501, both ways up) show the night point and tapping it opens the night; phones (either way up): no night point, no download
+  // 1.19.6: touch tablets (>=701x501, both ways up) show the night point and tapping it opens the night; phones (either way up): no night point, no download
   for (const [w, h, tablet] of [[1024, 768, true], [820, 1180, true], [744, 1133, true], [844, 390, false], [390, 844, false]]) {
     const cx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: true, isMobile: true });
     const pg = await cx.newPage(); const rq = [];
@@ -412,26 +412,26 @@ async function sheets() {
       ok(sz.right >= 150 && sz.afterTopper >= 60 && Math.abs(sz.mid) <= 2, '1.11.2: the size badge sits well apart from the Topper button (>= 60 px) and from the corner chat bubble (>= 150 px from the edge): ' + JSON.stringify(sz));
       ok(await page.evaluate(() => getComputedStyle(document.querySelector('.ddh__sz')).borderTopWidth === '0px' && getComputedStyle(document.querySelector('.ddh__sz i')).borderRadius.startsWith('50%')), '1.11.2: the size trigger is a round badge with a plain label, not a bordered button like the two Shop buttons');
     }
-    { // 1.19.5: the site header's "Mattresses" and "Toppers" links are plain links: hover and keyboard focus open nothing, a click is not intercepted (no preventDefault), the href is untouched
+    { // 1.19.6: the site header's "Mattresses" and "Toppers" links are plain links: hover and keyboard focus open nothing, a click is not intercepted (no preventDefault), the href is untouched
       for (const label of ['Mattresses', 'Toppers']) {
         const link = (await page.evaluateHandle((l) => [...document.querySelectorAll('.ins-tile--header a')].find((a) => a.textContent.trim() === l) || null, label)).asElement();
         if (!link) continue;
         const href0 = await link.getAttribute('href');
         await page.mouse.move(5, 400); await link.hover(); await page.waitForTimeout(800);
         const k = await page.evaluate(() => ({ open: document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'), via: document.querySelector('.ddh').getAttribute('data-ddh-via'), vis: [...document.querySelectorAll('.ddh__sheet')].some((s) => !s.hidden) }));
-        ok(!k.open && !k.via && !k.vis, `1.19.5: hovering the header's ${label} opens nothing: ` + JSON.stringify(k));
+        ok(!k.open && !k.via && !k.vis, `1.19.6: hovering the header's ${label} opens nothing: ` + JSON.stringify(k));
         await link.focus(); await page.keyboard.press('Tab'); await page.keyboard.press('Shift+Tab'); await page.waitForTimeout(500);
-        ok(!(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'))), `1.19.5: keyboard focus on the header's ${label} opens nothing`);
+        ok(!(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'))), `1.19.6: keyboard focus on the header's ${label} opens nothing`);
         const r = await page.evaluate((l) => { window.__d = null; const a = [...document.querySelectorAll('.ins-tile--header a')].find((x) => x.textContent.trim() === l); window.__h = (e) => { window.__d = e.defaultPrevented; e.preventDefault(); }; document.addEventListener('click', window.__h, false); return true; }, label);
         const box = await link.boundingBox(); await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2); await page.waitForTimeout(300);
-        ok((await page.evaluate(() => window.__d)) === false && (await page.evaluate(() => !document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'))), `1.19.5: a click on the header's ${label} is not prevented by the hero and opens no preview`);
+        ok((await page.evaluate(() => window.__d)) === false && (await page.evaluate(() => !document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'))), `1.19.6: a click on the header's ${label} is not prevented by the hero and opens no preview`);
         await page.evaluate(() => { document.removeEventListener('click', window.__h, false); });
-        ok((await link.getAttribute('href')) === href0 && !(await link.getAttribute('aria-haspopup')) && !(await link.getAttribute('aria-expanded')) && !(await link.getAttribute('aria-controls')) && !(await link.getAttribute('role')), `1.19.5: the header's ${label} keeps its href and gets no popup attributes`);
+        ok((await link.getAttribute('href')) === href0 && !(await link.getAttribute('aria-haspopup')) && !(await link.getAttribute('aria-expanded')) && !(await link.getAttribute('aria-controls')) && !(await link.getAttribute('role')), `1.19.6: the header's ${label} keeps its href and gets no popup attributes`);
         await page.mouse.move(5, 880); await page.waitForTimeout(300);
       }
       // the hero's own Shop buttons still open their previews on hover
       for (const name of ['mattress', 'topper']) { await page.mouse.move(5, 880); await page.waitForTimeout(500); await (await page.$(`.ddh__cta[data-ddh-sheet=${name}]`)).hover(); await page.waitForTimeout(700);
-        ok((await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'))) === name, `1.19.5: the Shop ${name} button still opens its preview on hover`); }
+        ok((await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-open-sheet'))) === name, `1.19.6: the Shop ${name} button still opens its preview on hover`); }
       await page.mouse.move(5, 880); await page.waitForTimeout(700);
     }
     const c = await centre(page, 'bio'); await page.mouse.move(c.x + 30, c.y + 20); await page.mouse.move(c.x, c.y, { steps: 3 }); await page.waitForTimeout(600);

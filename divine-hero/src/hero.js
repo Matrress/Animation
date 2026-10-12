@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.19.5 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.19.6 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.19.5';
+  var VERSION = '1.19.6';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -168,7 +168,7 @@
     var screens = [].slice.call(root.querySelectorAll('.ddh__screen'));
     var lazyImgs = [].slice.call(root.querySelectorAll('.ddh__screen img, .ddh__mat img, .ddh__bed img'));
     var fine = w.matchMedia ? w.matchMedia('(hover:hover) and (pointer:fine)') : { matches: true };
-    var nightMQ = w.matchMedia ? w.matchMedia('(min-width:701px) and (min-height:501px)') : { matches: false };   // 1.19.5: tablets with touch too
+    var nightMQ = w.matchMedia ? w.matchMedia('(min-width:701px) and (min-height:501px)') : { matches: false };   // 1.19.6: tablets with touch too
     var nightImg = root.querySelector('.ddh__night-img');
     var live = d.createElement('p');
     live.className = 'ddh__sr';
@@ -537,28 +537,29 @@
         on(szEl, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode === 'hover') szT = w.setTimeout(szClose, 280); });
       }
     }
-    // 1.19.5 the planet of the certification card. One 2:1 picture of Earth (assets/earth.webp, 34 KB) is mapped onto a sphere by hand: for every pixel
+    // 1.19.6 the planet of the certification card. One 2:1 picture of Earth (assets/earth.webp, 34 KB) is mapped onto a sphere by hand: for every pixel
     // of a small canvas the longitude/latitude are computed once, each frame only the turn is added (a full circle in 26 s, so every continent passes).
     // The light comes from upper left, a thin cloud layer drifts a little faster than the ground. Nothing runs unless the card is open; if the picture
     // cannot be read (no CORS) a flat, turning copy of it is shown instead; with reduced motion Earth stands still, centred on Europe.
     var space = null, orbEl = null, orbCv = null, orbE = null, orbC = null, orbP = null, orbOn = false, orbRaf = 0, orbT0 = 0, orbLast = 0, orbN = 0;
-    var TAU = Math.PI * 2, EW = 1280, EH = 640, CW = 1024, CH = 512, LON0 = 0.2;   // 0.2 rad = 11 deg east: Europe in the middle
+    var TAU = Math.PI * 2, EW = 1600, EH = 800, CW = 1600, CH = 800, LW = 1024, LH = 512, LON0 = 0.2, orbL = null;   // 0.2 rad = 11 deg east: Europe in the middle
     function orbWire() {
       space = sheetBox.querySelector('.ddh__space'); if (!space) return;
       art.appendChild(space); orbEl = space.querySelector('.ddh__orb'); orbCv = space.querySelector('.ddh__orb-cv');
-      cleanups.push(function () { orbStop(); if (space && space.parentNode) space.parentNode.removeChild(space); space = orbEl = orbCv = orbE = orbC = orbP = null; });
+      cleanups.push(function () { orbStop(); if (space && space.parentNode) space.parentNode.removeChild(space); space = orbEl = orbCv = orbE = orbC = orbL = orbP = null; });
       if (!orbCv || !orbCv.getContext || lean()) { root.setAttribute('data-ddh-noorb', ''); return; }
-      var url = base() + 'assets/earth.webp', cur = base() + 'assets/clouds.webp';
+      var url = base() + 'assets/earth.webp', cur = base() + 'assets/clouds.webp', lig = base() + 'assets/lights.webp';
       var flat = function () { if (!orbEl) return; orbEl.setAttribute('data-flat', ''); orbEl.querySelector('.ddh__orb-fl').style.backgroundImage = 'url("' + url + '")'; orbEl.setAttribute('data-ready', ''); };
       var load = function (u, ok, bad) { var im = new w.Image(); im.crossOrigin = 'anonymous'; im.onload = function () { ok(im); }; im.onerror = bad; im.src = u; };
-      var read = function (im, ww, hh) { var c = d.createElement('canvas'); c.width = ww; c.height = hh; var x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(im, 0, 0, ww, hh); return x.getImageData(0, 0, ww, hh).data; };
+      var read = function (im, ww, hh, gray) { var c = d.createElement('canvas'); c.width = ww; c.height = hh; var x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(im, 0, 0, ww, hh); var px = x.getImageData(0, 0, ww, hh).data; if (!gray) return px; var g = new Uint8Array(ww * hh); for (var i = 0; i < g.length; i++) g[i] = px[i * 4]; return g; };
       var go = function () { if (!orbEl) return; load(url, function (im) {
         if (!orbEl) return;
-        try { orbE = read(im, EW, EH); } catch (e) { flat(); return; }
+        try { orbE = read(im, EW, EH, false); } catch (e) { flat(); return; }
         var fin = function () { if (!orbEl) return; orbEl.setAttribute('data-ready', ''); orbSync(); };
-        load(cur, function (ci) { try { orbC = read(ci, CW, CH); } catch (e) { orbC = null; } fin(); }, fin);
+        load(cur, function (ci) { try { orbC = read(ci, CW, CH, true); } catch (e) { orbC = null; }
+          load(lig, function (li) { try { orbL = read(li, LW, LH, true); } catch (e) { orbL = null; } fin(); }, fin); }, function () { load(lig, function (li) { try { orbL = read(li, LW, LH, true); } catch (e) { orbL = null; } fin(); }, fin); });
       }, function () { if (orbEl) { var im2 = new w.Image(); im2.onload = flat; im2.onerror = function () { root.setAttribute('data-ddh-noorb', ''); }; im2.src = url; } }); };
-      if (w.requestIdleCallback) w.requestIdleCallback(go, { timeout: 2500 }); else w.setTimeout(go, 900);   // the read-back of the picture waits for an idle moment
+      if (w.requestIdleCallback) w.requestIdleCallback(go, { timeout: 2500 }); else w.setTimeout(go, 900);   // the read-back of the pictures waits for an idle moment
     }
     function orbLayout() {                                            // the planet and its outline fill the free sky: below the header, above the Shop row
       if (!orbEl) return;
@@ -569,22 +570,26 @@
       orbEl.style.width = Math.round(D) + 'px'; orbEl.style.left = Math.round(pr.width * .0465) + 'px'; orbEl.style.top = Math.round(t0 - pr.top) + 'px';
     }
     function orbPrep() {                                            // per-pixel constants for the current canvas size
-      var S = Math.max(120, Math.min(560, Math.round(orbCv.clientWidth * Math.min(w.devicePixelRatio || 1, 1.5)))); if (!orbCv.clientWidth) return false;
+      var S = Math.max(120, Math.min(480, Math.round(orbCv.clientWidth * .86 * Math.min(w.devicePixelRatio || 1, 1.4)))); if (!orbCv.clientWidth) return false;
       if (orbP && orbP.S === S) return true;
       orbCv.width = orbCv.height = S; var R = S / 2, n = 0, N = S * S;
-      var P = { S: S, ctx: orbCv.getContext('2d'), idx: new Int32Array(N), lon: new Float32Array(N), row: new Uint16Array(N), crow: new Uint16Array(N), sh: new Float32Array(N), rim: new Float32Array(N), spec: new Float32Array(N) };
+      var P = { S: S, ctx: orbCv.getContext('2d'), idx: new Int32Array(N), lon: new Float32Array(N), lon2: new Float32Array(N), row: new Uint16Array(N), crow: new Uint16Array(N), crow2: new Uint16Array(N), lrow: new Uint16Array(N), sh: new Float32Array(N), lit: new Float32Array(N), rim: new Float32Array(N), limb: new Float32Array(N), spec: new Float32Array(N) };
       P.img = P.ctx.createImageData(S, S);
       var tilt = 0.36, ct = Math.cos(tilt), st = Math.sin(tilt), L = [-0.5, 0.42, 0.76], ll = Math.sqrt(L[0] * L[0] + L[1] * L[1] + L[2] * L[2]); L = [L[0] / ll, L[1] / ll, L[2] / ll];
       var H = [L[0], L[1], L[2] + 1], hl = Math.sqrt(H[0] * H[0] + H[1] * H[1] + H[2] * H[2]); H = [H[0] / hl, H[1] / hl, H[2] / hl];
+      var clampR = function (v, m) { return Math.min(m - 1, Math.max(0, Math.round((.5 - v / Math.PI) * (m - 1)))); };
       for (var y = 0; y < S; y++) for (var x = 0; x < S; x++) {
         var nx = (x + .5 - R) / R, ny = -(y + .5 - R) / R, r2 = nx * nx + ny * ny; if (r2 >= 1) continue;
         var nz = Math.sqrt(1 - r2), yb = ny * ct + nz * st, zb = -ny * st + nz * ct, lat = Math.asin(yb);
         var k = n++, i = y * S + x;
         P.idx[k] = i * 4; P.lon[k] = Math.atan2(nx, zb);
-        P.row[k] = Math.min(EH - 1, Math.max(0, Math.round((.5 - lat / Math.PI) * (EH - 1)))); P.crow[k] = Math.min(CH - 1, Math.max(0, Math.round((.5 - lat / Math.PI) * (CH - 1))));
+        P.row[k] = clampR(lat, EH); P.crow[k] = clampR(lat, CH); P.lrow[k] = clampR(lat, LH);
+        // the shadow of a cloud falls away from the sun: the ground under this pixel is shaded by the cloud that sits a little towards the sun
+        var sx = nx + .045 * L[0], sy = ny + .045 * L[1], q2 = sx * sx + sy * sy;
+        if (q2 < 1) { var sz = Math.sqrt(1 - q2), syb = sy * ct + sz * st, szb = -sy * st + sz * ct; P.lon2[k] = Math.atan2(sx, szb); P.crow2[k] = clampR(Math.asin(syb), CH); } else { P.lon2[k] = P.lon[k]; P.crow2[k] = P.crow[k]; }
         var df = nx * L[0] + ny * L[1] + nz * L[2], lit = Math.max(0, Math.min(1, df * 1.1 + .1));
-        P.sh[k] = .13 + .95 * Math.pow(lit, .85);
-        P.rim[k] = Math.pow(1 - nz, 2.8) * (.35 + .65 * lit);
+        P.lit[k] = lit; P.sh[k] = .12 + .96 * Math.pow(lit, .85);
+        P.rim[k] = Math.pow(1 - nz, 2.6) * (.3 + .7 * lit); P.limb[k] = Math.pow(1 - nz, 9) * (.35 + .65 * lit);
         var sd = Math.max(0, nx * H[0] + ny * H[1] + nz * H[2]); P.spec[k] = Math.pow(sd, 46);
         var a = Math.min(1, (1 - Math.sqrt(r2)) * R / 1.4), o = P.img.data; o[i * 4 + 3] = Math.round(a * 255);
       }
@@ -592,20 +597,30 @@
     }
     function orbDraw(t) {
       var P = orbP, E = orbE; if (!P || !E) return;
-      var C = orbC, o = P.img.data, n = P.n, idx = P.idx, lon = P.lon, row = P.row, crow = P.crow, sh = P.sh, rim = P.rim, spec = P.spec;
+      var C = orbC, G = orbL, o = P.img.data, n = P.n, idx = P.idx, lon = P.lon, lon2 = P.lon2, row = P.row, crow = P.crow, crow2 = P.crow2, lrow = P.lrow, sh = P.sh, lit = P.lit, rim = P.rim, limb = P.limb, spec = P.spec;
       var spin = calm() ? 0 : (TAU / 26) * t + TAU * .9 * (1 - Math.exp(-t / 1.1));              // a quick whirl that settles into the steady turn
-      var lc = LON0 - spin, lcl = LON0 - spin * 1.05 + .8, inv = 1 / TAU;
+      var lc = LON0 - spin, lcl = LON0 - spin * 1.05 + .8, inv = 1 / TAU;                        // the clouds drift a little faster than the ground
       for (var k = 0; k < n; k++) {
-        var u = (lon[k] + lc) * inv + .5; u -= Math.floor(u); u *= EW;
-        var i0 = u | 0, f = u - i0, i1 = i0 + 1 >= EW ? 0 : i0 + 1, ro = row[k] * EW, a = (ro + i0) * 4, b = (ro + i1) * 4;
+        var u = (lon[k] + lc) * inv + .5; u -= Math.floor(u); var uf = u * EW;
+        var i0 = uf | 0, f = uf - i0, i1 = i0 + 1 >= EW ? 0 : i0 + 1, ro = row[k] * EW, a = (ro + i0) * 4, b = (ro + i1) * 4;
         var r = E[a] + (E[b] - E[a]) * f, g = E[a + 1] + (E[b + 1] - E[a + 1]) * f, bl = E[a + 2] + (E[b + 2] - E[a + 2]) * f;
-        var cl = 0;
-        if (C) { var cu = (lon[k] + lcl) * inv + .5; cu -= Math.floor(cu); cl = C[(crow[k] * CW + ((cu * CW) | 0)) * 4] * .0031; }   // 0..0.8
+        var cl = 0, ca = 0, L9 = lit[k];
+        if (C) {
+          var cu = (lon[k] + lcl) * inv + .5; cu -= Math.floor(cu);
+          cl = C[crow[k] * CW + ((cu * CW) | 0)] * .0033;                                         // 0..0.84 (the cloud picture is soft, nearest is enough)
+          var su = (lon2[k] + lcl) * inv + .5; su -= Math.floor(su); ca = C[crow2[k] * CW + ((su * CW) | 0)] * .00149;   // shadow strength 0..0.38
+        }
         var oc = (bl > r + 18 && bl > g) ? 1 : .12;
-        r += (246 - r) * cl; g += (249 - g) * cl; bl += (250 - bl) * cl;
-        var s = sh[k], m = rim[k], sp = spec[k] * oc * (1 - cl) * 120;
-        var q = idx[k];
-        o[q] = r * s + m * 150 + sp; o[q + 1] = g * s + m * 214 + sp; o[q + 2] = bl * s + m * 226 + sp * .95;
+        var sk = 1 - ca * (1 - cl); r *= sk; g *= sk; bl *= sk * .98 + .02;                      // cloud shadow on the ground
+        r += (248 - r) * cl; g += (251 - g) * cl; bl += (255 - bl) * cl;                         // the clouds themselves
+        var s = sh[k], m = rim[k], lb = limb[k], sp = spec[k] * oc * (1 - cl) * 120, q = idx[k];
+        var R9 = r * s + m * 120 + lb * 175 + sp, G9 = g * s + m * 185 + lb * 215 + sp, B9 = bl * s + m * 255 + lb * 255 + sp * .95;
+        if (L9 < .36) {                                                                          // the night side: a warm glow at the terminator, city lights
+          var tw = (1 - Math.min(1, ((L9 - .2) * (L9 - .2)) * 100)) * .5; R9 += tw * 70; G9 += tw * 26; B9 -= tw * 8;
+          if (G) { var lf = lon[k] + lc; var lu = lf * inv + .5; lu -= Math.floor(lu); var lv = G[lrow[k] * LW + ((lu * LW) | 0)];
+            if (lv > 6) { var nw = (1 - L9 / .36) * lv * .0039 * (1 - cl * .9) * 255; R9 += nw; G9 += nw * .78; B9 += nw * .42; } }
+        }
+        o[q] = R9; o[q + 1] = G9; o[q + 2] = B9;
       }
       P.ctx.putImageData(P.img, 0, 0);
     }
@@ -665,7 +680,7 @@
       var rr = root.getBoundingClientRect(), lk = root.querySelector('.ddh__sky-lockup'), sh = root.querySelector('.ddh__shop');
       var safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 64;
       var top = Math.max(safe + 10, lk ? lk.getBoundingClientRect().bottom - rr.top + 16 : 0);
-      if (k === 'head' && !root.hasAttribute('data-ddh-noorb')) top = safe + 10;   // 1.19.5: the lockup steps aside in the cosmos, so the card may start higher (level with the planet)
+      if (k === 'head' && !root.hasAttribute('data-ddh-noorb')) top = safe + 10;   // 1.19.6: the lockup steps aside in the cosmos, so the card may start higher (level with the planet)
       if (k === 'weight') top = 10;                                 // 1.17.0: the firmness navigator is a full panel: it rises over the site header like the selectors
       var bottom = sh ? sh.getBoundingClientRect().top - rr.top - 16 : rr.height - 16;
       var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;
@@ -769,7 +784,7 @@
       on(szBtn, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode !== 'pin') { w.clearTimeout(szT); szT = w.setTimeout(szClose, 280); } }, { passive: true });
       on(szBtn, 'click', function () { if (szEl && !szEl.hidden && szMode === 'pin') szClose(); else if (szEl && !szEl.hidden) szMode = 'pin'; else szOpen('pin'); });
     }
-    // 1.19.5: the site header's "Mattresses" / "Toppers" links are plain links again: no preview opens from them (hover, focus, click or tap); only the two Shop buttons below open the previews.
+    // 1.19.6: the site header's "Mattresses" / "Toppers" links are plain links again: no preview opens from them (hover, focus, click or tap); only the two Shop buttons below open the previews.
     on(d, 'keydown', function (ev) { if ((ev.key === 'Escape' || ev.key === 'Esc') && szEl && !szEl.hidden) { szClose(true); ev.stopPropagation(); } });
     on(d, 'click', function (ev) { if (szEl && !szEl.hidden && !szEl.contains(ev.target) && !(szBtn && szBtn.contains(ev.target))) szClose(); });
     on(d, 'keydown', function (ev) { if (sheet && (ev.key === 'Escape' || ev.key === 'Esc')) closeSheet(); });

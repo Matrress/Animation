@@ -1,5 +1,13 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.19.6: Earth with cosmic realism (2026-10-12) - PREVIEW, awaiting owner approval
+
+Owner: the turning Earth should look like a real planet from space (clouds, air currents), in the style of Apple's Earth, fitting the visual system. Nothing else changed.
+- New pictures, generated from Natural Earth land data (public domain) in the hero's palette: Earth 1600x800 (deep blue oceans with turquoise shelves, forest/savanna/desert/steppe/tundra by latitude with relief, mountains, snow and polar ice, 54 KB), a cloud layer (banded by latitude with storm spirals and jet-stream streaks, 37 KB) and a night-lights map (cities such as London, Paris, Berlin, Madrid, Rome, Istanbul, Moscow, Delhi, Tokyo, New York..., 11 KB). About 100 KB in all, loaded once, lazily, when the first card opens.
+- Rendering: clouds are white where lit and dark at night, drift a little faster than the ground and cast soft shadows on the surface; thin blue atmosphere with a bright limb; warm glow at the terminator; city lights on the night side; sun glint on the oceans. Canvas drawn at 86% of its size (no visible loss; 8 ms per frame, 30 fps).
+- Fixed on the way (my 1.19.3 regression): the pulsing outline animated a CSS filter and dropped the page to ~17 fps; the filter is now static and only the opacity pulses (same look, 54 fps).
+Tests: orb19 35/35, interaction 394/394, 394/394, 385/385, 385/385, guards pass, panels 792/0, axe 0.
+
 ## 1.19.5: the site header's Mattresses / Toppers links open no preview (2026-10-12)
 
 Owner request (one minimal functional change): the top navigation links "Mattresses" and "Toppers" follow their existing hrefs directly (hover, focus, click, tap); only the two Shop buttons in the hero open the previews.
