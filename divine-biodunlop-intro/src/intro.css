@@ -1,0 +1,48 @@
+/*! Divine DunlopDreams BioDunlop intro 0.1.0-dev | namespace .ddb | attaches to Hero 1.20.2 (.ddh) without changing it */
+/* Off by default: nothing here applies unless the inline gate marked the page <html data-ddb="pending"> */
+.ddh .ddb,.ddh .ddb-skip{display:none}
+/* the crawlable line: present for search engines and screen readers at all times, visible only while the intro plays */
+.ddh .ddb-line{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* the stage lies exactly over the hero picture (same box, same crop at every size): above every picture layer (points are 5,
+   earlier in the DOM), below the Shop row (6) so shopping is never covered */
+html[data-ddb] .ddh .ddb{display:block;position:absolute;inset:0;z-index:5;overflow:hidden;background:#d3efe8 url(assets/ddb-poster-1280.webp) center/cover no-repeat;contain:strict}
+@media (max-width:1100px){html[data-ddb] .ddh .ddb{background-image:url(assets/ddb-poster-960.webp)}}
+.ddh .ddb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .35s ease}
+.ddh .ddb video[data-on]{opacity:1}
+
+/* while the film runs the hero's own layers wait: points, hint and the LATEX lockup (the Shop buttons stay, shopping is never delayed) */
+html[data-ddb] .ddh .ddh__points,html[data-ddb] .ddh .ddh__hint,html[data-ddb] .ddh .ddh__sky-lockup{opacity:0!important;visibility:hidden!important}
+
+/* the one line of story, real text in the brand type */
+html[data-ddb] .ddh .ddb-line{position:absolute!important;left:6.2%;bottom:24%;z-index:5;width:auto;height:auto;margin:0;overflow:visible;clip:auto;clip-path:none;white-space:normal;max-width:min(30em,56%);font:600 clamp(15px,1.5vw,22px)/1.35 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:.06em;color:#fff;text-shadow:0 1px 14px rgba(8,40,40,.55),0 0 2px rgba(8,40,40,.35);visibility:hidden;opacity:0;transform:translateY(8px);transition:opacity .8s ease,transform 1.2s cubic-bezier(.2,.8,.2,1),visibility 0s .8s;pointer-events:none}
+html[data-ddb=play] .ddh .ddb-line[data-on]{visibility:visible;opacity:1;transform:none;transition:opacity .8s ease,transform 1.2s cubic-bezier(.2,.8,.2,1),visibility 0s}
+/* laid out from the first paint (the gate runs before it), so showing it never shifts anything */
+
+/* over the darker origin shots the Shop row keeps its contrast: a light glass under the buttons while the film runs */
+html[data-ddb] .ddh .ddh__shop .ddh__cta,html[data-ddb] .ddh .ddh__shop .ddh__sz{background-color:rgba(238,250,246,.9)!important;border-radius:999px!important;transition:background-color .9s ease}
+
+/* Skip: quiet, always reachable */
+html[data-ddb=play] .ddh .ddb-skip{display:inline-flex;align-items:center;gap:.5em;position:absolute;left:clamp(16px,2.6%,48px);top:auto;z-index:7;min-height:40px;padding:0 18px;border:1px solid rgba(255,255,255,.75);border-radius:999px;background:rgba(20,64,62,.42);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;font:600 14px/1 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:.08em;cursor:pointer}
+html[data-ddb=play] .ddh .ddb-skip[data-wait]{visibility:hidden}
+html[data-ddb=play] .ddh .ddb-skip:hover{background:rgba(20,64,62,.62)}
+html[data-ddb=play] .ddh .ddb-skip:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.ddh .ddb-skip i{width:0;height:0;border-left:7px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent}
+
+/* the hand-over: the film dissolves into the live hero, the model is already in place, then the hero's own life lights up */
+html[data-ddb=out] .ddh .ddb{display:block;opacity:0;transition:opacity .9s cubic-bezier(.4,0,.2,1)}
+html[data-ddb-lit] .ddh .ddh__sky-lockup{animation:ddb-rise 1s cubic-bezier(.2,.8,.2,1) backwards}
+html[data-ddb-lit] .ddh .ddh__points .ddh__point{animation:ddb-lit .7s ease backwards}
+html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(2){animation-delay:.07s}
+html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(3){animation-delay:.14s}
+html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(4){animation-delay:.21s}
+html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(5){animation-delay:.28s}
+html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(6){animation-delay:.35s}
+html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(7){animation-delay:.42s}
+html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(8){animation-delay:.49s}
+html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(9){animation-delay:.56s}
+html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(n+10){animation-delay:.63s}
+@keyframes ddb-lit{from{opacity:0;transform:scale(.4)}}
+@keyframes ddb-rise{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){html[data-ddb] .ddh .ddb,html[data-ddb] .ddh .ddb-skip,html[data-ddb] .ddh .ddb-line{display:none!important}html[data-ddb-lit] .ddh *{animation:none!important}}
+@media (forced-colors:active){html[data-ddb] .ddh .ddb{display:none}}
