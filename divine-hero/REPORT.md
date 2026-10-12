@@ -1,5 +1,14 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.19.4: night scene on every tablet (2026-10-12) - PREVIEW, awaiting owner approval
+
+Owner: the night scene ("Improve the Quality of Your Sleep") was missing on iPad; all tablets must have it.
+- The night point and scene now exist for every window of at least 701x501 px, with touch as well as mouse (was: width >= 1051 px with hover only, since 1.7.0). Phones (either way up) keep the calm picture without it.
+- Tablets held upright: the Shop row is a separate band under the picture; it now darkens with the night (and with the cosmos) so the light-on-dark buttons stay readable.
+- Cosmos on tablets held upright: the certification card is narrower (450-540 px), its three steps stack in one column, so the planet and its outline keep the left side; everything fits at 744, 810, 820 and 834 px wide.
+- The lockup fades as quickly as before on tablets (0.2 s).
+Tests: interaction 389/389 (sim110; new tablet/phone night checks), panels 792/0, guards pass, orb19 35/35.
+
 ## 1.19.3: deeper meditative pulse, outline lower (2026-10-11) - PREVIEW, awaiting owner approval
 
 Owner feedback on 1.19.2: the outline a little lower below the planet; the pulse more intense and deep, like meditation, clearly visible.

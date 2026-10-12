@@ -184,7 +184,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.19.3/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.19.4/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);
@@ -251,15 +251,21 @@ async function night() {
   await page.mouse.move(5, 5); await page.waitForTimeout(300);
   ok((await state(page)).s === null, 'pointer leaving the hero ends the night');
   await ctx.close();
-  // touch-only tablets (<1051px) and phones: no night point, no download
-  for (const [w, h] of [[1024, 768], [844, 390], [390, 844]]) {
+  // 1.19.4: touch tablets (>=701x501, both ways up) show the night point and tapping it opens the night; phones (either way up): no night point, no download
+  for (const [w, h, tablet] of [[1024, 768, true], [820, 1180, true], [744, 1133, true], [844, 390, false], [390, 844, false]]) {
     const cx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: true, isMobile: true });
     const pg = await cx.newPage(); const rq = [];
     pg.on('request', (r) => /\/night-\d+\.webp/.test(r.url()) && rq.push(r.url()));
     await pg.goto(url, { waitUntil: 'load' }); await pg.waitForTimeout(250);
     if (w > 700) { const p0 = await centre(pg, 'shoulder'); await pg.touchscreen.tap(p0.x, p0.y); await pg.waitForTimeout(200); }
     const shown = await pg.evaluate(() => document.querySelector('[data-ddh-point=night]').offsetWidth > 0);
-    ok(!shown && rq.length === 0, `${w}x${h} touch: no night point (${shown}), no night download (${rq.length})`);
+    if (tablet) {
+      ok(shown, `${w}x${h} touch tablet: the night point is there`);
+      if (shown) { const pn = await centre(pg, 'night'); await pg.touchscreen.tap(pn.x, pn.y); await pg.waitForTimeout(1400);
+        const o = await pg.evaluate(() => ({ st: document.querySelector('.ddh').getAttribute('data-ddh-state'), op: +getComputedStyle(document.querySelector('.ddh__night')).opacity, bg: getComputedStyle(document.querySelector('.ddh__shop')).backgroundColor }));
+        ok(o.st === 'night' && o.op > .9, `${w}x${h} touch tablet: a tap opens the night (${o.st}, ${o.op})`);
+        if (w <= 1050) ok(/rgb\(4, 10, 22\)/.test(o.bg), `${w}x${h}: the Shop band darkens with the night (${o.bg})`); }
+    } else ok(!shown && rq.length === 0, `${w}x${h} phone: no night point (${shown}), no night download (${rq.length})`);
     await cx.close();
   }
 }

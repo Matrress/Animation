@@ -302,7 +302,7 @@
 .ddh .ddh__night-copy span{display:block;line-height:inherit!important}
 .ddh .ddh__night-copy b{font-weight:600;-webkit-text-stroke:.018em currentColor}
 .ddh .ddh__points .ddh__point[data-ddh-point=night]{display:none!important}
-@media (min-width:1051px) and (any-hover:hover){
+@media (min-width:701px) and (min-height:501px){   /* 1.19.4: every tablet (touch too), laptop and monitor; phones keep the calm picture */
 .ddh[data-ddh-warm] .ddh__night{display:block} /* only after intent: an opacity-0 layer on screen would still fetch its lazy image */
 .ddh .ddh__points .ddh__point[data-ddh-point=night]{display:block!important;--x:50.5%;--y:53.2%;--i:9}
 .ddh .ddh__point[data-ddh-point=night]::before{border-color:rgba(220,174,85,.85);background:rgba(246,226,176,.12)}
@@ -1864,3 +1864,25 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh .ddh__orb-sl{position:absolute;left:-7%;width:114%;top:114%;height:auto;overflow:visible;fill:none;filter:drop-shadow(0 0 2px rgba(190,245,255,.95)) drop-shadow(0 0 9px rgba(70,190,245,.85)) drop-shadow(0 0 22px rgba(60,150,235,.55))}
 .ddh .ddh__orb-sl path{fill:none;stroke:#dff8ff;stroke-width:2px;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1}
 @media (prefers-reduced-motion:no-preference){
+/* 1.19.4 tablets held upright: the Shop row is its own band under the picture; in the night and in the cosmos it darkens with the sky (its buttons turn light) */
+.ddh .ddh__shop{transition:background-color .7s ease}
+.ddh[data-ddh-state=night] .ddh__shop{background:#040a16}
+@media (min-width:701px) and (min-height:501px){.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb]) .ddh__shop{background:#041428}}
+/* tablets held upright: the certification card is narrower so the planet keeps the left side */
+@media (min-width:701px) and (max-width:1000px) and (min-height:501px){.ddh .ddh__hc--cert,.ddh .ddh__hc--cert[data-tight]:not([data-ddh-wide]),.ddh .ddh__hc--cert[data-ddh-wide]{width:clamp(450px,56vw,540px)}}
+@container hcard (max-width:560px){
+.ddh .ddh__hc--cert .ddh__crt-st{grid-template-columns:1fr;gap:8px;margin-left:24px;margin-right:24px;padding:10px 12px}
+.ddh .ddh__hc--cert .ddh__crt-st li:not(:last-child)::after{display:none}
+.ddh .ddh__hc--cert .ddh__crt-st li{grid-template-columns:30px minmax(0,1fr);column-gap:10px;align-items:center}
+.ddh .ddh__hc--cert .ddh__crt-st i{grid-row:1/span 4;width:30px;height:30px;box-shadow:none}
+.ddh .ddh__hc--cert .ddh__crt-st svg{width:16px;height:16px}
+.ddh .ddh__hc--cert .ddh__crt-st b{min-height:30px;letter-spacing:.06em}
+.ddh .ddh__hc--cert .ddh__crt-no li{font-size:13.5px;padding:4px 10px}
+}
+@container hcard (max-width:520px){
+.ddh .ddh__hc--cert[data-tight="3"] .ddh__crt{grid-template-columns:84px minmax(0,1fr);gap:14px;margin-bottom:10px}
+.ddh .ddh__hc--cert[data-tight="3"] .ddh__crt-tx .ddh__hc-l{font-size:15.5px;line-height:1.45;margin-bottom:8px}
+.ddh .ddh__hc--cert[data-tight="3"] .ddh__crt-st{gap:4px;padding:8px 12px;margin-bottom:6px}
+.ddh .ddh__hc--cert[data-tight="3"] .ddh__hc-hd{padding-top:12px;padding-bottom:10px}
+}
+@media (max-width:1050px){.ddh .ddh__sky-lockup{transition:opacity .2s ease}}   /* the lockup yields as quickly as before on tablets */
