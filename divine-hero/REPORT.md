@@ -998,3 +998,8 @@ Preserved v26 ✓ · no redesign (design-visible changes = phone overlap fix, ±
 - The small caption screens (Back, Temperature, Night, Balance and so on) bloom from their point (0.5 s).
 - Reduced motion: no animation at all, as before. Closing is still instant. Bio Comfort and the Shop previews are unchanged.
 - Only transform and opacity are animated.
+
+## 1.20.1 - Smoothness fix: the growing card never takes the pointer
+- Found by the owner: with 1.20.0 the cards did not stay open on a real mouse. The card starts as a small box exactly under the cursor, took the pointer from its point, and the point/card hover hand-over closed it again.
+- The card ignores the pointer while it grows (0.62 s) and the "mouse is travelling to the card" tests now use the card's final layout box, not its animated one.
+- New test tests/smooth20.mjs (growing card does not catch the pointer; a hand moving into the card keeps it open; card settles at opacity 1, no transform).

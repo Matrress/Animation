@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.20.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.20.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.20.0';
+  var VERSION = '1.20.1';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -641,10 +641,15 @@
       if (calm()) { orbDraw(0); orbOn = false; return; }
       orbRaf = w.requestAnimationFrame(orbFrame);
     }
+    // 1.20.0: the card's resting box (layout only): while it grows out of its point the transform shrinks its visible box, and every hit test must use the final one
+    function lbox(c) {
+      var op = c.offsetParent, o = op ? op.getBoundingClientRect() : { left: 0, top: 0 }, l = o.left + (op ? op.clientLeft : 0) + c.offsetLeft, t = o.top + (op ? op.clientTop : 0) + c.offsetTop;
+      return { left: l, top: t, right: l + c.offsetWidth, bottom: t + c.offsetHeight, width: c.offsetWidth, height: c.offsetHeight };
+    }
     // the "safe triangle": from the open point towards the facing edge of its card (any other direction closes at once)
     function toward(c, x, y) {
       var pt = group.querySelector('[data-ddh-point="' + active + '"]'); if (!pt || !c) return false;
-      var a = pt.getBoundingClientRect(), r = c.getBoundingClientRect(), ax = a.left + a.width / 2, ay = a.top + a.height / 2, m = 40;
+      var a = pt.getBoundingClientRect(), r = lbox(c), ax = a.left + a.width / 2, ay = a.top + a.height / 2, m = 40;
       if (ax >= r.left && ax <= r.right && ay >= r.top && ay <= r.bottom) return x >= r.left - m && x <= r.right + m && y >= r.top - m && y <= r.bottom + m;   // the point lies under its card
       var bx = ax < r.left ? r.left + 2 : ax > r.right ? r.right - 2 : null;
       if (bx === null) { var by = ay < r.top ? r.top + 2 : r.bottom - 2, ty = (y - ay) / (by - ay); if (ty < -.1 || ty > 1.05) return false; return x >= Math.min(ax + (r.left - m - ax) * ty, ax - m) && x <= Math.max(ax + (r.right + m - ax) * ty, ax + m); }
@@ -652,7 +657,7 @@
       var top = ay + (r.top - m - ay) * t, bot = ay + (r.bottom + m - ay) * t;
       return y >= Math.min(top, ay - m) && y <= Math.max(bot, ay + m);
     }
-    function inBox(c, x, y) { var r = c.getBoundingClientRect(); return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom; }
+    function inBox(c, x, y) { var r = lbox(c); return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom; }
     function inCards(el) { return !!(el && el.nodeType === 1 && ((dpc && dpc.contains(el)) || (hcs && hcs.contains(el)))); }
     function cardsLive() { return !!(hcs && w.innerWidth > 700 && w.innerHeight > 500); }
     function cardOf(k) { if (!k) return null; if (k === 'system') return dpcLive() ? dpc : null; return cardsLive() ? hcs.querySelector('[data-ddh-card="' + k + '"]') : null; }
@@ -702,7 +707,7 @@
       var p = group.querySelector('[data-ddh-point="' + key + '"]'); if (!p || !p.offsetWidth) return;
       var a = p.getBoundingClientRect(), ax = a.left + a.width / 2, ay = a.top + a.height / 2;
       var el = cardOf(key) || [].filter.call(copies, function (c) { return c.getAttribute('data-ddh-copy') === key; })[0];
-      if (el) { var r = el.getBoundingClientRect(); el.style.setProperty('--ddh-ox', Math.round(ax - r.left) + 'px'); el.style.setProperty('--ddh-oy', Math.round(ay - r.top) + 'px'); }
+      if (el) { var r = lbox(el); el.style.setProperty('--ddh-ox', Math.round(ax - r.left) + 'px'); el.style.setProperty('--ddh-oy', Math.round(ay - r.top) + 'px'); }
       var old = group.querySelector('.ddh__burst'); if (old) old.parentNode.removeChild(old);
       var b = w.document.createElement('i'); b.className = 'ddh__burst'; b.setAttribute('aria-hidden', 'true');
       b.style.left = Math.round(p.offsetLeft + p.offsetWidth / 2) + 'px'; b.style.top = Math.round(p.offsetTop + p.offsetHeight / 2) + 'px';

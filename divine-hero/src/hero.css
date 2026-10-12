@@ -1890,10 +1890,11 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 /* --- 1.20.0 smoothness: every card opens out of its own point (a funnel that widens into the window, with a soft ring where it starts) --- */
 .ddh .ddh__hc,.ddh .ddh__dpc,.ddh .ddh__copy,.ddh .ddh__spine{transform-origin:var(--ddh-ox,100%) var(--ddh-oy,0)}
 @keyframes ddh-erupt{
-0%{opacity:0;transform:scale(.05);animation-timing-function:cubic-bezier(.16,.84,.3,1)}
+0%{opacity:0;transform:scale(.05);pointer-events:none;animation-timing-function:cubic-bezier(.16,.84,.3,1)}
 16%{opacity:1}
-64%{opacity:1;transform:scale(1.022);animation-timing-function:cubic-bezier(.4,0,.2,1)}
-100%{opacity:1;transform:none}}
+64%{opacity:1;transform:scale(1.022);pointer-events:none;animation-timing-function:cubic-bezier(.4,0,.2,1)}
+99%{pointer-events:none}
+100%{opacity:1;transform:none;pointer-events:auto}}
 @keyframes ddh-bloom{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:none}}
 @keyframes ddh-kid{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
 @keyframes ddh-burst{0%{opacity:.95;transform:scale(.35)}100%{opacity:0;transform:scale(3.4)}}
