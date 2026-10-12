@@ -8,7 +8,7 @@
    Vanilla JS, no globals except window.DDC. */
 (function () {
   'use strict';
-  var VERSION = '3.11.0';
+  var VERSION = '3.13.0';
   if (window.DDC && window.DDC.version) { window.DDC.scan(); return; }
 
   var HOVER_IN = 120;    // ms a pointer must rest on a tile before its card opens (no flicker when crossing tiles)
@@ -141,9 +141,11 @@
     }, true);
     window.addEventListener('resize', function () { if (open) hide(false); });
     window.addEventListener('pagehide', function () { hide(false); });
+    if (window.DDCNav) window.DDCNav.mount(root);   // the decision navigator (mattress collection only: needs its .ddc__nv block)
   }
 
   function scan() {
+    if (window.DDCNav) window.DDCNav.gc();
     var list = document.querySelectorAll('.ddc:not([data-ddc])');
     for (var i = 0; i < list.length; i++) init(list[i]);
   }

@@ -18,3 +18,4 @@
 15. **Every model states what it is** ("... latex mattress") above its other lines, in the small and the big card, so a customer is always sure they get a latex mattress; this also serves SEO. Older key lines are never deleted: they stay below the newer lines (where space allows in the small card, always in the big card).
 16. "Organic" stands before "latex mattress" / "latex topper" everywhere; "Natural" only on Ambient and Hotel Line.
 17. Family labels use the exact edge colour of their family; row gaps stay clear enough that every button reads as belonging to the model above it.
+18. Family names (Premium, Innovation, Best Value, Orthopaedic, Partners) are secondary markers in the navigator: small, after the model name, never in front of the customer's need. Bio Comfort is never "Essential".

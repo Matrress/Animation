@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 export const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const BASE = process.env.DDC_BASE || 'http://127.0.0.1:8790/divine-collection/preview/';
-const types = { '.webp': 'image/webp', '.woff2': 'font/woff2', '.css': 'text/css', '.js': 'application/javascript' };
+const types = { '.webp': 'image/webp', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.css': 'text/css', '.js': 'application/javascript' };
 export async function browser() { return chromium.launch(); }
 export async function page(br, opts = {}) {
   const ctx = await br.newContext({ viewport: opts.viewport || { width: 1440, height: 900 }, deviceScaleFactor: opts.dpr || 1, hasTouch: !!opts.touch, isMobile: !!opts.mobile, reducedMotion: opts.reduce ? 'reduce' : 'no-preference' });

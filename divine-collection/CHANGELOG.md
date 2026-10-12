@@ -1,5 +1,28 @@
 # Changelog
 
+## 3.13.0
+
+Decision navigator (supersedes the unpublished 3.12.0):
+- The question "Which 100% natural latex mattress is right for you?" is a button (animated indicator, icon, hint "Hover or tap to find your mattress"). Mouse hover previews it, click / tap / Enter / Space pins it; X, Escape, click outside and pressing the question again close it.
+- Six real customer routes, in this order: balanced support and comfort; more adaptation and plush comfort; newest and most technologically advanced; best value; Extra Firm orthopaedic comfort; different comfort needs for partners. Need -> Answer -> model -> direct product link. Hotel Line is not part of it. Bio Comfort sits in routes 1 and 3, Bio Comfort Dual Plush in 2 and 3.
+- Family names are secondary markers only (small, after the model name): Botanic Premium / Original, Botanic Dual Plush Premium / Dual Plush, Bio Comfort Innovation / Latest Generation, Bio Comfort Dual Plush Innovation / Dual Plush, Ambient Best Value, Orthopaedic Extra Firm, Partners Individual Firmness. "Essential" is gone everywhere: the grid label of Bio Comfort and Bio Comfort Dual Plush is now "Innovation".
+- One dialog, three views (Guide, All UK & EU Sizes, Firmness Regulation); never a modal on a modal. A compact sticky bar inside the dialog keeps Close (and Back to Mattress Guide on the two secondary views) visible while the content scrolls.
+- The Need -> Answer arrow is a decorative flow connector (aria-hidden, not focusable, no pointer events); vertical on tablet and phone.
+- Responsive: desktop Need left / Answer right, two models side by side; tablet and phone Need above Answer; phone models one under the other; safe-area padding.
+- Progressive enhancement: the route block is real, visible content of the description (six needs, answers, model names, real product links). Without JavaScript it shows as a calm section under the collection; with JavaScript the same block is moved into the dialog (never duplicated).
+- Sizes and Firmness are read from the hero sources at build time (divine-hero/src/sizes.json, the Firmness Regulation card in sheets.html); identical in hero 1.17.1, 1.17.2, 1.18.0 and 1.19.4.
+- Sizes copy no longer claims every size exists on every model (Partners starts from specific widths). Firmness thesis: "Firmness is not a marketing label. It is body regulation based on weight, human proportions and the balance between support and adaptation."; Dual Plush explained in three points.
+- Header steps of the mattress collection: Pick your model / Configure it / Buy (no notes); hidden below 1100 px, leaving the question and the two tools.
+- Real whitespace between inline parts everywhere (no glued words); h5 reset.
+- tests/nav.mjs (151 checks), tests/nav-evidence.mjs (22 labelled screenshots with a self-check), tests/lib.mjs serves SVG with the right type.
+- Final round: the six routes and the intro use the owner's final wording; route answers now exist for all six routes.
+- The 1-2-3 steps are a light information sequence (`<ol aria-label="Buying steps">`: turquoise first number, thin connecting line, no plate, no black, nothing interactive: no button, link, role, tabindex or handler, default cursor, never in the tab order). Hidden below 940 px.
+- Large touch screens in landscape (>= 1024 px, `pointer: coarse`) get the desktop layout: four cards per row, normal pictures, View model & buy at the bottom of every card (not a chip over the picture), steps on one row, Need left of Answer and two models side by side in the navigator (stacking starts below a 940 px dialog).
+- Hover is gated by real capabilities (`any-hover: hover` and a non-touch pointer); hover styles live in `@media (any-hover: hover)`; a tap always opens.
+- Progressive enhancement without layout shift: the loader sets `ddc-js` on <html> (and removes it if the script or stylesheet fails or does not start within 8 s); only then the in-page route block is hidden while the script moves it into the dialog. Without the script the block stays visible.
+- The dialog resolves the firmness images from the script's own address (no commit id inside ddc.js).
+- Tests: nav.mjs 185, interaction.mjs 323 (the one-window height rule is not applied to large touch screens), 28 labelled screenshots.
+
 ## 3.11.0
 
 - Family names (Premium, Essential, Orthopaedic, Partners, Best Value) are bolder and larger (15px, extra stroke) and always in the family colour, in the tile label, the family heading and the card crumb. Only 400/600 font weights are loaded, so extra weight comes from a 0.5px text stroke.

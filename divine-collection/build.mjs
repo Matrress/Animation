@@ -5,8 +5,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collections, FIRM, HERO_ASSETS } from './src/data.mjs';
+import { navMarkup, navData, ROUTES } from './src/nav.mjs';
 
-const VERSION = '3.11.0';
+const VERSION = '3.13.0';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DDC_REF || 'main-preview';
 const CDN = `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-collection/release/${VERSION}/`;
@@ -61,7 +62,7 @@ ${dp}<div class="ddc__pfoot"><p class="ddc__buy"><b>You buy on the model page.</
 
 function description(c, imgBase, ownBase) {
   const byId = Object.fromEntries(c.models.map((m) => [m.id, m]));
-  const steps = c.steps.map((s, i) => `<li class="ddc__st${i === 0 ? ' ddc__st--now' : ''}"><span class="ddc__st-n">${i + 1}</span><span class="ddc__st-x"><span class="ddc__st-t">${esc(s)}</span><span class="ddc__st-w">${esc(c.stepNotes[i])}</span></span></li>`).join('');
+  const steps = c.steps.map((s, i) => `<li class="ddc__st${i === 0 ? ' ddc__st--now' : ''}"><span class="ddc__st-n">${i + 1}</span> <span class="ddc__st-x"><span class="ddc__st-t">${esc(s)}</span>${c.stepNotes[i] ? ` <span class="ddc__st-w">${esc(c.stepNotes[i])}</span>` : ''}</span></li>`).join('\n');
   // a tile is a colour block: picture on a tinted panel, a band in the family colour with the family label, the name and one key line, and a Buy now button
   const tile = (m, fa) => `<li class="ddc__row ddc-m-${m.id} ddc-f-${fa.id}"><p class="ddc__lab">${esc(fa.name)}</p><div class="ddc__cube"><a class="ddc__ra" href="${m.url}"><span class="ddc__th${m.img.photo ? ' ddc__th--photo' : ''}"><img src="${(m.img.own ? ownBase : imgBase) + m.img.src}" width="280" height="${Math.round(m.img.h * 280 / m.img.w)}" loading="lazy" decoding="async" alt=""></span><span class="ddc__bd"><span class="ddc__rn">${esc(m.name)}</span> ${m.type ? `<span class="ddc__ty">${esc(m.type)}</span> ` : ''}<span class="ddc__rd">${esc(m.fn || m.row)}</span>${m.fn ? ` <span class="ddc__rw">${esc(m.row)}</span>` : ''}</span></a><a class="ddc__go" href="${m.url}">View<span class="ddc__vm"> model</span> &amp; buy<span class="ddc__sr"> ${esc(m.name)}</span></a></div>${pop(c, m, fa, imgBase, ownBase)}</li>`;
   const fams = c.families.map((fa) => `<div class="ddc__fam ddc__fam--${fa.id} ddc__n${fa.models.length}"><h3 class="ddc__fam-h"><span class="ddc__fam-n">${esc(fa.name)}</span><span class="ddc__fam-s">${esc(fa.says)}</span></h3><ul class="ddc__rows">${fa.models.map((id) => tile(byId[id], fa)).join('')}</ul></div>`).join('\n');
@@ -70,15 +71,15 @@ function description(c, imgBase, ownBase) {
 <div class="ddc ddc--${c.key}">
 <div class="ddc__in">
 <div class="ddc__hd">
-<div class="ddc__ht"><h2 class="ddc__q">${esc(c.question)}</h2><p class="ddc__lede">${esc(c.lede)}</p></div>
-<ol class="ddc__path">${steps}</ol>
+<div class="ddc__ht"><h2 class="ddc__q">${esc(c.question)}</h2>\n<p class="ddc__lede">${esc(c.lede)}</p></div>
+<ol class="ddc__path" aria-label="Buying steps">\n${steps}\n</ol>
 </div>
 <div class="ddc__tiles">
 ${fams}
 </div>
 <ul class="ddc__foot">${foot}</ul>
 </div>
-</div>
+${c.key === 'mattress' ? navMarkup(c.models) + '\n' : ''}</div>
 `;
 }
 
@@ -92,7 +93,8 @@ function guard(c, html) {
   for (const m of c.models) {
     if (!/^https:\/\/divinedunlop\.com\/products\/[a-z0-9-]+$/.test(m.url)) throw new Error(`${m.id}: url ${m.url}`);
     const n = html.split(`href="${m.url}"`).length - 1;
-    if (n !== 3) throw new Error(`${m.id}: expected 3 links (tile, Buy now, Buy now in the card), found ${n}`);
+    const nav = c.key === 'mattress' ? ROUTES.flatMap((r) => r.models).filter((x) => x.id === m.id).length * 2 : 0;   // name link + CTA link in the navigator
+    if (n !== 3 + nav) throw new Error(`${m.id}: expected ${3 + nav} links (tile, Buy now, Buy now in the card${nav ? ', navigator name + CTA' : ''}), found ${n}`);
   }
   const text = html.replace(/<[^>]+>/g, ' ');
   const bad = [[/£|\$\s?\d|€\s?\d/, 'a price'], [/\b(her|him|his|hers|women|men|man|woman)\b/i, 'gendered wording'], [/no layers/i, '"No layers"'], [/approximately|approx\.|≈|~\s?\d/i, 'an approximate value'], [/\bcures?\b|pain relief|guarantee/i, 'a medical or guaranteed-outcome claim'], [/Ambient Topper/i, 'an Ambient Topper']];
@@ -123,10 +125,11 @@ function importantize(css) {
 
 // ---------- build ----------
 fs.rmSync(rel, { recursive: true, force: true });
-const css = importantize(fs.readFileSync(path.join(here, 'src/ddc.css'), 'utf8'));
+const css = importantize(fs.readFileSync(path.join(here, 'src/ddc.css'), 'utf8') + fs.readFileSync(path.join(here, 'src/nav.css'), 'utf8'));
 out(path.join(rel, 'ddc.css'), css);
 const { transformSync } = await import(process.env.ESBUILD || 'esbuild');
-const js = transformSync(fs.readFileSync(path.join(here, 'src/ddc.js'), 'utf8'), { minify: true, target: 'es2017' }).code;
+const navJs = fs.readFileSync(path.join(here, 'src/nav.js'), 'utf8').replace('__DDC_NAV_DATA__', JSON.stringify(navData(CDN + 'assets/')));
+const js = transformSync(navJs, { minify: true, target: 'es2017' }).code + transformSync(fs.readFileSync(path.join(here, 'src/ddc.js'), 'utf8'), { minify: true, target: 'es2017' }).code;
 out(path.join(rel, 'ddc.js'), js);
 fs.mkdirSync(path.join(rel, 'assets'), { recursive: true });
 for (const a of fs.readdirSync(path.join(here, 'src/assets'))) fs.copyFileSync(path.join(here, 'src/assets', a), path.join(rel, 'assets', a));
@@ -153,7 +156,7 @@ for (const c of Object.values(collections)) {
 
 // site-wide loader for Instant Site custom code: CSS early (no unstyled flash), script deferred; does nothing twice
 const loader = `<!-- Divine DunlopDreams Collection ${VERSION} loader (site-wide custom code). Styles + script for the .ddc category descriptions only. -->
-<script>(function(d,b){if(window.__ddcLoader)return;window.__ddcLoader=1;var l=d.createElement('link');l.rel='stylesheet';l.href=b+'ddc.css';d.head.appendChild(l);var s=d.createElement('script');s.src=b+'ddc.js';s.defer=true;d.head.appendChild(s)})(document,'${CDN}');</script>
+<script>(function(d,b){if(window.__ddcLoader)return;window.__ddcLoader=1;var h=d.documentElement,off=function(){h.classList.remove('ddc-js')};h.classList.add('ddc-js');var l=d.createElement('link');l.rel='stylesheet';l.href=b+'ddc.css';l.onerror=off;d.head.appendChild(l);var s=d.createElement('script');s.src=b+'ddc.js';s.defer=true;s.onerror=off;d.head.appendChild(s);setTimeout(function(){if(!window.DDC)off()},8000)})(document,'${CDN}');</script>
 `;
 out(path.join(here, `ecwid/loader-${VERSION}.html`), loader);
 // the same loader as plain JavaScript, for a custom-code field that expects code without <script> tags

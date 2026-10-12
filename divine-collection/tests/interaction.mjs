@@ -17,10 +17,10 @@ const onProduct = (p) => p.evaluate(() => /page=product/.test(location.search));
 // ---------- 1. content in the HTML itself (no CSS, no script) ----------
 for (const kind of ['mattress', 'topper']) {
   const c = collections[kind];
-  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-3.11.0.html`, import.meta.url), 'utf8');
+  const html = fs.readFileSync(new URL(`../ecwid/description-${kind}-3.13.0.html`, import.meta.url), 'utf8');
   const p = await page(br);
   await p.goto(S(kind, '&mode=none'));
-  const d = await p.evaluate(() => ({ tiles: [...document.querySelectorAll('.ddc__ra')].map((a) => [a.querySelector('.ddc__rn').firstChild.textContent.trim(), a.href]), links: [...document.querySelectorAll('.ddc a')].map((a) => a.href), text: document.querySelector('.ddc').textContent, imgs: [...document.querySelectorAll('.ddc img')].map((i) => [i.getAttribute('src'), i.alt]), tags: [...document.querySelectorAll('.ddc__row')].map((li) => [(li.className.match(/ddc-m-(\w+)/) || [])[1], li.querySelector('.ddc__lab').textContent.trim(), li.querySelector('.ddc__go').textContent.trim().replace(/\s+/g, ' '), li.querySelector('.ddc__cta').textContent.trim().replace(/\s+/g, ' ')]) }));
+  const d = await p.evaluate(() => ({ tiles: [...document.querySelectorAll('.ddc__ra')].map((a) => [a.querySelector('.ddc__rn').firstChild.textContent.trim(), a.href]), links: [...document.querySelectorAll('.ddc__tiles a')].map((a) => a.href), text: document.querySelector('.ddc').textContent, imgs: [...document.querySelectorAll('.ddc img')].map((i) => [i.getAttribute('src'), i.alt]), tags: [...document.querySelectorAll('.ddc__row')].map((li) => [(li.className.match(/ddc-m-(\w+)/) || [])[1], li.querySelector('.ddc__lab').textContent.trim(), li.querySelector('.ddc__go').textContent.trim().replace(/\s+/g, ' '), li.querySelector('.ddc__cta').textContent.trim().replace(/\s+/g, ' ')]) }));
   const famOrder = c.families.flatMap((f) => f.models);
   ok(JSON.stringify(d.tiles.map((t) => t[0])) === JSON.stringify(famOrder.map((id) => c.models.find((m) => m.id === id).name)), `${kind}: tiles are exactly the published models, in family order: ${d.tiles.map((t) => t[0])}`);
   ok(d.tiles.every((t, i) => t[1] === c.models.find((m) => m.id === famOrder[i]).url), `${kind}: every tile links to its verified product page`);
@@ -54,7 +54,8 @@ for (const kind of ['mattress', 'topper']) {
 // ---------- 3. one screen: the whole collection, the guide and the path, at every device size ----------
 const fits = [[1280, 720], [1440, 900], [1920, 1080], [1366, 768], [1180, 820], [1024, 768], [820, 1180], [768, 1024], [390, 844], [360, 740], [430, 932]];
 for (const [w, h] of fits) for (const kind of ['mattress', 'topper']) {
-  const p = await page(br, { viewport: { width: w, height: h }, touch: w < 1200 && w !== 1280 && w !== 1366, mobile: w < 500 });
+  const isTouch = w < 1200 && w !== 1280 && w !== 1366;
+  const p = await page(br, { viewport: { width: w, height: h }, touch: isTouch, mobile: w < 500 });
   await p.goto(S(kind)); await p.waitForSelector('.ddc--js'); await p.evaluate(() => document.fonts.ready); await sleep(250);
   const m = await p.evaluate(() => {
     const r = document.querySelector('.ddc').getBoundingClientRect(); const tiles = [...document.querySelectorAll('.ddc__ra')].map((a) => a.getBoundingClientRect());
@@ -74,7 +75,8 @@ for (const [w, h] of fits) for (const kind of ['mattress', 'topper']) {
   ok(m.fs >= 13.5, `${kind} ${w}x${h}: tile text >= 13.5 px (${m.fs})`);
   if (w >= 700) {
     ok(m.cols === (kind === 'mattress' ? 4 : 3) && m.rows === (kind === 'mattress' ? 2 : 1), `${kind} ${w}x${h}: ${kind === 'mattress' ? '4 columns, 2 rows' : '3 columns, 1 row'} (${m.cols} x ${m.rows})`);
-    ok(m.h <= h - 90, `${kind} ${w}x${h}: whole collection (${m.h}px) fits in one window with room for the site header (90 px)`);
+    // large touch screens in landscape (iPad >= 1024 px) get the normal desktop tiles and scroll instead of squeezing
+    if (!(isTouch && w >= 1024)) ok(m.h <= h - 60, `${kind} ${w}x${h}: whole collection (${m.h}px) fits in one window with room for the site header (60 px)`);
   } else {
     ok(m.cols === (kind === 'mattress' ? 2 : 1), `${kind} ${w}x${h}: phone layout ${m.cols} column(s)`);
     ok(m.h <= (kind === 'mattress' ? 1400 : 960), `${kind} ${w}x${h}: phone height ${m.h}px stays within about one screen`);

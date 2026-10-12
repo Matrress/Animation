@@ -1,4 +1,4 @@
-/* Divine DunlopDreams Collection 3.11.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
+/* Divine DunlopDreams Collection 3.13.0 — one-screen collection map for the Latex Mattresses and Latex Toppers category descriptions.
    Namespace: .ddc / .ddc__* only. Nothing here selects an Ecwid element or anything outside .ddc.
    The build adds !important to every declaration: the Ecwid storefront styles description content with id-prefixed selectors
    (html#ecwid_html body#ecwid_body …) that would otherwise win over any class selector.
@@ -17,7 +17,7 @@
   container:ddc/inline-size;display:block;box-sizing:border-box;width:100%;max-width:1240px;margin:0 auto 28px;padding:0;
   font-family:var(--ff);font-size:16px;font-weight:400;line-height:1.45;color:var(--ink);text-align:left;letter-spacing:0;text-transform:none;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .ddc *,.ddc *::before,.ddc *::after{box-sizing:border-box}
-.ddc :is(h2,h3,h4,p,ul,ol,li,figure){margin:0;padding:0;border:0;background:none;font-family:var(--ff);font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit;letter-spacing:0;text-transform:none;text-align:left}
+.ddc :is(h2,h3,h4,h5,p,ul,ol,li,figure){margin:0;padding:0;border:0;background:none;font-family:var(--ff);font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit;letter-spacing:0;text-transform:none;text-align:left}
 .ddc :is(ul,ol){list-style:none}
 .ddc li{list-style:none;text-indent:0}
 .ddc li::before,.ddc li::after{content:none}
