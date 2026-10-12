@@ -1,0 +1,9 @@
+/* PROPOSAL ONLY: do not install until Martin approves the new interface (INSTALL.md §6).
+   Hides the duplicated native product cards on the two collection pages only, keeping title, breadcrumbs and the new interface.
+   Replace MATTRESS_ID and TOPPER_ID with the real numeric category ids. Ecwid marks the store container of a category page with
+   .ecwid-productBrowser-CategoryPage-<id> (to confirm with the probe loader's category id and the page source).
+   Nothing else is affected: product pages, search, cart, checkout, reviews, other categories and the homepage keep their own classes. */
+.ecwid-productBrowser-CategoryPage-MATTRESS_ID .grid__products,
+.ecwid-productBrowser-CategoryPage-MATTRESS_ID .grid__sort,
+.ecwid-productBrowser-CategoryPage-TOPPER_ID .grid__products,
+.ecwid-productBrowser-CategoryPage-TOPPER_ID .grid__sort { display: none !important; }
