@@ -1,5 +1,12 @@
 # Divine DunlopDreams Hero — engineering & design polish report
 
+## 1.19.5: the site header's Mattresses / Toppers links open no preview (2026-10-12)
+
+Owner request (one minimal functional change): the top navigation links "Mattresses" and "Toppers" follow their existing hrefs directly (hover, focus, click, tap); only the two Shop buttons in the hero open the previews.
+- Removed the 1.11.1 header bridge from hero.js (pointerover/pointerout/focusin handlers, the click interceptor over the menu link and its helper). No hrefs added or changed, no preventDefault, no popup attributes. Nothing else touched (CSS, Shop buttons, previews, cards, navigator, hotspots, dialog logic).
+- Tests: the header-bridge checks replaced by 10 checks for the new behaviour (nothing opens on hover or focus, click not prevented, href kept, no popup attributes, Shop buttons still open on hover); fit15 no longer shoots the removed "nav" preview.
+Tests: interaction 394/394 and 394/394, 385/385 and 385/385, guards pass, panels 792/0, axe 0, orb19 35/35.
+
 ## 1.19.4: night scene on every tablet (2026-10-12) - PREVIEW, awaiting owner approval
 
 Owner: the night scene ("Improve the Quality of Your Sleep") was missing on iPad; all tablets must have it.

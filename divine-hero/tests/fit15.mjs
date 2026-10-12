@@ -24,7 +24,7 @@ const probe = () => {
 for (const lang of langs) for (const [w, h] of list) {
   const p = await (await b.newContext({ viewport: { width: w, height: h } })).newPage();
   await p.goto(`http://127.0.0.1:8765/${u}?ddh-lang=${lang}`, { waitUntil: 'load' }); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(2200);
-  for (const name of ['mattress', 'topper']) for (const via of ['cta', 'nav']) {
+  for (const name of ['mattress', 'topper']) for (const via of ['cta']) {   // 1.19.5: the site menu links no longer open previews
     await p.mouse.move(2, h - 2); await p.keyboard.press('Escape'); await p.waitForTimeout(350);
     if (via === 'cta') await p.hover(`.ddh__cta[data-ddh-sheet=${name}]`); else await p.hover(`.ins-tile--header a:has-text("${name === 'mattress' ? 'Mattresses' : 'Toppers'}")`);
     await p.waitForTimeout(650);

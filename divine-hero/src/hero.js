@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.19.4 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.19.5 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.19.4';
+  var VERSION = '1.19.5';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -168,7 +168,7 @@
     var screens = [].slice.call(root.querySelectorAll('.ddh__screen'));
     var lazyImgs = [].slice.call(root.querySelectorAll('.ddh__screen img, .ddh__mat img, .ddh__bed img'));
     var fine = w.matchMedia ? w.matchMedia('(hover:hover) and (pointer:fine)') : { matches: true };
-    var nightMQ = w.matchMedia ? w.matchMedia('(min-width:701px) and (min-height:501px)') : { matches: false };   // 1.19.4: tablets with touch too
+    var nightMQ = w.matchMedia ? w.matchMedia('(min-width:701px) and (min-height:501px)') : { matches: false };   // 1.19.5: tablets with touch too
     var nightImg = root.querySelector('.ddh__night-img');
     var live = d.createElement('p');
     live.className = 'ddh__sr';
@@ -537,7 +537,7 @@
         on(szEl, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode === 'hover') szT = w.setTimeout(szClose, 280); });
       }
     }
-    // 1.19.4 the planet of the certification card. One 2:1 picture of Earth (assets/earth.webp, 34 KB) is mapped onto a sphere by hand: for every pixel
+    // 1.19.5 the planet of the certification card. One 2:1 picture of Earth (assets/earth.webp, 34 KB) is mapped onto a sphere by hand: for every pixel
     // of a small canvas the longitude/latitude are computed once, each frame only the turn is added (a full circle in 26 s, so every continent passes).
     // The light comes from upper left, a thin cloud layer drifts a little faster than the ground. Nothing runs unless the card is open; if the picture
     // cannot be read (no CORS) a flat, turning copy of it is shown instead; with reduced motion Earth stands still, centred on Europe.
@@ -665,7 +665,7 @@
       var rr = root.getBoundingClientRect(), lk = root.querySelector('.ddh__sky-lockup'), sh = root.querySelector('.ddh__shop');
       var safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 64;
       var top = Math.max(safe + 10, lk ? lk.getBoundingClientRect().bottom - rr.top + 16 : 0);
-      if (k === 'head' && !root.hasAttribute('data-ddh-noorb')) top = safe + 10;   // 1.19.4: the lockup steps aside in the cosmos, so the card may start higher (level with the planet)
+      if (k === 'head' && !root.hasAttribute('data-ddh-noorb')) top = safe + 10;   // 1.19.5: the lockup steps aside in the cosmos, so the card may start higher (level with the planet)
       if (k === 'weight') top = 10;                                 // 1.17.0: the firmness navigator is a full panel: it rises over the site header like the selectors
       var bottom = sh ? sh.getBoundingClientRect().top - rr.top - 16 : rr.height - 16;
       var vb = w.innerHeight - rr.top - 16; if (vb - top >= 300 && vb < bottom) bottom = vb;
@@ -769,40 +769,7 @@
       on(szBtn, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode !== 'pin') { w.clearTimeout(szT); szT = w.setTimeout(szClose, 280); } }, { passive: true });
       on(szBtn, 'click', function () { if (szEl && !szEl.hidden && szMode === 'pin') szClose(); else if (szEl && !szEl.hidden) szMode = 'pin'; else szOpen('pin'); });
     }
-    // 1.11.1 bridge from the site's own header: pointing at (or tabbing to) its "Mattresses" / "Toppers" links opens the
-    // same preview under the header, while the hero is on screen. Read-only: nothing in the header is changed, clicks go
-    // where they always went, touch is left alone, and the hero still works if the header changes.
-    var navA = null;
-    function navSheet(a) {
-      if (!a || root.contains(a) || (sheetBox && sheetBox.contains(a)) || (portal && portal.contains(a))) return '';
-      var href = (a.getAttribute('href') || '').toLowerCase(), t = (a.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-      var name = (/latex-mattresses-collection/.test(href) || t === 'mattresses') ? 'mattress' : (/latex-toppers-collection/.test(href) || t === 'toppers') ? 'topper' : '';
-      if (!name) return '';
-      var r = a.getBoundingClientRect(), hr = root.getBoundingClientRect(), safe = parseFloat(w.getComputedStyle(root).getPropertyValue('--ddh-safe')) || 120;
-      return (hr.top > -40 && hr.top < w.innerHeight * .35 && r.bottom <= hr.top + safe + 8 && r.bottom > 0) ? name : '';
-    }
-    on(d, 'click', function (ev) {
-      if (!sheet || !navOrigin || !sheet.contains(ev.target) || (ev.target.closest && ev.target.closest('a,button'))) return;
-      var r = navOrigin.getBoundingClientRect(); if (ev.clientX < r.left || ev.clientX > r.right || ev.clientY < r.top || ev.clientY > r.bottom) return;
-      var a = navOrigin; ev.preventDefault(); closeSheet(true); a.click();
-    });
-    on(d, 'pointermove', function (ev) { if (!navGrace) return; navGrace = false; if (sheet && !sheet.contains(ev.target)) later(); }, { passive: true });
-    on(d, 'pointerover', function (ev) {
-      if (ev.pointerType !== 'mouse' || !deskMQ.matches || (sheet && sheetMode === 'modal')) return;
-      var a = ev.target.closest && ev.target.closest('a'); if (!a || a === navA) return;
-      var name = navSheet(a); if (!name) return;
-      navA = a; loadSheets(); w.clearTimeout(hoverT);
-      hoverT = w.setTimeout(function () { openSheet(name, 'hover', null, 'nav'); navOrigin = a; }, sheet ? 0 : 160);
-    }, { passive: true });
-    on(d, 'pointerout', function (ev) {
-      if (!navA || (ev.relatedTarget && navA.contains(ev.relatedTarget)) || !(ev.target.closest && ev.target.closest('a') === navA)) return;
-      navA = null; if (!sheet) w.clearTimeout(hoverT); later();
-    }, { passive: true });
-    on(d, 'focusin', function (ev) {
-      var a = ev.target; if (!deskMQ.matches || !a || a.tagName !== 'A' || !fv(a)) return;
-      var name = navSheet(a); if (name && !(sheet && sheetMode === 'modal')) openSheet(name, 'hover', null, 'nav');
-      else if (sheet && sheetMode === 'hover' && root.getAttribute('data-ddh-via') === 'nav' && !sheet.contains(a)) closeSheet(true);
-    });
+    // 1.19.5: the site header's "Mattresses" / "Toppers" links are plain links again: no preview opens from them (hover, focus, click or tap); only the two Shop buttons below open the previews.
     on(d, 'keydown', function (ev) { if ((ev.key === 'Escape' || ev.key === 'Esc') && szEl && !szEl.hidden) { szClose(true); ev.stopPropagation(); } });
     on(d, 'click', function (ev) { if (szEl && !szEl.hidden && !szEl.contains(ev.target) && !(szBtn && szBtn.contains(ev.target))) szClose(); });
     on(d, 'keydown', function (ev) { if (sheet && (ev.key === 'Escape' || ev.key === 'Esc')) closeSheet(); });

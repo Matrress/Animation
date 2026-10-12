@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const VERSION = '1.19.4';
+const VERSION = '1.19.5';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const esbuild = process.env.ESBUILD || 'esbuild';
 const rel = path.join(root, 'release', VERSION);
@@ -69,7 +69,7 @@ for (const f of fs.readdirSync(path.join(root, 'src/i18n'))) fs.writeFileSync(pa
   src = src.replace(/<article class="ddh__pv\b[\s\S]*?<\/article>/g, (art) => {
     const back = /<button class="ddh__pv-back"[\s\S]*?<\/button>/.exec(art); const cta = /<a class="ddh__pv-cta"[\s\S]*?<\/a>/.exec(art);
     if (!back || !cta) return art;
-    // 1.19.4: the buttons form one row at the foot of the text area (spanning both columns), not a stack in the narrow left column
+    // 1.19.5: the buttons form one row at the foot of the text area (spanning both columns), not a stack in the narrow left column
     const acts = `<div class="ddh__pv-acts">${cta[0]}${back[0]}</div>`;
     const cut = art.replace(back[0], '').replace(cta[0], '');
     const end = cut.lastIndexOf('</div></article>');
