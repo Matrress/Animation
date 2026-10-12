@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { collections, FIRM, HERO_ASSETS } from './src/data.mjs';
 import { navMarkup, navData, ROUTES } from './src/nav.mjs';
 
-const VERSION = '3.13.0';
+const VERSION = '3.13.1';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DDC_REF || 'main-preview';
 const CDN = `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-collection/release/${VERSION}/`;

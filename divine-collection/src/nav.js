@@ -27,7 +27,7 @@
       return '<li><span>' + esc(s.n) + '</span> <b>' + s.cm[0] + ' × ' + s.cm[1] + ' cm</b> <small>' + s.in[0] + '″ × ' + s.in[1] + '″</small></li>';
     }).join('');
     var contact = S.contactUrl ? '<a href="' + esc(S.contactUrl) + '">' + esc(S.contact) + '</a>' : '<b>' + esc(S.contact) + '</b>';
-    return '<div class="ddc-ov__hdr"><div class="ddc-ov__top"><h3 class="ddc-ov__h">' + esc(S.title) + '</h3><p class="ddc-ov__s">' + esc(S.sub) + '</p></div></div>' +
+    return '<div class="ddc-ov__hdr"><div class="ddc-ov__top"><h3 class="ddc-ov__h">' + esc(S.title) + '</h3><p class="ddc-ov__s">' + esc(S.sub) + '</p><p class="ddc-ov__l">' + esc(S.lead) + '</p></div></div>' +
       '<div class="ddc-ov__main"><ul class="ddc-szl">' + rows + '<li class="ddc-szl__c"><span>' + esc(S.custom) + '</span>' + contact + '</li></ul>' +
       '<p class="ddc-szn">' + esc(S.foot) + '</p><p class="ddc-szn ddc-szn--s">' + esc(S.note) + '</p></div>';
   }

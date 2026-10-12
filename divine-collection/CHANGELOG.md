@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.13.1
+
+- Sizes card: in the blue header, "Every mattress model is made to order in these sizes, and custom sizes are possible."; the foot note says Mattress for Partners, built for two sleepers, starts from UK Double. Only the dialog script changes; descriptions change only in the release path.
+
 ## 3.13.0
 
 Decision navigator (supersedes the unpublished 3.12.0):

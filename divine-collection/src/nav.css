@@ -259,3 +259,5 @@
 @container ddc (max-width:639px){.ddc.ddc--mattress .ddc__q{min-height:78px}}
 /* the route block answers to its own width, in the page (no script) and in the dialog alike */
 .ddc .ddc__nv{container:ddcn/inline-size}
+
+.ddc .ddc-szlead{margin:0 0 20px;padding:18px 22px;border-radius:20px;background:#dff4f1;box-shadow:inset 0 0 0 1.5px #9fdcd5;font-size:18px;font-weight:600;line-height:1.5;color:var(--nv-navy)}

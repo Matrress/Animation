@@ -95,7 +95,8 @@ export const SIZES_TXT = {
   custom: 'Custom size',
   contact: 'Contact us',
   note: 'Need a custom size, custom depth or special shape? Contact us and we will help configure it.',
-  foot: 'Find the mattress concept that fits your comfort needs first. The sizes available for each construction are shown on its model page.',
+  lead: 'Every mattress model is made to order in these sizes, and custom sizes are possible.',
+  foot: 'Mattress for Partners, built for two sleepers, starts from UK Double.',
 };
 
 export const FIRM_TXT = {
