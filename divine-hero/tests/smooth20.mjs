@@ -33,5 +33,20 @@ for (const [vw, vh] of (process.env.QUICK ? [[1440, 900]] : [[1440, 900], [1180,
     await pg.close();
   }
 }
+{ // 1.20.2: the vertebrae of Spinal Alignment are an inline drawing (no picture to load) that arranges itself left to right in about a second
+  const pg = await b.newPage({ viewport: { width: 1366, height: 1024 } }); const reqs = []; pg.on('request', (r) => /spine-graphic/.test(r.url()) && reqs.push(r.url()));
+  await pg.goto(url); await pg.waitForTimeout(1800);
+  const c = await pg.evaluate(() => { const r = document.querySelector('[data-ddh-point="back"]').getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+  await pg.mouse.move(c.x, c.y); await pg.waitForTimeout(150);
+  const early = await pg.evaluate(() => [...document.querySelectorAll('.ddh__spine path')].map((p) => +getComputedStyle(p).opacity));
+  await pg.waitForTimeout(1150);
+  const late = await pg.evaluate(() => { const sp = document.querySelector('.ddh__spine'), sv = sp.querySelector('svg'); const xs = [...sv.querySelectorAll('path')].map((p) => { const r = p.getBoundingClientRect(); return { x: r.left, o: +getComputedStyle(p).opacity, t: getComputedStyle(p).transform }; }); return { n: xs.length, xs, shown: getComputedStyle(sp).display !== 'none', w: sv.getBoundingClientRect().width }; });
+  ok(early.length === 7, 'spine: seven vertebrae drawn (' + early.length + ')');
+  ok(early[6] < .5, 'spine: the last vertebra is still on its way 150 ms in (' + early[6] + ')');
+  ok(late.shown && late.xs.every((v) => v.o === 1 && (v.t === 'none' || v.t === 'matrix(1, 0, 0, 1, 0, 0)')) && late.xs.every((v, i, a) => !i || v.x > a[i - 1].x), 'spine: after about a second every vertebra rests in its place, left to right');
+  ok(late.w > 300, 'spine: the drawing has its width (' + late.w + ')');
+  ok(reqs.length === 0, 'spine: no picture file is requested (' + reqs.length + ')');
+  await pg.close();
+}
 await b.close();
 console.log(`${passes} passed, ${fails} failed`); process.exit(fails ? 1 : 0);

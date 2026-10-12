@@ -36,7 +36,7 @@ async function desktop(w, h) {
     const c = await centre(page, k); await page.mouse.move(c.x, c.y, { steps: 2 }); await page.waitForTimeout(60);
     const s = await state(page); ok(s.s === k && s.exp.length === 1 && s.exp[0] === k, `hover ${k} -> ${JSON.stringify(s)}`);
   }
-  ok(plates.length === 3, 'interaction graphics loaded after intent (' + plates.length + ')');
+  ok(plates.length === 2, 'interaction graphics loaded after intent (' + plates.length + ')');
   const vis = await page.evaluate(() => { const s = document.querySelector('.ddh__screen--brand'), k = document.querySelector('.ddh').getAttribute('data-ddh-state'), c = document.querySelector(`[data-ddh-card="${k}"]`); return c && getComputedStyle(c).display === 'block' ? 'card' : getComputedStyle(s).display; });
   ok(vis === 'block' || vis === 'card', 'brand screen (or, 1.14.0, its context card) visible on hover: ' + vis);
   // leave
@@ -184,7 +184,7 @@ async function lifecycle() {
     await page.evaluate(() => { const old = document.querySelector('.ddh'); const fresh = document.createElement('div'); fresh.innerHTML = old.outerHTML; const n = fresh.firstElementChild; n.removeAttribute('data-ddh-ready'); n.removeAttribute('data-ddh-state'); n.classList.remove('ddh--offscreen', 'ddh--translated'); n.querySelectorAll('[aria-live]').forEach((e) => e.remove()); old.replaceWith(n); window.DDHero.boot(); });
   }
   // and the script itself being re-executed 5 times
-  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.20.1/hero.js' }).catch(() => {});
+  for (let i = 0; i < 5; i++) await page.addScriptTag({ url: url.replace(/[^/]*$/, '') + '../release/1.20.2/hero.js' }).catch(() => {});
   await page.waitForTimeout(200);
   const after = await count();
   ok(after.document === before.document && after.window === before.window, `listeners stable after 25 re-renders: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`);

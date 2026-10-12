@@ -1909,3 +1909,11 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh .ddh__hc-in>:nth-child(5),.ddh .ddh__dpc-in>:nth-child(5){animation-delay:.4s}
 .ddh .ddh__hc-in>:nth-child(n+6),.ddh .ddh__dpc-in>:nth-child(n+6){animation-delay:.45s}}
 @media (prefers-reduced-motion:reduce){.ddh .ddh__burst,.ddh .ddh__dpc{animation:none!important}}
+
+/* --- 1.20.2 Spinal Alignment: the vertebrae are an inline drawing that arranges itself from left to right in one second --- */
+.ddh .ddh__spine svg{display:block;width:100%;height:auto;overflow:visible}
+.ddh .ddh__spine path{fill:none;stroke:#fff;stroke-width:4.6;stroke-linejoin:round;transform-box:fill-box;transform-origin:50% 50%}
+@keyframes ddh-vert{from{opacity:0;transform:translateX(var(--dx,0px)) scale(.25)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+.ddh .ddh__spine{animation-duration:.3s}
+.ddh .ddh__spine path{animation:ddh-vert .46s cubic-bezier(.2,.9,.25,1) both;animation-delay:calc(var(--i,0)*.09s)}}

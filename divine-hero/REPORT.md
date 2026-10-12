@@ -1003,3 +1003,8 @@ Preserved v26 ✓ · no redesign (design-visible changes = phone overlap fix, ±
 - Found by the owner: with 1.20.0 the cards did not stay open on a real mouse. The card starts as a small box exactly under the cursor, took the pointer from its point, and the point/card hover hand-over closed it again.
 - The card ignores the pointer while it grows (0.62 s) and the "mouse is travelling to the card" tests now use the card's final layout box, not its animated one.
 - New test tests/smooth20.mjs (growing card does not catch the pointer; a hand moving into the card keeps it open; card settles at opacity 1, no transform).
+
+## 1.20.2 - Spinal Alignment: the vertebrae are drawn inline and arrange themselves
+- On the owner's iPad the Spinal Alignment picture (spine-graphic.webp) showed Safari's broken-picture icon. The seven vertebra outlines are now an inline SVG made by hero.js (traced from the old picture, about 1.3 KB of numbers): nothing to download, so nothing can fail. The picture tag is gone from the section code (shorter paste); the .webp stays in the release folder, unused.
+- Animation: the vertebrae come out of the first one and arrange themselves left to right into their usual places, 90 ms apart, 0.46 s each: one second in all. Reduced motion: no animation.
+- Test: tests/smooth20.mjs now also checks the drawing (7 outlines, last one still moving at 150 ms, all at rest after ~1.3 s in left-to-right order, no picture request).

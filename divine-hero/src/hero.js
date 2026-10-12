@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.20.1 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.20.2 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.20.1';
+  var VERSION = '1.20.2';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -165,6 +165,27 @@
 
     var points = [].slice.call(group.querySelectorAll('[data-ddh-point]'));
     var copies = [].slice.call(root.querySelectorAll('[data-ddh-copy]'));
+    // 1.20.2: the vertebrae of "Spinal Alignment" are drawn here as inline SVG (seven outlines traced from the old picture): nothing to download, nothing to fail on a slow or strict browser.
+    // They come out of the first one and arrange themselves left to right (the whole move takes one second, see .ddh__spine path in the CSS).
+    (function () {
+      var V = [[93,31,105,32,114,37,117,41,118,53,115,60,109,64,84,69,80,74,80,78,89,82,108,83,114,85,121,97,121,106,115,113,101,118,91,118,62,98,53,96,31,96,24,93,19,88,15,77,15,71,20,64,36,56,57,52,75,38],[336,31,344,31,355,36,360,42,360,55,354,63,328,68,324,71,322,77,327,81,351,83,356,85,360,89,364,100,364,105,360,111,351,116,334,118,302,97,274,96,268,94,263,90,258,79,258,69,261,65,278,56,297,53,306,48,321,36],[633,41,642,41,650,45,653,49,653,60,650,65,646,67,628,70,624,74,624,77,630,80,650,82,656,92,656,99,653,103,641,108,632,108,611,93,600,91,585,91,578,87,574,79,575,68,587,61,604,58,620,46],[883,50,894,52,898,57,898,64,891,70,879,72,877,76,880,78,889,78,896,80,900,87,899,94,892,98,882,99,864,87,849,87,842,83,839,74,841,69,851,64,860,63,873,54],[1111,50,1116,50,1123,53,1125,55,1126,63,1123,68,1107,72,1105,76,1108,78,1117,78,1125,81,1128,91,1124,96,1116,99,1110,99,1094,88,1076,87,1069,82,1067,76,1069,69,1078,64,1088,63,1101,54],[1322,50,1333,52,1337,57,1337,64,1333,69,1318,72,1316,76,1320,78,1329,78,1335,80,1339,87,1337,95,1328,99,1321,99,1305,88,1287,87,1281,83,1278,75,1280,69,1289,64,1301,62,1312,54],[1529,50,1540,52,1544,56,1544,65,1540,69,1525,72,1523,76,1527,78,1536,78,1542,80,1546,86,1546,92,1543,96,1535,99,1529,99,1513,88,1494,87,1489,84,1486,79,1487,69,1496,64,1506,63,1519,54]], NS = 'http://www.w3.org/2000/svg';
+      [].forEach.call(root.querySelectorAll('.ddh__spine'), function (sp) {
+        var st = sp.querySelector('strong'), old = sp.querySelector('img'); if (sp.querySelector('svg') || !st) return;
+        var svg = w.document.createElementNS(NS, 'svg'), cx0 = 0;
+        svg.setAttribute('viewBox', '0 0 1615 145'); svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+        V.forEach(function (a, i) {
+          var n = a.length / 2, P = function (k) { k = (k + n) % n; return [a[2 * k], a[2 * k + 1]]; }, M = function (k) { var u = P(k), v = P(k + 1); return ((u[0] + v[0]) / 2).toFixed(1) + ' ' + ((u[1] + v[1]) / 2).toFixed(1); };
+          var dd = 'M' + M(0), lo = 1e9, hi = -1e9;
+          for (var k = 1; k <= n; k++) { dd += 'Q' + P(k).join(' ') + ' ' + M(k); }
+          for (var j = 0; j < n; j++) { lo = Math.min(lo, a[2 * j]); hi = Math.max(hi, a[2 * j]); }
+          if (!i) cx0 = (lo + hi) / 2;
+          var pa = w.document.createElementNS(NS, 'path'); pa.setAttribute('d', dd + 'Z');
+          pa.style.setProperty('--i', String(i)); pa.style.setProperty('--dx', Math.round(cx0 - (lo + hi) / 2) + 'px'); svg.appendChild(pa);
+        });
+        if (old && old.parentNode) old.parentNode.removeChild(old);
+        sp.insertBefore(svg, st.nextSibling);
+      });
+    })();
     var screens = [].slice.call(root.querySelectorAll('.ddh__screen'));
     var lazyImgs = [].slice.call(root.querySelectorAll('.ddh__screen img, .ddh__mat img, .ddh__bed img'));
     var fine = w.matchMedia ? w.matchMedia('(hover:hover) and (pointer:fine)') : { matches: true };
