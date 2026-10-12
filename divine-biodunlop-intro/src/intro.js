@@ -3,18 +3,25 @@
   'use strict';
   var H = d.documentElement;
   // The inline gate in the section decides before the first paint (laptops, monitors and tablets only; not with reduced
-  // motion, Data Saver or a slow connection; once per browser session). Nothing to do unless it said "pending".
-  if (H.getAttribute('data-ddb') !== 'pending') return;
+  // motion, Data Saver or a slow connection; once per browser session). boot() does nothing unless it said "pending".
   var base = ((d.currentScript && d.currentScript.src) || '').replace(/[^\/]*$/, '');
   var LINE_IN = 0.5, LINE_OUT = 3.2;            // the story line shows over the origin (forest, tree, latex milk)
   var START_LIMIT = 4000;                         // no first frame after 4 s: the hero simply appears
-  var root, stage, video, skip, line, done = false, startT = 0, ticks = 0;
+  var root, stage, video, skip, line, done = false, booted = false, waits = 0, startT = 0, ticks = 0;
 
   function mark() { try { w.sessionStorage.setItem('ddb-seen', '1'); } catch (e) {} }
+  // Safe to call more than once and at any time: it does nothing until the section's markup is in the page. The section ends with an
+  // inline DDBIntro.boot() (like the hero's own DDHero.boot()) so a builder that inserts scripts before the markup still starts it.
   function boot() {
+    if (booted || done || H.getAttribute('data-ddb') !== 'pending') return;
     root = d.querySelector('.ddh'); stage = root && root.querySelector('.ddb'); line = root && root.querySelector('.ddb-line');
-    if (!stage) { H.removeAttribute('data-ddb'); return; }
-    mark();                                       // returning from a product page never replays it
+    if (!stage) return;
+    // the stylesheet is a separate file: without it the film would play unstyled in the page flow, so the intro only starts when it is applied
+    if (w.getComputedStyle(stage).position !== 'absolute') {
+      if (++waits < 6) { w.setTimeout(boot, 300); return; }
+      stage.parentNode && stage.parentNode.removeChild(stage); H.removeAttribute('data-ddb'); return;
+    }
+    booted = true; mark();                                       // returning from a product page never replays it
     var wide = stage.clientWidth * Math.min(w.devicePixelRatio || 1, 2) > 1100;
     var name = 'assets/ddb-intro-' + (wide ? '1280' : '960');
     video = d.createElement('video');
@@ -82,6 +89,6 @@
       w.setTimeout(function () { H.removeAttribute('data-ddb-lit'); }, 1800);
     }, ms);
   }
-  w.DDBIntro = { skip: function () { finish(true); }, version: '0.1.0-dev' };
+  w.DDBIntro = { boot: boot, skip: function () { finish(true); }, version: '0.1.0-dev' };
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
 })(window, document);

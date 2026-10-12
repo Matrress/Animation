@@ -20,6 +20,7 @@ function candidate(src, introBase) {
   const heroJs = s.match(/<script src="[^"]*\/hero\.js" defer><\/script>\n/)[0];
   s = s.replace(heroJs, heroJs + `<link rel="stylesheet" href="${introBase}intro.css">\n<script src="${introBase}intro.js" defer></script>\n`);
   s = s.replace('<section class="ddh"', gate + '\n<section class="ddh"');
+  s = s.replace('<script>window.DDHero&&DDHero.boot()</script>', '<script>window.DDHero&&DDHero.boot()</script>\n<script>window.DDBIntro&&DDBIntro.boot()</script>');
   const last = s.match(/<p class="ddh__sr">European production[^\n]*<\/p>\n/)[0];
   s = s.replace(last, last + `<div class="ddb" aria-hidden="true"></div>\n<p class="ddb-line">${LINE}</p>\n`);
   s = s.replace(/^<!-- Divine DunlopDreams Hero [^|]*\|/, `<!-- Divine DunlopDreams Hero ${HERO} + BioDunlop intro ${VER} (development candidate 1.21.0-dev, NOT for production) |`);

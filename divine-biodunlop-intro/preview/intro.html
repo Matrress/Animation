@@ -33,8 +33,9 @@ body{margin:0;font-family:Comfortaa,system-ui,sans-serif;background:#fff;color:#
 <script src="/divine-hero/release/1.20.2/hero.js" defer></script>
 <link rel="stylesheet" href="/divine-biodunlop-intro/release/0.1.0-dev/intro.css">
 <script src="/divine-biodunlop-intro/release/0.1.0-dev/intro.js" defer></script>
-<!-- BioDunlop intro gate (must stay BEFORE <section class="ddh">). One switch: set ON=0 to switch the intro off everywhere. -->
-<script>(function(){var ON=1;try{var m=function(q){return matchMedia(q).matches},c=navigator.connection||{};if(ON&&m('(min-width:701px) and (min-height:501px)')&&!m('(prefers-reduced-motion: reduce)')&&!c.saveData&&!/(^|-)2g|3g/.test(c.effectiveType||'')&&!sessionStorage.getItem('ddb-seen'))document.documentElement.setAttribute('data-ddb','pending')}catch(e){}})()</script>
+<!-- BioDunlop intro gate (must stay BEFORE <section class="ddh">). One switch: set ON=0 to switch the intro off everywhere.
+     Testing: add ?ddb=1 to the page address to play it again (ignores "already seen" and the connection checks); ?ddb=0 turns it off. -->
+<script>(function(){var ON=1,H=document.documentElement;try{var q=location.search,m=function(x){return matchMedia(x).matches},c=navigator.connection||{};if(ON&&!/[?&]ddb=0(&|$)/.test(q)&&m('(min-width:701px) and (min-height:501px)')&&!m('(prefers-reduced-motion: reduce)')&&(/[?&]ddb=1(&|$)/.test(q)||!c.saveData&&!/(^|-)2g|3g/.test(c.effectiveType||'')&&!sessionStorage.getItem('ddb-seen'))){H.setAttribute('data-ddb','pending');setTimeout(function(){if(H.getAttribute('data-ddb')==='pending')H.removeAttribute('data-ddb')},4500)}}catch(e){}})()</script>
 <section class="ddh" aria-labelledby="ddh-title" data-ddh-mode="interactive">
 <h1 class="ddh__sr" id="ddh-title">Divine DunlopDreams – 100% Natural Latex Mattresses, Toppers &amp; Pillows. Engineering Natural Latex Sleep System</h1>
 <div class="ddh__scene">
@@ -94,6 +95,7 @@ body{margin:0;font-family:Comfortaa,system-ui,sans-serif;background:#fff;color:#
 <i class="ddh__end" hidden></i>
 </section>
 <script>window.DDHero&&DDHero.boot()</script>
+<script>window.DDBIntro&&DDBIntro.boot()</script>
 </div>
 <div class="ins-tile next next-section"></div>
 </body></html>

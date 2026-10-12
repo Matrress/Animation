@@ -33,6 +33,10 @@ divine-biodunlop-intro/
   tools/render/                 the scripts that made the film from the two supplied videos
 ```
 
+## If you do not see the intro
+
+It plays **once per browser session** (so coming back from a product page shows the hero straight away). To see it again: add `?ddb=1` to the page address (ignores "already seen" and the connection checks; `?ddb=0` switches it off), or use a new private window. It never plays on phones, with reduced motion, with Data Saver or on 2G/3G. If a file of the pair is missing or blocked the hero simply shows (never an empty screen). The section must end with `<script>window.DDBIntro&&DDBIntro.boot()</script>` (the candidate has it).
+
 ## Preview
 
 ```sh
@@ -41,6 +45,7 @@ python3 tools/serve.py 8766 &           # serves the repository root
 open http://127.0.0.1:8766/divine-biodunlop-intro/preview/intro.html
 # play it again: open a new private window, or run sessionStorage.removeItem('ddb-seen') in the console
 node tests/intro.mjs                    # behaviour tests (needs Playwright + Chromium)
+node tests/candidate.mjs                # the pasted candidate, delivered four ways, with files missing
 ```
 
 ## How it works
