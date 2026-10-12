@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.13.2
+
+- Navigator redesigned to fit ONE screen (desktop, laptop, iPad landscape): every route is a single row. The route title is the question (uppercase, wide letter-spacing, its own colour per route); the answer is the model buttons beside it (name, markers, View). The repeated "Your need" / "Our answer" sentences, the model descriptions, the intro paragraph and the connector arrow are removed. One link per model card.
+- Sizes view: the lead now says every model is available in all the listed sizes and any other size can be made to measure; "made to order" moved to the foot note.
+- Description size: mattress 37.6 KB -> about 32 KB.
+
 ## 3.13.1
 
 - Sizes card: in the blue header, "Every mattress model is made to order in these sizes, and custom sizes are possible."; the foot note says Mattress for Partners, built for two sleepers, starts from UK Double. Only the dialog script changes; descriptions change only in the release path.

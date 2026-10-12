@@ -9,26 +9,26 @@ const ok = (c, m) => { if (c) pass++; else { fail++; log.push('FAIL ' + m); } };
 const br = await browser();
 const URL_ = (q = '') => `${BASE}sim.html?page=mattress${q}`;
 const C = collections.mattress, byId = Object.fromEntries(C.models.map((m) => [m.id, m]));
-const desc = fs.readFileSync(new URL('../ecwid/description-mattress-3.13.1.html', import.meta.url), 'utf8');
+const desc = fs.readFileSync(new URL('../ecwid/description-mattress-3.13.2.html', import.meta.url), 'utf8');
 const hero = JSON.parse(fs.readFileSync(new URL('../../divine-hero/src/sizes.json', import.meta.url), 'utf8'));
 const st = (p) => p.evaluate(() => { const o = document.querySelector('.ddc-ov'); if (!o) return null; return { open: o.classList.contains('is-open'), pinned: o.classList.contains('is-pinned'), view: o.getAttribute('data-view'), lock: document.documentElement.style.overflow === 'hidden', inCard: !!document.activeElement && !!document.activeElement.closest('.ddc-ov__card'), exp: [...document.querySelectorAll('[aria-controls]')].map((b) => b.getAttribute('aria-expanded')) }; });
 const ready = async (p, q) => { await p.goto(URL_(q)); await p.waitForSelector('.ddc.ddc--js .ddc__qb'); await p.evaluate(() => document.fonts.ready); await sleep(150); };
 const center = async (p, sel) => { const b = await p.locator(sel).first().boundingBox(); return [b.x + b.width / 2, b.y + b.height / 2]; };
 
 // ---------- 1. content: real text and real links, before any script ----------
-ok(desc.includes('Every comfort need has a clear route.') && desc.includes('Your need. Your mattress.') && desc.includes('Choose your mattress concept first.'), 'navigator text is in the description HTML');
+ok(desc.includes('Every comfort need has a clear route.') && desc.includes('Your need. Your mattress.'), 'navigator text is in the description HTML');
 ok(desc.includes(QUESTION), 'the question is in the description HTML: ' + QUESTION);
 for (const r of ROUTES) {
-  ok(desc.includes('“' + r.need.replace(/&/g, '&amp;') + '”'), 'route need present: ' + r.need);
+  ok(desc.includes('<span class="ddc__r-q">' + r.title + '</span>'), 'route question present: ' + r.title);
   for (const m of r.models) {
     const u = byId[m.id].url;
     const cta = m.cta || 'View ' + byId[m.id].name, times = ROUTES.flatMap((x) => x.models).filter((x) => x.id === m.id).length;
-    ok(desc.split(`<h5 class="ddc__m-n"><a href="${u}">`).length === times + 1 && desc.split(`<a class="ddc__m-go" href="${u}">${cta}</a>`).length === times + 1, `${m.id}: name link + CTA link in the navigator (${times}x)`);
+    ok(desc.split(`<a class="ddc__m-a" href="${u}">`).length === times + 1, `${m.id}: one link card in the navigator (${times}x)`);
   }
 }
 ok(!/Hotel Line/.test(desc.slice(desc.indexOf('class="ddc__nv"'))), 'Hotel Line is not part of the navigator');
-ok(ROUTES.length === 6 && (desc.match(/<li class="ddc__r">/g) || []).length === 6, 'six routes in the description HTML');
-ok(ROUTES[2].need === 'Which is your newest and most technologically advanced mattress?' && desc.includes('Bio Comfort is our latest-generation single-core latex mattress concept.') && desc.includes('Bio Comfort Dual Plush is our most complete and technologically advanced comfort system'), 'the technology route is route 3 with its question and answer');
+ok(ROUTES.length === 6 && (desc.match(/<li class="ddc__r ddc__r--\d">/g) || []).length === 6, 'six routes in the description HTML');
+ok(ROUTES[2].title === 'Newest and most technologically advanced', 'the technology route is route 3 with its question');
 const idsIn = (n) => ROUTES[n].models.map((m) => m.id).join();
 ok(idsIn(0) === 'botanic,bio' && idsIn(1) === 'botanic_dp,bio_dp' && idsIn(2) === 'bio,bio_dp' && idsIn(3) === 'ambient' && idsIn(4) === 'ortho' && idsIn(5) === 'partners', 'routes in the agreed order; Bio Comfort in Balanced + Innovation, Bio Comfort Dual Plush in Plush + Innovation');
 ok(!/>\s*Essential\s*</.test(desc), 'the label Essential does not appear anywhere in the description');
@@ -57,7 +57,7 @@ ok(!/<a[^>]*>(?:(?!<\/a>).)*<a /s.test(desc), 'no nested links');
   await p.mouse.move(cb.x + cb.width / 2, cb.y + 200, { steps: 12 }); await sleep(900);
   s = await st(p); ok(s.open, 'the card stays open while the pointer travels from the question to it and rests on it');
   // click inside pins
-  await p.mouse.click(cb.x + cb.width / 2, cb.y + 150); await sleep(150);
+  await p.mouse.click(cb.x + cb.width / 2, cb.y + 85); await sleep(150);
   s = await st(p); ok(s.pinned && s.lock && s.inCard, 'a click inside pins it open: scroll locked, focus in the dialog');
   await p.mouse.move(5, 5); await sleep(800);
   s = await st(p); ok(s.open && s.pinned, 'a pinned card does not close when the pointer leaves');
@@ -89,7 +89,7 @@ ok(!/<a[^>]*>(?:(?!<\/a>).)*<a /s.test(desc), 'no nested links');
   ok(s.view === 'sizes' && sz.length === 22 && JSON.stringify(sz) === JSON.stringify(hero.sizes.map((x) => x.name)), 'Sizes view shows the hero\'s 22 sizes in the hero\'s order (one data source)');
   const lab = await p.evaluate(() => { const c = document.querySelector('.ddc-ov__card'); return document.getElementById(c.getAttribute('aria-labelledby')).textContent; }); ok(lab === 'All UK & EU Sizes', 'dialog is labelled by the Sizes title');
   const txt = await p.evaluate(() => document.querySelector('.ddc-ov__view--sizes').textContent);
-  ok(txt.includes('Width × length, organised within one UK and European size system.') && txt.includes('Custom size') && txt.includes('Contact us') && txt.includes('Every mattress model is made to order in these sizes, and custom sizes are possible.') && txt.includes('Mattress for Partners, built for two sleepers, starts from UK Double.'), 'Sizes texts present');
+  ok(txt.includes('Width × length, organised within one UK and European size system.') && txt.includes('Custom size') && txt.includes('Contact us') && txt.includes('Every model in the collection is available in all of these sizes, and any other size can be made to measure.') && txt.includes('All mattresses are made to order. Mattress for Partners, built for two sleepers, starts from UK Double.'), 'Sizes texts present');
   const only = await p.evaluate(() => document.querySelectorAll('.ddc-ov__view.is-on').length); ok(only === 1, 'one view at a time (no modal on a modal)');
   await p.click('.ddc-ov__back'); await sleep(100); s = await st(p); ok(s.view === 'guide', 'Back to Mattress Guide returns to the routes');
   await p.evaluate(() => { document.querySelector('.ddc-ov__card').scrollTop = 1e5; });
@@ -114,8 +114,8 @@ ok(!/<a[^>]*>(?:(?!<\/a>).)*<a /s.test(desc), 'no nested links');
   // links
   await p.click('.ddc__qb'); await sleep(150);
   const links = await p.evaluate(() => [...document.querySelectorAll('.ddc-ov__view--guide a')].map((a) => a.href));
-  const want = ROUTES.flatMap((r) => r.models).flatMap((m) => [byId[m.id].url, byId[m.id].url]);
-  ok(JSON.stringify(links) === JSON.stringify(want), 'navigator links: each route model has its name link and CTA, all real anchors to the verified product pages');
+  const want = ROUTES.flatMap((r) => r.models).map((m) => byId[m.id].url);
+  ok(JSON.stringify(links) === JSON.stringify(want), 'navigator links: each route model is ONE link card (no second link), all real anchors to the verified product pages');
   // overlay is not clipped; text size
   const fz = await p.evaluate(() => Math.min(...[...document.querySelectorAll('.ddc-ov__view--guide p, .ddc-ov__view--guide a')].map((e) => parseFloat(getComputedStyle(e).fontSize))));
   ok(fz >= 13.5, 'smallest text in the navigator >= 13.5px (' + fz + ')');
@@ -160,7 +160,7 @@ for (const [name, w, h] of [['ipad-land', 1180, 820], ['ipad-port', 820, 1180], 
   const rect = await p.evaluate(() => { const r = document.querySelector('.ddc-ov__card').getBoundingClientRect(); return { l: r.left, r: r.right, t: r.top, b: r.bottom, w: innerWidth, h: innerHeight, sw: document.documentElement.scrollWidth, csw: document.querySelector('.ddc-ov__card').scrollWidth, cw: document.querySelector('.ddc-ov__card').clientWidth }; });
   ok(rect.l >= 0 && rect.r <= rect.w + 0.5 && rect.b <= rect.h + 0.5 && rect.t >= 0, `${name}: card inside the viewport`);
   ok(rect.sw <= rect.w && rect.csw <= rect.cw + 1, `${name}: no horizontal scroll (page ${rect.sw}/${rect.w}, card ${rect.csw}/${rect.cw})`);
-  const sizes = await p.evaluate(() => [...document.querySelectorAll('.ddc-ov__x,.ddc-rst__b,.ddc__m-go,.ddc__tb,.ddc__qb')].filter((e) => e.offsetParent).map((e) => { const r = e.getBoundingClientRect(); return [e.className.split(' ')[0], Math.round(r.height), Math.round(r.width)]; }));
+  const sizes = await p.evaluate(() => [...document.querySelectorAll('.ddc-ov__x,.ddc-rst__b,.ddc__m-a,.ddc__tb,.ddc__qb')].filter((e) => e.offsetParent).map((e) => { const r = e.getBoundingClientRect(); return [e.className.split(' ')[0], Math.round(r.height), Math.round(r.width)]; }));
   ok(sizes.every((x) => x[1] >= 44 && x[2] >= 44), `${name}: touch targets >= 44px (${sizes.filter((x) => x[1] < 44 || x[2] < 44)})`);
   for (const v of ['sizes', 'firmness']) {
     await p.evaluate(() => { document.querySelector('.ddc-ov__card').scrollTop = 1e5; });
@@ -191,11 +191,11 @@ for (const mode of ['css', 'none']) {
   await p.goto(URL_('&mode=' + mode)); await sleep(500);
   const d = await p.evaluate(() => { const nv = document.querySelector('.ddc__nv'); const vis = (e) => { const r = e.getBoundingClientRect(); const c = getComputedStyle(e); return c.display !== 'none' && c.visibility !== 'hidden' && r.height > 0 && r.width > 0; };
     return { q: document.querySelector('.ddc__q').textContent.trim(), tiles: document.querySelectorAll('.ddc__ra').length, qb: document.querySelectorAll('.ddc__qb').length, ov: document.querySelectorAll('.ddc-ov').length,
-      nvVisible: !!nv && vis(nv), routes: nv ? nv.querySelectorAll('.ddc__r').length : 0, needs: nv ? [...nv.querySelectorAll('.ddc__need-q')].filter(vis).length : 0, answers: nv ? [...nv.querySelectorAll('.ddc__ans-t')].filter(vis).length : 0,
-      models: nv ? [...nv.querySelectorAll('.ddc__m-n a')].filter(vis).map((a) => a.textContent) : [], links: nv ? [...nv.querySelectorAll('a[href]')].filter(vis).map((a) => a.href) : [], arrowAria: nv ? [...nv.querySelectorAll('.ddc__arw')].every((a) => a.getAttribute('aria-hidden') === 'true') : false }; });
+      nvVisible: !!nv && vis(nv), routes: nv ? nv.querySelectorAll('.ddc__r').length : 0, needs: nv ? [...nv.querySelectorAll('.ddc__r-q')].filter(vis).length : 0, answers: nv ? [...nv.querySelectorAll('.ddc__m-a')].filter(vis).length : 0,
+      models: nv ? [...nv.querySelectorAll('.ddc__m-n')].filter(vis).map((a) => a.textContent) : [], links: nv ? [...nv.querySelectorAll('a[href]')].filter(vis).map((a) => a.href) : [], noNeedAnswer: nv ? !nv.querySelector('.ddc__need,.ddc__ans,.ddc__arw') : false }; });
   ok(d.q === QUESTION && d.tiles === 8 && d.qb === 0 && d.ov === 0, `without JavaScript (${mode}): the question and the 8 model links stay, no trigger, no overlay`);
-  ok(d.nvVisible && d.routes === 6 && d.needs === 6 && d.answers === 6, `without JavaScript (${mode}): the six needs and the answers are visible in the page (${d.routes}/${d.needs}/${d.answers})`);
-  ok(d.models.length === 9 && d.links.length === 18 && d.links.every((u) => /^https:\/\/divinedunlop\.com\/products\/[a-z0-9-]+$/.test(u)), `without JavaScript (${mode}): nine model names and eighteen real product anchors (${d.models.length}/${d.links.length})`);
+  ok(d.nvVisible && d.routes === 6 && d.needs === 6 && d.answers === 9, `without JavaScript (${mode}): the six questions and their model cards are visible in the page (${d.routes}/${d.needs}/${d.answers})`);
+  ok(d.models.length === 9 && d.links.length === 9 && d.links.every((u) => /^https:\/\/divinedunlop\.com\/products\/[a-z0-9-]+$/.test(u)), `without JavaScript (${mode}): nine model cards, nine real product anchors (${d.models.length}/${d.links.length})`);
   await p.context().close();
 }
 // ---------- 5a. the 1-2-3 sequence is information, not buttons ----------
@@ -244,9 +244,10 @@ for (const [w, h] of [[1024, 768], [1180, 820], [1366, 1024]]) {
   ok(m.minRatio < 3.2, `${w}: product pictures keep normal proportions (min ratio ${m.minRatio.toFixed(2)})`);
   ok(m.sw <= m.iw, `${w}: no horizontal scroll`);
   await p.tap('.ddc__qb'); await sleep(450);
-  const g = await p.evaluate(() => { const r = (e) => e.getBoundingClientRect(); const R = document.querySelector('.ddc-ov .ddc__r'); const need = r(R.querySelector('.ddc__need')), ans = r(R.querySelector('.ddc__ans')), ms = [...R.querySelectorAll('.ddc__m')].map(r);
+  const one = await p.evaluate(() => { const c = document.querySelector('.ddc-ov__card'); return [c.scrollHeight, c.clientHeight]; }); ok(one[0] <= one[1] + 1, `${w}x${h}: the whole guide (6 questions, 8 models, Sizes, Firmness) is on one screen, no scrolling (${one})`);
+  const g = await p.evaluate(() => { const r = (e) => e.getBoundingClientRect(); const R = document.querySelector('.ddc-ov .ddc__r'); const need = r(R.querySelector('.ddc__r-t')), ans = r(R.querySelector('.ddc__md')), ms = [...R.querySelectorAll('.ddc__m')].map(r);
     const cardEl = document.querySelector('.ddc-ov__card'); return { side: need.right <= ans.left + 1, two: ms.length === 2 && ms[0].right <= ms[1].left + 1, sw: cardEl.scrollWidth - cardEl.clientWidth, widthy: Math.round(r(cardEl).width) }; });
-  ok(g.side && g.two && g.sw <= 1, `${w}: Guide shows Need left of Answer and the two models side by side (${g.widthy}px card)`);
+  ok(g.side && g.two && g.sw <= 1, `${w}: Guide shows the question left of its two model buttons, side by side (${g.widthy}px card)`);
   ok(p.errors.length === 0, `${w}: no JavaScript errors`);
   await p.context().close();
 }
@@ -276,25 +277,23 @@ for (const [name, w, h, touch] of [['desktop', 1440, 900, false], ['ipad-portrai
   await ready(p);
   if (touch) await p.tap('.ddc__qb'); else await p.click('.ddc__qb'); await sleep(400);
   const g = await p.evaluate(() => { const r = (e) => e.getBoundingClientRect(); const R = document.querySelectorAll('.ddc-ov .ddc__r'); const q = (i, s) => R[i].querySelector(s);
-    const need = r(q(0, '.ddc__need')), ans = r(q(0, '.ddc__ans')), arw = q(0, '.ddc__arw'), ms = [...R[0].querySelectorAll('.ddc__m')].map(r);
-    return { needLeft: need.right <= ans.left + 1, needAbove: need.bottom <= ans.top + 1, side: ms.length === 2 && ms[0].right <= ms[1].left + 1, stacked: ms.length === 2 && ms[0].bottom <= ms[1].top + 1,
-      arw: { tag: arw.tagName, aria: arw.getAttribute('aria-hidden'), tab: arw.getAttribute('tabindex'), pe: getComputedStyle(arw).pointerEvents, role: arw.getAttribute('role'), tr: getComputedStyle(arw).transform, w: r(arw).width, h: r(arw).height },
-      arwFocusable: [...document.querySelectorAll('.ddc-ov a[href],.ddc-ov button,.ddc-ov [tabindex]')].some((e) => e.classList.contains('ddc__arw') || e.closest('.ddc__arw')),
+    const t = r(q(0, '.ddc__r-t')), md = r(q(0, '.ddc__md')), ms = [...R[0].querySelectorAll('.ddc__m')].map(r);
+    return { titleLeft: t.right <= md.left + 1, titleAbove: t.bottom <= md.top + 1, side: ms.length === 2 && ms[0].right <= ms[1].left + 1, stacked: ms.length === 2 && ms[0].bottom <= ms[1].top + 1,
+      leftover: !!document.querySelector('.ddc-ov .ddc__need,.ddc-ov .ddc__ans,.ddc-ov .ddc__arw,.ddc-ov .ddc__m-d'),
       sw: document.documentElement.scrollWidth, iw: innerWidth, cw: document.querySelector('.ddc-ov__card').scrollWidth - document.querySelector('.ddc-ov__card').clientWidth };
   });
-  ok(g.arw.tag === 'SPAN' && g.arw.aria === 'true' && g.arw.tab === null && g.arw.role === null && g.arw.pe === 'none' && !g.arwFocusable, `${name}: the Need → Answer arrow is a decorative connector (aria-hidden, not focusable, no pointer events)`);
-  if (name === 'desktop') ok(g.needLeft && g.side, 'desktop: Need left of Answer, two models side by side');
-  else ok(g.needAbove, `${name}: Need above Answer, no forced two columns`);
-  if (name === 'iphone') ok(g.stacked && g.arw.tr !== 'none' && g.arw.h > g.arw.w, 'mobile: models one under the other, the connector turns vertical');
-  if (name === 'ipad-portrait') ok(g.arw.tr !== 'none', 'tablet: the connector is vertical between Need and Answer');
+  ok(!g.leftover, `${name}: no repeated Need / Answer text, no connector: the question is the title, the models are the answer`);
+  if (name === 'desktop') ok(g.titleLeft && g.side, 'desktop: the question on the left, its two model buttons side by side');
+  else ok(g.titleAbove, `${name}: question above its model buttons, no forced columns`);
+  if (name === 'iphone') ok(g.stacked, 'mobile: model buttons one under the other');
   ok(g.sw <= g.iw && g.cw <= 1, `${name}: no horizontal scroll (${g.sw}/${g.iw}, card ${g.cw})`);
   // sticky controls stay in view while the dialog content scrolls
   const stick = async (label) => { const m = await p.evaluate(() => { const c = document.querySelector('.ddc-ov__card'), cr = c.getBoundingClientRect(); const x = document.querySelector('.ddc-ov__x').getBoundingClientRect(), b = document.querySelector('.ddc-ov__back'), br2 = b.getBoundingClientRect(); const bar = document.querySelector('.ddc-ov__sticky').getBoundingClientRect();
-      const first = [...c.querySelectorAll('.ddc-ov__view.is-on h3,.ddc-ov__view.is-on .ddc__r-t,.ddc-ov__view.is-on .ddc__need')].map((e) => e.getBoundingClientRect()).filter((r) => r.bottom > cr.top).sort((a, b2) => a.top - b2.top)[0];
+      const first = [...c.querySelectorAll('.ddc-ov__view.is-on h3,.ddc-ov__view.is-on .ddc__r-t,.ddc-ov__view.is-on .ddc__m')].map((e) => e.getBoundingClientRect()).filter((r) => r.bottom > cr.top).sort((a, b2) => a.top - b2.top)[0];
       return { st: c.scrollTop, xIn: x.top >= cr.top - 0.5 && x.bottom <= cr.top + bar.height + 0.5 && x.right <= cr.right, xw: x.width, xh: x.height, bh: br2.height, bVis: !b.hidden && b.offsetParent !== null, bIn: br2.top >= cr.top - 0.5 && br2.bottom <= cr.top + bar.height + 0.5, barH: bar.height, textUnder: first ? first.top >= cr.top + bar.height - 1 || first.bottom <= cr.top + bar.height + 1 : true }; });
     return m; };
   await p.evaluate(() => { document.querySelector('.ddc-ov__card').scrollTop = 700; }); await sleep(100);
-  let m = await stick('guide'); ok(m.st > 300 && m.xIn && m.xw >= 44 && m.xh >= 44, `${name}: Close stays visible while the Guide scrolls (${m.st}px), ${Math.round(m.xw)}x${Math.round(m.xh)}`);
+  let m = await stick('guide'); ok((m.st > 100 || name === 'desktop') && m.xIn && m.xw >= 44 && m.xh >= 44, `${name}: Close stays visible while the Guide scrolls (${m.st}px), ${Math.round(m.xw)}x${Math.round(m.xh)}`);
   ok(!m.bVis, `${name}: no Back on the Guide`);
   await p.evaluate(() => { document.querySelector('.ddc-ov__card').scrollTop = 1e6; }); await sleep(100);
   for (const [v, sel] of [['sizes', '.ddc-rst__b--s'], ['firmness', '.ddc-rst__b--f']]) {

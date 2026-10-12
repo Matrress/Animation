@@ -71,7 +71,7 @@ export const ROUTES = [
     title: 'Extra Firm orthopaedic comfort',
     need: 'I want Extra Firm, highly supportive orthopaedic comfort.',
     answer: 'Orthopaedic Coconut Coir is the solution for customers looking for the firmest and most strongly supportive comfort concept in the collection.',
-    models: [{ id: 'ortho', line: 'Natural Dunlop latex reinforced with coconut coir for a flatter, more controlled and Extra Firm orthopaedic response.', cta: 'View Orthopaedic' }],
+    models: [{ id: 'ortho', line: 'Natural Dunlop latex reinforced with coconut coir for a flatter, more controlled and Extra Firm orthopaedic response.' }],
   },
   {
     title: 'Different comfort needs for partners',
@@ -83,7 +83,7 @@ export const ROUTES = [
 
 export const REASSURE = {
   title: 'Choose your mattress concept first.',
-  text: 'Our collection follows one clear UK and European size system. First choose the mattress concept that matches your comfort needs. Then select the sizes available for that construction on its model page.',
+  text: 'Choose the model that answers your need, then set your size on its page. Sizes and firmness are explained below.',
   text2: 'Together, the collection covers the full range of standard UK and European sizes. Some specialised constructions, including Mattress for Partners, begin from specific widths. Custom sizes, depths and special shapes can also be discussed with us.',
   sizes: { title: 'All UK & EU Sizes', sub: 'One clear size system across the full collection.' },
   firmness: { title: 'Firmness Regulation', sub: 'Find the support level regulated for your body.' },
@@ -95,8 +95,8 @@ export const SIZES_TXT = {
   custom: 'Custom size',
   contact: 'Contact us',
   note: 'Need a custom size, custom depth or special shape? Contact us and we will help configure it.',
-  lead: 'Every mattress model is made to order in these sizes, and custom sizes are possible.',
-  foot: 'Mattress for Partners, built for two sleepers, starts from UK Double.',
+  lead: 'Every model in the collection is available in all of these sizes, and any other size can be made to measure.',
+  foot: 'All mattresses are made to order. Mattress for Partners, built for two sleepers, starts from UK Double.',
 };
 
 export const FIRM_TXT = {
@@ -144,22 +144,21 @@ export function heroFirmness() {
 // the script moves the same block into the dialog) ----------
 export function navMarkup(models) {
   const byId = Object.fromEntries(models.map((m) => [m.id, m]));
+  // one model = one link: name, small markers, "View". No second sentence, no second link.
   const card = (r) => {
     const m = byId[r.id]; if (!m) throw new Error(`navigator: unknown model ${r.id}`);
     const lab = LABELS[r.id].map((t) => `<span>${esc(t)}</span>`).join(' ');
-    return `<li class="ddc__m ddc-f-${FAMILY[r.id]}"><h5 class="ddc__m-n"><a href="${m.url}">${esc(m.name)}</a></h5>\n<p class="ddc__m-f">${lab}</p>\n<p class="ddc__m-d">${esc(r.line)}</p>\n<a class="ddc__m-go" href="${m.url}">${esc(r.cta || 'View ' + m.name)}</a></li>`;
+    return `<li class="ddc__m ddc-f-${FAMILY[r.id]}"><a class="ddc__m-a" href="${m.url}"><span class="ddc__m-x"><span class="ddc__m-n">${esc(m.name)}</span>\n<span class="ddc__m-f">${lab}</span></span>\n<span class="ddc__m-go">${esc(r.cta || 'View')}</span></a></li>`;
   };
-  const routes = ROUTES.map((rt, i) => `<li class="ddc__r"><h4 class="ddc__r-t"><span class="ddc__r-n">${i + 1}</span> ${esc(rt.title)}</h4>\n<div class="ddc__need"><p class="ddc__need-k">Your need</p>\n<p class="ddc__need-q">“${esc(rt.need)}”</p></div>\n<span class="ddc__arw" aria-hidden="true"></span>\n<div class="ddc__ans"><p class="ddc__ans-k">Our answer</p>\n${rt.answer ? `<p class="ddc__ans-t">${esc(rt.answer)}</p>\n` : ''}<ul class="ddc__md ddc__md--${rt.models.length}">\n${rt.models.map(card).join('\n')}\n</ul></div></li>`).join('\n');
+  // question -> models: the title IS the question, the models ARE the answer
+  const routes = ROUTES.map((rt, i) => `<li class="ddc__r ddc__r--${i + 1}"><h4 class="ddc__r-t"><span class="ddc__r-n">${i + 1}</span> <span class="ddc__r-q">${esc(rt.title)}</span></h4>\n<ul class="ddc__md ddc__md--${rt.models.length}">\n${rt.models.map(card).join('\n')}\n</ul></li>`).join('\n');
   return `<div class="ddc__nv">
 <div class="ddc__nv-h"><p class="ddc__nv-eb">${esc(INTRO.eyebrow)}</p>
-<h3 class="ddc__nv-t">${esc(INTRO.title)}</h3>
-<p class="ddc__nv-in">${esc(INTRO.text)}</p></div>
+<h3 class="ddc__nv-t">${esc(INTRO.title)}</h3></div>
 <ol class="ddc__rt">
 ${routes}
 </ol>
-<div class="ddc__rs"><h3 class="ddc__rs-t">${esc(REASSURE.title)}</h3>
-<p class="ddc__rs-x">${esc(REASSURE.text)}</p>
-<p class="ddc__rs-x">${esc(REASSURE.text2)}</p></div>
+<div class="ddc__rs"></div>
 </div>`;
 }
 

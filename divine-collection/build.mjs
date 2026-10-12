@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { collections, FIRM, HERO_ASSETS } from './src/data.mjs';
 import { navMarkup, navData, ROUTES } from './src/nav.mjs';
 
-const VERSION = '3.13.1';
+const VERSION = '3.13.2';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DDC_REF || 'main-preview';
 const CDN = `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-collection/release/${VERSION}/`;
@@ -93,8 +93,8 @@ function guard(c, html) {
   for (const m of c.models) {
     if (!/^https:\/\/divinedunlop\.com\/products\/[a-z0-9-]+$/.test(m.url)) throw new Error(`${m.id}: url ${m.url}`);
     const n = html.split(`href="${m.url}"`).length - 1;
-    const nav = c.key === 'mattress' ? ROUTES.flatMap((r) => r.models).filter((x) => x.id === m.id).length * 2 : 0;   // name link + CTA link in the navigator
-    if (n !== 3 + nav) throw new Error(`${m.id}: expected ${3 + nav} links (tile, Buy now, Buy now in the card${nav ? ', navigator name + CTA' : ''}), found ${n}`);
+    const nav = c.key === 'mattress' ? ROUTES.flatMap((r) => r.models).filter((x) => x.id === m.id).length : 0;   // one link per model card in the navigator
+    if (n !== 3 + nav) throw new Error(`${m.id}: expected ${3 + nav} links (tile, Buy now, Buy now in the card${nav ? ', navigator card' : ''}), found ${n}`);
   }
   const text = html.replace(/<[^>]+>/g, ' ');
   const bad = [[/£|\$\s?\d|€\s?\d/, 'a price'], [/\b(her|him|his|hers|women|men|man|woman)\b/i, 'gendered wording'], [/no layers/i, '"No layers"'], [/approximately|approx\.|≈|~\s?\d/i, 'an approximate value'], [/\bcures?\b|pain relief|guarantee/i, 'a medical or guaranteed-outcome claim'], [/Ambient Topper/i, 'an Ambient Topper']];
