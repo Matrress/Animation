@@ -991,3 +991,10 @@ Tooling (`tests/`): `matrix.mjs` (screenshots + geometry), `lockup-pixels.mjs` (
 ## Final self-review
 
 Preserved v26 ✓ · no redesign (design-visible changes = phone overlap fix, ±1 px lockup alignment, lifting cropped hotspots into view) ✓ · no empty bands, full bleed, clouds unchanged ✓ · lockup one geometric object ✓ · LATEX aligned ✓ · 7 hotspots work and pulse ✓ · links direct ✓ · iPad / small laptop / Retina ✓ · LCP not damaged (phone faster; desktop pays only for correct sharpness) ✓ · no listener leaks ✓ · Instant Site lifecycle safe ✓ · no libraries ✓.
+
+## 1.20.0 - Smoothness: cards open out of their point
+- Every card (Natural Adaptation, Dunlop zones, Body Weight, Sizes, Shoulder, 100% EU & UK Certified, Dual Plush) now grows out of the exact point that opened it: the transform origin is the point, the card widens like a funnel (0.62 s, a 2% overshoot, then settles), and the content inside follows in a soft 50 ms cascade.
+- A thin ring leaves the point at the same moment (0.7 s, two rings, light with a faint teal edge), no sparks or confetti.
+- The small caption screens (Back, Temperature, Night, Balance and so on) bloom from their point (0.5 s).
+- Reduced motion: no animation at all, as before. Closing is still instant. Bio Comfort and the Shop previews are unchanged.
+- Only transform and opacity are animated.

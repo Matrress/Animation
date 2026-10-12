@@ -66,12 +66,12 @@
    and the shoulder always come from the photo itself and no longer shift when a hotspot opens. */
 .ddh .ddh__plate{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .ddh .ddh__copy,.ddh .ddh__spine{font-family:DDHChillax,"Comfortaa",system-ui,sans-serif;display:none}
-.ddh .ddh__copy{position:absolute;left:24%;right:1%;top:-6%;bottom:24%;margin:0;flex-direction:column;align-items:center;justify-content:center;gap:.28em;text-align:center;color:var(--ddh-ink-soft);font-size:1.72cqw;text-wrap:balance;font-weight:400;letter-spacing:.035em;line-height:1.08;text-shadow:0 1px 0 rgba(236,252,247,.45);animation:ddh-in .22s ease-out both}
+.ddh .ddh__copy{position:absolute;left:24%;right:1%;top:-6%;bottom:24%;margin:0;flex-direction:column;align-items:center;justify-content:center;gap:.28em;text-align:center;color:var(--ddh-ink-soft);font-size:1.72cqw;text-wrap:balance;font-weight:400;letter-spacing:.035em;line-height:1.08;text-shadow:0 1px 0 rgba(236,252,247,.45);animation:ddh-bloom .5s cubic-bezier(.2,.9,.25,1) both}
 .ddh .ddh__copy strong{display:block;color:var(--ddh-ink);font-size:1.3em;font-weight:600;letter-spacing:.07em;margin-bottom:.12em}
 .ddh .ddh__copy span{display:block}
 .ddh .ddh__copy span b{font-weight:600;color:var(--ddh-ink)}
 .ddh .ddh__copy--solo strong{font-size:1.42em;line-height:1.15;margin:0}
-.ddh .ddh__spine{position:absolute;left:2.6%;width:93%;top:5%;height:62%;flex-direction:column;justify-content:space-between;align-items:stretch;text-transform:uppercase;line-height:1;animation:ddh-in .22s ease-out both}
+.ddh .ddh__spine{position:absolute;left:2.6%;width:93%;top:5%;height:62%;flex-direction:column;justify-content:space-between;align-items:stretch;text-transform:uppercase;line-height:1;animation:ddh-bloom .5s cubic-bezier(.2,.9,.25,1) both}
 .ddh .ddh__spine strong{display:block;color:#1c4843;font-size:2.02cqw;font-weight:600;letter-spacing:.39em;white-space:nowrap;text-shadow:0 1px 0 rgba(214,240,232,.35)}
 .ddh .ddh__spine img{display:block;width:100%;height:auto}
 .ddh .ddh__spine span{display:block;color:#fff;font-size:1.72cqw;font-weight:400;letter-spacing:.57em;white-space:nowrap;opacity:.93}
@@ -943,7 +943,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 @media (min-width:1051px) and (max-width:1240px){.ddh{--ddh-szw:12.5em}.ddh .ddh__shop .ddh__sz,.ddh .ddh__shop::before{font-size:12px}.ddh .ddh__shop .ddh__sz{padding:.5em .8em}}
 /* --- the Dual Plush reveal: with the lifted mattress, one calm card explains the system --- */
 .ddh .ddh__dpc{display:none;position:absolute;z-index:8;right:var(--ddh-edge-r,clamp(20px,3.6vw,64px));top:calc(var(--ddh-safe) + clamp(12px,2vh,26px));bottom:calc(var(--ddh-art-h) - var(--ddh-h0) + var(--ddh-shop-b) + var(--ddh-cta-h) + 18px);width:clamp(430px,41vw,660px);container:dpc/size;border:1px solid rgba(255,255,255,.88);border-radius:26px;background:linear-gradient(160deg,rgba(244,251,251,.95) 0,rgba(228,244,244,.92) 100%);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);box-shadow:0 30px 70px -34px rgba(18,52,52,.5);color:#1f3b38;font:400 14px/1.45 DDHChillax,"Comfortaa",system-ui,sans-serif;text-align:left}
-.ddh[data-ddh-state=system] .ddh__dpc{display:block;animation:ddh-dpc .55s .2s cubic-bezier(.22,1,.36,1) both}
+.ddh[data-ddh-state=system] .ddh__dpc{display:block;animation:ddh-erupt .62s .1s linear both}
 @keyframes ddh-dpc{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .ddh[data-ddh-dpc][data-ddh-state=system] .ddh__screen--brand{visibility:hidden}
 .ddh .ddh__dpc-in{height:100%;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);grid-template-rows:auto auto minmax(0,1fr) auto;grid-template-areas:"eye eye" "h h" "fig fig" "x c" "cta cta";column-gap:clamp(16px,2vw,28px);row-gap:clamp(6px,1.4cqh,12px);padding:clamp(16px,3cqh,30px) clamp(18px,2.2vw,32px)}
@@ -1022,7 +1022,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__hc,.ddh .ddh__sheet--mattress,.ddh .ddh__sheet--topper{--pl-bg:#e4e8f2;--pl-bg2:#f1f4f9;--pl-card:#fff;--pl-ink:#1d2c47;--pl-soft:#47587a;--pl-label:#3b5f82;--pl-blue:#2a638e;--pl-blue-d:#1f4a6e;--pl-band:linear-gradient(180deg,#3e7093,#29506f);--pl-line:#d3dbe6;--pl-pale:#e8eefa;--pl-tile:#eef2f9;--pl-shadow:0 18px 40px -26px rgba(30,52,86,.45)}
 .ddh .ddh__hc{display:none;position:absolute;z-index:4;right:var(--ddh-edge-r,clamp(20px,3.6vw,64px));width:clamp(470px,41vw,660px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;border:1px solid #dfe5ec;border-radius:26px;background:var(--pl-bg2);box-shadow:0 30px 70px -28px rgba(12,30,56,.55);color:var(--pl-ink);font:400 17px/1.55 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:0;text-align:left;text-transform:none}
 @media (min-width:701px) and (min-height:501px){
-.ddh[data-ddh-state=firmness] [data-ddh-card=firmness],.ddh[data-ddh-state=zones] [data-ddh-card=zones],.ddh[data-ddh-state=weight] [data-ddh-card=weight],.ddh[data-ddh-state=sizes] [data-ddh-card=sizes],.ddh[data-ddh-state=shoulder] [data-ddh-card=shoulder]{display:block;animation:ddh-hc .45s cubic-bezier(.22,1,.36,1) both}
+.ddh[data-ddh-state=firmness] [data-ddh-card=firmness],.ddh[data-ddh-state=zones] [data-ddh-card=zones],.ddh[data-ddh-state=weight] [data-ddh-card=weight],.ddh[data-ddh-state=sizes] [data-ddh-card=sizes],.ddh[data-ddh-state=shoulder] [data-ddh-card=shoulder]{display:block;animation:ddh-erupt .62s linear both}
 .ddh.ddh[data-ddh-cards]:is([data-ddh-state=firmness],[data-ddh-state=zones],[data-ddh-state=weight],[data-ddh-state=sizes],[data-ddh-state=shoulder]) .ddh__screen--brand{display:none!important}
 .ddh[data-ddh-cards]:is([data-ddh-state=firmness],[data-ddh-state=zones],[data-ddh-state=weight],[data-ddh-state=sizes],[data-ddh-state=shoulder]) .ddh__point:not([aria-expanded=true]){opacity:.6}
 }
@@ -1780,7 +1780,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
    fine arrows between their markers. Natural green accents only; type follows the readability standard (body 16.5, secondary 15,
    labels 13.5). ===== */
 @media (min-width:701px) and (min-height:501px){
-.ddh[data-ddh-state=head] [data-ddh-card=head]{display:block;animation:ddh-hc .45s cubic-bezier(.22,1,.36,1) both}
+.ddh[data-ddh-state=head] [data-ddh-card=head]{display:block;animation:ddh-erupt .62s linear both}
 .ddh.ddh[data-ddh-cards][data-ddh-state=head] .ddh__screen--brand{display:none!important}
 .ddh[data-ddh-cards][data-ddh-state=head] .ddh__point:not([aria-expanded=true]){opacity:.6}
 }
@@ -1886,3 +1886,25 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh .ddh__hc--cert[data-tight="3"] .ddh__hc-hd{padding-top:12px;padding-bottom:10px}
 }
 @media (max-width:1050px){.ddh .ddh__sky-lockup{transition:opacity .2s ease}}   /* the lockup yields as quickly as before on tablets */
+
+/* --- 1.20.0 smoothness: every card opens out of its own point (a funnel that widens into the window, with a soft ring where it starts) --- */
+.ddh .ddh__hc,.ddh .ddh__dpc,.ddh .ddh__copy,.ddh .ddh__spine{transform-origin:var(--ddh-ox,100%) var(--ddh-oy,0)}
+@keyframes ddh-erupt{
+0%{opacity:0;transform:scale(.05);animation-timing-function:cubic-bezier(.16,.84,.3,1)}
+16%{opacity:1}
+64%{opacity:1;transform:scale(1.022);animation-timing-function:cubic-bezier(.4,0,.2,1)}
+100%{opacity:1;transform:none}}
+@keyframes ddh-bloom{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:none}}
+@keyframes ddh-kid{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@keyframes ddh-burst{0%{opacity:.95;transform:scale(.35)}100%{opacity:0;transform:scale(3.4)}}
+.ddh .ddh__burst{position:absolute;z-index:6;width:46px;height:46px;margin:-23px 0 0 -23px;border:2px solid rgba(255,255,255,.92);border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.55),rgba(255,255,255,0) 68%);box-shadow:0 0 0 1px rgba(35,102,95,.25),0 0 22px 3px rgba(150,215,235,.55);pointer-events:none;animation:ddh-burst .72s cubic-bezier(.2,.8,.3,1) both}
+.ddh .ddh__burst::after{content:"";position:absolute;inset:-2px;border:1px solid rgba(255,255,255,.7);border-radius:50%;animation:ddh-burst .72s .12s cubic-bezier(.2,.8,.3,1) both}
+@media (prefers-reduced-motion:no-preference){
+.ddh .ddh__hc-in>*,.ddh .ddh__dpc-in>*{animation:ddh-kid .46s cubic-bezier(.22,1,.36,1) backwards}
+.ddh .ddh__hc-in>:nth-child(1),.ddh .ddh__dpc-in>:nth-child(1){animation-delay:.2s}
+.ddh .ddh__hc-in>:nth-child(2),.ddh .ddh__dpc-in>:nth-child(2){animation-delay:.25s}
+.ddh .ddh__hc-in>:nth-child(3),.ddh .ddh__dpc-in>:nth-child(3){animation-delay:.3s}
+.ddh .ddh__hc-in>:nth-child(4),.ddh .ddh__dpc-in>:nth-child(4){animation-delay:.35s}
+.ddh .ddh__hc-in>:nth-child(5),.ddh .ddh__dpc-in>:nth-child(5){animation-delay:.4s}
+.ddh .ddh__hc-in>:nth-child(n+6),.ddh .ddh__dpc-in>:nth-child(n+6){animation-delay:.45s}}
+@media (prefers-reduced-motion:reduce){.ddh .ddh__burst,.ddh .ddh__dpc{animation:none!important}}

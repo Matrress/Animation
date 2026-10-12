@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.19.6 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.20.0 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.19.6';
+  var VERSION = '1.20.0';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -209,6 +209,7 @@
       else { root.removeAttribute('data-ddh-state'); root.removeAttribute('data-ddh-screen'); }
       if (typeof unplace === 'function' && (!key || !cardOf(key))) unplace();
       if (typeof orbSync === 'function') orbSync();
+      if (key && typeof bloom === 'function') bloom(key);
       var txt = '';
       copies.forEach(function (c) { var isOn = c.getAttribute('data-ddh-copy') === key; c.setAttribute('aria-hidden', String(!isOn)); if (isOn) txt = speak(c); });
       screens.forEach(function (s) { var isBack = s.classList.contains('ddh__screen--back'); s.setAttribute('aria-hidden', String(!key || (key === 'back' ? !isBack : isBack))); });
@@ -694,6 +695,20 @@
       var r = c.getBoundingClientRect();
       points.forEach(function (p) { var q = p.getBoundingClientRect(), x = q.left + q.width / 2, y = q.top + q.height / 2; p.toggleAttribute('data-ddh-under', !!q.width && x > r.left - 6 && x < r.right + 6 && y > r.top - 6 && y < r.bottom + 6); });
     }
+    // 1.20.0: the card (or the caption) grows out of the point that opened it: its transform origin is the point, and a soft ring leaves the point
+    var burstT = 0;
+    function bloom(key) {
+      if (calm()) return;
+      var p = group.querySelector('[data-ddh-point="' + key + '"]'); if (!p || !p.offsetWidth) return;
+      var a = p.getBoundingClientRect(), ax = a.left + a.width / 2, ay = a.top + a.height / 2;
+      var el = cardOf(key) || [].filter.call(copies, function (c) { return c.getAttribute('data-ddh-copy') === key; })[0];
+      if (el) { var r = el.getBoundingClientRect(); el.style.setProperty('--ddh-ox', Math.round(ax - r.left) + 'px'); el.style.setProperty('--ddh-oy', Math.round(ay - r.top) + 'px'); }
+      var old = group.querySelector('.ddh__burst'); if (old) old.parentNode.removeChild(old);
+      var b = w.document.createElement('i'); b.className = 'ddh__burst'; b.setAttribute('aria-hidden', 'true');
+      b.style.left = Math.round(p.offsetLeft + p.offsetWidth / 2) + 'px'; b.style.top = Math.round(p.offsetTop + p.offsetHeight / 2) + 'px';
+      group.appendChild(b); w.clearTimeout(burstT); burstT = w.setTimeout(function () { if (b.parentNode) b.parentNode.removeChild(b); }, 1000);
+    }
+    cleanups.push(function () { w.clearTimeout(burstT); });
     function unplace() { points.forEach(function (p) { p.removeAttribute('data-ddh-under'); }); }
     function wireCard(c) {
       on(c, 'pointerenter', function (ev) { if (ev.pointerType !== 'touch') { overDpc = true; if (dpcT) { w.clearTimeout(dpcT); dpcT = 0; } } });
