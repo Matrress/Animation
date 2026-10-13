@@ -36,7 +36,7 @@ export async function openLive(browser, vp, { inject = true, motion = 'no-prefer
   await page.addStyleTag({ content: '[class*="cookie" i],[id*="gdpr" i],[class*="gdpr" i],[class*="privacy" i],.ins-notices{display:none!important}' });
   await page.evaluate(() => { for (const e of document.querySelectorAll('div,section,aside')) { const s = getComputedStyle(e); if ((s.position === 'fixed') && /Privacy notice/.test(e.innerText || '') && e.innerText.length < 900) e.style.display = 'none'; } });
   if (inject) {
-    const html = fs.readFileSync(path.join(root, 'ecwid', `section-${VERSION}.html`), 'utf8');
+    const html = fs.readFileSync(path.join(root, 'ecwid', process.env.DDHD_EMBED || `section-${VERSION}.html`), 'utf8');   // DDHD_EMBED=section-0.1.0-pinned.html tests the real jsDelivr URLs
     await page.evaluate((html) => {
       const hero = document.querySelector('.ddh');
       let a = hero;
