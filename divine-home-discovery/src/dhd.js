@@ -77,7 +77,7 @@
         var on = !!ids && ids.indexOf(c.getAttribute('data-id')) > -1;
         c.classList.toggle('is-match', on); c.classList.toggle('is-dim', !!ids && !on);
         var tag = qs(c, '.ddhd__tag'); if (tag) tag.parentNode.removeChild(tag);
-        if (on) c.appendChild(el('span', 'ddhd__tag', 'Matches your need'));
+        if (on) c.appendChild(el('span', 'ddhd__tag', 'Matches Your Need'));
       });
       closePanel(false);
       if (!guide) return;
@@ -94,7 +94,7 @@
         ul.appendChild(li);
       });
       guide.appendChild(ul);
-      var x = el('p', 'ddhd__g-x'), b = el('button', null, 'Show all models'); b.type = 'button'; b.setAttribute('data-route', 'all'); b.className = 'ddhd__g-all';
+      var x = el('p', 'ddhd__g-x'), b = el('button', null, 'Show All Models'); b.type = 'button'; b.setAttribute('data-route', 'all'); b.className = 'ddhd__g-all';
       x.appendChild(b); guide.appendChild(x); guide.hidden = false;
       fire('need', { route: i, title: r.t });
     }
@@ -129,6 +129,7 @@
       // trusted markup: generated at build time from the approved source, every value escaped (no visitor input reaches this)
       panel.innerHTML = '<button type="button" class="ddhd__x" aria-label="Close preview"></button>' + PV[id];
       panel.setAttribute('aria-labelledby', 'ddhd-pv-' + id);
+      pli.setAttribute('data-fam', card.getAttribute('data-fam') || '');   // the panel's bottom edge wears the same family colour as the card
       openCard = card; place();
       card.classList.add('is-open');
       var b = qs(card, '.ddhd__more'); if (b) { b.setAttribute('aria-expanded', 'true'); b.setAttribute('aria-controls', 'ddhd-panel'); }

@@ -16,7 +16,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const VERSION = '0.2.0';
+const VERSION = '0.3.0';
 const SOURCE_VERSION = '3.13.2';
 const SOURCE_REF = process.env.DHD_SOURCE_REF || 'f4d9318a14f32ede544936f332f3ff4e5e800768';
 const REF = process.env.DHD_REF || 'main-preview';
@@ -29,6 +29,17 @@ const FONT_BASE = 'https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd56
 const OWN_ASSETS = `https://cdn.jsdelivr.net/gh/Matrress/Animation@${SOURCE_REF}/divine-collection/release/${SOURCE_VERSION}/assets/`;
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+// Title Case for button and card labels (owner rule): every word capitalised except and / or / with / for / of / to / the ... ; units (cm) and numbers are left alone
+const MINOR = new Set(['and', 'or', 'with', 'for', 'of', 'to', 'the', 'a', 'an', 'in', 'on', 'at', 'by', 'from', 'vs']);
+const tc = (s) => String(s).split(' ').map((tok, i) => {
+  const m = /^([^A-Za-z]*)([A-Za-z][A-Za-z’']*)(.*)$/.exec(tok);
+  if (!m) return tok;
+  const [, pre, w, post] = m, lw = w.toLowerCase();
+  if (/^(cm|mm|kg)$/.test(lw)) return tok;
+  if (i > 0 && MINOR.has(lw)) return pre + lw + post;
+  if (w.length > 1 && w === w.toUpperCase()) return tok;
+  return pre + w[0].toUpperCase() + w.slice(1) + post;
+}).join(' ');
 const out = (p, s) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, s); };
 
 // ---------- 1. approved sources, read from the pinned commit ----------
@@ -71,8 +82,8 @@ function facts(m) {
   else if (f.sides) h = `<ul class="ddhd__ul">${f.sides.map((k, i) => `<li><span>${F(k)} ${esc(f.sideNames[i].toLowerCase())}</span></li>`).join('')}</ul>`;
   else if (f.text) h = `<p class="ddhd__fz">${f.text.map(([k, t]) => `<span class="ddhd__f ddhd__f--${k}">${esc(t)}</span>`).join(' ')}</p>`;
   else throw new Error(`${m.id}: no firmness data`);
-  const title = f.layers ? 'Layer combinations' : f.split ? 'Firmness, one for each side' : 'Firmness';
-  return `<div class="ddhd__pf">${h ? `<div><p class="ddhd__k">${title}</p>${h}</div>` : ''}<div><p class="ddhd__k">${esc(m.depth.label)}</p><p class="ddhd__dl">${m.depth.items.map((d) => `<span class="ddhd__d">${esc(d)}</span>`).join(' ')}</p></div></div>`;
+  const title = f.layers ? 'Layer Combinations' : f.split ? 'Firmness, One for Each Side' : 'Firmness';
+  return `<div class="ddhd__pf">${h ? `<div><p class="ddhd__k">${title}</p>${h}</div>` : ''}<div><p class="ddhd__k">${esc(tc(m.depth.label))}</p><p class="ddhd__dl">${m.depth.items.map((d) => `<span class="ddhd__d">${esc(d)}</span>`).join(' ')}</p></div></div>`;
 }
 
 // the preview of one model: built here, once, from the approved data; the script only inserts it
@@ -85,8 +96,8 @@ function preview(c, m) {
   }).join('');
   // Dual Plush: the approved explanation, and one diagram per combination = the Collection 3.13.2 SVG assets (dual-plush-<top>-<bottom>.svg), same wording as the Collection page
   const n = m.firm.pairs ? m.firm.pairs.length : 0;
-  const combos = n ? `<div class="ddhd__dp-c"><p class="ddhd__k">Dual Plush: ${n} combinations</p><ul class="ddhd__dpg ddhd__dpg--${n}">${m.firm.pairs.map(([t, b]) => `<li class="ddhd__dpv"><img class="ddhd__dpv-i" src="${OWN_ASSETS}dual-plush-${t}-${b}.svg" width="246" height="100" loading="lazy" decoding="async" alt="${esc(FIRM[t])} topper above a ${esc(FIRM[b])} mattress"><span class="ddhd__dpv-r">${F(t)} <span>topper, above</span></span><span class="ddhd__dpv-r">${F(b)} <span>mattress, below</span></span></li>`).join('')}</ul></div>` : '';
-  const dp = m.dp && c.dualPlush ? `<div class="ddhd__dp"><div class="ddhd__dp-t"><p class="ddhd__k">${esc(c.dualPlush.h)}</p><p>${esc(c.dualPlush.p)}</p></div>${combos}</div>` : '';
+  const combos = n ? `<div class="ddhd__dp-c"><p class="ddhd__k">Dual Plush: ${n} Combinations</p><ul class="ddhd__dpg ddhd__dpg--${n}">${m.firm.pairs.map(([t, b]) => `<li class="ddhd__dpv"><img class="ddhd__dpv-i" src="${OWN_ASSETS}dual-plush-${t}-${b}.svg" width="246" height="100" loading="lazy" decoding="async" alt="${esc(FIRM[t])} topper above a ${esc(FIRM[b])} mattress"><span class="ddhd__dpv-r">${F(t)} <span>topper, above</span></span><span class="ddhd__dpv-r">${F(b)} <span>mattress, below</span></span></li>`).join('')}</ul></div>` : '';
+  const dp = m.dp && c.dualPlush ? `<div class="ddhd__dp"><div class="ddhd__dp-t"><p class="ddhd__k">${esc(tc(c.dualPlush.h))}</p><p>${esc(c.dualPlush.p)}</p></div>${combos}</div>` : '';
   return `<div class="ddhd__pv">
 <div class="ddhd__pv-l"><div class="ddhd__pv-fig"><img src="${big}" width="${w}" height="${h}" loading="lazy" decoding="async" alt="${esc(m.img.alt)}"></div>
 ${facts(m)}</div>
@@ -97,26 +108,26 @@ ${m.type ? `<p class="ddhd__pv-type">${esc(m.type)}</p>` : ''}<p class="ddhd__wh
 <p class="ddhd__who"><b>Who it suits.</b> ${esc(m.who)}</p>
 <p class="ddhd__bld"><b>How it is built.</b> ${esc(m.build)}</p>
 </div></div>
-${dp}${diff ? `<div class="ddhd__df"><p class="ddhd__k">How it differs</p><ul class="ddhd__ul ddhd__ul--p">${diff}</ul></div>` : ''}
-<div class="ddhd__pv-foot"><p class="ddhd__buy">${esc(c.buy)}</p><a class="ddhd__cta" data-ddhd-product="${m.id}" href="${m.url}">View ${esc(m.name)} &amp; buy</a></div>
+${dp}${diff ? `<div class="ddhd__df"><p class="ddhd__k">How It Differs</p><ul class="ddhd__ul ddhd__ul--p">${diff}</ul></div>` : ''}
+<div class="ddhd__pv-foot"><p class="ddhd__buy">${esc(c.buy)}</p><a class="ddhd__cta" data-ddhd-product="${m.id}" href="${m.url}">View ${esc(m.name)} &amp; Buy</a></div>
 </div>`;
 }
 
 function card(c, m, kind) {
   const fam = famOf(c, m);
-  return `<li class="ddhd__card" id="ddhd-m-${m.id}" data-id="${m.id}">
+  return `<li class="ddhd__card" id="ddhd-m-${m.id}" data-id="${m.id}" data-fam="${fam.id}">
 <div class="ddhd__fig${m.img.photo ? ' ddhd__fig--photo' : ''}"><img src="${imgSrc(m)}" width="${m.img.w}" height="${m.img.h}" loading="lazy" decoding="async" alt="${esc(m.img.alt)}"></div>
-<div class="ddhd__bd"><p class="ddhd__lab">${esc(label(c, m))}${m.dp ? ' <span class="ddhd__dpb">+ topper</span>' : ''}</p>
+<div class="ddhd__bd"><p class="ddhd__lab">${esc(label(c, m))}${m.dp ? ' <span class="ddhd__dpb">+ Topper</span>' : ''}</p>
 <h4 class="ddhd__nm"><a data-ddhd-product="${m.id}" href="${m.url}">${esc(m.name)}</a></h4>
 <p class="ddhd__ty">${esc(m.type || fam.says)}</p>
-<p class="ddhd__fn">${esc(m.fn || m.row)}</p></div>
-<p class="ddhd__ac"><button type="button" class="ddhd__more" aria-expanded="false"><span>Compare &amp; details</span><span class="ddhd__sr"> ${esc(m.name)}</span></button><a class="ddhd__go" href="${m.url}">View model<span class="ddhd__sr"> ${esc(m.name)}</span> &rarr;</a></p>
+<p class="ddhd__fn">${esc(tc(m.fn || m.row))}</p></div>
+<p class="ddhd__ac"><button type="button" class="ddhd__more" aria-expanded="false"><span>Compare &amp; Details</span><span class="ddhd__sr"> ${esc(m.name)}</span></button><a class="ddhd__go" href="${m.url}">View Model<span class="ddhd__sr"> ${esc(m.name)}</span> &rarr;</a></p>
 </li>`;
 }
 
 const needs = ROUTES.map((r, i) => {
   const first = r.models[0].id;
-  return `<li><a class="ddhd__chip" data-route="${i}" href="#ddhd-m-${first}">${esc(r.title)}</a></li>`;
+  return `<li><a class="ddhd__chip" data-route="${i}" href="#ddhd-m-${first}">${esc(tc(r.title))}</a></li>`;
 }).join('\n');
 
 function view(c, kind, id) {
@@ -124,17 +135,17 @@ function view(c, kind, id) {
   const isM = kind === 'mattress';
   return `<div class="ddhd__view" id="ddhd-${id}" data-view-panel="${id}">
 <div class="ddhd__vh"><h3 class="ddhd__q">${esc(c.question)}</h3><p class="ddhd__lede">${esc(c.lede)}</p></div>
-${isM ? `<div class="ddhd__needs"><p class="ddhd__needs-h" id="ddhd-needs-h">What matters most to you?</p>
+${isM ? `<div class="ddhd__needs"><p class="ddhd__needs-h" id="ddhd-needs-h">What Matters Most to You?</p>
 <ul class="ddhd__chips" aria-labelledby="ddhd-needs-h">
-<li class="ddhd__js"><a class="ddhd__chip ddhd__chip--all" data-route="all" href="#ddhd-mattress">All ${n} models</a></li>
+<li class="ddhd__js"><a class="ddhd__chip ddhd__chip--all" data-route="all" href="#ddhd-mattress">All ${n} Models</a></li>
 ${needs}
 </ul>
 <div class="ddhd__guide ddhd__js" aria-live="polite" hidden></div></div>` : ''}
 <ul class="ddhd__grid ddhd__grid--${id}">
 ${c.models.map((m) => card(c, m, id)).join('\n')}
 </ul>
-<ul class="ddhd__pr">${c.principles.map(([h, t]) => `<li><b>${esc(h)}</b> ${esc(t)}</li>`).join('')}</ul>
-<p class="ddhd__all"><a href="${c.url}" data-ddhd-collection="${id}">Open the full ${esc(c.label)} <span aria-hidden="true">&rarr;</span></a></p>
+<ul class="ddhd__pr">${c.principles.map(([h, t]) => `<li><b>${esc(tc(h))}</b> ${esc(t)}</li>`).join('')}</ul>
+<p class="ddhd__all"><a href="${c.url}" data-ddhd-collection="${id}">Open the Full ${esc(c.label)} <span aria-hidden="true">&rarr;</span></a></p>
 </div>`;
 }
 
@@ -145,8 +156,8 @@ const section = `<section class="ddhd" id="ddhd" data-ddhd-root aria-labelledby=
 <h2 class="ddhd__h" id="ddhd-h">Find your <span>natural sleep solution</span></h2>
 <p class="ddhd__lede">Start with what you need: a new latex mattress, or a latex topper to improve the mattress you already have.</p></div>
 <nav class="ddhd__sw" aria-label="Choose a product type">
-<a class="ddhd__tab" href="#ddhd-mattress" data-tab="mattress"><span class="ddhd__tab-n">Latex mattresses</span><span class="ddhd__tab-c">${M.models.length} models</span></a>
-<a class="ddhd__tab" href="#ddhd-topper" data-tab="topper"><span class="ddhd__tab-n">Latex toppers</span><span class="ddhd__tab-c">${T.models.length} models</span></a>
+<a class="ddhd__tab" href="#ddhd-mattress" data-tab="mattress"><span class="ddhd__tab-n">Latex Mattresses</span><span class="ddhd__tab-c">${M.models.length} Models</span></a>
+<a class="ddhd__tab" href="#ddhd-topper" data-tab="topper"><span class="ddhd__tab-n">Latex Toppers</span><span class="ddhd__tab-c">${T.models.length} Models</span></a>
 </nav>
 </div>
 ${view(M, 'mattress', 'mattress')}

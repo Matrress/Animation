@@ -74,6 +74,57 @@ const b = await launch();
   await ctx.close();
 }
 
+
+// ---- 1c. owner's 0.3.0 rules: Title Case, thin frame, line colour, weights, family edge, ambient glow, comfort sizes and contrast ----
+{
+  const { ctx, page } = await openLive(b, VIEWPORTS.desktop);
+  const lum = (hex) => { const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => (v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4)); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+  const ratio = (a, bg) => { const [x, y] = [lum(a), lum(bg)].sort((p, q) => q - p); return (x + .05) / (y + .05); };
+  // Title Case on every button / chip / tab / card title / function line / link-button
+  const bad = await page.evaluate(() => {
+    const MINOR = new Set(['and', 'or', 'with', 'for', 'of', 'to', 'the', 'a', 'an', 'in', 'on', 'at', 'by', 'from', 'vs']);
+    const sels = ['.ddhd__chip', '.ddhd__tab-n', '.ddhd__tab-c', '.ddhd__more span:first-child', '.ddhd__nm a', '.ddhd__fn', '.ddhd__all a', '.ddhd__needs-h', '.ddhd__pr b', '.ddhd__dpb'];
+    const out = [];
+    for (const s of sels) for (const e of document.querySelectorAll('#ddhd ' + s)) {
+      const txt = e.textContent.replace(/\s+/g, ' ').trim();
+      txt.split(' ').forEach((tok, i) => { const m = /^[^A-Za-z]*([A-Za-z][A-Za-z\u2019']*)/.exec(tok); if (!m) return; const w = m[1]; if (/^(cm|mm|kg)$/.test(w)) return; if (i > 0 && MINOR.has(w.toLowerCase())) { if (w !== w.toLowerCase()) out.push(s + ': "' + txt + '" ' + w); return; } if (w[0] !== w[0].toUpperCase()) out.push(s + ': "' + txt + '" ' + w); });
+    }
+    return out;
+  });
+  ok(bad.length === 0, 'Title Case on all buttons, chips, tabs and card labels: ' + JSON.stringify(bad.slice(0, 5)));
+  const v = await page.evaluate(() => {
+    const cs = (s) => getComputedStyle(document.querySelector(s));
+    const fam = (id) => getComputedStyle(document.querySelector('#ddhd-m-' + id)).getPropertyValue('--fam').trim();
+    return { frame: cs('.ddhd__fig').marginTop, fnColor: cs('#ddhd-m-botanic_dp .ddhd__fn').color, fnWeight: cs('.ddhd__fn').fontWeight, nameSize: parseFloat(cs('.ddhd__nm').fontSize), moreW: cs('.ddhd__more').fontWeight, moreStroke: cs('.ddhd__more').webkitTextStrokeWidth, chipStroke: cs('.ddhd__chip').webkitTextStrokeWidth, edge: getComputedStyle(document.querySelector('#ddhd-m-botanic'), '::after').height,
+      fams: { botanic: fam('botanic'), botanic_dp: fam('botanic_dp'), bio: fam('bio'), bio_dp: fam('bio_dp'), ambient: fam('ambient'), hotel: fam('hotel'), ortho: fam('ortho'), partners: fam('partners') },
+      ladeSize: parseFloat(cs('.ddhd__hd .ddhd__lede').fontSize), ladeColor: cs('.ddhd__hd .ddhd__lede').color };
+  });
+  ok(parseFloat(v.frame) <= 6, `thin frame round the picture (${v.frame})`);
+  ok(v.fnColor === 'rgb(164, 212, 220)' && v.fnWeight === '600', `line under the name is #a4d4dc and semi-bold (${v.fnColor}, ${v.fnWeight})`);
+  ok(v.nameSize >= 24, `model name is large (${v.nameSize}px)`);
+  ok(v.moreW === '600' && parseFloat(v.moreStroke) > 0 && parseFloat(v.chipStroke) > 0, `button text is heavier: weight ${v.moreW} + hairline stroke (${v.moreStroke}/${v.chipStroke})`);
+  ok(parseFloat(v.edge) >= 6, `bottom edge on the card is a real band (${v.edge})`);
+  ok(v.fams.botanic === v.fams.botanic_dp && v.fams.bio === v.fams.bio_dp && v.fams.ambient === v.fams.hotel, 'models of one family share one edge colour: ' + JSON.stringify(v.fams));
+  ok(new Set([v.fams.botanic, v.fams.bio, v.fams.ambient]).size === 3 && v.fams.ortho === v.fams.partners && ![v.fams.botanic, v.fams.bio, v.fams.ambient].includes(v.fams.ortho), 'three family colours + neutral edge for the others');
+  ok(v.ladeSize >= 17.5 && /rgb\(27, 56, 78\)/.test(v.ladeColor), `header text is larger and darker (${v.ladeSize}px ${v.ladeColor})`);
+  // contrast (AAA 7:1) of the text colours on the lightest blue-graphite stop and on the mint
+  const darkBg = '#263650';
+  for (const [name, hex] of [['snow', '#f7fbfd'], ['ice', '#d5e8f1'], ['sky', '#bfe3f1'], ['aqua (#a4d4dc)', '#a4d4dc'], ['mist', '#b4cbd8']]) ok(ratio(hex, darkBg) >= 7, `${name} on blue-graphite >= 7:1 (${ratio(hex, darkBg).toFixed(1)})`);
+  for (const [name, hex] of [['ink', '#0e2234'], ['ink2', '#1b384e'], ['blue', '#1d5a86']]) ok(ratio(hex, '#e6f6fa') >= 6.5, `${name} on the mint area >= 6.5:1 (${ratio(hex, '#e6f6fa').toFixed(1)})`);
+  // ambient glow on EVERY kind of button (hover; press is the same rule for touch)
+  await page.evaluate(() => document.querySelector('#ddhd-m-botanic .ddhd__more').click());
+  await page.waitForTimeout(400);
+  const targets = ['.ddhd__chip[data-route="1"]', '.ddhd__tab:not([aria-selected="true"])', '#ddhd-m-ortho .ddhd__more', '.ddhd__panel .ddhd__cta', '.ddhd__panel .ddhd__x'];
+  for (const sel of targets) {
+    await page.locator(sel).first().scrollIntoViewIfNeeded();
+    await page.locator(sel).first().hover();
+    await page.waitForTimeout(450);
+    const sh = await page.evaluate((s) => getComputedStyle(document.querySelector(s)).boxShadow, sel);
+    ok(/rgba?\(76, 195, 238/.test(sh), `ambient glow on hover: ${sel}`);
+  }
+  await ctx.close();
+}
+
 // ---- 2. interaction, mouse + keyboard ----
 {
   const { ctx, page, errors } = await openLive(b, VIEWPORTS.desktop);
@@ -184,14 +235,14 @@ for (const [name, vp] of Object.entries(VIEWPORTS)) {
     document.querySelector('#ddhd-tab-topper').click();
     const t = getComputedStyle(document.querySelector('.ddhd__grid--topper')).gridTemplateColumns.split(' ').length;
     const over = document.documentElement.scrollWidth > innerWidth + 1;
-    const tiny = [...document.querySelectorAll('#ddhd .ddhd__nm,#ddhd .ddhd__fn,#ddhd .ddhd__chip,#ddhd .ddhd__more')].filter((e) => e.offsetParent && parseFloat(getComputedStyle(e).fontSize) < 14).length;
-    const small = [...document.querySelectorAll('#ddhd .ddhd__more,#ddhd .ddhd__chip,#ddhd .ddhd__tab')].filter((e) => e.offsetParent && e.getBoundingClientRect().height < 43.5).length;
+    const tiny = [...document.querySelectorAll('#ddhd .ddhd__nm,#ddhd .ddhd__fn,#ddhd .ddhd__chip,#ddhd .ddhd__more')].filter((e) => e.offsetParent && parseFloat(getComputedStyle(e).fontSize) < 15).length;
+    const small = [...document.querySelectorAll('#ddhd .ddhd__more,#ddhd .ddhd__chip,#ddhd .ddhd__tab')].filter((e) => e.offsetParent && e.getBoundingClientRect().height < 47.5).length;
     return { m, t, over, tiny, small };
   });
   ok(g.m === expectCols[name][0] && g.t === expectCols[name][1], `${name}: ${g.m}-col mattresses, ${g.t}-col toppers (want ${expectCols[name]})`);
   ok(!g.over, `${name}: no horizontal overflow`);
-  ok(g.tiny === 0, `${name}: no text under 14px on cards/chips/buttons`);
-  ok(g.small === 0, `${name}: tap targets are at least 44px high`);
+  ok(g.tiny === 0, `${name}: no text under 15px on card names, function lines, chips and buttons`);
+  ok(g.small === 0, `${name}: tap targets are at least 48px high`);
   await ctx.close();
 }
 

@@ -46,6 +46,12 @@ for (const [name, vp] of Object.entries(VIEWPORTS)) {
   await page.waitForFunction(() => [...document.querySelectorAll('.ddhd__dpv-i')].every((i) => i.complete && i.naturalWidth > 0), null, { timeout: 15000 }).catch(() => {});
   await page.waitForTimeout(500);
   await page.locator('.ddhd__panel').screenshot({ path: path.join(out, `${name}-7-botanic-dualplush.png`) });
+  // 8. ambient hover: a card and its button under the pointer (closed state)
+  await page.evaluate(() => { document.querySelector('.ddhd__x') && document.querySelector('.ddhd__x').click(); document.querySelector('.ddhd__g-all') && document.querySelector('.ddhd__g-all').click(); });
+  await page.locator('#ddhd-m-bio .ddhd__more').scrollIntoViewIfNeeded();
+  await page.locator('#ddhd-m-bio .ddhd__more').hover();
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: path.join(out, `${name}-8-hover.png`) });
   console.log(name, JSON.stringify(m), errors.length ? errors : 'no ddhd errors');
   await ctx.close();
 }
