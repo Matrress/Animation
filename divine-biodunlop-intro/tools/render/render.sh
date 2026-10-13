@@ -7,7 +7,7 @@ set -e
 # 2. hero layers (m2/): refs.py (the hero's words lifted off / as a difference layer), geo.py (video -> hero picture placement), plate.py (clean sky behind the model),
 #    grade2.py (colour + luminance curve + shading map fitted to the hero photo)
 # 3. m2/prep3.py 8 118 (clean matte: no specks / holes / rim, lace cup -> skin; writes cache3/) then m2/keyflow.py (finds the clip's real pictures - only every 3rd frame is new -
-#    and the optical flow between them), then  film7.py A  and  film7.py B   (A: the opening turn 8.2 s + 0.5 s; B: the turn again, rolls back 62 % of the path and turns forward, 6.6 s + 0.5 s)
+#    and the optical flow between them), then  film8.py A  and  film8.py B   (A: the opening turn 8.2 s + 0.5 s; B: the turn again, rolls back 62 % of the path and turns forward, 6.6 s + 0.5 s)
 #    -> PNG frames at 1280x988. A plain rotation: no settling, no extra shoulder / blade / back movements, no ticking.
 # 4. pour frames:  ffmpeg -ss 5.9 -i <video B> -vf "crop=1477:985:221:0,scale=768:512:flags=lanczos" -start_number 0 pour/fr/p%03d.png   (crops the caption away)
 #    tapping frames: ffmpeg -ss 1.4 -t 4.3 -i <video B> -vf "fps=30,scale=1280:720:flags=lanczos" -start_number 0 pour/tap720/t%03d.png

@@ -1,9 +1,10 @@
-# Film v7 (0.3.4-dev): + the lace keeps its embroidery (matte, skin-toned) and is left out of the glint removal; the garment's vertical edge is no longer part of the static
+# Film v8 (0.3.5-dev): hair is calmed at the source (prep3.calm_hair), no per-frame hair filtering or grain (it boiled), and the key pictures are blended only where the flow
+# can be trusted (no ghost / smoke at the hair-pillow edge) | v7 (0.3.4-dev): + the lace keeps its embroidery (matte, skin-toned) and is left out of the glint removal; the garment's vertical edge is no longer part of the static
 # 'words' layer (it moves with the body); hair gloss capped harder | v6 (0.3.3-dev): + exact mattress mask (its own cut-out + the shadow below it, always the hero's), hair kept crisp and matte, the last blend into the hero is a MORPH
 # (the film's last pose is slid onto the hero's pixels while it fades, so thin things like the bra strap never show twice) | v5 (0.3.2-dev): + glints and gloss on skin and hair are taken down (no balloon / reflection look) | v4 (0.3.1-dev): film3 + a clean matte (cache3: no specks, no rim, no lace) + the clip's real 10 pictures/s timeline (no ticking). Everything is laid into Hero 1.20.2's own picture (words, mattress, bed and sky stay the hero's), the model
 # is slowed right down and relit from the hero photo. It is a plain, smooth ROTATION: no settling, no extra shoulder / blade / back movements (the owner
 # asked for the earlier look back). The last frame is exactly the hero picture.
-#   usage: film7.py A|B [first last]        A = the opening turn (supine -> side, 9.6 s), B = the turn again (hero pose -> rolls back -> turns forward again)
+#   usage: film8.py A|B [first last]        A = the opening turn (supine -> side, 9.6 s), B = the turn again (hero pose -> rolls back -> turns forward again)
 import numpy as np, cv2, os, sys
 from PIL import Image
 from geo import *
@@ -45,7 +46,10 @@ def interp(lam):
     P0, A0, L0 = src(j); P1, A1, L1 = src(j + 1); f01, f10 = flow('kfw', j), flow('kbw', j)
     Ft0 = -(1 - s) * s * f01 + s * s * f10; Ft1 = (1 - s) ** 2 * f01 - s * (1 - s) * f10
     W0 = np.dstack([P0, A0]); W1 = np.dstack([P1, A1])
-    out = (1 - s) * warp(W0, Ft0) + s * warp(W1, Ft1)
+    c0 = flow('kcf', j) / 255.0; c1 = flow('kcb', j) / 255.0
+    w0 = (1 - s) * (0.04 + warp(c0, Ft0)); w1 = s * (0.04 + warp(c1, Ft1))                       # trusted flow: both pictures; doubtful: mostly the nearer one
+    q = w0 + w1 + 1e-6
+    out = (w0 / q)[..., None] * warp(W0, Ft0) + (w1 / q)[..., None] * warp(W1, Ft1)
     lw = (1 - s) * warp(L0, Ft0) + s * warp(L1, Ft1)
     return out[..., :3], out[..., 3], lw
 # ---------------------------------------------------------------- static layers
@@ -100,8 +104,8 @@ def state(kind, t):
     return lam, wg, wb
 EDGE = (np.clip((1278 - np.arange(1280)) / 40, 0, 1)[None, :] * np.clip((np.arange(720)[:, None] - 2) / 50, 0, 1) ** 1.5).astype(np.float32)
 def tame(G, Fr, Ar, Lw):
-    """skin: small bright glints and the broad shiny highlight are pulled back (edge-preserving medians at about 9 px and 60 px); hair: it stays hair (strands, depth) but
-    its gloss is capped (no bright sheen band that reads as a dome / cap) and the detail the slow-down smoothed out is given back"""
+    """skin: small bright glints and the broad shiny highlight are pulled back (edge-preserving medians at about 9 px and 60 px). Hair is NOT touched here: it was calmed at the
+    source (prep3.calm_hair), because any per-frame filter or grain on hair boils (the owner saw 'bubbling hair')"""
     L = G @ np.array([.299, .587, .114], np.float32); L8 = np.clip(L, 0, 255).astype(np.uint8)
     m1 = cv2.medianBlur(L8, 9).astype(np.float32)
     sm = cv2.resize(L8, (RW // 4, RH // 4), interpolation=cv2.INTER_AREA)
@@ -109,24 +113,9 @@ def tame(G, Fr, Ar, Lw):
     ex = 0.80 * np.maximum(L - m1 - 3, 0) + 0.70 * np.maximum(L - np.maximum(m2, m1) - 5, 0)
     ex = cv2.GaussianBlur(ex, (0, 0), 1.0)
     R, Gc, B = Fr[..., 0], Fr[..., 1], Fr[..., 2]; ls = (R + Gc + B) / 3; ch = (R - B) / (R + Gc + B + 1)
-    dark = (ls < 80) & (Ar > 0.5)
-    reg = cv2.morphologyEx(dark.astype(np.uint8), cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (41, 41)))      # the whole hair, the bright sheen arcs inside it too
-    reg = cv2.morphologyEx(reg, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8)) * (Ar > 0.5) * (ch < 0.15)                        # not the ear or the skin next to the hair
-    hair = cv2.GaussianBlur(reg.astype(np.float32), (0, 0), 2.0)
-    skin = np.clip((ch - 0.08) / 0.06, 0, 1) * (1 - hair) * (1 - np.clip(Lw * 1.6, 0, 1))            # not on the lace: its embroidery stays
+    skin = np.clip((ch - 0.08) / 0.06, 0, 1) * np.clip((ls - 85) / 25, 0, 1) * (1 - np.clip(Lw * 1.6, 0, 1))      # skin only (not hair, not the lace: its embroidery stays)
     skin = cv2.GaussianBlur(skin, (0, 0), 2.0)
-    L1 = L - ex * skin
-    # hair: cap the gloss at a little above its own dark level, then restore fine detail
-    dk = dark.astype(np.float32)
-    base = cv2.GaussianBlur(L * dk, (0, 0), 25) / np.maximum(cv2.GaussianBlur(dk, (0, 0), 25), 1e-3)              # the hair's own dark level
-    cap = base + 10
-    Lh = np.minimum(L, cap + 0.10 * np.maximum(L - cap, 0))
-    fine = Lh - cv2.GaussianBlur(Lh, (0, 0), 1.3)
-    Lh = Lh + 0.95 * fine
-    rng = np.random.default_rng(int(L.sum()) % 99991)
-    Lh = Lh + hair * cv2.GaussianBlur(rng.normal(0, 1, L.shape).astype(np.float32), (0, 0), 0.8) * 7.0                     # a fine grain of hair, so a smooth sleek area never reads as a cap
-    L2 = L1 * (1 - hair) + Lh * hair
-    return G * (np.maximum(L2, 1) / np.maximum(L, 1))[..., None]
+    return G * (np.maximum(L - ex * skin, 1) / np.maximum(L, 1))[..., None]
 def compose(kind, k, wb_off=True):
     t = k / FPS; lam, wg, wb = state(kind, t)
     P, A, Lw = interp(lam)
@@ -169,7 +158,7 @@ def frame(kind, k):
 if __name__ == '__main__':
     kind = sys.argv[1]; Tt, Ts, n = timeline(kind)
     a, b = (int(sys.argv[2]), int(sys.argv[3])) if len(sys.argv) > 3 else (0, n)
-    os.makedirs(f'o7_{kind}', exist_ok=True)
+    os.makedirs(f'o8_{kind}', exist_ok=True)
     for k in range(a, min(b, n)):
-        Image.fromarray(frame(kind, k)).save(f'o7_{kind}/f{k:04d}.png', compress_level=1)
+        Image.fromarray(frame(kind, k)).save(f'o8_{kind}/f{k:04d}.png', compress_level=1)
     print('frames', n)

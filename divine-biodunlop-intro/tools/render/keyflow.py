@@ -19,6 +19,12 @@ for j in spikes:
     g0, g1 = g(P0, A0), g(P1, A1)
     fw = dis.calc(g0, g1, None); bw = dis.calc(g1, g0, None)
     np.save(f'cache3/kfw{j:03d}.npy', fw.astype(np.float16)); np.save(f'cache3/kbw{j:03d}.npy', bw.astype(np.float16))
+    # where the two flows agree (forward then back returns to the start) the flow can be trusted; elsewhere (hair against the pillow, thin straps) the nearer picture is used on its own
+    gy, gx = np.mgrid[0:fw.shape[0], 0:fw.shape[1]].astype(np.float32)
+    def conf(a, b):
+        wb_ = cv2.remap(b, gx + a[..., 0], gy + a[..., 1], cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        c = np.linalg.norm(a + wb_, axis=-1); return np.exp(-(c / 1.2) ** 2)
+    np.save(f'cache3/kcf{j:03d}.npy', (conf(fw, bw) * 255).astype(np.uint8)); np.save(f'cache3/kcb{j:03d}.npy', (conf(bw, fw) * 255).astype(np.uint8))
     m = A0 > 0.5; lens.append(float(np.linalg.norm(fw[m], axis=-1).mean()))
 json.dump({'spikes': spikes, 'len': lens}, open('cache3/keys.json', 'w'))
 print(np.round(lens, 1).tolist())

@@ -53,6 +53,16 @@ def de_lace(F, A, ylim=340):
     lace = sk[None, None, :] * (Lt / sL)[..., None] + (0.95 * pattern)[..., None]
     soft = cv2.GaussianBlur(lm.astype(np.float32), (0, 0), 4)[..., None]
     return F * (1 - soft) + np.clip(lace, 0, 255) * soft, lm
+def calm_hair(F, A):
+    """the hair is glossy and sleek: its bright sheen arcs read as a dome / cap / balloon once the picture is slowed down and graded. Done here, on each source picture, with one fixed
+    per-pixel curve (no spatial filter, no noise), so it is stable in time and moves with the picture when the film is made: bright hair is pulled to a fraction above its dark level"""
+    ls = F.mean(-1); ch = (F[..., 0] - F[..., 2]) / (F.sum(-1) + 1)
+    dark = ((ls < 85) & (A > 0.5)).astype(np.uint8)
+    reg = cv2.morphologyEx(dark, cv2.MORPH_CLOSE, EL(41)) * (A > 0.5).astype(np.uint8) * (ch < 0.15).astype(np.uint8)
+    w = cv2.GaussianBlur(reg.astype(np.float32), (0, 0), 6.0)
+    Lc = np.where(ls < 52, ls, 52 + (ls - 52) * 0.38)
+    k = Lc / np.maximum(ls, 1.0)
+    return F * (1 + (k - 1) * w)[..., None]
 def load(i):
     a = np.array(Image.open(f'../vid/Am/a{i:03d}.png'), np.float32)
     F, A = a[..., :3], a[..., 3] / 255
@@ -60,6 +70,7 @@ def load(i):
     F2 = pushpull(F, A)
     lm = np.zeros(A.shape, np.uint8)
     if i < 80: F2, lm = de_lace(F2, A, 440 if i < 45 else 340)
+    F2 = calm_hair(F2, A)
     return F2, A, lm
 if __name__ == '__main__':
     for i in range(int(sys.argv[1]), int(sys.argv[2])):
