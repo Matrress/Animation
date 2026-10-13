@@ -1,3 +1,5 @@
+> **0.4.0-dev (14 Oct): the turning films were withdrawn.** Only the sourcing loop (`ddb-latex.*`, requested when its card first opens) remains; statements below about the opening/turn films and posters describe 0.1–0.3.6 and no longer apply. The intro now downloads nothing on page load (two small files, no media).
+
 # BioDunlop intro – Google visibility and performance
 
 ## What Google can rely on

@@ -1,44 +1,22 @@
-# Divine DunlopDreams – BioDunlop intro (0.3.6-dev)
+# Divine DunlopDreams – BioDunlop intro (0.4.0-dev)
 
 Development prototype. **Not deployed, not in the production embed.** Hero 1.20.2 (`divine-hero/release/1.20.2/`, commit `f727e88`) is not modified by anything in this folder.
 
-The story is split in two (owner's briefs of 13 Oct; 0.3.6-dev = the seventh round of corrections, same day):
+**0.4.0-dev (14 Oct): the body turn is gone.** The owner withdrew it after the seventh round of failed renders (smeared, "deconstructed" hair). Everything else from the earlier rounds stays; nothing is rendered or turned any more. The model is the hero picture, still.
 
-* **Three film sizes:** 1640 (iPads and large screens, the hero picture's own width), 1280, 960 (smaller windows). The browser picks by the window's pixel width and downloads one.
-* **The end of every turn is a slow dissolve** (1.4 s opening, 1.5 s turn again): the last frame of the film is the hero picture and it flows into the live hero (light and colour), the points come out under it. The films are tagged BT.709 (matrix and tags) so Safari and Chrome show the same colours as the live picture.
-* **The head is the hero photo's own and never moves (0.3.6):** after repeated 'bubbling / smeared hair' reports, the hair, ear and crown (and the pillow edge round them) are taken from the hero picture in every frame of both films (`tools/render/headmask.py`, `film9.py`); only the neck, shoulder and the face's turn-away come from the film, blended at a soft seam. The price: the head itself does not rotate, and at the very first frame the film's face-up pose meets the hero's hair.
-* **The model** turns slowly in the hero picture itself, three ways: **every time the page loads or is reloaded** (hotspots appear only after the body has turned), at the moment the **Spinal Alignment** point is used (the old spinal animation starts only after the body is still), and from a hidden spot on the wordmark. It is a plain, smooth rotation: no settling, no extra shoulder / blade / back movements (0.2.0's "natural movement" corrections were taken out).
-* **Natural sourcing** lives in the **Original Dunlop Technology** card: a rounded video window opens beside the card, loops while the card is open and stops when it closes. The loop (8.9 s) is the **supplied footage** only, nothing drawn: the tapped tree, the latex running and the cup filling, then the mixture **poured** (the supplied pouring footage, slowed), then it starts again.
+* **Page load (every load and reload; `ONCE=1` in the gate = first load of a browser session only):** the model (the hero picture) is shown first, still. The points, the hint and the wordmark lockup wait (`html[data-ddb=pending]`, hidden; the Shop buttons stay), a beat (0.45 s) after the picture has loaded they come out of the model one after another (1.25 s each, 0.12 s apart, growing from the point with a soft blur) and then pulse as in the hero. If the picture is slow, they are released after at most 2.5 s; if the intro files fail, the gate's own timer (3.6 s) releases them.
+* **Spinal Alignment point, wordmark:** nothing of ours; the hero's own behaviour (the vertebra animation and words start at once; the wordmark does nothing).
+* **Natural sourcing** lives in the **Original Dunlop Technology** card: a rounded video window opens beside the card, loops while the card is open and stops when it closes. The loop (8.9 s) is the **supplied footage** only: the tapped tree, the latex running and the cup filling, then the mixture **poured**, then it starts again. The blue band shows `Naturally Sourced · Custom-Made Sleep Systems`.
 
 | | |
 |---|---|
 | Namespace | `.ddb` + `html[data-ddb-*]` state attributes; it never edits `.ddh` files |
-| Devices | laptops, monitors, tablets (window ≥ 701 × 501). Not on phones |
-| Opening turn | 8.7 s (8.2 s turn, the last 1.6 s of it blending into the hero's own pixels, + 0.5 s still), on every load of the page (`ONCE=1` in the gate = once per browser session). No Skip button (Escape still ends it) |
-| Turn again | 7.1 s (the body rolls back about 60 %, then turns forward again), starts the moment the point is used; 0.6 s guard (8 s for the wordmark) |
-| Weight | intro.css 5 KB + intro.js 9 KB (minified, before compression). Films: opening 0.8 MB (1640) / 0.51 MB (1280) / 0.28 MB (960), turn again 0.6 / 0.4 / 0.22 MB (fetched while the opening plays), sourcing loop 0.27 MB (+ 22 KB poster; only when its card is first opened). WebM fallbacks are about the same. One file per kind per visit |
+| Devices | laptops, monitors, tablets (window ≥ 701 × 501). Not on phones; reduced motion / Data Saver / 2G–3G: the hero as it is, points at once |
+| Weight | intro.css 3.4 KB + intro.js 5.4 KB (minified, before compression); the sourcing loop 0.27 MB (+ 22 KB poster), requested only when its card is first opened |
 
-## The state controller (intro.js)
+## The controller (intro.js)
 
-One object decides everything: `phase` is `off` (nothing allowed: phones, reduced motion, Data Saver, 2G/3G), `opening`, `idle` or `turn`. Every trigger asks it first.
-
-| It prevents | How |
-|---|---|
-| overlapping body turns | `turn()` only starts from `idle`; `turn` ends only by the film's `ended` (or a 14 s safety) |
-| rapid re-triggering | guard after every turn: 0.6 s (Spinal Alignment), 8 s (wordmark) |
-| the Spinal Alignment film not there yet | it is requested as soon as the opening plays; a press that comes first waits up to 0.9 s for it, then the hero simply works |
-| hotspots before the first turn has settled | during `opening` the hotspots are hidden **and** `inert`; they light up in the hand-over |
-| hotspots taking over during a turn | during every body movement (the opening, the Spinal Alignment point, the wordmark) all the points, the hint and the LATEX note fade away and `.ddh__points` is `inert`; the Shop buttons and the page stay and work. When the body is still they come out one after another (1.25 s each, 0.12 s apart) |
-| Spinal Alignment starting before the body is still | `html[data-ddb-hold]` keeps the hero's own back screen `display:none` until the film ends; then the old vertebra animation and labels start in their established order |
-| the wordmark interrupting a card | it is ignored while a hero state (card) is open or the video window is shown, and during any turn |
-| the video playing unseen | on close / another hotspot / hidden tab: `pause()` + rewind to 0 |
-| reduced motion | `phase` stays `off`: no turn, final state and hotspots at once; the card shows the poster only (no video) |
-
-`DDBIntro.phase` exposes the phase for tests.
-
-## The wordmark (hidden)
-
-No element lies over it (so nothing it covers is blocked and its clicks are untouched): a `pointermove` on the picture checks whether the mouse is inside the wordmark's box (35–65 % × 26–36 % of the picture). A mouse resting there for about 0.8 s turns the body; a brief crossing does nothing; moving out cancels. Not on touch (no safe, non-conflicting touch behaviour exists).
+`DDBIntro.phase`: `off` (nothing allowed), `reveal` (the model is shown, the points wait), `idle`. The video window is tied to the hero's own state attribute (`data-ddh-state=zones`): it starts when the card opens and pauses + rewinds on close / another hotspot / hidden tab. Reduced motion: the card shows the poster only.
 
 ## The sourcing video
 
@@ -54,12 +32,12 @@ No element lies over it (so nothing it covers is blocked and its clicks are unto
 divine-biodunlop-intro/
   README.md  STORYBOARD.md  SEO-PERFORMANCE.md
   src/intro.js | intro.css | gate.html         sources (gate = inline "may it play?" script)
-  assets/                                        ddb-turn-*, ddb-again-* (1280/960, .mp4 + .webm), ddb-poster-*, ddb-latex.mp4/.webm/-poster.webp
-  release/0.3.0-dev/                             minified CSS/JS + assets; release/0.1.0-dev and 0.2.0-dev are earlier prototypes, kept for their pinned commits
+  assets/                                        ddb-latex.mp4/.webm/-poster.webp (the sourcing loop)
+  release/0.4.0-dev/                             minified CSS/JS + assets; earlier releases (0.1–0.3.x, with the body turn) are kept only for their pinned commits
   candidate/section-1.21.0-dev-jsdelivr.html     integration candidate: the 1.20.2 section + the additions
   preview/intro.html                             local preview in the Instant Site imitation
-  tests/intro.mjs (83 checks)  tests/candidate.mjs (the pasted candidate, delivered four ways)
-  tools/build.mjs  tools/serve.py  tools/render/ the scripts that made the films
+  tests/intro.mjs  tests/candidate.mjs (the pasted candidate, delivered four ways)
+  tools/build.mjs  tools/serve.py  tools/render/ the scripts that made the (now retired) turning films and the sourcing loop
   seo/videoobject.draft.json
 ```
 
@@ -68,13 +46,13 @@ divine-biodunlop-intro/
 ```sh
 cd divine-biodunlop-intro
 python3 tools/serve.py 8766 &
-open http://127.0.0.1:8766/divine-biodunlop-intro/preview/intro.html     # the opening plays on every load; ?ddb=2 skips it (turns still work)
+open http://127.0.0.1:8766/divine-biodunlop-intro/preview/intro.html     # the points come out of the still model on every load; ?ddb=2 shows them at once
 node tests/intro.mjs && node tests/candidate.mjs
 ```
 
 ## Integrating (when approved)
 
-`candidate/section-1.21.0-dev-jsdelivr.html` is the unchanged 1.20.2 section plus: the gate `<script>` before `<section class="ddh">`; `intro.css` / `intro.js` after the hero's own; `<div class="ddb">`, `<div class="ddb-lx">` and the crawlable line at the end of `.ddh__plane`; and `<script>window.DDBIntro&&DDBIntro.boot()</script>` after the hero's boot. Pin the intro files to a commit (`JSDELIVR_REF=<sha> node tools/build.mjs`). About 1.7 KB is added to the pasted section.
+`candidate/section-1.21.0-dev-jsdelivr.html` is the unchanged 1.20.2 section plus: the gate `<script>` before `<section class="ddh">`; `intro.css` / `intro.js` after the hero's own; `<div class="ddb-lx">` and the crawlable line at the end of `.ddh__plane`; and `<script>window.DDBIntro&&DDBIntro.boot()</script>` after the hero's boot. Pin the intro files to a commit (`JSDELIVR_REF=<sha> node tools/build.mjs`). About 1.7 KB is added to the pasted section.
 
 ## If you do not see something
 

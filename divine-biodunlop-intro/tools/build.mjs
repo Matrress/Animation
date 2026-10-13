@@ -2,7 +2,7 @@
 // copy of the stable Hero 1.20.2 jsDelivr section with the intro additions inserted) and a local preview page.
 // usage: node tools/build.mjs            (JSDELIVR_REF=<sha> to pin the candidate's intro files to a commit)
 import fs from 'node:fs'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
-const VER = '0.3.6-dev', HERO = '1.20.2';
+const VER = '0.4.0-dev', HERO = '1.20.2';
 const here = path.dirname(new URL(import.meta.url).pathname), mod = path.join(here, '..'), repo = path.join(mod, '..');
 const rel = path.join(mod, 'release', VER);
 fs.mkdirSync(path.join(rel, 'assets'), { recursive: true });
@@ -22,7 +22,7 @@ function candidate(src, introBase) {
   s = s.replace('<section class="ddh"', gate + '\n<section class="ddh"');
   s = s.replace('<script>window.DDHero&&DDHero.boot()</script>', '<script>window.DDHero&&DDHero.boot()</script>\n<script>window.DDBIntro&&DDBIntro.boot()</script>');
   const last = s.match(/<p class="ddh__sr">European production[^\n]*<\/p>\n/)[0];
-  s = s.replace(last, last + `<div class="ddb" aria-hidden="true"></div>\n<div class="ddb-lx" aria-hidden="true"></div>\n<p class="ddb-line">${LINE}</p>\n`);
+  s = s.replace(last, last + `<div class="ddb-lx" aria-hidden="true"></div>\n<p class="ddb-line">${LINE}</p>\n`);
   s = s.replace(/^<!-- Divine DunlopDreams Hero [^|]*\|/, `<!-- Divine DunlopDreams Hero ${HERO} + BioDunlop intro ${VER} (development candidate 1.21.0-dev, NOT for production) |`);
   return s;
 }

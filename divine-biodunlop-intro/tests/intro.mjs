@@ -7,11 +7,10 @@ const st = (p) => p.evaluate(() => document.documentElement.getAttribute('data-d
 async function page(opts = {}, init) {
   const ctx = await b.newContext({ viewport: opts.vp || { width: 1440, height: 900 }, reducedMotion: opts.rm ? 'reduce' : 'no-preference', hasTouch: !!opts.touch, isMobile: !!opts.mobile });
   const pg = await ctx.newPage(); const media = [];
-  pg.on('request', (r) => /ddb-(turn|again|latex|poster)/.test(r.url()) && media.push(r.url()));
+  pg.on('request', (r) => /ddb-/.test(r.url()) && media.push(r.url()));
   if (init) await pg.addInitScript(init);
-  if (opts.seen) { const g = pg.goto.bind(pg); pg.goto = (u, o) => g(u + (u.includes('?') ? '&' : '?') + 'ddb=2', o); }      // ?ddb=2: the opening is skipped, the turns still work
-  await pg.addInitScript(() => { window.__cls = 0; window.__ddbShift = 0; window.__lcp = []; new PerformanceObserver((l) => l.getEntries().forEach((e) => { if (!e.hadRecentInput) window.__cls += e.value; if ((e.sources || []).some((x) => x.node && x.node.closest && x.node.closest('.ddb,.ddb-line,.ddb-skip,.ddb-lx'))) window.__ddbShift += e.value; })).observe({ type: 'layout-shift', buffered: true }); new PerformanceObserver((l) => l.getEntries().forEach((e) => window.__lcp.push([Math.round(e.startTime), e.element && (e.element.className || e.element.tagName), e.size]))).observe({ type: 'largest-contentful-paint', buffered: true }); });
-  if (opts.route) await ctx.route(/ddb-turn-.*\.(mp4|webm)/, opts.route);
+  if (opts.seen) { const g = pg.goto.bind(pg); pg.goto = (u, o) => g(u + (u.includes('?') ? '&' : '?') + 'ddb=2', o); }      // ?ddb=2: no waiting, the points are there at once
+  await pg.addInitScript(() => { window.__cls = 0; window.__ddbShift = 0; window.__lcp = []; new PerformanceObserver((l) => l.getEntries().forEach((e) => { if (!e.hadRecentInput) window.__cls += e.value; if ((e.sources || []).some((x) => x.node && x.node.closest && x.node.closest('.ddb-line,.ddb-lx'))) window.__ddbShift += e.value; })).observe({ type: 'layout-shift', buffered: true }); new PerformanceObserver((l) => l.getEntries().forEach((e) => window.__lcp.push([Math.round(e.startTime), e.element && (e.element.className || e.element.tagName), e.size]))).observe({ type: 'largest-contentful-paint', buffered: true }); });
   return { ctx, pg, media };
 }
 const box = (p, sel) => p.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return [r.left, r.top, r.width, r.height].map(Math.round); }, sel);
@@ -19,126 +18,53 @@ const centre = async (p, sel) => { const c = await box(p, sel); return [c[0] + c
 const hstate = (p) => p.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-state'));
 const phase = (p) => p.evaluate(() => window.DDBIntro && window.DDBIntro.phase);
 const ptsVisible = (p) => p.evaluate(() => getComputedStyle(document.querySelector('.ddh__points')).visibility === 'visible' && getComputedStyle(document.querySelector('.ddh__point')).opacity !== '0');
-async function settled(p) {            // idle, with the "turn again" film ready
-  await p.waitForFunction(() => window.DDBIntro && window.DDBIntro.phase === 'idle', null, { timeout: 20000 });
-  await p.waitForFunction(() => { const v = document.querySelector('.ddb video[data-role=again]'); return v && v.readyState >= 3; }, null, { timeout: 20000 });
-}
+async function settled(p) { await p.waitForFunction(() => window.DDBIntro && window.DDBIntro.phase === 'idle', null, { timeout: 20000 }); }
 
-{ // 1. desktop: the clean hero, the body turns slowly, THEN the hotspots appear
+{ // 1. desktop: the model is shown still, then the points come out of it one after another and pulse
   const { ctx, pg, media } = await page();
-  await pg.goto(URL); await pg.waitForTimeout(500);
-  ok(await st(pg) === 'play' && await phase(pg) === 'opening', 'desktop: the opening turn plays on the first visit (' + await st(pg) + '/' + await phase(pg) + ')');
-  ok(JSON.stringify(await box(pg, '.ddb')) === JSON.stringify(await box(pg, '.ddh__img')), 'desktop: the stage lies exactly on the hero picture');
-  ok(!(await ptsVisible(pg)), 'desktop: no hotspot is shown while the body moves');
-  ok(await pg.evaluate(() => document.querySelector('.ddh__points').hasAttribute('inert')), 'desktop: the hotspots are inert (no pointer, no keyboard) during the first movement');
-  const fc = await centre(pg, '[data-ddh-point="firmness"]'); await pg.mouse.move(fc[0], fc[1]); await pg.waitForTimeout(250);
-  ok(await hstate(pg) === null, 'desktop: moving over a hotspot position does nothing during the movement');
-  ok(await pg.evaluate(() => [...document.querySelectorAll('.ddh__cta')].every((a) => { const r = a.getBoundingClientRect(), e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return a.contains(e); })), 'desktop: both Shop buttons stay visible and clickable during the movement');
+  await pg.goto(URL, { waitUntil: 'domcontentloaded' }); await pg.waitForFunction(() => document.querySelector('.ddh__img'), null, { timeout: 5000 });
+  ok(await st(pg) === 'pending' && await phase(pg) === 'reveal' || await st(pg) === 'pending', 'desktop: on load the points wait (' + await st(pg) + '/' + await phase(pg) + ')');
+  ok(!(await ptsVisible(pg)) && await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__sky-lockup')).visibility === 'hidden'), 'desktop: no point, no hint, no wordmark note while the model is first shown');
+  ok(await pg.evaluate(() => [...document.querySelectorAll('.ddh__cta')].every((a) => { const r = a.getBoundingClientRect(), e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return a.contains(e); })), 'desktop: both Shop buttons stay visible and clickable');
   ok(await pg.evaluate(() => document.querySelectorAll('h1').length) === 1, 'desktop: still exactly one H1');
-  ok(!(await pg.$('.ddb-skip')) && !(await pg.$('button[class*=skip]')), 'desktop: there is no Skip button');
-  ok(media.some((u) => /ddb-turn-1280\.(mp4|webm)/.test(u)), 'desktop: the 1280 film is chosen');
-  await pg.waitForFunction(() => { const v = document.querySelector('.ddb video'); return v && v.currentTime > 3; }, null, { timeout: 15000 });
-  ok(!(await ptsVisible(pg)), 'desktop: still no hotspots 3 s into the movement');
-  await pg.waitForFunction(() => document.documentElement.getAttribute('data-ddb') === 'out', null, { timeout: 20000 });
-  ok(await pg.evaluate(() => /^1\.4s/.test(getComputedStyle(document.querySelector('.ddb')).transitionDuration)), 'desktop: the last frame dissolves slowly (1.4 s) into the live hero, no snap');
-  await pg.waitForFunction(() => !document.documentElement.hasAttribute('data-ddb'), null, { timeout: 20000 });
-  ok(!(await pg.$('.ddb video[data-on]')), 'desktop: after the movement the first film is gone');
-  await pg.waitForTimeout(900);
-  ok(await ptsVisible(pg) && !(await pg.evaluate(() => document.querySelector('.ddh__points').hasAttribute('inert'))), 'desktop: the body is still: the hotspots are shown and active');
-  await pg.waitForTimeout(2200);
-  await pg.mouse.move(5, 5); await pg.waitForTimeout(700);
+  ok(!(await pg.$('.ddb video')) && !(await pg.$('.ddb')) && !(await pg.$('.ddb-skip')), 'desktop: no film, no stage, no Skip button');
+  await pg.waitForFunction(() => document.documentElement.hasAttribute('data-ddb-lit'), null, { timeout: 6000 });
+  ok(await st(pg) === null && await phase(pg) === 'idle', 'desktop: the points are released (' + await st(pg) + '/' + await phase(pg) + ')');
+  await pg.waitForTimeout(100);
+  const grow = await pg.evaluate(() => [...document.querySelectorAll('.ddh__points .ddh__point')].slice(0, 4).map((p) => { const a = p.getAnimations().find((x) => x.animationName === 'ddb-lit'); return a ? Math.round(a.effect.getComputedTiming().delay) : -1; }));
+  ok(grow.every((x) => x >= 0) && grow[1] > grow[0] && grow[3] > grow[2], 'desktop: the points grow out one after another (delays ' + grow + ' ms)');
+  await pg.waitForTimeout(3300);
   const anim = await pg.evaluate(() => { const b = document.querySelector('.ddh__point'); return [getComputedStyle(b, '::after').animationName, getComputedStyle(b, '::after').animationPlayState]; });
-  ok(anim[0] === 'ddh-point-beat' && anim[1] === 'running', 'desktop: the hotspots pulse as always ' + anim);
+  ok(anim[0] === 'ddh-point-beat' && anim[1] === 'running', 'desktop: the points pulse as always ' + anim);
   const c = await centre(pg, '[data-ddh-point="firmness"]'); await pg.mouse.move(c[0], c[1]); await pg.waitForTimeout(350);
-  ok(await hstate(pg) === 'firmness', 'desktop: the hero is interactive right after (' + await hstate(pg) + ')');
-  ok(await pg.evaluate(() => window.__ddbShift) === 0, 'desktop: the intro causes no layout shift (page CLS ' + (await pg.evaluate(() => window.__cls)).toFixed(4) + ', the same as Hero 1.20.2 alone)');
-  console.log('  LCP entries', JSON.stringify(await pg.evaluate(() => window.__lcp)));
-  await pg.reload(); await pg.waitForTimeout(400);
-  ok(await st(pg) === 'play' && await phase(pg) === 'opening' && !(await ptsVisible(pg)), 'a reload of the page plays the opening again, without hotspots (' + await st(pg) + ')');
+  ok(await hstate(pg) === 'firmness', 'desktop: the hero is interactive (' + await hstate(pg) + ')');
+  ok(!media.some((u) => /ddb-(turn|again|poster)/.test(u)), 'desktop: no turning film is requested (' + media.length + ' ddb files)');
+  ok(await pg.evaluate(() => window.__ddbShift) === 0, 'desktop: no layout shift from the intro (page CLS ' + (await pg.evaluate(() => window.__cls)).toFixed(4) + ')');
+  await pg.reload({ waitUntil: 'domcontentloaded' }); await pg.waitForTimeout(150);
+  ok(await st(pg) === 'pending' && !(await ptsVisible(pg)), 'a reload shows the model first, points waiting again (' + await st(pg) + ')');
   await pg.goto(URL + '?ddb=2'); await pg.waitForTimeout(500);
-  ok(await st(pg) === null && await ptsVisible(pg), '?ddb=2: no opening, the hotspots are there at once');
+  ok(await st(pg) === null && await ptsVisible(pg), '?ddb=2: the points are there at once');
   await ctx.close();
 }
-{ // 2. no Skip button; Escape still ends the opening (keyboard users)
-  const p2 = await page(); await p2.pg.goto(URL); await p2.pg.waitForTimeout(1500); await p2.pg.keyboard.press('Escape'); await p2.pg.waitForTimeout(1200);
-  ok(await st(p2.pg) === null && await ptsVisible(p2.pg), 'Escape ends the opening'); await p2.ctx.close();
-}
-{ // 3. reduced motion, phone, Data Saver, 3G: no body movement; the final state and the hotspots at once
+{ // 2. reduced motion, phone, Data Saver, 3G: nothing waits; the points are there at once
   for (const [name, opts, init, pts] of [['reduced motion', { rm: true }, null, true], ['phone 390x844', { vp: { width: 390, height: 844 }, touch: true, mobile: true }, null, false], ['Data Saver', {}, () => Object.defineProperty(navigator, 'connection', { value: { saveData: true, effectiveType: '4g' } }), true], ['3g', {}, () => Object.defineProperty(navigator, 'connection', { value: { saveData: false, effectiveType: '3g' } }), true]]) {
-    const { ctx, pg, media } = await page(opts, init); await pg.goto(URL); await pg.waitForTimeout(1300);
-    ok(await st(pg) === null && !media.some((u) => /ddb-(turn|again)/.test(u)), `${name}: no body movement, no film downloaded (${media.length})`);
-    if (pts) ok(await ptsVisible(pg), `${name}: the hotspots are there immediately`);
+    const { ctx, pg, media } = await page(opts, init); await pg.goto(URL); await pg.waitForTimeout(900);
+    ok(await st(pg) === null && !media.length, `${name}: nothing waits, no media downloaded (${media.length})`);
+    if (pts) ok(await ptsVisible(pg), `${name}: the points are there immediately`);
     await ctx.close();
   }
 }
-{ // 4. failure and slowness: never an empty stage
-  const { ctx, pg } = await page({ route: (r) => r.fulfill({ status: 404, body: '' }) }); await pg.goto(URL); await pg.waitForTimeout(1800);
-  ok(await st(pg) === null && await ptsVisible(pg), 'missing film: the hero and its hotspots appear at once'); await ctx.close();
-  const s = await page({ route: () => {} }); await s.pg.goto(URL, { waitUntil: 'domcontentloaded' }); await s.pg.waitForTimeout(2000);
-  ok(await st(s.pg) === 'play', 'stalled film: the poster holds for a moment'); await s.pg.waitForTimeout(2800);
-  ok(await st(s.pg) === null, 'stalled film: after 4 s the hero appears'); await s.ctx.close();
-}
-{ // 5. tablet: the lighter 960 film, same alignment
-  const { ctx, pg, media } = await page({ vp: { width: 1024, height: 768 }, touch: true }); await pg.goto(URL); await pg.waitForTimeout(800);
-  ok(await st(pg) === 'play' && media.some((u) => /ddb-turn-960\.(mp4|webm)/.test(u)), 'tablet 1024x768: plays the 960 film');
-  ok(JSON.stringify(await box(pg, '.ddb')) === JSON.stringify(await box(pg, '.ddh__img')), 'tablet: the stage lies exactly on the hero picture');
-  await ctx.close();
-}
-{ // 5b. iPad Pro (1366 x 1024 at 2x): the sharpest film
-  const ctx = await b.newContext({ viewport: { width: 1366, height: 1024 }, deviceScaleFactor: 2, hasTouch: true }); const pg = await ctx.newPage(); const media = [];
-  pg.on('request', (r) => /ddb-(turn|again)/.test(r.url()) && media.push(r.url()));
-  await pg.goto(URL); await pg.waitForTimeout(1500);
-  ok(media.some((u) => /ddb-turn-1640\.(mp4|webm)/.test(u)) && !media.some((u) => /ddb-turn-(1280|960)/.test(u)), 'iPad 2x: the 1640 film is chosen (' + media.map((u) => u.split('/').pop()).join(',') + ')');
-  await ctx.close();
-}
-{ // 6. Spinal Alignment: the body turns the moment the point is used, hotspots suspended, THEN the old animation starts
-  const { ctx, pg } = await page({ seen: true });
+{ // 3. nothing turns: the Spinal Alignment point is the hero's own screen at once; the wordmark does nothing
+  const { ctx, pg, media } = await page({ seen: true });
   await pg.goto(URL); await settled(pg);
-  ok(await st(pg) === null && await ptsVisible(pg), 'spinal: the hotspots are there (the opening was seen)');
-  const bc = await centre(pg, '[data-ddh-point="back"]'); await pg.mouse.move(bc[0], bc[1]); await pg.waitForTimeout(350);
-  ok(await phase(pg) === 'turn' && await hstate(pg) === 'back', 'spinal: the body movement starts (' + await phase(pg) + '/' + await hstate(pg) + ')');
-  ok(await pg.evaluate(() => { const v = document.querySelector('.ddb video[data-role=again]'); return !v.paused && v.currentTime > 0.1 && v.currentTime < 1.2; }), 'spinal: the film is already running 0.35 s after the touch (' + await pg.evaluate(() => document.querySelector('.ddb video[data-role=again]').currentTime.toFixed(2)) + ' s)');
-  ok(await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__screen--back')).display) === 'none', 'spinal: the Spinal Alignment screen waits while the body moves');
-  ok(await pg.evaluate(() => document.querySelector('.ddh__points').hasAttribute('inert')), 'spinal: the other hotspots are suspended');
-  await pg.waitForTimeout(700);
-  ok(!(await ptsVisible(pg)) && await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__sky-lockup')).visibility === 'hidden') && await pg.evaluate(() => [...document.querySelectorAll('.ddh__cta')].every((a) => { const r = a.getBoundingClientRect(), e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return a.contains(e); })), 'spinal: while the body turns all the points and notes are gone, the Shop buttons stay');
-  const fc = await centre(pg, '[data-ddh-point="firmness"]'); await pg.mouse.move(fc[0], fc[1]); await pg.waitForTimeout(300);
-  ok(await hstate(pg) === 'back', 'spinal: another hotspot cannot take over during the movement (' + await hstate(pg) + ')');
-  await pg.mouse.move(bc[0], bc[1]);
-  await pg.waitForFunction(() => window.DDBIntro.phase === 'idle', null, { timeout: 15000 });
-  ok(await pg.evaluate(() => document.documentElement.hasAttribute('data-ddb-tend') && /^1\.5s/.test(getComputedStyle(document.querySelector('.ddb')).transitionDuration)), 'spinal: at the end the last frame dissolves slowly (1.5 s) into the live hero');
-  await pg.waitForTimeout(250);
-  ok(await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__screen--back')).display) !== 'none' || await hstate(pg) !== 'back', 'spinal: after the body is still, the old Spinal Alignment screen starts');
-  await pg.waitForTimeout(2800);
-  ok(await ptsVisible(pg) && await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__sky-lockup')).visibility === 'visible'), 'spinal: the points and notes come out again after the body is still');
-  if (await hstate(pg) === 'back') {
-    await pg.waitForTimeout(400);
-    ok(await pg.evaluate(() => [...document.querySelectorAll('.ddh__spine path')].some((p) => getComputedStyle(p).animationName === 'ddh-vert')), 'spinal: the vertebra animation runs after the movement, not over it');
-  }
+  const bc = await centre(pg, '[data-ddh-point="back"]'); await pg.mouse.move(bc[0], bc[1]); await pg.waitForTimeout(400);
+  ok(await hstate(pg) === 'back' && await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__screen--back')).display) !== 'none', 'spinal: the Spinal Alignment screen starts at once (' + await hstate(pg) + ')');
+  ok(await ptsVisible(pg), 'spinal: the other points stay as in the hero');
+  await pg.waitForTimeout(500);
+  ok(await pg.evaluate(() => [...document.querySelectorAll('.ddh__spine path')].some((p) => getComputedStyle(p).animationName === 'ddh-vert')), 'spinal: the vertebra animation runs');
+  const pr = await box(pg, '.ddh__plane'); await pg.mouse.move(5, 5); await pg.waitForTimeout(300); await pg.mouse.move(pr[0] + pr[2] * 0.5, pr[1] + pr[3] * 0.31); await pg.waitForTimeout(1300);
+  ok(!media.some((u) => /ddb-(turn|again)/.test(u)) && !(await pg.$('.ddb video')), 'wordmark: resting on it starts nothing (no film at all)');
   await ctx.close();
-}
-{ // 7. the secret logo: a short crossing does nothing, a rest of ~0.8 s turns the body; never over a card; never on touch; cooldown
-  const { ctx, pg } = await page({ seen: true });
-  await pg.goto(URL); await settled(pg);
-  const pr = await box(pg, '.ddh__plane'), lx = pr[0] + pr[2] * 0.5, ly = pr[1] + pr[3] * 0.31;
-  await pg.mouse.move(lx, ly); await pg.waitForTimeout(300); await pg.mouse.move(5, 5); await pg.waitForTimeout(900);
-  ok(await phase(pg) === 'idle', 'logo: a brief crossing (0.3 s) does nothing');
-  await pg.mouse.move(lx, ly); await pg.waitForTimeout(1200);
-  ok(await phase(pg) === 'turn', 'logo: a rest of about 0.8 s turns the body (' + await phase(pg) + ')');
-  ok(await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__screen--back')).display) === 'none' || true, 'logo: (no label is shown for it)');
-  await pg.waitForFunction(() => window.DDBIntro.phase === 'idle', null, { timeout: 15000 });
-  await pg.mouse.move(5, 5); await pg.waitForTimeout(200); await pg.mouse.move(lx, ly); await pg.waitForTimeout(1300);
-  ok(await phase(pg) === 'idle', 'logo: the cooldown stops an immediate restart');
-  await ctx.close();
-  const q = await page({ seen: true }); await q.pg.goto(URL); await settled(q.pg);       // while a body movement runs, the logo cannot start another or interrupt it
-  const pq = await box(q.pg, '.ddh__plane'), qx = pq[0] + pq[2] * 0.5, qy = pq[1] + pq[3] * 0.31;
-  await q.pg.mouse.move(qx, qy); await q.pg.waitForTimeout(1200);
-  const t1 = await q.pg.evaluate(() => document.querySelector('.ddb video[data-role=again]').currentTime); await q.pg.mouse.move(5, 5); await q.pg.waitForTimeout(150); await q.pg.mouse.move(qx, qy); await q.pg.waitForTimeout(1100);
-  const t2 = await q.pg.evaluate(() => { const v = document.querySelector('.ddb video[data-role=again]'); return v.currentTime; });
-  ok(t2 > t1 || await phase(q.pg) === 'idle', 'logo: it cannot restart a movement that is running (' + t1.toFixed(2) + ' -> ' + t2.toFixed(2) + ')'); await q.ctx.close();
-  const t = await page({ seen: true, touch: true, vp: { width: 1180, height: 820 } }); await t.pg.goto(URL); await t.pg.waitForTimeout(1500);
-  const pr3 = await box(t.pg, '.ddh__plane'); await t.pg.touchscreen.tap(pr3[0] + pr3[2] * 0.5, pr3[1] + pr3[3] * 0.31); await t.pg.waitForTimeout(1300);
-  ok(await phase(t.pg) === 'idle', 'logo: a touch does nothing'); await t.ctx.close();
 }
 { // 8. Original Dunlop Technology: the natural-sourcing video next to the card (wide) or inside it (narrow); stops and rewinds when the card closes
   for (const [vp, mode] of [[{ width: 1440, height: 900 }, 'side'], [{ width: 1024, height: 768 }, 'side'], [{ width: 1180, height: 820 }, 'card'], [{ width: 900, height: 700 }, 'card']]) {
