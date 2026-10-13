@@ -1,9 +1,10 @@
-# Divine DunlopDreams – BioDunlop intro (0.3.2-dev)
+# Divine DunlopDreams – BioDunlop intro (0.3.3-dev)
 
 Development prototype. **Not deployed, not in the production embed.** Hero 1.20.2 (`divine-hero/release/1.20.2/`, commit `f727e88`) is not modified by anything in this folder.
 
-The story is split in two (owner's briefs of 13 Oct; 0.3.2-dev = the third round of corrections, same day):
+The story is split in two (owner's briefs of 13 Oct; 0.3.3-dev = the fourth round of corrections, same day):
 
+* **Three film sizes:** 1640 (iPads and large screens, the hero picture's own width), 1280, 960 (smaller windows). The browser picks by the window's pixel width and downloads one.
 * **The end of every turn is a slow dissolve** (1.4 s opening, 1.5 s turn again): the last frame of the film is the hero picture and it flows into the live hero (light and colour), the points come out under it. The films are tagged BT.709 (matrix and tags) so Safari and Chrome show the same colours as the live picture.
 * **The model** turns slowly in the hero picture itself, three ways: **every time the page loads or is reloaded** (hotspots appear only after the body has turned), at the moment the **Spinal Alignment** point is used (the old spinal animation starts only after the body is still), and from a hidden spot on the wordmark. It is a plain, smooth rotation: no settling, no extra shoulder / blade / back movements (0.2.0's "natural movement" corrections were taken out).
 * **Natural sourcing** lives in the **Original Dunlop Technology** card: a rounded video window opens beside the card, loops while the card is open and stops when it closes. The loop (8.9 s) is the **supplied footage** only, nothing drawn: the tapped tree, the latex running and the cup filling, then the mixture **poured** (the supplied pouring footage, slowed), then it starts again.
@@ -14,7 +15,7 @@ The story is split in two (owner's briefs of 13 Oct; 0.3.2-dev = the third round
 | Devices | laptops, monitors, tablets (window ≥ 701 × 501). Not on phones |
 | Opening turn | 8.7 s (8.2 s turn, the last 1.6 s of it blending into the hero's own pixels, + 0.5 s still), on every load of the page (`ONCE=1` in the gate = once per browser session). No Skip button (Escape still ends it) |
 | Turn again | 7.1 s (the body rolls back about 60 %, then turns forward again), starts the moment the point is used; 0.6 s guard (8 s for the wordmark) |
-| Weight | intro.css 5 KB + intro.js 9 KB (minified, before compression). Films: opening 0.51 MB (1280) / 0.28 MB (960), turn again 0.40 / 0.22 MB (fetched while the opening plays), sourcing loop 0.27 MB (+ 22 KB poster; only when its card is first opened). WebM fallbacks are about the same. One file per kind per visit |
+| Weight | intro.css 5 KB + intro.js 9 KB (minified, before compression). Films: opening 0.8 MB (1640) / 0.51 MB (1280) / 0.28 MB (960), turn again 0.6 / 0.4 / 0.22 MB (fetched while the opening plays), sourcing loop 0.27 MB (+ 22 KB poster; only when its card is first opened). WebM fallbacks are about the same. One file per kind per visit |
 
 ## The state controller (intro.js)
 
@@ -86,4 +87,4 @@ node tests/intro.mjs && node tests/candidate.mjs
 
 ## Replacing the films later
 
-Keep the names and the frame: 1280 × 988 and 960 × 742, 30 fps, H.264 High, `+faststart`, no audio. The first and last frame of `ddb-again-*` must be the hero's pose; the last frame of `ddb-turn-*` too (the dissolve into the live hero is then invisible). The sourcing loop is 768 × 512, 24 fps, 8.9 s, seamless (it dissolves tree → pour → tree).
+Keep the names and the frame: 1640 × 1266, 1280 × 988 and 960 × 742, 30 fps, H.264 High, `+faststart`, no audio. The first and last frame of `ddb-again-*` must be the hero's pose; the last frame of `ddb-turn-*` too (the dissolve into the live hero is then invisible). The sourcing loop is 768 × 512, 24 fps, 8.9 s, seamless (it dissolves tree → pour → tree).

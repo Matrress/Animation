@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams BioDunlop intro 0.3.2-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
+/*! Divine DunlopDreams BioDunlop intro 0.3.3-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
 (function (w, d) {
   'use strict';
   var H = d.documentElement, base = ((d.currentScript && d.currentScript.src) || '').replace(/[^\/]*$/, '');
@@ -21,7 +21,7 @@
     [['.mp4', 'video/mp4; codecs="avc1.640028"'], ['.webm', 'video/webm; codecs="vp9"']].forEach(function (f) { var s = d.createElement('source'); s.src = base + name + f[0]; s.type = f[1]; v.appendChild(s); });
     return v;
   }
-  function size() { return plane.clientWidth * Math.min(w.devicePixelRatio || 1, 2) > 1100 ? '1280' : '960'; }
+  function size() { var px = plane.clientWidth * Math.min(w.devicePixelRatio || 1, 2); return px > 1700 ? '1640' : px > 1100 ? '1280' : '960'; }   // the film is as sharp as the screen needs: iPads and large screens get 1640 (the hero picture's own width)
   function inertPoints(on) {   // hotspots are suspended (pointer and keyboard) while a body movement runs
     if (!pts) return; var had = pts.contains(d.activeElement) && d.activeElement;
     if (on) { pts.setAttribute('inert', ''); } else { pts.removeAttribute('inert'); if (had && had.focus) had.focus({ preventScroll: true }); }
@@ -179,6 +179,6 @@
       var p = v.play(); if (p && p.catch) p.catch(function () {});
     }
   }
-  w.DDBIntro = { boot: boot, version: '0.3.2-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
+  w.DDBIntro = { boot: boot, version: '0.3.3-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
 })(window, document);

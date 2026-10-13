@@ -1,4 +1,4 @@
-# BioDunlop intro – storyboard, timing, light, sources (0.3.2-dev)
+# BioDunlop intro – storyboard, timing, light, sources (0.3.3-dev)
 
 ## What happens (owner's brief and corrections, 13 Oct)
 
@@ -30,6 +30,9 @@
 
 * Every frame of the film was matched to the hero photo: colour (a 3 × 4 transform fitted on the final pose), then a **luminance curve** and a **shading map**, so the shoulders, upper arm, back, neck and the contact with the bed carry the hero's light and shadow, ramped in as the body arrives.
 * The model's cut-out was cleaned (0.3.1): no specks or holes in the matte, a smoothed hair edge, about 5 px of the silhouette re-coloured from the solid interior (a light rim sat there), and the **lace bra** on the shoulder (it read as a glassy patch once graded) turned into the smooth skin-toned shape it is, shading kept.
+* **The Dual Plush mattress (0.3.3):** the film now takes the mattress from the hero's own cut-out (`assets/mattress.webp`, placed exactly as hero.css places it) instead of a rough polygon that cut the lower-left of its base, and the soft shadow under it (the bed in front of it, to about 80 px below) is always the hero's own, so the mattress is whole and its shadow constant in every frame.
+* **The bra strap (0.3.3):** it showed twice near the end because the film's last pose and the hero photo differ by a few pixels and a plain cross-fade shows both. The last blend is now a morph: the film's last pose is slid onto the hero's pixels (dense flow, at most 12 px) while it fades.
+* **Hair (0.3.3):** gloss is capped a little above the hair's own dark level (no sheen band that reads as a dome or a cap), the detail the slow-down smoothed out is given back (sharpening 0.95 on the fine scale) and a fine grain of hair is added.
 * **No balloons, no reflections (0.3.2):** skin and hair carried small bright glints, a glossy sheen on the hair and one broad shiny highlight on the shoulder that read as inflated / plastic once graded. Everything brighter than its own surroundings (edge-preserving medians at about 9 px and 60 px) is pulled back on skin and hair only; the pillow and bed are untouched.
 * No plastic skin: sharpening is mild (0.12), a fine film grain (σ 2.0) is added to the model only and fades out as the hero's own pixels take over.
 * The hero's words and the small mattress picture stay: the mattress lies in front of the bed *and* of the model, the words lie over everything as a difference layer.

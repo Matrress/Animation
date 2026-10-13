@@ -84,6 +84,13 @@ async function settled(p) {            // idle, with the "turn again" film ready
   ok(JSON.stringify(await box(pg, '.ddb')) === JSON.stringify(await box(pg, '.ddh__img')), 'tablet: the stage lies exactly on the hero picture');
   await ctx.close();
 }
+{ // 5b. iPad Pro (1366 x 1024 at 2x): the sharpest film
+  const ctx = await b.newContext({ viewport: { width: 1366, height: 1024 }, deviceScaleFactor: 2, hasTouch: true }); const pg = await ctx.newPage(); const media = [];
+  pg.on('request', (r) => /ddb-(turn|again)/.test(r.url()) && media.push(r.url()));
+  await pg.goto(URL); await pg.waitForTimeout(1500);
+  ok(media.some((u) => /ddb-turn-1640\.(mp4|webm)/.test(u)) && !media.some((u) => /ddb-turn-(1280|960)/.test(u)), 'iPad 2x: the 1640 film is chosen (' + media.map((u) => u.split('/').pop()).join(',') + ')');
+  await ctx.close();
+}
 { // 6. Spinal Alignment: the body turns the moment the point is used, hotspots suspended, THEN the old animation starts
   const { ctx, pg } = await page({ seen: true });
   await pg.goto(URL); await settled(pg);
