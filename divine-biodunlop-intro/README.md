@@ -1,11 +1,12 @@
-# Divine DunlopDreams – BioDunlop intro (0.3.5-dev)
+# Divine DunlopDreams – BioDunlop intro (0.3.6-dev)
 
 Development prototype. **Not deployed, not in the production embed.** Hero 1.20.2 (`divine-hero/release/1.20.2/`, commit `f727e88`) is not modified by anything in this folder.
 
-The story is split in two (owner's briefs of 13 Oct; 0.3.5-dev = the sixth round of corrections, same day):
+The story is split in two (owner's briefs of 13 Oct; 0.3.6-dev = the seventh round of corrections, same day):
 
 * **Three film sizes:** 1640 (iPads and large screens, the hero picture's own width), 1280, 960 (smaller windows). The browser picks by the window's pixel width and downloads one.
 * **The end of every turn is a slow dissolve** (1.4 s opening, 1.5 s turn again): the last frame of the film is the hero picture and it flows into the live hero (light and colour), the points come out under it. The films are tagged BT.709 (matrix and tags) so Safari and Chrome show the same colours as the live picture.
+* **The head is the hero photo's own and never moves (0.3.6):** after repeated 'bubbling / smeared hair' reports, the hair, ear and crown (and the pillow edge round them) are taken from the hero picture in every frame of both films (`tools/render/headmask.py`, `film9.py`); only the neck, shoulder and the face's turn-away come from the film, blended at a soft seam. The price: the head itself does not rotate, and at the very first frame the film's face-up pose meets the hero's hair.
 * **The model** turns slowly in the hero picture itself, three ways: **every time the page loads or is reloaded** (hotspots appear only after the body has turned), at the moment the **Spinal Alignment** point is used (the old spinal animation starts only after the body is still), and from a hidden spot on the wordmark. It is a plain, smooth rotation: no settling, no extra shoulder / blade / back movements (0.2.0's "natural movement" corrections were taken out).
 * **Natural sourcing** lives in the **Original Dunlop Technology** card: a rounded video window opens beside the card, loops while the card is open and stops when it closes. The loop (8.9 s) is the **supplied footage** only, nothing drawn: the tapped tree, the latex running and the cup filling, then the mixture **poured** (the supplied pouring footage, slowed), then it starts again.
 
