@@ -1,7 +1,7 @@
-# Film v4 of the turning model (0.3.1-dev): film3 + a clean matte (cache3: no specks, no rim, no lace) + the clip's real 10 pictures/s timeline (no ticking). Everything is laid into Hero 1.20.2's own picture (words, mattress, bed and sky stay the hero's), the model
+# Film v5 of the turning model (0.3.2-dev): + glints and gloss on skin and hair are taken down (no balloon / reflection look) | v4 (0.3.1-dev): film3 + a clean matte (cache3: no specks, no rim, no lace) + the clip's real 10 pictures/s timeline (no ticking). Everything is laid into Hero 1.20.2's own picture (words, mattress, bed and sky stay the hero's), the model
 # is slowed right down and relit from the hero photo. It is a plain, smooth ROTATION: no settling, no extra shoulder / blade / back movements (the owner
 # asked for the earlier look back). The last frame is exactly the hero picture.
-#   usage: film4.py A|B [first last]        A = the opening turn (supine -> side, 9.6 s), B = the turn again (hero pose -> rolls back -> turns forward again)
+#   usage: film5.py A|B [first last]        A = the opening turn (supine -> side, 9.6 s), B = the turn again (hero pose -> rolls back -> turns forward again)
 import numpy as np, cv2, os, sys
 from PIL import Image
 from geo import *
@@ -76,6 +76,20 @@ def state(kind, t):
         wb = max(sstep(1 - BLEND / Tt, 1.0, u), 1 - sstep(0.0, 0.5, t))                                          # the first and the last moments are the hero's own pixels: nothing pops in or out
     return lam, wg, wb
 EDGE = (np.clip((1278 - np.arange(1280)) / 40, 0, 1)[None, :] * np.clip((np.arange(720)[:, None] - 2) / 50, 0, 1) ** 1.5).astype(np.float32)
+def tame(G, Fr, Ar):
+    """skin and hair carried small bright glints and a glossy sheen (and one broad shiny highlight on the shoulder) that read as balloons / reflections once graded:
+    everything brighter than its own surroundings (edge-preserving medians at about 9 px and 60 px) is pulled back; the pillow and bed are left alone"""
+    L = G @ np.array([.299, .587, .114], np.float32); L8 = np.clip(L, 0, 255).astype(np.uint8)
+    m1 = cv2.medianBlur(L8, 9).astype(np.float32)
+    sm = cv2.resize(L8, (RW // 4, RH // 4), interpolation=cv2.INTER_AREA)
+    m2 = cv2.resize(cv2.medianBlur(sm, 15), (RW, RH), interpolation=cv2.INTER_LINEAR).astype(np.float32)
+    ex = 0.80 * np.maximum(L - m1 - 3, 0) + 0.70 * np.maximum(L - np.maximum(m2, m1) - 5, 0)
+    ex = cv2.GaussianBlur(ex, (0, 0), 1.0)
+    R, Gc, B = Fr[..., 0], Fr[..., 1], Fr[..., 2]; ls = (R + Gc + B) / 3; ch = (R - B) / (R + Gc + B + 1)
+    w = np.maximum(np.clip((ch - 0.08) / 0.06, 0, 1), np.clip((100 - ls) / 40, 0, 1))                  # skin and hair only
+    w = cv2.GaussianBlur(w, (0, 0), 2.0)
+    k = np.maximum(L - ex * w, 1) / np.maximum(L, 1)
+    return G * k[..., None]
 def frame(kind, k):
     t = k / FPS; lam, wg, wb = state(kind, t)
     P, A = interp(lam)
@@ -83,6 +97,7 @@ def frame(kind, k):
     Pr = to_roi(P); Ar = to_roi(A)
     Fr = Pr / np.maximum(Ar, 1e-3)[..., None]
     G = grade2.apply(np.clip(Fr, 0, 255), CURVE, GAIN, wg)
+    G = tame(G, Fr, Ar)
     if True:
         sh = cv2.GaussianBlur(G, (0, 0), 1.5); G = np.clip(G + 0.12 * (G - sh), 0, 255)
         nz = cv2.GaussianBlur(np.random.default_rng(1000 + k).normal(0, 1, (RH, RW)).astype(np.float32), (0, 0), 0.7) * 2.0
@@ -97,7 +112,7 @@ def frame(kind, k):
 if __name__ == '__main__':
     kind = sys.argv[1]; Tt, Ts, n = timeline(kind)
     a, b = (int(sys.argv[2]), int(sys.argv[3])) if len(sys.argv) > 3 else (0, n)
-    os.makedirs(f'o4_{kind}', exist_ok=True)
+    os.makedirs(f'o5_{kind}', exist_ok=True)
     for k in range(a, min(b, n)):
-        Image.fromarray(frame(kind, k)).save(f'o4_{kind}/f{k:04d}.png')
+        Image.fromarray(frame(kind, k)).save(f'o5_{kind}/f{k:04d}.png')
     print('frames', n)

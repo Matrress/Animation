@@ -39,6 +39,8 @@ async function settled(p) {            // idle, with the "turn again" film ready
   ok(media.some((u) => /ddb-turn-1280\.(mp4|webm)/.test(u)), 'desktop: the 1280 film is chosen');
   await pg.waitForFunction(() => { const v = document.querySelector('.ddb video'); return v && v.currentTime > 3; }, null, { timeout: 15000 });
   ok(!(await ptsVisible(pg)), 'desktop: still no hotspots 3 s into the movement');
+  await pg.waitForFunction(() => document.documentElement.getAttribute('data-ddb') === 'out', null, { timeout: 20000 });
+  ok(await pg.evaluate(() => /^1\.4s/.test(getComputedStyle(document.querySelector('.ddb')).transitionDuration)), 'desktop: the last frame dissolves slowly (1.4 s) into the live hero, no snap');
   await pg.waitForFunction(() => !document.documentElement.hasAttribute('data-ddb'), null, { timeout: 20000 });
   ok(!(await pg.$('.ddb video[data-on]')), 'desktop: after the movement the first film is gone');
   await pg.waitForTimeout(900);
@@ -97,6 +99,7 @@ async function settled(p) {            // idle, with the "turn again" film ready
   ok(await hstate(pg) === 'back', 'spinal: another hotspot cannot take over during the movement (' + await hstate(pg) + ')');
   await pg.mouse.move(bc[0], bc[1]);
   await pg.waitForFunction(() => window.DDBIntro.phase === 'idle', null, { timeout: 15000 });
+  ok(await pg.evaluate(() => document.documentElement.hasAttribute('data-ddb-tend') && /^1\.5s/.test(getComputedStyle(document.querySelector('.ddb')).transitionDuration)), 'spinal: at the end the last frame dissolves slowly (1.5 s) into the live hero');
   await pg.waitForTimeout(250);
   ok(await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__screen--back')).display) !== 'none' || await hstate(pg) !== 'back', 'spinal: after the body is still, the old Spinal Alignment screen starts');
   await pg.waitForTimeout(2800);

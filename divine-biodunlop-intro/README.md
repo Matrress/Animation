@@ -1,9 +1,10 @@
-# Divine DunlopDreams – BioDunlop intro (0.3.1-dev)
+# Divine DunlopDreams – BioDunlop intro (0.3.2-dev)
 
 Development prototype. **Not deployed, not in the production embed.** Hero 1.20.2 (`divine-hero/release/1.20.2/`, commit `f727e88`) is not modified by anything in this folder.
 
-The story is split in two (owner's briefs of 13 Oct; 0.3.1-dev = the second round of corrections, same day):
+The story is split in two (owner's briefs of 13 Oct; 0.3.2-dev = the third round of corrections, same day):
 
+* **The end of every turn is a slow dissolve** (1.4 s opening, 1.5 s turn again): the last frame of the film is the hero picture and it flows into the live hero (light and colour), the points come out under it. The films are tagged BT.709 (matrix and tags) so Safari and Chrome show the same colours as the live picture.
 * **The model** turns slowly in the hero picture itself, three ways: **every time the page loads or is reloaded** (hotspots appear only after the body has turned), at the moment the **Spinal Alignment** point is used (the old spinal animation starts only after the body is still), and from a hidden spot on the wordmark. It is a plain, smooth rotation: no settling, no extra shoulder / blade / back movements (0.2.0's "natural movement" corrections were taken out).
 * **Natural sourcing** lives in the **Original Dunlop Technology** card: a rounded video window opens beside the card, loops while the card is open and stops when it closes. The loop (8.9 s) is the **supplied footage** only, nothing drawn: the tapped tree, the latex running and the cup filling, then the mixture **poured** (the supplied pouring footage, slowed), then it starts again.
 

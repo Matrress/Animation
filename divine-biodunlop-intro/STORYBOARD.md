@@ -1,4 +1,4 @@
-# BioDunlop intro – storyboard, timing, light, sources (0.3.1-dev)
+# BioDunlop intro – storyboard, timing, light, sources (0.3.2-dev)
 
 ## What happens (owner's brief and corrections, 13 Oct)
 
@@ -9,7 +9,7 @@
 | 0 – 8.2 s | The turn: a plain, smooth rotation: slow start, long soft arrival, constant-pace path, no ticking | the clip carries only every 3rd frame as a new picture (about 10 pictures a second, the rest are repeats: that made the old film tick). The real pictures are found, the motion between them is measured (optical flow) and re-timed along its path length, with smootherstep easing; frames in between are motion-compensated blends |
 | 6.6 – 8.2 s | the model's pixels become the hero photo's own (so the hero picture's light and shadow are exact) while the last of the movement dies out | cross-blend to the hero picture |
 | 8.2 – 8.7 s | still | |
-| then | hand-over: the stage fades (0.45 s), the hotspots and notes come out one after another (1.25 s each, 0.12 s apart, growing from a point, blur to sharp), then pulse | CSS |
+| then | hand-over: the stage (its last frame is the hero) dissolves slowly (1.4 s) into the live hero; 0.45 s after it starts the hotspots and notes come out one after another (1.25 s each, 0.12 s apart, growing from a point, blur to sharp), then pulse | CSS |
 
 0.2.0's "natural settling" (sinking into the bed, shoulder, shoulder blade, back, breathing) was taken out at the owner's request: the earlier look, a rotation, is back.
 
@@ -30,6 +30,7 @@
 
 * Every frame of the film was matched to the hero photo: colour (a 3 × 4 transform fitted on the final pose), then a **luminance curve** and a **shading map**, so the shoulders, upper arm, back, neck and the contact with the bed carry the hero's light and shadow, ramped in as the body arrives.
 * The model's cut-out was cleaned (0.3.1): no specks or holes in the matte, a smoothed hair edge, about 5 px of the silhouette re-coloured from the solid interior (a light rim sat there), and the **lace bra** on the shoulder (it read as a glassy patch once graded) turned into the smooth skin-toned shape it is, shading kept.
+* **No balloons, no reflections (0.3.2):** skin and hair carried small bright glints, a glossy sheen on the hair and one broad shiny highlight on the shoulder that read as inflated / plastic once graded. Everything brighter than its own surroundings (edge-preserving medians at about 9 px and 60 px) is pulled back on skin and hair only; the pillow and bed are untouched.
 * No plastic skin: sharpening is mild (0.12), a fine film grain (σ 2.0) is added to the model only and fades out as the hero's own pixels take over.
 * The hero's words and the small mattress picture stay: the mattress lies in front of the bed *and* of the model, the words lie over everything as a difference layer.
 

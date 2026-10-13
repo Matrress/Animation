@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams BioDunlop intro 0.3.1-dev | namespace .ddb | attaches to Hero 1.20.2 (.ddh) without changing it */
+/*! Divine DunlopDreams BioDunlop intro 0.3.2-dev | namespace .ddb | attaches to Hero 1.20.2 (.ddh) without changing it */
 /* Nothing here applies unless the inline gate marked the page: html[data-ddb-ok] (device allowed), html[data-ddb=pending|play|out] (opening turn) */
 .ddh .ddb,.ddh .ddb-lx,.ddh .ddb-lx-card{display:none}
 /* the crawlable line stays in the page for search engines and screen readers, never drawn */
@@ -10,18 +10,22 @@
 /* opening turn (page load): above every picture layer, below the Shop row; the first frame is already the hero, so nothing flashes */
 html[data-ddb] .ddh .ddb{display:block;position:absolute;inset:0;z-index:5;overflow:hidden;background:#d3efe8 url(assets/ddb-poster-1280.webp) center/cover no-repeat;contain:strict}
 @media (max-width:1100px){html[data-ddb] .ddh .ddb{background-image:url(assets/ddb-poster-960.webp)}}
-html[data-ddb] .ddh .ddh__points,html[data-ddb] .ddh .ddh__hint,html[data-ddb] .ddh .ddh__sky-lockup{opacity:0!important;visibility:hidden!important}
-html[data-ddb=out] .ddh .ddb{display:block;opacity:0;transition:opacity .45s cubic-bezier(.4,0,.2,1)}
+html[data-ddb=pending] .ddh .ddh__points,html[data-ddb=pending] .ddh .ddh__hint,html[data-ddb=pending] .ddh .ddh__sky-lockup,html[data-ddb=play] .ddh .ddh__points,html[data-ddb=play] .ddh .ddh__hint,html[data-ddb=play] .ddh .ddh__sky-lockup{opacity:0!important;visibility:hidden!important}
+/* the end of the opening: the stage (its last frame is the hero) dissolves slowly into the live hero; the hotspots come out under it */
+html[data-ddb=out] .ddh .ddb{display:block;z-index:3;pointer-events:none;opacity:0;transition:opacity 1.4s cubic-bezier(.45,0,.25,1)}
 /* the same turn again (Spinal Alignment point, the logo): under the points and the cards, never catches the pointer */
 html[data-ddb-turn]:not([data-ddb]) .ddh .ddb{display:block;position:absolute;inset:0;z-index:3;overflow:hidden;contain:strict;animation:ddb-fade .2s ease both}
 html[data-ddb-turn] .ddh .ddh__points .ddh__point{pointer-events:none!important}
 /* while the body turns (the Spinal Alignment point, the wordmark) all the points and notes fade away; only the Shop row stays. They come out again when the body is still */
 html[data-ddb-turn]:not([data-ddb]) .ddh .ddh__points,html[data-ddb-turn]:not([data-ddb]) .ddh .ddh__hint,html[data-ddb-turn]:not([data-ddb]) .ddh .ddh__sky-lockup{opacity:0!important;visibility:hidden!important;transition:opacity .5s ease,visibility 0s .5s!important}
 html[data-ddb-turn]:not([data-ddb]) .ddh .ddb video[data-on]{opacity:1;transition:none}
+/* the end of a turn: the same slow dissolve of the last frame (the hero) into the live hero */
+html[data-ddb-tend]:not([data-ddb]) .ddh .ddb{display:block;position:absolute;inset:0;z-index:3;overflow:hidden;contain:strict;pointer-events:none;animation:none;opacity:0;transition:opacity 1.5s cubic-bezier(.45,0,.25,1)}
+html[data-ddb-tend]:not([data-ddb]) .ddh .ddb video[data-on]{opacity:1;transition:none}
 /* while the model settles, the Spinal Alignment screen waits: it starts (vertebrae and words) the moment the model is still */
 html[data-ddb-hold] .ddh .ddh__screen--back{display:none!important}
 /* ---- hand-over after the opening turn: the hero's own life lights up ---- */
-html[data-ddb-lit] .ddh .ddh__sky-lockup{animation:ddb-rise 1.5s cubic-bezier(.2,.8,.2,1) .15s backwards}
+html[data-ddb-lit] .ddh .ddh__sky-lockup{animation:ddb-rise 1.6s cubic-bezier(.2,.8,.2,1) .15s backwards}
 html[data-ddb-lit] .ddh .ddh__points .ddh__point{animation:ddb-lit 1.25s cubic-bezier(.2,.8,.2,1) backwards}
 html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(2){animation-delay:0.12s}
 html[data-ddb-lit] .ddh .ddh__points .ddh__point:nth-child(3){animation-delay:0.24s}

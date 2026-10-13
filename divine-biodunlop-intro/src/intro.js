@@ -1,8 +1,8 @@
-/*! Divine DunlopDreams BioDunlop intro 0.3.1-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
+/*! Divine DunlopDreams BioDunlop intro 0.3.2-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
 (function (w, d) {
   'use strict';
   var H = d.documentElement, base = ((d.currentScript && d.currentScript.src) || '').replace(/[^\/]*$/, '');
-  var root, plane, stage, win, fig, winV, figV, film, again, litT = 0, pts, mo, booted = false, waits = 0, startT = 0, prevState = '', lx = '', dwellT = 0, inLogo = false;
+  var root, plane, stage, win, fig, winV, figV, film, again, litT = 0, tendT = 0, pts, mo, booted = false, waits = 0, startT = 0, prevState = '', lx = '', dwellT = 0, inLogo = false;
   // ---- the ONE state controller: phase is 'off' (nothing allowed), 'opening' (the first turn), 'idle', or 'turn' (the turn again). Every trigger asks here first.
   var ctl = { phase: 'off', last: 0, hold: false };
   var COOL = 600, LOGO_COOL = 8000, DWELL = 800, STARTS = 4000, WAIT = 900;
@@ -67,12 +67,13 @@
     if (ctl.phase !== 'opening') return;
     w.clearTimeout(startT); d.removeEventListener('keydown', onKey);
     var v = film; if (v) { try { v.pause(); } catch (e) {} }
+    // the last frame of the film is the hero picture: the stage dissolves slowly into the live hero (colour and light flow over, no snap) while the hotspots come out
     H.setAttribute('data-ddb', 'out');
-    var ms = fast ? 250 : 450; if (fast) stage.style.transitionDuration = '.25s';
+    var ms = fast ? 300 : 1400; stage.style.transitionDuration = fast ? '.3s' : '';
+    w.setTimeout(function () { if (ctl.phase === 'opening') { inertPoints(false); lit(); } }, fast ? 0 : 450);
     w.setTimeout(function () {
       if (v) { v.removeAttribute('src'); while (v.firstChild) v.removeChild(v.firstChild); try { v.load(); } catch (e) {} if (v.parentNode) v.parentNode.removeChild(v); }
-      film = null; H.removeAttribute('data-ddb'); inertPoints(false); prime();
-      lit();      // the body is still: the hotspots come out one after another, then pulse as always
+      film = null; H.removeAttribute('data-ddb'); stage.style.transitionDuration = '';
       ctl.phase = 'idle'; ctl.last = 0; idle();
     }, ms);
   }
@@ -89,6 +90,7 @@
     if (!anim() || ctl.phase !== 'idle' || now() - ctl.last < (kind === 'logo' ? LOGO_COOL : COOL)) return false;
     if (kind === 'logo' && (root.getAttribute('data-ddh-state') || lx)) return false;      // never interrupts an open card
     prime(); if (!again) return false;
+    w.clearTimeout(tendT); H.removeAttribute('data-ddb-tend');
     ctl.phase = 'turn'; ctl.hold = kind === 'back';
     if (ctl.hold) H.setAttribute('data-ddb-hold', '');
     inertPoints(true); ctl.t = w.setTimeout(endTurn, 14000);
@@ -104,10 +106,13 @@
   }
   function endTurn() {
     if (ctl.phase !== 'turn') return; w.clearTimeout(ctl.t); w.clearTimeout(ctl.w);
-    ctl.phase = 'idle'; ctl.last = now(); ctl.hold = false; ctl.on = false;
-    H.removeAttribute('data-ddb-turn'); H.removeAttribute('data-ddb-hold');      // the last frame is the hero: nothing changes, and the held screen starts now
-    var v = again; if (v) { try { v.pause(); v.currentTime = 0; } catch (e) {} v.removeAttribute('data-on'); }
-    inertPoints(false); lit();      // the hotspots and the notes come out again, smoothly, one after another
+    ctl.phase = 'idle'; ctl.last = now() + 1000; ctl.hold = false; ctl.on = false;       // (the guard runs on through the dissolve)
+    H.removeAttribute('data-ddb-turn'); H.removeAttribute('data-ddb-hold');                // the held screen starts now (vertebrae, then the words)
+    H.setAttribute('data-ddb-tend', '');                                                    // the last frame is the hero: it dissolves slowly into the live hero, no snap
+    w.setTimeout(function () { if (ctl.phase === 'idle') { inertPoints(false); lit(); } }, 450);   // the hotspots and the notes come out again, smoothly, one after another
+    w.clearTimeout(tendT); tendT = w.setTimeout(function () {
+      H.removeAttribute('data-ddb-tend'); var v = again; if (v) { try { v.pause(); v.currentTime = 0; } catch (e) {} v.removeAttribute('data-on'); }
+    }, 1500);
   }
   // the wordmark: a mouse resting on it for about 0.8 s (a crossing does nothing); no element lies over it, so its own clicks and the page are untouched; not on touch
   function wireLogo() {
@@ -174,6 +179,6 @@
       var p = v.play(); if (p && p.catch) p.catch(function () {});
     }
   }
-  w.DDBIntro = { boot: boot, version: '0.3.1-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
+  w.DDBIntro = { boot: boot, version: '0.3.2-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
 })(window, document);
