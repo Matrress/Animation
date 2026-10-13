@@ -8,7 +8,7 @@ Google does not read the story from video frames. It comes from the page text:
 * **Added, one sentence, real HTML:** `From natural latex milk to a complete natural latex sleep system.` (`.ddb-line`). It stays in the DOM (visually hidden, like the hero's existing `.ddh__sr` lines). No hidden keyword paragraphs.
 * **Added, visible:** the secondary line in the Original Dunlop Technology card, `Naturally Sourced · Custom-Made Sleep Systems` (real text; the video window itself carries no text).
 * **The films have no burned-in text.** The supplied videos' caption "Natural Origin & Natural Sleep System" was removed.
-* **Stable URLs:** after integration, the film and poster have versioned, cacheable jsDelivr URLs pinned to a commit, for example `…/Animation@<sha>/divine-biodunlop-intro/release/0.3.0-dev/assets/ddb-turn-1280.mp4` and `…/ddb-poster-1280.webp`. jsDelivr serves `robots.txt` with `Allow: /`, so it does not block them. Check this again at release time.
+* **Stable URLs:** after integration, the film and poster have versioned, cacheable jsDelivr URLs pinned to a commit, for example `…/Animation@<sha>/divine-biodunlop-intro/release/0.3.1-dev/assets/ddb-turn-1280.mp4` and `…/ddb-poster-1280.webp`. jsDelivr serves `robots.txt` with `Allow: /`, so it does not block them. Check this again at release time.
 
 ## VideoObject structured data: honest status
 
@@ -38,7 +38,7 @@ Google does not read the story from video frames. It comes from the page text:
 | LCP | The hero picture keeps `fetchpriority="high"`. The stage, poster and video have the same box as the hero picture, so they never become a *larger* LCP candidate. The poster is 25 KB (and is the hero itself at frame 0). |
 | CLS | The stage is absolutely positioned inside the existing plane: 0 layout shift (tested) |
 | INP / main thread | Two small listeners, no per-frame JS (the story line uses `timeupdate`, about 4 per second), no framework, no third-party player |
-| Bandwidth | Opening: 0.53 MB (1280) or 0.28 MB (960) MP4 on each load of the page (the browser caches it: a reload costs nothing). The *turn again* film (0.49 / 0.26 MB) is fetched once the opening is playing, only on devices that allow it. The sourcing loop (0.28 MB) is fetched only when its card is first opened (`preload=metadata`). No audio. |
+| Bandwidth | Opening: 0.51 MB (1280) or 0.28 MB (960) MP4 on each load of the page (the browser caches it: a reload costs nothing). The *turn again* film (0.40 / 0.22 MB) is fetched once the opening is playing, only on devices that allow it. The sourcing loop (0.27 MB) is fetched only when its card is first opened (`preload=metadata`). No audio. |
 | Slow or failing network | Data Saver or 2G/3G (where the browser reports it) → no intro. Video error → hero at once. No first frame within 4 s → hero. |
 | Caching | Versioned, immutable URLs (jsDelivr pinned commit) |
 | Formats | H.264 MP4 first (Chrome, Safari, Edge, Firefox play it); VP9 WebM second, only for browsers without H.264 (e.g. Chromium builds without proprietary codecs). The browser downloads exactly one. AV1 skipped: not universal on Safari. |

@@ -1,8 +1,8 @@
-/*! Divine DunlopDreams BioDunlop intro 0.3.0-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
+/*! Divine DunlopDreams BioDunlop intro 0.3.1-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
 (function (w, d) {
   'use strict';
   var H = d.documentElement, base = ((d.currentScript && d.currentScript.src) || '').replace(/[^\/]*$/, '');
-  var root, plane, stage, win, fig, winV, figV, skip, film, again, pts, mo, booted = false, waits = 0, startT = 0, prevState = '', lx = '', dwellT = 0, inLogo = false;
+  var root, plane, stage, win, fig, winV, figV, film, again, litT = 0, pts, mo, booted = false, waits = 0, startT = 0, prevState = '', lx = '', dwellT = 0, inLogo = false;
   // ---- the ONE state controller: phase is 'off' (nothing allowed), 'opening' (the first turn), 'idle', or 'turn' (the turn again). Every trigger asks here first.
   var ctl = { phase: 'off', last: 0, hold: false };
   var COOL = 600, LOGO_COOL = 8000, DWELL = 800, STARTS = 4000, WAIT = 900;
@@ -52,44 +52,27 @@
     ctl.phase = 'opening'; mark();
     var v = mk('assets/ddb-turn-' + size()); film = v;
     v.lastChild.addEventListener('error', function () { endOpening(true); }); v.addEventListener('error', function () { endOpening(true); });
-    v.addEventListener('playing', function () { v.setAttribute('data-on', ''); showSkip(); prime(); }, { once: true });   // the turn again is fetched while the first turn plays, so the Spinal Alignment point answers at once
+    v.addEventListener('playing', function () { v.setAttribute('data-on', ''); prime(); }, { once: true });   // the turn again is fetched while the first turn plays, so the Spinal Alignment point answers at once
     v.addEventListener('ended', function () { endOpening(false); });
     stage.appendChild(v); inertPoints(true);
-    skip = d.createElement('button'); skip.type = 'button'; skip.className = 'ddb-skip';
-    skip.innerHTML = '<span>Skip intro</span><i aria-hidden="true"></i>'; skip.setAttribute('aria-label', 'Skip the opening animation and show the page');
-    skip.addEventListener('click', function () { endOpening(true); });
-    // first in the hero's tab order, drawn on the Shop row (left), never over the buttons; invisible until the web font and layout have settled
-    var h1 = root.querySelector('h1'); root.insertBefore(skip, h1 ? h1.nextSibling : root.firstChild);
-    skip.setAttribute('data-wait', ''); placeSkip(); w.addEventListener('resize', placeSkip); w.addEventListener('load', placeSkip); w.setTimeout(showSkip, 1200);
     d.addEventListener('keydown', onKey);
     H.setAttribute('data-ddb', 'play');
     startT = w.setTimeout(function () { if (!v.currentTime) endOpening(true); }, STARTS);
     var p = v.play(); if (p && p.catch) p.catch(function (e) { if (e && e.name === 'NotAllowedError') endOpening(true); });   // autoplay refused: straight to the hero
   }
-  function showSkip() { if (skip && skip.hasAttribute('data-wait')) { placeSkip(); skip.removeAttribute('data-wait'); } }
-  function placeSkip(ev) {
-    if (!skip || !skip.parentNode || (ev && ev.type === 'load' && !skip.hasAttribute('data-wait'))) return;
-    var shop = root.querySelector('.ddh__shop'), r = root.getBoundingClientRect();
-    if (!shop) { skip.style.top = '16px'; return; }
-    var c = shop.querySelector('.ddh__cta') ? shop.querySelector('.ddh__cta').getBoundingClientRect() : shop.getBoundingClientRect();
-    skip.style.top = Math.round(c.top - r.top + (c.height - skip.offsetHeight) / 2) + 'px';
-  }
+  function lit() { H.setAttribute('data-ddb-lit', ''); w.clearTimeout(litT); litT = w.setTimeout(function () { H.removeAttribute('data-ddb-lit'); }, 3200); }
   function onKey(ev) { if (ev.key === 'Escape' || ev.key === 'Esc') endOpening(true); }
   // fast: skipped, failed or refused (a quick fade); otherwise the film ended on the hero itself (a short dissolve into the live hero)
   function endOpening(fast) {
     if (ctl.phase !== 'opening') return;
-    w.clearTimeout(startT); d.removeEventListener('keydown', onKey); w.removeEventListener('resize', placeSkip); w.removeEventListener('load', placeSkip);
+    w.clearTimeout(startT); d.removeEventListener('keydown', onKey);
     var v = film; if (v) { try { v.pause(); } catch (e) {} }
-    var hadFocus = skip && d.activeElement === skip;   // the keyboard user lands on the first Shop button, not on <body>
-    if (skip && skip.parentNode) skip.parentNode.removeChild(skip);
-    if (hadFocus) { var a = root.querySelector('.ddh__cta'); if (a) a.focus({ preventScroll: true }); }
     H.setAttribute('data-ddb', 'out');
     var ms = fast ? 250 : 450; if (fast) stage.style.transitionDuration = '.25s';
     w.setTimeout(function () {
       if (v) { v.removeAttribute('src'); while (v.firstChild) v.removeChild(v.firstChild); try { v.load(); } catch (e) {} if (v.parentNode) v.parentNode.removeChild(v); }
       film = null; H.removeAttribute('data-ddb'); inertPoints(false); prime();
-      H.setAttribute('data-ddb-lit', '');      // the body is still: the hotspots light up one after another, then pulse as always
-      w.setTimeout(function () { H.removeAttribute('data-ddb-lit'); }, 1800);
+      lit();      // the body is still: the hotspots come out one after another, then pulse as always
       ctl.phase = 'idle'; ctl.last = 0; idle();
     }, ms);
   }
@@ -124,7 +107,7 @@
     ctl.phase = 'idle'; ctl.last = now(); ctl.hold = false; ctl.on = false;
     H.removeAttribute('data-ddb-turn'); H.removeAttribute('data-ddb-hold');      // the last frame is the hero: nothing changes, and the held screen starts now
     var v = again; if (v) { try { v.pause(); v.currentTime = 0; } catch (e) {} v.removeAttribute('data-on'); }
-    inertPoints(false);
+    inertPoints(false); lit();      // the hotspots and the notes come out again, smoothly, one after another
   }
   // the wordmark: a mouse resting on it for about 0.8 s (a crossing does nothing); no element lies over it, so its own clicks and the page are untouched; not on touch
   function wireLogo() {
@@ -191,6 +174,6 @@
       var p = v.play(); if (p && p.catch) p.catch(function () {});
     }
   }
-  w.DDBIntro = { boot: boot, version: '0.3.0-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
+  w.DDBIntro = { boot: boot, version: '0.3.1-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
 })(window, document);

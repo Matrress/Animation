@@ -35,12 +35,12 @@ async function settled(p) {            // idle, with the "turn again" film ready
   ok(await hstate(pg) === null, 'desktop: moving over a hotspot position does nothing during the movement');
   ok(await pg.evaluate(() => [...document.querySelectorAll('.ddh__cta')].every((a) => { const r = a.getBoundingClientRect(), e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return a.contains(e); })), 'desktop: both Shop buttons stay visible and clickable during the movement');
   ok(await pg.evaluate(() => document.querySelectorAll('h1').length) === 1, 'desktop: still exactly one H1');
-  ok(await pg.evaluate(() => !!document.querySelector('.ddb-skip') && /skip/i.test(document.querySelector('.ddb-skip').getAttribute('aria-label'))), 'desktop: a named Skip button exists');
+  ok(!(await pg.$('.ddb-skip')) && !(await pg.$('button[class*=skip]')), 'desktop: there is no Skip button');
   ok(media.some((u) => /ddb-turn-1280\.(mp4|webm)/.test(u)), 'desktop: the 1280 film is chosen');
   await pg.waitForFunction(() => { const v = document.querySelector('.ddb video'); return v && v.currentTime > 3; }, null, { timeout: 15000 });
   ok(!(await ptsVisible(pg)), 'desktop: still no hotspots 3 s into the movement');
   await pg.waitForFunction(() => !document.documentElement.hasAttribute('data-ddb'), null, { timeout: 20000 });
-  ok(!(await pg.$('.ddb-skip')) && !(await pg.$('.ddb video[data-on]')), 'desktop: after the movement Skip and the first film are gone');
+  ok(!(await pg.$('.ddb video[data-on]')), 'desktop: after the movement the first film is gone');
   await pg.waitForTimeout(900);
   ok(await ptsVisible(pg) && !(await pg.evaluate(() => document.querySelector('.ddh__points').hasAttribute('inert'))), 'desktop: the body is still: the hotspots are shown and active');
   await pg.waitForTimeout(2200);
@@ -57,16 +57,9 @@ async function settled(p) {            // idle, with the "turn again" film ready
   ok(await st(pg) === null && await ptsVisible(pg), '?ddb=2: no opening, the hotspots are there at once');
   await ctx.close();
 }
-{ // 2. Skip by button and by Escape
-  const { ctx, pg } = await page();
-  await pg.goto(URL); await pg.waitForSelector('.ddb-skip:not([data-wait])'); await pg.waitForTimeout(200);
-  await pg.focus('.ddb-skip'); await pg.keyboard.press('Enter'); await pg.waitForTimeout(900);
-  ok(await st(pg) === null && await ptsVisible(pg), 'skip (keyboard): the hero and its hotspots are back within 1 s');
-  ok(await pg.evaluate(() => document.activeElement && document.activeElement.classList.contains('ddh__cta')), 'skip (keyboard): focus moves to the first Shop button');
-  await ctx.close();
-  const p2 = await page(); await p2.pg.goto(URL); await p2.pg.waitForSelector('.ddb-skip'); await p2.pg.waitForTimeout(300);
-  await p2.pg.keyboard.press('Escape'); await p2.pg.waitForTimeout(900);
-  ok(await st(p2.pg) === null && await ptsVisible(p2.pg), 'Escape skips the opening'); await p2.ctx.close();
+{ // 2. no Skip button; Escape still ends the opening (keyboard users)
+  const p2 = await page(); await p2.pg.goto(URL); await p2.pg.waitForTimeout(1500); await p2.pg.keyboard.press('Escape'); await p2.pg.waitForTimeout(1200);
+  ok(await st(p2.pg) === null && await ptsVisible(p2.pg), 'Escape ends the opening'); await p2.ctx.close();
 }
 { // 3. reduced motion, phone, Data Saver, 3G: no body movement; the final state and the hotspots at once
   for (const [name, opts, init, pts] of [['reduced motion', { rm: true }, null, true], ['phone 390x844', { vp: { width: 390, height: 844 }, touch: true, mobile: true }, null, false], ['Data Saver', {}, () => Object.defineProperty(navigator, 'connection', { value: { saveData: true, effectiveType: '4g' } }), true], ['3g', {}, () => Object.defineProperty(navigator, 'connection', { value: { saveData: false, effectiveType: '3g' } }), true]]) {
@@ -98,12 +91,16 @@ async function settled(p) {            // idle, with the "turn again" film ready
   ok(await pg.evaluate(() => { const v = document.querySelector('.ddb video[data-role=again]'); return !v.paused && v.currentTime > 0.1 && v.currentTime < 1.2; }), 'spinal: the film is already running 0.35 s after the touch (' + await pg.evaluate(() => document.querySelector('.ddb video[data-role=again]').currentTime.toFixed(2)) + ' s)');
   ok(await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__screen--back')).display) === 'none', 'spinal: the Spinal Alignment screen waits while the body moves');
   ok(await pg.evaluate(() => document.querySelector('.ddh__points').hasAttribute('inert')), 'spinal: the other hotspots are suspended');
+  await pg.waitForTimeout(700);
+  ok(!(await ptsVisible(pg)) && await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__sky-lockup')).visibility === 'hidden') && await pg.evaluate(() => [...document.querySelectorAll('.ddh__cta')].every((a) => { const r = a.getBoundingClientRect(), e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return a.contains(e); })), 'spinal: while the body turns all the points and notes are gone, the Shop buttons stay');
   const fc = await centre(pg, '[data-ddh-point="firmness"]'); await pg.mouse.move(fc[0], fc[1]); await pg.waitForTimeout(300);
   ok(await hstate(pg) === 'back', 'spinal: another hotspot cannot take over during the movement (' + await hstate(pg) + ')');
   await pg.mouse.move(bc[0], bc[1]);
   await pg.waitForFunction(() => window.DDBIntro.phase === 'idle', null, { timeout: 15000 });
   await pg.waitForTimeout(250);
   ok(await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__screen--back')).display) !== 'none' || await hstate(pg) !== 'back', 'spinal: after the body is still, the old Spinal Alignment screen starts');
+  await pg.waitForTimeout(2800);
+  ok(await ptsVisible(pg) && await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__sky-lockup')).visibility === 'visible'), 'spinal: the points and notes come out again after the body is still');
   if (await hstate(pg) === 'back') {
     await pg.waitForTimeout(400);
     ok(await pg.evaluate(() => [...document.querySelectorAll('.ddh__spine path')].some((p) => getComputedStyle(p).animationName === 'ddh-vert')), 'spinal: the vertebra animation runs after the movement, not over it');

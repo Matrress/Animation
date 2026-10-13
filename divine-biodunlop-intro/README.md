@@ -1,19 +1,19 @@
-# Divine DunlopDreams – BioDunlop intro (0.3.0-dev)
+# Divine DunlopDreams – BioDunlop intro (0.3.1-dev)
 
 Development prototype. **Not deployed, not in the production embed.** Hero 1.20.2 (`divine-hero/release/1.20.2/`, commit `f727e88`) is not modified by anything in this folder.
 
-The story is split in two (owner's briefs of 13 Oct; 0.3.0-dev = the corrections of the same day):
+The story is split in two (owner's briefs of 13 Oct; 0.3.1-dev = the second round of corrections, same day):
 
 * **The model** turns slowly in the hero picture itself, three ways: **every time the page loads or is reloaded** (hotspots appear only after the body has turned), at the moment the **Spinal Alignment** point is used (the old spinal animation starts only after the body is still), and from a hidden spot on the wordmark. It is a plain, smooth rotation: no settling, no extra shoulder / blade / back movements (0.2.0's "natural movement" corrections were taken out).
-* **Natural sourcing** lives in the **Original Dunlop Technology** card: a rounded video window opens beside the card, loops while the card is open and stops when it closes. The loop (10.5 s): the latex is collected (a heavy creamy film, a fat slow drop that sinks into the cup), then the mixture is **poured** (the supplied pouring footage), then it starts again.
+* **Natural sourcing** lives in the **Original Dunlop Technology** card: a rounded video window opens beside the card, loops while the card is open and stops when it closes. The loop (8.9 s) is the **supplied footage** only, nothing drawn: the tapped tree, the latex running and the cup filling, then the mixture **poured** (the supplied pouring footage, slowed), then it starts again.
 
 | | |
 |---|---|
 | Namespace | `.ddb` + `html[data-ddb-*]` state attributes; it never edits `.ddh` files |
 | Devices | laptops, monitors, tablets (window ≥ 701 × 501). Not on phones |
-| Opening turn | 10.5 s (9.6 s turn + 0.9 s to the hero's own pixels), skippable, on every load of the page (`ONCE=1` in the gate = once per browser session) |
-| Turn again | 8.7 s (the body rolls back about 60 %, then turns forward again), starts the moment the point is used; 0.6 s guard (8 s for the wordmark) |
-| Weight | intro.css 5 KB + intro.js 9 KB (minified, before compression). Films: opening 0.53 MB (1280) / 0.28 MB (960), turn again 0.49 / 0.26 MB (fetched while the opening plays), sourcing loop 0.28 MB (+ 23 KB poster; only when its card is first opened). WebM fallbacks are about the same. One file per kind per visit |
+| Opening turn | 8.7 s (8.2 s turn, the last 1.6 s of it blending into the hero's own pixels, + 0.5 s still), on every load of the page (`ONCE=1` in the gate = once per browser session). No Skip button (Escape still ends it) |
+| Turn again | 7.1 s (the body rolls back about 60 %, then turns forward again), starts the moment the point is used; 0.6 s guard (8 s for the wordmark) |
+| Weight | intro.css 5 KB + intro.js 9 KB (minified, before compression). Films: opening 0.51 MB (1280) / 0.28 MB (960), turn again 0.40 / 0.22 MB (fetched while the opening plays), sourcing loop 0.27 MB (+ 22 KB poster; only when its card is first opened). WebM fallbacks are about the same. One file per kind per visit |
 
 ## The state controller (intro.js)
 
@@ -25,7 +25,7 @@ One object decides everything: `phase` is `off` (nothing allowed: phones, reduce
 | rapid re-triggering | guard after every turn: 0.6 s (Spinal Alignment), 8 s (wordmark) |
 | the Spinal Alignment film not there yet | it is requested as soon as the opening plays; a press that comes first waits up to 0.9 s for it, then the hero simply works |
 | hotspots before the first turn has settled | during `opening` the hotspots are hidden **and** `inert`; they light up in the hand-over |
-| hotspots taking over during a turn | `.ddh__points` is `inert` (pointer and keyboard), the stage swallows pointer events over the picture; the Shop buttons and the page stay outside it and work |
+| hotspots taking over during a turn | during every body movement (the opening, the Spinal Alignment point, the wordmark) all the points, the hint and the LATEX note fade away and `.ddh__points` is `inert`; the Shop buttons and the page stay and work. When the body is still they come out one after another (1.25 s each, 0.12 s apart) |
 | Spinal Alignment starting before the body is still | `html[data-ddb-hold]` keeps the hero's own back screen `display:none` until the film ends; then the old vertebra animation and labels start in their established order |
 | the wordmark interrupting a card | it is ignored while a hero state (card) is open or the video window is shown, and during any turn |
 | the video playing unseen | on close / another hotspot / hidden tab: `pause()` + rewind to 0 |
@@ -42,7 +42,7 @@ No element lies over it (so nothing it covers is blocked and its clicks are unto
 * **Wide windows (side):** a rounded window (26 px radius, same border and shadow as the card) in the marked area: left 3.3 %, top 35.6 %, 39.4 % × 34.2 % of the hero picture, so it follows the picture at every size. It opens from the hotspot like the card (0.62 s) and does not move or resize the hero.
 * **Where the card would touch it (narrower or lower windows):** decided when the card opens, from the card's real position: the video sits **inside the card, under the blue band**. Tablets held across (1024 × 768) still get the window.
 * Only this card starts it; muted, `playsinline`, looping, poster shown at once (WebP background); no text over the video.
-* **Loop:** collecting (thin matte film on the bark, a fat drop swelling on a stretching thread, soft mound and two slow rings in the cup, the cup slowly fills) → pouring (the supplied footage of the cream being poured, slowed to 0.4×, caption cropped away) → back. No splash: latex is heavy and greasy, not water.
+* **Loop:** the origin film's tapping scene (caption removed, flicker of the posterised bark calmed, graded into the window's palette, slow push-in) → dissolve → the pour (0.36×, caption cropped away) → dissolve. The earlier drawn latex (0.2.0 and 0.3.0) was dropped: it looked like a cartoon.
 * **Blue band:** `Naturally Sourced · Custom-Made Sleep Systems` (8 languages, machine-translated like the rest) is the secondary line. The older subtitle (*Custom Made Sleep Systems*) says the same, shorter: it stays in the page but is not drawn.
 
 ## Files
@@ -85,4 +85,4 @@ node tests/intro.mjs && node tests/candidate.mjs
 
 ## Replacing the films later
 
-Keep the names and the frame: 1280 × 988 and 960 × 742, 30 fps, H.264 High, `+faststart`, no audio. The first and last frame of `ddb-again-*` must be the hero's pose; the last frame of `ddb-turn-*` too (the dissolve into the live hero is then invisible). The sourcing loop is 768 × 512, 24 fps, 10.5 s, seamless (it dissolves tree → pour → tree).
+Keep the names and the frame: 1280 × 988 and 960 × 742, 30 fps, H.264 High, `+faststart`, no audio. The first and last frame of `ddb-again-*` must be the hero's pose; the last frame of `ddb-turn-*` too (the dissolve into the live hero is then invisible). The sourcing loop is 768 × 512, 24 fps, 8.9 s, seamless (it dissolves tree → pour → tree).

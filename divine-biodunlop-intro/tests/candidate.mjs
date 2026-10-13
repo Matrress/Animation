@@ -43,8 +43,8 @@ for (const mode of ['static', 'fragment', 'scripts-first']) {
   ok(hits.some((u) => /ddb-turn-(1280|960)\.(mp4|webm)$/.test(u)), `${mode}: a film is requested (${hits.filter((u) => /ddb-intro/.test(u)).join(',')})`);
   ok(await page.evaluate(() => !!document.querySelector('.ddb video') && document.querySelector('.ddb video').currentTime > 0.5), `${mode}: the film is playing`);
   if (await st(page) !== 'play') { await ctx.close(); continue; }
-  await page.click('.ddb-skip'); await page.waitForTimeout(900);
-  ok(await st(page) === null && await page.evaluate(() => !document.querySelector('.ddb video[data-role=open]') && !document.querySelector('.ddb-skip')), `${mode}: Skip hands over to the hero`);
+  await page.keyboard.press('Escape'); await page.waitForTimeout(900);
+  ok(await st(page) === null && await page.evaluate(() => !document.querySelector('.ddb video[data-role=open]') && !document.querySelector('.ddb-skip')), `${mode}: Escape hands over to the hero, and there is no Skip button`);
   await page.waitForTimeout(1900);
   const c = await page.evaluate(() => { const r = document.querySelector('[data-ddh-point="firmness"]').getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
   await page.mouse.move(c[0], c[1]); await page.waitForTimeout(400);
@@ -54,7 +54,7 @@ for (const mode of ['static', 'fragment', 'scripts-first']) {
   await ctx.close();
 }
 { // ?ddb=1 plays it again in the same session; ?ddb=0 switches it off
-  const { ctx, page } = await open('static'); await page.waitForTimeout(600); await page.click('.ddb-skip');
+  const { ctx, page } = await open('static'); await page.waitForTimeout(600); await page.keyboard.press('Escape');
   await page.goto('https://shop.test/?ddb=2'); await page.waitForTimeout(700);
   ok(await st(page) === null, '?ddb=2: no opening');
   await page.goto('https://shop.test/?ddb=1'); await page.waitForTimeout(700);
