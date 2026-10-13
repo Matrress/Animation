@@ -1,5 +1,6 @@
 # prep3 (0.3.1-dev): a cleaner model layer per source frame: alpha without specks / holes / jagged hair edge, no light rim along the silhouette,
-# the lace garment on the shoulder (it reads as a glassy patch once the picture is graded) replaced by smooth skin.
+# the lace garment on the shoulder (it read as a glassy, translucent patch once the picture was graded): 0.3.4 keeps the embroidery and the shape of the cup, recoloured to a
+# matte skin-toned lace (no brightness, no translucency); the lace mask is saved too (cache3/L###.npy) so the film can leave it out of the glint removal.
 import numpy as np, cv2, os, sys
 from PIL import Image
 os.makedirs('cache3', exist_ok=True)
@@ -40,17 +41,18 @@ def lace_mask(F, A, ylim=340):
         keep = cv2.morphologyEx(keep, cv2.MORPH_CLOSE, EL(15))
     return cv2.dilate(keep, EL(17)), (L, ch, roi)
 def de_lace(F, A, ylim=340):
-    """the lace cup becomes the smooth skin-toned shape it is: the pattern goes, the volume (light and shade) stays"""
+    """matte skin-toned lace: the cup keeps its shape and shading, the embroidery stays (as fine detail), the cream brightness and the see-through look go"""
     lm, (L, ch, roi) = lace_mask(F, A, ylim)
     if not lm.any(): return F, lm
     ring = (cv2.dilate(lm, EL(61)) > 0) & (lm == 0) & (A > 0.9) & (ch > 0.14) & (ch < 0.23) & (L > 110)
     if ring.sum() < 300: return F, np.zeros_like(lm)
     sk = F[ring].mean(0); sL = sk.mean()
-    Ls = cv2.GaussianBlur(L, (0, 0), 7.0); mL = Ls[lm > 0].mean()
-    Lt = sL + 0.55 * (Ls - mL)                                               # the shading of the cup stays, a little flatter, at the level of the skin around it
-    skin_img = sk[None, None, :] * (Lt / sL)[..., None]
-    soft = cv2.GaussianBlur(lm.astype(np.float32), (0, 0), 5)[..., None]
-    return F * (1 - soft) + np.clip(skin_img, 0, 255) * soft, lm
+    Ls = cv2.GaussianBlur(L, (0, 0), 4.0); mL = Ls[lm > 0].mean()
+    Lt = sL + 0.6 * (Ls - mL)                                                # the form of the cup, at the level of the skin around it
+    pattern = L - cv2.GaussianBlur(L, (0, 0), 2.5)                           # the embroidery: threads and holes
+    lace = sk[None, None, :] * (Lt / sL)[..., None] + (0.95 * pattern)[..., None]
+    soft = cv2.GaussianBlur(lm.astype(np.float32), (0, 0), 4)[..., None]
+    return F * (1 - soft) + np.clip(lace, 0, 255) * soft, lm
 def load(i):
     a = np.array(Image.open(f'../vid/Am/a{i:03d}.png'), np.float32)
     F, A = a[..., :3], a[..., 3] / 255
@@ -63,4 +65,5 @@ if __name__ == '__main__':
     for i in range(int(sys.argv[1]), int(sys.argv[2])):
         F2, A, lm = load(i)
         np.save(f'cache3/F{i:03d}.npy', np.clip(F2, 0, 255).astype(np.uint8)); np.save(f'cache3/A{i:03d}.npy', (A * 255).astype(np.uint8))
+        np.save(f'cache3/L{i:03d}.npy', (cv2.GaussianBlur(lm.astype(np.float32), (0, 0), 6) * 255).astype(np.uint8))
         if i % 10 == 0: print(i, int(lm.sum()), flush=True)

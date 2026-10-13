@@ -1,4 +1,4 @@
-# BioDunlop intro – storyboard, timing, light, sources (0.3.3-dev)
+# BioDunlop intro – storyboard, timing, light, sources (0.3.4-dev)
 
 ## What happens (owner's brief and corrections, 13 Oct)
 
@@ -30,6 +30,9 @@
 
 * Every frame of the film was matched to the hero photo: colour (a 3 × 4 transform fitted on the final pose), then a **luminance curve** and a **shading map**, so the shoulders, upper arm, back, neck and the contact with the bed carry the hero's light and shadow, ramped in as the body arrives.
 * The model's cut-out was cleaned (0.3.1): no specks or holes in the matte, a smoothed hair edge, about 5 px of the silhouette re-coloured from the solid interior (a light rim sat there), and the **lace bra** on the shoulder (it read as a glassy patch once graded) turned into the smooth skin-toned shape it is, shading kept.
+* **The lace (0.3.4):** the lace bra keeps its embroidery and the shape of the cup (the owner wants a real, not a plastic, picture). It is recoloured to a matte skin-toned lace: the cream brightness and the see-through look (what read as a glassy patch) are gone, the pattern stays as fine detail, and the lace is left out of the glint removal.
+* **The garment's edge (0.3.4):** the vertical edge of the bodysuit beside *HIGH SUPPORT* had been caught by the words mask and was laid over every frame as a static strip. It is out of the mask now (only real letters stay), so it moves with the body and reaches its place at the end.
+* **Hair (0.3.4):** the whole hair region is found including the bright sheen arcs inside it (they had escaped the mask) and its gloss is capped at the hair's own dark level + 10, so no light arc or cap is left; the ear and skin are not touched.
 * **The Dual Plush mattress (0.3.3):** the film now takes the mattress from the hero's own cut-out (`assets/mattress.webp`, placed exactly as hero.css places it) instead of a rough polygon that cut the lower-left of its base, and the soft shadow under it (the bed in front of it, to about 80 px below) is always the hero's own, so the mattress is whole and its shadow constant in every frame.
 * **The bra strap (0.3.3):** it showed twice near the end because the film's last pose and the hero photo differ by a few pixels and a plain cross-fade shows both. The last blend is now a morph: the film's last pose is slid onto the hero's pixels (dense flow, at most 12 px) while it fades.
 * **Hair (0.3.3):** gloss is capped a little above the hair's own dark level (no sheen band that reads as a dome or a cap), the detail the slow-down smoothed out is given back (sharpening 0.95 on the fine scale) and a fine grain of hair is added.

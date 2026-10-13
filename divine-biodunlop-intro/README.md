@@ -1,8 +1,8 @@
-# Divine DunlopDreams – BioDunlop intro (0.3.3-dev)
+# Divine DunlopDreams – BioDunlop intro (0.3.4-dev)
 
 Development prototype. **Not deployed, not in the production embed.** Hero 1.20.2 (`divine-hero/release/1.20.2/`, commit `f727e88`) is not modified by anything in this folder.
 
-The story is split in two (owner's briefs of 13 Oct; 0.3.3-dev = the fourth round of corrections, same day):
+The story is split in two (owner's briefs of 13 Oct; 0.3.4-dev = the fifth round of corrections, same day):
 
 * **Three film sizes:** 1640 (iPads and large screens, the hero picture's own width), 1280, 960 (smaller windows). The browser picks by the window's pixel width and downloads one.
 * **The end of every turn is a slow dissolve** (1.4 s opening, 1.5 s turn again): the last frame of the film is the hero picture and it flows into the live hero (light and colour), the points come out under it. The films are tagged BT.709 (matrix and tags) so Safari and Chrome show the same colours as the live picture.

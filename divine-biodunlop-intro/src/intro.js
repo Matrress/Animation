@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams BioDunlop intro 0.3.3-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
+/*! Divine DunlopDreams BioDunlop intro 0.3.4-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
 (function (w, d) {
   'use strict';
   var H = d.documentElement, base = ((d.currentScript && d.currentScript.src) || '').replace(/[^\/]*$/, '');
@@ -179,6 +179,6 @@
       var p = v.play(); if (p && p.catch) p.catch(function () {});
     }
   }
-  w.DDBIntro = { boot: boot, version: '0.3.3-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
+  w.DDBIntro = { boot: boot, version: '0.3.4-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
 })(window, document);

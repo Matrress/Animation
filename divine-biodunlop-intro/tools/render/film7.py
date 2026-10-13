@@ -1,8 +1,9 @@
-# Film v6 (0.3.3-dev): + exact mattress mask (its own cut-out + the shadow below it, always the hero's), hair kept crisp and matte, the last blend into the hero is a MORPH
+# Film v7 (0.3.4-dev): + the lace keeps its embroidery (matte, skin-toned) and is left out of the glint removal; the garment's vertical edge is no longer part of the static
+# 'words' layer (it moves with the body); hair gloss capped harder | v6 (0.3.3-dev): + exact mattress mask (its own cut-out + the shadow below it, always the hero's), hair kept crisp and matte, the last blend into the hero is a MORPH
 # (the film's last pose is slid onto the hero's pixels while it fades, so thin things like the bra strap never show twice) | v5 (0.3.2-dev): + glints and gloss on skin and hair are taken down (no balloon / reflection look) | v4 (0.3.1-dev): film3 + a clean matte (cache3: no specks, no rim, no lace) + the clip's real 10 pictures/s timeline (no ticking). Everything is laid into Hero 1.20.2's own picture (words, mattress, bed and sky stay the hero's), the model
 # is slowed right down and relit from the hero photo. It is a plain, smooth ROTATION: no settling, no extra shoulder / blade / back movements (the owner
 # asked for the earlier look back). The last frame is exactly the hero picture.
-#   usage: film6.py A|B [first last]        A = the opening turn (supine -> side, 9.6 s), B = the turn again (hero pose -> rolls back -> turns forward again)
+#   usage: film7.py A|B [first last]        A = the opening turn (supine -> side, 9.6 s), B = the turn again (hero pose -> rolls back -> turns forward again)
 import numpy as np, cv2, os, sys
 from PIL import Image
 from geo import *
@@ -21,7 +22,8 @@ def src(i):
     if i not in _cache:
         if len(_cache) > 6: _cache.pop(next(iter(_cache)))
         F = np.load(f'cache3/F{i:03d}.npy').astype(np.float32); A = np.load(f'cache3/A{i:03d}.npy').astype(np.float32) / 255
-        _cache[i] = (F * A[..., None], A)
+        Lm = np.load(f'cache3/L{i:03d}.npy').astype(np.float32) / 255
+        _cache[i] = (F * A[..., None], A, Lm)
     return _cache[i]
 _fl = {}
 def flow(kind, i):
@@ -40,11 +42,12 @@ def interp(lam):
     """the model at path position lam (0 = first real picture, LT = last): motion-compensated blend of the two real pictures around it"""
     lam = float(np.clip(lam, 0, LT - 1e-6)); k = int(np.searchsorted(CUM, lam, 'right') - 1); k = min(max(k, 0), len(SP) - 1)
     s = float((lam - CUM[k]) / (CUM[k + 1] - CUM[k])); j = SP[k]
-    P0, A0 = src(j); P1, A1 = src(j + 1); f01, f10 = flow('kfw', j), flow('kbw', j)
+    P0, A0, L0 = src(j); P1, A1, L1 = src(j + 1); f01, f10 = flow('kfw', j), flow('kbw', j)
     Ft0 = -(1 - s) * s * f01 + s * s * f10; Ft1 = (1 - s) ** 2 * f01 - s * (1 - s) * f10
     W0 = np.dstack([P0, A0]); W1 = np.dstack([P1, A1])
     out = (1 - s) * warp(W0, Ft0) + s * warp(W1, Ft1)
-    return out[..., :3], out[..., 3]
+    lw = (1 - s) * warp(L0, Ft0) + s * warp(L1, Ft1)
+    return out[..., :3], out[..., 3], lw
 # ---------------------------------------------------------------- static layers
 def build_keep():
     """the base picture: the hero's own pixels everywhere, except behind the model's final silhouette, where the clean sky is used (the model moves; the hero's sky, bed and pillow do not)"""
@@ -69,7 +72,14 @@ def build_mat():
     shadow = cv2.GaussianBlur(down.astype(np.float32), (0, 0), 14) * cut
     return np.maximum(body, shadow)[..., None]
 MATM = build_mat()
-TM1 = np.load('TM1.npy').astype(np.float32)[..., None]; TM2 = np.load('TM2.npy').astype(np.float32)[..., None]
+TM1 = np.load('TM1.npy').astype(np.float32); TM2 = np.load('TM2.npy').astype(np.float32)
+# the garment's vertical edge beside 'HIGH SUPPORT' was caught by the words mask: laid as a static layer it stayed put while the body moved. Only real letters (bright white) stay in the mask.
+_L = H_.mean(-1); _strip = np.zeros(TM1.shape, bool); _strip[560:800, 240:300] = True
+_letters = cv2.dilate((_L >= 222).astype(np.uint8), np.ones((9, 9), np.uint8)) > 0          # real letters (and a margin round them) stay
+_strip &= ~_letters
+_strip = cv2.dilate(_strip.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0 & ~_letters
+TM1[_strip] = 0; TM2[_strip] = 0
+TM1 = TM1[..., None]; TM2 = TM2[..., None]
 # the hero's words are laid over the picture as a difference (word minus the picture around it), so no patch of the hero's own sky can show
 _med = np.dstack([cv2.medianBlur(H_.astype(np.uint8)[..., c], 31) for c in range(3)]).astype(np.float32)
 DELTA = (H_ - H_INP) * TM1 + (H_ - _med) * TM2 * DS      # words on the model / pillow; words on the sky only where the clean sky replaced the picture
@@ -89,7 +99,7 @@ def state(kind, t):
         wb = max(sstep(1 - BLEND / Tt, 1.0, u), 1 - sstep(0.0, 0.5, t))                                          # the first and the last moments are the hero's own pixels: nothing pops in or out
     return lam, wg, wb
 EDGE = (np.clip((1278 - np.arange(1280)) / 40, 0, 1)[None, :] * np.clip((np.arange(720)[:, None] - 2) / 50, 0, 1) ** 1.5).astype(np.float32)
-def tame(G, Fr, Ar):
+def tame(G, Fr, Ar, Lw):
     """skin: small bright glints and the broad shiny highlight are pulled back (edge-preserving medians at about 9 px and 60 px); hair: it stays hair (strands, depth) but
     its gloss is capped (no bright sheen band that reads as a dome / cap) and the detail the slow-down smoothed out is given back"""
     L = G @ np.array([.299, .587, .114], np.float32); L8 = np.clip(L, 0, 255).astype(np.uint8)
@@ -99,14 +109,18 @@ def tame(G, Fr, Ar):
     ex = 0.80 * np.maximum(L - m1 - 3, 0) + 0.70 * np.maximum(L - np.maximum(m2, m1) - 5, 0)
     ex = cv2.GaussianBlur(ex, (0, 0), 1.0)
     R, Gc, B = Fr[..., 0], Fr[..., 1], Fr[..., 2]; ls = (R + Gc + B) / 3; ch = (R - B) / (R + Gc + B + 1)
-    hair = cv2.GaussianBlur(np.clip((95 - ls) / 30, 0, 1) * (Ar > 0.5), (0, 0), 1.5)
-    skin = np.clip((ch - 0.08) / 0.06, 0, 1) * (1 - hair)
+    dark = (ls < 80) & (Ar > 0.5)
+    reg = cv2.morphologyEx(dark.astype(np.uint8), cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (41, 41)))      # the whole hair, the bright sheen arcs inside it too
+    reg = cv2.morphologyEx(reg, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8)) * (Ar > 0.5) * (ch < 0.15)                        # not the ear or the skin next to the hair
+    hair = cv2.GaussianBlur(reg.astype(np.float32), (0, 0), 2.0)
+    skin = np.clip((ch - 0.08) / 0.06, 0, 1) * (1 - hair) * (1 - np.clip(Lw * 1.6, 0, 1))            # not on the lace: its embroidery stays
     skin = cv2.GaussianBlur(skin, (0, 0), 2.0)
     L1 = L - ex * skin
     # hair: cap the gloss at a little above its own dark level, then restore fine detail
-    base = cv2.GaussianBlur(L * hair, (0, 0), 25) / np.maximum(cv2.GaussianBlur(hair, (0, 0), 25), 1e-3)
-    cap = base + 22
-    Lh = np.minimum(L, cap + 0.25 * np.maximum(L - cap, 0))
+    dk = dark.astype(np.float32)
+    base = cv2.GaussianBlur(L * dk, (0, 0), 25) / np.maximum(cv2.GaussianBlur(dk, (0, 0), 25), 1e-3)              # the hair's own dark level
+    cap = base + 10
+    Lh = np.minimum(L, cap + 0.10 * np.maximum(L - cap, 0))
     fine = Lh - cv2.GaussianBlur(Lh, (0, 0), 1.3)
     Lh = Lh + 0.95 * fine
     rng = np.random.default_rng(int(L.sum()) % 99991)
@@ -115,12 +129,12 @@ def tame(G, Fr, Ar):
     return G * (np.maximum(L2, 1) / np.maximum(L, 1))[..., None]
 def compose(kind, k, wb_off=True):
     t = k / FPS; lam, wg, wb = state(kind, t)
-    P, A = interp(lam)
+    P, A, Lw = interp(lam)
     P = P * EDGE[..., None]; A = A * EDGE
-    Pr = to_roi(P); Ar = to_roi(A)
+    Pr = to_roi(P); Ar = to_roi(A); Lwr = to_roi(Lw)
     Fr = Pr / np.maximum(Ar, 1e-3)[..., None]
     G = grade2.apply(np.clip(Fr, 0, 255), CURVE, GAIN, wg)
-    G = tame(G, Fr, Ar)
+    G = tame(G, Fr, Ar, Lwr)
     sh = cv2.GaussianBlur(G, (0, 0), 1.5); G = np.clip(G + 0.12 * (G - sh), 0, 255)
     nz = cv2.GaussianBlur(np.random.default_rng(1000 + k).normal(0, 1, (RH, RW)).astype(np.float32), (0, 0), 0.7) * 2.0
     G = np.clip(G + nz[..., None] * (1 - wb), 0, 255)
@@ -155,7 +169,7 @@ def frame(kind, k):
 if __name__ == '__main__':
     kind = sys.argv[1]; Tt, Ts, n = timeline(kind)
     a, b = (int(sys.argv[2]), int(sys.argv[3])) if len(sys.argv) > 3 else (0, n)
-    os.makedirs(f'o6_{kind}', exist_ok=True)
+    os.makedirs(f'o7_{kind}', exist_ok=True)
     for k in range(a, min(b, n)):
-        Image.fromarray(frame(kind, k)).save(f'o6_{kind}/f{k:04d}.png', compress_level=1)
+        Image.fromarray(frame(kind, k)).save(f'o7_{kind}/f{k:04d}.png', compress_level=1)
     print('frames', n)
