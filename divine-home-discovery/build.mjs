@@ -1,0 +1,224 @@
+// Divine DunlopDreams Home Discovery: build.
+//   node divine-home-discovery/build.mjs
+//
+// Product facts are NOT stored in this folder. The approved Collection 3.13.2 sources (src/data.mjs, src/nav.mjs) are read
+// straight from the pinned git commit (DHD_SOURCE_REF) with `git show`, written to .source/ (git-ignored) and imported from there.
+// Nothing is copied into the repository, so there is no second product database to drift.
+//
+// env:
+//   DHD_SOURCE_REF  commit that holds the approved Collection 3.13.2 sources (default: f4d9318, the commit the live loader is pinned to)
+//   DHD_REF         commit that will host THIS tool's release files on jsDelivr (default "main-preview" = not yet pinned)
+//   DHD_BASE        full base URL for dhd.css / dhd.js (overrides the jsDelivr URL; used for local previews)
+//   ESBUILD         path to esbuild's main.js (npm i esbuild@0.24.0); without it the CSS/JS are written unminified
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+
+const VERSION = '0.1.0';
+const SOURCE_VERSION = '3.13.2';
+const SOURCE_REF = process.env.DHD_SOURCE_REF || 'f4d9318a14f32ede544936f332f3ff4e5e800768';
+const REF = process.env.DHD_REF || 'main-preview';
+const here = path.dirname(fileURLToPath(import.meta.url));
+const repo = execFileSync('git', ['rev-parse', '--show-toplevel'], { cwd: here, encoding: 'utf8' }).trim();
+const BASE = process.env.DHD_BASE || `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-home-discovery/release/${VERSION}/`;
+// The Chillax files the live Hero 1.20.2 already loads (same URLs, so the browser cache is shared).
+const FONT_BASE = 'https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/assets/';
+// The one picture that lives in the collection's own release, not in the hero's assets.
+const OWN_ASSETS = `https://cdn.jsdelivr.net/gh/Matrress/Animation@${SOURCE_REF}/divine-collection/release/${SOURCE_VERSION}/assets/`;
+
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const out = (p, s) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, s); };
+
+// ---------- 1. approved sources, read from the pinned commit ----------
+function show(p) {
+  try { return execFileSync('git', ['show', `${SOURCE_REF}:${p}`], { cwd: repo, encoding: 'utf8', maxBuffer: 1 << 26, stdio: ['ignore', 'pipe', 'pipe'] }); }
+  catch (e) { throw new Error(`Cannot read ${p} at ${SOURCE_REF}. Fetch the approved branch first:  git fetch origin claude/divine-collection\n${e.stderr || e.message}`); }
+}
+const collBuild = show('divine-collection/build.mjs');
+if (!new RegExp(`const VERSION = '${SOURCE_VERSION.replace(/\./g, '\\.')}'`).test(collBuild)) throw new Error(`${SOURCE_REF} is not Collection ${SOURCE_VERSION}`);
+// design tokens of the approved firmness colours: parsed strictly (four `k: '#rrggbb'` pairs), never evaluated
+const firmBlock = /const FIRM_HEX = \{([^}]+)\};/.exec(collBuild);
+if (!firmBlock) throw new Error('FIRM_HEX not found in the approved build.mjs');
+const firmHex = Object.fromEntries([...firmBlock[1].matchAll(/\b([smfx]):\s*'(#[0-9a-fA-F]{6})'/g)].map((m) => [m[1], m[2]]));
+if (Object.keys(firmHex).length !== 4) throw new Error('expected four firmness colours');
+const srcDir = path.join(here, '.source', SOURCE_REF.slice(0, 12), 'divine-collection', 'src');
+const hashes = {};
+for (const f of ['data.mjs', 'nav.mjs']) {
+  const txt = show(`divine-collection/src/${f}`);
+  hashes[f] = crypto.createHash('sha256').update(txt).digest('hex');
+  out(path.join(srcDir, f), txt);
+}
+const { collections, FIRM, HERO_ASSETS } = await import(pathToFileURL(path.join(srcDir, 'data.mjs')).href);
+const { ROUTES, LABELS } = await import(pathToFileURL(path.join(srcDir, 'nav.mjs')).href);
+
+// ---------- 2. markup ----------
+const M = collections.mattress, T = collections.topper;
+const famOf = (c, m) => c.families.find((f) => f.models.includes(m.id));
+const label = (c, m) => (c === M && LABELS[m.id] ? LABELS[m.id].join(' · ') : famOf(c, m).name);
+const imgSrc = (m, big) => (big && m.img.big ? HERO_ASSETS + m.img.big : (m.img.own ? OWN_ASSETS : HERO_ASSETS) + m.img.src);
+const byName = (c, name) => c.models.find((x) => x.name === name);
+const F = (k) => `<span class="ddhd__f ddhd__f--${k}">${esc(FIRM[k])}</span>`;
+const stk = (t, b) => `<span class="ddhd__stk" aria-hidden="true"><i class="ddhd__f--${t}"></i><b class="ddhd__f--${b}"></b></span>`;
+
+function facts(m) {
+  const f = m.firm; let h = '';
+  if (f.levels) h = `<p class="ddhd__fz">${f.levels.map(F).join(' ')}</p>`;
+  else if (f.pairs) h = `<ul class="ddhd__ul">${f.pairs.map(([t, b]) => `<li>${stk(t, b)}<span>${F(t)} topper over ${F(b)} mattress</span></li>`).join('')}</ul>`;
+  else if (f.layers) h = `<ul class="ddhd__ul">${f.layers.map(([t, b]) => `<li>${stk(t, b)}<span>${F(t)} upper layer over ${F(b)} lower layer</span></li>`).join('')}</ul>`;
+  else if (f.split) h = `<ul class="ddhd__ul">${f.split.map(([a, b]) => `<li><span>${F(a)} + ${F(b)}</span></li>`).join('')}</ul>`;
+  else if (f.sides) h = `<ul class="ddhd__ul">${f.sides.map((k, i) => `<li><span>${F(k)} ${esc(f.sideNames[i].toLowerCase())}</span></li>`).join('')}</ul>`;
+  else if (f.text) h = `<p class="ddhd__fz">${f.text.map(([k, t]) => `<span class="ddhd__f ddhd__f--${k}">${esc(t)}</span>`).join(' ')}</p>`;
+  else throw new Error(`${m.id}: no firmness data`);
+  const title = f.pairs ? 'Firmness combinations' : f.layers ? 'Layer combinations' : f.split ? 'Firmness, one for each side' : 'Firmness';
+  return `<div class="ddhd__pf"><div><p class="ddhd__k">${title}</p>${h}</div><div><p class="ddhd__k">${esc(m.depth.label)}</p><p class="ddhd__dl">${m.depth.items.map((d) => `<span class="ddhd__d">${esc(d)}</span>`).join(' ')}</p></div></div>`;
+}
+
+// the preview of one model: built here, once, from the approved data; the script only inserts it
+function preview(c, m) {
+  const big = imgSrc(m, true);
+  const w = m.img.big ? m.img.bw : m.img.w, h = m.img.big ? m.img.bh : m.img.h;
+  const diff = (m.differs || []).map(([n, t]) => {
+    const o = byName(c, n);
+    return `<li>${o ? `<button type="button" class="ddhd__jump" data-jump="${o.id}">${esc(n)}</button>` : `<b>${esc(n)}</b>`} ${esc(t)}</li>`;
+  }).join('');
+  const dp = m.dp && c.dualPlush ? `<div class="ddhd__dp"><p class="ddhd__k">${esc(c.dualPlush.h)}</p><p>${esc(c.dualPlush.p)}</p></div>` : '';
+  return `<div class="ddhd__pv">
+<div class="ddhd__pv-l"><div class="ddhd__pv-fig"><img src="${big}" width="${w}" height="${h}" loading="lazy" decoding="async" alt="${esc(m.img.alt)}"></div>
+${facts(m)}</div>
+<div class="ddhd__pv-r"><div class="ddhd__pv-main">
+<p class="ddhd__crumb">${esc(label(c, m))}</p>
+<h4 class="ddhd__pv-name" id="ddhd-pv-${m.id}">${esc(m.name)}</h4>
+${m.type ? `<p class="ddhd__pv-type">${esc(m.type)}</p>` : ''}<p class="ddhd__what">${esc(m.what)}</p>
+<p class="ddhd__who"><b>Who it suits.</b> ${esc(m.who)}</p>
+<p class="ddhd__bld"><b>How it is built.</b> ${esc(m.build)}</p>
+</div>${dp}</div>
+${diff ? `<div class="ddhd__df"><p class="ddhd__k">How it differs</p><ul class="ddhd__ul ddhd__ul--p">${diff}</ul></div>` : ''}
+<div class="ddhd__pv-foot"><p class="ddhd__buy">${esc(c.buy)}</p><a class="ddhd__cta" data-ddhd-product="${m.id}" href="${m.url}">View ${esc(m.name)} &amp; buy</a></div>
+</div>`;
+}
+
+function card(c, m, kind) {
+  const fam = famOf(c, m);
+  return `<li class="ddhd__card" id="ddhd-m-${m.id}" data-id="${m.id}">
+<div class="ddhd__fig${m.img.photo ? ' ddhd__fig--photo' : ''}"><img src="${imgSrc(m)}" width="${m.img.w}" height="${m.img.h}" loading="lazy" decoding="async" alt="${esc(m.img.alt)}"></div>
+<div class="ddhd__bd"><p class="ddhd__lab">${esc(label(c, m))}${m.dp ? ' <span class="ddhd__dpb">+ topper</span>' : ''}</p>
+<h4 class="ddhd__nm"><a data-ddhd-product="${m.id}" href="${m.url}">${esc(m.name)}</a></h4>
+<p class="ddhd__ty">${esc(m.type || fam.says)}</p>
+<p class="ddhd__fn">${esc(m.fn || m.row)}</p></div>
+<p class="ddhd__ac"><button type="button" class="ddhd__more" aria-expanded="false"><span>Compare &amp; details</span><span class="ddhd__sr"> ${esc(m.name)}</span></button><a class="ddhd__go" href="${m.url}">View model<span class="ddhd__sr"> ${esc(m.name)}</span> &rarr;</a></p>
+</li>`;
+}
+
+const needs = ROUTES.map((r, i) => {
+  const first = r.models[0].id;
+  return `<li><a class="ddhd__chip" data-route="${i}" href="#ddhd-m-${first}">${esc(r.title)}</a></li>`;
+}).join('\n');
+
+function view(c, kind, id) {
+  const n = c.models.length;
+  const isM = kind === 'mattress';
+  return `<div class="ddhd__view" id="ddhd-${id}" data-view-panel="${id}">
+<div class="ddhd__vh"><h3 class="ddhd__q">${esc(c.question)}</h3><p class="ddhd__lede">${esc(c.lede)}</p></div>
+${isM ? `<div class="ddhd__needs"><p class="ddhd__needs-h" id="ddhd-needs-h">What matters most to you?</p>
+<ul class="ddhd__chips" aria-labelledby="ddhd-needs-h">
+<li class="ddhd__js"><a class="ddhd__chip ddhd__chip--all" data-route="all" href="#ddhd-mattress">All ${n} models</a></li>
+${needs}
+</ul>
+<div class="ddhd__guide ddhd__js" aria-live="polite" hidden></div></div>` : ''}
+<ul class="ddhd__grid ddhd__grid--${id}">
+${c.models.map((m) => card(c, m, id)).join('\n')}
+</ul>
+<ul class="ddhd__pr">${c.principles.map(([h, t]) => `<li><b>${esc(h)}</b> ${esc(t)}</li>`).join('')}</ul>
+<p class="ddhd__all"><a href="${c.url}" data-ddhd-collection="${id}">Open the full ${esc(c.label)} <span aria-hidden="true">&rarr;</span></a></p>
+</div>`;
+}
+
+const section = `<section class="ddhd" id="ddhd" data-ddhd-root aria-labelledby="ddhd-h">
+<div class="ddhd__in">
+<div class="ddhd__hd">
+<div class="ddhd__ht"><p class="ddhd__eb">Natural latex sleep systems</p>
+<h2 class="ddhd__h" id="ddhd-h">Find your <span>natural sleep solution</span></h2>
+<p class="ddhd__lede">Start with what you need: a new latex mattress, or a latex topper to improve the mattress you already have.</p></div>
+<nav class="ddhd__sw" aria-label="Choose a product type">
+<a class="ddhd__tab" href="#ddhd-mattress" data-tab="mattress"><span class="ddhd__tab-n">Latex mattresses</span><span class="ddhd__tab-c">${M.models.length} models</span></a>
+<a class="ddhd__tab" href="#ddhd-topper" data-tab="topper"><span class="ddhd__tab-n">Latex toppers</span><span class="ddhd__tab-c">${T.models.length} models</span></a>
+</nav>
+</div>
+${view(M, 'mattress', 'mattress')}
+${view(T, 'topper', 'topper')}
+</div>
+</section>`;
+
+// the tiny bootstrap that stays in the Ecwid field: marks the section as script-enhanced before first paint (no layout shift),
+// loads the one script, and takes the enhancement away again if the script cannot load (the static range then stays visible)
+const boot = `<script>(function(){var s=document.getElementById('ddhd');if(!s)return;s.classList.add('is-js');if(window.DDHD){window.DDHD.scan();return}var x=document.createElement('script');x.src='${BASE}dhd.js';x.defer=true;x.onerror=function(){s.classList.remove('is-js')};document.head.appendChild(x);setTimeout(function(){if(!window.DDHD)s.classList.remove('is-js')},8000)})();</script>`;
+
+const header = `<!-- Divine DunlopDreams Home Discovery ${VERSION} · product data: Collection ${SOURCE_VERSION} @ ${SOURCE_REF.slice(0, 12)} · generated by divine-home-discovery/build.mjs: edit the collection's src/data.mjs or src/nav.mjs and rebuild, not this file -->`;
+const embed = `${header}\n<link rel="stylesheet" href="${BASE}dhd.css">\n${section}\n${boot}\n`;
+
+// ---------- 3. data for the script (previews, route guidance) ----------
+const previews = {}, names = {};
+for (const c of [M, T]) for (const m of c.models) { previews[m.id] = preview(c, m); names[m.id] = { n: m.name, v: c === M ? 'mattress' : 'topper' }; }
+const routes = ROUTES.map((r) => ({ t: r.title, need: r.need, a: r.answer, m: r.models.map((x) => ({ id: x.id, l: x.line })) }));
+for (const r of ROUTES) for (const x of r.models) if (!names[x.id]) throw new Error(`route model ${x.id} is not in data.mjs`);
+
+// ---------- 4. css / js ----------
+function importantize(css) {
+  // every declaration of a style rule gets !important (Ecwid's id-prefixed storefront CSS would otherwise win); custom properties, @font-face and @keyframes stay as written
+  const decls = (b) => b.split(/;(?![^(]*\))/).map((d) => (!d.trim() || /^\s*--/.test(d) || /!important/.test(d) ? d : d.replace(/\s*$/, '') + ' !important')).join(';');
+  let i = 0, o = '';
+  while (i < css.length) {
+    if (/\s/.test(css[i])) { o += css[i++]; continue; }
+    if (css.startsWith('/*', i)) { const e = css.indexOf('*/', i); o += css.slice(i, e + 2); i = e + 2; continue; }
+    const b = css.indexOf('{', i); if (b < 0) { o += css.slice(i); break; }
+    const pre = css.slice(i, b); let depth = 1, j = b + 1;
+    while (depth && j < css.length) { if (css[j] === '{') depth++; else if (css[j] === '}') depth--; j++; }
+    const body = css.slice(b + 1, j - 1);
+    if (/^\s*@(media|container|supports|layer)/.test(pre)) o += pre + '{' + importantize(body) + '}';
+    else if (/^\s*@(font-face|keyframes|-webkit-keyframes)/.test(pre)) o += pre + '{' + body + '}';
+    else o += pre + '{' + decls(body) + '}';
+    i = j;
+  }
+  return o;
+}
+const tokens = `.ddhd{${Object.entries(firmHex).map(([k, v]) => `--ddhd-f-${k}:${v}`).join(';')}}`;
+const fonts = `@font-face{font-family:DDHDChillax;src:url(${FONT_BASE}chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:DDHDChillax;src:url(${FONT_BASE}chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}`;
+let css = fonts + '\n' + tokens + '\n' + importantize(fs.readFileSync(path.join(here, 'src/dhd.css'), 'utf8'));
+let js = fs.readFileSync(path.join(here, 'src/dhd.js'), 'utf8')
+  .replaceAll('__VERSION__', () => VERSION)   // function replacers: a "$" in the data must never be read as a replacement pattern
+  .replace('__PREVIEWS__', () => JSON.stringify(previews))
+  .replace('__ROUTES__', () => JSON.stringify(routes))
+  .replace('__NAMES__', () => JSON.stringify(names));
+let minified = false;
+if (process.env.ESBUILD) {
+  const { transformSync } = await import(pathToFileURL(process.env.ESBUILD).href);
+  css = transformSync(css, { loader: 'css', minify: true }).code;
+  js = transformSync(js, { loader: 'js', minify: true, target: 'es2019' }).code;
+  minified = true;
+}
+
+// ---------- 5. content guards (the owner's standing rules) ----------
+const text = embed.replace(/<[^>]+>/g, ' ') + JSON.stringify(previews);
+const guards = [
+  [/[£€$]\s?\d|\b\d[\d.,]*\s?(GBP|EUR)\b|\bfrom\s+[£€$]/i, 'a price (a currency amount)'],
+  [/\b(her|him|she|he|woman|man)\b/i, 'gendered wording'],
+  [/approximately|\babout \d/i, '"approximately"'],
+  [/<h1/i, 'an H1'],
+  [/latest-design-latex-mattresses-cloud-comfort/, 'the retired Bio Comfort URL'],
+];
+for (const [re, what] of guards) if (re.test(embed + JSON.stringify(previews))) throw new Error(`content guard: output contains ${what}`);
+const cards = (embed.match(/class="ddhd__card"/g) || []).length;
+if (cards !== M.models.length + T.models.length) throw new Error(`expected ${M.models.length + T.models.length} cards, got ${cards}`);
+for (const m of [...M.models, ...T.models]) if (!embed.includes(`href="${m.url}"`)) throw new Error(`${m.id}: product link missing`);
+if (M.models.length !== 8 || T.models.length !== 3) throw new Error('expected 8 mattresses and 3 toppers');
+
+// ---------- 6. write ----------
+const rel = path.join(here, 'release', VERSION);
+out(path.join(rel, 'dhd.css'), css);
+out(path.join(rel, 'dhd.js'), js);
+out(path.join(here, 'ecwid', `section-${VERSION}.html`), embed);
+out(path.join(rel, 'SOURCES.json'), JSON.stringify({ tool: VERSION, collection: SOURCE_VERSION, sourceCommit: SOURCE_REF, sha256: hashes, fonts: FONT_BASE, images: [HERO_ASSETS, OWN_ASSETS] }, null, 2) + '\n');
+console.log(`ddhd ${VERSION} source=${SOURCE_REF.slice(0, 12)} base=${BASE}`);
+console.log(`section ${embed.length} chars (${Buffer.byteLength(embed)} B) · css ${Buffer.byteLength(css)} B · js ${Buffer.byteLength(js)} B${minified ? '' : ' (unminified: set ESBUILD)'} · ${cards} cards`);
