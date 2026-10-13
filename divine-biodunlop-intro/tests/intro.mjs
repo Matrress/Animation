@@ -4,13 +4,12 @@ const URL = (process.env.BASE || 'http://127.0.0.1:8766') + '/divine-biodunlop-i
 let pass = 0, fail = 0; const ok = (c, m) => { if (c) pass++; else { fail++; console.log('  FAIL', m); } };
 const b = await chromium.launch();
 const st = (p) => p.evaluate(() => document.documentElement.getAttribute('data-ddb'));
-const SEEN = () => sessionStorage.setItem('ddb-seen', '1');
 async function page(opts = {}, init) {
   const ctx = await b.newContext({ viewport: opts.vp || { width: 1440, height: 900 }, reducedMotion: opts.rm ? 'reduce' : 'no-preference', hasTouch: !!opts.touch, isMobile: !!opts.mobile });
   const pg = await ctx.newPage(); const media = [];
-  pg.on('request', (r) => /ddb-(turn|settle|latex|poster)/.test(r.url()) && media.push(r.url()));
+  pg.on('request', (r) => /ddb-(turn|again|latex|poster)/.test(r.url()) && media.push(r.url()));
   if (init) await pg.addInitScript(init);
-  if (opts.seen) await pg.addInitScript(SEEN);
+  if (opts.seen) { const g = pg.goto.bind(pg); pg.goto = (u, o) => g(u + (u.includes('?') ? '&' : '?') + 'ddb=2', o); }      // ?ddb=2: the opening is skipped, the turns still work
   await pg.addInitScript(() => { window.__cls = 0; window.__ddbShift = 0; window.__lcp = []; new PerformanceObserver((l) => l.getEntries().forEach((e) => { if (!e.hadRecentInput) window.__cls += e.value; if ((e.sources || []).some((x) => x.node && x.node.closest && x.node.closest('.ddb,.ddb-line,.ddb-skip,.ddb-lx'))) window.__ddbShift += e.value; })).observe({ type: 'layout-shift', buffered: true }); new PerformanceObserver((l) => l.getEntries().forEach((e) => window.__lcp.push([Math.round(e.startTime), e.element && (e.element.className || e.element.tagName), e.size]))).observe({ type: 'largest-contentful-paint', buffered: true }); });
   if (opts.route) await ctx.route(/ddb-turn-.*\.(mp4|webm)/, opts.route);
   return { ctx, pg, media };
@@ -25,7 +24,7 @@ async function settled(p) {            // idle, with the "turn again" film ready
   await p.waitForFunction(() => { const v = document.querySelector('.ddb video[data-role=again]'); return v && v.readyState >= 3; }, null, { timeout: 20000 });
 }
 
-{ // 1. desktop, first visit: the clean hero, the body turns and settles, then the hotspots appear
+{ // 1. desktop: the clean hero, the body turns slowly, THEN the hotspots appear
   const { ctx, pg, media } = await page();
   await pg.goto(URL); await pg.waitForTimeout(500);
   ok(await st(pg) === 'play' && await phase(pg) === 'opening', 'desktop: the opening turn plays on the first visit (' + await st(pg) + '/' + await phase(pg) + ')');
@@ -53,7 +52,9 @@ async function settled(p) {            // idle, with the "turn again" film ready
   ok(await pg.evaluate(() => window.__ddbShift) === 0, 'desktop: the intro causes no layout shift (page CLS ' + (await pg.evaluate(() => window.__cls)).toFixed(4) + ', the same as Hero 1.20.2 alone)');
   console.log('  LCP entries', JSON.stringify(await pg.evaluate(() => window.__lcp)));
   await pg.reload(); await pg.waitForTimeout(400);
-  ok(await st(pg) === null && !(await pg.$('.ddb video[data-role=open]')) && await ptsVisible(pg), 'same session: no replay, the hotspots are there at once');
+  ok(await st(pg) === 'play' && await phase(pg) === 'opening' && !(await ptsVisible(pg)), 'a reload of the page plays the opening again, without hotspots (' + await st(pg) + ')');
+  await pg.goto(URL + '?ddb=2'); await pg.waitForTimeout(500);
+  ok(await st(pg) === null && await ptsVisible(pg), '?ddb=2: no opening, the hotspots are there at once');
   await ctx.close();
 }
 { // 2. Skip by button and by Escape
@@ -70,7 +71,7 @@ async function settled(p) {            // idle, with the "turn again" film ready
 { // 3. reduced motion, phone, Data Saver, 3G: no body movement; the final state and the hotspots at once
   for (const [name, opts, init, pts] of [['reduced motion', { rm: true }, null, true], ['phone 390x844', { vp: { width: 390, height: 844 }, touch: true, mobile: true }, null, false], ['Data Saver', {}, () => Object.defineProperty(navigator, 'connection', { value: { saveData: true, effectiveType: '4g' } }), true], ['3g', {}, () => Object.defineProperty(navigator, 'connection', { value: { saveData: false, effectiveType: '3g' } }), true]]) {
     const { ctx, pg, media } = await page(opts, init); await pg.goto(URL); await pg.waitForTimeout(1300);
-    ok(await st(pg) === null && !media.some((u) => /ddb-(turn|settle)/.test(u)), `${name}: no body movement, no film downloaded (${media.length})`);
+    ok(await st(pg) === null && !media.some((u) => /ddb-(turn|again)/.test(u)), `${name}: no body movement, no film downloaded (${media.length})`);
     if (pts) ok(await ptsVisible(pg), `${name}: the hotspots are there immediately`);
     await ctx.close();
   }
@@ -88,12 +89,13 @@ async function settled(p) {            // idle, with the "turn again" film ready
   ok(JSON.stringify(await box(pg, '.ddb')) === JSON.stringify(await box(pg, '.ddh__img')), 'tablet: the stage lies exactly on the hero picture');
   await ctx.close();
 }
-{ // 6. Spinal Alignment: hotspots suspended, the body turns and settles, THEN the old animation starts
+{ // 6. Spinal Alignment: the body turns the moment the point is used, hotspots suspended, THEN the old animation starts
   const { ctx, pg } = await page({ seen: true });
   await pg.goto(URL); await settled(pg);
   ok(await st(pg) === null && await ptsVisible(pg), 'spinal: the hotspots are there (the opening was seen)');
   const bc = await centre(pg, '[data-ddh-point="back"]'); await pg.mouse.move(bc[0], bc[1]); await pg.waitForTimeout(350);
   ok(await phase(pg) === 'turn' && await hstate(pg) === 'back', 'spinal: the body movement starts (' + await phase(pg) + '/' + await hstate(pg) + ')');
+  ok(await pg.evaluate(() => { const v = document.querySelector('.ddb video[data-role=again]'); return !v.paused && v.currentTime > 0.1 && v.currentTime < 1.2; }), 'spinal: the film is already running 0.35 s after the touch (' + await pg.evaluate(() => document.querySelector('.ddb video[data-role=again]').currentTime.toFixed(2)) + ' s)');
   ok(await pg.evaluate(() => getComputedStyle(document.querySelector('.ddh__screen--back')).display) === 'none', 'spinal: the Spinal Alignment screen waits while the body moves');
   ok(await pg.evaluate(() => document.querySelector('.ddh__points').hasAttribute('inert')), 'spinal: the other hotspots are suspended');
   const fc = await centre(pg, '[data-ddh-point="firmness"]'); await pg.mouse.move(fc[0], fc[1]); await pg.waitForTimeout(300);
@@ -146,6 +148,7 @@ async function settled(p) {            // idle, with the "turn again" film ready
     ok(info.bg && info.text === '', `${tag}: poster fallback present, no text over the video`);
     if (mode === 'side') {
       ok(/^26px/.test(info.rad), `${tag}: same corner radius as the card (${info.rad})`);
+      await pg.waitForFunction(() => !document.querySelector('.ddb-lx').getAnimations().length, null, { timeout: 5000 }).catch(() => {});
       const wb = await box(pg, '.ddb-lx'), pb = await box(pg, '.ddh__plane');
       ok(Math.abs(wb[0] - (pb[0] + pb[2] * .033)) <= 2 && Math.abs(wb[2] - pb[2] * .394) <= 2, `${tag}: the window lies in the marked area (${wb} in ${pb})`);
       const cb = await box(pg, '[data-ddh-card="zones"]'); ok(wb[0] + wb[2] < cb[0] - 4, `${tag}: it does not touch the card (${wb[0] + wb[2]} < ${cb[0]})`);

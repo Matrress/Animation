@@ -1,7 +1,7 @@
-# Film v2 of the turning model. Everything is laid into Hero 1.20.2's own picture (words, mattress, bed and sky stay the hero's), the model is
-# slowed, relit from the hero photo, moved by a few soft anatomical motions (shoulder, shoulder blade, back, weight sinking into the bed),
-# and the last frame is exactly the hero picture.
-#   usage: film2.py A|B [first last]        A = the opening turn, B = the re-settle (hero pose -> a small roll back -> hero pose)
+# Film v3 of the turning model (0.3.0-dev). Everything is laid into Hero 1.20.2's own picture (words, mattress, bed and sky stay the hero's), the model
+# is slowed right down and relit from the hero photo. It is a plain, smooth ROTATION: no settling, no extra shoulder / blade / back movements (the owner
+# asked for the earlier look back). The last frame is exactly the hero picture.
+#   usage: film3.py A|B [first last]        A = the opening turn (supine -> side, 9.6 s), B = the turn again (hero pose -> rolls back -> turns forward again)
 import numpy as np, cv2, os, sys
 from PIL import Image
 from geo import *
@@ -57,61 +57,32 @@ TM1 = np.load('TM1.npy').astype(np.float32)[..., None]; TM2 = np.load('TM2.npy')
 # the hero's words are laid over the picture as a difference (word minus the picture around it), so no patch of the hero's own sky can show
 _med = np.dstack([cv2.medianBlur(H_.astype(np.uint8)[..., c], 31) for c in range(3)]).astype(np.float32)
 DELTA = (H_ - H_INP) * TM1 + (H_ - _med) * TM2 * DS      # words on the model / pillow; words on the sky only where the clean sky replaced the picture
-# ---------------------------------------------------------------- motion
-BLOBS = dict(scap=(470, 690, 85), shoulder=(330, 500, 120))
-YY, XX = np.mgrid[RY0:RY0 + RH, RX0:RX0 + RW].astype(np.float32)
-W_SINK = (sstep(760, 960, YY) * (1 - sstep(1000, 1200, XX))).astype(np.float32)
-def gauss(cx, cy, s): return np.exp(-(((XX - cx) / s) ** 2 + ((YY - cy) / s) ** 2) / 2).astype(np.float32)
-G_SCAP = gauss(*BLOBS['scap']); G_SH = gauss(*BLOBS['shoulder']); G_BACK = gauss(560, 640, 150)
-R2 = ((XX - 560) ** 2 + (YY - 760) ** 2)
-def disp(ts, breathe):
-    """displacement field (dx, dy) in hero-picture pixels for settle-time ts (seconds after the turn ended); all of it is zero when ts >= Ts"""
-    Ts = 2.0
-    fin = 1 - sstep(1.55, Ts, ts)                                                           # everything is back to the hero pose exactly at the end
-    sink = ease(ts / 0.55) * (1 - ease((ts - 0.55) / 1.35)) - 0.14 * np.sin(np.pi * np.clip((ts - 1.3) / 0.7, 0, 1))
-    env = np.exp(-ts / 0.85) * fin
-    sc = 5.5 * env * np.sin(2 * np.pi * 2.3 * ts) * (1 - np.exp(-max(ts, 0) / 0.12))
-    relax = -8.0 * sstep(0, 0.35, ts) * (1 - ease((ts - 0.35) / 1.4))                      # the upper shoulder rises a little with the arrival, then lets go (delayed)
-    bump = sstep(0, 0.5, ts) * (1 - ease((ts - 0.5) / 1.3))                                   # the upper back gives a little, a moment later
-    br = breathe * np.sin(2 * np.pi * (ts / 3.2) - np.pi / 2)
-    dx = np.zeros_like(XX); dy = np.zeros_like(XX)
-    if ts >= 0:
-        dy += 9.0 * sink * W_SINK
-        dx += 0.74 * sc * G_SCAP; dy += -0.67 * sc * G_SCAP
-        dy += relax * G_SH; dx += 0.15 * relax * G_SH
-        dy += 4.0 * bump * G_BACK; dx += -1.6 * bump * G_BACK
-    k = br * np.exp(-R2 / (2 * 330.0 ** 2)) * fin                                          # the back breathes: a very slight swell around the middle of the back
-    dx += (XX - 560) * k; dy += (YY - 760) * k * 0.8
-    return dx, dy
 # ---------------------------------------------------------------- timeline
+TURN_A, TURN_B, HOLD = 9.6, 7.8, 0.9      # seconds: the slow turn / the turn again / the last stretch in which the model's pixels become the hero photo's
+BACK_R, BACK_U = 66, 0.30                 # B: rolls back by 66 of the 108 source frames (about 60 %), in the first 30 % of its time
 def timeline(kind):
-    if kind == 'A': Tt, Ts = 6.4, 2.0
-    else: Tt, Ts = 3.2, 2.0
-    n = int(round((Tt + Ts) * FPS)); return Tt, Ts, n
+    Tt = TURN_A if kind == 'A' else TURN_B
+    n = int(round((Tt + HOLD) * FPS)); return Tt, HOLD, n
 def state(kind, t):
     Tt, Ts, n = timeline(kind)
     if t < Tt:
         u = t / Tt
-        if kind == 'A': tau = 8 + 108 * ((1 - 0.85) * u + 0.85 * ease(u) + 0.014 * np.sin(2 * np.pi * 1.6 * u) * np.sin(np.pi * u) ** 2); ts = -1; wg = sstep(.5, 1.0, u); br = 0.0035 * sstep(.6, 1, u)
-        else: b = np.sin(np.pi * ease(u)) ** 2; tau = 116 - 20 * b; ts = -1; wg = 1.0; br = 0.0012
+        if kind == 'A': tau = 8 + 108 * ease(u); wg = sstep(.5, 1.0, u)               # slow start, a long soft arrival; the hero's light is ramped in as the body arrives
+        else:
+            tau = 116 - BACK_R * ease(u / BACK_U) if u < BACK_U else 116 - BACK_R + BACK_R * ease((u - BACK_U) / (1 - BACK_U)); wg = 1.0
+        ts = -1
     else:
-        tau = 116; ts = t - Tt; wg = 1.0; br = 0.0035 * (1 - sstep(1.2, 2.0, ts)) if kind == 'A' else 0.0030 * (1 - sstep(1.2, 2.0, ts))
-    wb = sstep(Ts - 0.9, Ts, ts) if ts >= 0 else 0.0                                       # the last 0.9 s: the model's pixels become the hero photo's
-    return tau, ts, wg, br, wb
+        tau = 116; ts = t - Tt; wg = 1.0
+    wb = sstep(Ts - HOLD, Ts, ts) if ts >= 0 else 0.0
+    return tau, ts, wg, wb
 EDGE = (np.clip((1278 - np.arange(1280)) / 40, 0, 1)[None, :] * np.clip((np.arange(720)[:, None] - 2) / 50, 0, 1) ** 1.5).astype(np.float32)
 def frame(kind, k):
-    t = k / FPS; tau, ts, wg, br, wb = state(kind, t)
+    t = k / FPS; tau, ts, wg, wb = state(kind, t)
     P, A = interp(tau)
     P = P * EDGE[..., None]; A = A * EDGE
     Pr = to_roi(P); Ar = to_roi(A)
     Fr = Pr / np.maximum(Ar, 1e-3)[..., None]
     G = grade2.apply(np.clip(Fr, 0, 255), CURVE, GAIN, wg)
-    if ts >= 0 or br:
-        dx, dy = disp(ts if ts >= 0 else -1, br)
-        mx, my = XX - RX0 - dx, YY - RY0 - dy
-        pk = np.dstack([G * Ar[..., None], Ar]).astype(np.float32)
-        pk = cv2.remap(pk, mx.astype(np.float32), my.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
-        Ar = np.clip(pk[..., 3], 0, 1); G = pk[..., :3] / np.maximum(Ar, 1e-3)[..., None]
     if True:
         sh = cv2.GaussianBlur(G, (0, 0), 1.5); G = np.clip(G + 0.28 * (G - sh), 0, 255)
         nz = cv2.GaussianBlur(np.random.default_rng(1000 + k).normal(0, 1, (RH, RW)).astype(np.float32), (0, 0), 0.7) * 2.0
@@ -126,7 +97,7 @@ def frame(kind, k):
 if __name__ == '__main__':
     kind = sys.argv[1]; Tt, Ts, n = timeline(kind)
     a, b = (int(sys.argv[2]), int(sys.argv[3])) if len(sys.argv) > 3 else (0, n)
-    os.makedirs(f'out_{kind}', exist_ok=True)
+    os.makedirs(f'o3_{kind}', exist_ok=True)
     for k in range(a, min(b, n)):
-        Image.fromarray(frame(kind, k)).save(f'out_{kind}/f{k:04d}.png')
+        Image.fromarray(frame(kind, k)).save(f'o3_{kind}/f{k:04d}.png')
     print('frames', n)

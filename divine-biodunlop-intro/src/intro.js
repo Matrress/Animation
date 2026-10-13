@@ -1,11 +1,11 @@
-/*! Divine DunlopDreams BioDunlop intro 0.2.0-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
+/*! Divine DunlopDreams BioDunlop intro 0.3.0-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
 (function (w, d) {
   'use strict';
   var H = d.documentElement, base = ((d.currentScript && d.currentScript.src) || '').replace(/[^\/]*$/, '');
-  var root, plane, stage, win, fig, winV, figV, skip, film, pts, mo, booted = false, waits = 0, startT = 0, prevState = '', lx = '', dwellT = 0, inLogo = false;
+  var root, plane, stage, win, fig, winV, figV, skip, film, again, pts, mo, booted = false, waits = 0, startT = 0, prevState = '', lx = '', dwellT = 0, inLogo = false;
   // ---- the ONE state controller: phase is 'off' (nothing allowed), 'opening' (the first turn), 'idle', or 'turn' (the turn again). Every trigger asks here first.
   var ctl = { phase: 'off', last: 0, hold: false };
-  var COOL = 2500, LOGO_COOL = 8000, DWELL = 800, STARTS = 4000;
+  var COOL = 600, LOGO_COOL = 8000, DWELL = 800, STARTS = 4000, WAIT = 900;
   var LOGO = { l: .35, t: .26, w: .30, h: .10 };                 // the wordmark in the hero picture (fractions of the picture); never covered by an element
   var LXR = { l: .033, t: .356, w: .394, h: .342 };               // the natural-sourcing window in the hero picture (fractions)
   var calmQ = w.matchMedia ? w.matchMedia('(prefers-reduced-motion:reduce)') : { matches: false };
@@ -49,10 +49,10 @@
 
   // ------------------------------------------------------------------------------------------------ the opening turn (page load): hotspots wait until the body has settled
   function opening() {
-    ctl.phase = 'opening'; mark();                // returning from a product page never replays it
+    ctl.phase = 'opening'; mark();
     var v = mk('assets/ddb-turn-' + size()); film = v;
     v.lastChild.addEventListener('error', function () { endOpening(true); }); v.addEventListener('error', function () { endOpening(true); });
-    v.addEventListener('playing', function () { v.setAttribute('data-on', ''); showSkip(); }, { once: true });
+    v.addEventListener('playing', function () { v.setAttribute('data-on', ''); showSkip(); prime(); }, { once: true });   // the turn again is fetched while the first turn plays, so the Spinal Alignment point answers at once
     v.addEventListener('ended', function () { endOpening(false); });
     stage.appendChild(v); inertPoints(true);
     skip = d.createElement('button'); skip.type = 'button'; skip.className = 'ddb-skip';
@@ -87,39 +87,43 @@
     var ms = fast ? 250 : 450; if (fast) stage.style.transitionDuration = '.25s';
     w.setTimeout(function () {
       if (v) { v.removeAttribute('src'); while (v.firstChild) v.removeChild(v.firstChild); try { v.load(); } catch (e) {} if (v.parentNode) v.parentNode.removeChild(v); }
-      film = null; H.removeAttribute('data-ddb'); inertPoints(false);
+      film = null; H.removeAttribute('data-ddb'); inertPoints(false); prime();
       H.setAttribute('data-ddb-lit', '');      // the body is still: the hotspots light up one after another, then pulse as always
       w.setTimeout(function () { H.removeAttribute('data-ddb-lit'); }, 1800);
-      ctl.phase = 'idle'; ctl.last = now(); idle();
+      ctl.phase = 'idle'; ctl.last = 0; idle();
     }, ms);
   }
 
   // ------------------------------------------------------------------------------------------------ the turn again (Spinal Alignment point, the wordmark)
-  function idle() {
-    if (!anim() || busy()) { return; } if (ctl.phase === 'off') ctl.phase = 'idle';
-    var go = function () { if (film || !stage || !anim()) return; film = mk('assets/ddb-settle-' + size()); film.setAttribute('data-role', 'again'); stage.appendChild(film); };
-    if (w.requestIdleCallback) w.requestIdleCallback(go, { timeout: 4000 }); else w.setTimeout(go, 2500);
+  function idle() { if (!anim() || busy()) return; if (ctl.phase === 'off') ctl.phase = 'idle'; prime(); }
+  function prime() {   // the turn again film: requested once, as early as it can be (it is small), never twice
+    if (again || !stage || !anim()) return;
+    again = mk('assets/ddb-again-' + size()); again.setAttribute('data-role', 'again'); stage.appendChild(again);
   }
-  function ready() { return !!film && film.getAttribute('data-role') === 'again' && film.readyState >= 3; }
-  // kind: 'back' (the Spinal Alignment point: the screen waits for the body) or 'logo' (the hidden wordmark)
+  function ready() { return !!again && again.readyState >= 3; }
+  // kind: 'back' (the Spinal Alignment point: the screen waits for the body) or 'logo' (the hidden wordmark). The body starts to move at the moment of the touch.
   function turn(kind) {
     if (!anim() || ctl.phase !== 'idle' || now() - ctl.last < (kind === 'logo' ? LOGO_COOL : COOL)) return false;
     if (kind === 'logo' && (root.getAttribute('data-ddh-state') || lx)) return false;      // never interrupts an open card
-    if (!ready()) return false;                                                             // the film is not there yet: the hero simply works as always
+    prime(); if (!again) return false;
     ctl.phase = 'turn'; ctl.hold = kind === 'back';
     if (ctl.hold) H.setAttribute('data-ddb-hold', '');
-    inertPoints(true);
-    try { film.currentTime = 0; } catch (e) {}
-    film.setAttribute('data-on', ''); H.setAttribute('data-ddb-turn', '');
-    film.addEventListener('ended', endTurn, { once: true }); ctl.t = w.setTimeout(endTurn, 9000);
-    var p = film.play(); if (p && p.catch) p.catch(endTurn);
+    inertPoints(true); ctl.t = w.setTimeout(endTurn, 14000);
+    if (ready()) go(); else { again.addEventListener('canplay', go, { once: true }); ctl.w = w.setTimeout(function () { if (ctl.phase === 'turn' && !ctl.on) endTurn(); }, WAIT); }   // pressed before the film arrived: a moment's grace, then the hero simply works
     return true;
   }
+  function go() {
+    if (ctl.phase !== 'turn' || ctl.on) return; ctl.on = true; w.clearTimeout(ctl.w);
+    try { again.currentTime = 0; } catch (e) {}
+    again.setAttribute('data-on', ''); H.setAttribute('data-ddb-turn', '');
+    again.addEventListener('ended', endTurn, { once: true });
+    var p = again.play(); if (p && p.catch) p.catch(endTurn);
+  }
   function endTurn() {
-    if (ctl.phase !== 'turn') return; w.clearTimeout(ctl.t);
-    ctl.phase = 'idle'; ctl.last = now(); ctl.hold = false;
+    if (ctl.phase !== 'turn') return; w.clearTimeout(ctl.t); w.clearTimeout(ctl.w);
+    ctl.phase = 'idle'; ctl.last = now(); ctl.hold = false; ctl.on = false;
     H.removeAttribute('data-ddb-turn'); H.removeAttribute('data-ddb-hold');      // the last frame is the hero: nothing changes, and the held screen starts now
-    var v = film; if (v) { try { v.pause(); v.currentTime = 0; } catch (e) {} v.removeAttribute('data-on'); }
+    var v = again; if (v) { try { v.pause(); v.currentTime = 0; } catch (e) {} v.removeAttribute('data-on'); }
     inertPoints(false);
   }
   // the wordmark: a mouse resting on it for about 0.8 s (a crossing does nothing); no element lies over it, so its own clicks and the page are untouched; not on touch
@@ -187,6 +191,6 @@
       var p = v.play(); if (p && p.catch) p.catch(function () {});
     }
   }
-  w.DDBIntro = { boot: boot, version: '0.2.0-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
+  w.DDBIntro = { boot: boot, version: '0.3.0-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
 })(window, document);

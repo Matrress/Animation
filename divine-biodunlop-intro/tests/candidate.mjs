@@ -50,13 +50,15 @@ for (const mode of ['static', 'fragment', 'scripts-first']) {
   await page.mouse.move(c[0], c[1]); await page.waitForTimeout(400);
   ok(await page.evaluate(() => document.querySelector('.ddh').getAttribute('data-ddh-state')) === 'firmness', `${mode}: the hero works after the intro`);
   await page.reload(); await page.waitForTimeout(500);
-  if (mode === 'static') ok(await st(page) === null, 'static: a reload in the same session does not replay it');
+  if (mode === 'static') ok(['pending', 'play'].includes(await st(page)), 'static: a reload plays the opening again (' + await st(page) + ')');
   await ctx.close();
 }
 { // ?ddb=1 plays it again in the same session; ?ddb=0 switches it off
   const { ctx, page } = await open('static'); await page.waitForTimeout(600); await page.click('.ddb-skip');
+  await page.goto('https://shop.test/?ddb=2'); await page.waitForTimeout(700);
+  ok(await st(page) === null, '?ddb=2: no opening');
   await page.goto('https://shop.test/?ddb=1'); await page.waitForTimeout(700);
-  ok(await st(page) === 'play', '?ddb=1: plays again in the same session');
+  ok(await st(page) === 'play', '?ddb=1: plays');
   await page.goto('https://shop.test/?ddb=0'); await page.waitForTimeout(500);
   ok(await st(page) === null, '?ddb=0: off'); await ctx.close();
 }
