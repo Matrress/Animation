@@ -1,13 +1,14 @@
-<!-- Divine DunlopDreams Hero 1.20.2 + BioDunlop intro 0.1.0-dev (development candidate 1.21.0-dev, NOT for production) | one Instant Site "Embed & Custom Code" section | CSS/JS/assets: https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/ -->
+<!-- Divine DunlopDreams Hero 1.20.2 + BioDunlop intro 0.2.0-dev (development candidate 1.21.0-dev, NOT for production) | one Instant Site "Embed & Custom Code" section | CSS/JS/assets: https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/ -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preload" href="https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/assets/chillax-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/hero.css">
 <script src="https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/hero.js" defer></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Matrress/Animation@5f280cb96a1999dba57b48d136e46a16c32877b8/divine-biodunlop-intro/release/0.1.0-dev/intro.css">
-<script src="https://cdn.jsdelivr.net/gh/Matrress/Animation@5f280cb96a1999dba57b48d136e46a16c32877b8/divine-biodunlop-intro/release/0.1.0-dev/intro.js" defer></script>
-<!-- BioDunlop intro gate (must stay BEFORE <section class="ddh">). One switch: set ON=0 to switch the intro off everywhere.
-     Testing: add ?ddb=1 to the page address to play it again (ignores "already seen" and the connection checks); ?ddb=0 turns it off. -->
-<script>(function(){var ON=1,H=document.documentElement;try{var q=location.search,m=function(x){return matchMedia(x).matches},c=navigator.connection||{};if(ON&&!/[?&]ddb=0(&|$)/.test(q)&&m('(min-width:701px) and (min-height:501px)')&&!m('(prefers-reduced-motion: reduce)')&&(/[?&]ddb=1(&|$)/.test(q)||!c.saveData&&!/(^|-)2g|3g/.test(c.effectiveType||'')&&!sessionStorage.getItem('ddb-seen'))){H.setAttribute('data-ddb','pending');setTimeout(function(){if(H.getAttribute('data-ddb')==='pending')H.removeAttribute('data-ddb')},4500)}}catch(e){}})()</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Matrress/Animation@<COMMIT>/divine-biodunlop-intro/release/0.2.0-dev/intro.css">
+<script src="https://cdn.jsdelivr.net/gh/Matrress/Animation@<COMMIT>/divine-biodunlop-intro/release/0.2.0-dev/intro.js" defer></script>
+<!-- BioDunlop intro gate (must stay BEFORE <section class="ddh">). One switch: set ON=0 to switch it all off everywhere.
+     data-ddb-ok = a laptop / monitor / tablet window (the sourcing video may show), data-ddb-anim = body movements allowed (no reduced motion, no Data Saver, no 2G/3G),
+     data-ddb=pending = the opening turn plays (once per session). Testing: add ?ddb=1 to the page address to play the opening again; ?ddb=0 turns it all off. -->
+<script>(function(){var ON=1,H=document.documentElement;try{var q=location.search,m=function(x){return matchMedia(x).matches},c=navigator.connection||{},f=/[?&]ddb=1(&|$)/.test(q);if(ON&&!/[?&]ddb=0(&|$)/.test(q)&&m('(min-width:701px) and (min-height:501px)')){H.setAttribute('data-ddb-ok','');if(!m('(prefers-reduced-motion: reduce)')&&(f||!c.saveData&&!/(^|-)2g|3g/.test(c.effectiveType||''))){H.setAttribute('data-ddb-anim','');if(f||!sessionStorage.getItem('ddb-seen')){H.setAttribute('data-ddb','pending');setTimeout(function(){if(H.getAttribute('data-ddb')==='pending')H.removeAttribute('data-ddb')},4500)}}}}catch(e){}})()</script>
 <section class="ddh" aria-labelledby="ddh-title" data-ddh-mode="interactive">
 <h1 class="ddh__sr" id="ddh-title">Divine DunlopDreams – 100% Natural Latex Mattresses, Toppers &amp; Pillows. Engineering Natural Latex Sleep System</h1>
 <div class="ddh__scene">
@@ -55,6 +56,7 @@
 <ul class="ddh__benefits" aria-label="Benefits"><li>High Support</li><li>Anatomical Balance</li><li>Orthopaedic Comfort</li><li>High Adaptability</li></ul>
 <p class="ddh__sr">European production, certified for UK &amp; EU. Dual Plush mattress and topper system.</p>
 <div class="ddb" aria-hidden="true"></div>
+<div class="ddb-lx" aria-hidden="true"></div>
 <p class="ddb-line">From natural latex milk to a complete natural latex sleep system.</p>
 </div>
 </div>

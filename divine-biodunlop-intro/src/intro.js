@@ -1,94 +1,192 @@
-/*! Divine DunlopDreams BioDunlop intro 0.1.0-dev | namespace .ddb | plays once per session, then hands over to the live Hero 1.20.2 */
+/*! Divine DunlopDreams BioDunlop intro 0.2.0-dev | namespace .ddb | opening turn, the turn again on demand, the natural-sourcing video | attaches to Hero 1.20.2 */
 (function (w, d) {
   'use strict';
-  var H = d.documentElement;
-  // The inline gate in the section decides before the first paint (laptops, monitors and tablets only; not with reduced
-  // motion, Data Saver or a slow connection; once per browser session). boot() does nothing unless it said "pending".
-  var base = ((d.currentScript && d.currentScript.src) || '').replace(/[^\/]*$/, '');
-  var LINE_IN = 0.5, LINE_OUT = 3.2;            // the story line shows over the origin (forest, tree, latex milk)
-  var START_LIMIT = 4000;                         // no first frame after 4 s: the hero simply appears
-  var root, stage, video, skip, line, done = false, booted = false, waits = 0, startT = 0, ticks = 0;
-
+  var H = d.documentElement, base = ((d.currentScript && d.currentScript.src) || '').replace(/[^\/]*$/, '');
+  var root, plane, stage, win, fig, winV, figV, skip, film, pts, mo, booted = false, waits = 0, startT = 0, prevState = '', lx = '', dwellT = 0, inLogo = false;
+  // ---- the ONE state controller: phase is 'off' (nothing allowed), 'opening' (the first turn), 'idle', or 'turn' (the turn again). Every trigger asks here first.
+  var ctl = { phase: 'off', last: 0, hold: false };
+  var COOL = 2500, LOGO_COOL = 8000, DWELL = 800, STARTS = 4000;
+  var LOGO = { l: .35, t: .26, w: .30, h: .10 };                 // the wordmark in the hero picture (fractions of the picture); never covered by an element
+  var LXR = { l: .033, t: .356, w: .394, h: .342 };               // the natural-sourcing window in the hero picture (fractions)
+  var calmQ = w.matchMedia ? w.matchMedia('(prefers-reduced-motion:reduce)') : { matches: false };
+  function anim() { return H.hasAttribute('data-ddb-anim') && !calmQ.matches; }
+  function busy() { return ctl.phase === 'opening' || ctl.phase === 'turn'; }
+  function now() { return w.Date.now(); }
   function mark() { try { w.sessionStorage.setItem('ddb-seen', '1'); } catch (e) {} }
-  // Safe to call more than once and at any time: it does nothing until the section's markup is in the page. The section ends with an
-  // inline DDBIntro.boot() (like the hero's own DDHero.boot()) so a builder that inserts scripts before the markup still starts it.
+  function mk(name) {
+    // muted, inline, silent; H.264 first (Chrome, Safari, Edge, Firefox), VP9 WebM only for browsers without H.264. One file is downloaded.
+    var v = d.createElement('video'); v.muted = true; v.defaultMuted = true; v.playsInline = true; v.preload = 'auto';
+    ['muted', 'playsinline', 'disablepictureinpicture', 'disableremoteplayback'].forEach(function (a) { v.setAttribute(a, ''); });
+    v.setAttribute('aria-hidden', 'true'); v.setAttribute('tabindex', '-1');
+    [['.mp4', 'video/mp4; codecs="avc1.640028"'], ['.webm', 'video/webm; codecs="vp9"']].forEach(function (f) { var s = d.createElement('source'); s.src = base + name + f[0]; s.type = f[1]; v.appendChild(s); });
+    return v;
+  }
+  function size() { return plane.clientWidth * Math.min(w.devicePixelRatio || 1, 2) > 1100 ? '1280' : '960'; }
+  function inertPoints(on) {   // hotspots are suspended (pointer and keyboard) while a body movement runs
+    if (!pts) return; var had = pts.contains(d.activeElement) && d.activeElement;
+    if (on) { pts.setAttribute('inert', ''); } else { pts.removeAttribute('inert'); if (had && had.focus) had.focus({ preventScroll: true }); }
+  }
+
+  // ------------------------------------------------------------------------------------------------ boot
+  // Safe to call more than once and at any time: it does nothing until the section's markup is in the page. The section ends with an inline
+  // DDBIntro.boot() (like the hero's own DDHero.boot()) so a builder that inserts scripts before the markup still starts it.
   function boot() {
-    if (booted || done || H.getAttribute('data-ddb') !== 'pending') return;
-    root = d.querySelector('.ddh'); stage = root && root.querySelector('.ddb'); line = root && root.querySelector('.ddb-line');
-    if (!stage) return;
-    // the stylesheet is a separate file: without it the film would play unstyled in the page flow, so the intro only starts when it is applied
-    if (w.getComputedStyle(stage).position !== 'absolute') {
+    if (booted || !H.hasAttribute('data-ddb-ok')) return;
+    root = d.querySelector('.ddh'); plane = root && root.querySelector('.ddh__plane'); stage = root && root.querySelector('.ddb'); win = root && root.querySelector('.ddb-lx');
+    if (!root || !plane || !stage || !win) return;
+    // the stylesheet is a separate file: nothing starts until it is applied (the window is absolutely positioned only by it)
+    if (w.getComputedStyle(win).position !== 'absolute') {
       if (++waits < 6) { w.setTimeout(boot, 300); return; }
-      stage.parentNode && stage.parentNode.removeChild(stage); H.removeAttribute('data-ddb'); return;
+      H.removeAttribute('data-ddb'); H.removeAttribute('data-ddb-ok'); H.removeAttribute('data-ddb-anim'); return;
     }
-    booted = true; mark();                                       // returning from a product page never replays it
-    var wide = stage.clientWidth * Math.min(w.devicePixelRatio || 1, 2) > 1100;
-    var name = 'assets/ddb-intro-' + (wide ? '1280' : '960');
-    video = d.createElement('video');
-    video.muted = true; video.defaultMuted = true; video.playsInline = true; video.preload = 'auto';
-    ['muted', 'playsinline', 'disablepictureinpicture', 'disableremoteplayback'].forEach(function (a) { video.setAttribute(a, ''); });
-    video.setAttribute('aria-hidden', 'true'); video.setAttribute('tabindex', '-1');
-    // H.264 first (Chrome, Safari, Edge, Firefox); VP9 WebM only for browsers without H.264. One file is downloaded.
-    var last;
-    [['.mp4', 'video/mp4; codecs="avc1.640028"'], ['.webm', 'video/webm; codecs="vp9"']].forEach(function (f) {
-      last = d.createElement('source'); last.src = base + name + f[0]; last.type = f[1]; video.appendChild(last);
-    });
-    last.addEventListener('error', function () { finish(true); });   // no playable source at all: straight to the hero
-    video.addEventListener('error', function () { finish(true); });
-    video.addEventListener('playing', function () { video.setAttribute('data-on', ''); showSkip(); }, { once: true });
-    video.addEventListener('timeupdate', onTime);
-    video.addEventListener('ended', function () { finish(false); });
-    stage.appendChild(video);
-    // the stage swallows pointer events so the hero underneath does not react while the film runs
-    ['pointermove', 'pointerdown', 'pointerup', 'click', 'touchstart'].forEach(function (t) {
-      stage.addEventListener(t, function (ev) { ev.stopPropagation(); }, { passive: true });
-    });
+    booted = true; pts = root.querySelector('.ddh__points');
+    // while the stage is shown (the opening turn, the turn again) the picture area is inert: the hero underneath does not react. Shop buttons and the page are outside it.
+    ['pointermove', 'pointerdown', 'pointerup', 'click', 'touchstart'].forEach(function (t) { stage.addEventListener(t, function (ev) { ev.stopPropagation(); }, { passive: true }); });
+    watch(); wireLogo(); inject();
+    d.addEventListener('visibilitychange', function () { if (d.hidden) { pauseLx(); } else if (lx) { playLx(); } });
+    if (H.getAttribute('data-ddb') === 'pending' && anim()) opening(); else if (anim()) idle();
+  }
+
+  // ------------------------------------------------------------------------------------------------ the opening turn (page load): hotspots wait until the body has settled
+  function opening() {
+    ctl.phase = 'opening'; mark();                // returning from a product page never replays it
+    var v = mk('assets/ddb-turn-' + size()); film = v;
+    v.lastChild.addEventListener('error', function () { endOpening(true); }); v.addEventListener('error', function () { endOpening(true); });
+    v.addEventListener('playing', function () { v.setAttribute('data-on', ''); showSkip(); }, { once: true });
+    v.addEventListener('ended', function () { endOpening(false); });
+    stage.appendChild(v); inertPoints(true);
     skip = d.createElement('button'); skip.type = 'button'; skip.className = 'ddb-skip';
-    skip.innerHTML = '<span>Skip intro</span><i aria-hidden="true"></i>';
-    skip.setAttribute('aria-label', 'Skip the natural latex intro and show the page');
-    skip.addEventListener('click', function () { finish(true); });
-    // first in the hero's tab order, drawn on the always-visible Shop row (left), never over the buttons
+    skip.innerHTML = '<span>Skip intro</span><i aria-hidden="true"></i>'; skip.setAttribute('aria-label', 'Skip the opening animation and show the page');
+    skip.addEventListener('click', function () { endOpening(true); });
+    // first in the hero's tab order, drawn on the Shop row (left), never over the buttons; invisible until the web font and layout have settled
     var h1 = root.querySelector('h1'); root.insertBefore(skip, h1 ? h1.nextSibling : root.firstChild);
-    // it stays invisible (no layout shift counted) until the hero's web font and layout have settled: shown when the film starts, at the latest after 1.2 s
-    skip.setAttribute('data-wait', ''); placeSkip(); w.addEventListener('resize', placeSkip); w.addEventListener('load', placeSkip);
-    w.setTimeout(showSkip, 1200);
+    skip.setAttribute('data-wait', ''); placeSkip(); w.addEventListener('resize', placeSkip); w.addEventListener('load', placeSkip); w.setTimeout(showSkip, 1200);
     d.addEventListener('keydown', onKey);
     H.setAttribute('data-ddb', 'play');
-    startT = w.setTimeout(function () { if (!video.currentTime) finish(true); }, START_LIMIT);
-    var p = video.play(); if (p && p.catch) p.catch(function (e) { if (e && e.name === 'NotAllowedError') finish(true); });   // autoplay refused: straight to the hero (a stalled load is left to START_LIMIT)
+    startT = w.setTimeout(function () { if (!v.currentTime) endOpening(true); }, STARTS);
+    var p = v.play(); if (p && p.catch) p.catch(function (e) { if (e && e.name === 'NotAllowedError') endOpening(true); });   // autoplay refused: straight to the hero
   }
   function showSkip() { if (skip && skip.hasAttribute('data-wait')) { placeSkip(); skip.removeAttribute('data-wait'); } }
   function placeSkip(ev) {
     if (!skip || !skip.parentNode || (ev && ev.type === 'load' && !skip.hasAttribute('data-wait'))) return;
     var shop = root.querySelector('.ddh__shop'), r = root.getBoundingClientRect();
     if (!shop) { skip.style.top = '16px'; return; }
-    var b = shop.getBoundingClientRect(), ctas = shop.querySelector('.ddh__cta'), c = ctas ? ctas.getBoundingClientRect() : b;
+    var c = shop.querySelector('.ddh__cta') ? shop.querySelector('.ddh__cta').getBoundingClientRect() : shop.getBoundingClientRect();
     skip.style.top = Math.round(c.top - r.top + (c.height - skip.offsetHeight) / 2) + 'px';
   }
-  function onTime() {
-    var t = video.currentTime;
-    if (line) { if (t >= LINE_IN && t < LINE_OUT) line.setAttribute('data-on', ''); else line.removeAttribute('data-on'); }
-    if (++ticks === 1) w.clearTimeout(startT);
-  }
-  function onKey(ev) { if (ev.key === 'Escape' || ev.key === 'Esc') finish(true); }
-  // fast: skipped, failed or refused (a quick fade); otherwise the film ended on the hero's own pose (the long dissolve)
-  function finish(fast) {
-    if (done) return; done = true;
+  function onKey(ev) { if (ev.key === 'Escape' || ev.key === 'Esc') endOpening(true); }
+  // fast: skipped, failed or refused (a quick fade); otherwise the film ended on the hero itself (a short dissolve into the live hero)
+  function endOpening(fast) {
+    if (ctl.phase !== 'opening') return;
     w.clearTimeout(startT); d.removeEventListener('keydown', onKey); w.removeEventListener('resize', placeSkip); w.removeEventListener('load', placeSkip);
-    if (line) line.removeAttribute('data-on');
-    if (video) { try { video.pause(); } catch (e) {} }
+    var v = film; if (v) { try { v.pause(); } catch (e) {} }
     var hadFocus = skip && d.activeElement === skip;   // the keyboard user lands on the first Shop button, not on <body>
     if (skip && skip.parentNode) skip.parentNode.removeChild(skip);
-    if (hadFocus && root) { var a = root.querySelector('.ddh__cta'); if (a) a.focus({ preventScroll: true }); }
+    if (hadFocus) { var a = root.querySelector('.ddh__cta'); if (a) a.focus({ preventScroll: true }); }
     H.setAttribute('data-ddb', 'out');
-    var ms = fast ? 250 : 900; if (fast) stage.style.transitionDuration = '.25s';
+    var ms = fast ? 250 : 450; if (fast) stage.style.transitionDuration = '.25s';
     w.setTimeout(function () {
-      if (stage) { if (video) { video.removeAttribute('src'); while (video.firstChild) video.removeChild(video.firstChild); try { video.load(); } catch (e) {} } stage.parentNode && stage.parentNode.removeChild(stage); }
-      H.removeAttribute('data-ddb');
-      H.setAttribute('data-ddb-lit', '');      // the hero's points light up one after another
+      if (v) { v.removeAttribute('src'); while (v.firstChild) v.removeChild(v.firstChild); try { v.load(); } catch (e) {} if (v.parentNode) v.parentNode.removeChild(v); }
+      film = null; H.removeAttribute('data-ddb'); inertPoints(false);
+      H.setAttribute('data-ddb-lit', '');      // the body is still: the hotspots light up one after another, then pulse as always
       w.setTimeout(function () { H.removeAttribute('data-ddb-lit'); }, 1800);
+      ctl.phase = 'idle'; ctl.last = now(); idle();
     }, ms);
   }
-  w.DDBIntro = { boot: boot, skip: function () { finish(true); }, version: '0.1.0-dev' };
+
+  // ------------------------------------------------------------------------------------------------ the turn again (Spinal Alignment point, the wordmark)
+  function idle() {
+    if (!anim() || busy()) { return; } if (ctl.phase === 'off') ctl.phase = 'idle';
+    var go = function () { if (film || !stage || !anim()) return; film = mk('assets/ddb-settle-' + size()); film.setAttribute('data-role', 'again'); stage.appendChild(film); };
+    if (w.requestIdleCallback) w.requestIdleCallback(go, { timeout: 4000 }); else w.setTimeout(go, 2500);
+  }
+  function ready() { return !!film && film.getAttribute('data-role') === 'again' && film.readyState >= 3; }
+  // kind: 'back' (the Spinal Alignment point: the screen waits for the body) or 'logo' (the hidden wordmark)
+  function turn(kind) {
+    if (!anim() || ctl.phase !== 'idle' || now() - ctl.last < (kind === 'logo' ? LOGO_COOL : COOL)) return false;
+    if (kind === 'logo' && (root.getAttribute('data-ddh-state') || lx)) return false;      // never interrupts an open card
+    if (!ready()) return false;                                                             // the film is not there yet: the hero simply works as always
+    ctl.phase = 'turn'; ctl.hold = kind === 'back';
+    if (ctl.hold) H.setAttribute('data-ddb-hold', '');
+    inertPoints(true);
+    try { film.currentTime = 0; } catch (e) {}
+    film.setAttribute('data-on', ''); H.setAttribute('data-ddb-turn', '');
+    film.addEventListener('ended', endTurn, { once: true }); ctl.t = w.setTimeout(endTurn, 9000);
+    var p = film.play(); if (p && p.catch) p.catch(endTurn);
+    return true;
+  }
+  function endTurn() {
+    if (ctl.phase !== 'turn') return; w.clearTimeout(ctl.t);
+    ctl.phase = 'idle'; ctl.last = now(); ctl.hold = false;
+    H.removeAttribute('data-ddb-turn'); H.removeAttribute('data-ddb-hold');      // the last frame is the hero: nothing changes, and the held screen starts now
+    var v = film; if (v) { try { v.pause(); v.currentTime = 0; } catch (e) {} v.removeAttribute('data-on'); }
+    inertPoints(false);
+  }
+  // the wordmark: a mouse resting on it for about 0.8 s (a crossing does nothing); no element lies over it, so its own clicks and the page are untouched; not on touch
+  function wireLogo() {
+    plane.addEventListener('pointermove', function (ev) {
+      if (ev.pointerType === 'touch') return;
+      var r = plane.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height;
+      var inside = x >= LOGO.l && x <= LOGO.l + LOGO.w && y >= LOGO.t && y <= LOGO.t + LOGO.h;
+      if (inside && !inLogo) { inLogo = true; w.clearTimeout(dwellT); dwellT = w.setTimeout(function () { if (inLogo) turn('logo'); }, DWELL); }
+      else if (!inside && inLogo) { inLogo = false; w.clearTimeout(dwellT); }
+    }, { passive: true });
+    plane.addEventListener('pointerleave', function () { inLogo = false; w.clearTimeout(dwellT); }, { passive: true });
+  }
+
+  // ------------------------------------------------------------------------------------------------ what the hero is doing (read from its own state attribute)
+  function watch() {
+    mo = new w.MutationObserver(function (list) {
+      list.forEach(function (m) { if (m.type === 'childList') inject(); });
+      var s = root.getAttribute('data-ddh-state') || '';
+      if (s !== prevState) { var was = prevState; prevState = s; if (s === 'back' && was !== 'back') turn('back'); }
+      lxSync(s);                                   // also when the cards arrive after the state was set (the first hover loads them)
+    });
+    mo.observe(root, { attributes: true, attributeFilter: ['data-ddh-state', 'data-ddh-cards'], childList: true });
+  }
+
+  // ------------------------------------------------------------------------------------------------ Original Dunlop Technology: the line in the blue band and the natural-sourcing video
+  var HDR = { en: 'Naturally Sourced · Custom-Made Sleep Systems', de: 'Natürlich gewonnen · Maßgefertigte Schlafsysteme', sv: 'Naturligt framställt · Skräddarsydda sovsystem', fr: 'Issu de sources naturelles · Systèmes de sommeil sur mesure', es: 'De origen natural · Sistemas de descanso a medida', pt: 'De origem natural · Sistemas de descanso por medida', el: 'Φυσικής προέλευσης · Συστήματα ύπνου κατά παραγγελία', fi: 'Luonnollisesti hankittu · Räätälöidyt unijärjestelmät', it: 'Di origine naturale · Sistemi del sonno su misura' };
+  function lang() { var l = ((root && root.closest('[lang]') || H).getAttribute('lang') || 'en').toLowerCase().slice(0, 2); return HDR[l] ? l : 'en'; }
+  function inject() {   // exists before the card is ever opened, so the card is measured with it
+    var card = root && root.querySelector('[data-ddh-card="zones"]'), hd = card && card.querySelector('.ddh__hc-hd');
+    if (!hd || hd.querySelector('.ddb-hc-n')) return;
+    var p = d.createElement('p'); p.className = 'ddb-hc-n'; p.textContent = HDR[lang()];
+    var sub = hd.querySelector('.ddh__hc-s'); hd.insertBefore(p, sub || null);   // the secondary line; the old subtitle (it says the same, shorter) stays in the page but is not drawn
+    fig = d.createElement('figure'); fig.className = 'ddb-lx-card'; fig.setAttribute('aria-hidden', 'true');    // where the window has no room: the video sits in the card, under the blue band
+    hd.parentNode.insertBefore(fig, hd.nextSibling);
+  }
+  // where the video goes is decided when the card opens, from the card's real position: beside the card in the marked area, or (no room) inside the card under the blue band
+  function pick() {
+    var card = root.querySelector('[data-ddh-card="zones"]'); if (!card) return 'side';
+    var pr = plane.getBoundingClientRect(), rr = root.getBoundingClientRect();
+    return w.innerWidth >= 900 && rr.left + card.offsetLeft >= pr.left + (LXR.l + LXR.w) * pr.width + 8 ? 'side' : 'card';
+  }
+  function modeSync() { H.setAttribute('data-ddb-lxm', lx || 'side'); }
+  function pauseLx() { [winV, figV].forEach(function (v) { if (v) { try { v.pause(); } catch (e) {} } }); }
+  function playLx() { var v = lx === 'side' ? winV : figV; if (v && anim()) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } }
+  function lxSync(s) {
+    var on = s === 'zones' && root.hasAttribute('data-ddh-cards') && w.innerWidth > 700 && w.innerHeight > 500 && !H.hasAttribute('data-ddb') && ctl.phase !== 'opening';
+    var mode = on ? pick() : '';
+    if (on && lx === mode) return;                                                              // already showing
+    if (!on) {   // closed or another hotspot chosen: stop, rewind, never keep playing unseen
+      if (!lx) return; lx = ''; H.removeAttribute('data-ddb-lx'); [winV, figV].forEach(function (v) { if (v) { try { v.pause(); v.currentTime = 0; } catch (e) {} } }); return;
+    }
+    [winV, figV].forEach(function (v) { if (v) { try { v.pause(); v.currentTime = 0; } catch (e) {} } });
+    var side = mode === 'side', el = side ? win : fig; if (!el) return;
+    H.setAttribute('data-ddb-lxm', mode);
+    if (!el.getAttribute('data-ready')) { el.setAttribute('data-ready', ''); el.style.backgroundImage = 'url(' + base + 'assets/ddb-latex-poster.webp)'; }
+    if (side) {
+      var pt = root.querySelector('[data-ddh-point="zones"]'), pr2 = plane.getBoundingClientRect();
+      if (pt) { var a = pt.getBoundingClientRect(); win.style.setProperty('--ddb-ox', Math.round(a.left + a.width / 2 - (pr2.left + LXR.l * pr2.width)) + 'px'); win.style.setProperty('--ddb-oy', Math.round(a.top + a.height / 2 - (pr2.top + LXR.t * pr2.height)) + 'px'); }
+    }
+    lx = mode; H.setAttribute('data-ddb-lx', lx);
+    if (anim() && !(w.navigator.connection && w.navigator.connection.saveData)) {
+      var v = side ? winV : figV;
+      if (!v) { v = mk('assets/ddb-latex'); v.loop = true; v.setAttribute('loop', ''); v.preload = 'metadata'; el.appendChild(v); if (side) winV = v; else figV = v; }
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    }
+  }
+  w.DDBIntro = { boot: boot, version: '0.2.0-dev', get phase() { return ctl.phase; }, turn: function () { return turn('back'); }, skip: function () { endOpening(true); } };
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
 })(window, document);

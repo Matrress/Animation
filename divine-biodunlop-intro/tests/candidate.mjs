@@ -40,11 +40,11 @@ for (const mode of ['static', 'fragment', 'scripts-first']) {
   ok(await st(page) === 'play', `${mode}: the intro plays`);
   ok(hits.some((u) => /intro\.css$/.test(u)) && hits.some((u) => /intro\.js$/.test(u)), `${mode}: intro.css and intro.js are requested from the pinned path`);
   await page.waitForFunction(() => { const v = document.querySelector('.ddb video'); return v && v.currentTime > 1; }, null, { timeout: 8000 }).catch(() => {});
-  ok(hits.some((u) => /ddb-intro-(1280|960)\.(mp4|webm)$/.test(u)), `${mode}: a film is requested (${hits.filter((u) => /ddb-intro/.test(u)).join(',')})`);
+  ok(hits.some((u) => /ddb-turn-(1280|960)\.(mp4|webm)$/.test(u)), `${mode}: a film is requested (${hits.filter((u) => /ddb-intro/.test(u)).join(',')})`);
   ok(await page.evaluate(() => !!document.querySelector('.ddb video') && document.querySelector('.ddb video').currentTime > 0.5), `${mode}: the film is playing`);
   if (await st(page) !== 'play') { await ctx.close(); continue; }
-  await page.click('.ddb-skip'); await page.waitForTimeout(500);
-  ok(await st(page) === null && await page.evaluate(() => !document.querySelector('.ddb')), `${mode}: Skip hands over to the hero`);
+  await page.click('.ddb-skip'); await page.waitForTimeout(900);
+  ok(await st(page) === null && await page.evaluate(() => !document.querySelector('.ddb video[data-role=open]') && !document.querySelector('.ddb-skip')), `${mode}: Skip hands over to the hero`);
   await page.waitForTimeout(1900);
   const c = await page.evaluate(() => { const r = document.querySelector('[data-ddh-point="firmness"]').getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
   await page.mouse.move(c[0], c[1]); await page.waitForTimeout(400);
@@ -61,10 +61,10 @@ for (const mode of ['static', 'fragment', 'scripts-first']) {
   ok(await st(page) === null, '?ddb=0: off'); await ctx.close();
 }
 { // the second file of the pair missing: never stuck on the poster
-  for (const [what, re] of [['intro.js', /intro\.js$/], ['the film', /ddb-intro-/], ['intro.css', /intro\.css$/]]) {
+  for (const [what, re] of [['intro.js', /intro\.js$/], ['the film', /ddb-turn-/], ['intro.css', /intro\.css$/]]) {
     const { ctx, page } = await open('static', { block: re }); await page.waitForTimeout(5400);
     ok(await st(page) === null, `${what} missing: the hero is shown within 5 s (${await st(page)})`);
-    ok(await page.evaluate(() => { const s = document.querySelector('.ddb'); return !s || getComputedStyle(s).display === 'none'; }), `${what} missing: no stage left over the hero`);
+    ok(await page.evaluate(() => { const s = document.querySelector('.ddb'); return !s || getComputedStyle(s).display === 'none' || (s.offsetHeight === 0 && !s.querySelector('video')); }), `${what} missing: no stage left over the hero`);
     await ctx.close();
   }
 }

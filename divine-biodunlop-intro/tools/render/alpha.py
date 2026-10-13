@@ -11,12 +11,13 @@ def alpha(i):
     a=frame(i); bg=bgcol(a); bl=bg.mean(); lum=a.mean(-1)
     P=seg.person(a.astype(np.uint8))
     d=np.sqrt(((a-bg)**2).sum(-1))
-    K=ss(30,70,d) if bl<100 else ss(18,50,d)
-    K=K*(box(K,4)>0.35)                                   # speckles of compression noise go
-    Ph=ss(.45,.75,P)*(lum<110)*(xx>760)                   # dark hair on a dark background: the person model (the head is always on the right)
+    black=bl<10                                            # the studio went fully black: the key can be very sensitive (dark hair on black)
+    K=ss(5,17,d) if black else (ss(30,70,d) if bl<100 else ss(18,50,d))
+    K=K*(box(K,4)>(0.55 if black else 0.35))                                   # speckles of compression noise go
+    Ph=(0*P) if black else ss(.45,.75,P)*(lum<110)*(xx>760)                   # dark hair on a dark background: the person model (the head is always on the right)
     Pl=ss(.25,.45,P) if bl>150 else 0*P                   # lace on a white background: the person model
     A=np.maximum.reduce([K,S,Ph,Pl])
-    A=guided(lum/255,A,5,1e-3)
+    A=guided(lum/255,A,3 if black else 5,5e-4 if black else 1e-3)
     A=np.clip((A-.06)/.88,0,1)*crop
     from scipy import ndimage
     lab,n=ndimage.label(A>0.3)
