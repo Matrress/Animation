@@ -33,6 +33,47 @@ const b = await launch();
   await ctx.close();
 }
 
+
+// ---- 1b. visual-system requirements: Dual Plush diagrams = the Collection 3.13.2 SVG assets; no green text; no black buttons ----
+{
+  const { ctx, page } = await openLive(b, VIEWPORTS.desktop);
+  const OWN = `https://cdn.jsdelivr.net/gh/Matrress/Animation@f4d9318a14f32ede544936f332f3ff4e5e800768/divine-collection/release/3.13.2/assets/`;
+  for (const [id, pairs] of [['botanic_dp', collections.mattress.models.find((m) => m.id === 'botanic_dp').firm.pairs], ['bio_dp', collections.mattress.models.find((m) => m.id === 'bio_dp').firm.pairs]]) {
+    await page.evaluate((id) => document.querySelector(`#ddhd-m-${id} .ddhd__more`).click(), id);
+    await page.waitForTimeout(300);
+    await page.evaluate(() => document.querySelectorAll('.ddhd__panel img').forEach((i) => { i.loading = 'eager'; }));
+    await page.waitForFunction(() => [...document.querySelectorAll('.ddhd__dpv-i')].every((i) => i.complete && i.naturalWidth > 0), null, { timeout: 15000 }).catch(() => {});
+    const d = await page.evaluate(() => [...document.querySelectorAll('.ddhd__panel .ddhd__dpv')].map((li) => ({ src: li.querySelector('img').src, alt: li.querySelector('img').alt, ok: li.querySelector('img').naturalWidth > 0, vis: li.querySelector('img').getBoundingClientRect().width > 100, txt: li.innerText.replace(/\s+/g, ' ') })));
+    ok(d.length === pairs.length, `${id}: one SVG diagram per approved combination (${d.length}/${pairs.length})`);
+    pairs.forEach(([t1, b1], i) => {
+      ok(d[i] && d[i].src === `${OWN}dual-plush-${t1}-${b1}.svg`, `${id}: diagram ${i + 1} is the Collection asset dual-plush-${t1}-${b1}.svg`);
+      ok(d[i] && d[i].ok && d[i].vis, `${id}: diagram ${i + 1} loaded and visible`);
+      ok(d[i] && d[i].alt === `${collections.mattress.models[0] && ({ s: 'Soft', m: 'Medium', f: 'Firm', x: 'Extra Firm' })[t1]} topper above a ${({ s: 'Soft', m: 'Medium', f: 'Firm', x: 'Extra Firm' })[b1]} mattress`, `${id}: diagram ${i + 1} alt text states topper-over-mattress`);
+    });
+    ok(await page.evaluate(() => !document.querySelector('.ddhd__panel .ddhd__pf .ddhd__stk')), `${id}: combinations are not repeated as a second list`);
+    await page.evaluate(() => document.querySelector('.ddhd__x').click());
+  }
+  await page.evaluate(() => document.querySelector('.ddhd__chip[data-route="1"]').click());
+  const colours = await page.evaluate(() => {
+    const out = [], rgb2hsl = (r, g, b) => { r /= 255; g /= 255; b /= 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2; let h = 0, s = 0; if (mx !== mn) { const dd = mx - mn; s = l > .5 ? dd / (2 - mx - mn) : dd / (mx + mn); h = mx === r ? ((g - b) / dd + (g < b ? 6 : 0)) : mx === g ? (b - r) / dd + 2 : (r - g) / dd + 4; h *= 60; } return [h, s, l]; };
+    document.querySelector('#ddhd-m-bio_dp .ddhd__more').click();
+    for (const e of document.querySelectorAll('#ddhd *')) {
+      if (!e.offsetParent && e.tagName !== 'BODY') continue;
+      const own = [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+      if (!own) continue;
+      const m = getComputedStyle(e).color.match(/\d+(\.\d+)?/g).map(Number); const [h, s, l] = rgb2hsl(m[0], m[1], m[2]);
+      if (h >= 75 && h <= 180 && s > .2 && l > .12 && l < .95) out.push(e.className + ' ' + getComputedStyle(e).color);
+    }
+    const btns = [...document.querySelectorAll('#ddhd button, #ddhd a.ddhd__cta, #ddhd .ddhd__tab[aria-selected="true"]')].filter((e) => e.offsetParent).map((e) => { const bg = getComputedStyle(e).backgroundImage + ' ' + getComputedStyle(e).backgroundColor; return [e.className, bg]; });
+    const pureBlack = btns.filter(([, bg]) => /rgb\(0, 0, 0\)|#000\b|rgb\(([0-3]), ([0-3]), ([0-3])\)/.test(bg));
+    return { green: out, pureBlack, surfaces: [getComputedStyle(document.querySelector('#ddhd-m-botanic')).backgroundImage.slice(0, 80), getComputedStyle(document.querySelector('.ddhd__panel')).backgroundImage.slice(0, 80)] };
+  });
+  ok(colours.green.length === 0, 'no green text anywhere in the section: ' + JSON.stringify(colours.green.slice(0, 4)));
+  ok(colours.pureBlack.length === 0, 'no pure-black button/surface backgrounds: ' + JSON.stringify(colours.pureBlack.slice(0, 3)));
+  ok(/linear-gradient/.test(colours.surfaces[0]) && /linear-gradient/.test(colours.surfaces[1]), 'cards and preview panel are blue-graphite gradient surfaces');
+  await ctx.close();
+}
+
 // ---- 2. interaction, mouse + keyboard ----
 {
   const { ctx, page, errors } = await openLive(b, VIEWPORTS.desktop);

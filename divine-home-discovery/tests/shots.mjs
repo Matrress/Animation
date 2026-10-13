@@ -33,9 +33,19 @@ for (const [name, vp] of Object.entries(VIEWPORTS)) {
   await page.locator('#ddhd .ddhd__needs').scrollIntoViewIfNeeded();
   await page.screenshot({ path: path.join(out, `${name}-5-need.png`) });
   await page.evaluate(() => document.querySelector('#ddhd-m-bio_dp .ddhd__more').click());
-  await page.waitForTimeout(900);
+  await page.waitForTimeout(500);
+  await page.evaluate(() => document.querySelectorAll('.ddhd__panel img').forEach((i) => { i.loading = 'eager'; }));
+  await page.waitForFunction(() => [...document.querySelectorAll('.ddhd__dpv-i')].every((i) => i.complete && i.naturalWidth > 0), null, { timeout: 15000 }).catch(() => {});
+  await page.waitForTimeout(600);
   await page.locator('#ddhd').screenshot({ path: path.join(out, `${name}-6-preview-section.png`) });
   await page.screenshot({ path: path.join(out, `${name}-6-preview.png`) });
+  // 7. Botanic Dual Plush: three SVG combinations (Soft/Medium, Medium/Firm, Firm/Extra Firm)
+  await page.evaluate(() => document.querySelector('#ddhd-m-botanic_dp .ddhd__more').click());
+  await page.waitForTimeout(500);
+  await page.evaluate(() => document.querySelectorAll('.ddhd__panel img').forEach((i) => { i.loading = 'eager'; }));
+  await page.waitForFunction(() => [...document.querySelectorAll('.ddhd__dpv-i')].every((i) => i.complete && i.naturalWidth > 0), null, { timeout: 15000 }).catch(() => {});
+  await page.waitForTimeout(500);
+  await page.locator('.ddhd__panel').screenshot({ path: path.join(out, `${name}-7-botanic-dualplush.png`) });
   console.log(name, JSON.stringify(m), errors.length ? errors : 'no ddhd errors');
   await ctx.close();
 }

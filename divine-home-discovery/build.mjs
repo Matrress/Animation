@@ -16,7 +16,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const VERSION = '0.1.0';
+const VERSION = '0.2.0';
 const SOURCE_VERSION = '3.13.2';
 const SOURCE_REF = process.env.DHD_SOURCE_REF || 'f4d9318a14f32ede544936f332f3ff4e5e800768';
 const REF = process.env.DHD_REF || 'main-preview';
@@ -65,14 +65,14 @@ const stk = (t, b) => `<span class="ddhd__stk" aria-hidden="true"><i class="ddhd
 function facts(m) {
   const f = m.firm; let h = '';
   if (f.levels) h = `<p class="ddhd__fz">${f.levels.map(F).join(' ')}</p>`;
-  else if (f.pairs) h = `<ul class="ddhd__ul">${f.pairs.map(([t, b]) => `<li>${stk(t, b)}<span>${F(t)} topper over ${F(b)} mattress</span></li>`).join('')}</ul>`;
+  else if (f.pairs) h = '';  // shown as the approved topper-over-mattress diagrams (see dualPlush below), not as a second list
   else if (f.layers) h = `<ul class="ddhd__ul">${f.layers.map(([t, b]) => `<li>${stk(t, b)}<span>${F(t)} upper layer over ${F(b)} lower layer</span></li>`).join('')}</ul>`;
   else if (f.split) h = `<ul class="ddhd__ul">${f.split.map(([a, b]) => `<li><span>${F(a)} + ${F(b)}</span></li>`).join('')}</ul>`;
   else if (f.sides) h = `<ul class="ddhd__ul">${f.sides.map((k, i) => `<li><span>${F(k)} ${esc(f.sideNames[i].toLowerCase())}</span></li>`).join('')}</ul>`;
   else if (f.text) h = `<p class="ddhd__fz">${f.text.map(([k, t]) => `<span class="ddhd__f ddhd__f--${k}">${esc(t)}</span>`).join(' ')}</p>`;
   else throw new Error(`${m.id}: no firmness data`);
-  const title = f.pairs ? 'Firmness combinations' : f.layers ? 'Layer combinations' : f.split ? 'Firmness, one for each side' : 'Firmness';
-  return `<div class="ddhd__pf"><div><p class="ddhd__k">${title}</p>${h}</div><div><p class="ddhd__k">${esc(m.depth.label)}</p><p class="ddhd__dl">${m.depth.items.map((d) => `<span class="ddhd__d">${esc(d)}</span>`).join(' ')}</p></div></div>`;
+  const title = f.layers ? 'Layer combinations' : f.split ? 'Firmness, one for each side' : 'Firmness';
+  return `<div class="ddhd__pf">${h ? `<div><p class="ddhd__k">${title}</p>${h}</div>` : ''}<div><p class="ddhd__k">${esc(m.depth.label)}</p><p class="ddhd__dl">${m.depth.items.map((d) => `<span class="ddhd__d">${esc(d)}</span>`).join(' ')}</p></div></div>`;
 }
 
 // the preview of one model: built here, once, from the approved data; the script only inserts it
@@ -83,7 +83,10 @@ function preview(c, m) {
     const o = byName(c, n);
     return `<li>${o ? `<button type="button" class="ddhd__jump" data-jump="${o.id}">${esc(n)}</button>` : `<b>${esc(n)}</b>`} ${esc(t)}</li>`;
   }).join('');
-  const dp = m.dp && c.dualPlush ? `<div class="ddhd__dp"><p class="ddhd__k">${esc(c.dualPlush.h)}</p><p>${esc(c.dualPlush.p)}</p></div>` : '';
+  // Dual Plush: the approved explanation, and one diagram per combination = the Collection 3.13.2 SVG assets (dual-plush-<top>-<bottom>.svg), same wording as the Collection page
+  const n = m.firm.pairs ? m.firm.pairs.length : 0;
+  const combos = n ? `<div class="ddhd__dp-c"><p class="ddhd__k">Dual Plush: ${n} combinations</p><ul class="ddhd__dpg ddhd__dpg--${n}">${m.firm.pairs.map(([t, b]) => `<li class="ddhd__dpv"><img class="ddhd__dpv-i" src="${OWN_ASSETS}dual-plush-${t}-${b}.svg" width="246" height="100" loading="lazy" decoding="async" alt="${esc(FIRM[t])} topper above a ${esc(FIRM[b])} mattress"><span class="ddhd__dpv-r">${F(t)} <span>topper, above</span></span><span class="ddhd__dpv-r">${F(b)} <span>mattress, below</span></span></li>`).join('')}</ul></div>` : '';
+  const dp = m.dp && c.dualPlush ? `<div class="ddhd__dp"><div class="ddhd__dp-t"><p class="ddhd__k">${esc(c.dualPlush.h)}</p><p>${esc(c.dualPlush.p)}</p></div>${combos}</div>` : '';
   return `<div class="ddhd__pv">
 <div class="ddhd__pv-l"><div class="ddhd__pv-fig"><img src="${big}" width="${w}" height="${h}" loading="lazy" decoding="async" alt="${esc(m.img.alt)}"></div>
 ${facts(m)}</div>
@@ -93,8 +96,8 @@ ${facts(m)}</div>
 ${m.type ? `<p class="ddhd__pv-type">${esc(m.type)}</p>` : ''}<p class="ddhd__what">${esc(m.what)}</p>
 <p class="ddhd__who"><b>Who it suits.</b> ${esc(m.who)}</p>
 <p class="ddhd__bld"><b>How it is built.</b> ${esc(m.build)}</p>
-</div>${dp}</div>
-${diff ? `<div class="ddhd__df"><p class="ddhd__k">How it differs</p><ul class="ddhd__ul ddhd__ul--p">${diff}</ul></div>` : ''}
+</div></div>
+${dp}${diff ? `<div class="ddhd__df"><p class="ddhd__k">How it differs</p><ul class="ddhd__ul ddhd__ul--p">${diff}</ul></div>` : ''}
 <div class="ddhd__pv-foot"><p class="ddhd__buy">${esc(c.buy)}</p><a class="ddhd__cta" data-ddhd-product="${m.id}" href="${m.url}">View ${esc(m.name)} &amp; buy</a></div>
 </div>`;
 }
