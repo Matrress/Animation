@@ -1,3 +1,16 @@
+# Home Discovery 0.3.0: comfort pass (preview; 0.1.0 is installed)
+
+Owner notes applied, 2026-10-14 (reference images: Affinity mock-ups). Structure, product data, links, routes, behaviour, no-JS fallback, accessibility model, Hero: unchanged. Static section markup differs from 0.2.0 only in capitalisation and a `data-fam` attribute per card (17,196 characters pinned).
+- Frame round the card picture: 4px (was 10px).
+- **Title Case** on every button, chip, tab and card label (`and / or / with / for / of / to / the ...` stay lower case; `cm` untouched), generated at build time (`tc()`); the approved wording is unchanged.
+- Model name 25px (21px on four narrow columns); the line under it is the owner's `#a4d4dc`, semi-bold.
+- Button text: Chillax 600 plus a 0.35px hairline stroke (only 400/600 are loaded; the Collection page uses the same technique).
+- **Ambient glow on every button** (chips, tabs, Compare & Details, View Model, the primary button, close, guidance links): hover, press (touch) and keyboard focus.
+- **Family edge** on the bottom of every product card and of the preview panel, with ambient glow: Botanic + Botanic Dual Plush mint, Bio Comfort + Bio Comfort Dual Plush cyan, Best Value (Ambient + Hotel Line) violet. Orthopaedic, Partners and the three toppers carry a neutral ice edge (the owner named three families only).
+- Comfort for readers who need strong reading glasses: header 18px, preview 17-18px, no card or button text under 15px, controls 48px high, text contrast 7:1 or better on the dark surfaces and 6.5:1 or better on the mint area.
+
+Verification: 153 functional checks (also against the pinned jsDelivr build), axe 0 violations in 8 state/size combinations, layout shift 0, 18 asset URLs 200.
+
 # Home Discovery 0.2.0: visual polish (preview; 0.1.0 is what is currently installed)
 
 Visual pass only. Structure, product data (Collection 3.13.2 @ f4d9318), links, routes, preview behaviour, no-JS fallback, accessibility model, Hero: unchanged. Static section markup is identical to 0.1.0 (17,006 characters; only the pinned URLs differ).
