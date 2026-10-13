@@ -1,4 +1,17 @@
-# Home Discovery 0.1.0: report (preview, nothing installed)
+# Home Discovery 0.2.0: visual polish (preview; 0.1.0 is what is currently installed)
+
+Visual pass only. Structure, product data (Collection 3.13.2 @ f4d9318), links, routes, preview behaviour, no-JS fallback, accessibility model, Hero: unchanged. Static section markup is identical to 0.1.0 (17,006 characters; only the pinned URLs differ).
+
+## What changed visually
+- **Surfaces:** cards, the need-guidance box and the preview panel are deep blue-graphite gradients (`#1e3548` to `#17293a`, never black) with a light "stage" behind each product picture, hairline ice borders, layered shadows. The mint/ice Hero seam above and the `#f9f9f9` exit below are unchanged.
+- **Type:** snow `#f5fafc` for names and key copy, ice-blue `#cfe4ef` for descriptions, sky `#a5d3e6` for small labels; on the light mint area ink `#12283a` with a blue accent `#245f8a`. Green text is gone (the old teal accent became blue); mint `#9fe6d8` is only a small accent (match tag, hairline, glow, link underline).
+- **Buttons:** "Compare & details" is a ghost button (ice hairline, soft fill, mint glow on hover); open state and the one primary action ("View ... & buy") use an ice gradient with navy type; chips and the active tab are blue-graphite gradients. No black blocks.
+- **Dual Plush:** the preview shows one of the Collection 3.13.2 SVGs per approved combination (`dual-plush-s-m`, `m-f`, `f-x`: Botanic Dual Plush 3, Bio Comfort Dual Plush 2), with the Collection's captions ("Soft topper, above / Medium mattress, below") under the approved explanation. The previous mini-icon list is not repeated for these models.
+
+## Verification (real homepage, new build injected in the live Ecwid tile wrapper, live 0.1.0 files blocked)
+131 functional checks pass (109 existing + 22 new: SVG per combination, source URL = Collection asset, order, alt text, loaded, no second list, no green text, no pure-black surfaces); also against the pinned jsDelivr build. axe-core 0 violations in 8 state/size combinations (contrast on the dark surfaces included). Layout shift at script start 0 (desktop, iPad portrait, phone). 18 asset URLs (images, fonts, 3 SVGs) return 200. jsDelivr serves CSS/JS byte-identical to the build.
+
+# Home Discovery 0.1.0: report (installed on the live site by the owner on 2026-10-13)
 
 ## Source map (verified 2026-10-13)
 | Item | Finding |
