@@ -89,6 +89,45 @@ const b = await launch();
   await ctx.close();
 }
 
+// ---- 1e. owner's 0.5.0: Bio Dunlop mark (header, preview, bottom) with a hover/tap window; Dual Plush principle replaces "Layers with a job" ----
+{
+  const { ctx, page } = await openLive(b, VIEWPORTS.desktop);
+  const s = await page.evaluate(async () => ({
+    marks: document.querySelectorAll('#ddhd .ddhd__bio').length,
+    hdr: document.querySelectorAll('#ddhd .ddhd__vh .ddhd__bio').length, ftr: document.querySelectorAll('#ddhd .ddhd__ft .ddhd__bio').length,
+    imgs: [...document.querySelectorAll('#ddhd .ddhd__bio-i')].every((i) => /assets\/bio-dunlop\.svg$/.test(i.src)) && await fetch(document.querySelector('#ddhd .ddhd__bio-i').src).then((r) => r.ok && /svg/.test(r.headers.get('content-type'))),
+    pr: [...document.querySelectorAll('#ddhd-mattress .ddhd__pr li')].map((l) => l.textContent),
+    layersWithJob: /layers with a job/i.test(document.querySelector('#ddhd').innerText),
+  }));
+  ok(s.marks === 4 && s.hdr === 2 && s.ftr === 2, `Bio Dunlop mark in both views' header and bottom (${s.marks}: ${s.hdr} header, ${s.ftr} bottom)`);
+  ok(s.imgs, 'Bio Dunlop SVG loads');
+  ok(!s.layersWithJob && s.pr.some((t) => /^Dual Plush A latex mattress with a latex topper on top is one system: the mattress gives the support and the latex topper gives the comfort\.$/.test(t.trim())), 'principle text is the owner\'s Dual Plush wording: ' + JSON.stringify(s.pr));
+  // mouse hover opens the window, leaving closes it
+  await page.evaluate(() => document.querySelector('#ddhd-mattress .ddhd__vh .ddhd__bio').scrollIntoView({ block: 'center' }));
+  const box = await page.locator('#ddhd-mattress .ddhd__vh .ddhd__bio-i').boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.waitForTimeout(500);
+  const o = await page.evaluate(() => { const d = document.querySelector('#ddhd-mattress .ddhd__vh .ddhd__bio'); const p = d.querySelector('.ddhd__bio-p'); const r = p.getBoundingClientRect(); return { open: d.open, txt: p.innerText, vis: r.width > 200 && r.height > 40, inView: r.left >= 0 && r.right <= innerWidth }; });
+  ok(o.open && o.vis && o.inView && /Certified European production for European customers and standards\./.test(o.txt), 'hover opens the window with the wording: ' + JSON.stringify(o));
+  await page.mouse.move(5, 5); await page.waitForTimeout(600);
+  ok(await page.evaluate(() => !document.querySelector('#ddhd-mattress .ddhd__vh .ddhd__bio').open), 'leaving closes the hover window');
+  // click pins it, Escape closes
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2); await page.waitForTimeout(400);
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2); await page.mouse.move(5, 5); await page.waitForTimeout(600);
+  ok(await page.evaluate(() => document.querySelector('#ddhd-mattress .ddhd__vh .ddhd__bio').open), 'a click keeps the window open');
+  await page.keyboard.press('Escape');
+  ok(await page.evaluate(() => !document.querySelector('#ddhd-mattress .ddhd__vh .ddhd__bio').open), 'Escape closes it');
+  // preview panel has one, inside the panel, and the window stays inside the viewport
+  await page.evaluate(() => document.querySelector('#ddhd-m-botanic_dp .ddhd__more').click());
+  const pv = await page.evaluate(() => { const d = document.querySelector('.ddhd__panel .ddhd__bio'); if (!d) return null; d.querySelector('summary').click(); const p = d.querySelector('.ddhd__bio-p').getBoundingClientRect(); return { open: d.open, w: p.width, left: p.left, right: p.right, vw: innerWidth }; });
+  ok(pv && pv.open && pv.left >= 0 && pv.right <= pv.vw, 'preview panel mark opens its window: ' + JSON.stringify(pv));
+  await ctx.close();
+  const t2 = await openLive(b, VIEWPORTS.phone);
+  const tp = await t2.page.evaluate(() => { const d = document.querySelector('#ddhd-mattress .ddhd__vh .ddhd__bio'); d.scrollIntoView({ block: 'center' }); d.querySelector('summary').click(); const p = d.querySelector('.ddhd__bio-p').getBoundingClientRect(); return { open: d.open, left: p.left, right: p.right, vw: innerWidth }; });
+  ok(tp.open && tp.left >= 0 && tp.right <= tp.vw, 'phone: a tap opens the window inside the screen: ' + JSON.stringify(tp));
+  await t2.ctx.close();
+}
+
 // ---- 1c. owner's 0.3.0 rules: Title Case, thin frame, line colour, weights, family edge, ambient glow, comfort sizes and contrast ----
 {
   const { ctx, page } = await openLive(b, VIEWPORTS.desktop);

@@ -16,7 +16,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const VERSION = '0.4.1';
+const VERSION = '0.5.0';
 const SOURCE_VERSION = '3.13.2';
 const SOURCE_REF = process.env.DHD_SOURCE_REF || 'f4d9318a14f32ede544936f332f3ff4e5e800768';
 const REF = process.env.DHD_REF || 'main-preview';
@@ -86,6 +86,12 @@ function facts(m) {
   return `<div class="ddhd__pf">${h ? `<div><p class="ddhd__k">${title}</p>${h}</div>` : ''}<div><p class="ddhd__k">${esc(tc(m.depth.label))}</p><p class="ddhd__dl">${m.depth.items.map((d) => `<span class="ddhd__d">${esc(d)}</span>`).join(' ')}</p></div></div>`;
 }
 
+// the Bio Dunlop mark (the owner's drawing, converted once: assets/bio-dunlop.svg) with its window: <details>, so it opens without script too; the wording is the owner's
+const BIO_IMG = `${BASE}assets/bio-dunlop.svg`;
+const bio = () => `<details class="ddhd__bio"><summary class="ddhd__bio-s"><img class="ddhd__bio-i" src="${BIO_IMG}" width="255" height="101" loading="lazy" decoding="async" alt="Bio Dunlop"><span class="ddhd__sr"> Certified European production</span></summary><div class="ddhd__bio-p"><p class="ddhd__bio-h">Bio Dunlop</p><p>Certified European production for European customers and standards.</p></div></details>`;
+// the owner's wording for the Dual Plush principle replaces the Collection's "Layers with a job" line (no "layer" in Dual Plush wording)
+const principle = ([h, t]) => /^layers with a job$/i.test(h) ? ['Dual Plush', 'A latex mattress with a latex topper on top is one system: the mattress gives the support and the latex topper gives the comfort.'] : [h, t];
+
 // the preview of one model: built here, once, from the approved data; the script only inserts it
 function preview(c, m) {
   const big = imgSrc(m, true);
@@ -108,7 +114,7 @@ ${m.type ? `<p class="ddhd__pv-type">${esc(m.type)}</p>` : ''}<p class="ddhd__wh
 <p class="ddhd__who"><b>Who it suits.</b> ${esc(m.who)}</p>
 <p class="ddhd__bld"><b>How it is built.</b> ${esc(m.build)}</p>
 </div></div>
-${dp}${diff ? `<div class="ddhd__df"><p class="ddhd__k">How It Differs</p><ul class="ddhd__ul ddhd__ul--p">${diff}</ul></div>` : ''}
+${dp}<div class="ddhd__df">${diff ? `<div class="ddhd__dfl"><p class="ddhd__k">How It Differs</p><ul class="ddhd__ul ddhd__ul--p">${diff}</ul></div>` : ''}${bio()}</div>
 <div class="ddhd__pv-foot"><p class="ddhd__buy">${esc(c.buy)}</p><a class="ddhd__cta" data-ddhd-product="${m.id}" href="${m.url}">View ${esc(m.name)} &amp; Buy</a></div>
 </div>`;
 }
@@ -134,7 +140,7 @@ function view(c, kind, id) {
   const n = c.models.length;
   const isM = kind === 'mattress';
   return `<div class="ddhd__view" id="ddhd-${id}" data-view-panel="${id}">
-<div class="ddhd__vh"><h3 class="ddhd__q">${esc(c.question)}</h3><p class="ddhd__lede">${esc(c.lede)}</p></div>
+<div class="ddhd__vh"><div class="ddhd__vt"><h3 class="ddhd__q">${esc(c.question)}</h3><p class="ddhd__lede">${esc(c.lede)}</p></div>${bio()}</div>
 ${isM ? `<div class="ddhd__needs"><p class="ddhd__needs-h" id="ddhd-needs-h">What Matters Most to You?</p>
 <ul class="ddhd__chips" aria-labelledby="ddhd-needs-h">
 <li class="ddhd__js"><a class="ddhd__chip ddhd__chip--all" data-route="all" href="#ddhd-mattress">All ${n} Models</a></li>
@@ -144,8 +150,8 @@ ${needs}
 <ul class="ddhd__grid ddhd__grid--${id}">
 ${c.models.map((m) => card(c, m, id)).join('\n')}
 </ul>
-<ul class="ddhd__pr">${c.principles.map(([h, t]) => `<li><b>${esc(tc(h))}</b> ${esc(t)}</li>`).join('')}</ul>
-<p class="ddhd__all"><a href="${c.url}" data-ddhd-collection="${id}">Open the Full ${esc(c.label)} <span aria-hidden="true">&rarr;</span></a></p>
+<ul class="ddhd__pr">${c.principles.map(principle).map(([h, t]) => `<li><b>${esc(tc(h))}</b> ${esc(t)}</li>`).join('')}</ul>
+<div class="ddhd__ft"><p class="ddhd__all"><a href="${c.url}" data-ddhd-collection="${id}">Open the Full ${esc(c.label)} <span aria-hidden="true">&rarr;</span></a></p>${bio()}</div>
 </div>`;
 }
 
@@ -228,6 +234,7 @@ const guards = [
   [/approximately|\babout \d/i, '"approximately"'],
   [/<h1/i, 'an H1'],
   [/latest-design-latex-mattresses-cloud-comfort/, 'the retired Bio Comfort URL'],
+  [/layers with a job/i, 'the retired "Layers with a job" line'],
 ];
 // Dual Plush wording never says "layer": every route line / answer / preview that mentions Dual Plush
 for (const r of routes) for (const t of [r.a, ...r.m.map((x) => x.l)]) if (/dual plush|_dp|topper/i.test(t + JSON.stringify(r.m.map((x) => x.id))) && /layer/i.test(t) && /dual plush|_dp/i.test(r.a + JSON.stringify(r.m.map((x) => x.id)))) throw new Error(`content guard: Dual Plush text says "layer": ${t}`);
@@ -242,6 +249,7 @@ if (M.models.length !== 8 || T.models.length !== 3) throw new Error('expected 8 
 const rel = path.join(here, 'release', VERSION);
 out(path.join(rel, 'dhd.css'), css);
 out(path.join(rel, 'dhd.js'), js);
+out(path.join(rel, 'assets', 'bio-dunlop.svg'), fs.readFileSync(path.join(here, 'assets', 'bio-dunlop.svg'), 'utf8'));
 out(path.join(here, 'ecwid', `section-${VERSION}.html`), embed);
 out(path.join(rel, 'SOURCES.json'), JSON.stringify({ tool: VERSION, collection: SOURCE_VERSION, sourceCommit: SOURCE_REF, sha256: hashes, fonts: FONT_BASE, images: [HERO_ASSETS, OWN_ASSETS] }, null, 2) + '\n');
 console.log(`ddhd ${VERSION} source=${SOURCE_REF.slice(0, 12)} base=${BASE}`);

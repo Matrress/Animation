@@ -145,10 +145,29 @@
       if (returnFocus && b) b.focus({ preventScroll: true });
     }
 
+    /* ---- the Bio Dunlop windows: a mouse hovering opens one, leaving closes it; a tap, Enter or Space opens it for good (native <details>); Escape or a press elsewhere closes it ---- */
+    var bioTimer = 0;
+    function bioShut(b) { b.open = false; b.removeAttribute('data-hover'); }
+    function bioCloseAll(except) { var l = root.querySelectorAll('.ddhd__bio[open]'); for (var i = 0; i < l.length; i++) if (l[i] !== except) bioShut(l[i]); }
+    root.addEventListener('pointerover', function (e) {
+      if (e.pointerType !== 'mouse' || !e.target.closest) return;
+      var b = e.target.closest('.ddhd__bio'); if (!b) return;
+      clearTimeout(bioTimer); bioCloseAll(b);
+      if (!b.open) { b.open = true; b.setAttribute('data-hover', ''); }
+    }, sig);
+    root.addEventListener('pointerout', function (e) {
+      if (e.pointerType !== 'mouse' || !e.target.closest) return;
+      var b = e.target.closest('.ddhd__bio');
+      if (!b || !b.hasAttribute('data-hover') || (e.relatedTarget && b.contains(e.relatedTarget))) return;
+      bioTimer = setTimeout(function () { if (b.hasAttribute('data-hover')) bioShut(b); }, 220);
+    }, sig);
+
     /* ---- events (all delegated, all removed by destroy) ---- */
     root.addEventListener('click', function (e) {
       var t = e.target;
       if (!t.closest) return;
+      var bs = t.closest('.ddhd__bio-s');
+      if (bs) { var bb = bs.parentNode; if (bb.hasAttribute('data-hover')) { e.preventDefault(); bb.removeAttribute('data-hover'); } else bioCloseAll(bb); return; }   // a click on a hover-opened window keeps it open
       var tab = t.closest('.ddhd__tab');
       if (tab) { e.preventDefault(); setView(tab.getAttribute('data-tab'), { keepPos: true }); return; }
       var chip = t.closest('.ddhd__chip, .ddhd__g-all');
@@ -164,6 +183,7 @@
       if (card && !t.closest('a')) openPanel(card, { focus: e.detail === 0 });  // detail 0 = keyboard activation: move into the preview
     }, sig);
     root.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { var ob = root.querySelector('.ddhd__bio[open]'); if (ob) { e.stopPropagation(); bioShut(ob); var os = qs(ob, 'summary'); if (os) os.focus(); return; } }
       if (e.key === 'Escape' && openCard) { e.stopPropagation(); closePanel(true); return; }
       var tab = e.target.closest && e.target.closest('.ddhd__tab');
       if (!tab) return;
@@ -175,7 +195,7 @@
       if (n > -1) { e.preventDefault(); setView(tabs[n].getAttribute('data-tab'), { focus: true, keepPos: true }); }
     }, sig);
     // any pointer-down that is not on a card or inside the preview closes it (the section is full width, so "outside" is not "outside the element")
-    d.addEventListener('pointerdown', function (e) { if (openCard && !(e.target.closest && e.target.closest('.ddhd__card, .ddhd__pli'))) closePanel(false); }, sig);
+    d.addEventListener('pointerdown', function (e) { if (!(e.target.closest && e.target.closest('.ddhd__bio'))) bioCloseAll(); if (openCard && !(e.target.closest && e.target.closest('.ddhd__card, .ddhd__pli'))) closePanel(false); }, sig);
     function relayout() { if (raf) return; raf = w.requestAnimationFrame(function () { raf = 0; place(); }); }
     if (typeof ResizeObserver === 'function') { ro = new ResizeObserver(relayout); ro.observe(qs(root, '.ddhd__in')); }
     else w.addEventListener('resize', relayout, sig);

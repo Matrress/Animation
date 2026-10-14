@@ -30,7 +30,7 @@ export async function openLive(browser, vp, { inject = true, motion = 'no-prefer
   await page.route(PREVIEW_HOST + '**', (route) => {
     const f = path.join(root, 'release', VERSION, new URL(route.request().url()).pathname.replace(/^\//, ''));
     if (!fs.existsSync(f)) return route.fulfill({ status: 404, body: 'nf' });
-    route.fulfill({ status: 200, contentType: f.endsWith('.css') ? 'text/css' : 'application/javascript', headers: { 'access-control-allow-origin': '*' }, body: fs.readFileSync(f) });
+    route.fulfill({ status: 200, contentType: f.endsWith('.css') ? 'text/css' : f.endsWith('.svg') ? 'image/svg+xml' : 'application/javascript', headers: { 'access-control-allow-origin': '*' }, body: fs.readFileSync(f) });
   });
   await page.goto('https://divinedunlop.com/', { waitUntil: 'networkidle', timeout: 90000 }).catch(() => {});
   await page.waitForTimeout(3500);
