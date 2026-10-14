@@ -26,7 +26,7 @@ export async function openLive(browser, vp, { inject = true, motion = 'no-prefer
   const errors = [];
   page.on('pageerror', (e) => errors.push(String(e).slice(0, 160)));
   page.on('console', (m) => { if (m.type() === 'error' && /ddhd/i.test(m.text())) errors.push(m.text().slice(0, 160)); });
-  await page.route(/divine-home-discovery\/release\/0\.1\.0\//, (route) => route.abort());   // the version currently installed on the live site: never let it run in a test
+  await page.route(/divine-home-discovery\/release\/[\d.]+\//, (route) => { const v = /release\/([\d.]+)\//.exec(route.request().url())[1]; return v === VERSION ? route.fallback() : route.abort(); });   // any other version the live site carries (0.1.0 ... today's): never let it run in a test
   await page.route(PREVIEW_HOST + '**', (route) => {
     const f = path.join(root, 'release', VERSION, new URL(route.request().url()).pathname.replace(/^\//, ''));
     if (!fs.existsSync(f)) return route.fulfill({ status: 404, body: 'nf' });

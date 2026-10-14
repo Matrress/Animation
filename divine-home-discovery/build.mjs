@@ -16,7 +16,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const VERSION = '0.4.0';
+const VERSION = '0.4.1';
 const SOURCE_VERSION = '3.13.2';
 const SOURCE_REF = process.env.DHD_SOURCE_REF || 'f4d9318a14f32ede544936f332f3ff4e5e800768';
 const REF = process.env.DHD_REF || 'main-preview';
@@ -175,7 +175,14 @@ const embed = `${header}\n<link rel="stylesheet" href="${BASE}dhd.css">\n${secti
 // ---------- 3. data for the script (previews, route guidance) ----------
 const previews = {}, names = {};
 for (const c of [M, T]) for (const m of c.models) { previews[m.id] = preview(c, m); names[m.id] = { n: m.name, v: c === M ? 'mattress' : 'topper' }; }
-const routes = ROUTES.map((r) => ({ t: r.title, need: r.need, a: r.answer, m: r.models.map((x) => ({ id: x.id, l: x.line })) }));
+// the owner's rule: in Dual Plush wording the upper part is always "latex topper", never a "layer" (the Collection source still says "comfort layer"; the wording is rewritten here, the source is not touched)
+const dpWords = (t) => String(t)
+  .replace(/\b(?:a|an) (second|additional) (?:(natural|adaptable) )?(?:latex )?comfort layer\b/gi, (m, w, adj) => { const mid = [/^add/i.test(w) ? 'additional' : '', adj || ''].filter(Boolean); return `${/^[aeiou]/i.test(mid[0] || 'l') ? 'an' : 'a'} ${mid.join(' ')}${mid.length ? ' ' : ''}latex topper`; })
+  .replace(/\blatex comfort layer\b/gi, 'latex topper')
+  .replace(/\bsecond comfort layer\b/gi, 'latex topper')
+  .replace(/\bcomfort layer\b/gi, 'latex topper');
+const isDP = (r) => r.models.some((x) => /_dp$/.test(x.id)) || /dual plush/i.test(r.answer + r.title);
+const routes = ROUTES.map((r) => { const dp = isDP(r); const f = dp ? dpWords : (t) => t; return { t: r.title, need: r.need, a: f(r.answer), m: r.models.map((x) => ({ id: x.id, l: /_dp$/.test(x.id) ? dpWords(x.line) : x.line })) }; });
 for (const r of ROUTES) for (const x of r.models) if (!names[x.id]) throw new Error(`route model ${x.id} is not in data.mjs`);
 
 // ---------- 4. css / js ----------
@@ -222,6 +229,9 @@ const guards = [
   [/<h1/i, 'an H1'],
   [/latest-design-latex-mattresses-cloud-comfort/, 'the retired Bio Comfort URL'],
 ];
+// Dual Plush wording never says "layer": every route line / answer / preview that mentions Dual Plush
+for (const r of routes) for (const t of [r.a, ...r.m.map((x) => x.l)]) if (/dual plush|_dp|topper/i.test(t + JSON.stringify(r.m.map((x) => x.id))) && /layer/i.test(t) && /dual plush|_dp/i.test(r.a + JSON.stringify(r.m.map((x) => x.id)))) throw new Error(`content guard: Dual Plush text says "layer": ${t}`);
+for (const [id, html] of Object.entries(previews)) if (/_dp$/.test(id) && /layer/i.test(html)) throw new Error(`content guard: ${id} preview says "layer"`);
 for (const [re, what] of guards) if (re.test(embed + JSON.stringify(previews))) throw new Error(`content guard: output contains ${what}`);
 const cards = (embed.match(/class="ddhd__card"/g) || []).length;
 if (cards !== M.models.length + T.models.length) throw new Error(`expected ${M.models.length + T.models.length} cards, got ${cards}`);

@@ -75,6 +75,20 @@ const b = await launch();
 }
 
 
+// ---- 1d. owner's rule: Dual Plush wording never says "layer" (always latex topper) ----
+{
+  const { ctx, page } = await openLive(b, VIEWPORTS.desktop);
+  const texts = [];
+  for (const r of [1, 2]) {
+    texts.push(await page.evaluate((r) => { document.querySelector(`.ddhd__chip[data-route="${r}"]`).click(); return document.querySelector('#ddhd .ddhd__guide').innerText; }, r));
+  }
+  for (const id of ['botanic_dp', 'bio_dp']) texts.push(await page.evaluate((id) => { document.querySelector(`#ddhd-m-${id} .ddhd__more`).click(); return document.querySelector('.ddhd__panel').innerText; }, id));
+  ok(texts.every((t) => t.length > 40), 'Dual Plush guide and previews rendered');
+  ok(texts.every((t) => !/layer/i.test(t)), 'Dual Plush wording never says "layer": ' + JSON.stringify(texts.filter((t) => /layer/i.test(t)).map((t) => (t.match(/.{30}layer.{20}/i) || [''])[0])));
+  ok(/topper/i.test(texts[0]), 'Dual Plush guide says "topper"');
+  await ctx.close();
+}
+
 // ---- 1c. owner's 0.3.0 rules: Title Case, thin frame, line colour, weights, family edge, ambient glow, comfort sizes and contrast ----
 {
   const { ctx, page } = await openLive(b, VIEWPORTS.desktop);
