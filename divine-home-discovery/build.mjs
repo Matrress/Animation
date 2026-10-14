@@ -87,7 +87,8 @@ function facts(m) {
 }
 
 // the Bio Dunlop mark (the owner's drawing, converted once: assets/bio-dunlop.svg) with its window: <details>, so it opens without script too; the wording is the owner's
-const BIO_IMG = `${BASE}assets/bio-dunlop.svg`;
+// pinned to the commit that first carried the file, so dhd.js is byte-identical in every build (it does not depend on DHD_REF / DHD_BASE)
+const BIO_IMG = 'https://cdn.jsdelivr.net/gh/Matrress/Animation@9d681f860c9dae7dd866236d6824f413443b8512/divine-home-discovery/assets/bio-dunlop.svg';
 const bio = () => `<details class="ddhd__bio"><summary class="ddhd__bio-s"><img class="ddhd__bio-i" src="${BIO_IMG}" width="255" height="101" loading="lazy" decoding="async" alt="Bio Dunlop"><span class="ddhd__sr"> Certified European production</span></summary><div class="ddhd__bio-p"><p class="ddhd__bio-h">Bio Dunlop</p><p>Certified European production for European customers and standards.</p></div></details>`;
 // the owner's wording for the Dual Plush principle replaces the Collection's "Layers with a job" line (no "layer" in Dual Plush wording)
 const principle = ([h, t]) => /^layers with a job$/i.test(h) ? ['Dual Plush', 'A latex mattress with a latex topper on top is one system: the mattress gives the support and the latex topper gives the comfort.'] : [h, t];
@@ -249,7 +250,6 @@ if (M.models.length !== 8 || T.models.length !== 3) throw new Error('expected 8 
 const rel = path.join(here, 'release', VERSION);
 out(path.join(rel, 'dhd.css'), css);
 out(path.join(rel, 'dhd.js'), js);
-out(path.join(rel, 'assets', 'bio-dunlop.svg'), fs.readFileSync(path.join(here, 'assets', 'bio-dunlop.svg'), 'utf8'));
 out(path.join(here, 'ecwid', `section-${VERSION}.html`), embed);
 out(path.join(rel, 'SOURCES.json'), JSON.stringify({ tool: VERSION, collection: SOURCE_VERSION, sourceCommit: SOURCE_REF, sha256: hashes, fonts: FONT_BASE, images: [HERO_ASSETS, OWN_ASSETS] }, null, 2) + '\n');
 console.log(`ddhd ${VERSION} source=${SOURCE_REF.slice(0, 12)} base=${BASE}`);
