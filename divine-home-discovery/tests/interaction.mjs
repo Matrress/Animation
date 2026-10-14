@@ -108,7 +108,7 @@ const b = await launch();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.waitForTimeout(500);
   const o = await page.evaluate(() => { const d = document.querySelector('#ddhd-mattress .ddhd__vh .ddhd__bio'); const p = d.querySelector('.ddhd__bio-p'); const r = p.getBoundingClientRect(); return { open: d.open, txt: p.innerText, vis: r.width > 200 && r.height > 40, inView: r.left >= 0 && r.right <= innerWidth }; });
-  ok(o.open && o.vis && o.inView && /Certified European production for European customers and standards\./.test(o.txt), 'hover opens the window with the wording: ' + JSON.stringify(o));
+  ok(o.open && o.vis && o.inView && /^Fully Certified\s+Certified European production for European customers and standards\.$/.test(o.txt.trim()) && !/Bio Dunlop/.test(o.txt), 'hover opens the window with the wording: ' + JSON.stringify(o));
   await page.mouse.move(5, 5); await page.waitForTimeout(600);
   ok(await page.evaluate(() => !document.querySelector('#ddhd-mattress .ddhd__vh .ddhd__bio').open), 'leaving closes the hover window');
   // click pins it, Escape closes
