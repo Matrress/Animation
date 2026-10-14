@@ -95,7 +95,7 @@ const b = await launch();
   const v = await page.evaluate(() => {
     const cs = (s) => getComputedStyle(document.querySelector(s));
     const fam = (id) => getComputedStyle(document.querySelector('#ddhd-m-' + id)).getPropertyValue('--fam').trim();
-    return { frame: cs('.ddhd__fig').marginTop, fnColor: cs('#ddhd-m-botanic_dp .ddhd__fn').color, fnWeight: cs('.ddhd__fn').fontWeight, nameSize: parseFloat(cs('.ddhd__nm').fontSize), moreW: cs('.ddhd__more').fontWeight, moreStroke: cs('.ddhd__more').webkitTextStrokeWidth, chipStroke: cs('.ddhd__chip').webkitTextStrokeWidth, edge: getComputedStyle(document.querySelector('#ddhd-m-botanic'), '::after').height,
+    return { frame: cs('.ddhd__fig').marginTop, fnColor: cs('#ddhd-m-botanic_dp .ddhd__fn').color, fnWeight: cs('.ddhd__fn').fontWeight, nameSize: parseFloat(cs('.ddhd__nm').fontSize), moreW: cs('.ddhd__more').fontWeight, moreStroke: cs('.ddhd__more').webkitTextStrokeWidth, chipStroke: cs('.ddhd__chip').webkitTextStrokeWidth, edge: getComputedStyle(document.querySelector('#ddhd-m-botanic'), '::after').content, famAttr: document.querySelectorAll('#ddhd [data-fam]').length,
       fams: { botanic: fam('botanic'), botanic_dp: fam('botanic_dp'), bio: fam('bio'), bio_dp: fam('bio_dp'), ambient: fam('ambient'), hotel: fam('hotel'), ortho: fam('ortho'), partners: fam('partners') },
       ladeSize: parseFloat(cs('.ddhd__hd .ddhd__lede').fontSize), ladeColor: cs('.ddhd__hd .ddhd__lede').color };
   });
@@ -103,9 +103,7 @@ const b = await launch();
   ok(v.fnColor === 'rgb(164, 212, 220)' && v.fnWeight === '600', `line under the name is #a4d4dc and semi-bold (${v.fnColor}, ${v.fnWeight})`);
   ok(v.nameSize >= 24, `model name is large (${v.nameSize}px)`);
   ok(v.moreW === '600' && parseFloat(v.moreStroke) > 0 && parseFloat(v.chipStroke) > 0, `button text is heavier: weight ${v.moreW} + hairline stroke (${v.moreStroke}/${v.chipStroke})`);
-  ok(parseFloat(v.edge) >= 6, `bottom edge on the card is a real band (${v.edge})`);
-  ok(v.fams.botanic === v.fams.botanic_dp && v.fams.bio === v.fams.bio_dp && v.fams.ambient === v.fams.hotel, 'models of one family share one edge colour: ' + JSON.stringify(v.fams));
-  ok(new Set([v.fams.botanic, v.fams.bio, v.fams.ambient]).size === 3 && v.fams.ortho === v.fams.partners && ![v.fams.botanic, v.fams.bio, v.fams.ambient].includes(v.fams.ortho), 'three family colours + neutral edge for the others');
+  ok(v.edge === 'none' && v.famAttr === 0, `no coloured family edge on the cards (${v.edge}, ${v.famAttr} data-fam)`);
   ok(v.ladeSize >= 17.5 && /rgb\(27, 56, 78\)/.test(v.ladeColor), `header text is larger and darker (${v.ladeSize}px ${v.ladeColor})`);
   // contrast (AAA 7:1) of the text colours on the lightest blue-graphite stop and on the mint
   const darkBg = '#263650';

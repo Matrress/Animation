@@ -1,0 +1,14 @@
+{
+  "tool": "0.4.0",
+  "collection": "3.13.2",
+  "sourceCommit": "f4d9318a14f32ede544936f332f3ff4e5e800768",
+  "sha256": {
+    "data.mjs": "4e051f690271f1d95b1c7a3519be0b128d754161a67e093ae79746284549f597",
+    "nav.mjs": "0d8123e67c432242e7f5a94c240c39041df7c3e98e6d6ef7c6c7d9c6f3e3fc85"
+  },
+  "fonts": "https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/assets/",
+  "images": [
+    "https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/",
+    "https://cdn.jsdelivr.net/gh/Matrress/Animation@f4d9318a14f32ede544936f332f3ff4e5e800768/divine-collection/release/3.13.2/assets/"
+  ]
+}

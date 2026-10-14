@@ -129,7 +129,6 @@
       // trusted markup: generated at build time from the approved source, every value escaped (no visitor input reaches this)
       panel.innerHTML = '<button type="button" class="ddhd__x" aria-label="Close preview"></button>' + PV[id];
       panel.setAttribute('aria-labelledby', 'ddhd-pv-' + id);
-      pli.setAttribute('data-fam', card.getAttribute('data-fam') || '');   // the panel's bottom edge wears the same family colour as the card
       openCard = card; place();
       card.classList.add('is-open');
       var b = qs(card, '.ddhd__more'); if (b) { b.setAttribute('aria-expanded', 'true'); b.setAttribute('aria-controls', 'ddhd-panel'); }

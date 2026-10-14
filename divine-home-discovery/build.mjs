@@ -16,7 +16,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const VERSION = '0.3.0';
+const VERSION = '0.4.0';
 const SOURCE_VERSION = '3.13.2';
 const SOURCE_REF = process.env.DHD_SOURCE_REF || 'f4d9318a14f32ede544936f332f3ff4e5e800768';
 const REF = process.env.DHD_REF || 'main-preview';
@@ -115,7 +115,7 @@ ${dp}${diff ? `<div class="ddhd__df"><p class="ddhd__k">How It Differs</p><ul cl
 
 function card(c, m, kind) {
   const fam = famOf(c, m);
-  return `<li class="ddhd__card" id="ddhd-m-${m.id}" data-id="${m.id}" data-fam="${fam.id}">
+  return `<li class="ddhd__card" id="ddhd-m-${m.id}" data-id="${m.id}">
 <div class="ddhd__fig${m.img.photo ? ' ddhd__fig--photo' : ''}"><img src="${imgSrc(m)}" width="${m.img.w}" height="${m.img.h}" loading="lazy" decoding="async" alt="${esc(m.img.alt)}"></div>
 <div class="ddhd__bd"><p class="ddhd__lab">${esc(label(c, m))}${m.dp ? ' <span class="ddhd__dpb">+ Topper</span>' : ''}</p>
 <h4 class="ddhd__nm"><a data-ddhd-product="${m.id}" href="${m.url}">${esc(m.name)}</a></h4>
