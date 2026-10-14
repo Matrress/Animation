@@ -128,6 +128,23 @@ const b = await launch();
   await t2.ctx.close();
 }
 
+// ---- 1f. owner's 0.6.0: the choice between mattress and topper is asked, and must be made ----
+{
+  for (const vp of ['desktop', 'phone']) {
+    const { ctx, page } = await openLive(b, VIEWPORTS[vp]);
+    const q = await page.evaluate(() => {
+      const ask = document.querySelector('#ddhd-ask'), sw = document.querySelector('#ddhd .ddhd__sw'), tabs = [...document.querySelectorAll('#ddhd .ddhd__tab')];
+      const r = ask.getBoundingClientRect(), s = sw.getBoundingClientRect();
+      return { ask: ask.textContent, hint: document.querySelector('.ddhd__ask-s').textContent, label: sw.getAttribute('aria-labelledby'), dots: tabs.map((t) => { const d = t.querySelector('.ddhd__tab-d').getBoundingClientRect(); return [Math.round(d.width), t.getAttribute('aria-selected')]; }), above: r.bottom <= s.top + 1, aligned: Math.abs(r.left - s.left) < 2, tabH: tabs.map((t) => Math.round(t.getBoundingClientRect().height)), overflow: document.documentElement.scrollWidth > innerWidth };
+    });
+    ok(q.ask === 'What Are You Looking For?' && /^Select one/.test(q.hint) && q.label === 'ddhd-ask', `${vp}: the question and "select one" hint are there, and name the choice (${q.ask} / ${q.hint})`);
+    ok(q.above && q.aligned, `${vp}: the question sits right above the two buttons`);
+    ok(q.dots.every(([w]) => w >= 20) && q.dots.filter(([, s]) => s === 'true').length === 1, `${vp}: each button has a choice dot, exactly one selected (${JSON.stringify(q.dots)})`);
+    ok(q.tabH.every((h) => h >= 56) && !q.overflow, `${vp}: buttons stay tall enough, no sideways scroll (${q.tabH})`);
+    await ctx.close();
+  }
+}
+
 // ---- 1c. owner's 0.3.0 rules: Title Case, thin frame, line colour, weights, family edge, ambient glow, comfort sizes and contrast ----
 {
   const { ctx, page } = await openLive(b, VIEWPORTS.desktop);

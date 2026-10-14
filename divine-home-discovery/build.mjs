@@ -16,7 +16,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const VERSION = '0.5.1';
+const VERSION = '0.6.0';
 const SOURCE_VERSION = '3.13.2';
 const SOURCE_REF = process.env.DHD_SOURCE_REF || 'f4d9318a14f32ede544936f332f3ff4e5e800768';
 const REF = process.env.DHD_REF || 'main-preview';
@@ -162,10 +162,11 @@ const section = `<section class="ddhd" id="ddhd" data-ddhd-root aria-labelledby=
 <div class="ddhd__ht"><p class="ddhd__eb">Natural latex sleep systems</p>
 <h2 class="ddhd__h" id="ddhd-h">Find your <span>natural sleep solution</span></h2>
 <p class="ddhd__lede">Start with what you need: a new latex mattress, or a latex topper to improve the mattress you already have.</p></div>
-<nav class="ddhd__sw" aria-label="Choose a product type">
-<a class="ddhd__tab" href="#ddhd-mattress" data-tab="mattress"><span class="ddhd__tab-n">Latex Mattresses</span><span class="ddhd__tab-c">${M.models.length} Models</span></a>
-<a class="ddhd__tab" href="#ddhd-topper" data-tab="topper"><span class="ddhd__tab-n">Latex Toppers</span><span class="ddhd__tab-c">${T.models.length} Models</span></a>
-</nav>
+<div class="ddhd__pick"><p class="ddhd__ask" id="ddhd-ask">What Are You Looking For?</p><p class="ddhd__ask-s">Select one to see your models and how to choose</p>
+<nav class="ddhd__sw" aria-labelledby="ddhd-ask">
+<a class="ddhd__tab" href="#ddhd-mattress" data-tab="mattress"><span class="ddhd__tab-d" aria-hidden="true"></span><span class="ddhd__tab-n">Latex Mattresses</span><span class="ddhd__tab-c">${M.models.length} Models</span></a>
+<a class="ddhd__tab" href="#ddhd-topper" data-tab="topper"><span class="ddhd__tab-d" aria-hidden="true"></span><span class="ddhd__tab-n">Latex Toppers</span><span class="ddhd__tab-c">${T.models.length} Models</span></a>
+</nav></div>
 </div>
 ${view(M, 'mattress', 'mattress')}
 ${view(T, 'topper', 'topper')}
