@@ -46,6 +46,21 @@
 .ddhd .ddhd__ask{font-size:clamp(22px,2.2vw,27px);line-height:1.2;letter-spacing:-.012em;font-weight:600;color:var(--ink);-webkit-text-stroke:.25px currentColor}
 .ddhd__ask-s{font-size:16px;line-height:1.4;color:var(--ink2);font-weight:600;margin-bottom:5px}
 
+/* the link to the System tile: a secondary row between the choice above and the needs below (outlined, never a filled primary button) */
+.ddhd__sys{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 28px;margin:0 0 clamp(22px,2.4vw,30px);padding:16px 20px 16px 22px;border:1.5px solid rgba(14,34,52,.45);border-radius:14px;background:rgba(255,255,255,.55);color:var(--ink);text-decoration:none;cursor:pointer;transition:box-shadow .3s ease,transform .25s ease,background-color .25s ease,border-color .25s ease}
+.ddhd__sys[hidden]{display:none}
+.ddhd__sys-t{flex:1 1 420px;min-width:0;display:grid;gap:3px}
+.ddhd__sys-t b{font-size:clamp(19px,1.9vw,22px);line-height:1.25;font-weight:600;color:var(--ink);-webkit-text-stroke:.3px currentColor}
+.ddhd__sys-t span{font-size:17px;line-height:1.5;color:var(--ink2);font-weight:600}
+.ddhd__sys-b{flex:none;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:10px 20px;border:1.5px solid #174d75;border-radius:var(--rb);color:#174d75;font-size:17px;line-height:1.2;font-style:normal;font-weight:600;-webkit-text-stroke:.35px currentColor;transition:background-color .25s ease,color .25s ease}
+.ddhd__sys-b u{text-decoration:none;transition:transform .25s ease}
+.ddhd__sys:hover,.ddhd__sys:focus-visible,.ddhd__sys:active{background:#fff;border-color:var(--blue);box-shadow:var(--amb-l);transform:translateY(-1px)}
+.ddhd__sys:hover .ddhd__sys-b,.ddhd__sys:focus-visible .ddhd__sys-b,.ddhd__sys:active .ddhd__sys-b{background:var(--blue);color:var(--snow)}
+.ddhd__sys:hover .ddhd__sys-b u{transform:translateX(3px)}
+.ddhd__sys:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+@container ddhd (max-width:759px){.ddhd__sys{padding:16px}.ddhd__sys-b{width:100%;justify-content:center}}
+@media (prefers-reduced-motion:reduce){.ddhd__sys,.ddhd__sys-b,.ddhd__sys-b u{transition:none}}
+
 /* views: without script every view is visible (a plain, complete document); with script one at a time */
 .ddhd.is-js .ddhd__view[hidden],.ddhd.is-js:not([data-ddhd]) #ddhd-topper{display:none}  /* before the script has run, show the default view only: no jump when it initialises */
 .ddhd__view+.ddhd__view{margin-top:clamp(52px,6vw,88px);padding-top:clamp(36px,4vw,56px);border-top:1px solid var(--line)}

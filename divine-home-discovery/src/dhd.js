@@ -226,6 +226,9 @@
   function scan() {
     insts = insts.filter(function (i) { if (!i.root.isConnected) { i.destroy(); return false; } return true; });
     qa(d, '.ddhd[data-ddhd-root]').forEach(function (r) { var i = init(r); if (i) insts.push(i); });
+    // the "Explore the System" link leads to the System tile; if that tile is not on the page the link is hidden rather than left leading nowhere
+    var sys = !!d.getElementById('ddhd-system');
+    qa(d, 'a[data-ddhd-system]').forEach(function (a) { a.hidden = !sys; });
   }
   w.DDHD = { version: VERSION, scan: scan };
 

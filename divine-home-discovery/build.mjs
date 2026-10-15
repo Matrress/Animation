@@ -15,8 +15,9 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { systemHtml } from './src/system.mjs';
 
-const VERSION = '0.6.0';
+const VERSION = '0.7.0';
 const SOURCE_VERSION = '3.13.2';
 const SOURCE_REF = process.env.DHD_SOURCE_REF || 'f4d9318a14f32ede544936f332f3ff4e5e800768';
 const REF = process.env.DHD_REF || 'main-preview';
@@ -64,6 +65,18 @@ for (const f of ['data.mjs', 'nav.mjs']) {
 const { collections, FIRM, HERO_ASSETS } = await import(pathToFileURL(path.join(srcDir, 'data.mjs')).href);
 const { ROUTES, LABELS } = await import(pathToFileURL(path.join(srcDir, 'nav.mjs')).href);
 
+// the body-weight ranges are the Hero's own Firmness Regulation card (same source the Collection navigator reads), read from the Hero commit that is live
+const HERO_REF = process.env.DHD_HERO_REF || '199c8f8daa17c32bfc928dc6ba229332be5fe6ee';
+let heroSheets;
+try { heroSheets = execFileSync('git', ['show', `${HERO_REF}:divine-hero/src/sheets.html`], { cwd: repo, encoding: 'utf8', maxBuffer: 1 << 26, stdio: ['ignore', 'pipe', 'pipe'] }); }
+catch (e) { throw new Error(`Cannot read the Hero's sheets.html at ${HERO_REF}. Fetch it first:  git fetch origin claude/divine-hero-polish\n${e.stderr || e.message}`); }
+const hi = heroSheets.indexOf('id="ddh-hc-weight"');
+if (hi < 0) throw new Error('hero sheets.html: the Firmness Regulation card moved');
+const hblk = heroSheets.slice(hi, heroSheets.indexOf('</aside>', hi));
+const ranges = [...hblk.matchAll(/<li class="ddh__hcf-(\w)"><b[^>]*>([^<]*)<\/b><span[^>]*>([^<]*)<\/span>/g)].map((m) => ({ k: m[1], n: m[2], r: m[3] }));
+if (ranges.map((r) => r.k).join('') !== 'smfx' || ranges.some((r) => !/\d\s*kg/.test(r.r) || /[~≈]|approx/i.test(r.r))) throw new Error('hero firmness ranges changed');
+hashes['hero-sheets.html'] = crypto.createHash('sha256').update(heroSheets).digest('hex');
+
 // ---------- 2. markup ----------
 const M = collections.mattress, T = collections.topper;
 const famOf = (c, m) => c.families.find((f) => f.models.includes(m.id));
@@ -89,7 +102,7 @@ function facts(m) {
 // the Bio Dunlop mark (the owner's drawing, converted once: assets/bio-dunlop.svg) with its window: <details>, so it opens without script too; the wording is the owner's
 // pinned to the commit that first carried the file, so dhd.js is byte-identical in every build (it does not depend on DHD_REF / DHD_BASE)
 const BIO_IMG = 'https://cdn.jsdelivr.net/gh/Matrress/Animation@9d681f860c9dae7dd866236d6824f413443b8512/divine-home-discovery/assets/bio-dunlop.svg';
-const bio = () => `<details class="ddhd__bio"><summary class="ddhd__bio-s"><img class="ddhd__bio-i" src="${BIO_IMG}" width="255" height="101" loading="lazy" decoding="async" alt="Bio Dunlop"><span class="ddhd__sr"> Certified European production</span></summary><div class="ddhd__bio-p"><p class="ddhd__bio-h">Fully Certified</p><p>Certified European production for European customers and standards.</p></div></details>`;
+const bio = () => `<details class="ddhd__bio"><summary class="ddhd__bio-s"><img class="ddhd__bio-i" src="${BIO_IMG}" loading="lazy" alt="Bio Dunlop: certified European production"></summary><div class="ddhd__bio-p"><p class="ddhd__bio-h">Fully Certified</p><p>Certified European production for European customers and standards.</p></div></details>`;
 // the owner's wording for the Dual Plush principle replaces the Collection's "Layers with a job" line (no "layer" in Dual Plush wording)
 const principle = ([h, t]) => /^layers with a job$/i.test(h) ? ['Dual Plush', 'A latex mattress with a latex topper on top is one system: the mattress gives the support and the latex topper gives the comfort.'] : [h, t];
 
@@ -168,6 +181,7 @@ const section = `<section class="ddhd" id="ddhd" data-ddhd-root aria-labelledby=
 <a class="ddhd__tab" href="#ddhd-topper" data-tab="topper"><span class="ddhd__tab-d" aria-hidden="true"></span><span class="ddhd__tab-n">Latex Toppers</span><span class="ddhd__tab-c">${T.models.length} Models</span></a>
 </nav></div>
 </div>
+<a class="ddhd__sys" href="#ddhd-system" data-ddhd-system><span class="ddhd__sys-t"><b>What Makes Our Latex Sleep System Different?</b><span>Explore how every model, material and comfort configuration is built around a real customer need.</span></span><i class="ddhd__sys-b">Explore the System <u aria-hidden="true">&rarr;</u></i></a>
 ${view(M, 'mattress', 'mattress')}
 ${view(T, 'topper', 'topper')}
 </div>
@@ -177,8 +191,11 @@ ${view(T, 'topper', 'topper')}
 // loads the one script, and takes the enhancement away again if the script cannot load (the static range then stays visible)
 const boot = `<script>(function(){var s=document.getElementById('ddhd');if(!s)return;s.classList.add('is-js');if(window.DDHD){window.DDHD.scan();return}var x=document.createElement('script');x.src='${BASE}dhd.js';x.defer=true;x.onerror=function(){s.classList.remove('is-js')};document.head.appendChild(x);setTimeout(function(){if(!window.DDHD)s.classList.remove('is-js')},8000)})();</script>`;
 
-const header = `<!-- Divine DunlopDreams Home Discovery ${VERSION} · product data: Collection ${SOURCE_VERSION} @ ${SOURCE_REF.slice(0, 12)} · generated by divine-home-discovery/build.mjs: edit the collection's src/data.mjs or src/nav.mjs and rebuild, not this file -->`;
+const header = `<!-- Divine DunlopDreams Home Discovery ${VERSION} · Collection ${SOURCE_VERSION} @ ${SOURCE_REF.slice(0, 12)} · generated by build.mjs -->`;
 const embed = `${header}\n<link rel="stylesheet" href="${BASE}dhd.css">\n${section}\n${boot}\n`;
+
+// ---------- 2b. tile 2: the System section (own file, own script; linked to tile 1 by the id #ddhd-system and the mattress tab) ----------
+// (routes need dpWords, defined below with the script data: the tile is generated after section 3)
 
 // ---------- 3. data for the script (previews, route guidance) ----------
 const previews = {}, names = {};
@@ -192,6 +209,12 @@ const dpWords = (t) => String(t)
 const isDP = (r) => r.models.some((x) => /_dp$/.test(x.id)) || /dual plush/i.test(r.answer + r.title);
 const routes = ROUTES.map((r) => { const dp = isDP(r); const f = dp ? dpWords : (t) => t; return { t: r.title, need: r.need, a: f(r.answer), m: r.models.map((x) => ({ id: x.id, l: /_dp$/.test(x.id) ? dpWords(x.line) : x.line })) }; });
 for (const r of ROUTES) for (const x of r.models) if (!names[x.id]) throw new Error(`route model ${x.id} is not in data.mjs`);
+
+const routesFor = routes.map((r) => ({ ...r }));
+const sysSection = systemHtml({ M, T, FIRM, routes: routesFor, ranges, esc, tc, ownAssets: OWN_ASSETS, bioImg: BIO_IMG, firmHex });
+const sysBoot = `<script>(function(){var s=document.getElementById('ddhd-system');if(!s)return;s.classList.add('is-js');if(window.DSYS){window.DSYS.scan();return}var x=document.createElement('script');x.src='${BASE}dsys.js';x.defer=true;x.onerror=function(){s.classList.remove('is-js')};document.head.appendChild(x);setTimeout(function(){if(!window.DSYS)s.classList.remove('is-js')},8000)})();</script>`;
+const sysHeader = `<!-- Divine DunlopDreams System ${VERSION} · tile 2 of 2, install directly BELOW the Home Discovery navigator tile · product data: Collection ${SOURCE_VERSION} @ ${SOURCE_REF.slice(0, 12)}, body-weight ranges: Hero firmness card @ ${HERO_REF.slice(0, 12)} · generated by divine-home-discovery/build.mjs -->`;
+const sysEmbed = `${sysHeader}\n<link rel="stylesheet" href="${BASE}dsys.css">\n${sysSection}\n${sysBoot}\n`;
 
 // ---------- 4. css / js ----------
 function importantize(css) {
@@ -220,11 +243,15 @@ let js = fs.readFileSync(path.join(here, 'src/dhd.js'), 'utf8')
   .replace('__PREVIEWS__', () => JSON.stringify(previews))
   .replace('__ROUTES__', () => JSON.stringify(routes))
   .replace('__NAMES__', () => JSON.stringify(names));
+let sysCss = fonts + '\n' + importantize(fs.readFileSync(path.join(here, 'src/dsys.css'), 'utf8'));
+let sysJs = fs.readFileSync(path.join(here, 'src/dsys.js'), 'utf8').replaceAll('__VERSION__', () => VERSION);
 let minified = false;
 if (process.env.ESBUILD) {
   const { transformSync } = await import(pathToFileURL(process.env.ESBUILD).href);
   css = transformSync(css, { loader: 'css', minify: true }).code;
   js = transformSync(js, { loader: 'js', minify: true, target: 'es2019' }).code;
+  sysCss = transformSync(sysCss, { loader: 'css', minify: true }).code;
+  sysJs = transformSync(sysJs, { loader: 'js', minify: true, target: 'es2019' }).code;
   minified = true;
 }
 
@@ -242,6 +269,13 @@ const guards = [
 for (const r of routes) for (const t of [r.a, ...r.m.map((x) => x.l)]) if (/dual plush|_dp|topper/i.test(t + JSON.stringify(r.m.map((x) => x.id))) && /layer/i.test(t) && /dual plush|_dp/i.test(r.a + JSON.stringify(r.m.map((x) => x.id)))) throw new Error(`content guard: Dual Plush text says "layer": ${t}`);
 for (const [id, html] of Object.entries(previews)) if (/_dp$/.test(id) && /layer/i.test(html)) throw new Error(`content guard: ${id} preview says "layer"`);
 for (const [re, what] of guards) if (re.test(embed + JSON.stringify(previews))) throw new Error(`content guard: output contains ${what}`);
+// the System tile follows the same standing rules
+const sysText = sysEmbed;
+for (const [re, what] of guards) if (re.test(sysText)) throw new Error(`content guard (system): output contains ${what}`);
+if (/\blayers?\b/i.test(sysText.replace(/<[^>]+>/g, ' '))) throw new Error('content guard (system): the word "layer" appears; the upper part of Dual Plush is always "latex topper"');
+if (/\b(baby|babies|infant|OEKO|certificate number)\b/i.test(sysText)) throw new Error('content guard (system): a baby / certificate claim needs a supplied document first');
+if (!/More than a mattress\. A complete sleep system\./.test(sysText) || !/Find Your Latex Mattress/.test(sysText)) throw new Error('system: the story ending is missing');
+for (const r of ranges) if (!sysText.includes(r.r)) throw new Error(`system: the Hero weight range "${r.r}" is not in the tile`);
 const cards = (embed.match(/class="ddhd__card"/g) || []).length;
 if (cards !== M.models.length + T.models.length) throw new Error(`expected ${M.models.length + T.models.length} cards, got ${cards}`);
 for (const m of [...M.models, ...T.models]) if (!embed.includes(`href="${m.url}"`)) throw new Error(`${m.id}: product link missing`);
@@ -251,7 +285,11 @@ if (M.models.length !== 8 || T.models.length !== 3) throw new Error('expected 8 
 const rel = path.join(here, 'release', VERSION);
 out(path.join(rel, 'dhd.css'), css);
 out(path.join(rel, 'dhd.js'), js);
+out(path.join(rel, 'dsys.css'), sysCss);
+out(path.join(rel, 'dsys.js'), sysJs);
 out(path.join(here, 'ecwid', `section-${VERSION}.html`), embed);
-out(path.join(rel, 'SOURCES.json'), JSON.stringify({ tool: VERSION, collection: SOURCE_VERSION, sourceCommit: SOURCE_REF, sha256: hashes, fonts: FONT_BASE, images: [HERO_ASSETS, OWN_ASSETS] }, null, 2) + '\n');
+out(path.join(here, 'ecwid', `system-${VERSION}.html`), sysEmbed);
+out(path.join(rel, 'SOURCES.json'), JSON.stringify({ tool: VERSION, collection: SOURCE_VERSION, sourceCommit: SOURCE_REF, heroCommit: HERO_REF, sha256: hashes, fonts: FONT_BASE, images: [HERO_ASSETS, OWN_ASSETS] }, null, 2) + '\n');
 console.log(`ddhd ${VERSION} source=${SOURCE_REF.slice(0, 12)} base=${BASE}`);
+console.log(`system tile ${sysEmbed.length} chars · dsys.css ${Buffer.byteLength(sysCss)} B · dsys.js ${Buffer.byteLength(sysJs)} B`);
 console.log(`section ${embed.length} chars (${Buffer.byteLength(embed)} B) · css ${Buffer.byteLength(css)} B · js ${Buffer.byteLength(js)} B${minified ? '' : ' (unminified: set ESBUILD)'} · ${cards} cards`);

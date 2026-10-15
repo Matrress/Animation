@@ -53,6 +53,14 @@ export async function openLive(browser, vp, { inject = true, motion = 'no-prefer
         a.after(frag);
       }
     }, html);
+    const sysFile = path.join(root, 'ecwid', process.env.DDHD_EMBED2 || `system-${VERSION}.html`);
+    if (fs.existsSync(sysFile) && !process.env.DDHD_NO_SYSTEM) {   // tile 2: installed directly below the navigator's tile
+      await page.evaluate((html) => {
+        let w = document.querySelector('#ddhd');
+        while (w.parentElement && [...w.parentElement.children].every((c) => c === w || /^(SCRIPT|LINK|STYLE)$/.test(c.tagName))) w = w.parentElement;
+        w.after(document.createRange().createContextualFragment(html));
+      }, fs.readFileSync(sysFile, 'utf8'));
+    }
     errors.length = 0; // only what happens from here on counts: the live page throws its own errors (Ecwid's OnPageLoaded, blocked trackers)
     await page.waitForFunction(() => window.DDHD && document.querySelector('#ddhd[data-ddhd]'), null, { timeout: 15000 });
     await page.waitForTimeout(400);
