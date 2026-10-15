@@ -25,7 +25,7 @@ export function systemHtml({ M, T, FIRM, routes, ranges, esc, tc, ownAssets, bio
 
   // ---- 4. Engineering: the three approved Dual Plush diagrams (Collection 3.13.2 assets) ----
   const dpUnique = [['s', 'm'], ['m', 'f'], ['f', 'x']];
-  const dpFig = dpUnique.map(([t, b]) => `<li class="dsys__dpv"><img src="${ownAssets}dual-plush-${t}-${b}.svg" width="246" height="100" loading="lazy" decoding="async" alt="${esc(FIRM[t])} latex topper above a ${esc(FIRM[b])} latex mattress"><span>${esc(FIRM[t])} Topper <em>on</em> ${esc(FIRM[b])} Mattress</span></li>`).join('');
+  const dpFig = dpUnique.map(([t, b]) => `<li class="dsys__dpv"><img src="${ownAssets}dual-plush-${t}-${b}.svg" width="246" height="100" loading="lazy" decoding="async" alt="${esc(FIRM[t])} latex topper above ${/^[aeiou]/i.test(FIRM[b]) ? 'an' : 'a'} ${esc(FIRM[b])} latex mattress"><span>${esc(FIRM[t])} Topper <em>on</em> ${esc(FIRM[b])} Mattress</span></li>`).join('');
 
   // ---- 3. materials: what each model is made of is its own approved "type" line ----
   const typeRows = M.models.filter((m) => m.id !== 'hotel').map((m) => `<li><b>${esc(m.name)}</b><span>${esc(m.type)}</span></li>`).join('');
