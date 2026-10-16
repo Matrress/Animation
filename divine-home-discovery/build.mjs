@@ -17,7 +17,8 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { systemHtml } from './src/system.mjs';
 
-const VERSION = '0.7.2';
+const VERSION = '0.7.3';
+// 0.7.3: the lede is exactly as wide as the heading (heading sets the width, lede fills it, justified). Replaces the 0.7.2 justified heading.
 // 0.7.2: heading text-align:justify;text-align-last:justify — the h2 now spans the full container width, matching the lede paragraph below it.
 // 0.7.1: the navigator stands alone. The System tile (0.7.0) stays in the repository but is only built and linked when DHD_SYSTEM_LINK=1.
 const WITH_SYSTEM = process.env.DHD_SYSTEM_LINK === '1';
