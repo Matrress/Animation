@@ -17,7 +17,9 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { systemHtml } from './src/system.mjs';
 
-const VERSION = '0.7.0';
+const VERSION = '0.7.1';
+// 0.7.1: the navigator stands alone. The System tile (0.7.0) stays in the repository but is only built and linked when DHD_SYSTEM_LINK=1.
+const WITH_SYSTEM = process.env.DHD_SYSTEM_LINK === '1';
 const SOURCE_VERSION = '3.13.2';
 const SOURCE_REF = process.env.DHD_SOURCE_REF || 'f4d9318a14f32ede544936f332f3ff4e5e800768';
 const REF = process.env.DHD_REF || 'main-preview';
@@ -173,7 +175,7 @@ const section = `<section class="ddhd" id="ddhd" data-ddhd-root aria-labelledby=
 <div class="ddhd__in">
 <div class="ddhd__hd">
 <div class="ddhd__ht"><p class="ddhd__eb">Natural latex sleep systems</p>
-<h2 class="ddhd__h" id="ddhd-h">Find your <span>natural sleep solution</span></h2>
+<h2 class="ddhd__h" id="ddhd-h">Find <b>Your</b> Natural Sleep <b>Solution</b></h2>
 <p class="ddhd__lede">Start with what you need: a new latex mattress, or a latex topper to improve the mattress you already have.</p></div>
 <div class="ddhd__pick"><p class="ddhd__ask" id="ddhd-ask">What Are You Looking For?</p><p class="ddhd__ask-s">Select one to see your models and how to choose</p>
 <nav class="ddhd__sw" aria-labelledby="ddhd-ask">
@@ -181,7 +183,7 @@ const section = `<section class="ddhd" id="ddhd" data-ddhd-root aria-labelledby=
 <a class="ddhd__tab" href="#ddhd-topper" data-tab="topper"><span class="ddhd__tab-d" aria-hidden="true"></span><span class="ddhd__tab-n">Latex Toppers</span><span class="ddhd__tab-c">${T.models.length} Models</span></a>
 </nav></div>
 </div>
-<a class="ddhd__sys" href="#ddhd-system" data-ddhd-system><span class="ddhd__sys-t"><b>What Makes Our Latex Sleep System Different?</b><span>Explore how every model, material and comfort configuration is built around a real customer need.</span></span><i class="ddhd__sys-b">Explore the System <u aria-hidden="true">&rarr;</u></i></a>
+${WITH_SYSTEM ? `<a class="ddhd__sys" href="#ddhd-system" data-ddhd-system><span class="ddhd__sys-t"><b>What Makes Our Latex Sleep System Different?</b><span>Explore how every model, material and comfort configuration is built around a real customer need.</span></span><i class="ddhd__sys-b">Explore the System <u aria-hidden="true">&rarr;</u></i></a>` : ''}
 ${view(M, 'mattress', 'mattress')}
 ${view(T, 'topper', 'topper')}
 </div>
@@ -271,11 +273,13 @@ for (const [id, html] of Object.entries(previews)) if (/_dp$/.test(id) && /layer
 for (const [re, what] of guards) if (re.test(embed + JSON.stringify(previews))) throw new Error(`content guard: output contains ${what}`);
 // the System tile follows the same standing rules
 const sysText = sysEmbed;
+if (WITH_SYSTEM) {
 for (const [re, what] of guards) if (re.test(sysText)) throw new Error(`content guard (system): output contains ${what}`);
 if (/\blayers?\b/i.test(sysText.replace(/<[^>]+>/g, ' '))) throw new Error('content guard (system): the word "layer" appears; the upper part of Dual Plush is always "latex topper"');
 if (/\b(baby|babies|infant|OEKO|certificate number)\b/i.test(sysText)) throw new Error('content guard (system): a baby / certificate claim needs a supplied document first');
 if (!/More than a mattress\. A complete sleep system\./.test(sysText) || !/Find Your Latex Mattress/.test(sysText)) throw new Error('system: the story ending is missing');
 for (const r of ranges) if (!sysText.includes(r.r)) throw new Error(`system: the Hero weight range "${r.r}" is not in the tile`);
+}
 const cards = (embed.match(/class="ddhd__card"/g) || []).length;
 if (cards !== M.models.length + T.models.length) throw new Error(`expected ${M.models.length + T.models.length} cards, got ${cards}`);
 for (const m of [...M.models, ...T.models]) if (!embed.includes(`href="${m.url}"`)) throw new Error(`${m.id}: product link missing`);
@@ -285,10 +289,9 @@ if (M.models.length !== 8 || T.models.length !== 3) throw new Error('expected 8 
 const rel = path.join(here, 'release', VERSION);
 out(path.join(rel, 'dhd.css'), css);
 out(path.join(rel, 'dhd.js'), js);
-out(path.join(rel, 'dsys.css'), sysCss);
-out(path.join(rel, 'dsys.js'), sysJs);
+if (WITH_SYSTEM) { out(path.join(rel, 'dsys.css'), sysCss); out(path.join(rel, 'dsys.js'), sysJs); }
 out(path.join(here, 'ecwid', `section-${VERSION}.html`), embed);
-out(path.join(here, 'ecwid', `system-${VERSION}.html`), sysEmbed);
+if (WITH_SYSTEM) out(path.join(here, 'ecwid', `system-${VERSION}.html`), sysEmbed);
 out(path.join(rel, 'SOURCES.json'), JSON.stringify({ tool: VERSION, collection: SOURCE_VERSION, sourceCommit: SOURCE_REF, heroCommit: HERO_REF, sha256: hashes, fonts: FONT_BASE, images: [HERO_ASSETS, OWN_ASSETS] }, null, 2) + '\n');
 console.log(`ddhd ${VERSION} source=${SOURCE_REF.slice(0, 12)} base=${BASE}`);
 console.log(`system tile ${sysEmbed.length} chars · dsys.css ${Buffer.byteLength(sysCss)} B · dsys.js ${Buffer.byteLength(sysJs)} B`);
