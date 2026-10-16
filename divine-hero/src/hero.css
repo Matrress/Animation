@@ -1917,3 +1917,40 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 @media (prefers-reduced-motion:no-preference){
 .ddh .ddh__spine{animation-duration:.3s}
 .ddh .ddh__spine path{animation:ddh-vert .46s cubic-bezier(.2,.9,.25,1) both;animation-delay:calc(var(--i,0)*.09s)}}
+
+/* ===== 1.20.3 Dual Plush combinations as firmness bands: each layer's firmness is a colour band that grows out of the row (a gradient in its own tone) with the word written in it, large, spaced, white on the tone; the pair reads at a glance, one block above the other with a hair of air between ===== */
+.ddh{--bd-s:#2f7da8;--bd-m:#25648a;--bd-f:#4a5664;--bd-x:#313d4c;--bd0-s:rgba(47,125,168,0);--bd0-m:rgba(37,100,138,0);--bd0-f:rgba(74,86,100,0);--bd0-x:rgba(49,61,76,0)}
+.ddh.ddh .ddh__dsk{padding-right:0;row-gap:2px;overflow:hidden}
+.ddh.ddh .ddh__dsk-r{align-self:stretch;min-height:2.35em;gap:12px}
+.ddh.ddh .ddh__dsk-r b{flex:none}
+.ddh.ddh.ddh .ddh__dsk .ddh__fw{flex:1 1 0;min-width:6.5em;align-self:stretch;display:flex;align-items:center;justify-content:flex-end;box-sizing:border-box;padding:0 calc(20px - .26em) 0 2.4em;border-radius:0;font-size:calc(var(--dr-f)*1.2);font-weight:600;letter-spacing:.26em;line-height:1.1;text-transform:uppercase;text-align:right;color:#fff;box-shadow:none;background:linear-gradient(90deg,var(--bd0) 0,var(--bd) 2.6em);text-shadow:0 1px 2px rgba(8,20,36,.3)}
+.ddh.ddh.ddh .ddh__dsk .ddh__fw.ddh__ly--s{--bd:var(--bd-s);--bd0:var(--bd0-s)}
+.ddh.ddh.ddh .ddh__dsk .ddh__fw.ddh__ly--m{--bd:var(--bd-m);--bd0:var(--bd0-m)}
+.ddh.ddh.ddh .ddh__dsk .ddh__fw.ddh__ly--f{--bd:var(--bd-f);--bd0:var(--bd0-f)}
+.ddh.ddh.ddh .ddh__dsk .ddh__fw.ddh__ly--x{--bd:var(--bd-x);--bd0:var(--bd0-x)}
+.ddh.ddh .ddh__dsk .ddh__fw,.ddh.ddh .ddh__dsk .ddh__fw *{color:#fff}
+/* the narrow preview column and the sheets: a little less tracking so "EXTRA FIRM" and "LATEX MATTRESS" never touch */
+.ddh.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk .ddh__fw,.ddh.ddh.ddh .ddh__dsks--bio .ddh__fw,.ddh.ddh.ddh .ddh__dsks--nav .ddh__fw{background-image:linear-gradient(90deg,var(--bd0) 0,var(--bd) 1.4em);letter-spacing:.1em;padding:0 calc(12px - .1em) 0 1.2em;min-width:4.6em;font-size:calc(var(--dr-f)*1.04)}
+.ddh.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk .ddh__fw.ddh__ly--x,.ddh.ddh.ddh .ddh__dsks--bio .ddh__fw.ddh__ly--x,.ddh.ddh.ddh .ddh__dsks--nav .ddh__fw.ddh__ly--x{min-width:7.6em}
+.ddh.ddh .ddh__dsks--nav .ddh__dsk-r,.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk-r{gap:8px}
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk{padding-right:0}
+/* the preview column is the narrowest place: smaller icon and type, tighter tracking, so the label and the band never meet */
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsks{--dr-w:52px;--dr-f:13.5px}
+.ddh.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk .ddh__fw{letter-spacing:.06em;padding:0 calc(10px - .06em) 0 .8em;min-width:4.2em;font-size:calc(var(--dr-f)*1.04)}
+.ddh.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk .ddh__fw.ddh__ly--x{min-width:6.6em}
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk{column-gap:8px}
+@container ddsh (max-width:1060px){.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsks{--dr-w:42px;--dr-f:12.5px}.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk{column-gap:6px;padding-left:6px}.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk-r{gap:6px}.ddh.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk .ddh__fw{letter-spacing:.04em;padding:0 calc(8px - .04em) 0 .6em;min-width:3.8em;font-size:calc(var(--dr-f)*1.05)}.ddh.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk .ddh__fw.ddh__ly--x{min-width:6.3em}}
+/* two-layer topper (Option 1 / Option 2) in the narrow preview column: a slimmer icon and tighter rows so the bands keep their room and the buttons below stay in view */
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk-r{min-height:2.1em}
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk--tp{--dr-w:40px;column-gap:6px;padding-left:8px}
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk--tp .ddh__dsk-o{font-size:12px;letter-spacing:.06em}
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk--tp .ddh__dsk-r{font-size:12.5px;gap:6px}
+.ddh.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk--tp .ddh__fw{font-size:13px;letter-spacing:.04em;min-width:4em;padding:0 calc(8px - .04em) 0 .5em}
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk-r{min-height:1.95em}
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk--tp{padding-top:5px;padding-bottom:5px}
+/* phones: the preview column is too narrow for a band; the layers keep their tone as compact chips, as before */
+@media (max-width:700px){
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk{padding-right:10px;overflow:visible}
+.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk-r{min-height:0;gap:6px}
+.ddh.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk .ddh__fw{flex:none;align-self:center;display:inline-block;min-width:0;padding:2px 8px;border-radius:8px;letter-spacing:0;text-transform:none;font-size:var(--dr-f);background:var(--bd);background-image:none;text-shadow:none}
+}
