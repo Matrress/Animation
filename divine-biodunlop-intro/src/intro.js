@@ -1,4 +1,4 @@
-/*! Divine DunlopDreams BioDunlop intro 0.4.0-dev | namespace .ddb | the hotspots come out of the still model, the natural-sourcing video | attaches to Hero 1.20.2 (no body movement) */
+/*! Divine DunlopDreams BioDunlop intro 0.4.1-dev | namespace .ddb | the hotspots come out of the still model, the natural-sourcing video | attaches to Hero 1.20.2 (no body movement) */
 (function (w, d) {
   'use strict';
   var H = d.documentElement, base = ((d.currentScript && d.currentScript.src) || '').replace(/[^\/]*$/, '');
@@ -101,6 +101,6 @@
       var p = v.play(); if (p && p.catch) p.catch(function () {});
     }
   }
-  w.DDBIntro = { boot: boot, version: '0.4.0-dev', get phase() { return ctl.phase; } };
+  w.DDBIntro = { boot: boot, version: '0.4.1-dev', get phase() { return ctl.phase; } };
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
 })(window, document);

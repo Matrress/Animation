@@ -1,6 +1,6 @@
-# Divine DunlopDreams – BioDunlop intro (0.4.0-dev)
+# Divine DunlopDreams – BioDunlop intro (0.4.1-dev)
 
-Development prototype. **Not deployed, not in the production embed.** Hero 1.20.2 (`divine-hero/release/1.20.2/`, commit `f727e88`) is not modified by anything in this folder.
+Development prototype. **Not deployed, not in the production embed.** Hero 1.20.3 (`divine-hero/release/1.20.2/`, commit `f727e88`) is not modified by anything in this folder.
 
 **0.4.0-dev (14 Oct): the body turn is gone.** The owner withdrew it after the seventh round of failed renders (smeared, "deconstructed" hair). Everything else from the earlier rounds stays; nothing is rendered or turned any more. The model is the hero picture, still.
 
