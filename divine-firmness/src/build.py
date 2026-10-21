@@ -50,7 +50,9 @@ old=rd('build/concept.html'); head='\n'.join(old.split('\n')[:16])
 logo=re.search(r'<img src="(data:image/webp;base64,[^"]+)" alt="Divine DunlopDreams"',old).group(1)
 img='data:image/webp;base64,'+base64.b64encode(open(B+'visual/model2_1400.webp','rb').read()).decode()
 pv='\n'.join(t for _,_,t in blocks)
-pv=pv.replace(IMGURL,img).replace(LOGO,logo)
+FOAMURL='https://cdn.jsdelivr.net/gh/Matrress/Animation@be4159bb10b86c2733ec1c1d10520ee0f597fb1f/divine-firmness/assets/foam.webp'
+foam='data:image/webp;base64,'+base64.b64encode(open(B+'v2/foam.webp','rb').read()).decode()
+pv=pv.replace(IMGURL,img).replace(FOAMURL,foam).replace(LOGO,logo)
 hdr='<header class="cx"><div class="cx-w"><p class="cx-e">Концепция 4 · не е код за поставяне</p><p>Визуалният слой е най-горе. Секциите отдолу са същите 7 блока, които се поставят на страницата.</p></div></header>\n'
 head=head.replace('<title>Firmness Navigator</title>','<title>Firmness Navigator Visual</title>')
 wr('build/concept4.html',head+'\n'+hdr+pv+'\n'); print('preview',len(head+pv)//1024,'KB')
