@@ -14,18 +14,6 @@
   root.classList.add('ddv-js');
   for(var t = 0; t < tips.length; t++) tips[t].hidden = true;
 
-  /* fizz: tiny sparks that rise through the foam, like a fresh pour */
-  (function(){
-    var s = 11, R = function(){ s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }, T = 180, c = '';
-    for(var i = 0; i < 34; i++){
-      var r = .5 + Math.pow(R(), 3) * 1.6, x = R() * T, y = R() * T, o = (.35 + R() * .65).toFixed(2), big = R() > .82;
-      c += "<circle cx='" + x.toFixed(1) + "' cy='" + y.toFixed(1) + "' r='" + (big ? r * 3.2 : r * 2).toFixed(1) + "' fill='url(%23h)' opacity='" + o + "'/>";
-      if(y < 6) c += "<circle cx='" + x.toFixed(1) + "' cy='" + (y + T).toFixed(1) + "' r='" + (r * 2).toFixed(1) + "' fill='url(%23h)' opacity='" + o + "'/>";
-    }
-    var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='" + T + "' height='" + T + "'><defs><radialGradient id='h'><stop offset='0' stop-color='%23fff'/><stop offset='.35' stop-color='%23fff' stop-opacity='.6'/><stop offset='1' stop-color='%23fff' stop-opacity='0'/></radialGradient></defs>" + c + "</svg>";
-    root.style.setProperty('--ddv-fizz', 'url("data:image/svg+xml,' + svg.replace(/</g,'%3C').replace(/>/g,'%3E') + '")');
-  })();
-
   /* the spine, drawn as a separate light layer */
   (function(){
     var g = document.createElementNS(NS, 'g'), html = '';
@@ -93,7 +81,7 @@
   function nm(l){ return (LV[l] || {}).name || ''; }
   function grad(a, b){
     if(b) return 'linear-gradient(180deg,' + a.c0 + ' 0%,' + a.c1 + ' 34%,' + a.c2 + ' 57.6%,' + b.c1 + ' 57.7%,' + b.c2 + ' 100%)';
-    return 'linear-gradient(176deg,' + a.c0 + ' 0%,' + a.c1 + ' 42%,' + a.c2 + ' 100%)';
+    return 'radial-gradient(60% 90% at 0 0,rgba(0,0,0,.24),transparent 70%),linear-gradient(176deg,' + a.c0 + ' 0%,' + a.c1 + ' 42%,' + a.c2 + ' 100%)';
   }
   function paint(bg, hl, c1, c2){
     var n = $('ddv-g' + (gl === 1 ? 2 : 1)), o = $('ddv-g' + gl);

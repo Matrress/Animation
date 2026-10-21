@@ -12,7 +12,7 @@ Preview build 0.4.0 (concept 4, contour scene). Not live.
   5. The firmness engine (unchanged rules, `window.DDFT_API`)
   6. Navigator behaviour (JS), sends `ddn:state`
   7. Scene behaviour (JS), listens to `ddn:state`
-- `assets/` holds the model photo shown at point 8 (jsDelivr, commit `33b9eb8`) and the greyscale latex foam texture recoloured per regulation (commit `be4159b`).
+- `assets/` holds the model photo shown at point 8 (jsDelivr, commit `33b9eb8`). `foam.webp` is kept for reference only; the scene no longer uses it.
 - `src/` holds the readable sources and `build.py`, which minifies them into the seven sections.
 - `preview/concept4.html` is the self-contained preview with the photo inlined.
 
