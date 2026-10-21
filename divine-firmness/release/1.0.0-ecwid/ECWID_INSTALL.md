@@ -1,6 +1,6 @@
 # Firmness Navigator: Ecwid installation (option B, 3 sections)
 
-Pinned commit: `0b95079439e9224ea0cd610dbe1ab7e0c94ad804`. The files on jsDelivr are immutable. The loader carries SRI hashes, so a changed or tampered file will not run.
+Pinned commit: `7f30cc5e2c4048dcdd37b29572a6d3b6ae75274b`. The files on jsDelivr are immutable. The loader carries SRI hashes, so a changed or tampered file will not run.
 
 ## Sections (page /firmnesses, above the old firmness sections)
 1. `ecwid_1_markup_intro_visual.html` : intro text and the visual (real text in the HTML, indexable)
@@ -9,6 +9,12 @@ Pinned commit: `0b95079439e9224ea0cd610dbe1ab7e0c94ad804`. The files on jsDelivr
 4. `ecwid_4_loader.html`              : loads `firmness.css` and the three JS files (engine, module, visual) in order
 
 Homepage section 1 is not touched.
+
+## Before pasting the loader
+A new commit can take a minute or two to appear on jsDelivr (a fresh commit first answered with an error page in testing). Open each of the four file addresses from the loader in a browser tab; when all four show code, the loader is safe to paste.
+
+## Go to model links
+Under the scene each offered model has a "Go to model" link (first choice highlighted, second quieter). A click fires the page event `ddn:go` and pushes `firmness_go_to_model` to `window.dataLayer` when it exists, so the shop can count how many visitors go to the model. Only addresses on divinedunlop.com are used. No UTM tags are added to internal links (they would overwrite the visitor's original traffic source in analytics).
 
 ## Safe order
 1. Copy the current firmness sections of the page (backup), keep them off the page but saved.
