@@ -94,15 +94,19 @@
     el.textContent = txt; el.style.fontSize = size + 'px';
     try{ var w = el.getComputedTextLength(); if(w > max) el.style.fontSize = Math.max(min, size * max / w) + 'px'; }catch(e){}
   }
+  function two2(el, a, b, x){
+    el.style.fontSize = ''; el.textContent = '';
+    [a, b].forEach(function(s, i){ var t = document.createElementNS(NS, 'tspan'); t.setAttribute('x', x); if(i) t.setAttribute('dy', 52); t.textContent = s; el.appendChild(t); });
+  }
   function badge(rec){
     var dp = $('ddv-dp'), m = $('ddv-vm');
-    if(!rec){ root.removeAttribute('data-dp'); return; }
+    if(!rec){ root.removeAttribute('data-dp'); $('ddv-dp1').textContent = $('ddv-dp2').textContent = ''; return; }
     try{
       var s = m.textContent, i = s.lastIndexOf('Dual Plush'); if(i < 0){ root.removeAttribute('data-dp'); return; }
       var x0 = m.getStartPositionOfChar(i).x, w = m.getSubStringLength(i, 10), r = $('ddv-dpr');
-      r.setAttribute('x', x0 - 22); r.setAttribute('y', 520); r.setAttribute('width', w + 44); r.setAttribute('height', 178);
-      $('ddv-dp1').setAttribute('x', x0); $('ddv-dp1').setAttribute('y', 568);
-      $('ddv-dp2').setAttribute('x', x0); $('ddv-dp2').setAttribute('y', 610);
+      r.setAttribute('x', x0 - 22); r.setAttribute('y', 508); r.setAttribute('width', w + 44); r.setAttribute('height', 190);
+      $('ddv-dp1').setAttribute('x', x0); $('ddv-dp1').setAttribute('y', 550);
+      $('ddv-dp2').setAttribute('x', x0); $('ddv-dp2').setAttribute('y', 594);
       $('ddv-dp1').innerHTML = 'Latex Topper <tspan>' + nm(rec.firmness[1]).toUpperCase() + '</tspan>';
       $('ddv-dp2').innerHTML = 'Latex Mattress <tspan>' + nm(rec.firmness[0]).toUpperCase() + '</tspan>';
       root.setAttribute('data-dp', '1');
@@ -131,22 +135,23 @@
 
     /* inside the body: height left, weight right */
     var vh = $('ddv-vh'), vw = $('ddv-vw'), vf = $('ddv-vf'), vm = $('ddv-vm');
-    if(!touched){ vh.textContent = '— cm'; vw.textContent = '— kg'; vf.textContent = '—'; vm.textContent = '—'; vf.style.fontSize = vm.style.fontSize = ''; badge(null); }
+    if(!touched){ vh.style.fontSize = vw.style.fontSize = vf.style.fontSize = ''; vh.textContent = '— cm'; vw.textContent = '— kg'; vf.textContent = '—'; vm.textContent = '—'; vf.style.fontSize = vm.style.fontSize = ''; badge(null); }
     else {
-      fit(vh, two ? 'You ' + st.me.h + ' · Partner ' + st.pt.h + ' cm' : st.me.h + ' cm / ' + ftin(st.me.h), 760, 62, 36);
-      fit(vw, two ? 'You ' + st.me.w + ' · Partner ' + st.pt.w + ' kg' : st.me.w + ' kg / ' + imp(st.me.w), 860, 62, 36);
+      if(two){ two2(vh, 'You ' + st.me.h + ' cm', 'Partner ' + st.pt.h + ' cm', 705); two2(vw, 'You ' + st.me.w + ' kg', 'Partner ' + st.pt.w + ' kg', 1520); }
+      else { fit(vh, st.me.h + ' cm / ' + ftin(st.me.h), 440, 62, 34); fit(vw, st.me.w + ' kg / ' + imp(st.me.w), 620, 62, 34); }
       /* inside the mattress: firmness left, model right */
       $('ddv-lf').innerHTML = isTop ? 'Your <tspan>Topper</tspan>:' : two ? 'Your <tspan>Firmness</tspan>: you / partner' : 'Your <tspan>Firmness</tspan>:';
-      fit(vf, two ? L.name + ' / ' + P.name : isTop ? f.map(nm).reverse().join(' + ') : L.name, 760, 96, 44);
+      if(two){ two2(vf, L.name, P.name, 700); vf.style.fontSize = '58px'; vf.firstChild.setAttribute('dy', -28); vf.lastChild.setAttribute('dy', 64); }
+      else fit(vf, isTop ? f.map(nm).reverse().join(' + ') : L.name, 760, 96, 44);
       var ms = recs.slice(0, 2), shared = two && ms.length === 1 && /Partners/.test(ms[0].model);
       if(!two && ms.length === 2 && isDual(ms[0]) && !isDual(ms[1])) ms = [ms[1], ms[0]];
-      fit(vm, ms.length ? ms.map(function(r){ return r.model; }).join(two && !shared ? ' / ' : ' or ') : 'Ask us, we advise', (!two && isDual(ms[ms.length - 1])) ? 980 : 1060, 78, 40);
+      fit(vm, ms.length ? ms.map(function(r){ return r.model; }).join(two && !shared ? ' / ' : ' or ') : 'Ask us, we advise', 980, 78, 40);
       badge(two ? null : (isDual(ms[ms.length - 1]) ? ms[ms.length - 1] : null));
     }
 
     /* the ring */
     if(!touched) ring([], '4 levels', 'regulated by body');
-    else if(two) ring([st.me.lv, st.pt.lv], L.name + ' · ' + P.name, 'you · partner');
+    else if(two) ring([st.me.lv, st.pt.lv], '2 bodies', 'regulated apart');
     else if(isDual(r0) || (isTop && f.length === 2)) ring(f, nm(f[0]) + ' + ' + nm(f[1]), isTop ? 'topper layers' : 'base + topper');
     else ring([isTop ? f[0] : st.me.lv], isTop ? nm(f[0]) : L.name, isTop ? 'topper' : L.d);
 
@@ -159,7 +164,8 @@
     /* the same answer as text, for every screen and for screen readers */
     $('ddv-rh').textContent = touched ? (two ? 'You ' + st.me.h + ' cm, partner ' + st.pt.h + ' cm' : st.me.h + ' cm / ' + ftin(st.me.h)) : 'Not entered yet';
     $('ddv-rw').textContent = touched ? (two ? 'You ' + st.me.w + ' kg, partner ' + st.pt.w + ' kg' : st.me.w + ' kg / ' + imp(st.me.w)) : 'Not entered yet';
-    $('ddv-rf').textContent = touched ? vf.textContent : 'Set by your height and weight';
+    var ftx = touched && two ? 'You ' + L.name + ', partner ' + P.name : vf.textContent;
+    $('ddv-rf').textContent = touched ? ftx : 'Set by your height and weight';
     $('ddv-rm').textContent = touched ? vm.textContent : 'Chosen by your answers below';
     var rr = '';
     if(touched){
@@ -172,7 +178,7 @@
     }
     $('ddv-rr').innerHTML = rr; $('ddv-rr').hidden = !rr;
     $('ddv-gol').innerHTML = (touched ? 'See your mattress and change your answers' : 'Enter your height and weight') + ' <span aria-hidden="true">↓</span>';
-    $('ddv-live').textContent = touched ? 'Regulation: ' + vf.textContent + '. Model: ' + vm.textContent + '.' : '';
+    $('ddv-live').textContent = touched ? 'Regulation: ' + ftx + '. Model: ' + vm.textContent + '.' : '';
     last = st;
   }
   document.addEventListener('ddn:state', function(e){ var st = e.detail; clearTimeout(timer); timer = setTimeout(function(){ apply(st); }, last ? 140 : 0); });

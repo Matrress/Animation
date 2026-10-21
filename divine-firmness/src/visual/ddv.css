@@ -46,13 +46,12 @@
 .ddv[data-mode=explore] .ddv-medge{stroke:#fff;stroke-width:6}
 
 /* seven zones: a quiet equaliser of support */
-.ddv-eq i{position:absolute;bottom:0;height:64%;opacity:.3;transition:opacity .5s}
+.ddv-eq i{position:absolute;bottom:0;height:64%;opacity:0;transition:opacity .5s}
 .ddv-eq b{position:absolute;left:12%;right:12%;bottom:0;height:100%;border-radius:10px 10px 0 0;background:linear-gradient(to top,rgba(255,255,255,.5),rgba(255,255,255,.08));transform-origin:50% 100%;transform:scaleY(var(--h));mix-blend-mode:soft-light;animation:ddv-eq 2.6s ease-in-out infinite;animation-delay:calc(var(--i) * -.37s)}
 @keyframes ddv-eq{0%,100%{transform:scaleY(calc(var(--h) * .8))}50%{transform:scaleY(var(--h))}}
 .ddv-eq em{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);padding:.35em .9em;border-radius:999px;background:rgba(10,14,18,.78);border:1px solid rgba(255,255,255,.4);box-shadow:0 2px 10px rgba(0,0,0,.4);color:#fff;white-space:nowrap;font-style:normal;font-size:clamp(10px,1.05vw,13.5px);font-weight:600;letter-spacing:.12em;text-transform:uppercase;line-height:1.2;opacity:0;transition:opacity .4s}
 .ddv[data-p="1"] .ddv-eq i{opacity:1;border-left:1px solid rgba(255,255,255,.18)}.ddv[data-p="1"] .ddv-eq i:first-child{border-left:0}.ddv[data-p="1"] .ddv-eq b{mix-blend-mode:normal;background:linear-gradient(to top,rgba(255,255,255,.04),rgba(255,255,255,.42));box-shadow:inset 0 3px 0 rgba(255,255,255,.9)}.ddv[data-p="1"] .ddv-eq em{opacity:1}
-.ddv[data-p="1"] .ddv-tx .ddv-l,.ddv[data-p="1"] .ddv-f,.ddv[data-p="1"] .ddv-m,.ddv[data-p="1"] .ddv-dp{opacity:.15}
-.ddv[data-p="4"] .ddv-eq i:nth-child(4){opacity:1}
+.ddv[data-p="1"] .ddv-mtx,.ddv[data-p="1"] .ddv-dp{opacity:0!important}
 
 /* svg: outline, texts, overlays */
 .ddv-svg{overflow:visible;pointer-events:none;transition:opacity .6s}
@@ -60,7 +59,7 @@
 .ddv-medge{fill:none;stroke:rgba(255,255,255,.3);stroke-width:2.5;transition:stroke .6s,stroke-width .6s}
 .ddv-tx text{fill:#fff;paint-order:stroke;stroke:rgba(8,12,16,.42);stroke-width:7px;stroke-linejoin:round;font-family:DDVChillax,Chillax,Outfit,system-ui,sans-serif;transition:opacity .4s}
 .ddv-l{font-size:40px;font-weight:400;letter-spacing:.01em}.ddv-l tspan{font-weight:600}
-.ddv-v{font-size:62px;font-weight:400}
+.ddv-v{font-size:62px;font-weight:400}.ddv-v tspan{font-size:46px}.ddv-f tspan{font-size:inherit}
 .ddv-f{font-size:96px;font-weight:400;letter-spacing:.34em;text-transform:uppercase}
 .ddv-m{font-size:78px;font-weight:400}
 .ddv-s{font-size:30px;letter-spacing:.04em}.ddv-s tspan{font-weight:600;letter-spacing:.28em}
@@ -69,7 +68,6 @@
 .ddv[data-mode=explore] .ddv-v,.ddv[data-mode=explore] .ddv-f,.ddv[data-mode=explore] .ddv-m{opacity:.55}
 .ddv-band{opacity:0;transition:opacity .6s}.ddv[data-top="1"] .ddv-band,.ddv[data-top="only"] .ddv-band{opacity:.9}
 #ddv-b2{opacity:0}.ddv[data-tl="2"] #ddv-b2{opacity:1}
-.ddv-sd{opacity:0;transition:opacity .5s}.ddv-sd text{font-size:34px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;opacity:.85}.ddv[data-two="1"] .ddv-sd{opacity:1}
 .ddv-glows ellipse{fill:url(#ddv-gl);opacity:0;mix-blend-mode:screen;transition:opacity .5s}
 .ddv[data-p="2"] [data-g="2"],.ddv[data-p="3"] [data-g="3"],.ddv[data-p="4"] [data-g="4"],.ddv[data-p="6"] [data-g="6"]{opacity:1}
 .ddv-flow path{fill:none;stroke:var(--ddv-hl);stroke-width:7;stroke-linecap:round;stroke-dasharray:22 34;opacity:0;transition:opacity .4s}
@@ -77,8 +75,8 @@
 @keyframes ddv-flow{to{stroke-dashoffset:-112}}
 .ddv-spine{opacity:0;transition:opacity .5s}
 .ddv-spine rect,.ddv-spine path{fill:url(#ddv-gsp);stroke:#A89A85;stroke-width:2}
-.ddv[data-p="5"] .ddv-spine,.ddv[data-p="3"] .ddv-spine{opacity:1}.ddv[data-p="3"] .ddv-spine{opacity:.45}
-.ddv[data-p="5"] .ddv-tb{opacity:.16}
+.ddv[data-p="5"] .ddv-spine{opacity:1}
+.ddv[data-p="5"] .ddv-tb{opacity:0}
 .ddv[data-p="5"] .ddv-spine>g{transform-box:fill-box;transform-origin:0 50%;animation:ddv-st 2.4s cubic-bezier(.3,.7,.2,1) 1 both}
 @keyframes ddv-st{0%{transform:scaleX(.985)}60%{transform:scaleX(1.045)}100%{transform:scaleX(1.03)}}
 .ddv-photo{object-fit:contain;opacity:0;visibility:hidden;transition:opacity .7s,visibility 0s .7s}
