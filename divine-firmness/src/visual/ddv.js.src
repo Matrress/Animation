@@ -142,10 +142,19 @@
     else ring([isTop ? f[0] : st.me.lv], isTop ? nm(f[0]) : L.name, isTop ? 'topper' : L.d);
 
     /* header text */
-    $('ddv-chip').textContent = touched ? (two ? 'Two bodies · two regulations' : 'Your personalised regulation') : 'Explore';
-    $('ddv-lead').innerHTML = !touched ? (st.waiting === 'partner' ? 'Now add your partner’s height and weight below. Each of you is regulated on your own body.' : 'Tap a glowing point. Enter your height and weight below, and the body and the mattress fill in for you.')
-      : two ? 'Each of you is regulated on your own body, on one mattress. Tap a glowing point to see what each zone does.'
-      : 'Your <b>' + st.me.w + ' kg</b> at <b>' + st.me.h + ' cm</b>, regulated by Dunlop. Tap a glowing point to see what each zone does for you.';
+    $('ddv-chip').textContent = touched ? (two ? 'Engineering view · two regulations' : 'Engineering view · your regulation') : 'Engineering view';
+    /* the engineering readout: only values the rules produce */
+    var dens = function(k){ return LV[k].d; };
+    if(!touched){ $('ddv-e1').textContent = 'Waiting for your height and weight'; $('ddv-e2').textContent = 'Set by the regulation'; $('ddv-e4').textContent = 'Your height and weight'; }
+    else if(two){ $('ddv-e1').textContent = L.name + ' · ' + P.name + ' (you · partner)'; $('ddv-e2').textContent = dens(st.me.lv) + ' · ' + dens(st.pt.lv); $('ddv-e4').textContent = st.me.w + ' kg, ' + st.me.h + ' cm · ' + st.pt.w + ' kg, ' + st.pt.h + ' cm'; }
+    else {
+      $('ddv-e1').textContent = L.name + ', position ' + L.n + ' of 4';
+      $('ddv-e2').textContent = isTop ? (f.length === 2 ? 'Topper ' + dens(f[1]) + ' over ' + dens(f[0]) : 'Topper ' + dens(f[0])) : isDual(r0) ? dens(f[0]) + ' base · ' + dens(f[1]) + ' topper' : dens(st.me.lv);
+      $('ddv-e4').textContent = st.me.w + ' kg (' + imp(st.me.w) + ') · ' + st.me.h + ' cm (' + ftin(st.me.h) + ')';
+    }
+    $('ddv-lead').innerHTML = !touched ? (st.waiting === 'partner' ? 'Now add your partner’s height and weight below. Each of you is regulated on your own body.' : 'An engineering view of your sleep. Enter your height and weight below and our regulation rules calculate your firmness, density and model.')
+      : two ? 'Each of you is regulated on your own body by the same rules. These are calculated values, not an animation.'
+      : 'Your <b>' + st.me.w + ' kg</b> at <b>' + st.me.h + ' cm</b>, regulated by Dunlop. These are calculated values, not an animation. Tap a glowing point to see where each one acts.';
 
     /* the same answer as text, for every screen and for screen readers */
     $('ddv-rh').textContent = touched ? (two ? 'You ' + st.me.h + ' cm, partner ' + st.pt.h + ' cm' : st.me.h + ' cm / ' + ftin(st.me.h)) : 'Not entered yet';
