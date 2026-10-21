@@ -62,7 +62,7 @@ background:radial-gradient(120% 90% at 0 0,rgba(190,196,194,.18),transparent 55%
 background:linear-gradient(150deg,rgba(255,255,255,.28),rgba(255,255,255,0) 60%,rgba(0,0,0,.08)),var(--c);box-shadow:0 0 14px rgba(95,197,205,.4)}
 .dn-plate small{display:block;font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;opacity:.9}
 .dn-plate b{display:block;font-size:clamp(26px,3.2vw,34px);line-height:1.15;font-weight:700}
-.dn-plate[data-lv="2"] b{text-shadow:1px 1px 0 #3A474D,-1px 1px 0 #3A474D,0 2px 3px rgba(58,71,77,.55)}
+
 .dn-bars{display:flex;gap:4px;margin-top:8px}
 .dn-bars i{flex:1;height:7px;border-radius:7px;background:currentColor;opacity:.28}
 .dn-bars[data-n="1"] i:nth-child(-n+1),.dn-bars[data-n="2"] i:nth-child(-n+2),.dn-bars[data-n="3"] i:nth-child(-n+3),.dn-bars[data-n="4"] i{opacity:1}

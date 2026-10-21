@@ -14,18 +14,6 @@
   root.classList.add('ddv-js');
   for(var t = 0; t < tips.length; t++) tips[t].hidden = true;
 
-  /* the spine, drawn as a separate light layer */
-  (function(){
-    var g = document.createElementNS(NS, 'g'), html = '';
-    for(var i = 0; i < 23; i++){
-      var k = i / 22, x = 660 + k * 860, y = 262 + 10 * Math.sin(k * Math.PI), sp = 860 / 22, w = sp * (.62 + k * .26), h = 46 + k * 70, hb = h * .42, lum = i > 17, ang = lum ? 10 : 28, aw = w * (lum ? .5 : .4), ah = h * .5;
-      var arm = function(s){ var cx = x - w * .12, cy = y + s * h * .3; return '<rect x="' + (cx - aw / 2).toFixed(1) + '" y="' + (cy - ah / 2).toFixed(1) + '" width="' + aw.toFixed(1) + '" height="' + ah.toFixed(1) + '" rx="' + (aw / 2.2).toFixed(1) + '" transform="rotate(' + (-s * ang) + ' ' + cx.toFixed(1) + ' ' + cy.toFixed(1) + ')"/>'; };
-      html += arm(-1) + arm(1) + '<rect x="' + (x - w / 2).toFixed(1) + '" y="' + (y - hb / 2).toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + hb.toFixed(1) + '" rx="' + (Math.min(w, hb) / 2.6).toFixed(1) + '"/>';
-    }
-    html += '<path d="M1546,226 L1630,246 Q1664,262 1630,280 L1546,300 Z"/>';
-    g.innerHTML = html; $('ddv-spine').appendChild(g);
-  })();
-
   /* the regulation ring: four positions, never weak or strong */
   function arc(a0, a1){
     var p = function(r, a){ a = (a - 90) * Math.PI / 180; return (60 + r * Math.cos(a)).toFixed(2) + ' ' + (60 + r * Math.sin(a)).toFixed(2); };
@@ -61,6 +49,7 @@
     var i = li.getAttribute('data-i');
     li.querySelector('.ddv-tip').hidden = false; li.querySelector('button').setAttribute('aria-expanded', 'true');
     if(i === '8') photo();
+    if(i === '5'){ var sp = $('ddv-spi'); if(!sp.getAttribute('href')) sp.setAttribute('href', sp.getAttribute('data-src')); }
     root.removeAttribute('data-p'); void root.offsetWidth; root.setAttribute('data-p', i);
   }
   root.querySelectorAll('.ddv-hs').forEach(function(li){
@@ -98,20 +87,16 @@
     el.style.fontSize = ''; el.textContent = '';
     [a, b].forEach(function(s, i){ var t = document.createElementNS(NS, 'tspan'); t.setAttribute('x', x); if(i) t.setAttribute('dy', 52); t.textContent = s; el.appendChild(t); });
   }
-  function badge(rec){
-    var dp = $('ddv-dp'), m = $('ddv-vm');
-    if(!rec){ root.removeAttribute('data-dp'); $('ddv-dp1').textContent = $('ddv-dp2').textContent = ''; return; }
-    try{
-      var s = m.textContent, i = s.lastIndexOf('Dual Plush'); if(i < 0){ root.removeAttribute('data-dp'); return; }
-      var x0 = m.getStartPositionOfChar(i).x, w = m.getSubStringLength(i, 10), r = $('ddv-dpr');
-      r.setAttribute('x', x0 - 22); r.setAttribute('y', 508); r.setAttribute('width', w + 44); r.setAttribute('height', 190);
-      $('ddv-dp1').setAttribute('x', x0); $('ddv-dp1').setAttribute('y', 550);
-      $('ddv-dp2').setAttribute('x', x0); $('ddv-dp2').setAttribute('y', 594);
-      $('ddv-dp1').innerHTML = 'Latex Topper <tspan>' + nm(rec.firmness[1]).toUpperCase() + '</tspan>';
-      $('ddv-dp2').innerHTML = 'Latex Mattress <tspan>' + nm(rec.firmness[0]).toUpperCase() + '</tspan>';
-      root.setAttribute('data-dp', '1');
-    }catch(e){ root.removeAttribute('data-dp'); }
+  function comp(f, title, upper, lower){
+    var w = $('ddv-cmp');
+    if(!f){ w.hidden = true; return; }
+    $('ddv-ck').textContent = title;
+    $('ddv-l1').style.background = 'linear-gradient(90deg,' + LV[f[1]].c1 + ',' + LV[f[1]].c2 + ')';
+    $('ddv-l2').style.background = 'linear-gradient(90deg,' + LV[f[0]].c1 + ',' + LV[f[0]].c2 + ')';
+    $('ddv-t1x').innerHTML = upper + ' <b>' + nm(f[1]) + '</b>'; $('ddv-t2x').innerHTML = lower + ' <b>' + nm(f[0]) + '</b>';
+    w.hidden = false;
   }
+
 
   /* the one input: what the navigator sends, built on the engine's own answer */
   function apply(st){
@@ -135,7 +120,7 @@
 
     /* inside the body: height left, weight right */
     var vh = $('ddv-vh'), vw = $('ddv-vw'), vf = $('ddv-vf'), vm = $('ddv-vm');
-    if(!touched){ vh.style.fontSize = vw.style.fontSize = vf.style.fontSize = ''; vh.textContent = '— cm'; vw.textContent = '— kg'; vf.textContent = '—'; vm.textContent = '—'; vf.style.fontSize = vm.style.fontSize = ''; badge(null); }
+    if(!touched){ vh.style.fontSize = vw.style.fontSize = vf.style.fontSize = ''; vh.textContent = '— cm'; vw.textContent = '— kg'; vf.textContent = '—'; vm.textContent = '—'; vf.style.fontSize = vm.style.fontSize = ''; comp(null); }
     else {
       if(two){ two2(vh, 'You ' + st.me.h + ' cm', 'Partner ' + st.pt.h + ' cm', 705); two2(vw, 'You ' + st.me.w + ' kg', 'Partner ' + st.pt.w + ' kg', 1520); }
       else { fit(vh, st.me.h + ' cm / ' + ftin(st.me.h), 440, 62, 34); fit(vw, st.me.w + ' kg / ' + imp(st.me.w), 620, 62, 34); }
@@ -146,7 +131,8 @@
       var ms = recs.slice(0, 2), shared = two && ms.length === 1 && /Partners/.test(ms[0].model);
       if(!two && ms.length === 2 && isDual(ms[0]) && !isDual(ms[1])) ms = [ms[1], ms[0]];
       fit(vm, ms.length ? ms.map(function(r){ return r.model; }).join(two && !shared ? ' / ' : ' or ') : 'Ask us, we advise', 980, 78, 40);
-      badge(two ? null : (isDual(ms[ms.length - 1]) ? ms[ms.length - 1] : null));
+      var dr = two ? null : isTop && f.length === 2 ? r0 : ms.filter(isDual)[0];
+      if(dr) comp(dr.firmness, dr.model, isTop ? 'Upper layer' : 'Latex topper', isTop ? 'Lower layer' : 'Latex mattress'); else comp(null);
     }
 
     /* the ring */

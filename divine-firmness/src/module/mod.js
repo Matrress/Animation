@@ -34,7 +34,7 @@
 
   function plate(label, w, h){
     var s = lvl(w,h), L = LV[s ? s.display : 'MEDIUM'];
-    return '<div class="dn-plate" data-lv="' + L.n + '" style="--c:' + L.c + ';--tc:' + L.t + '"><small>' + label + '</small><b>' + L.name + '</b>' +
+    return '<div class="dn-plate" data-lv="' + L.n + '" style="--c:' + (L.n === 2 ? '#8C948D' : L.c) + ';--tc:' + (L.n === 1 ? L.t : '#fff') + '"><small>' + label + '</small><b>' + L.name + '</b>' +
       ring(L.n) + '</div>';
   }
   /* four regulation positions on a ring, never a weak-to-strong signal */

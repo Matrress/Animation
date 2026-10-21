@@ -32,6 +32,8 @@ body=body.replace('<section class="dn" id="dn">','<section class="dn dn-c" id="d
 blk3='<section class="dn dn-a"><div class="dn-w">'+head+'</div></section>\n<section class="dn dn-b" id="ddv-sec"><div class="dn-w">'+vis+'</div></section>'
 IMGURL='https://cdn.jsdelivr.net/gh/Matrress/Animation@33b9eb8bede4af6b33023e5a154fca1482aee68b/divine-firmness/assets/model-1400.webp'
 blk3=blk3.replace('@IMG@',IMGURL)
+SPINEURL='https://cdn.jsdelivr.net/gh/Matrress/Animation@1782714e8c61343e207ed14efa52fdbebad2524d/divine-firmness/assets/spine.webp'
+blk3=blk3.replace('@SPINE@',SPINEURL)
 blk4=body
 engine=rd('live/new/ft_all_logic_min2.html')
 blocks=[('1','CSS_module','<style>'+rd('blocks/m_css.txt')[7:-8]+'</style>' if False else rd('blocks/m_css.txt')),
@@ -52,7 +54,8 @@ img='data:image/webp;base64,'+base64.b64encode(open(B+'visual/model2_1400.webp',
 pv='\n'.join(t for _,_,t in blocks)
 FOAMURL='https://cdn.jsdelivr.net/gh/Matrress/Animation@be4159bb10b86c2733ec1c1d10520ee0f597fb1f/divine-firmness/assets/foam.webp'
 foam='data:image/webp;base64,'+base64.b64encode(open(B+'v2/foam.webp','rb').read()).decode()
-pv=pv.replace(IMGURL,img).replace(FOAMURL,foam).replace(LOGO,logo)
+spi='data:image/webp;base64,'+base64.b64encode(open(B+'v2/spine.webp','rb').read()).decode()
+pv=pv.replace(SPINEURL,spi).replace(IMGURL,img).replace(FOAMURL,foam).replace(LOGO,logo)
 hdr='<header class="cx"><div class="cx-w"><p class="cx-e">Концепция 4 · не е код за поставяне</p><p>Визуалният слой е най-горе. Секциите отдолу са същите 7 блока, които се поставят на страницата.</p></div></header>\n'
 head=head.replace('<title>Firmness Navigator</title>','<title>Firmness Navigator Visual</title>')
 wr('build/concept4.html',head+'\n'+hdr+pv+'\n'); print('preview',len(head+pv)//1024,'KB')
