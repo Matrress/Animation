@@ -67,7 +67,7 @@
     var tp = li.querySelector('.ddv-tip'); it.textContent = tp.querySelector('h4').textContent; inn.textContent = i;
     var xa = document.querySelector('#ddv-x article[data-i="' + i + '"]'), src = xa || tp; ib.innerHTML = ''; [].forEach.call(src.querySelectorAll('p'), function(p){ ib.appendChild(p.cloneNode(true)); });
     li.querySelector('button').setAttribute('aria-expanded', 'true'); info.hidden = false; info.style.animation = 'none'; void info.offsetWidth; info.style.animation = '';
-    if(window.innerWidth < 900 && info.getBoundingClientRect().bottom > window.innerHeight) info.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+    info.style.scrollMarginBottom = '24px'; var ir = info.getBoundingClientRect(); if(ir.bottom > window.innerHeight || ir.top < 0) info.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block: 'nearest'});
     if(i === '8') photo();
     root.removeAttribute('data-p'); void root.offsetWidth; root.setAttribute('data-p', i);
   }
@@ -78,7 +78,7 @@
   });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && openLi){ var b = openLi.querySelector('button'); close(); b.focus(); } });
   $('ddv-ix').addEventListener('click', function(){ var b = openLi && openLi.querySelector('button'); close(); if(b) b.focus(); });
-  document.addEventListener('pointerdown', function(e){ if(openLi && !openLi.contains(e.target) && !info.contains(e.target)) close(); });
+  document.addEventListener('pointerdown', function(e){ if(openLi && !openLi.contains(e.target) && !info.contains(e.target) && !(e.target.closest && e.target.closest('.ddv-hs'))) close(); });
   /* the loops run only while the scene is on screen */
   if('IntersectionObserver' in window) new IntersectionObserver(function(en){ root.classList.toggle('ddv-vis', en[0].isIntersecting); }).observe(root);
   else root.classList.add('ddv-vis');
