@@ -2,8 +2,8 @@
 (function(){
   var LV = {'SOFT':{n:1,c:'#BEC4C2',t:'#3A474D',name:'Soft',d:'63 kg/m³ latex density'},'MEDIUM':{n:2,c:'#A3AAA3',t:'#fff',name:'Medium',d:'75 kg/m³ latex density'},
             'FIRM':{n:3,c:'#7E8887',t:'#fff',name:'Firm',d:'83 kg/m³ latex density'},'EXTRA FIRM':{n:4,c:'#5D6B6E',t:'#fff',name:'Extra Firm',d:'83 kg/m³ with 2 coir layers'}};
-  var SET = {S:'a Soft mattress',M:'a Medium mattress',F:'a Firm mattress',X:'an Extra Firm mattress',
-    FM:'a Firm mattress with a Medium topper',XF:'an Extra Firm mattress with a Firm topper',MS:'a Medium mattress with a Soft topper'};
+  var SET = {S:'a Soft latex mattress',M:'a Medium latex mattress',F:'a Firm latex mattress',X:'an Extra Firm latex mattress',
+    FM:'a Firm latex mattress with a Medium latex topper',XF:'an Extra Firm latex mattress with a Firm latex topper',MS:'a Medium latex mattress with a Soft latex topper'};
   function $(i){ return document.getElementById(i); }
   function api(){ return window.DDFT_API; }
   function lvl(w,h){ try{ return api().setups(w,h); }catch(e){ return null; } }
@@ -11,6 +11,15 @@
   function num(v){ v = parseFloat(String(v).replace(',','.')); return isFinite(v) ? v : null; }
   function cl(v,a,b){ return v < a ? a : v > b ? b : v; }
   function nm(d){ return (LV[d] || {}).name || ''; }
+  function lx(t){ return String(t).replace(/\b(Extra Firm|Soft|Medium|Firm) (mattress|topper)\b/g,'$1 latex $2').replace('(one mattress, one firmness)','(one latex mattress, one firmness)').replace('(a mattress with a topper)','(a latex mattress with a latex topper)'); }
+  function art(x){ return /^[AEIOU]/i.test(x) ? 'an ' : 'a '; }
+  function cap1(x){ return x.charAt(0).toUpperCase() + x.slice(1); }
+  function kind(){ return S.a.product === 'topper' ? 'topper' : 'mattress'; }
+  function lk(d){ return nm(d) + ' latex ' + kind(); }
+  function fdesc(r){ var f = r.firmness, m = r.model;
+    if(/Partners/.test(m) && f.length === 2) return nm(f[1]) + ' and ' + nm(f[0]) + ' latex mattress cores';
+    if(/Support/.test(m)) return f.length === 2 ? nm(f[0]) + ' + ' + nm(f[1]) + ' latex topper layers' : nm(f[0]) + ' latex topper';
+    return f.length === 2 ? nm(f[0]) + ' latex mattress + ' + nm(f[1]) + ' latex topper' : nm(f[0]) + ' latex mattress'; }
 
   var S = { tch:{me:false,pt:false}, two:false, tab:'me', me:{w:76,h:172}, pt:{w:62,h:165}, a:{product:'mattress',budget:'premium'} };
   function cur(){ return S.tab === 'pt' && S.two ? S.pt : S.me; }
@@ -34,7 +43,7 @@
 
   function plate(label, w, h){
     var s = lvl(w,h), L = LV[s ? s.display : 'MEDIUM'];
-    return '<div class="dn-plate" data-lv="' + L.n + '" style="--c:' + (L.n === 2 ? '#8C948D' : L.c) + ';--tc:' + (L.n === 1 ? L.t : '#fff') + '"><small>' + label + '</small><b>' + L.name + '</b>' +
+    return '<div class="dn-plate" data-lv="' + L.n + '" style="--c:' + (L.n === 2 ? '#8C948D' : L.c) + ';--tc:' + (L.n === 1 ? L.t : '#fff') + '"><small>' + label + '</small><b>' + L.name + '</b><em>latex ' + kind() + '</em>' +
       ring(L.n) + '</div>';
   }
   /* four regulation positions on a ring, never a weak-to-strong signal */
@@ -66,17 +75,17 @@
   }
   function stack(f, model, big){
     if(/Partners/.test(model) && f.length === 2){
-      return '<span class="dn-stack" aria-hidden="true" style="grid-template-columns:1fr 1fr"><i class="t" style="grid-column:1/3;background:#A3AAA3">SHARED TOP</i>' +
-        '<i class="c" style="background:' + LV[f[1]].c + '">' + nm(f[1]).toUpperCase() + '</i><i class="c" style="background:' + LV[f[0]].c + '">' + nm(f[0]).toUpperCase() + '</i></span>';
+      return '<span class="dn-stack" aria-hidden="true" style="grid-template-columns:1fr 1fr"><i class="t" style="grid-column:1/3;background:#A3AAA3">SHARED LATEX TOP</i>' +
+        '<i class="c" style="background:' + LV[f[1]].c + '">' + nm(f[1]).toUpperCase() + '<br>LATEX CORE</i><i class="c" style="background:' + LV[f[0]].c + '">' + nm(f[0]).toUpperCase() + '<br>LATEX CORE</i></span>';
     }
-    if(f.length === 2) return '<span class="dn-stack" aria-hidden="true"><i class="t" style="background:' + LV[f[1]].c + (LV[f[1]].n === 1 ? ';color:#3A474D' : '') + '">' + nm(f[1]).toUpperCase() + ' TOPPER</i><i class="c" style="background:' + LV[f[0]].c + '">' + nm(f[0]).toUpperCase() + '</i></span>';
-    return '<span class="dn-stack" aria-hidden="true"><i class="c" style="height:' + (big ? 59 : 38) + 'px;background:' + LV[f[0]].c + (LV[f[0]].n === 1 ? ';color:#3A474D' : '') + '">' + nm(f[0]).toUpperCase() + '</i></span>';
+    if(f.length === 2) return '<span class="dn-stack" aria-hidden="true"><i class="t" style="background:' + LV[f[1]].c + (LV[f[1]].n === 1 ? ';color:#3A474D' : '') + '">' + nm(f[1]).toUpperCase() + ' LATEX<br>TOPPER</i><i class="c" style="background:' + LV[f[0]].c + '">' + nm(f[0]).toUpperCase() + ' LATEX<br>MATTRESS</i></span>';
+    return '<span class="dn-stack" aria-hidden="true"><i class="c" style="height:' + (big ? 59 : 38) + 'px;background:' + LV[f[0]].c + (LV[f[0]].n === 1 ? ';color:#3A474D' : '') + '">' + nm(f[0]).toUpperCase() + ' LATEX<br>' + (/Support/.test(model) ? 'TOPPER' : 'MATTRESS') + '</i></span>';
   }
   function setupText(f, model){
-    if(/Partners/.test(model)) return 'Two cores side by side, ' + nm(f[1]) + ' and ' + nm(f[0]) + ', under one shared surface.';
-    if(/Bio Support/.test(model)) return f.length === 2 ? 'A topper with two regulated firmnesses in one.' : 'A ' + nm(f[0]) + ' topper on the mattress you have.';
-    if(/Orthopaedic/.test(model)) return 'Coconut coir reinforced, ' + nm(f[0]) + ' face.';
-    return f.length === 2 ? 'A ' + nm(f[0]) + ' mattress with a separate ' + nm(f[1]) + ' topper.' : 'One ' + nm(f[0]) + ' core with 7 comfort zones.';
+    if(/Partners/.test(model)) return 'A latex mattress with two cores side by side, ' + nm(f[1]) + ' and ' + nm(f[0]) + ', under one shared surface.';
+    if(/Bio Support/.test(model)) return f.length === 2 ? 'A latex topper with two regulated firmnesses in one.' : cap1(art(nm(f[0])) + nm(f[0])) + ' latex topper on the mattress you have.';
+    if(/Orthopaedic/.test(model)) return 'A coconut coir reinforced latex mattress with ' + art(nm(f[0])) + nm(f[0]) + ' face.';
+    return f.length === 2 ? cap1(art(nm(f[0])) + nm(f[0])) + ' latex mattress with a separate ' + nm(f[1]) + ' latex topper.' : cap1(art(nm(f[0])) + nm(f[0])) + ' latex mattress, one core with 7 comfort zones.';
   }
 
   var R = null;
@@ -94,10 +103,10 @@
     $('dn-plates').className = 'dn-plates' + (S.two ? ' two' : '');
     $('dn-say').innerHTML = S.two
       ? 'Each of you is regulated on your own body. Your two weights are never added or averaged.'
-      : '<b>' + L.name + '</b> is the density that carries your <b>' + S.me.w + ' kg</b>. It does not make the surface hard. Support holds your skeleton, adaptation looks after everything else.';
+      : '<b>' + cap1(art(L.name) + lk(s.display)) + '</b> carries your <b>' + S.me.w + ' kg</b>. It does not make the surface hard. Support holds your skeleton, adaptation looks after everything else.';
     var nb = S.two ? null : nearBorder(S.me), note = $('dn-note');
     note.hidden = !nb;
-    if(nb) note.innerHTML = '<span>You are close to the border with <b>' + nm(nb) + '</b>. Your proportions place you in <b>' + nm(s.display) + '</b>.' +
+    if(nb) note.innerHTML = '<span>You are close to the border with <b>' + art(nm(nb)) + lk(nb) + '</b>. Your proportions place you in <b>' + art(nm(s.display)) + lk(s.display) + '</b>.' +
       (s.second && s.second.length === 2 ? ' The second choice is the engineered bridge between the two levels.' : ' Our specialist can confirm it with you.') + '</span>';
 
     var lt = $('dn-lvs').children; for(var q = 0; q < lt.length; q++) lt[q].className = (q + 1 === L.n) ? 'on' : '';
@@ -115,32 +124,32 @@
     $('dn-picks').className = 'dn-picks' + (recs.length > 1 ? ' n2' : '');
 
     /* 3 · why it is right */
-    $('dn-v-t').textContent = 'Why ' + nm(s.display) + ' is right for you';
+    $('dn-v-t').textContent = 'Why ' + art(nm(s.display)) + lk(s.display) + ' is right for you';
     var v = [];
-    v.push('Your body, <b>' + S.me.w + ' kg</b> at <b>' + S.me.h + ' cm</b>, is regulated to <b>' + nm(s.display) + '</b>: ' + LV[s.display].d + '.');
+    v.push('Your body, <b>' + S.me.w + ' kg</b> at <b>' + S.me.h + ' cm</b>, is regulated to <b>' + art(nm(s.display)) + lk(s.display) + '</b>: ' + LV[s.display].d + '.');
     var b = base(S.me.w);
     if(b !== s.display){
       var firmer = LV[s.display].n > LV[b].n;
-      v.push('By weight alone you would start at <b>' + nm(b) + '</b>. At <b>' + S.me.h + ' cm</b> your weight is ' +
+      v.push('By weight alone you would start at <b>' + art(nm(b)) + nm(b) + ' latex ' + kind() + '</b>. At <b>' + S.me.h + ' cm</b> your weight is ' +
         (firmer ? 'carried on a more compact frame, which asks for more support.' : 'spread over a longer frame, which allows more adaptation.'));
     } else v.push('Your weight sets this level and your height confirms it. Your proportions sit inside this regulation.');
     if(recs[0] && !S.two) v.push('Your first choice, <b>' + recs[0].model + '</b>: ' + setupText(recs[0].firmness, recs[0].model).replace(/\.$/,'') + '. Support and adaptation stay in balance for your body.');
-    if(nb) v.push('You are close to <b>' + nm(nb) + '</b>, so we checked both. Your proportions keep you in <b>' + nm(s.display) + '</b>.');
+    if(nb) v.push('You are close to <b>' + art(nm(nb)) + lk(nb) + '</b>, so we checked both. Your proportions keep you in <b>' + art(nm(s.display)) + lk(s.display) + '</b>.');
     var notes = R ? (R.result.notes || []).filter(function(n){ return !/How to read/.test(n[0]); }) : [];
-    notes.forEach(function(n){ v.push('<b>' + n[0] + '.</b> ' + n[1]); });
+    notes.forEach(function(n){ v.push('<b>' + lx(n[0]) + '.</b> ' + lx(n[1])); });
     $('dn-v').innerHTML = v.map(function(t){ return '<li><span>' + t + '</span></li>'; }).join('');
     var tiles = $('dn-dens').children;
     for(var k = 0; k < tiles.length; k++) tiles[k].className = (k + 1 === L.n) ? 'on' : '';
     var duals = [s.first, s.second].filter(function(c){ return c && c.length === 2; });
     $('dn-mixes').innerHTML = [['MS','MEDIUM','SOFT'],['FM','FIRM','MEDIUM'],['XF','EXTRA FIRM','FIRM']].map(function(m){
-      return '<div' + (duals.indexOf(m[0]) > -1 ? ' class="on"' : '') + '>' + stack([m[1],m[2]],'') + nm(m[1]) + ' + ' + nm(m[2]) + '</div>';
+      return '<div' + (duals.indexOf(m[0]) > -1 ? ' class="on"' : '') + '>' + stack([m[1],m[2]],'') + nm(m[1]) + ' latex mattress + ' + nm(m[2]) + ' latex topper</div>';
     }).join('');
 
 
     /* the selection, as the customer will send it */
-    var lines = [['Your regulation', S.two ? 'You: ' + nm(s.display) + ' · Partner: ' + nm(lvl(S.pt.w,S.pt.h).display) : nm(s.display) + ' · ' + S.me.w + ' kg · ' + S.me.h + ' cm']];
-    if(recs[0]) lines.push([S.two ? 'Your mattress' : 'First choice', recs[0].model + ' · ' + recs[0].firmness.map(nm).join(' + ')]);
-    if(recs[1]) lines.push(['Second choice', recs[1].model + ' · ' + recs[1].firmness.map(nm).join(' + ')]);
+    var lines = [['Your regulation', S.two ? 'You: ' + lk(s.display) + ' · Partner: ' + lk(lvl(S.pt.w,S.pt.h).display) : lk(s.display) + ' · ' + S.me.w + ' kg · ' + S.me.h + ' cm']];
+    if(recs[0]) lines.push([S.two ? 'Your mattress' : 'First choice', recs[0].model + ' · ' + fdesc(recs[0])]);
+    if(recs[1]) lines.push(['Second choice', recs[1].model + ' · ' + fdesc(recs[1])]);
     $('dn-sel').innerHTML = lines.map(function(l){ return '<li><small>' + l[0] + '</small><b>' + l[1] + '</b></li>'; }).join('');
     if(recs[0]){ $('dn-buy').href = recs[0].url; $('dn-buy').textContent = 'Explore and buy ' + recs[0].model; }
     $('dn-pin-c').style.background = L.c; $('dn-pin-t').textContent = L.name; $('dn-pin-s').textContent = 'level ' + L.n + ' of 4 · ' + S.me.w + ' kg · ' + S.me.h + ' cm';
@@ -149,7 +158,7 @@
     var sb = S.two ? lvl(S.pt.w,S.pt.h) : null;
     var st = { touched: S.two ? (S.tch.me && S.tch.pt) : S.tch.me, waiting: S.two ? (!S.tch.me ? 'you' : !S.tch.pt ? 'partner' : '') : '',
       two:S.two, tab:S.tab, product:S.a.product, me:{w:S.me.w,h:S.me.h,lv:s.display}, pt:S.two && sb ? {w:S.pt.w,h:S.pt.h,lv:sb.display} : null,
-      recs:recs.map(function(r){ return {model:r.model,firmness:r.firmness,title:r.title}; }), notes:R ? R.result.notes : [] };
+      recs:recs.map(function(r){ return {model:r.model,firmness:r.firmness,title:r.title,url:r.url}; }), notes:R ? R.result.notes : [] };
     window.DDN_STATE = st;
     document.dispatchEvent(new CustomEvent('ddn:state', {detail:st}));
   }
@@ -157,7 +166,7 @@
 
 
   /* ---------- send the selection ---------- */
-  var MAIL = 'divinedreams.d@gmail.com';
+  var MAIL = 'support@divinedunlop.com';
   function pickedText(q){
     var el = document.querySelector('input[name="dn-' + q + '"]:checked');
     return el ? el.parentNode.querySelector('span').textContent : 'Not answered';
@@ -185,18 +194,41 @@
     if(recs[1]) L.push('Second recommendation: ' + recs[1].model + ' / Firmness - ' + recs[1].firmness.map(nm).join(' + '));
     return L.join('\n');
   }
+  var ENDPOINT = '';  /* a form endpoint (POST, JSON). Empty = the visitor's email app is used */
   function onSend(e){
     e.preventDefault();
-    var msg = $('dn-fm'), n = $('dn-fn').value.trim(), p = $('dn-fp').value.trim(), m = $('dn-fe').value.trim();
+    var msg = $('dn-fm'), n = $('dn-fn').value.trim(), p = $('dn-fp').value.trim(), m = $('dn-fe').value.trim(), btn = e.target.querySelector('button[type=submit]');
     msg.className = 'dn-fm';
-    if(!n || (!p && !m)){ msg.className = 'dn-fm err'; msg.textContent = 'Please add your name and a phone or an email, so we can come back to you.'; return; }
-    var href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent('Firmness enquiry - ' + n) + '&body=' + encodeURIComponent(mailBody());
-    msg.textContent = 'Your email app opens with everything filled in. Press send there. If nothing opens, write to ' + MAIL + '.';
-    window.location.href = href;
+    var okP = p.replace(/\D/g, '').length >= 7, okM = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m);
+    if(!n || (!okP && !okM) || (p && !okP) || (m && !okM)){ msg.className = 'dn-fm err'; msg.textContent = 'Please add your name and a valid phone or email, so we can come back to you.'; return; }
+    var body = mailBody();
+    function viaMail(){
+      msg.className = 'dn-fm';
+      msg.innerHTML = 'Your email app opens with everything filled in. Press send there. Nothing opened? Write to <a href="mailto:' + MAIL + '">' + MAIL + '</a>.';
+      window.location.href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent('Firmness enquiry - ' + n) + '&body=' + encodeURIComponent(body);
+    }
+    if(!ENDPOINT || !window.fetch){ viaMail(); return; }
+    msg.textContent = 'Sending…'; if(btn) btn.disabled = true;
+    var ctl = window.AbortController ? new AbortController() : null, to = setTimeout(function(){ if(ctl) ctl.abort(); }, 12000);
+    fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'}, body:JSON.stringify({name:n, phone:p, email:m, message:body, _subject:'Firmness enquiry - ' + n}), signal:ctl ? ctl.signal : undefined})
+      .then(function(r){ if(!r.ok) throw new Error('bad'); clearTimeout(to); msg.className = 'dn-fm ok'; msg.textContent = 'Sent. We have your selection and will come back to you.'; if(btn) btn.disabled = false; })
+      .catch(function(){ clearTimeout(to); if(btn) btn.disabled = false; viaMail(); });
+  }
+
+  /* links an assistant or a friend can send: ?kg=110&cm=180&need=balance&pain=no */
+  function fromUrl(){
+    try{
+      var q = new URLSearchParams(location.search), kg = parseFloat(q.get('kg')), cm = parseFloat(q.get('cm'));
+      function put(id, v){ var el = $(id); if(!el) return; el.value = String(Math.round(v)); el.dispatchEvent(new Event('input', {bubbles:true})); el.dispatchEvent(new Event('change', {bubbles:true})); }
+      if(kg >= 30 && kg <= 250 && cm >= 120 && cm <= 230){ put('dn-kg', kg); put('dn-cm', cm); }
+      ['product', 'need', 'pain', 'current', 'position', 'budget'].forEach(function(k){
+        var v = (q.get(k) || '').replace(/[^a-z_]/g, ''), r = v && document.querySelector('input[name="dn-' + k + '"][value="' + v + '"]');
+        if(r) r.click();
+      });
+    }catch(e){}
   }
 
   function start(){
-    if(!$('dn') || !api()) return;
     $('dn-form').addEventListener('submit', onSend);
     $('dn-ask').addEventListener('click', function(){ var d = $('dn-ct'); d.open = true; d.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(function(){ $('dn-fn').focus({preventScroll:true}); }, 400); });
     paintInputs(); render();
@@ -221,7 +253,19 @@
     $('dn-qs').addEventListener('change', function(e){ var t = e.target; if(t && t.type === 'radio'){ S.a[t.closest('.dn-ch').dataset.q] = t.value; render(); } });
     var pin = $('dn-pin');
     if('IntersectionObserver' in window) new IntersectionObserver(function(en){ pin.className = 'dn-pin' + (!en[0].isIntersecting && en[0].boundingClientRect.top < 0 ? ' show' : ''); }).observe($('dn-plates'));
+    fromUrl();
   }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+  /* order-independent start: waits for the markup (#dn) and the engine (DDFT_API), starts again if the
+     page builder re-renders the section, and reports its status on <html> for the page check (#dn-chk) */
+  var bound = null, tries = 0, root = document.documentElement;
+  function boot(){
+    if(api()) root.classList.add('ddft-ok');
+    var d = $('dn');
+    if(!d || !api() || d === bound) return;
+    bound = d;
+    try{ start(); root.classList.add('dn-ok'); }catch(e){ root.classList.remove('dn-ok'); }
+  }
+  function tick(){ boot(); if(++tries < 700) setTimeout(tick, tries < 40 ? 150 : 1500); }
+  document.addEventListener('DOMContentLoaded', boot); window.addEventListener('load', boot); tick();
 })();
 </script>

@@ -1,6 +1,6 @@
 <script>
 (function(){
-  var root = document.getElementById('ddv'); if(!root) return;
+  function main(root){
   var $ = function(i){ return document.getElementById(i); }, NS = 'http://www.w3.org/2000/svg';
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   /* the four regulations, in the colours of the sketches */
@@ -9,10 +9,10 @@
             'FIRM':{n:3,name:'Firm',c0:'#2E5C4C',c1:'#1F777B',c2:'#0F6DCB',hl:'#8DFFB8',d:'83 kg/m³'},
             'EXTRA FIRM':{n:4,name:'Extra Firm',c0:'#2F415D',c1:'#2D4293',c2:'#620FCD',hl:'#E070FF',d:'83 kg/m³ + 2 coir'}};
   var ORDER = ['SOFT','MEDIUM','FIRM','EXTRA FIRM'];
-  var NEUTRAL = {c0:'#2F3A3E',c1:'#3E5A60',c2:'#6E8F93',hl:'#7AF5F0'}, GRAPHITE = {c0:'#35393B',c1:'#4A5154',c2:'#6B7478',hl:'#B9C6C9'};
+  var NEUTRAL = {c0:'#1E3F66',c1:'#1A6FC8',c2:'#2F86E6',hl:'#7DBDFF'}, GRAPHITE = {c0:'#35393B',c1:'#4A5154',c2:'#6B7478',hl:'#B9C6C9'};
   var tips = root.querySelectorAll('.ddv-tip'), openLi = null, timer = null, last = null, gl = 1;
   root.classList.add('ddv-js');
-  for(var t = 0; t < tips.length; t++) tips[t].hidden = true;
+  var info = $('ddv-info'), ib = $('ddv-ib'), it = $('ddv-it'), inn = $('ddv-in');
 
   /* the regulation ring: four positions, never weak or strong */
   function arc(a0, a1){
@@ -44,23 +44,30 @@
     });
   })();
 
+  /* a visitor going to the offered model: tell the page, so the shop can count it */
+  $('ddv-rr').addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a.go'); if(!a) return;
+    var b = a.parentNode.querySelector('b'), d = {model: b ? b.textContent : '', position: a.getAttribute('data-p')};
+    document.dispatchEvent(new CustomEvent('ddn:go', {detail: d}));
+    if(window.dataLayer) window.dataLayer.push({event: 'firmness_go_to_model', model: d.model, position: d.position});
+  });
+
   /* points */
   function close(){
     if(!openLi) return;
-    openLi.querySelector('.ddv-tip').hidden = true; openLi.querySelector('button').setAttribute('aria-expanded', 'false');
+    openLi.querySelector('button').setAttribute('aria-expanded', 'false'); info.hidden = true;
     openLi = null; root.removeAttribute('data-p');
   }
-  function photo(){
-    var im = $('ddv-photo'), u = im.getAttribute('data-src');
-    if(im.src || !/^(https:|data:)/.test(u || '')) return;
-    im.addEventListener('load', function(){ im.classList.add('ddv-ok'); });
-    im.src = u;
-  }
+  function photo(){ var im = $('ddv-photo'); if(im && im.loading === 'lazy') im.loading = 'eager'; }
+  (function(){ var im = $('ddv-photo'); function ok(){ if(im.naturalWidth) im.classList.add('ddv-ok'); } im.addEventListener('load', ok); ok(); })();
   function open(li){
     if(li === openLi){ close(); return; }
     close(); openLi = li;
     var i = li.getAttribute('data-i');
-    li.querySelector('.ddv-tip').hidden = false; li.querySelector('button').setAttribute('aria-expanded', 'true');
+    var tp = li.querySelector('.ddv-tip'); it.textContent = tp.querySelector('h4').textContent; inn.textContent = i;
+    var xa = document.querySelector('#ddv-x article[data-i="' + i + '"]'), src = xa || tp; ib.innerHTML = ''; [].forEach.call(src.querySelectorAll('p'), function(p){ ib.appendChild(p.cloneNode(true)); });
+    li.querySelector('button').setAttribute('aria-expanded', 'true'); info.hidden = false; info.style.animation = 'none'; void info.offsetWidth; info.style.animation = '';
+    if(window.innerWidth < 900 && info.getBoundingClientRect().bottom > window.innerHeight) info.scrollIntoView({behavior: 'smooth', block: 'nearest'});
     if(i === '8') photo();
     root.removeAttribute('data-p'); void root.offsetWidth; root.setAttribute('data-p', i);
   }
@@ -70,7 +77,8 @@
     if(li.getAttribute('data-i') === '8'){ b.addEventListener('pointerenter', photo); b.addEventListener('focus', photo); }
   });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && openLi){ var b = openLi.querySelector('button'); close(); b.focus(); } });
-  document.addEventListener('pointerdown', function(e){ if(openLi && !openLi.contains(e.target)) close(); });
+  $('ddv-ix').addEventListener('click', function(){ var b = openLi && openLi.querySelector('button'); close(); if(b) b.focus(); });
+  document.addEventListener('pointerdown', function(e){ if(openLi && !openLi.contains(e.target) && !info.contains(e.target)) close(); });
   /* the loops run only while the scene is on screen */
   if('IntersectionObserver' in window) new IntersectionObserver(function(en){ root.classList.toggle('ddv-vis', en[0].isIntersecting); }).observe(root);
   else root.classList.add('ddv-vis');
@@ -176,7 +184,7 @@
     if(!touched){ $('ddv-e1').textContent = 'waiting for your height and weight'; $('ddv-e2').textContent = 'set by the regulation'; $('ddv-e4').textContent = 'your height and weight'; }
     else if(two){ $('ddv-e1').textContent = L.name + ' · ' + P.name + ' (you · partner)'; $('ddv-e2').textContent = dens(st.me.lv) + ' · ' + dens(st.pt.lv); $('ddv-e4').textContent = st.me.w + ' kg, ' + st.me.h + ' cm · ' + st.pt.w + ' kg, ' + st.pt.h + ' cm'; }
     else {
-      $('ddv-e1').textContent = L.name + ' · position ' + L.n + ' of 4';
+      $('ddv-e1').textContent = L.name;
       $('ddv-e2').textContent = isTop ? (f.length === 2 ? 'Topper ' + dens(f[1]) + ' over ' + dens(f[0]) : 'Topper ' + dens(f[0])) : isDual(r0) ? dens(f[0]) + ' base · ' + dens(f[1]) + ' topper' : dens(st.me.lv);
       $('ddv-e4').textContent = st.me.w + ' kg · ' + st.me.h + ' cm';
     }
@@ -194,16 +202,15 @@
     if(touched){
       var row = function(k, v){ return '<div><em>' + k + '</em><span>' + v + '</span></div>'; };
       var fmx = two ? 'You <b>' + st.me.w + ' kg · ' + st.me.h + ' cm</b> → <b>' + L.name + '</b> · partner <b>' + st.pt.w + ' kg · ' + st.pt.h + ' cm</b> → <b>' + P.name + '</b>'
-        : '<b>' + st.me.w + ' kg · ' + st.me.h + ' cm</b> → <b>' + L.name + '</b> · ' + L.d + ' · position ' + L.n + ' of 4';
+        : '<b>' + st.me.w + ' kg · ' + st.me.h + ' cm</b> → <b>' + L.name + '</b> · ' + L.d;
       rr += row('Firmness', fmx);
       var md = '';
       recs.slice(0, 2).forEach(function(r, i){
         var fm = r.firmness.map(nm), w = r.firmness.length === 2 ? (/Partners/.test(r.model) ? 'you ' + nm(st.me.lv) + ' · partner ' + nm(st.pt.lv) : /Support/.test(r.model) ? fm[0] + ' and ' + fm[1] + ' layers' : fm[0] + ' mattress · ' + fm[1] + ' topper') : fm[0];
-        md += '<span class="m"><i>' + (two ? (r.title || '') : (i ? 'Second choice' : 'First choice')) + '</i> <b>' + r.model + '</b> · ' + w + '</span>';
+        var gu = /^https:\/\/divinedunlop\.com\//.test(r.url || '') ? r.url : '';
+        md += '<span class="m"><i>' + (two ? (r.title || '') : (i ? 'Second choice' : 'First choice')) + '</i> <b>' + r.model + '</b> · ' + w + (gu ? ' <a class="go" href="' + gu + '" target="_blank" rel="noopener" data-p="' + (i ? 'second' : 'first') + '">Go to model <span aria-hidden="true">→</span></a>' : '') + '</span>';
       });
       if(md) rr += row('Model', md);
-      var why = (st.notes || []).map(function(n){ return '<p><b>' + n[0] + '.</b> ' + n[1] + '</p>'; }).join('');
-      if(why) rr += row('Why', why);
       if(!recs.length){ var n = (st.notes && st.notes[0]) || null; rr = n ? '<p><b>' + n[0] + '.</b> ' + n[1] + '</p>' : '<p>There is no approved combination for these measurements. Please contact us and we will advise.</p>'; }
     }
     $('ddv-rr').innerHTML = rr; $('ddv-rr').hidden = !rr;
@@ -211,7 +218,9 @@
     $('ddv-live').textContent = touched ? 'Regulation: ' + ftx + '. Model: ' + vm.textContent + '.' : '';
     last = st;
   }
-  document.addEventListener('ddn:state', function(e){ var st = e.detail; clearTimeout(timer); timer = setTimeout(function(){ apply(st); }, last ? 140 : 0); });
+  if(window.__ddvOff) window.__ddvOff();
+  var onState = function(e){ var st = e.detail; clearTimeout(timer); timer = setTimeout(function(){ apply(st); }, last ? 140 : 0); };
+  document.addEventListener('ddn:state', onState); window.__ddvOff = function(){ document.removeEventListener('ddn:state', onState); };
   $('ddv-gol').addEventListener('click', function(e){
     var w = $('dn-w'); if(!w) return; e.preventDefault();
     (w.closest('.dn-card') || w).scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block:'center'});
@@ -219,5 +228,16 @@
   });
   apply(window.DDN_STATE || {me:{w:0,h:0,lv:'MEDIUM'},recs:[]});
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ if(last) apply(last); });
+  }
+  /* order-independent start, see the module script */
+  var bound = null, tries = 0, html = document.documentElement;
+  function boot(){
+    var r = document.getElementById('ddv');
+    if(!r || r === bound) return;
+    bound = r;
+    try{ main(r); html.classList.add('ddv-ok'); }catch(e){ html.classList.remove('ddv-ok'); }
+  }
+  function tick(){ boot(); if(++tries < 700) setTimeout(tick, tries < 40 ? 150 : 1500); }
+  document.addEventListener('DOMContentLoaded', boot); window.addEventListener('load', boot); tick();
 })();
 </script>
