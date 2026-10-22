@@ -1,8 +1,8 @@
 // Builds the BioDunlop intro: minified CSS/JS + media into release/<ver>/, the integration candidate section (a byte-for-byte
-// copy of the stable Hero 1.20.3 jsDelivr section with the intro additions inserted) and a local preview page.
+// copy of the stable Hero 1.20.4 jsDelivr section with the intro additions inserted) and a local preview page.
 // usage: node tools/build.mjs            (JSDELIVR_REF=<sha> to pin the candidate's intro files to a commit)
 import fs from 'node:fs'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
-const VER = '0.4.1-dev', HERO = '1.20.3', HERO_SHA = '7842df68ca488c6d06a117ca50d6268215789fd0';
+const VER = '0.4.1-dev', HERO = '1.20.4', HERO_SHA = 'f3ef98458e207b352d65205c03137e30ac93d1ce';
 const here = path.dirname(new URL(import.meta.url).pathname), mod = path.join(here, '..'), repo = path.join(mod, '..');
 const rel = path.join(mod, 'release', VER);
 fs.mkdirSync(path.join(rel, 'assets'), { recursive: true });
