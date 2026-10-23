@@ -245,7 +245,7 @@
       recs.slice(0, 2).forEach(function(r, i){
         var fm = r.firmness.map(nm), w = r.firmness.length === 2 ? (/Partners/.test(r.model) ? 'you ' + nm(st.me.lv) + ' · partner ' + nm(st.pt.lv) : /Support/.test(r.model) ? fm[0] + ' and ' + fm[1] + ' layers' : fm[0] + ' mattress · ' + fm[1] + ' topper') : fm[0];
         var gu = /^https:\/\/divinedunlop\.com\//.test(r.url || '') ? r.url : '';
-        md += '<span class="m"><i>' + (two ? (r.title || '') : (i ? 'Second choice' : 'First choice')) + '</i> <b>' + r.model + '</b> · ' + w + (gu ? ' <a class="go" href="' + gu + '" target="_blank" rel="noopener" data-p="' + (i ? 'second' : 'first') + '">Go to model <span aria-hidden="true">→</span></a>' : '') + '</span>';
+        md += '<span class="m"><i>' + (two ? (r.title && r.title !== r.model ? r.title : '') : (i ? 'Second choice' : 'First choice')) + '</i> <b>' + r.model + '</b> · ' + w + (gu ? ' <a class="go" href="' + gu + '" target="_blank" rel="noopener" data-p="' + (i ? 'second' : 'first') + '">Go to model <span aria-hidden="true">→</span></a>' : '') + '</span>';
       });
       if(md) rr += row('Model', md);
       if(!recs.length){ var n = (st.notes && st.notes[0]) || null; rr = n ? '<p><b>' + n[0] + '.</b> ' + n[1] + '</p>' : '<p>There is no approved combination for these measurements. Please contact us and we will advise.</p>'; }
