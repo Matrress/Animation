@@ -1,0 +1,50 @@
+<!-- DDC capability probe {{V}} · paste into the HTML (<>) mode of a TEST category description, Save, view the category. Harmless: no handlers, no forms submitted, no tracking. -->
+<section class="ddcp">
+<style>
+.ddcp{max-width:100%;margin:0 0 24px;padding:16px;border:2px dashed #8a99a8;font:15px/1.4 system-ui,sans-serif;color:#14223b;text-align:left}
+.ddcp table{width:100%;border-collapse:collapse}.ddcp td,.ddcp th{padding:6px 8px;border-bottom:1px solid #dde3e3;vertical-align:top;text-align:left}
+.ddcp .ok{display:inline-block;padding:2px 8px;border-radius:6px;background:#0a7d3b;color:#fff}
+.ddcp-st{background:#0a7d3b;color:#fff;padding:2px 8px;border-radius:6px}
+[data-ddcp="1"]{background:#0a7d3b;color:#fff;padding:2px 8px;border-radius:6px}
+#ddcp-id{background:#0a7d3b;color:#fff;padding:2px 8px;border-radius:6px}
+.ddcp-hv:hover{background:#0a7d3b;color:#fff}
+.ddcp-fc:focus-visible{outline:3px solid #0a7d3b;background:#0a7d3b;color:#fff}
+.ddcp-tabs input{position:absolute;opacity:0}.ddcp-tabs label{display:inline-block;padding:4px 10px;border:1px solid #8a99a8;border-radius:6px;cursor:pointer}
+.ddcp-tabs .p2{display:none}.ddcp-tabs:has(#ddcp-r2:checked) .p1{display:none}.ddcp-tabs:has(#ddcp-r2:checked) .p2{display:block}
+.ddcp-tabs input:checked+label{background:#0a7d3b;color:#fff}
+.ddcp-has .no{display:inline}.ddcp-has .yes{display:none}.ddcp-has:has(.x) .no{display:none}.ddcp-has:has(.x) .yes{display:inline}
+.ddcp-rul{container-type:inline-size}.ddcp-rul span{display:none}
+@container (min-width:0px){.ddcp-rul .w0{display:inline}}
+@container (min-width:600px){.ddcp-rul .w0{display:none}.ddcp-rul .w600{display:inline}}
+@container (min-width:800px){.ddcp-rul .w600{display:none}.ddcp-rul .w800{display:inline}}
+@container (min-width:1000px){.ddcp-rul .w800{display:none}.ddcp-rul .w1000{display:inline}}
+@container (min-width:1200px){.ddcp-rul .w1000{display:none}.ddcp-rul .w1200{display:inline}}
+</style>
+<link rel="stylesheet" href="{{CDN}}probe.css">
+<h2>DDC probe {{V}}: what this description field keeps</h2>
+<p>Green = works. Plain text = removed or not applied. After saving, please also reopen the HTML editor, copy everything and send it back.</p>
+<p><b>Description width:</b></p><div class="ddcp-rul"><span class="w0">under 600 px</span><span class="w600">600–799 px</span><span class="w800">800–999 px</span><span class="w1000">1000–1199 px</span><span class="w1200">1200 px or more</span></div>
+<table>
+<tr><th>#</th><th>Test</th><th>Result</th></tr>
+<tr><td>1</td><td>&lt;style&gt; block</td><td><span class="ddcp-st">green if &lt;style&gt; works</span></td></tr>
+<tr><td>2</td><td>&lt;link rel=stylesheet&gt; (jsDelivr)</td><td><span class="ddcp-lk">green if the linked stylesheet loads</span></td></tr>
+<tr><td>3</td><td>inline style="" attribute</td><td><span style="background:#0a7d3b;color:#fff;padding:2px 8px;border-radius:6px">green if inline styles are kept</span></td></tr>
+<tr><td>4</td><td>data- attribute</td><td><span data-ddcp="1">green if data- attributes are kept (needs 1 or 2)</span></td></tr>
+<tr><td>5</td><td>id attribute</td><td><span id="ddcp-id">green if ids are kept (needs 1 or 2)</span></td></tr>
+<tr><td>6</td><td>:hover</td><td><span class="ddcp-hv">turns green under the pointer</span></td></tr>
+<tr><td>7</td><td>link + :focus-visible</td><td><a class="ddcp-fc" href="https://divinedunlop.com/products/latex-mattresses-collection">Tab to me: green outline when focused</a></td></tr>
+<tr><td>8</td><td>radio + label + :checked</td><td><div class="ddcp-tabs"><input type="radio" name="ddcp-t" id="ddcp-r1" checked><label for="ddcp-r1">Tab A</label> <input type="radio" name="ddcp-t" id="ddcp-r2"><label for="ddcp-r2">Tab B</label><p class="p1">Panel A</p><p class="p2">Panel B (shown after choosing Tab B)</p></div></td></tr>
+<tr><td>9</td><td>:has()</td><td><span class="ddcp-has"><i class="x"></i><span class="no">:has not applied</span><span class="yes ok">:has works</span></span></td></tr>
+<tr><td>10</td><td>description width (container query)</td><td>see "Description width" above the table</td></tr>
+<tr><td>11</td><td>&lt;button&gt;</td><td><button type="button">I am a button</button></td></tr>
+<tr><td>12</td><td>&lt;details&gt;/&lt;summary&gt;</td><td><details><summary>Open me</summary><p>Hidden text inside details.</p></details></td></tr>
+<tr><td>13</td><td>&lt;img&gt; from jsDelivr (WebP, lazy)</td><td><img src="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/m-botanic.webp" width="280" height="104" loading="lazy" alt="Botanic latex mattress (probe image)"></td></tr>
+<tr><td>14</td><td>&lt;picture&gt;/&lt;source&gt;</td><td><picture><source srcset="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/m-bio.webp" type="image/webp"><img src="https://cdn.jsdelivr.net/gh/Matrress/Animation@57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad/divine-hero/release/1.17.1/assets/m-ambient.webp" width="280" height="138" alt="Probe: Bio Comfort if source works, Ambient if source was removed"></picture><br><small>Bio Comfort picture (with a sleeper) = source works · plain Ambient block = source removed</small></td></tr>
+<tr><td>15</td><td>inline SVG</td><td><svg width="60" height="20" viewBox="0 0 60 20" aria-hidden="true"><rect width="60" height="20" rx="6" fill="#0a7d3b"/></svg> <small>(a green bar if SVG is kept)</small></td></tr>
+<tr><td>16</td><td>inline &lt;script&gt;</td><td><span class="ddcp-js1">inline script did not run</span><script>(function(){var e=document.querySelectorAll('.ddcp-js1');for(var i=0;i<e.length;i++){e[i].textContent='inline script ran';e[i].className+=' ok';}})();</script></td></tr>
+<tr><td>17</td><td>&lt;script src&gt; (jsDelivr)</td><td><span class="ddcp-js2">external script did not run</span><script src="{{CDN}}probe.js"></script></td></tr>
+<tr><td>18</td><td>site-wide custom code (only after installing the probe loader)</td><td><span class="ddcp-js3">site-wide loader not active</span></td></tr>
+<tr><td>19</td><td>plain list and heading (Ecwid's own styling)</td><td><h3>A plain h3</h3><ul><li>plain list item one</li><li>plain list item two</li></ul></td></tr>
+<tr><td>20</td><td>length: markers at 15,000 · 20,000 · 28,000 · 35,000 characters (the mattress description is about 27,000)</td><td>{{FILLER}}</td></tr>
+</table>
+</section>
