@@ -1,0 +1,11 @@
+{
+  "_status": "DRAFT - do not publish. Replace every <...> with the real value of the FINAL film and place it on the page whose main content is that film (see SEO-PERFORMANCE.md).",
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "From natural latex milk to a natural latex sleep system",
+  "description": "Natural latex is tapped as milky sap from the rubber tree, made into Dunlop latex foam in Europe and finished as a natural latex mattress, topper and pillow sleep system certified for UK and EU requirements.",
+  "thumbnailUrl": ["https://cdn.jsdelivr.net/gh/Matrress/Animation@<COMMIT>/divine-biodunlop-intro/release/<VERSION>/assets/ddb-poster-1280.webp"],
+  "uploadDate": "<YYYY-MM-DD of the day the final film goes live>",
+  "duration": "<ISO 8601, e.g. PT8S for the homepage cut or the real length of the full film>",
+  "contentUrl": "https://cdn.jsdelivr.net/gh/Matrress/Animation@<COMMIT>/divine-biodunlop-intro/release/<VERSION>/assets/ddb-intro-1280.mp4"
+}
