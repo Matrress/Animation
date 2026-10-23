@@ -1,6 +1,7 @@
 const { chromium } = require('playwright'); const fs=require('fs'),path=require('path');
 const R='/home/user/animation/divine-firmness/release/1.0.0-inline/', A='/home/user/animation/divine-firmness/assets/';
-fs.writeFileSync('/tmp/_pps.html','<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"></head><body style="margin:0">'+fs.readdirSync(R).filter(f=>/^\d\d_.*\.html$/.test(f)).sort().map(f=>'<div class="tile">'+fs.readFileSync(R+f,'utf8')+'</div>').join('\n')+'</body></html>');
+const NO4=!!process.env.NO04, OUT=NO4?'/tmp/_pps_no4.html':'/tmp/_pps.html';
+fs.writeFileSync(OUT,'<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"></head><body style="margin:0">'+fs.readdirSync(R).filter(f=>/^\d\d_.*\.html$/.test(f)&&!(NO4&&/^04_/.test(f))).sort().map(f=>'<div class="tile">'+fs.readFileSync(R+f,'utf8')+'</div>').join('\n')+'</body></html>');
 const VPS=(process.env.VPS||'1440x900,1194x834,834x1194,390x844').split(',').map(s=>s.split('x').map(Number));
 (async()=>{
  const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium'}); let bad=0,n=0; const msgs=[]; const errs=[];
@@ -8,7 +9,7 @@ const VPS=(process.env.VPS||'1440x900,1194x834,834x1194,390x844').split(',').map
   const c=await b.newContext({viewport:{width:w,height:h},hasTouch:w<900,deviceScaleFactor:1.3}); const p=await c.newPage();
   p.on('pageerror',e=>errs.push(w+'x'+h+' '+e.message));
   await p.route('https://cdn.jsdelivr.net/**',r=>{const f=path.basename(new URL(r.request().url()).pathname); const fp=A+f; fs.existsSync(fp)?r.fulfill({status:200,contentType:'image/webp',body:fs.readFileSync(fp)}):r.abort();});
-  await p.goto('file:///tmp/_pps.html'); await p.waitForTimeout(1500);
+  await p.goto('file://'+OUT); await p.waitForTimeout(1500);
   const setTwo=(a,b2)=>p.evaluate(([a,b2])=>{const t=(id,v)=>{const e=document.getElementById(id);e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}))};document.querySelector('input[name="dn-ppl"][value="two"]').click();document.getElementById('dn-tab-me').click();t('dn-kg',a);t('dn-cm',172);document.getElementById('dn-tab-pt').click();t('dn-kg',b2);t('dn-cm',165);document.getElementById('dn-tab-me').click()},[a,b2]);
   const setOne=(kg,cm)=>p.evaluate(([kg,cm])=>{document.querySelector('input[name="dn-ppl"][value="one"]').click();const t=(id,v)=>{const e=document.getElementById(id);e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}))};t('dn-kg',kg);t('dn-cm',cm)},[kg,cm]);
   const vis=(sel)=>`(()=>{const e=document.querySelector('${sel}');return !!e&&e.offsetParent!==null&&e.getBoundingClientRect().width>0})()`;
@@ -40,6 +41,7 @@ const VPS=(process.env.VPS||'1440x900,1194x834,834x1194,390x844').split(',').map
       }
       return bad; },expectPP);
     if(r.length){bad++; msgs.push(w+'x'+h+' '+label+' => '+r.join('; '));} };
+  { const p2=await c.newPage(); await p2.route('https://cdn.jsdelivr.net/**',r=>r.abort()); await p2.goto('file://'+OUT+'#dn-chk'); await p2.waitForTimeout(3500); const t=await p2.evaluate(()=>{const e=document.getElementById('dn-t8');return e?e.textContent:'(no banner)'}); if(w===1194) console.log('banner:',t); await p2.close(); }
   // 1. start state: no partners
   await check('start',false);
   // 2. open point 4 (single person), then choose partners
@@ -51,7 +53,7 @@ const VPS=(process.env.VPS||'1440x900,1194x834,834x1194,390x844').split(',').map
     const isP=await p.evaluate(()=>window.DDN_STATE&&window.DDN_STATE.recs[0]&&/Partners/.test(window.DDN_STATE.recs[0].model));
     await check('two '+a+'/'+b2+(isP?' (partners)':' (not partners)'),!!isP); if(isP) any++;
     if(isP&&a===50&&b2===80){ const info=await p.evaluate(()=>document.getElementById('ddv-info').hidden); if(!info){bad++;msgs.push(w+'x'+h+' info panel left open after partners');}
-      await (await p.$('.ddv-stage')).scrollIntoViewIfNeeded(); await p.waitForTimeout(300); await (await p.$('#ddv')).screenshot({path:`pps_${w}.png`}); }
+      await (await p.$('.ddv-stage')).scrollIntoViewIfNeeded(); await p.waitForTimeout(300); await (await p.$('#ddv')).screenshot({path:`pps${NO4?'n':''}_${w}.png`}); }
   }
   if(!any){bad++;msgs.push(w+'x'+h+' no partners configuration found');}
   // 3. back to one person: scene returns, points work again

@@ -83,17 +83,41 @@
     if(f.length === 2) return '<span class="dn-stack" aria-hidden="true"><i class="t" style="background:' + LV[f[1]].c + (LV[f[1]].n === 1 ? ';color:#3A474D' : '') + '">' + nm(f[1]).toUpperCase() + ' LATEX<br>TOPPER</i><i class="c" style="background:' + LV[f[0]].c + '">' + nm(f[0]).toUpperCase() + ' LATEX<br>MATTRESS</i></span>';
     return '<span class="dn-stack" aria-hidden="true"><i class="c" style="height:' + (big ? 59 : 38) + 'px;background:' + LV[f[0]].c + (LV[f[0]].n === 1 ? ';color:#3A474D' : '') + '">' + nm(f[0]).toUpperCase() + ' LATEX<br>' + (/Support/.test(model) ? 'TOPPER' : 'MATTRESS') + '</i></span>';
   }
-  /* a Partners result: its picture takes the place of the scene's model above; the points and the equalizers step aside */
-  var PPV = null;
+  /* every style the Partners picture needs travels with this script, so it works whatever the other sections hold */
+  var PPCSS = [
+    '.dn-pm{position:relative;display:block;width:100%;max-width:560px;aspect-ratio:1000/387;margin:2px auto 0;border-radius:14px;overflow:hidden;background:#fff}',
+    '.dn-pm img{position:absolute;left:0;top:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover}',
+    '.dn-pm b{position:absolute;top:84.4%;transform:translate(-50%,-50%);font:600 clamp(10px,2.6vw,17px)/1.1 DDVChillax,Chillax,system-ui,sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#14191C;white-space:nowrap}',
+    '.dn-pm .l{left:23.9%}.dn-pm .r{left:71.8%}',
+    '.dn-pick{position:relative}.dn-pick .dn-pi{position:absolute;top:16px;right:18px;width:40px;height:auto}.dn-pick.pp>div:first-of-type{padding-right:58px}.dn-pick .dn-pm{grid-column:1/-1;grid-row:2}',
+    '.dn-ra .dn-ri{flex:none;width:24px;height:auto}',
+    '.dn-ans .dn-lvs div[hidden]{display:none}.dn-ans .dn-lvs{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(0,170px);justify-content:start}',
+    '.dn-plates.two{grid-template-columns:repeat(2,minmax(0,1fr))}.dn-plates.two .dn-plate{min-width:0}',
+    '@media(max-width:480px){.dn-plates.two .dn-plate{padding:11px 10px 12px 10px;padding-right:46px}.dn-plates.two .dn-plate small{font-size:10.5px;letter-spacing:.1em}.dn-plates.two .dn-plate b{font-size:22px;overflow-wrap:anywhere}.dn-plates.two .dn-plate em{font-size:11px}.dn-plates.two .dn-dnt{width:34px;height:34px;right:8px}}',
+    '.ddv-ppv{display:grid;gap:14px;margin:0;padding:6px 0 2px}.ddv-ppv .pt{display:flex;align-items:center;gap:16px}.ddv-ppv .pt img{flex:none;width:44px;height:auto;max-width:none}.ddv-ppv .pt span{display:grid;gap:2px}',
+    '.ddv-ppv .pt small{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#C9D2D3}.ddv-ppv .pt b{font-size:clamp(20px,2.4vw,28px);line-height:1.2;font-weight:600;color:#fff}',
+    '.ddv-ppv .dn-pm{max-width:min(100%,860px);margin:0 auto}.ddv-ppv .dn-pm b{font-size:clamp(11px,1.9vw,24px)}',
+    '.ddv-ppv .pc{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 28px;margin:0;font-size:14.5px;line-height:1.4;color:#E6ECEE}'
+  ].join('');
+  function ppCss(){
+    if($('dn-ppcss')) return;
+    var s = document.createElement('style'); s.id = 'dn-ppcss'; s.textContent = PPCSS; document.body.appendChild(s);
+  }
+  /* a Partners result: the scene's model, points and equalizers are switched off completely and its picture takes the place.
+     The switching is done on the elements themselves, so it holds with or without any stylesheet. */
+  var PPV = null, PPS = ['.ddv-fig', '.ddv-hsl', '.ddv-hint', '.ddv-info', '.ddv-rot'];
   function ppScene(r, me, pt){
     var root = $('ddv'); if(!root) return;
-    if(!r){ root.setAttribute('data-pp', '0'); return; }
     var stage = root.querySelector('.ddv-stage'); if(!stage) return;
+    PPS.forEach(function(q){ var e = root.querySelector(q); if(e) e.style.display = r ? 'none' : ''; });
+    stage.style.marginTop = r ? '0' : '';
+    if(!r){ if(PPV) PPV.style.display = 'none'; root.setAttribute('data-pp', '0'); return; }
     if(!PPV || PPV.parentNode !== stage){
       PPV = document.createElement('figure'); PPV.className = 'ddv-ppv';
       PPV.innerHTML = '<div class="pt"><img src="' + PI + '" alt="" width="40" height="72" decoding="async"><span><small>Full Partners</small><b>Mattress for Partners</b></span></div><span class="dn-pm" aria-hidden="true"><img src="' + PM + '" alt="" width="1000" height="387" decoding="async"><b class="l"></b><b class="r"></b></span><p class="pc"><span></span><span></span></p>';
       stage.insertBefore(PPV, stage.firstChild);
     }
+    PPV.style.display = '';
     var f = r.firmness, who = ['', ''];
     if(f[0] === me && f[1] === pt) who = ['You \u00B7 ', 'Partner \u00B7 ']; else if(f[0] === pt && f[1] === me) who = ['Partner \u00B7 ', 'You \u00B7 '];
     PPV.querySelector('.l').textContent = nm(f[0]); PPV.querySelector('.r').textContent = nm(f[1]);
@@ -294,6 +318,7 @@
     var d = $('dn');
     if(!d || !api() || d === bound) return;
     bound = d;
+    try{ ppCss(); }catch(e){}
     try{ start(); root.classList.add('dn-ok'); }catch(e){ root.classList.remove('dn-ok'); }
   }
   function tick(){ boot(); if(++tries < 700) setTimeout(tick, tries < 40 ? 150 : 1500); }
