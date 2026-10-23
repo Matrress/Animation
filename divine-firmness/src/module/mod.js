@@ -83,6 +83,23 @@
     if(f.length === 2) return '<span class="dn-stack" aria-hidden="true"><i class="t" style="background:' + LV[f[1]].c + (LV[f[1]].n === 1 ? ';color:#3A474D' : '') + '">' + nm(f[1]).toUpperCase() + ' LATEX<br>TOPPER</i><i class="c" style="background:' + LV[f[0]].c + '">' + nm(f[0]).toUpperCase() + ' LATEX<br>MATTRESS</i></span>';
     return '<span class="dn-stack" aria-hidden="true"><i class="c" style="height:' + (big ? 59 : 38) + 'px;background:' + LV[f[0]].c + (LV[f[0]].n === 1 ? ';color:#3A474D' : '') + '">' + nm(f[0]).toUpperCase() + ' LATEX<br>' + (/Support/.test(model) ? 'TOPPER' : 'MATTRESS') + '</i></span>';
   }
+  /* a Partners result: its picture takes the place of the scene's model above; the points and the equalizers step aside */
+  var PPV = null;
+  function ppScene(r, me, pt){
+    var root = $('ddv'); if(!root) return;
+    if(!r){ root.setAttribute('data-pp', '0'); return; }
+    var stage = root.querySelector('.ddv-stage'); if(!stage) return;
+    if(!PPV || PPV.parentNode !== stage){
+      PPV = document.createElement('figure'); PPV.className = 'ddv-ppv';
+      PPV.innerHTML = '<div class="pt"><img src="' + PI + '" alt="" width="40" height="72" decoding="async"><span><small>Full Partners</small><b>Mattress for Partners</b></span></div><span class="dn-pm" aria-hidden="true"><img src="' + PM + '" alt="" width="1000" height="387" decoding="async"><b class="l"></b><b class="r"></b></span><p class="pc"><span></span><span></span></p>';
+      stage.insertBefore(PPV, stage.firstChild);
+    }
+    var f = r.firmness, who = ['', ''];
+    if(f[0] === me && f[1] === pt) who = ['You \u00B7 ', 'Partner \u00B7 ']; else if(f[0] === pt && f[1] === me) who = ['Partner \u00B7 ', 'You \u00B7 '];
+    PPV.querySelector('.l').textContent = nm(f[0]); PPV.querySelector('.r').textContent = nm(f[1]);
+    var c = PPV.querySelectorAll('.pc span'); c[0].textContent = who[0] + nm(f[0]) + ' latex core'; c[1].textContent = who[1] + nm(f[1]) + ' latex core';
+    if(root.getAttribute('data-pp') !== '1'){ root.setAttribute('data-pp', '1'); document.dispatchEvent(new KeyboardEvent('keydown', {key:'Escape'})); }
+  }
   function setupText(f, model){
     if(/Partners/.test(model)) return 'A latex mattress with two cores side by side, ' + nm(f[1]) + ' and ' + nm(f[0]) + ', under one shared surface.';
     if(/Bio Support/.test(model)) return f.length === 2 ? 'A latex topper with two regulated firmnesses in one.' : cap1(art(nm(f[0])) + nm(f[0])) + ' latex topper on the mattress you have.';
@@ -171,6 +188,7 @@
     var st = { touched: S.two ? (S.tch.me && S.tch.pt) : S.tch.me, waiting: S.two ? (!S.tch.me ? 'you' : !S.tch.pt ? 'partner' : '') : '',
       two:S.two, tab:S.tab, product:S.a.product, me:{w:S.me.w,h:S.me.h,lv:s.display}, pt:S.two && sb ? {w:S.pt.w,h:S.pt.h,lv:sb.display} : null,
       recs:recs.map(function(r){ return {model:r.model,firmness:r.firmness,title:r.title,url:r.url}; }), notes:R ? R.result.notes : [] };
+    ppScene(S.two && recs[0] && isPP(recs[0]) ? recs[0] : null, s.display, sb && sb.display);
     window.DDN_STATE = st;
     document.dispatchEvent(new CustomEvent('ddn:state', {detail:st}));
   }
