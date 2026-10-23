@@ -46,5 +46,18 @@
 #dn .dn-ra b{font-size:17px}
 #dn .dn-ra i{padding:7px 12px;font-size:13.5px}
 }
+@media (min-width:641px) and (min-height:940px){
+#ddv .ddv-in{padding:20px 24px 16px;gap:10px}
+#ddv .ddv-stage{margin-top:38px;width:min(100%,max(620px,calc((100vh - 600px) * 3.295)));width:min(100%,max(620px,calc((100svh - 600px) * 3.295)))}
+#ddv .ddv-hint{margin-bottom:10px}
+#dn .dn-w{gap:12px}
+#dn .dn-act{margin-top:8px}
+#dn .dn-row{gap:16px}
+#dn .dn-card{padding:18px 20px}
+#dn .dn-who{margin-bottom:10px}
+#dn .dn-gap{margin:10px 0}
+#dn .dn-ans{gap:10px}
+#dn .dn-ra{gap:8px}
+}
 @media (min-width:641px) and (min-height:521px) and (max-height:1250px){#ddv .ddv-rr{display:none}}
 @media (min-width:960px){#dn .dn-body::after{content:"More below: six quick answers, advanced solutions, full details \2193";margin-top:10px;padding-top:8px;border-top:1px solid rgba(126,136,135,.5);font-size:12.5px;letter-spacing:.03em;color:var(--t2);text-align:center}}
