@@ -6,6 +6,9 @@
     FM:'a Firm latex mattress with a Medium latex topper',XF:'an Extra Firm latex mattress with a Firm latex topper',MS:'a Medium latex mattress with a Soft latex topper'};
   function $(i){ return document.getElementById(i); }
   function api(){ return window.DDFT_API; }
+  /* the two-core partner mattress is shown with the product picture; the level names are set as text on the cores */
+  var CDN = 'https://cdn.jsdelivr.net/gh/Matrress/Animation@624b97aecce93c8814b40bde6598e78535cd9df1/divine-firmness/assets/', PM = CDN + 'partners-mattress-1000.webp', PI = CDN + 'partners-icon.webp';
+  function isPP(x){ return /Partners/.test(x.model) && x.firmness.length === 2; }
   function lvl(w,h){ try{ return api().setups(w,h); }catch(e){ return null; } }
   function base(w){ return w <= 48 ? 'SOFT' : w <= 87 ? 'MEDIUM' : w <= 114 ? 'FIRM' : 'EXTRA FIRM'; }
   function num(v){ v = parseFloat(String(v).replace(',','.')); return isFinite(v) ? v : null; }
@@ -75,8 +78,7 @@
   }
   function stack(f, model, big){
     if(/Partners/.test(model) && f.length === 2){
-      return '<span class="dn-stack" aria-hidden="true" style="grid-template-columns:1fr 1fr"><i class="t" style="grid-column:1/3;background:#A3AAA3">SHARED LATEX TOP</i>' +
-        '<i class="c" style="background:' + LV[f[1]].c + '">' + nm(f[1]).toUpperCase() + '<br>LATEX CORE</i><i class="c" style="background:' + LV[f[0]].c + '">' + nm(f[0]).toUpperCase() + '<br>LATEX CORE</i></span>';
+      return '<span class="dn-pm" aria-hidden="true"><img src="' + PM + '" alt="" width="1000" height="387" loading="lazy" decoding="async"><b class="l">' + nm(f[0]) + '</b><b class="r">' + nm(f[1]) + '</b></span>';
     }
     if(f.length === 2) return '<span class="dn-stack" aria-hidden="true"><i class="t" style="background:' + LV[f[1]].c + (LV[f[1]].n === 1 ? ';color:#3A474D' : '') + '">' + nm(f[1]).toUpperCase() + ' LATEX<br>TOPPER</i><i class="c" style="background:' + LV[f[0]].c + '">' + nm(f[0]).toUpperCase() + ' LATEX<br>MATTRESS</i></span>';
     return '<span class="dn-stack" aria-hidden="true"><i class="c" style="height:' + (big ? 59 : 38) + 'px;background:' + LV[f[0]].c + (LV[f[0]].n === 1 ? ';color:#3A474D' : '') + '">' + nm(f[0]).toUpperCase() + ' LATEX<br>' + (/Support/.test(model) ? 'TOPPER' : 'MATTRESS') + '</i></span>';
@@ -108,7 +110,7 @@
     var ra = '';
     for(var ri = 0; ri < recs.length && ri < 2; ri++){
       var rx = recs[ri];
-      ra += '<a class="dn-rl' + (ri ? '' : ' first') + '" href="' + rx.url + '" target="_blank" rel="noopener" data-m="' + rx.model + '" data-pos="' + (ri ? 'second' : 'first') + '"><span class="dn-rt"><small>' + (ri ? 'Second choice' : recs.length === 1 && S.two ? 'For both of you' : 'First choice') + '</small><b>' + rx.model + '</b><em>' + fdesc(rx) + '</em></span><i>Go to model <u aria-hidden="true">\u2192</u></i></a>';
+      ra += '<a class="dn-rl' + (ri ? '' : ' first') + '" href="' + rx.url + '" target="_blank" rel="noopener" data-m="' + rx.model + '" data-pos="' + (ri ? 'second' : 'first') + '">' + (isPP(rx) ? '<img class="dn-ri" src="' + PI + '" alt="" width="24" height="43" loading="lazy">' : '') + '<span class="dn-rt"><small>' + (ri ? 'Second choice' : recs.length === 1 && S.two ? 'For both of you' : 'First choice') + '</small><b>' + rx.model + '</b><em>' + fdesc(rx) + '</em></span><i>Go to model <u aria-hidden="true">\u2192</u></i></a>';
     }
     var rae = $('dn-ra'); if(rae) rae.innerHTML = ra;   /* older markup without the result list must not stop the module */
     var nb = S.two ? null : nearBorder(S.me), note = $('dn-note');
@@ -116,14 +118,17 @@
     if(nb) note.innerHTML = '<span>You are close to the border with <b>' + art(nm(nb)) + lk(nb) + '</b>. Your proportions place you in <b>' + art(nm(s.display)) + lk(s.display) + '</b>.' +
       (s.second && s.second.length === 2 ? ' The second choice is the engineered bridge between the two levels.' : ' Our specialist can confirm it with you.') + '</span>';
 
-    var lt = $('dn-lvs').children; for(var q = 0; q < lt.length; q++) lt[q].className = (q + 1 === L.n) ? 'on' : '';
+    var lt = $('dn-lvs').children, rel = {};
+    rel[L.n] = 1; if(S.two){ var sp = lvl(S.pt.w, S.pt.h); if(sp) rel[LV[sp.display].n] = 1; }
+    recs.forEach(function(x){ x.firmness.forEach(function(k){ rel[LV[k].n] = 1; }); });
+    for(var q = 0; q < lt.length; q++){ lt[q].className = (q + 1 === L.n) ? 'on' : ''; lt[q].hidden = !rel[q + 1]; }
 
     /* 2 · the mattress */
     var h = '';
     for(var i = 0; i < recs.length && i < 2; i++){
       var x = recs[i], first = i === 0;
       var title = first ? (recs.length === 1 && S.two ? 'For both of you' : 'First choice') : 'Second choice';
-      h += '<article class="dn-pick' + (first ? ' first' : '') + '"><div><small>' + title + '</small><h4>' + x.model + '</h4><p>' + setupText(x.firmness, x.model) + '</p></div>' +
+      h += '<article class="dn-pick' + (first ? ' first' : '') + (isPP(x) ? ' pp' : '') + '">' + (isPP(x) ? '<img class="dn-pi" src="' + PI + '" alt="" width="40" height="72" loading="lazy">' : '') + '<div><small>' + title + '</small><h4>' + x.model + '</h4><p>' + setupText(x.firmness, x.model) + '</p></div>' +
         stack(x.firmness, x.model, first) +
         '<div class="go"><a href="' + x.url + '" target="_blank" rel="noopener">' + (first ? 'Explore and buy' : 'Explore') + ' <span aria-hidden="true">→</span></a></div></article>';
     }
