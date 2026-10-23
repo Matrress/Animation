@@ -104,6 +104,13 @@
     $('dn-say').innerHTML = S.two
       ? 'Each of you is regulated on your own body. Your two weights are never added or averaged.'
       : '<b>' + cap1(art(L.name) + lk(s.display)) + '</b> carries your <b>' + S.me.w + ' kg</b>. It does not make the surface hard. Support holds your skeleton, adaptation looks after everything else.';
+    /* the result inside this card too: firmness is the plate above, the models with their links are here */
+    var ra = '';
+    for(var ri = 0; ri < recs.length && ri < 2; ri++){
+      var rx = recs[ri];
+      ra += '<a class="dn-rl' + (ri ? '' : ' first') + '" href="' + rx.url + '" target="_blank" rel="noopener" data-m="' + rx.model + '" data-pos="' + (ri ? 'second' : 'first') + '"><span class="dn-rt"><small>' + (ri ? 'Second choice' : recs.length === 1 && S.two ? 'For both of you' : 'First choice') + '</small><b>' + rx.model + '</b><em>' + fdesc(rx) + '</em></span><i>Go to model <u aria-hidden="true">\u2192</u></i></a>';
+    }
+    var rae = $('dn-ra'); if(rae) rae.innerHTML = ra;   /* older markup without the result list must not stop the module */
     var nb = S.two ? null : nearBorder(S.me), note = $('dn-note');
     note.hidden = !nb;
     if(nb) note.innerHTML = '<span>You are close to the border with <b>' + art(nm(nb)) + lk(nb) + '</b>. Your proportions place you in <b>' + art(nm(s.display)) + lk(s.display) + '</b>.' +
@@ -250,6 +257,7 @@
       if(S.two) S.a.product = 'mattress';
       tab('me'); render();
     }); });
+    if($('dn-ra')) $('dn-ra').addEventListener('click', function(e){ var a = e.target.closest && e.target.closest('a'); if(a && window.dataLayer) window.dataLayer.push({event: 'firmness_go_to_model', model: a.getAttribute('data-m'), position: a.getAttribute('data-pos')}); });
     $('dn-qs').addEventListener('change', function(e){ var t = e.target; if(t && t.type === 'radio'){ S.a[t.closest('.dn-ch').dataset.q] = t.value; render(); } });
     var pin = $('dn-pin');
     if('IntersectionObserver' in window) new IntersectionObserver(function(en){ pin.className = 'dn-pin' + (!en[0].isIntersecting && en[0].boundingClientRect.top < 0 ? ' show' : ''); }).observe($('dn-plates'));
