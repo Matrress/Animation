@@ -53,6 +53,7 @@ const inter=(a,b,g=0)=>!(a.right+g<=b.left||b.right+g<=a.left||a.bottom+g<=b.top
   // two people
   await pick('product','mattress'); await pick('ppl','two');
   for(const [a,b2] of [[60,120],[100,45],[80,80],[125,40]]){ await p.evaluate(([a,b2])=>{const t=(id,v)=>{const e=document.getElementById(id);e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}))};document.getElementById('dn-tab-me').click();t('dn-kg',a);t('dn-cm',172);document.getElementById('dn-tab-pt').click();t('dn-kg',b2);t('dn-cm',165);document.getElementById('dn-tab-me').click()},[a,b2]); await run(`two ${a}/${b2}`); }
+  if(process.env.ROTATE){ for(const [kg,cm,prod] of [[62,161,'topper'],[100,185,'mattress'],[40,150,'mattress'],[125,172,'topper']]){ await pick('ppl','one'); await pick('product',prod); await set(kg,cm); await p.setViewportSize({width:h,height:w}); await p.waitForTimeout(700); await run(`rotated ${prod} ${kg}kg ${cm}cm`); await p.setViewportSize({width:w,height:h}); await p.waitForTimeout(700); await run(`rotated back ${prod} ${kg}kg`); } }
   console.log(`${w}x${h}: ${n} configurations, ${bad} with a problem`); totalBad+=bad; totalCfg+=n; await c.close();
  }
  await b.close(); console.log(SAFARI?'(Safari text-measure emulation ON)':'(plain Chromium)', 'TOTAL',totalCfg,'configs,',totalBad,'with problems'); samples.forEach(s=>console.log(' -',s));

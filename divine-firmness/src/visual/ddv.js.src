@@ -96,7 +96,10 @@
   $('ddv-ix').addEventListener('click', function(){ var b = openLi && openLi.querySelector('button'); close(); if(b) b.focus(); });
   document.addEventListener('pointerdown', function(e){ if(openLi && !openLi.contains(e.target) && !info.contains(e.target) && !(e.target.closest && e.target.closest('.ddv-hs'))) close(); });
   /* the loops run only while the scene is on screen */
-  if('IntersectionObserver' in window) new IntersectionObserver(function(en){ root.classList.toggle('ddv-vis', en[0].isIntersecting); }).observe(root);
+  /* text is measured on the laid-out scene, so measure again when it first comes on screen and whenever the screen turns or resizes */
+  var seen = 0, rz = 0;
+  window.addEventListener('resize', function(){ clearTimeout(rz); rz = setTimeout(function(){ if(last) apply(last); }, 200); });
+  if('IntersectionObserver' in window) new IntersectionObserver(function(en){ root.classList.toggle('ddv-vis', en[0].isIntersecting); if(en[0].isIntersecting && !seen){ seen = 1; if(last) apply(last); } }).observe(root);
   else root.classList.add('ddv-vis');
 
   /* helpers */
