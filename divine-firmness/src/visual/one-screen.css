@@ -1,30 +1,27 @@
 /*one*/
 @media (min-width:641px) and (min-height:521px){
-#ddv .ddv-in{padding:12px 20px 10px;gap:6px}
+#ddv .ddv-in{padding:clamp(12px,1.9vh,20px) clamp(20px,2vw,24px) clamp(10px,1.5vh,16px);gap:clamp(6px,1vh,10px)}
 #ddv .ddv-top{gap:14px}
 #ddv .ddv-chip{margin:0 0 3px;font-size:11px}
 #ddv h3{font-size:clamp(19px,2.1vw,25px)}
 #ddv .ddv-lead{margin:3px 0 0;max-width:none;font-size:13.5px;line-height:1.4}
 #ddv .ddv-dn{width:92px;height:92px}
 #ddv .ddv-cmp{padding:7px 12px;gap:4px;min-width:200px}
-#ddv .ddv-stage{margin:28px auto 0;width:min(100%,max(620px,calc((100vh - 560px) * 3.295)));width:min(100%,max(620px,calc((100svh - 560px) * 3.295)))}
-#ddv .ddv-hint{margin:0 0 5px;font-size:12.5px}
+#ddv .ddv-stage{margin:clamp(28px,3.9vh,38px) auto 0;width:min(100%,max(520px,calc((100vh - 560px) * 3.295)));width:min(100%,max(520px,calc((100svh - 560px) * 3.295)))}
+#ddv .ddv-hint{margin:0 0 clamp(5px,1vh,10px);font-size:12.5px}
 #ddv .ddv-go{font-size:13.5px}
-#ddv .ddv-rr{gap:6px;font-size:13.5px;line-height:1.4}
-#ddv .ddv-rr>div{padding:7px 12px;gap:2px 14px}
-#ddv .ddv-rr em{flex-basis:96px}
-#ddv .ddv-rr p{margin:0 0 3px}
+#ddv .ddv-rr{display:none}
 #ddv[data-pp="1"] .ddv-stage{width:100%;margin-top:4px}
 #ddv .ddv-ppv{grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr);gap:2px 22px;padding:0;align-items:center}
 #ddv .ddv-ppv .pt{grid-column:1;grid-row:1;align-self:end;gap:12px}
 #ddv .ddv-ppv .pt b{font-size:clamp(19px,2.2vw,26px)}
 #ddv .ddv-ppv .dn-pm{display:block;grid-column:2;grid-row:1/3;justify-self:end;width:100%;max-width:min(100%,max(380px,calc((100vh - 500px) * 2.58)));max-width:min(100%,max(380px,calc((100svh - 500px) * 2.58)));margin:0}
 #ddv .ddv-ppv .pc{grid-column:1;grid-row:2;flex-direction:column;flex-wrap:nowrap;justify-content:flex-start;align-self:start;gap:2px;font-size:14px}
-#dn .dn-w{gap:8px}
-#dn .dn-act{margin:4px 0 0}
-#dn .dn-row{gap:12px;align-items:start}
-#dn .dn-card{padding:14px 16px;border-radius:18px}
-#dn .dn-who{margin-bottom:6px}
+#dn .dn-w{gap:clamp(8px,1.3vh,12px)}
+#dn .dn-act{margin:clamp(4px,.8vh,8px) 0 0}
+#dn .dn-row{gap:clamp(10px,1.5vh,16px);align-items:start}
+#dn .dn-card{padding:clamp(14px,1.9vh,18px) clamp(16px,1.5vw,20px);border-radius:18px}
+#dn .dn-who{margin-bottom:clamp(6px,1vh,10px)}
 #dn .dn-seg span{padding:5px 12px;font-size:13.5px}
 #dn .dn-meas{grid-template-columns:minmax(0,1fr) auto;column-gap:14px;row-gap:0;align-items:center}
 #dn .dn-mh{grid-column:1/-1}
@@ -33,33 +30,20 @@
 #dn .dn-in{flex-wrap:nowrap;gap:6px}
 #dn .dn-f input{width:74px;height:40px;padding:0 24px 0 9px;font-size:16px}
 #dn .dn-f b{right:8px;font-size:12px}
-#dn .dn-gap{margin:6px 0}
-#dn .dn-ans{gap:8px}
+#dn .dn-gap{margin:clamp(6px,1vh,10px) 0}
+#dn .dn-ans{gap:clamp(8px,1vh,10px)}
 #dn .dn-plate{padding:8px 74px 9px 14px;border-radius:14px}
 #dn .dn-plate b{font-size:clamp(22px,2.4vw,28px);line-height:1.1}
 #dn .dn-plate small{font-size:11px}
 #dn .dn-plate em{font-size:11.5px;margin-top:1px}
 #dn .dn-dnt{width:44px;height:44px;right:12px}
 #dn .dn-say{font-size:13.5px;line-height:1.42}
-#dn .dn-ra{gap:6px}
+#dn .dn-ra{gap:clamp(6px,.8vh,8px)}
 #dn .dn-ra a{padding:8px 12px;min-height:44px;border-radius:12px}
 #dn .dn-ra b{font-size:17px}
 #dn .dn-ra i{padding:7px 12px;font-size:13.5px}
 }
-@media (min-width:641px) and (min-height:940px){
-#ddv .ddv-in{padding:20px 24px 16px;gap:10px}
-#ddv .ddv-stage{margin-top:38px;width:min(100%,max(620px,calc((100vh - 600px) * 3.295)));width:min(100%,max(620px,calc((100svh - 600px) * 3.295)))}
-#ddv .ddv-hint{margin-bottom:10px}
-#dn .dn-w{gap:12px}
-#dn .dn-act{margin-top:8px}
-#dn .dn-row{gap:16px}
-#dn .dn-card{padding:18px 20px}
-#dn .dn-who{margin-bottom:10px}
-#dn .dn-gap{margin:10px 0}
-#dn .dn-ans{gap:10px}
-#dn .dn-ra{gap:8px}
-}
-@media (min-width:641px) and (min-height:521px) and (max-height:1250px){#ddv .ddv-rr{display:none}}
+
 @media (min-width:960px){#dn .dn-body::after{content:"More below: six quick answers, advanced solutions, full details \2193";margin-top:10px;padding-top:8px;border-top:1px solid rgba(126,136,135,.5);font-size:12.5px;letter-spacing:.03em;color:var(--t2);text-align:center}}
 /*one-cards*/
 @media (min-width:641px) and (min-height:521px){
@@ -68,8 +52,8 @@
 #ddv{border:1.5px solid var(--ddv-c2,#2F86E6);transition:border-color .8s}
 #ddv-sec{padding-bottom:12px}
 #dn .dn-row{align-items:stretch;gap:12px}
-#dn .dn-row .dn-card{border:1.5px solid var(--dn-edge,#2F86E6)!important;background:#1F2A2F;background:color-mix(in srgb,var(--dn-edge,#2F86E6) 12%,#1B2328);box-shadow:0 0 26px -14px var(--dn-edge,#2F86E6)}
-#dn .dn-row .dn-ans{background:#222F35;background:color-mix(in srgb,var(--dn-edge,#2F86E6) 18%,#1B2328)}
+#dn .dn-row .dn-card{border:1.5px solid var(--dn-edge,#2F86E6)!important;background:#1F2A2F;box-shadow:0 0 30px -10px var(--dn-edge,#2F86E6)}
+#dn .dn-row .dn-ans{background:#232F35}
 }
 @media (min-width:960px){
 #dn .dn-body{align-content:space-between}
