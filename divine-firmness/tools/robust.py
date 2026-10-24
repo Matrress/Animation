@@ -70,9 +70,9 @@ chk=('<style>.dnchk{display:none;position:fixed;left:12px;bottom:12px;z-index:21
  'html.ddft-ok .dnchk .e .y,html.dn-ok .dnchk .m .y,html.ddv-ok .dnchk .s .y{display:inline}'
  'html.ddft-ok .dnchk .e .n,html.dn-ok .dnchk .m .n,html.ddv-ok .dnchk .s .n{display:none}</style>'
  '<aside class="dnchk" id="dn-chk" role="status"><b>Page check</b>'
- '<p class="e">Section 7 · engine: <span class="y">running</span><span class="n">NOT FOUND</span></p>'
- '<p class="m">Section 8 · module script: <span class="y">running</span><span class="n">NOT RUNNING</span></p>'
- '<p class="s">Section 9 · scene script: <span class="y">running</span><span class="n">NOT RUNNING</span></p>'
+ '<p class="e">Section 8 · engine: <span class="y">running</span><span class="n">NOT FOUND</span></p>'
+ '<p class="m">Section 9 · module script: <span class="y">running</span><span class="n">NOT RUNNING</span></p>'
+ '<p class="s">Section 10 · scene script: <span class="y">running</span><span class="n">NOT RUNNING</span></p>'
  '<p>If a line is red, that Custom code section is missing or empty on the published page.</p></aside>')
 p='blocks/out/3b_Markup_zone_texts.html'; s=rd(p)
 assert 'dn-chk' not in s; wr(p,s+chk)
