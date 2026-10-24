@@ -12,6 +12,7 @@ wr('03_Markup_intro_visual.html',rd('3_Markup_intro_visual.html'))
 wr('04_Markup_zone_texts.html',rd('3b_Markup_zone_texts.html'))
 wr('05_Markup_module.html',rd('4_Markup_module.html')+rd('4b_AI_layer.html'))
 wr('06_Markup_sketches.html',rd('4s_Markup_sketch.html'))
+wr('06b_Markup_distribution.html',rd('4t_Markup_distribution.html'))
 wr('07_Logic.html',rd('5_Logic.html'));wr('08_JS_module.html',rd('6_JS_module.html'));wr('09_JS_visual.html',rd('7_JS_visual.html'))
 wr('10_Font_400.html',fonts['400']);wr('11_Font_600.html',fonts['600'])
 for f in sorted(glob.glob(R+'*.html')):
