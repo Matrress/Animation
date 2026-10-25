@@ -34,12 +34,19 @@ export async function openLive(browser, vp, { motion = 'no-preference', system =
     const type = f.endsWith('.css') ? 'text/css' : f.endsWith('.webp') ? 'image/webp' : 'application/javascript';
     route.fulfill({ status: 200, contentType: type, headers: { 'access-control-allow-origin': '*' }, body: fs.readFileSync(f) });
   });
+  // the live site can already carry a version of this tile (the owner installs them): never let any version but the one under test load
+  await page.route(/divine-pillars\/release\/[\d.]+\//, (route) => { const v = /release\/([\d.]+)\//.exec(route.request().url())[1]; return v === VERSION ? route.fallback() : route.abort(); });
   await page.goto('https://divinedunlop.com/', { waitUntil: 'networkidle', timeout: 90000 }).catch(() => {});
   await page.waitForTimeout(3500);
   await page.addStyleTag({ content: '[class*="cookie" i],[id*="gdpr" i],[class*="gdpr" i],[class*="privacy" i],.ins-notices{display:none!important}' });
   await page.evaluate(() => { for (const e of document.querySelectorAll('div,section,aside')) { const s = getComputedStyle(e); if (s.position === 'fixed' && /Privacy notice/.test(e.innerText || '') && e.innerText.length < 900) e.style.display = 'none'; } });
+  await page.evaluate(() => {   // take the live copy of this tile out, with its stylesheet and script, so the tile under test is the only one
+    document.querySelectorAll('section.dpl').forEach((t) => { const w = t.parentElement; w.querySelectorAll('link[href*="divine-pillars"]').forEach((e) => e.remove()); [...w.querySelectorAll('script')].filter((x) => /getElementById\('dpl'\)/.test(x.textContent)).forEach((e) => e.remove()); t.remove(); });
+    document.head.querySelectorAll('script[src*="divine-pillars"],link[href*="divine-pillars"]').forEach((e) => e.remove());
+    delete window.DPL;
+  });
   const html = fs.readFileSync(path.join(root, 'ecwid', embed || process.env.DPL_EMBED || `pillars-${VERSION}.html`), 'utf8');
-  const sys = system && fs.existsSync(SYSTEM_TILE) ? fs.readFileSync(SYSTEM_TILE, 'utf8') : '';
+  const sys = system && fs.existsSync(SYSTEM_TILE) && !(await page.evaluate(() => !!document.querySelector('#ddhd-system'))) ? fs.readFileSync(SYSTEM_TILE, 'utf8') : '';
   await page.evaluate(([html, sys]) => {
     const wrap = (el) => { let w = el; while (w.parentElement && [...w.parentElement.children].every((c) => c === w || /^(SCRIPT|LINK|STYLE)$/.test(c.tagName))) w = w.parentElement; return w; };
     const last = document.querySelector('section.dn.dn-c') || document.querySelector('section.dn:last-of-type') || document.querySelector('#ddhd');

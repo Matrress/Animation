@@ -148,18 +148,23 @@ export const FOOT = {
 
 // The second structure: what makes US different, once the four laws of the material are clear.
 // Facts: approved Collection 3.13.2 (pure latex systems: no springs, no memory foam, no synthetic foam core; Dual Plush is a latex
-// mattress plus a separate latex topper of two neighbouring firmnesses, 3 pairs in Botanic, 2 in Bio Comfort; made to order in size,
-// firmness, depth and cover) and the owner's densities (Soft 63, Medium 75, Firm 83 kg/m3). No body-weight ranges here: they live
-// in the Firmness block above and in the Hero card, and are not repeated.
+// mattress for support plus a separate latex topper for comfort, two different latex firmnesses; Mattress for Partners = two
+// individually regulated latex mattresses under one shared topper, Latex Topper for Partners = a different firmness for each side;
+// Orthopaedic = Extra Firm natural Dunlop latex stabilised with coconut coir, two firm sides; made to order in size, firmness,
+// depth and cover) and the owner's densities (Soft 63, Medium 75, Firm 83 kg/m3). The owner confirmed (2026-10-25) that the
+// coconut coir is a natural product. No body-weight ranges here: they live in the Firmness block above and in the Hero card.
 export const DIFF = {
   eyebrow: 'How We Are Different',
   title: 'Only Natural Dunlop Latex. <b>Made Around You.</b>',
-  lede: 'The four laws belong to the material. What we do with it is ours: one natural material, firmness set by your body weight, two neighbouring firmnesses combined with nothing between them, and every Natural Latex Mattress and Natural Latex Topper made to order.',
+  lede: 'The four laws belong to the material. What we do with it is ours: custom-made production, firmness regulated at engineering level, and solutions for one sleeper, for two, and for firm orthopaedic comfort. Every Natural Latex Mattress and Natural Latex Topper is made to order.',
   tiles: [
-    { id: 'pure', icon: 'leaf', title: 'Pure Natural Dunlop Latex', text: 'Every Natural Latex Mattress and Topper is natural Dunlop latex. No springs, no memory foam, no synthetic foam core.' },
-    { id: 'regulated', icon: 'slider', title: 'Firmness Set by Body Weight', text: 'Your weight sets Soft, Medium, Firm or Extra Firm. Soft, Medium and Firm are made at 63, 75 and 83 kg/m³.' },
-    { id: 'dual', icon: 'pair', title: 'Two Firmnesses, Nothing Between', text: 'Dual Plush pairs a latex mattress with a latex topper of the neighbouring firmness. No third material between them.' },
-    { id: 'order', icon: 'frame', title: 'Made to Order, Fine-Tuned', text: 'Size, depth, firmness and cover are confirmed with you. Each model has its own real depths.' },
+    { id: 'pure', icon: 'leaf', title: 'Pure Natural Dunlop Latex', text: 'Natural Dunlop latex in every Natural Latex Mattress and Natural Latex Topper. No springs, no memory foam, no synthetic foam core. Even the coconut coir in our Orthopaedic is natural.' },
+    { id: 'regulated', icon: 'slider', title: 'Firmness Regulated by Body Weight', text: 'Your weight sets Soft, Medium, Firm or Extra Firm by engineering rules, not by guesswork. Soft, Medium and Firm are made at 63, 75 and 83 kg/m³.' },
+    { id: 'dual', icon: 'pair', title: 'Two Firmnesses, Nothing Between', text: 'Dual Plush puts a latex topper for comfort on a latex mattress for support: two different latex firmnesses, with nothing else added between them.' },
+    { id: 'partners', icon: 'partners', title: 'One Bed, Two Firmnesses', text: 'Mattress for Partners is two individually regulated latex mattresses under one shared topper, so each partner gets the firmness that fits their body.' },
+    { id: 'ortho', icon: 'spine', title: 'Firm Orthopaedic Comfort', text: 'For sleepers who want only firm comfort: Extra Firm natural Dunlop latex stabilised with natural coconut coir, with two firm sides and seven-zone support.' },
+    { id: 'order', icon: 'frame', title: 'Custom-Made, Fine-Tuned', text: 'Size, depth, firmness and cover are confirmed with you, so every sleep system is made for one body and one bed.' },
   ],
+  quote: 'Not one mattress for everyone. A natural latex solution made for you.',
   ctas: { mattress: 'Find Your Natural Latex Mattress', topper: 'Find Your Natural Latex Topper', firmness: 'Find Your Firmness' },
 };
