@@ -13,7 +13,7 @@ so the verified JS runs unchanged.
 """
 import re, sys, os, argparse
 
-VER = '0.3.0'
+VER = '0.4.0'
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SRC = os.path.join(ROOT, 'release', '1.0.0-inline')
@@ -50,9 +50,9 @@ def build_css():
     s05 = rd('05_Markup_module.html')
     must(len(c01) == 1 and len(c02) == 1, 'css sections changed shape')
     st04 = styles(s04)
-    must(len(st04) == 6, '04 style blocks changed: %d' % len(st04))
+    must(len(st04) == 7, '04 style blocks changed: %d' % len(st04))
     keep04 = [b for b in st04 if '.dnchk' not in b[:60]]          # drop the page-check banner style
-    must(len(keep04) == 5, '04 keep blocks %d' % len(keep04))
+    must(len(keep04) == 6, '04 keep blocks %d' % len(keep04))
     fonts = ('@font-face{font-family:DDVChillax;src:url(%schillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}'
              '@font-face{font-family:DDVChillax;src:url(%schillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}') % (FONT, FONT)
     front = (
