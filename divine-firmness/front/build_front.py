@@ -106,12 +106,12 @@ def tile_a(css_url):
     must(OLD_P in body, 'heading text not found in 03')
     body = body.replace(OLD_P, NEW_P)
     # notice sits in the heading block, OUTSIDE the monitor; it inherits the .dn font and ink colour
-    notice = ('<p class="fq-notice" style="margin:0;padding:10px 14px;border-left:3px solid var(--accd);border-radius:0 12px 12px 0;background:#fff;'
+    notice = ('<p style="margin:0;padding:10px 14px;border-left:3px solid var(--accd);border-radius:0 12px 12px 0;background:#fff;'
               'font-size:14.5px;line-height:1.5;color:var(--ink)"><b>This is not an animation.</b> These are Dunlop regulations, based on engineering research.</p>')
     end = '</div></div></section>\n<section class="dn dn-b"'
     must(end in body, 'heading/monitor boundary not found in tile A')
     body = body.replace(end, '</div>' + notice + '</div></section>\n<section class="dn dn-b"', 1)
-    head = ('<!-- Divine DunlopDreams Firmness front block %s · tile A of 2: heading + monitor · paste first, right after the collection tile -->'
+    head = ('<!-- Firmness front %s · tile A of 2 · paste first, right after the collection tile -->'
             '<link rel="stylesheet" href="%s">'
             "<script>(function(h){h.classList.add('ddv-wait');setTimeout(function(){h.classList.add('ddv-fit')},5000)})(document.documentElement)</script>") % (VER, css_url)
     return head + body
