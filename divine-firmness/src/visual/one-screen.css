@@ -7,7 +7,7 @@
 #ddv .ddv-lead{margin:3px 0 0;max-width:none;font-size:13.5px;line-height:1.4}
 #ddv .ddv-dn{width:92px;height:92px}
 #ddv .ddv-cmp{padding:7px 12px;gap:4px;min-width:200px}
-#ddv .ddv-stage{margin:clamp(28px,3.9vh,38px) auto 0;width:min(100%,max(520px,calc((100vh - 560px) * 3.295)));width:min(100%,max(520px,calc((100svh - 560px) * 3.295)))}
+#ddv .ddv-stage{margin:clamp(28px,3.9vh,38px) auto 0;width:min(100%,max(480px,calc((100vh - 660px) * 3.295)));width:min(100%,max(480px,calc((100svh - 660px) * 3.295)))}
 #ddv .ddv-hint{margin:0 0 clamp(5px,1vh,10px);font-size:12.5px}
 #ddv .ddv-go{font-size:13.5px}
 #ddv .ddv-rr{display:none}
@@ -45,6 +45,7 @@
 }
 
 @media (min-width:960px){#dn .dn-body::after{content:"More below: six quick answers, advanced solutions, full details \2193";margin-top:10px;padding-top:8px;border-top:1px solid rgba(126,136,135,.5);font-size:12.5px;letter-spacing:.03em;color:var(--t2);text-align:center}}
+@media (min-width:641px) and (min-height:521px) and (orientation:portrait){#ddv .ddv-stage{width:min(100%,600px)}}
 /*one-cards*/
 @media (min-width:641px) and (min-height:521px){
 #dn .dn-w>.dn-act:first-child{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:0}
