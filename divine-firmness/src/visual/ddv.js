@@ -203,7 +203,7 @@
       fit(vm, mtxt, 1000, 78, mn.length === 2 ? 54 : 34);
       if(mn.length === 2 && parseFloat(vm.style.fontSize) <= 54.5) fit2(vm, mn[0] + ' ' + sp, mn[1], 1510, 1000, 62, 34);
       var dr = two ? null : isTop && f.length === 2 ? r0 : ms.filter(isDual)[0];
-      if(dr) comp(dr.firmness, dr.model, isTop ? 'Upper layer' : 'Latex topper', isTop ? 'Lower layer' : 'Latex mattress'); else comp(null);
+      if(dr) comp(dr.firmness, dr.model, 'Latex topper', 'Latex mattress'); else comp(null);
     }
 
     plates();
