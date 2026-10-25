@@ -49,10 +49,8 @@ def build_css():
     s04 = rd('04_Markup_zone_texts.html')
     s05 = rd('05_Markup_module.html')
     must(len(c01) == 1 and len(c02) == 1, 'css sections changed shape')
-    st04 = styles(s04)
-    must(len(st04) == 7, '04 style blocks changed: %d' % len(st04))
-    keep04 = [b for b in st04 if '.dnchk' not in b[:60]]          # drop the page-check banner style
-    must(len(keep04) == 6, '04 keep blocks %d' % len(keep04))
+    # the styles that were inline in section 04 now live in page/firmnesses.css (also served to /firmnesses)
+    keep04 = [open(os.path.join(ROOT, 'page', 'firmnesses.css'), encoding='utf8').read()]
     fonts = ('@font-face{font-family:DDVChillax;src:url(%schillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}'
              '@font-face{font-family:DDVChillax;src:url(%schillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}') % (FONT, FONT)
     front = (
@@ -141,7 +139,7 @@ def tile_b(js_url):
     must(left.rstrip().endswith('</div>'), 'left card end')
     left = left.rstrip()[:-len('</div>')] + '<a class="fq-more" href="%s">Fine-tune with six quick answers · full details →</a></div>' % FORM_LINK
     row = left + row[k:]
-    zx = re.search(r'<div class="ddv-x" id="ddv-x">.*?</div>(?=<style)', s04, re.S)
+    zx = re.search(r'<div class="ddv-x" id="ddv-x">.*</article></div>', s04, re.S)
     must(zx is not None, 'zone texts not found')
     sect = '<section class="dn dn-c" id="dn">' + STUBS + act + row + '</div></section>'
     loader = ("<script>(function(){var d=document,s=d.createElement('script');s.src='%s';s.defer=true;"
