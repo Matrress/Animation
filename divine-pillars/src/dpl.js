@@ -1,7 +1,7 @@
 /* Divine DunlopDreams · Four Laws of Good Sleep · dpl.js
    The static tile is complete without this file. This file draws the data rings around the four circles, opens one
    law at a time in the panel under them (as large as it needs), and turns "Compare All Materials" into a window.
-   Data is injected at build time from src/content.mjs. Nothing moves by itself except the slow orbit of the forms. */
+   Data is injected at build time from src/content.mjs. Nothing moves by itself except the slow ticks around the disc and the pulse of its centre. */
 (function () {
   'use strict';
   var D = __DPL_DATA__;
@@ -19,27 +19,24 @@
   function arc(r, a0, a1) { if (a1 - a0 < 1) a1 = a0 + 1; return 'M' + pt(r, a0) + 'A' + r + ' ' + r + ' 0 ' + (a1 - a0 > 180 ? 1 : 0) + ' 1 ' + pt(r, a1); }
   function ang(v, max) { return A0 + SWEEP * Math.min(v, max) / max; }
 
-  // one chart: rings for a scale (one per material), or four forms (petals) for the facts of natural origin
+  // one chart: rings for a scale (one per material), or four forms (petals) for the facts of natural origin.
+  // big = the panel chart (wide rings around a small photo); closed = the circle on the card (thin rings hugging the rim, photo fills 70%)
   function chart(p, big) {
     var c = p.chart, svg = sv('svg', { viewBox: '0 0 240 240', 'class': 'dpl__ring', 'aria-hidden': 'true', focusable: 'false' });
-    if (!big) {   // the orbit of forms around each circle: short strokes, every third one longer
-      var f = sv('g', { 'class': 'frm' }), d = '';
-      for (var i = 0; i < 40; i++) d += 'M' + pt(i % 4 ? 117 : 113, i * 9) + 'L' + pt(120, i * 9);
-      f.appendChild(sv('path', { d: d })); svg.appendChild(f);
-    }
+    if (!big) svg.appendChild(sv('path', { 'class': 'dec', d: arc(119, 52, 128) }));   // the arc the tab sits on
     if (c.kind === 'petals') {
       c.petals.forEach(function (name, i) {
-        var a = -90 + i * 90 + 7, g = sv('g', { 'data-m': 'p' + i, style: '--c:' + (i % 2 ? COL.bio : COL.dun) + ';--w:' + (big ? 12 : 9) });
-        g.appendChild(sv('path', { 'class': 'trk', d: arc(big ? 100 : 98, a, a + 76) }));
-        g.appendChild(sv('path', { 'class': 'val', d: arc(big ? 100 : 98, a, a + 76), pathLength: 1, style: '--d:' + (i * 0.12) + 's' }));
+        var a = -90 + i * 90 + 7, r = big ? 100 : 110, g = sv('g', { 'data-m': 'p' + i, style: '--c:' + (i % 2 ? COL.bio : COL.dun) + ';--w:' + (big ? 12 : 7) });
+        g.appendChild(sv('path', { 'class': 'trk', d: arc(r, a, a + 76) }));
+        g.appendChild(sv('path', { 'class': 'val', d: arc(r, a, a + 76), pathLength: 1, style: '--d:' + (i * 0.12) + 's' }));
         svg.appendChild(g);
       });
       return svg;
     }
     var rings = big ? c.rings : c.rings.filter(function (r) { return c.card.indexOf(r.m) >= 0; });
     rings.forEach(function (rg, i) {
-      var r = big ? 78 + i * 9 : 80 + i * 10;
-      var g = sv('g', { 'data-m': rg.m, style: '--c:' + COL[rg.m] + ';--w:' + (big ? 6 : 6) });
+      var r = big ? 78 + i * 9 : 101 + i * 5.2;
+      var g = sv('g', { 'data-m': rg.m, style: '--c:' + COL[rg.m] + ';--w:' + (big ? 6 : 3.2) });
       g.appendChild(sv('path', { 'class': 'trk' + (rg.none ? ' is-none' : ''), d: arc(r, A0, A0 + SWEEP), pathLength: 1 }));
       if (!rg.none) {
         var a1 = ang(rg.lo, c.max);
@@ -56,7 +53,7 @@
     if (c.kind === 'petals') return c.petals.map(function (n, i) { return '<li><button type="button" class="is-ours" data-m="p' + i + '" data-v="' + esc(n) + '" data-n="' + esc(p.title) + '"><i style="--c:' + (i % 2 ? COL.bio : COL.dun) + '"></i><span>' + esc(n) + '</span><b>&#10003;</b></button></li>'; }).join('');
     return c.rings.map(function (rg) {
       var m = mat(rg.m), n = rg.name || m.name;
-      return '<li><button type="button" class="' + (m.ours ? 'is-ours' : '') + '" data-m="' + rg.m + '" data-v="' + esc(rg.v) + '" data-n="' + esc(n) + '"><i style="--c:' + COL[rg.m] + '"></i><span>' + esc(n) + '</span><b>' + esc(rg.v) + '</b></button></li>';
+      return '<li><button type="button" class="' + (m.ours ? 'is-ours' : '') + (rg.v.length > 16 ? ' is-long' : '') + '" data-m="' + rg.m + '" data-v="' + esc(rg.rv || rg.v) + '" data-n="' + esc(n) + '"><i style="--c:' + COL[rg.m] + '"></i><span>' + esc(n) + '</span><b>' + esc(rg.v) + '</b></button></li>';
     }).join('');
   }
 
@@ -81,19 +78,28 @@
     root.setAttribute('data-dpl', 'on');
     root.classList.add('is-js');
     var sun = root.querySelector('.dpl__sun'), panel = root.querySelector('.dpl__panel'), slot = panel && panel.firstElementChild;
-    var items = [].slice.call(root.querySelectorAll('.dpl__p')), cur = -1, opener = null;
+    var items = [].slice.call(root.querySelectorAll('.dpl__p')), rows = [].slice.call(root.querySelectorAll('.dpl__row')), cur = -1, opener = null;
     if (!sun || !panel || !slot) return;
 
     items.forEach(function (li, i) {
-      var p = D.pillars[i], orb = li.querySelector('.dpl__orb'), more = li.querySelector('.dpl__more');
+      var p = D.pillars[i], orb = li.querySelector('.dpl__orb');
       if (!p || !orb) return;
       orb.insertBefore(chart(p, false), orb.firstChild);
-      [orb, more].forEach(function (b) { if (b) b.addEventListener('click', function () { opener = b; toggle(i); }); });
+      orb.addEventListener('click', function () { opener = orb; toggle(i); });
+      orb.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse' && rows[i]) rows[i].classList.add('is-peek'); });
+      orb.addEventListener('pointerleave', function () { if (rows[i]) rows[i].classList.remove('is-peek'); });
+    });
+    // a row is the same law as its circle: pointing at it lights the circle, a click opens it (the circle's button stays the keyboard path)
+    rows.forEach(function (r, i) {
+      r.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse' && items[i]) items[i].classList.add('is-peek'); });
+      r.addEventListener('pointerleave', function () { if (items[i]) items[i].classList.remove('is-peek'); });
+      r.addEventListener('click', function () { var o = items[i] && items[i].querySelector('.dpl__orb'); if (o) { opener = o; toggle(i); } });
     });
 
     function setExpanded() {
       items.forEach(function (li, i) {
         li.classList.toggle('is-on', i === cur);
+        if (rows[i]) rows[i].classList.toggle('is-on', i === cur);
         [].forEach.call(li.querySelectorAll('[aria-controls]'), function (b) { b.setAttribute('aria-expanded', i === cur ? 'true' : 'false'); });
       });
       sun.classList.toggle('has-on', cur >= 0);
@@ -178,9 +184,8 @@
       sum.addEventListener('click', function (e) { if (typeof HTMLDialogElement === 'function') { e.preventDefault(); showCompare(sum); } });
     }
 
-    // the next tile (How We Are Different) only gets a link when it is on the page
-    var nx = root.querySelector('[data-dpl-sys]');
-    if (nx && document.getElementById('ddhd-system')) nx.hidden = false;
+    // links to other parts of the page (the navigator, the Firmness block, the System tile) show only when their target is there
+    [].forEach.call(root.querySelectorAll('[data-need]'), function (el) { if (document.querySelector(el.getAttribute('data-need'))) el.hidden = false; });
 
     // draw the rings when the band comes into view (immediately under reduced motion or without IntersectionObserver)
     if (reduce || !('IntersectionObserver' in window)) root.classList.add('is-in');

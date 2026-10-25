@@ -4,9 +4,9 @@
 // and independent technical sheets. Nothing here is typed twice.
 
 export const HEAD = {
-  eyebrow: 'Why Natural Dunlop Latex',
+  eyebrow: 'Why Natural Latex Mattresses and Toppers',
   title: 'One Natural Material. <b>Four Laws</b> of Good Sleep.',
-  lede: 'A good mattress has to carry the body, adapt to it, let it breathe and keep the sleep space clean. Natural Dunlop latex does all four in one material. Tap a circle to see the physics and the numbers behind it.',
+  lede: 'A good mattress has to carry the body, adapt to it, let it breathe and keep the sleep space clean. Natural Dunlop latex does all four in one material, in every Natural Latex Mattress and Natural Latex Topper we make. Tap a circle to see the physics and the numbers behind it.',
 };
 
 // the six material classes of the comparison. TEMPUR is its own class, never mixed with ordinary memory foam.
@@ -104,11 +104,11 @@ export const PILLARS = [
       kind: 'radial', unit: 'airflow scales', max: 3, label: 'Airflow scales',
       card: ['pu', 'mem', 'dun', 'bio'],
       rings: [
-        { m: 'pu', lo: 1, v: '1: micro-cells' },
-        { m: 'mem', lo: 1, v: '1: finer cells' },
-        { m: 'tempur', lo: 1, v: '1: channels depend on the construction' },
-        { m: 'dun', lo: 2, v: '2: open cells and vertical channels' },
-        { m: 'bio', lo: 3, v: '3: cells, channels and capsule spaces' },
+        { m: 'pu', lo: 1, v: '1: micro-cells', rv: '1 scale' },
+        { m: 'mem', lo: 1, v: '1: finer cells', rv: '1 scale' },
+        { m: 'tempur', lo: 1, v: '1: channels depend on the construction', rv: '1 scale' },
+        { m: 'dun', lo: 2, v: '2: open cells and vertical channels', rv: '2 scales' },
+        { m: 'bio', lo: 3, v: '3: cells, channels and capsule spaces', rv: '3 scales' },
       ],
     },
     body: [
@@ -144,4 +144,22 @@ export const FOOT = {
   compare: 'Compare All Materials',
   system: 'See How We Build Your System',
   systemLead: 'Four laws, one material. Next: how we turn them into your mattress.',
+};
+
+// The second structure: what makes US different, once the four laws of the material are clear.
+// Facts: approved Collection 3.13.2 (pure latex systems: no springs, no memory foam, no synthetic foam core; Dual Plush is a latex
+// mattress plus a separate latex topper of two neighbouring firmnesses, 3 pairs in Botanic, 2 in Bio Comfort; made to order in size,
+// firmness, depth and cover) and the owner's densities (Soft 63, Medium 75, Firm 83 kg/m3). No body-weight ranges here: they live
+// in the Firmness block above and in the Hero card, and are not repeated.
+export const DIFF = {
+  eyebrow: 'How We Are Different',
+  title: 'Only Natural Dunlop Latex. <b>Made Around You.</b>',
+  lede: 'The four laws belong to the material. What we do with it is ours: one natural material, firmness set by your body weight, two neighbouring firmnesses combined with nothing between them, and every Natural Latex Mattress and Natural Latex Topper made to order.',
+  tiles: [
+    { id: 'pure', icon: 'leaf', title: 'Pure Natural Dunlop Latex', text: 'Every Natural Latex Mattress and Topper is natural Dunlop latex. No springs, no memory foam, no synthetic foam core.' },
+    { id: 'regulated', icon: 'slider', title: 'Firmness Set by Body Weight', text: 'Your weight sets Soft, Medium, Firm or Extra Firm. Soft, Medium and Firm are made at 63, 75 and 83 kg/m³.' },
+    { id: 'dual', icon: 'pair', title: 'Two Firmnesses, Nothing Between', text: 'Dual Plush pairs a latex mattress with a latex topper of the neighbouring firmness. No third material between them.' },
+    { id: 'order', icon: 'frame', title: 'Made to Order, Fine-Tuned', text: 'Size, depth, firmness and cover are confirmed with you. Each model has its own real depths.' },
+  ],
+  ctas: { mattress: 'Find Your Natural Latex Mattress', topper: 'Find Your Natural Latex Topper', firmness: 'Find Your Firmness' },
 };

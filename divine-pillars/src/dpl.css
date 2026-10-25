@@ -22,30 +22,56 @@
 .dpl .dpl__h b{font-weight:600;color:var(--acc);-webkit-text-stroke:.5px currentColor}
 .dpl .dpl__lede{margin:18px auto 0;max-width:700px;color:var(--ink2);font-size:clamp(17px,1.35vw,19px);line-height:1.6;-webkit-text-stroke:.15px currentColor}
 
-/* the sun row: four circles joined by one line (each law leads to the next) */
-.dpl__sun{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,2.4vw,36px)}
-.dpl__sun::before{content:"";position:absolute;left:12.5%;right:12.5%;top:calc(var(--orb) / 2);height:1px;background:linear-gradient(90deg,transparent,rgba(164,212,220,.45) 12%,rgba(164,212,220,.45) 88%,transparent);pointer-events:none}
-.dpl__sun::after{content:"";position:absolute;left:12.5%;top:calc(var(--orb) / 2 - 2px);width:60px;height:5px;border-radius:5px;background:radial-gradient(closest-side,rgba(79,211,203,.9),transparent);animation:dpl-flow 7s linear infinite;pointer-events:none}
-@keyframes dpl-flow{from{left:12.5%;opacity:0}8%{opacity:1}92%{opacity:1}to{left:calc(87.5% - 60px);opacity:0}}
-.dpl__sun{--orb:clamp(196px,18vw,236px)}
-.dpl__p{position:relative;align-self:stretch;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0}
-.dpl__orb{position:relative;display:block;width:var(--orb);height:var(--orb);border-radius:50%;flex:none;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
-.dpl__orb img{position:absolute;inset:22%;width:56%;height:56%;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px rgba(164,212,220,.35),0 18px 40px -18px rgba(0,0,0,.8);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
-.dpl:not(.is-js) .dpl__orb{background:radial-gradient(closest-side,transparent 86%,rgba(164,212,220,.25) 87%,transparent 89%)}
+/* Part A: one square card (corner radius like the owner's reference), one large disc in it, four circles in a 2 x 2 grid.
+   Proportions from the reference: disc 92% of the card, circles 33%, centres at 30% and 70%. */
+.dpl__top{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(28px,4vw,48px);align-items:center;justify-items:center}
+.dpl__fig{width:100%;max-width:640px}
+.dpl__card{position:relative;width:100%;aspect-ratio:1;border-radius:18%;background:radial-gradient(120% 80% at 50% 0,rgba(79,211,203,.1),transparent 62%),linear-gradient(160deg,#143345,#0A1B26);box-shadow:inset 0 0 0 1px rgba(164,212,220,.2),0 60px 110px -55px #000}
+.dpl__disc{position:absolute;inset:4%;border-radius:50%;background:radial-gradient(closest-side at 50% 36%,#1D4E61,#10303F 72%,#0B2231);box-shadow:inset 0 0 0 1px rgba(79,211,203,.28),inset 0 0 90px rgba(79,211,203,.07)}
+.dpl__disc::before{content:"";position:absolute;inset:-2.7%;border-radius:50%;background:repeating-conic-gradient(rgba(164,212,220,.6) 0 .45deg,transparent .45deg 4deg);-webkit-mask:radial-gradient(closest-side,transparent calc(100% - 9px),#000 calc(100% - 8px),#000 calc(100% - 2px),transparent 100%);mask:radial-gradient(closest-side,transparent calc(100% - 9px),#000 calc(100% - 8px),#000 calc(100% - 2px),transparent 100%);animation:dpl-turn 180s linear infinite}
+.dpl__disc::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 5px rgba(79,211,203,.18),0 0 26px 6px rgba(79,211,203,.5);animation:dpl-pulse 4.5s ease-in-out infinite}
+@keyframes dpl-pulse{0%,100%{box-shadow:0 0 0 5px rgba(79,211,203,.14),0 0 20px 4px rgba(79,211,203,.4)}50%{box-shadow:0 0 0 8px rgba(79,211,203,.22),0 0 34px 9px rgba(79,211,203,.65)}}
+.dpl__sun{position:absolute;inset:0}
+.dpl__sun::before,.dpl__sun::after{content:"";position:absolute;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(164,212,220,.38) 18%,rgba(164,212,220,.38) 82%,transparent)}
+.dpl__sun::before{left:14%;right:14%;top:50%;height:1px}
+.dpl__sun::after{top:14%;bottom:14%;left:50%;width:1px;background:linear-gradient(180deg,transparent,rgba(164,212,220,.38) 18%,rgba(164,212,220,.38) 82%,transparent)}
+.dpl__p{position:absolute;width:33%;aspect-ratio:1}
+.dpl__p:nth-child(1){left:13.5%;top:13.5%}
+.dpl__p:nth-child(2){left:53.5%;top:13.5%}
+.dpl__p:nth-child(3){left:13.5%;top:53.5%}
+.dpl__p:nth-child(4){left:53.5%;top:53.5%}
+.dpl__orb{position:absolute;inset:0;display:block;width:100%;height:100%;border-radius:50%;transition:transform .45s cubic-bezier(.2,.7,.2,1),opacity .3s}
+.dpl__orb img{position:absolute;inset:10%;width:80%;height:80%;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px rgba(164,212,220,.35),0 16px 36px -16px rgba(0,0,0,.85);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.dpl:not(.is-js) .dpl__orb{cursor:default;background:radial-gradient(closest-side,transparent 86%,rgba(164,212,220,.25) 87%,transparent 89%)}
 .dpl__orb .dpl__ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.dpl__num{position:absolute;left:6%;top:6%;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--bg2);box-shadow:0 0 0 1.5px var(--acc);color:var(--ink);font-size:16px;font-weight:600;line-height:1}
-.dpl__orb:hover,.dpl__p.is-on .dpl__orb{transform:translateY(-4px)}
-.dpl__orb:hover img,.dpl__p.is-on .dpl__orb img{transform:scale(1.05);box-shadow:0 0 0 2px var(--acc),0 0 46px -6px rgba(79,211,203,.55),0 18px 40px -18px rgba(0,0,0,.8)}
-.dpl__sun.has-on .dpl__p:not(.is-on) .dpl__orb{opacity:.62}
+.dpl__num{position:absolute;left:3%;top:3%;pointer-events:none;z-index:1;display:grid;place-items:center;width:clamp(28px,5.2%,38px);aspect-ratio:1;border-radius:50%;background:var(--bg2);box-shadow:0 0 0 1.5px var(--acc);color:var(--ink);font-size:16px;font-weight:600;line-height:1}
+/* the arc tab under each circle: the verb, and a plus that opens the law */
+.dpl__arc{position:absolute;left:50%;bottom:-17px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.4em;height:36px;padding:0 14px;border-radius:999px;background:#0C2230;box-shadow:0 0 0 1.5px var(--acc),0 8px 20px -8px rgba(0,0,0,.8);color:var(--ink);font-size:16px;font-weight:600;line-height:1;white-space:nowrap;transition:background-color .3s,color .3s,box-shadow .35s}
+.dpl__arc::after{content:"+";display:inline-block;font-size:20px;line-height:1;color:var(--acc);transition:transform .35s,color .3s}
+.dpl__orb:hover,.dpl__p.is-on .dpl__orb,.dpl__p.is-peek .dpl__orb{transform:translateY(-3px)}
+.dpl__orb:hover img,.dpl__p.is-on .dpl__orb img,.dpl__p.is-peek .dpl__orb img{transform:scale(1.04);box-shadow:0 0 0 2px var(--acc),0 0 46px -6px rgba(79,211,203,.55),0 16px 36px -16px rgba(0,0,0,.85)}
+.dpl__orb:hover .dpl__arc,.dpl__p.is-on .dpl__arc,.dpl__p.is-peek .dpl__arc{background:var(--acc);color:#06222A;box-shadow:0 0 0 4px rgba(79,211,203,.16),0 12px 30px -10px rgba(79,211,203,.7)}
+.dpl__orb:hover .dpl__arc::after,.dpl__p.is-on .dpl__arc::after,.dpl__p.is-peek .dpl__arc::after,.dpl__orb:focus-visible .dpl__arc::after{color:#06222A}
+.dpl__orb[aria-expanded="true"] .dpl__arc::after{transform:rotate(45deg)}
+.dpl:not(.is-js) .dpl__arc{display:none}
+.dpl__sun.has-on .dpl__p:not(.is-on) .dpl__orb{opacity:.6}
 .dpl__sun.has-on .dpl__p:not(.is-on) .dpl__orb:hover{opacity:1}
-.dpl__pv{margin-top:14px;color:var(--acc);font-size:16px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
-.dpl .dpl__t{margin-top:4px;font-size:clamp(21px,1.75vw,24px);line-height:1.2;font-weight:600;color:var(--ink)!important;-webkit-text-stroke:.35px currentColor}
-.dpl .dpl__k{margin-top:10px;color:var(--ink2);font-size:16px;line-height:1.45}
-.dpl .dpl__k b{display:block;color:var(--acc);font-size:clamp(26px,2.3vw,32px);line-height:1.15;-webkit-text-stroke:.4px currentColor}
-.dpl .dpl__s{margin-top:8px;max-width:30ch;color:var(--mut);font-size:16px;line-height:1.5}
-.dpl .dpl__more{margin-top:auto}
-.dpl .dpl__s{margin-bottom:18px}
+.dpl__orb:focus-visible{outline:2px solid var(--acc);outline-offset:6px;border-radius:50%}
+.dpl__orb:focus-visible .dpl__arc{background:var(--acc);color:#06222A}
 
+/* the rows beside the card: the number each circle stands for */
+.dpl__rows{width:100%;max-width:640px;display:grid}
+.dpl .dpl__row{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:18px;padding:22px 16px;border-radius:20px;transition:background-color .3s,box-shadow .3s}
+.dpl .dpl__row+.dpl__row::before{content:"";position:absolute;left:16px;right:16px;top:0;height:1px;background:var(--line)}
+.dpl.is-js .dpl__row{cursor:pointer}
+.dpl__rn{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;box-shadow:0 0 0 1.5px var(--acc);color:var(--ink);font-size:18px;font-weight:600;transition:background-color .3s,color .3s}
+.dpl__row.is-on,.dpl__row.is-peek{background:rgba(79,211,203,.07);box-shadow:inset 0 0 0 1px rgba(79,211,203,.3)}
+.dpl__row.is-on .dpl__rn,.dpl__row.is-peek .dpl__rn{background:var(--acc);color:#06222A}
+.dpl__pv{color:var(--acc);font-size:16px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.dpl .dpl__t{margin-top:2px;font-size:clamp(21px,1.75vw,24px);line-height:1.2;font-weight:600;color:var(--ink)!important;-webkit-text-stroke:.35px currentColor}
+.dpl .dpl__k{margin-top:8px;color:var(--ink2);font-size:17px;line-height:1.45}
+.dpl .dpl__k b{color:var(--acc);font-size:clamp(24px,2.1vw,29px);line-height:1.15;-webkit-text-stroke:.4px currentColor;margin-right:.2em}
+.dpl .dpl__s{margin-top:6px;color:var(--mut);font-size:16px;line-height:1.5}
 
 /* buttons: Title Case, one ambient hover for all */
 .dpl .dpl__btn{opacity:1;position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-height:48px;padding:11px 22px;border-radius:999px;border:1.5px solid rgba(164,212,220,.55);background:rgba(255,255,255,.03);color:var(--ink)!important;font-size:16px;font-weight:600;line-height:1.2;text-decoration:none!important;letter-spacing:.01em;transition:background-color .3s,border-color .3s,box-shadow .35s,transform .25s;list-style:none}
@@ -55,7 +81,6 @@
 .dpl .dpl__btn.is-pri:hover{background:#6FE0D9;box-shadow:0 0 0 4px rgba(79,211,203,.18),0 12px 34px -10px rgba(79,211,203,.75)}
 .dpl .dpl__btn u{text-decoration:none;transition:transform .3s}
 .dpl .dpl__btn:hover u{transform:translateX(3px)}
-.dpl:not(.is-js) .dpl__more{display:none}
 
 /* the panel: the working area opens under the circles, as large as the law needs */
 .dpl__panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.2,.7,.2,1),margin-top .55s;margin-top:0}
@@ -75,6 +100,9 @@
 .dpl__lg{display:grid;gap:6px;width:100%;margin-top:12px!important}
 .dpl__lg button{display:grid;grid-template-columns:14px minmax(0,1fr) auto;align-items:center;gap:12px;width:100%;min-height:44px;padding:9px 14px;border-radius:14px;text-align:left;font-size:16px;line-height:1.3;transition:background-color .25s,box-shadow .3s}
 .dpl__lg button:hover,.dpl__lg button.is-on{background:rgba(164,212,220,.08);box-shadow:inset 0 0 0 1px rgba(164,212,220,.3)}
+.dpl__lg .is-long{grid-template-columns:14px minmax(0,1fr);row-gap:2px}
+.dpl__lg .is-long b{grid-column:2;text-align:left;font-weight:400;color:var(--mut)}
+.dpl__lg .is-long.is-ours b{color:var(--acc)}
 .dpl__lg i{width:14px;height:14px;border-radius:50%;background:var(--c)}
 .dpl__lg span{color:var(--ink2)}
 .dpl__lg b{color:var(--ink);font-weight:600;text-align:right}
@@ -108,14 +136,13 @@
 .dpl.is-js:not(.is-in) .dpl__ring .val{stroke-dashoffset:1}
 .dpl__ring g[data-m]{transition:opacity .3s}
 .dpl__ring.has-hl g[data-m]:not(.is-hl){opacity:.22}
+.dpl__ring .dec{fill:none;stroke:rgba(79,211,203,.55);stroke-width:1.6;stroke-linecap:round}
 .dpl__ring g.is-hl .val{--w:9}
 .dpl__big .dpl__ring g[data-m]{cursor:pointer}
-.dpl__ring .frm{fill:none;stroke:rgba(164,212,220,.32);stroke-width:1.6;stroke-linecap:round;transform-origin:120px 120px;animation:dpl-turn 90s linear infinite}
-.dpl__orb:hover .frm,.dpl__p.is-on .frm{stroke:rgba(79,211,203,.7)}
 @keyframes dpl-turn{to{transform:rotate(360deg)}}
 
 /* the static comparison: a details block without JS, a window with JS */
-.dpl__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 24px;margin-top:clamp(40px,5vw,60px);text-align:center}
+.dpl__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 24px;margin-top:clamp(44px,5vw,64px);text-align:center}
 .dpl__cmp>summary{list-style:none}
 .dpl__cmp>summary::-webkit-details-marker{display:none}
 .dpl__cmp[open]{flex-basis:100%}
@@ -133,6 +160,22 @@
 .dpl .dpl__note{margin-top:14px;color:var(--mut);font-size:16px;line-height:1.55}
 .dpl__next{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 18px;color:var(--ink2);font-size:17px}
 
+
+/* Part B: what makes us different. Text beside a square module of four tiles, in the same proportions as the card. */
+.dpl__diff{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(30px,4vw,56px);align-items:center;margin-top:clamp(72px,9vw,128px)}
+.dpl__dt{max-width:640px}
+.dpl .dpl__h2{margin-top:14px;font-size:clamp(30px,3.3vw,44px);line-height:1.1;font-weight:400;letter-spacing:-.015em;color:var(--ink)!important;-webkit-text-stroke:.3px currentColor;text-wrap:balance}
+.dpl .dpl__h2 b{font-weight:600;color:var(--acc);-webkit-text-stroke:.5px currentColor}
+.dpl .dpl__lede2{margin-top:18px;color:var(--ink2);font-size:clamp(17px,1.35vw,19px);line-height:1.6;-webkit-text-stroke:.15px currentColor}
+.dpl .dpl__ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.dpl__cube{position:relative;display:grid;width:100%;max-width:640px;aspect-ratio:1;padding:4.5%;border-radius:14%;background:radial-gradient(120% 80% at 50% 0,rgba(79,211,203,.1),transparent 62%),linear-gradient(160deg,#143345,#0A1B26);box-shadow:inset 0 0 0 1px rgba(164,212,220,.2),0 60px 110px -55px #000}
+.dpl__tiles{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:clamp(8px,2.4%,16px);align-self:stretch}
+.dpl .dpl__tl{display:flex;flex-direction:column;padding:clamp(16px,2.4vw,26px);border-radius:clamp(18px,3.4vw,34px);background:linear-gradient(160deg,rgba(26,70,90,.6),rgba(12,32,45,.55));box-shadow:inset 0 0 0 1px var(--line);min-width:0}
+.dpl__ic{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;box-shadow:0 0 0 1.5px var(--acc);color:var(--acc);flex:none}
+.dpl .dpl__tt{margin-top:12px;font-size:clamp(19px,1.7vw,22px);line-height:1.2;font-weight:600;color:var(--ink)!important;-webkit-text-stroke:.3px currentColor}
+.dpl .dpl__tx2{margin-top:8px;color:var(--ink2);font-size:16px;line-height:1.5}
+.dpl .dpl__next{margin-top:clamp(56px,7vw,96px)}
+
 /* the comparison window */
 .dpl__dlg{width:min(1180px,calc(100vw - 24px));max-height:calc(100dvh - 24px);margin:auto;padding:0;border:0;border-radius:28px;background:linear-gradient(160deg,#12303F,#0A1B26);color:var(--ink);box-shadow:0 50px 120px -30px rgba(0,0,0,.9),0 0 0 1px rgba(164,212,220,.2);font-family:var(--f)}
 .dpl__dlg::backdrop{background:rgba(4,14,20,.72);backdrop-filter:blur(6px)}
@@ -142,25 +185,32 @@
 .dpl__dlghd h3{font-size:clamp(23px,2.2vw,30px);line-height:1.2;font-weight:600;color:var(--ink)!important;-webkit-text-stroke:.35px currentColor}
 html.dpl-lock,html.dpl-lock body{overflow:hidden!important}
 
-/* tablet: two circles per row */
+/* wide: the card beside its rows, the text beside its module */
+@media (min-width:1100px){
+  .dpl__top{grid-template-columns:minmax(0,600px) minmax(0,1fr);justify-items:stretch}
+  .dpl__diff{grid-template-columns:minmax(0,1fr) minmax(0,600px)}
+  .dpl__fig,.dpl__rows{max-width:none}
+}
+/* tablet: rows in two columns under the card, the module under its text */
+@media (max-width:1099px) and (min-width:700px){
+  .dpl__rows{grid-template-columns:1fr 1fr;column-gap:20px}
+  .dpl .dpl__row:nth-child(2)::before{display:none}
+  .dpl__dt{max-width:720px}
+}
 @media (max-width:999px){
-  .dpl__sun{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:44px;--orb:clamp(190px,30vw,230px)}
-  .dpl__sun::before,.dpl__sun::after{display:none}
   .dpl__pin{grid-template-columns:1fr}
   .dpl__big{width:min(100%,380px)}
   .dpl__st{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-/* phone: two compact circles per row, the short text moves into the panel */
+/* phone: the card keeps its proportions, the tiles stack */
 @media (max-width:620px){
   .dpl{font-size:16px}
-  .dpl__sun{gap:30px 14px;--orb:min(41vw,170px)}
-  .dpl__num{width:30px;height:30px;font-size:16px}
-  .dpl .dpl__s{display:none}
-  .dpl .dpl__k{margin-bottom:16px}
-  .dpl .dpl__k b{font-size:24px}
+  .dpl__card{border-radius:18%}
+  .dpl__arc{height:34px;padding:0 11px;bottom:-15px}
+  .dpl .dpl__row{padding:18px 8px}
+  .dpl__cube{aspect-ratio:auto;padding:12px;border-radius:28px}
+  .dpl__tiles{grid-template-columns:1fr;grid-auto-rows:auto;gap:12px}
   .dpl .dpl__btn{width:100%}
-  .dpl__p .dpl__btn{padding:10px 12px;font-size:16px}
-  .dpl .dpl__bl{display:none}
   .dpl__lg button{grid-template-columns:14px minmax(0,1fr);row-gap:2px}
   .dpl__lg b{grid-column:2;text-align:left}
   .dpl__pin{padding:22px 16px;border-radius:24px}
