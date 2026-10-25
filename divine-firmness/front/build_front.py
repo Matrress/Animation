@@ -103,6 +103,11 @@ def tile_a(css_url):
     body = s03[i:]
     must(OLD_P in body, 'heading text not found in 03')
     body = body.replace(OLD_P, NEW_P)
+    # notice placed OUTSIDE the monitor window, between the heading and the monitor
+    notice = ('<div class="dn-w"><p class="fq-notice" style="margin:0 0 14px;font-size:13px;line-height:1.5;letter-spacing:.02em;text-align:center;color:var(--t2,#B8C2C0)">'
+              '<b style="color:#fff">This is not an animation.</b> These are Dunlop regulations, based on engineering research.</p></div>')
+    must('<section class="dn dn-b"' in body, 'monitor section not found in tile A')
+    body = body.replace('<section class="dn dn-b"', notice + '<section class="dn dn-b"', 1)
     head = ('<!-- Divine DunlopDreams Firmness front block %s · tile A of 2: heading + monitor · paste first, right after the collection tile -->'
             '<link rel="stylesheet" href="%s">'
             "<script>(function(h){h.classList.add('ddv-wait');setTimeout(function(){h.classList.add('ddv-fit')},5000)})(document.documentElement)</script>") % (VER, css_url)
