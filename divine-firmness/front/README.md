@@ -37,5 +37,5 @@
 
 ## Статус
 
-Версия 0.1.0 е построена: `build_front.py` събира монитора, двете карти и резултата от проверените секции на /firmnesses.
-Два файла на jsDelivr (`release/0.1.0/front.css`, `front.js`) и две Ecwid секции (`ecwid/`). Вж. `INSTALL.md`.
+Версия 0.2.0 е построена: `build_front.py` събира монитора, двете карти и резултата от проверените секции на /firmnesses.
+Два файла на jsDelivr (`release/0.2.0/front.css`, `front.js`) и две Ecwid секции (`ecwid/`). Вж. `INSTALL.md`.
