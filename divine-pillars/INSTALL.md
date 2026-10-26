@@ -1,17 +1,16 @@
-# Four Laws of Good Sleep 0.11.1 · инсталация
+# Four Laws of Good Sleep 0.11.2 · инсталация
 
 ## Какво е
 
 Една Ecwid секция с custom code, в две части:
 
-- **Част А, „Four Laws“:** четири кръга един до друг (Natural & Bio Origin, Support, Adaptability, Ventilation), с фазите на луната около всеки и луна, която изгрява и залязва между тях. Около всяка снимка са данните като дъги, отдолу са глаголът, заглавието, ключовото число и бутон „Explore“. Натискане отваря панела под кръговете: голямата графика, обяснението, числата и бележката за TEMPUR®. „Compare All Materials“ отваря таблицата за шестте материала.
+- **Част А, „Four Laws“:** четири кръга един до друг (Natural & Bio Origin, Support, Adaptability, Ventilation), с фазите на луната около всеки и тънка линия със светеща точка, която ги свързва. Около всяка снимка са данните като дъги, отдолу са глаголът, заглавието, ключовото число и бутон „Explore“. Натискане отваря панела под кръговете: голямата графика, обяснението, числата и бележката за TEMPUR®. „Compare All Materials“ отваря таблицата за шестте материала.
 - **Между частите:** белегът Bio Dunlop (hover отваря „Fully Certified“) и думите „For us, a mattress is not a piece of furniture…“.
-- **Вятърът:** на десктоп светлината от кръг 4 се вдига към перото над заглавието и го разлюлява (порив на всеки 8 s).
 - **Част Б, „How We Are Different“:** шест карти, по три на ред: чист латекс (и натурални кокосови влакна), твърдост по телесно тегло, The Dual Plush System (латекс матрак за поддръжка и латекс топър за комфорт, топърът до следващата адекватна твърдост), Partner’s Comfort (a side for her and a side for him), ортопедичен твърд комфорт, индивидуално производство. Под тях е изречението „Not one mattress for everyone. A natural latex solution made for you.“ и връзките.
 
-**Ако 0.9.0, 0.10.0 или 0.11.0 вече е поставена:** отвори същата секция в Ecwid и замени цялото ѝ съдържание с `ecwid/pillars-0.11.1-pinned.html`. Не добавяй втора.
+**Ако 0.9.0, 0.10.0, 0.11.0 или 0.11.1 вече е поставена:** отвори същата секция в Ecwid и замени цялото ѝ съдържание с `ecwid/pillars-0.11.2-pinned.html`. Не добавяй втора.
 
-В Ecwid се поставя само `ecwid/pillars-0.11.1-pinned.html` (около 14 500 знака, далеч под ~20 000).
+В Ecwid се поставя само `ecwid/pillars-0.11.2-pinned.html` (около 14 500 знака, далеч под ~20 000).
 `dpl.css`, `dpl.js` и четирите снимки идват от jsDelivr, заключени към конкретен commit.
 Ако `dpl.js` не се зареди, секцията остава пълна статична страница: четирите закона, шестте карти и таблицата (в разгъващ се блок).
 
@@ -31,10 +30,10 @@
 ## Стъпки
 
 1. Ecwid → Website → добави нова секция **Custom code** веднага под последната Firmness секция.
-2. Постави цялото съдържание на `ecwid/pillars-0.11.1-pinned.html` и запази.
+2. Постави цялото съдържание на `ecwid/pillars-0.11.2-pinned.html` и запази.
 3. Провери: кръговете се рисуват при скрол, кръг или ред отваря панела, „Compare All Materials“ отваря прозореца, Escape го затваря.
 
-Връщане назад: `ecwid/pillars-0.11.0-pinned.html` (емблема с луната, без вятър), `ecwid/pillars-0.10.0-pinned.html` (предишният ред, без луната), `ecwid/pillars-0.9.0-pinned.html` (квадратна карта със сфера и 2×2 кръгове) или `ecwid/pillars-0.8.0-pinned.html` (четири кръга, без Част Б). Връщане към нищо: скрий или изтрий секцията. Нищо друго не зависи от нея.
+Връщане назад: `ecwid/pillars-0.11.1-pinned.html` (с вятъра към перото), `ecwid/pillars-0.11.0-pinned.html` (емблема с луната, изгряваща луна между кръговете), `ecwid/pillars-0.10.0-pinned.html` (предишният ред, без луната), `ecwid/pillars-0.9.0-pinned.html` (квадратна карта със сфера и 2×2 кръгове) или `ecwid/pillars-0.8.0-pinned.html` (четири кръга, без Част Б). Връщане към нищо: скрий или изтрий секцията. Нищо друго не зависи от нея.
 
 ## Дълбоки връзки (за Hero или менюто, по-късно)
 
@@ -45,7 +44,7 @@
 ```
 npm i esbuild@0.24.0 axe-core
 ESBUILD=node_modules/esbuild/lib/main.js DPL_BASE=https://dpl-preview.invalid/ node divine-pillars/build.mjs   # преглед
-node divine-pillars/tests/pillars.mjs                                              # 243 проверки на живата страница
+node divine-pillars/tests/pillars.mjs                                              # 236 проверки на живата страница
 AXE_PATH=node_modules/axe-core/axe.min.js node divine-pillars/tests/a11y.mjs       # axe
 node divine-pillars/tests/shots.mjs desktop ipad-portrait phone                     # скрийншоти в reports/
 ```

@@ -62,9 +62,9 @@ for (const [name, motion] of [['desktop', 'no-preference'], ['phone', 'no-prefer
   ok(await q(() => document.querySelectorAll('#dpl .dpl__orb svg.dpl__ring').length === 4), `${tag}: four rings drawn`);
   ok(await q(() => [...document.querySelectorAll('#dpl .dpl__orb .lun')].every((g) => g.querySelectorAll('.ln').length === 12) && !document.querySelector('#dpl .frm')), `${tag}: twelve phases of the moon around every circle, no rotating marks`);
   ok(await q(() => !document.querySelector('.dpl__emb') && !!document.querySelector('.dpl__creed .dpl__bio-i')), `${tag}: the creed carries the Bio Dunlop mark, not the moon emblem`);
-  const sky = await q(() => { const s = document.querySelector('.dpl__sky'); return s && { off: s.classList.contains('is-off'), dots: (s.querySelector('.hz path') || { getAttribute: () => '' }).getAttribute('d').split('Z').length - 1, shown: getComputedStyle(s).display !== 'none' }; });
-  if (name === 'desktop') ok(sky && !sky.off && sky.shown && sky.dots > 12, `${tag}: a dotted horizon between the circles for the moon (${sky && sky.dots} dots)`);
-  if (name === 'phone') ok(sky && !sky.shown, `${tag}: no moon crossing on the phone`);
+  const ln = await q(() => { const sun = document.querySelector('.dpl__sun'), b = getComputedStyle(sun, '::before'), a = getComputedStyle(sun, '::after'); return { line: b.display !== 'none' && b.content !== 'none', dot: a.display !== 'none' && a.animationName === 'dpl-flow', sky: !!document.querySelector('.dpl__sky, .dpl__wind') }; });
+  if (name === 'desktop') ok(ln.line && (motion === 'reduce' || ln.dot) && !ln.sky, `${tag}: one line joins the four circles with a light that runs along it (the original), no moonrise, no wind`);
+  if (name === 'phone') ok(!ln.line, `${tag}: no line between circles on the phone`);
   ok(await q(() => !!document.querySelector('#dpl-test-tile') && document.querySelector('#dpl-test-tile').previousElementSibling.contains(document.querySelector('section.dn.dn-c'))), `${tag}: the band sits directly under the Firmness block`);
   ok(await q(() => !document.querySelector('[data-need="#ddhd-system"]').hidden), `${tag}: the link to the System tile shows when the System tile is there`);
   ok(await q(() => [...document.querySelectorAll('.dpl__ctas [data-need]')].every((a) => !a.hidden === !!document.querySelector(a.getAttribute('data-need')))), `${tag}: links to the navigator and to Firmness show only when their target is on the page`);
@@ -82,27 +82,6 @@ for (const [name, motion] of [['desktop', 'no-preference'], ['phone', 'no-prefer
     ok(await q(() => document.querySelector('.dpl__bio').open && /Fully Certified/.test(document.querySelector('.dpl__bio-p').textContent) && /Certified European production for European customers and standards\./.test(document.querySelector('.dpl__bio-p').textContent)), `${tag}: hovering the mark opens "Fully Certified"`);
     await page.mouse.move(5, 5); await page.waitForTimeout(600);
     ok(await q(() => !document.querySelector('.dpl__bio').open), `${tag}: leaving the mark closes the window`);
-  }
-  // the air of Ventilation reaches the leaf (desktop, four circles in a row, normal motion); nowhere else
-  const wd = await q(() => { const w = document.querySelector('.dpl__wind'); if (!w) return null; const cs = getComputedStyle(w); const o4 = document.querySelectorAll('.dpl__orb')[3].getBoundingClientRect(), lf = document.querySelector('.dpl__leaf').getBoundingClientRect(), s1 = w.querySelector('.s1'), off = w.classList.contains('is-off') || !s1.getAttribute('d'), L = off ? 0 : s1.getTotalLength(), a = off ? { x: 0, y: 0 } : s1.getPointAtLength(0), z = off ? { x: 0, y: 0 } : s1.getPointAtLength(L), h = w.getBoundingClientRect(); return { off, disp: cs.display, start: [a.x + h.left, a.y + h.top], end: [z.x + h.left, z.y + h.top], o4: [o4.left, o4.top, o4.right, o4.bottom], lf: [lf.left, lf.top, lf.right, lf.bottom] }; });
-  if (name === 'desktop') {
-    const inside = (pt, r) => pt[0] >= r[0] - 1 && pt[0] <= r[2] + 1 && pt[1] >= r[1] - 1 && pt[1] <= r[3] + 1;
-    if (motion === 'reduce') ok(wd && wd.disp === 'none', `${tag}: no wind under reduced motion`);
-    else ok(wd && !wd.off && wd.disp !== 'none' && inside(wd.start, wd.o4) && inside(wd.end, wd.lf), `${tag}: the stream rises from inside the fourth circle to inside the leaf`);
-  }
-  if (name === 'phone') ok(!wd || wd.off || wd.disp === 'none', `${tag}: no wind on the phone`);
-  if (name === 'desktop' && motion !== 'reduce') {   // the leaf trembles: sample a gust cycle, see it leave the rest position and come back
-    const seen = await q(() => new Promise((res) => { const g = document.querySelector('.dpl__leaf .lf'); let max = 0, end = 0, t0 = performance.now(); (function f() { const m = new DOMMatrix(getComputedStyle(g).transform === 'none' ? undefined : getComputedStyle(g).transform), a = Math.abs(Math.atan2(m.b, m.a) * 180 / Math.PI); max = Math.max(max, a); end = a; if (performance.now() - t0 < 9000) requestAnimationFrame(f); else res({ max, end }); })(); }));
-    ok(seen.max > 3, `${tag}: the leaf trembles when the air reaches it (up to ${seen.max.toFixed(1)}°)`);
-  }
-  if (name === 'desktop' && motion === 'reduce') ok(await q(() => getComputedStyle(document.querySelector('.dpl__leaf .lf')).transform === 'none'), `${tag}: the leaf stands still`);
-  await q(() => document.querySelector('#dpl').scrollIntoView()); await page.waitForTimeout(600);
-  if (name === 'desktop') {   // the moon moves (or stands still, full, under reduced motion)
-    const m1 = await q(() => document.querySelector('.dpl__sky .mn').getAttribute('d'));
-    let moved = false; for (let k = 0; k < 8 && !moved; k++) { await page.waitForTimeout(300); moved = (await q(() => document.querySelector('.dpl__sky .mn').getAttribute('d'))) !== m1; }   // the moon rests 1.6 s between crossings
-    const m2 = await q(() => ({ o: +getComputedStyle(document.querySelector('.dpl__sky .mn')).opacity }));
-    if (motion === 'reduce') ok(!moved && m2.o > 0.9, `${tag}: the moon stands still, full`);
-    else ok(moved, `${tag}: the moon rises and sets between the circles`);
   }
   // text size: every visible text in the band 16 px or more
   const small = await q(() => { const out = []; const w = document.createTreeWalker(document.querySelector('#dpl'), NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { const t = n.textContent.trim(); const e = n.parentElement; if (!t || !e.offsetParent || e.closest('[aria-hidden="true"]') || e.closest('caption') || e.closest('.dpl__num')) continue; const fs = parseFloat(getComputedStyle(e).fontSize); if (fs < 15.9) out.push(`${t.slice(0, 30)} ${fs}px`); } return out; });

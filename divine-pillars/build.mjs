@@ -10,7 +10,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { HEAD, MATERIALS, COMPARE, PILLARS, FOOT, DIFF, CREED } from './src/content.mjs';
 
-const VERSION = '0.11.1';
+const VERSION = '0.11.2';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DPL_REF || 'main-preview';
 const BASE = process.env.DPL_BASE || `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-pillars/release/${VERSION}/`;
@@ -54,15 +54,11 @@ const bio = `<details class="dpl__bio"><summary class="dpl__bio-s"><img class="d
 const creed = `<figure class="dpl__creed">${bio}<div><blockquote class="dpl__cq"><p>${esc(CREED.quote[0])}</p><p><b>${esc(CREED.quote[1])}</b></p></blockquote>
 <figcaption class="dpl__ct">${esc(CREED.text)}</figcaption></div></figure>`;
 
-// the quiet leaf behind the header: a real element now, so that the air from the Ventilation circle can reach it (dpl.js draws the stream)
-const leaf = `<svg class="dpl__leaf" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><g class="lf"><path d="M30 170C60 120 100 70 175 25C150 95 105 150 30 170Z"/><path d="M30 170C80 125 125 80 175 25"/><path d="M70 140l-6-30M95 115l-4-34M120 90l-2-36M140 70l2-32M88 128l30 4M112 104l32 2M134 80l28-2"/></g></svg>`;
-
 const loader = `<script>(function(){var s=document.getElementById('dpl');if(!s)return;s.classList.add('is-js');if(window.DPL){window.DPL.scan();return}var x=document.createElement('script');x.src='${BASE}dpl.js';x.defer=true;x.onerror=function(){s.classList.remove('is-js')};document.head.appendChild(x);setTimeout(function(){if(!window.DPL)s.classList.remove('is-js')},8000)})();</script>`;
 
 const tile = `<link rel="stylesheet" href="${BASE}dpl.css">
 <section class="dpl" id="dpl" aria-labelledby="dpl-h" data-version="${VERSION}">
 <div class="dpl__in">
-${leaf}
 <header class="dpl__hd"><p class="dpl__eb">${esc(HEAD.eyebrow)}</p>
 <h2 class="dpl__h" id="dpl-h">${HEAD.title}</h2>
 <p class="dpl__lede">${esc(HEAD.lede)}</p></header>

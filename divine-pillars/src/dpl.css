@@ -12,10 +12,8 @@
 .dpl button{font:inherit;color:inherit;background:none;border:0;margin:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .dpl :focus-visible{outline:2px solid var(--acc);outline-offset:4px;border-radius:12px}
 .dpl__in{position:relative;max-width:1220px;margin:0 auto}
-/* one quiet botanical line behind the header (a hevea leaf in outline). A real element: the air of Ventilation reaches it. */
-.dpl__leaf{position:absolute;right:-40px;top:-30px;width:280px;height:280px;opacity:.14;pointer-events:none;overflow:visible;fill:none;stroke:#A4D4DC;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.dpl__leaf .lf{transform-origin:30px 170px}
-.dpl__hd{position:relative}
+/* one quiet botanical line behind the header (a hevea leaf in outline, no kitsch) */
+.dpl__in::before{content:"";position:absolute;right:-40px;top:-30px;width:280px;height:280px;opacity:.09;pointer-events:none;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23A4D4DC' stroke-width='2'%3E%3Cpath d='M30 170C60 120 100 70 175 25C150 95 105 150 30 170Z'/%3E%3Cpath d='M30 170C80 125 125 80 175 25'/%3E%3Cpath d='M70 140l-6-30M95 115l-4-34M120 90l-2-36M140 70l2-32M88 128l30 4M112 104l32 2M134 80l28-2'/%3E%3C/svg%3E")}
 
 /* header */
 .dpl__hd{max-width:820px;margin:0 auto clamp(40px,5vw,64px);text-align:center}
@@ -24,13 +22,11 @@
 .dpl .dpl__h b{font-weight:600;color:var(--acc);-webkit-text-stroke:.5px currentColor}
 .dpl .dpl__lede{margin:18px auto 0;max-width:700px;color:var(--ink2);font-size:clamp(17px,1.35vw,19px);line-height:1.6;-webkit-text-stroke:.15px currentColor}
 
-/* the sun row: four circles. Without JS one line joins them; with JS a moon rises and sets between them (.dpl__sky). */
+/* the sun row: four circles joined by one line, and a light that runs along it again and again (each law leads to the next) */
 .dpl__sun{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,2.4vw,36px)}
-.dpl:not(.is-js) .dpl__sun::before{content:"";position:absolute;left:12.5%;right:12.5%;top:calc(var(--orb) / 2);height:1px;background:linear-gradient(90deg,transparent,rgba(164,212,220,.45) 12%,rgba(164,212,220,.45) 88%,transparent);pointer-events:none}
-.dpl__sky{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
-.dpl__sky.is-off{display:none}
-.dpl__sky .hz{fill:rgba(164,212,220,.38)}
-.dpl__sky .mn{fill:#EAF7F6;filter:drop-shadow(0 0 5px rgba(79,211,203,.9)) drop-shadow(0 0 14px rgba(79,211,203,.35));opacity:0}
+.dpl__sun::before{content:"";position:absolute;left:12.5%;right:12.5%;top:calc(var(--orb) / 2);height:1px;background:linear-gradient(90deg,transparent,rgba(164,212,220,.45) 12%,rgba(164,212,220,.45) 88%,transparent);pointer-events:none}
+.dpl__sun::after{content:"";position:absolute;left:12.5%;top:calc(var(--orb) / 2 - 2px);width:60px;height:5px;border-radius:5px;background:radial-gradient(closest-side,rgba(79,211,203,.9),transparent);animation:dpl-flow 7s linear infinite;pointer-events:none}
+@keyframes dpl-flow{from{left:12.5%;opacity:0}8%{opacity:1}92%{opacity:1}to{left:calc(87.5% - 60px);opacity:0}}
 .dpl__sun{--orb:clamp(196px,18vw,236px)}
 .dpl__p{position:relative;align-self:stretch;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0}
 .dpl__orb{position:relative;display:block;width:var(--orb);height:var(--orb);border-radius:50%;flex:none;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
@@ -205,31 +201,6 @@
 .dpl .dpl__ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:clamp(28px,4vw,40px)}
 
 
-/* the air of Ventilation: light rises from the fourth circle to the leaf, the leaf trembles; one gust every 8 s while the band is in view */
-.dpl__wind{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.dpl__wind.is-off{display:none}
-.dpl__wind .wk{opacity:0}
-.dpl__wind path{fill:none;stroke:url(#dpl-wg);stroke-linecap:round}
-.dpl__wind .s0{stroke-width:18;opacity:.16;stroke-dasharray:none;filter:blur(5px)}
-.dpl__wind .s1{stroke-width:3.4;stroke-dasharray:30 22;--p:52}
-.dpl__wind .s2{stroke-width:2.2;stroke-dasharray:12 34;--p:46}
-.dpl__wind .s3{stroke-width:2.2;stroke-dasharray:8 40;--p:48}
-.dpl__wind .s4{stroke-width:4;stroke-dasharray:.1 30;--p:30.1}
-.dpl__wind .src{transform-box:fill-box;transform-origin:center}
-.dpl.is-in .dpl__wind .wk{animation:dpl-gust 8s ease-in-out infinite;filter:drop-shadow(0 0 5px rgba(255,226,160,.5))}
-.dpl.is-in .dpl__wind path:not(.s0){animation:dpl-fly 1.7s linear infinite}
-.dpl.is-in .dpl__wind .s2{animation-duration:2.3s}
-.dpl.is-in .dpl__wind .s3{animation-duration:2s;animation-delay:-.6s}
-.dpl.is-in .dpl__wind .s4{animation-duration:2.6s}
-.dpl.is-in .dpl__wind .src{animation:dpl-src 1.7s ease-in-out infinite}
-.dpl.is-in .dpl__leaf{animation:dpl-leaf 8s ease-in-out infinite}
-.dpl.is-in .dpl__leaf .lf{animation:dpl-sway 8s ease-out infinite}
-@keyframes dpl-gust{0%{opacity:0}10%,42%{opacity:1}58%,100%{opacity:0}}
-@keyframes dpl-fly{to{stroke-dashoffset:calc(var(--p) * -1)}}
-@keyframes dpl-src{0%,100%{transform:scale(.8);opacity:.7}50%{transform:scale(1.15);opacity:1}}
-@keyframes dpl-leaf{0%,14%{opacity:.14}24%,46%{opacity:.34}64%,100%{opacity:.14}}
-@keyframes dpl-sway{0%,16%{transform:rotate(0)}22%{transform:rotate(-7deg)}28%{transform:rotate(4.5deg)}34%{transform:rotate(-3.2deg)}40%{transform:rotate(2.2deg)}46%{transform:rotate(-1.4deg)}54%{transform:rotate(.7deg)}62%,100%{transform:rotate(0)}}
-
 /* the comparison window */
 .dpl__dlg{width:min(1180px,calc(100vw - 24px));max-height:calc(100dvh - 24px);margin:auto;padding:0;border:0;border-radius:28px;background:linear-gradient(160deg,#12303F,#0A1B26);color:var(--ink);box-shadow:0 50px 120px -30px rgba(0,0,0,.9),0 0 0 1px rgba(164,212,220,.2);font-family:var(--f)}
 .dpl__dlg::backdrop{background:rgba(4,14,20,.72);backdrop-filter:blur(6px)}
@@ -243,7 +214,7 @@ html.dpl-lock,html.dpl-lock body{overflow:hidden!important}
 @media (max-width:999px){
   .dpl__tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
   .dpl__sun{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:44px;--orb:clamp(190px,30vw,230px)}
-  .dpl:not(.is-js) .dpl__sun::before{display:none}
+  .dpl__sun::before,.dpl__sun::after{display:none}
   .dpl__pin{grid-template-columns:1fr}
   .dpl__big{width:min(100%,380px)}
   .dpl__st{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -264,12 +235,10 @@ html.dpl-lock,html.dpl-lock body{overflow:hidden!important}
   .dpl__lg button{grid-template-columns:14px minmax(0,1fr);row-gap:2px}
   .dpl__lg b{grid-column:2;text-align:left}
   .dpl__pin{padding:22px 16px;border-radius:24px}
-  .dpl__sky{display:none}
-  .dpl .dpl__creed{grid-template-columns:1fr;justify-items:center;text-align:center}
+    .dpl .dpl__creed{grid-template-columns:1fr;justify-items:center;text-align:center}
   .dpl__bio{width:210px}
   .dpl .dpl__bio-p{left:50%;transform:translateX(-50%);text-align:left}
   .dpl__bio[open] .dpl__bio-p{animation:none}
-  .dpl__leaf{width:190px;height:190px;opacity:.1}
   .dpl__chain{grid-template-columns:1fr;gap:26px}
   .dpl__chain li:not(:last-child)::after{content:"\2193";right:auto;left:50%;top:auto;bottom:-25px;transform:translateX(-50%)}
   .dpl__lv{grid-template-columns:1fr}
@@ -287,6 +256,4 @@ html.dpl-lock,html.dpl-lock body{overflow:hidden!important}
   .dpl *,.dpl *::before,.dpl *::after{animation:none!important;transition:none!important}
   .dpl.is-js:not(.is-in) .dpl__ring .val{stroke-dashoffset:0}
   .dpl .ln{opacity:.8}
-  .dpl__sky .mn{opacity:1}
-  .dpl__wind{display:none}
 }
