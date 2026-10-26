@@ -13,7 +13,7 @@ for (const name of ['desktop', 'phone']) {
   };
   await page.evaluate(() => document.querySelector('#dpl').scrollIntoView()); await page.waitForTimeout(1600);
   await run('#dpl', 'closed');
-  for (const id of ['support', 'adapt', 'breathe', 'natural']) { await page.click(`#dpl-${id} .dpl__orb`); await page.waitForTimeout(800); await run('#dpl', `open ${id}`); }
+  for (const id of ['natural', 'support', 'adapt', 'breathe']) { await page.click(`#dpl-${id} .dpl__orb`); await page.waitForTimeout(800); await page.evaluate(() => document.querySelectorAll('.dpl__panel details').forEach((d) => { d.open = true; })); await run('#dpl', `open ${id}`); }
   await page.click('.dpl__panel [data-cmp]'); await page.waitForTimeout(500);
   await run('.dpl__dlg', 'comparison window');
   await ctx.close();

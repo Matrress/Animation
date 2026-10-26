@@ -16,9 +16,10 @@ for (const name of names) {
   // the seam: the end of the Firmness block, the band, the start of the System tile
   await page.evaluate(() => window.scrollBy(0, -260)); await page.waitForTimeout(400);
   await page.screenshot({ path: path.join(dir, `${name}-0-seam.png`) });
-  for (const [i, id] of ['support', 'adapt', 'breathe', 'natural'].entries()) {
+  for (const [i, id] of ['natural', 'support', 'adapt', 'breathe'].entries()) {
     await page.click(`#dpl-${id} .dpl__orb`); await page.waitForTimeout(900);
-    if (i === 0) {   // hover the latex ring in the big chart
+    await page.evaluate(() => document.querySelectorAll('.dpl__panel .dpl__sub').forEach((d) => { d.open = true; })); await page.waitForTimeout(200);
+    if (i === 1) {   // hover the latex ring in the big chart
       const g = await page.$('.dpl__big g[data-m="dun"]'); if (g) { const bb = await g.boundingBox(); await page.mouse.move(bb.x + bb.width / 2, bb.y + 4); await page.waitForTimeout(500); }
     }
     await shot(`${i + 2}-open-${id}`);

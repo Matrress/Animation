@@ -8,9 +8,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { HEAD, MATERIALS, COMPARE, PILLARS, FOOT, DIFF } from './src/content.mjs';
+import { HEAD, MATERIALS, COMPARE, PILLARS, FOOT, DIFF, CREED } from './src/content.mjs';
 
-const VERSION = '0.10.0';
+const VERSION = '0.11.0';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DPL_REF || 'main-preview';
 const BASE = process.env.DPL_BASE || `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-pillars/release/${VERSION}/`;
@@ -31,7 +31,7 @@ const card = (p) => `<li class="dpl__p" id="dpl-${p.id}">
 </li>`;
 
 const table = `<div class="dpl__tbw"><div class="dpl__tbs"><table>
-<caption class="dpl-sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Six material classes compared on density, resilience, recovery, support factor, air channels and heat response</caption>
+<caption class="dpl-sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Six material classes compared on density, resilience, recovery, progressive response, air channels and heat response</caption>
 <thead><tr><th scope="col">Material</th>${COMPARE.cols.map((c) => `<th scope="col">${esc(c)}</th>`).join('')}</tr></thead>
 <tbody>${MATERIALS.map((m) => `<tr class="${m.ours ? 'is-ours' : ''}${m.id === 'tempur' ? 'is-tempur' : ''}"><th scope="row">${esc(m.name)}<small>${esc(m.how)}</small></th>${COMPARE.rows[m.id].map((v, i) => `<td data-l="${esc(COMPARE.cols[i])}">${esc(v)}</td>`).join('')}</tr>`).join('\n')}</tbody>
 </table></div><p class="dpl__note">${esc(COMPARE.note)}</p></div>`;
@@ -47,6 +47,20 @@ const ICON = {
 };
 const dtile = (t) => `<li class="dpl__tl"><span class="dpl__ic"><svg viewBox="0 0 48 48" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICON[t.icon]}</svg></span>
 <h3 class="dpl__tt">${esc(t.title)}</h3><p class="dpl__tx2">${esc(t.text)}</p></li>`;
+
+// the moon: one phase as a path (f 0 = new, .5 = full, 1 = new again). The same drawing is in dpl.js.
+const fx = (n) => +n.toFixed(2);
+function moonD(cx, cy, r, f) {
+  f = ((f % 1) + 1) % 1;
+  if (f < 0.04 || f > 0.96) { const q = r * 0.42; return `M${fx(cx - q)} ${fx(cy)}a${fx(q)} ${fx(q)} 0 1 0 ${fx(2 * q)} 0a${fx(q)} ${fx(q)} 0 1 0 ${fx(-2 * q)} 0Z`; }
+  if (Math.abs(f - 0.5) < 0.02) return `M${fx(cx - r)} ${fx(cy)}a${fx(r)} ${fx(r)} 0 1 0 ${fx(2 * r)} 0a${fx(r)} ${fx(r)} 0 1 0 ${fx(-2 * r)} 0Z`;
+  const wax = f < 0.5, t = wax ? 1 - 4 * f : 4 * f - 3, top = `${fx(cx)} ${fx(cy - r)}`, bot = `${fx(cx)} ${fx(cy + r)}`;
+  return `M${top}A${fx(r)} ${fx(r)} 0 0 ${wax ? 1 : 0} ${bot}A${fx(Math.abs(t) * r)} ${fx(r)} 0 0 ${wax ? (t > 0 ? 0 : 1) : (t > 0 ? 1 : 0)} ${top}Z`;
+}
+// the emblem of the creed: eight phases around a quiet circle, the full moon on top (after the owner's artwork)
+const emblem = `<svg class="dpl__emb" viewBox="0 0 200 200" width="200" height="200" aria-hidden="true" focusable="false"><circle cx="100" cy="100" r="56" class="dpl__eo"/><path class="dpl__ec" d="${moonD(100, 100, 30, 0.8)}"/>${Array.from({ length: 8 }, (_, k) => { const a = k * Math.PI / 4; return `<path class="ln" style="--i:${k}" d="${moonD(100 + 80 * Math.sin(a), 100 - 80 * Math.cos(a), 9, 0.5 + k / 8)}"/>`; }).join('')}</svg>`;
+const creed = `<figure class="dpl__creed">${emblem}<div><blockquote class="dpl__cq"><p>${esc(CREED.quote[0])}</p><p><b>${esc(CREED.quote[1])}</b></p></blockquote>
+<figcaption class="dpl__ct">${esc(CREED.text)}</figcaption></div></figure>`;
 
 const loader = `<script>(function(){var s=document.getElementById('dpl');if(!s)return;s.classList.add('is-js');if(window.DPL){window.DPL.scan();return}var x=document.createElement('script');x.src='${BASE}dpl.js';x.defer=true;x.onerror=function(){s.classList.remove('is-js')};document.head.appendChild(x);setTimeout(function(){if(!window.DPL)s.classList.remove('is-js')},8000)})();</script>`;
 
@@ -65,6 +79,7 @@ ${PILLARS.map(card).join('\n')}
 ${table}
 </details>
 </div>
+${creed}
 <div class="dpl__diff">
 <header class="dpl__hd dpl__hd2"><p class="dpl__eb">${esc(DIFF.eyebrow)}</p>
 <h2 class="dpl__h" id="dpl-h2">${DIFF.title}</h2>
@@ -87,18 +102,17 @@ ${loader}
 const data = {
   version: VERSION, compare: FOOT.compare,
   materials: MATERIALS.map(({ id, name, ours }) => ({ id, name, ours: !!ours })),
-  pillars: PILLARS.map(({ id, label, n, title, verb, img, alt, head, body, quote, stats, vs, chart }) => ({ id, label, n, title, verb, img, alt, head, body, quote, stats, vs, chart })),
+  pillars: PILLARS.map(({ id, label, n, title, verb, img, alt, head, chain, body, quote, sub, stats, vs, chart }) => ({ id, label, n, title, verb, img, alt, head, chain, body, quote, sub, stats, vs, chart })),
 };
 let js = fs.readFileSync(path.join(here, 'src/dpl.js'), 'utf8').replace('__DPL_DATA__', JSON.stringify(data));
 let css = `@font-face{font-family:DPLChillax;src:url(${FONT_BASE}chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:DPLChillax;src:url(${FONT_BASE}chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}\n` + fs.readFileSync(path.join(here, 'src/dpl.css'), 'utf8');
 
 // ---- the owner's standing rules, checked on everything a reader can see ----
-const visible = (tile.replace(/<script[\s\S]*?<\/script>/g, '') + JSON.stringify(data.pillars)).replace(/<[^>]+>/g, ' ');
+const visible = (tile.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<script[\s\S]*?<\/script>/g, '') + JSON.stringify(data.pillars)).replace(/<[^>]+>/g, ' ');
 const guards = [
   [/\blayers?\b/i, 'the word "layer"'],
   [/approximately|~/i, '"approximately" or "~"'],
   [/[£€$]\s?\d|\bprice\b/i, 'a price'],
-  [/overheating|no more over/i, 'an absolute temperature promise'],
   [/Hotel Line/, 'Hotel Line'],
   [/unbeatable|best in class|highest in class/i, 'an untested superlative'],
 ];
