@@ -2,7 +2,8 @@
    The static tile is complete without this file. This file draws the data rings around the four circles, opens one
    law at a time in the panel under them (as large as it needs), and turns "Compare All Materials" into a window.
    Data is injected at build time from src/content.mjs. Around each circle sit the phases of the moon; between the circles
-   (desktop and tablet) a moon rises and sets, from new to full to new. Under reduced motion nothing moves. */
+   (desktop and tablet) a moon rises and sets, from new to full to new. From the Ventilation circle a stream of light rises
+   to the leaf above and makes it tremble. Under reduced motion nothing moves. */
 (function () {
   'use strict';
   var D = __DPL_DATA__;
@@ -212,6 +213,8 @@
     [].forEach.call(root.querySelectorAll('[data-need]'), function (el) { if (document.querySelector(el.getAttribute('data-need'))) el.hidden = false; });
 
     sky(root, sun);
+    wind(root, sun);
+    bioMark(root);
 
     // draw the rings when the band comes into view (immediately under reduced motion or without IntersectionObserver)
     if (reduce || !('IntersectionObserver' in window)) root.classList.add('is-in');
@@ -271,6 +274,57 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { seen = es.some(function (e) { return e.isIntersecting; }); go(); }).observe(sun);
     else { seen = true; go(); }
     document.addEventListener('visibilitychange', go);
+  }
+
+  // the Bio Dunlop window: a mouse hovering opens it, leaving closes it; a tap, Enter or Space opens it for good (native <details>)
+  function bioMark(root) {
+    var b = root.querySelector('.dpl__bio'), t = 0;
+    if (!b) return;
+    var shut = function () { b.open = false; b.removeAttribute('data-hover'); };
+    b.addEventListener('pointerover', function (e) { if (e.pointerType !== 'mouse') return; clearTimeout(t); if (!b.open) { b.open = true; b.setAttribute('data-hover', ''); } });
+    b.addEventListener('pointerout', function (e) {
+      if (e.pointerType !== 'mouse' || !b.hasAttribute('data-hover') || (e.relatedTarget && b.contains(e.relatedTarget))) return;
+      t = setTimeout(function () { if (b.hasAttribute('data-hover')) shut(); }, 220);
+    });
+    b.querySelector('summary').addEventListener('click', function (e) { if (b.hasAttribute('data-hover')) { e.preventDefault(); b.removeAttribute('data-hover'); } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && b.open) shut(); });
+    document.addEventListener('pointerdown', function (e) { if (b.open && !b.contains(e.target)) shut(); });
+  }
+
+  // the air of Ventilation: from the top of the fourth circle (the light that comes out of the core) a stream rises to the leaf
+  // above the header; the leaf trembles when it is hit. Only where the way up is free (four circles in a row, clear of the
+  // header text). The motion itself is CSS (looped while the band is in view); this draws the path and the gradient.
+  function wind(root, sun) {
+    var host = sun.parentElement, leaf = host.querySelector('.dpl__leaf'), hd = host.querySelector('.dpl__hd'), orbs = sun.querySelectorAll('.dpl__orb');
+    if (!leaf || !hd || orbs.length < 4) return;
+    var svg = sv('svg', { 'class': 'dpl__wind is-off', 'aria-hidden': 'true', focusable: 'false' }), defs = sv('defs', {});
+    var gr = sv('linearGradient', { id: 'dpl-wg', gradientUnits: 'userSpaceOnUse' }), rg = sv('radialGradient', { id: 'dpl-wr' });
+    [['0', '#FFE9B0', '.95'], ['.5', '#D6F8F4', '.75'], ['1', '#D6F8F4', '0']].forEach(function (s) { gr.appendChild(sv('stop', { offset: s[0], 'stop-color': s[1], 'stop-opacity': s[2] })); });
+    [['0', '#FFE9B0', '.85'], ['1', '#FFE9B0', '0']].forEach(function (s) { rg.appendChild(sv('stop', { offset: s[0], 'stop-color': s[1], 'stop-opacity': s[2] })); });
+    defs.appendChild(gr); defs.appendChild(rg); svg.appendChild(defs);
+    var g = sv('g', { 'class': 'wk' }), src = sv('circle', { 'class': 'src', fill: 'url(#dpl-wr)' }), ss = ['s0', 's1', 's2', 's3', 's4'].map(function (c) { return sv('path', { 'class': c }); });
+    g.appendChild(src); ss.forEach(function (p) { g.appendChild(p); }); svg.appendChild(g);
+    host.insertBefore(svg, sun.nextSibling);
+    function layout() {
+      var h = host.getBoundingClientRect(), o1 = orbs[0].getBoundingClientRect(), o4 = orbs[3].getBoundingClientRect(), l = leaf.getBoundingClientRect(), hr = hd.getBoundingClientRect();
+      var x0 = o4.left - h.left + o4.width / 2, y0 = o4.top - h.top + o4.height * 0.27, x1 = l.left - h.left + l.width * 0.48, y1 = l.top - h.top + l.height * 0.6;
+      var row = Math.abs(o4.top - o1.top) < 4, clear = Math.min(x0, x1) - 22 > hr.right - h.left, up = y0 - y1 > 90;
+      svg.classList.toggle('is-off', !(row && clear && up));
+      if (!(row && clear && up)) return;
+      svg.setAttribute('viewBox', '0 0 ' + fx(h.width) + ' ' + fx(h.height));
+      gr.setAttribute('x1', 0); gr.setAttribute('y1', fx(y0)); gr.setAttribute('x2', 0); gr.setAttribute('y2', fx(y1));
+      var dy = y0 - y1;
+      [[0, 0], [0, 0], [9, -6], [-9, 7], [3, 2]].forEach(function (d, i) {
+        var a = x0 + d[0], b = x1 + d[1];
+        ss[i].setAttribute('d', 'M' + fx(a) + ' ' + fx(y0) + 'C' + fx(a - 24) + ' ' + fx(y0 - dy * 0.34) + ' ' + fx(b + 30) + ' ' + fx(y1 + dy * 0.36) + ' ' + fx(b) + ' ' + fx(y1));
+      });
+      src.setAttribute('cx', fx(x0)); src.setAttribute('cy', fx(y0)); src.setAttribute('r', 30);
+    }
+    layout();
+    var rz = 0, re = function () { if (!rz) rz = requestAnimationFrame(function () { rz = 0; layout(); }); };
+    window.addEventListener('resize', re);
+    if (window.ResizeObserver) new ResizeObserver(re).observe(host);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(re);
   }
 
   function scan() { [].forEach.call(document.querySelectorAll('section.dpl'), init); }

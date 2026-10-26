@@ -1,8 +1,10 @@
 # Divine DunlopDreams · Four Laws of Good Sleep
 
-Тъмна секция под Firmness блока на началната страница, в две части (0.11.0). Под нея идва System.
+Тъмна секция под Firmness блока на началната страница, в две части (0.11.1). Под нея идва System.
 
 **Част А, „Four Laws“:** четири кръга един до друг, всеки със снимка, дъги с данни, 12 фази на луната около кръга (светват една след друга), глагол, ключово послание и „Explore“. Между кръговете (десктоп и таблет) луна изгрява и залязва над пунктирен хоризонт: от новолуние през пълнолуние до новолуние. Натискане отваря панел с голяма графика и разгъващи се под-пера.
+
+**Вятърът (десктоп, четири кръга в ред):** от светлината на сърцевината в кръг 4 струя се издига към перото над заглавието; перото трепва и се люлее. Порив на всеки 8 s, докато лентата се вижда. Без движение при reduced motion; на таблет и телефон няма струя (перото стои тихо).
 
 | Закон | Глагол | Дъгите | Ключово послание | Под-пера |
 |---|---|---|---|---|
@@ -11,11 +13,11 @@
 | 3 Adaptability | Adapts | Progressive Response (SAG) | Instant | Four Levels of Adaptation in Bio Comfort |
 | 4 Ventilation | Breathes | мащаби на въздушния поток | No More Overheating (верига вентилация → температурен комфорт → no more overheating) | Temperature Comfort; A Hygienic, Hypoallergenic Sleep Space |
 
-**Между частите:** емблема с осем лунни фази и думите на собственика: „For us, a mattress is not a piece of furniture. For us, the mattress is a conception for healthy sleep.“ плюс реда за инженерното ниво.
+**Между частите:** белегът Bio Dunlop (листото от Collection, със същия hover и прозорец „Fully Certified“) и думите на собственика: „For us, a mattress is not a piece of furniture. For us, the mattress is a conception for healthy sleep.“ плюс реда за инженерното ниво.
 
 **Част Б, „How We Are Different“:** шест карти (чист латекс и натурални кокосови влакна; твърдост по телесно тегло; Dual Plush; Mattress for Partners; ортопедичен твърд комфорт; индивидуално производство), изречението „Not one mattress for everyone“ и връзки към навигатора, Firmness и System.
 
-Версии: 0.8.0 (четири кръга, без Част Б), 0.9.0 (квадратна карта със сфера), 0.10.0 (четири кръга и Част Б с шест карти), 0.11.0 (нов ред, луната, под-пера, Dual Plush System и Partner’s Comfort). Всяка има свой `release/<v>/` и `ecwid/pillars-<v>-pinned.html`.
+Версии: 0.8.0 (четири кръга, без Част Б), 0.9.0 (квадратна карта със сфера), 0.10.0 (четири кръга и Част Б с шест карти), 0.11.0 (нов ред, луната, под-пера, Dual Plush System и Partner’s Comfort), 0.11.1 (белегът Bio Dunlop вместо емблемата с луната; вятър от матрака към перото). Всяка има свой `release/<v>/` и `ecwid/pillars-<v>-pinned.html`.
 
 ## Един източник
 

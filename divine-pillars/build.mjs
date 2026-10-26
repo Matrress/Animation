@@ -10,7 +10,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { HEAD, MATERIALS, COMPARE, PILLARS, FOOT, DIFF, CREED } from './src/content.mjs';
 
-const VERSION = '0.11.0';
+const VERSION = '0.11.1';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DPL_REF || 'main-preview';
 const BASE = process.env.DPL_BASE || `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-pillars/release/${VERSION}/`;
@@ -48,25 +48,21 @@ const ICON = {
 const dtile = (t) => `<li class="dpl__tl"><span class="dpl__ic"><svg viewBox="0 0 48 48" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICON[t.icon]}</svg></span>
 <h3 class="dpl__tt">${esc(t.title)}</h3><p class="dpl__tx2">${esc(t.text)}</p></li>`;
 
-// the moon: one phase as a path (f 0 = new, .5 = full, 1 = new again). The same drawing is in dpl.js.
-const fx = (n) => +n.toFixed(2);
-function moonD(cx, cy, r, f) {
-  f = ((f % 1) + 1) % 1;
-  if (f < 0.04 || f > 0.96) { const q = r * 0.42; return `M${fx(cx - q)} ${fx(cy)}a${fx(q)} ${fx(q)} 0 1 0 ${fx(2 * q)} 0a${fx(q)} ${fx(q)} 0 1 0 ${fx(-2 * q)} 0Z`; }
-  if (Math.abs(f - 0.5) < 0.02) return `M${fx(cx - r)} ${fx(cy)}a${fx(r)} ${fx(r)} 0 1 0 ${fx(2 * r)} 0a${fx(r)} ${fx(r)} 0 1 0 ${fx(-2 * r)} 0Z`;
-  const wax = f < 0.5, t = wax ? 1 - 4 * f : 4 * f - 3, top = `${fx(cx)} ${fx(cy - r)}`, bot = `${fx(cx)} ${fx(cy + r)}`;
-  return `M${top}A${fx(r)} ${fx(r)} 0 0 ${wax ? 1 : 0} ${bot}A${fx(Math.abs(t) * r)} ${fx(r)} 0 0 ${wax ? (t > 0 ? 0 : 1) : (t > 0 ? 1 : 0)} ${top}Z`;
-}
-// the emblem of the creed: eight phases around a quiet circle, the full moon on top (after the owner's artwork)
-const emblem = `<svg class="dpl__emb" viewBox="0 0 200 200" width="200" height="200" aria-hidden="true" focusable="false"><circle cx="100" cy="100" r="56" class="dpl__eo"/><path class="dpl__ec" d="${moonD(100, 100, 30, 0.8)}"/>${Array.from({ length: 8 }, (_, k) => { const a = k * Math.PI / 4; return `<path class="ln" style="--i:${k}" d="${moonD(100 + 80 * Math.sin(a), 100 - 80 * Math.cos(a), 9, 0.5 + k / 8)}"/>`; }).join('')}</svg>`;
-const creed = `<figure class="dpl__creed">${emblem}<div><blockquote class="dpl__cq"><p>${esc(CREED.quote[0])}</p><p><b>${esc(CREED.quote[1])}</b></p></blockquote>
+// the creed: the owner's words next to the Bio Dunlop mark (his drawing, the same file and the same hover as under the Hero in the Collection)
+const BIO_IMG = 'https://cdn.jsdelivr.net/gh/Matrress/Animation@9d681f860c9dae7dd866236d6824f413443b8512/divine-home-discovery/assets/bio-dunlop.svg';
+const bio = `<details class="dpl__bio"><summary class="dpl__bio-s"><img class="dpl__bio-i" src="${BIO_IMG}" width="3845" height="1519" loading="lazy" alt="Bio Dunlop: certified European production"></summary><div class="dpl__bio-p"><p class="dpl__bio-h">Fully Certified</p><p>Certified European production for European customers and standards.</p></div></details>`;
+const creed = `<figure class="dpl__creed">${bio}<div><blockquote class="dpl__cq"><p>${esc(CREED.quote[0])}</p><p><b>${esc(CREED.quote[1])}</b></p></blockquote>
 <figcaption class="dpl__ct">${esc(CREED.text)}</figcaption></div></figure>`;
+
+// the quiet leaf behind the header: a real element now, so that the air from the Ventilation circle can reach it (dpl.js draws the stream)
+const leaf = `<svg class="dpl__leaf" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><g class="lf"><path d="M30 170C60 120 100 70 175 25C150 95 105 150 30 170Z"/><path d="M30 170C80 125 125 80 175 25"/><path d="M70 140l-6-30M95 115l-4-34M120 90l-2-36M140 70l2-32M88 128l30 4M112 104l32 2M134 80l28-2"/></g></svg>`;
 
 const loader = `<script>(function(){var s=document.getElementById('dpl');if(!s)return;s.classList.add('is-js');if(window.DPL){window.DPL.scan();return}var x=document.createElement('script');x.src='${BASE}dpl.js';x.defer=true;x.onerror=function(){s.classList.remove('is-js')};document.head.appendChild(x);setTimeout(function(){if(!window.DPL)s.classList.remove('is-js')},8000)})();</script>`;
 
 const tile = `<link rel="stylesheet" href="${BASE}dpl.css">
 <section class="dpl" id="dpl" aria-labelledby="dpl-h" data-version="${VERSION}">
 <div class="dpl__in">
+${leaf}
 <header class="dpl__hd"><p class="dpl__eb">${esc(HEAD.eyebrow)}</p>
 <h2 class="dpl__h" id="dpl-h">${HEAD.title}</h2>
 <p class="dpl__lede">${esc(HEAD.lede)}</p></header>
