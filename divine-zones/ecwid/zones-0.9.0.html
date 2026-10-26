@@ -1,0 +1,139 @@
+<!-- Divine DunlopDreams Seven Zones 0.9.0 · една Custom code секция · слага се на началната страница под Firmness блока -->
+<section class="dz7" id="dz7" aria-labelledby="dz7-h">
+<style>
+.dz7{--dz-c0:#1E3F66;--dz-c1:#1A6FC8;--dz-c2:#2F86E6;--dz-hl:#7DBDFF;--dz-mut:#C9D2D3;--dz-line:rgba(255,255,255,.14);position:relative;isolation:isolate;overflow:hidden;box-sizing:border-box;margin:0 auto;max-width:1200px;border-radius:22px;color:#fff;font-family:DDVChillax,Chillax,inherit;background:radial-gradient(120% 90% at 50% 120%,#24292B,#1B1E20 60%,#161819);box-shadow:0 22px 50px -24px rgba(10,12,14,.85)}
+.dz7 *{box-sizing:border-box}
+.dz7-bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.dz7-bg i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16}
+.dz7-a1{width:50%;height:70%;left:-10%;top:30%;background:var(--dz-c1)}
+.dz7-a2{width:55%;height:80%;right:-12%;bottom:-25%;background:var(--dz-c2)}
+.dz7-in{padding:28px 24px 26px;display:grid;gap:20px}
+.dz7-fig{margin-top:6px}
+.dz7-chip{margin:0 0 10px;display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#D8F7F4}
+.dz7-chip:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--dz-hl);box-shadow:0 0 10px var(--dz-hl)}
+.dz7 h2{margin:0;font-size:clamp(23px,3vw,34px);line-height:1.18;font-weight:600;text-wrap:balance;color:#fff}
+.dz7-lead{margin:10px 0 0;max-width:720px;font-size:16px;line-height:1.6;color:var(--dz-mut)}
+
+/* Сцената: тялото и матракът, зоните пулсират като еквалайзер по контура на матрака */
+.dz7-fig{position:relative;width:100%;aspect-ratio:2570/780;contain:layout}
+.dz7-fig svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.dz7-div line{stroke:rgba(255,255,255,.18);stroke-width:2}
+.dz7-bar{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(var(--h));animation:dz7-eq 2.6s ease-in-out infinite;animation-delay:calc(var(--i) * -.37s);transition:opacity .3s,filter .3s}
+.dz7-zq{transition:opacity .3s,filter .3s}
+.dz7-zq .zb{animation:dz7-zqa 2.6s ease-in-out infinite;animation-delay:calc(var(--i) * -.37s)}
+@keyframes dz7-zqa{0%,100%{transform:translateY(calc(var(--d) * .45))}50%{transform:translateY(var(--d))}}
+.dz7:not(.dz7-vis) .dz7-zq .zb{animation-play-state:paused}
+.dz7 [data-z="1"]{--zc:#7DBDFF}
+.dz7-zq[data-z="1"] .zb{fill:url(#dz7-gz1)}
+.dz7 [data-z="2"]{--zc:#7DBDFF}
+.dz7-zq[data-z="2"] .zb{fill:url(#dz7-gz2)}
+.dz7 [data-z="3"]{--zc:#7DBDFF}
+.dz7-zq[data-z="3"] .zb{fill:url(#dz7-gz3)}
+.dz7 [data-z="4"]{--zc:#7DBDFF}
+.dz7-zq[data-z="4"] .zb{fill:url(#dz7-gz4)}
+.dz7 [data-z="5"]{--zc:#7DBDFF}
+.dz7-zq[data-z="5"] .zb{fill:url(#dz7-gz5)}
+.dz7 [data-z="6"]{--zc:#7DBDFF}
+.dz7-zq[data-z="6"] .zb{fill:url(#dz7-gz6)}
+.dz7 [data-z="7"]{--zc:#7DBDFF}
+.dz7-zq[data-z="7"] .zb{fill:url(#dz7-gz7)}
+.dz7-bar .cap{fill:var(--zc)}
+.dz7-body{fill:url(#dz7-gbody);stroke:none}
+.dz7-lbls em{position:absolute;bottom:7.5%;transform:translateX(-50%);padding:.35em .75em;border-radius:999px;background:rgba(10,14,18,.78);border:1px solid var(--zc);box-shadow:0 2px 10px rgba(0,0,0,.4);color:#fff;white-space:nowrap;font-style:normal;font-size:clamp(11px,1.15vw,14px);font-weight:600;letter-spacing:.07em;text-transform:uppercase;line-height:1.2;transition:border-color .3s,background .3s}
+.dz7-lbls .n{display:none}
+@keyframes dz7-eq{0%,100%{transform:scaleY(calc(var(--h) * .8))}50%{transform:scaleY(var(--h))}}
+.dz7:not(.dz7-vis) .dz7-bar{animation-play-state:paused}
+
+/* Подсветка: посочена зона */
+.dz7[data-on] .dz7-bar:not(.on),.dz7[data-on] .dz7-zq:not(.on){opacity:.45}
+.dz7-bar.on,.dz7-zq.on{filter:brightness(1.35)}
+.dz7-lbls em.on{background:rgba(10,14,18,.95);box-shadow:0 0 14px var(--zc)}
+
+/* Малкият прозорец: отваря се при посочване на зона, на запазено място под сцената */
+.dz7-hit{fill:#000;fill-opacity:0;pointer-events:all;cursor:pointer;outline:none}
+.dz7-hit:focus-visible{stroke:#fff;stroke-width:4}
+.dz7-tipw{position:relative;min-height:180px}
+.dz7-hint{margin:0;padding-top:34px;text-align:center;font-size:16px;line-height:1.5;color:var(--dz-mut);transition:opacity .25s}
+.dz7[data-on] .dz7-hint{opacity:0}
+.dz7-tip{position:absolute;top:0;left:clamp(0px,calc(var(--x,50%) - 260px),max(0px,calc(100% - 520px)));width:min(520px,100%);padding:16px 18px 18px;border-radius:16px;background:rgba(10,14,18,.94);border:1px solid var(--dz-hl);box-shadow:0 14px 34px -14px rgba(0,0,0,.8),0 0 22px -8px var(--dz-hl);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .25s,transform .25s,visibility 0s .25s}
+.dz7-tip.show{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .25s}
+.dz7-zt{display:flex;align-items:center;gap:10px;margin:0 0 8px}
+.dz7-zt i{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--dz-hl);color:#08141a;font-style:normal;font-size:15px;font-weight:700}
+.dz7-zt h3{margin:0;font-size:19px;line-height:1.2;font-weight:600;color:#fff}
+.dz7-zv{display:block;margin:0 0 6px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dz-hl)}
+.dz7-tip p{margin:0;font-size:16px;line-height:1.55;color:var(--dz-mut)}
+/* пълният текст остава за четци на екрана */
+.dz7-list{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;list-style:none}
+
+@media (max-width:640px),(max-width:940px) and (max-height:520px) and (orientation:landscape){
+.dz7-in{padding:22px 16px 20px}
+.dz7-tipw,.dz7-lbls,.dz7-hits{display:none}
+.dz7-bar,.dz7-zq .zb{animation:none}
+.dz7-zq .zb{transform:translateY(calc(var(--d) * .7))}
+.dz7[data-on] .dz7-bar:not(.on),.dz7[data-on] .dz7-zq:not(.on){opacity:1}
+}
+@media (prefers-reduced-motion:reduce){.dz7-bar,.dz7-zq .zb{animation:none}.dz7-zq .zb{transform:translateY(calc(var(--d) * .7))}}
+</style>
+<div class="dz7-bg" aria-hidden="true"><i class="dz7-a1"></i><i class="dz7-a2"></i></div>
+<div class="dz7-in">
+<div>
+<p class="dz7-chip">Engineering view</p>
+<h2 id="dz7-h">Seven zones, each one supporting the body in its own way</h2>
+<p class="dz7-lead">Seven zones run under the body: head, shoulder, back, pelvis, knees, legs and ankles. Each one carries a different share of your weight, so every part of the body gets the support that suits it. The bars show how support is distributed between the zones.</p>
+</div>
+<div class="dz7-fig"><svg viewBox="80 0 2570 780" role="group" aria-label="Seven support zones under the body"><defs><path id="dz7-mp" d="M104 389L106 738L2606 750L2628 438C2628,438 2607,413 2602 410C2599,408 2598,412 2596 417C2593,421 2588,428 2575 426C2569,425 2562,423 2556 421C2549,419 2541,417 2534 415C2523,413 2502,410 2491 408C2483,406 2474,405 2466 403C2458,402 2450,401 2442 400C2434,399 2426,399 2419 398C2406,397 2385,395 2368 395C2349,395 2328,395 2308 396C2285,396 2254,398 2234 400C2219,402 2202,406 2189 408C2178,410 2167,412 2155 412C2125,413 2040,406 2007 404C1991,403 1975,400 1959 399C1941,399 1914,399 1899 399C1890,399 1880,400 1870 400C1857,400 1836,398 1820 399C1805,400 1790,402 1775 404C1760,406 1743,408 1729 410C1715,412 1700,414 1688 417C1677,419 1666,422 1655 424C1642,426 1625,428 1610 431C1593,434 1571,439 1556 442C1544,444 1533,446 1521 448C1508,450 1493,453 1481 454C1471,456 1460,457 1449 457C1437,458 1423,459 1409 458C1392,457 1366,454 1348 451C1332,449 1316,446 1300 443C1279,438 1243,430 1226 427C1218,425 1209,425 1201 424C1189,423 1172,422 1158 420C1141,419 1115,415 1098 414C1084,414 1069,414 1054 415C1034,416 1000,420 979 422C961,423 944,425 926 427C908,430 887,435 871 439C857,442 844,447 831 451C815,455 795,460 780 464C767,467 754,468 741 470C727,472 707,477 696 478C690,479 682,481 676 478C669,475 660,469 654 461C649,453 645,440 643 430C642,422 645,418 647 404C649,391 666,372 660 362C655,352 645,343 636 335C628,327 619,318 610 313C600,308 590,307 579 306C569,305 556,305 545 306C536,307 527,310 519 313C510,316 513,319 495 326C481,331 485,335 463 337C454,338 446,336 439 334C429,332 415,328 404 324C391,319 377,313 366 307C357,301 351,291 342 285C333,278 323,268 317 261C313,256 309,252 303 244C297,236 288,224 298 215C301,213 298,215 310 196C315,187 317,184 318 178C319,172 304,176 298 178C289,183 269,196 259 204C251,210 244,218 236 225C228,232 220,237 211 244C203,251 192,261 183 269C175,277 166,284 159 292C151,300 145,308 139 317C134,327 130,338 127 348C124,357 124,371 120 377C117,383 104,389 104 389Z"/><clipPath id="dz7-cm"><use href="#dz7-mp"/></clipPath><linearGradient id="dz7-gb" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity=".42"/></linearGradient><linearGradient id="dz7-gbody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FA3C7"/><stop offset="1" stop-color="#34506F"/></linearGradient><linearGradient id="dz7-gm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F86E6" stop-opacity=".42"/><stop offset="1" stop-color="#1E3F66" stop-opacity=".7"/></linearGradient><clipPath id="dz7-z1"><rect x="130" y="0" width="490" height="900"/></clipPath><clipPath id="dz7-z2"><rect x="660" y="0" width="420" height="900"/></clipPath><clipPath id="dz7-z3"><rect x="1120" y="0" width="280" height="900"/></clipPath><clipPath id="dz7-z4"><rect x="1440" y="0" width="340" height="900"/></clipPath><clipPath id="dz7-z5"><rect x="1820" y="0" width="310" height="900"/></clipPath><clipPath id="dz7-z6"><rect x="2170" y="0" width="230" height="900"/></clipPath><clipPath id="dz7-z7"><rect x="2440" y="0" width="180" height="900"/></clipPath><linearGradient id="dz7-gz" gradientUnits="userSpaceOnUse" x1="0" y1="380" x2="0" y2="760"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient><linearGradient id="dz7-gb1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0.32"/></linearGradient><linearGradient id="dz7-gz1" gradientUnits="userSpaceOnUse" x1="0" y1="380" x2="0" y2="760"><stop offset="0" stop-color="#fff" stop-opacity="0.40"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient><linearGradient id="dz7-gb2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0.34"/></linearGradient><linearGradient id="dz7-gz2" gradientUnits="userSpaceOnUse" x1="0" y1="380" x2="0" y2="760"><stop offset="0" stop-color="#fff" stop-opacity="0.44"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient><linearGradient id="dz7-gb3" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0.40"/></linearGradient><linearGradient id="dz7-gz3" gradientUnits="userSpaceOnUse" x1="0" y1="380" x2="0" y2="760"><stop offset="0" stop-color="#fff" stop-opacity="0.52"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient><linearGradient id="dz7-gb4" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0.46"/></linearGradient><linearGradient id="dz7-gz4" gradientUnits="userSpaceOnUse" x1="0" y1="380" x2="0" y2="760"><stop offset="0" stop-color="#fff" stop-opacity="0.60"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient><linearGradient id="dz7-gb5" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0.38"/></linearGradient><linearGradient id="dz7-gz5" gradientUnits="userSpaceOnUse" x1="0" y1="380" x2="0" y2="760"><stop offset="0" stop-color="#fff" stop-opacity="0.49"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient><linearGradient id="dz7-gb6" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0.34"/></linearGradient><linearGradient id="dz7-gz6" gradientUnits="userSpaceOnUse" x1="0" y1="380" x2="0" y2="760"><stop offset="0" stop-color="#fff" stop-opacity="0.44"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient><linearGradient id="dz7-gb7" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0.30"/></linearGradient><linearGradient id="dz7-gz7" gradientUnits="userSpaceOnUse" x1="0" y1="380" x2="0" y2="760"><stop offset="0" stop-color="#fff" stop-opacity="0.38"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient></defs><use href="#dz7-mp" fill="url(#dz7-gm)"/><g clip-path="url(#dz7-cm)"><g class="dz7-div"><line x1="640.0" x2="640.0" y1="0" y2="780"/><line x1="1100.0" x2="1100.0" y1="0" y2="780"/><line x1="1420.0" x2="1420.0" y1="0" y2="780"/><line x1="1800.1" x2="1800.1" y1="0" y2="780"/><line x1="2149.9" x2="2149.9" y1="0" y2="780"/><line x1="2420.0" x2="2420.0" y1="0" y2="780"/></g><g class="dz7-bar" data-z="1" style="--h:0.55;--i:0"><rect x="173.7" y="280" width="402.7" height="500" rx="23" fill="url(#dz7-gb1)"/><rect x="173.7" y="280" width="402.7" height="7" rx="3" class="cap"/></g><g class="dz7-bar" data-z="2" style="--h:0.62;--i:1"><rect x="695.2" y="280" width="349.6" height="500" rx="23" fill="url(#dz7-gb2)"/><rect x="695.2" y="280" width="349.6" height="7" rx="3" class="cap"/></g><g class="dz7-bar" data-z="3" style="--h:0.78;--i:2"><rect x="1138.4" y="280" width="243.2" height="500" rx="23" fill="url(#dz7-gb3)"/><rect x="1138.4" y="280" width="243.2" height="7" rx="3" class="cap"/></g><g class="dz7-bar" data-z="4" style="--h:0.95;--i:3"><rect x="1465.6" y="280" width="288.9" height="500" rx="23" fill="url(#dz7-gb4)"/><rect x="1465.6" y="280" width="288.9" height="7" rx="3" class="cap"/></g><g class="dz7-bar" data-z="5" style="--h:0.72;--i:4"><rect x="1842.1" y="280" width="266.0" height="500" rx="23" fill="url(#dz7-gb5)"/><rect x="1842.1" y="280" width="266.0" height="7" rx="3" class="cap"/></g><g class="dz7-bar" data-z="6" style="--h:0.62;--i:5"><rect x="2182.3" y="280" width="205.3" height="500" rx="23" fill="url(#dz7-gb6)"/><rect x="2182.3" y="280" width="205.3" height="7" rx="3" class="cap"/></g><g class="dz7-bar" data-z="7" style="--h:0.5;--i:6"><rect x="2445.2" y="280" width="159.6" height="500" rx="23" fill="url(#dz7-gb7)"/><rect x="2445.2" y="280" width="159.6" height="7" rx="3" class="cap"/></g><g class="dz7-zn"><g class="dz7-zq" data-z="1" style="--d:50px;--i:0"><g clip-path="url(#dz7-z1)"><use class="zb" href="#dz7-mp"/></g></g><g class="dz7-zq" data-z="2" style="--d:44px;--i:1"><g clip-path="url(#dz7-z2)"><use class="zb" href="#dz7-mp"/></g></g><g class="dz7-zq" data-z="3" style="--d:32px;--i:2"><g clip-path="url(#dz7-z3)"><use class="zb" href="#dz7-mp"/></g></g><g class="dz7-zq" data-z="4" style="--d:18px;--i:3"><g clip-path="url(#dz7-z4)"><use class="zb" href="#dz7-mp"/></g></g><g class="dz7-zq" data-z="5" style="--d:36px;--i:4"><g clip-path="url(#dz7-z5)"><use class="zb" href="#dz7-mp"/></g></g><g class="dz7-zq" data-z="6" style="--d:44px;--i:5"><g clip-path="url(#dz7-z6)"><use class="zb" href="#dz7-mp"/></g></g><g class="dz7-zq" data-z="7" style="--d:54px;--i:6"><g clip-path="url(#dz7-z7)"><use class="zb" href="#dz7-mp"/></g></g></g></g><path class="dz7-body" d="M2598 409C2599,405 2589,403 2589 400C2588,397 2596,396 2596 393C2596,387 2592,373 2589 367C2587,362 2580,360 2577 357C2574,355 2569,354 2568 352C2567,350 2568,346 2570 345C2572,343 2579,345 2582 342C2586,339 2591,333 2591 328C2592,323 2587,317 2586 312C2585,306 2586,298 2585 292C2584,286 2582,279 2579 275C2578,272 2573,270 2571 267C2570,265 2570,261 2568 259C2565,257 2561,253 2557 252C2554,251 2550,252 2546 251C2542,250 2538,247 2534 246C2531,245 2527,244 2524 244C2517,244 2503,245 2495 246C2487,247 2480,250 2472 251C2464,252 2455,253 2447 254C2438,255 2427,258 2420 258C2414,258 2408,254 2403 253C2394,251 2381,246 2371 245C2361,243 2351,245 2342 243C2330,240 2309,234 2298 230C2292,228 2286,224 2279 222C2260,217 2212,208 2181 202C2152,196 2122,188 2095 183C2071,179 2045,177 2022 175C2002,174 1979,174 1962 174C1948,173 1935,173 1921 172C1903,170 1873,167 1853 164C1836,161 1819,157 1803 152C1780,147 1747,137 1719 130C1691,123 1660,116 1634 109C1611,102 1588,95 1566 86C1540,75 1504,67 1484 65C1475,64 1424,64 1396 68C1369,71 1340,78 1317 84C1297,89 1277,95 1257 102C1238,110 1215,123 1198 129C1185,134 1166,139 1158 141C1154,141 1151,139 1147 139C1143,139 1135,142 1136 141C1136,140 1146,136 1149 133C1153,130 1155,126 1156 122C1157,116 1159,104 1157 98C1154,91 1147,87 1141 85C1124,79 1084,67 1054 60C1019,52 958,43 928 39C911,36 894,33 876 32C856,30 826,27 808 27C795,27 779,27 769 32C760,36 755,45 750 54C743,64 735,82 729 96C723,108 720,121 713 132C706,144 696,158 685 167C673,176 657,182 646 184C635,186 623,183 614 180C606,177 601,170 594 165C587,160 579,154 571 149C561,144 547,135 538 131C530,128 521,128 513 127C506,125 498,124 491 122C483,119 475,112 466 109C456,106 441,103 432 101C425,99 418,93 411 95C402,98 391,111 380 118C369,126 355,132 347 139C339,144 331,153 327 157C324,160 322,164 320 167C318,174 315,190 311 199C307,209 295,215 295 225C296,235 306,249 315 259C323,269 334,278 345 287C355,296 367,308 380 314C398,322 430,333 448 335C463,336 476,328 490 323C502,318 513,307 527 305C545,303 576,301 596 309C617,318 640,345 649 357C653,362 651,370 650 376C648,387 637,409 636 421C635,431 637,442 642 451C649,460 661,474 674 477C689,480 714,471 731 469C746,467 761,465 776 462C791,459 808,454 822 449C836,446 850,440 864 437C897,432 977,419 1021 416C1058,413 1100,415 1132 417C1157,418 1183,422 1208 426C1238,431 1275,441 1307 447C1336,452 1367,457 1396 458C1423,460 1451,458 1477 455C1500,453 1525,447 1546 444C1565,440 1584,436 1603 432C1631,427 1679,419 1714 413C1747,408 1785,402 1813 400C1836,398 1861,400 1883 399C1904,399 1927,397 1947 397C1966,398 1984,400 2003 402C2023,403 2046,405 2067 407C2093,408 2129,412 2157 411C2184,410 2210,401 2237 399C2263,396 2292,397 2317 397C2341,396 2371,397 2390 396C2403,396 2419,396 2429 396C2437,397 2444,400 2452 401C2462,403 2478,407 2491 410C2508,413 2538,420 2553 422C2564,424 2577,427 2585 425C2591,423 2597,413 2598 409Z"/><g class="dz7-hits"><rect class="dz7-hit" data-z="1" data-c="11.48" x="110.1" y="0" width="529.9" height="780" tabindex="0" role="button" aria-label="Head: show what this zone does" aria-controls="dz7-tip"/><rect class="dz7-hit" data-z="2" data-c="30.74" x="640.0" y="0" width="460.0" height="780" tabindex="0" role="button" aria-label="Shoulder: show what this zone does" aria-controls="dz7-tip"/><rect class="dz7-hit" data-z="3" data-c="45.91" x="1100.0" y="0" width="320.0" height="780" tabindex="0" role="button" aria-label="Back: show what this zone does" aria-controls="dz7-tip"/><rect class="dz7-hit" data-z="4" data-c="59.53" x="1420.0" y="0" width="380.1" height="780" tabindex="0" role="button" aria-label="Pelvis: show what this zone does" aria-controls="dz7-tip"/><rect class="dz7-hit" data-z="5" data-c="73.74" x="1800.1" y="0" width="350.0" height="780" tabindex="0" role="button" aria-label="Knees: show what this zone does" aria-controls="dz7-tip"/><rect class="dz7-hit" data-z="6" data-c="85.80" x="2149.9" y="0" width="270.1" height="780" tabindex="0" role="button" aria-label="Legs: show what this zone does" aria-controls="dz7-tip"/><rect class="dz7-hit" data-z="7" data-c="95.13" x="2420.0" y="0" width="210.0" height="780" tabindex="0" role="button" aria-label="Ankles: show what this zone does" aria-controls="dz7-tip"/></g></svg><div class="dz7-lbls" aria-hidden="true"><em data-z="1" style="left:11.48%"><span class="n">1</span><span class="t">Head</span></em><em data-z="2" style="left:30.74%"><span class="n">2</span><span class="t">Shoulder</span></em><em data-z="3" style="left:45.91%"><span class="n">3</span><span class="t">Back</span></em><em data-z="4" style="left:59.53%"><span class="n">4</span><span class="t">Pelvis</span></em><em data-z="5" style="left:73.74%"><span class="n">5</span><span class="t">Knees</span></em><em data-z="6" style="left:85.80%"><span class="n">6</span><span class="t">Legs</span></em><em data-z="7" style="left:95.13%"><span class="n">7</span><span class="t">Ankles</span></em></div></div>
+<div class="dz7-tipw"><p class="dz7-hint" id="dz7-hint">Hover over a zone to see what it does.</p><div class="dz7-tip" id="dz7-tip" role="status" aria-live="polite"></div></div>
+<ol class="dz7-list" id="dz7-list">
+<li class="dz7-z" data-z="1"><div class="dz7-zt"><i aria-hidden="true">1</i><h3>Head</h3></div><span class="dz7-zv">Settles in</span><p>The head is one of the lighter parts of the body. This zone gives way and lets the head settle in, instead of pushing it back.</p></li>
+<li class="dz7-z" data-z="2"><div class="dz7-zt"><i aria-hidden="true">2</i><h3>Shoulder</h3></div><span class="dz7-zv">Yields</span><p>The shoulder is the widest part of a side sleeper and takes a large share of the load. The latex yields here, so the shoulder settles into the surface and the spine can stay level.</p></li>
+<li class="dz7-z" data-z="3"><div class="dz7-zt"><i aria-hidden="true">3</i><h3>Back</h3></div><span class="dz7-zv">Rises to meet</span><p>Under the waist the latex rises to meet the natural curve of the lower back. It supports the hollow without pushing into it, so the spine keeps its neutral line.</p></li>
+<li class="dz7-z" data-z="4"><div class="dz7-zt"><i aria-hidden="true">4</i><h3>Pelvis</h3></div><span class="dz7-zv">Holds firm</span><p>The pelvis carries the most weight. This zone is reinforced, so the hips do not sink below the shoulders and the spine is not bent out of line.</p></li>
+<li class="dz7-z" data-z="5"><div class="dz7-zt"><i aria-hidden="true">5</i><h3>Knees</h3></div><span class="dz7-zv">Spreads the load</span><p>Latex spreads the weight of the knees over a wider area, so no single point carries too much and the joint is not pressed into the surface.</p></li>
+<li class="dz7-z" data-z="6"><div class="dz7-zt"><i aria-hidden="true">6</i><h3>Legs</h3></div><span class="dz7-zv">Follows the shape</span><p>Latex is elastic. It gives under muscle and soft tissue and comes back, following your shape without holding it, so muscles do not work to push against the surface.</p></li>
+<li class="dz7-z" data-z="7"><div class="dz7-zt"><i aria-hidden="true">7</i><h3>Ankles</h3></div><span class="dz7-zv">Releases</span><p>At the far end the load is light. Lower, more even pressure here helps you stay comfortable and change position freely.</p></li>
+<li class="dz7-p"><h3>The engineering principle</h3><p><b>One body, seven different loads.</b> A single setting cannot suit all of them, so support is divided into zones and each zone answers its own part of the body.</p><p>The heavy pelvis is held firmly while the lighter head and shoulders settle in. This is a principle of load distribution, not a medical measurement.</p></li>
+</ol>
+</div>
+<script>
+(function(){
+  var s=document.getElementById('dz7');
+  if(!s)return;
+  var tip=document.getElementById('dz7-tip'),hint=document.getElementById('dz7-hint');
+  var zs=s.querySelectorAll('.dz7-bar,.dz7-zq,.dz7-lbls em');
+  var hits=s.querySelectorAll('.dz7-hit'),cur=null;
+  if(!window.matchMedia('(hover:hover)').matches&&hint)hint.textContent='Tap a zone to see what it does.';
+  function show(z,c){
+    var li=s.querySelector('.dz7-list [data-z="'+z+'"]');
+    if(!li)return;
+    cur=z;
+    tip.innerHTML=li.innerHTML;
+    tip.style.setProperty('--x',c+'%');
+    tip.classList.add('show');
+    s.setAttribute('data-on','1');
+    for(var k=0;k<zs.length;k++){zs[k].classList[zs[k].getAttribute('data-z')===z?'add':'remove']('on')}
+  }
+  function hide(){
+    cur=null;
+    tip.classList.remove('show');
+    s.removeAttribute('data-on');
+    for(var k=0;k<zs.length;k++){zs[k].classList.remove('on')}
+  }
+  for(var k=0;k<hits.length;k++){
+    (function(h){
+      var z=h.getAttribute('data-z'),c=h.getAttribute('data-c');
+      h.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse')show(z,c)});
+      h.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse')hide()});
+      h.addEventListener('click',function(e){if(e.pointerType&&e.pointerType!=='mouse'||e.detail===0){cur===z?hide():show(z,c)}});
+      h.addEventListener('focus',function(){show(z,c)});
+      h.addEventListener('blur',hide);
+    })(hits[k]);
+  }
+  document.addEventListener('pointerdown',function(e){if(cur&&e.pointerType!=='mouse'&&!s.contains(e.target))hide()});
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(x){s.classList[x.isIntersecting?'add':'remove']('dz7-vis')});
+    },{threshold:.05}).observe(s);
+  }else{s.classList.add('dz7-vis')}
+})();
+</script>
+</section>
