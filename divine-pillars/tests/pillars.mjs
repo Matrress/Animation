@@ -81,6 +81,29 @@ for (const [name, motion] of [['desktop', 'no-preference'], ['phone', 'no-prefer
   ok(await q(() => document.querySelector('.dpl__tl').querySelector('.dpl__rd') !== null), `${tag}: Wellness leads the nine cells`);
   await q(() => document.querySelector('#dpl').scrollIntoView()); await page.waitForTimeout(1600);
   ok(await q(() => document.querySelector('#dpl').classList.contains('is-in')), `${tag}: rings drawn in when the band is seen`);
+  // the tropical night: the Earth turns top right, stars flash top left (1180 px and wider), the leaf is gone
+  const wide = VIEWPORTS[name].width >= 1180;
+  ok(await q(() => { const c = getComputedStyle(document.querySelector('.dpl__in'), '::before').content; return c === 'none' || c === 'normal'; }), `${tag}: the leaf is gone`);
+  const nt = await q(() => { const pl = document.querySelector('.dpl__planet'), st = document.querySelector('.dpl__stars'); return { pl: pl && getComputedStyle(pl).display !== 'none', st: st && getComputedStyle(st).display !== 'none', stars: st ? st.querySelectorAll('circle').length : 0, band: pl ? pl.querySelector('.dpl__pband').textContent.replace(/\s+/g, ' ').trim() : '' }; });
+  ok(!!nt.pl === wide && !!nt.st === wide, `${tag}: planet and stars show only where there is room (${wide ? 'wide' : 'narrow'})`);
+  ok(/Healthy for Us\s*Healthy for\s*Our Planet/.test(nt.band) && nt.stars >= 20, `${tag}: the slogan is real text across the Earth, ${nt.stars} stars`);
+  if (wide) {
+    await page.waitForFunction(() => document.querySelector('.dpl__planet[data-ready]'), null, { timeout: 15000 }).catch(() => {});
+    const snap = () => page.evaluate(() => { const c = document.querySelector('.dpl__planet canvas'), x = c.getContext('2d'), s = c.width, d = x.getImageData(0, Math.round(s * 0.2), s, 1).data; let h = 0, n = 0; for (let i = 0; i < d.length; i += 4) { h = (h * 31 + d[i] + d[i + 1] * 3 + d[i + 2] * 7) >>> 0; if (d[i + 3] > 200) n++; } return { h, n, w: s }; });
+    const p1 = await snap(); await page.waitForTimeout(2500); const p2 = await snap();
+    ok(p1.w > 150 && p1.n > p1.w * 0.4, `${tag}: the Earth is drawn on the canvas (${p1.n} solid pixels in a row of ${p1.w})`);
+    if (motion === 'reduce') ok(p1.h === p2.h, `${tag}: the Earth stands still`); else ok(p1.h !== p2.h, `${tag}: the Earth turns`);
+    const tw = await q(() => ({ a: getComputedStyle(document.querySelector('.dpl__stars .t')).animationName, bright: document.querySelectorAll('.dpl__stars .t.b').length }));
+    if (motion === 'reduce') ok(tw.a === 'none', `${tag}: stars stand still`); else ok(tw.a === 'dpl-tw' && tw.bright >= 5, `${tag}: stars flash softly (${tw.bright} bright ones)`);
+  }
+  // nothing of the night touches the text (title, lede, eyebrow) at this width
+  const hit = await q(() => { const rs = []; for (const sel of ['.dpl__hd .dpl__eb', '.dpl__hd .dpl__h', '.dpl__hd .dpl__lede']) { const r = document.createRange(); r.selectNodeContents(document.querySelector(sel)); rs.push(...[...r.getClientRects()].filter((b) => b.width > 2)); } const boxes = [...document.querySelectorAll('.dpl__planet, .dpl__stars .t')].filter((e) => e.getBoundingClientRect().width && getComputedStyle(e.closest('.dpl__planet, .dpl__stars')).display !== 'none').map((e) => e.getBoundingClientRect()); return boxes.filter((b) => rs.some((t) => b.left < t.right + 6 && b.right > t.left - 6 && b.top < t.bottom + 6 && b.bottom > t.top - 6)).length; });
+  ok(hit === 0, `${tag}: the Earth and the stars stay clear of the text`);
+  // the moon beside the centred creed
+  await q(() => document.querySelector('.dpl__creed').scrollIntoView({ block: 'center' })); await page.waitForTimeout(900);
+  const mo = await q(() => { const m = document.querySelector('.dpl__moon'), t = document.querySelector('.dpl__cq').getBoundingClientRect(), mb = m.getBoundingClientRect(); return { loaded: m.complete && m.naturalWidth > 0, w: mb.width, right: mb.left >= t.right - 1, below: mb.top >= t.bottom - 1, center: getComputedStyle(document.querySelector('.dpl__cq')).textAlign, mstars: document.querySelectorAll('.dpl__mstars circle').length }; });
+  ok(mo.loaded && mo.w >= 100 && mo.center === 'center' && mo.mstars >= 6, `${tag}: the moon is loaded (${Math.round(mo.w)} px), the creed is centred, ${mo.mstars} stars around the moon`);
+  ok(VIEWPORTS[name].width >= 1000 ? mo.right : mo.below, `${tag}: the moon sits ${VIEWPORTS[name].width >= 1000 ? 'to the right of' : 'below'} the text`);
   // the Bio Dunlop mark: the owner's drawing loads, hover opens its window, leaving closes it, Escape closes it
   await q(() => document.querySelector('.dpl__creed').scrollIntoView({ block: 'center' })); await page.waitForTimeout(1200);
   ok(await q(() => { const i = document.querySelector('.dpl__bio-i'); return i.complete && i.naturalWidth > 0 && i.getBoundingClientRect().width >= 150; }), `${tag}: the Bio Dunlop mark is loaded and 150 px or wider`);

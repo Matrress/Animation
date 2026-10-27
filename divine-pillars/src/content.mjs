@@ -6,6 +6,7 @@
 export const HEAD = {
   eyebrow: 'Why Natural Latex Mattresses and Toppers',
   title: 'One Natural Material. <b>Four Laws</b> of Good Sleep.',
+  planet: ['Healthy for Us', 'Healthy for', 'Our Planet'],   // the slogan across the turning Earth (the Hero's own words)
   lede: 'A good mattress has to come from clean material, carry the body, adapt to it and let it breathe. Natural Dunlop latex does all four in one material, in every Natural Latex Mattress and Natural Latex Topper we make. Tap a circle to see the engineering and the numbers behind it.',
 };
 

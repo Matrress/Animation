@@ -10,11 +10,13 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { HEAD, MATERIALS, COMPARE, PILLARS, FOOT, DIFF, CREED } from './src/content.mjs';
 
-const VERSION = '0.12.0';
+const VERSION = '0.13.0';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DPL_REF || 'main-preview';
 const BASE = process.env.DPL_BASE || `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-pillars/release/${VERSION}/`;
 // the Hero's own Chillax files, pinned (the same URLs Home Discovery and Firmness use)
+// the Hero's own Earth and cloud maps (same pinned files, so a visitor who has seen the Hero already has them in the cache)
+const HERO_ASSETS = 'https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/assets/';
 const FONT_BASE = 'https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/assets/';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -56,13 +58,17 @@ const dtile = (t) => `<li class="dpl__tl"><span class="dpl__ic"><svg viewBox="0 
 const BIO_IMG = 'https://cdn.jsdelivr.net/gh/Matrress/Animation@9d681f860c9dae7dd866236d6824f413443b8512/divine-home-discovery/assets/bio-dunlop.svg';
 const bio = `<details class="dpl__bio"><summary class="dpl__bio-s"><img class="dpl__bio-i" src="${BIO_IMG}" width="3845" height="1519" loading="lazy" alt="Bio Dunlop: certified European production"></summary><div class="dpl__bio-p"><p class="dpl__bio-h">Fully Certified</p><p>Certified European production for European customers and standards.</p></div></details>`;
 const creed = `<figure class="dpl__creed">${bio}<div><blockquote class="dpl__cq"><p>${esc(CREED.quote[0])}</p><p><b>${esc(CREED.quote[1])}</b></p></blockquote>
-<figcaption class="dpl__ct">${esc(CREED.text)}</figcaption></div></figure>`;
+<figcaption class="dpl__ct">${esc(CREED.text)}</figcaption></div><div class="dpl__moonbox"><img class="dpl__moon" src="${BASE}moon.webp" width="280" height="280" loading="lazy" decoding="async" alt=""></div></figure>`;
+
+// the turning Earth in the top-right corner (dpl.js draws it on the canvas); the slogan is real text
+const planet = `<div class="dpl__planet"><canvas aria-hidden="true"></canvas><p class="dpl__pband"><span>${esc(HEAD.planet[0])}</span><b>${esc(HEAD.planet[1])}<br>${esc(HEAD.planet[2])}</b></p></div>`;
 
 const loader = `<script>(function(){var s=document.getElementById('dpl');if(!s)return;s.classList.add('is-js');if(window.DPL){window.DPL.scan();return}var x=document.createElement('script');x.src='${BASE}dpl.js';x.defer=true;x.onerror=function(){s.classList.remove('is-js')};document.head.appendChild(x);setTimeout(function(){if(!window.DPL)s.classList.remove('is-js')},8000)})();</script>`;
 
 const tile = `<link rel="stylesheet" href="${BASE}dpl.css">
 <section class="dpl" id="dpl" aria-labelledby="dpl-h" data-version="${VERSION}">
 <div class="dpl__in">
+${planet}
 <header class="dpl__hd"><p class="dpl__eb">${esc(HEAD.eyebrow)}</p>
 <h2 class="dpl__h" id="dpl-h">${HEAD.title}</h2>
 <p class="dpl__lede">${esc(HEAD.lede)}</p></header>
@@ -96,7 +102,7 @@ ${loader}
 
 // ---- dpl.js: the data the panels need, nothing more ----
 const data = {
-  version: VERSION, compare: FOOT.compare,
+  version: VERSION, compare: FOOT.compare, earth: HERO_ASSETS + 'earth.webp', clouds: HERO_ASSETS + 'clouds.webp',
   materials: MATERIALS.map(({ id, name, ours }) => ({ id, name, ours: !!ours })),
   pillars: PILLARS.map(({ id, label, n, title, verb, img, alt, head, chain, body, quote, sub, stats, vs, chart }) => ({ id, label, n, title, verb, img, alt, head, chain, body, quote, sub, stats, vs, chart })),
 };
@@ -120,6 +126,7 @@ if (PILLARS.length !== 4) throw new Error('expected four laws');
 if (DIFF.tiles.length !== 9) throw new Error('expected nine difference cards');
 if (!/Natural Latex Mattress/.test(tile) || !/Natural Latex Topper/.test(tile)) throw new Error('the section must say "Natural Latex Mattress" and "Natural Latex Topper"');
 for (const p of PILLARS) if (!fs.existsSync(path.join(here, 'assets', `${p.img}.webp`))) throw new Error(`missing photo assets/${p.img}.webp`);
+if (!fs.existsSync(path.join(here, 'assets', 'moon.webp'))) throw new Error('missing assets/moon.webp');
 const ids = [...tile.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
 if (new Set(ids).size !== ids.length) throw new Error('duplicate id in the tile');
 if (ids.some((i) => !/^dpl/.test(i))) throw new Error('every id starts with dpl (no clash with ddhd-, dsys-, fq-)');
@@ -136,6 +143,7 @@ const rel = path.join(here, 'release', VERSION);
 out(path.join(rel, 'dpl.css'), css);
 out(path.join(rel, 'dpl.js'), js);
 for (const p of PILLARS) fs.copyFileSync(path.join(here, 'assets', `${p.img}.webp`), path.join(rel, `${p.img}.webp`));
+fs.copyFileSync(path.join(here, 'assets', 'moon.webp'), path.join(rel, 'moon.webp'));
 // a build pinned to a commit (DPL_REF) is the paste-ready file; every other build is the preview
 out(path.join(here, 'ecwid', REF !== 'main-preview' && !process.env.DPL_BASE ? `pillars-${VERSION}-pinned.html` : `pillars-${VERSION}.html`), tile);
 console.log(`dpl ${VERSION} base=${BASE}`);

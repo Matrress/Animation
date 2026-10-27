@@ -2,7 +2,9 @@
    The static tile is complete without this file. This file draws the data rings around the four circles, opens one
    law at a time in the panel under them (as large as it needs), and turns "Compare All Materials" into a window.
    Data is injected at build time from src/content.mjs. Around each circle sit the phases of the moon, lit in turn.
-   A line with a travelling light joins the four circles (desktop). Under reduced motion nothing moves. */
+   A line with a travelling light joins the four circles (desktop). A tropical night frames the band: the Earth turns in the
+   top-right corner (the Hero's own way of drawing it, scaled down), stars flash softly in the top-left, a moon rises beside the
+   creed. Under reduced motion nothing moves. */
 (function () {
   'use strict';
   var D = __DPL_DATA__;
@@ -212,6 +214,8 @@
     [].forEach.call(root.querySelectorAll('[data-need]'), function (el) { if (document.querySelector(el.getAttribute('data-need'))) el.hidden = false; });
 
     bioMark(root);
+    planet(root);
+    night(root);
 
     // draw the rings when the row of circles comes into view (the whole band is far taller than a phone screen) (immediately under reduced motion or without IntersectionObserver)
     if (reduce || !('IntersectionObserver' in window)) root.classList.add('is-in');
@@ -224,6 +228,95 @@
       for (var k = 0; k < D.pillars.length; k++) if (h === 'dpl-' + D.pillars[k].id) { open(k, false); setTimeout(function () { root.scrollIntoView({ block: 'start' }); }, 50); }
     }
     fromHash(); window.addEventListener('hashchange', fromHash);
+  }
+
+  // ---- the tropical night ----
+  // stars: x, y, radius, bright. Six of them follow the stars of the Hero's night scene (the curve of the Plough).
+  var SKY = [[41,52,2.4,1],[110,36,2.8,1],[131,46,2.2,1],[149,58,2.4,1],[154,80,2.6,1],[212,82,2.8,1],[14,20,1.2],[66,18,1.4],[92,64,1.2],[120,104,1.5],[176,30,1.3],[190,58,1.1],[230,40,1.4],[262,66,1.2],[248,110,1.3],[28,100,1.4],[70,128,1.2],[150,134,1.5],[206,138,1.2],[262,22,1.3],[172,108,1.1],[54,76,1.1]];
+  var MOONSKY = [[20,34,1.3],[170,22,1.8,1],[188,98,1.3],[160,172,1.4],[30,160,1.6,1],[12,98,1.2],[122,10,1.2],[104,190,1.1]];
+  function stars(parent, data, vb, cls) {
+    if (!parent || parent.querySelector('.' + cls)) return;
+    var svg = sv('svg', { 'class': cls, viewBox: '0 0 ' + vb + ' ' + vb, 'aria-hidden': 'true', focusable: 'false' });
+    data.forEach(function (a) { svg.appendChild(sv('circle', { cx: a[0], cy: a[1], r: a[2], 'class': a[3] ? 't b' : 't' })); });
+    parent.insertBefore(svg, parent.firstChild);
+  }
+  function night(root) {
+    stars(root.querySelector('.dpl__in'), SKY, 300, 'dpl__stars');
+    stars(root.querySelector('.dpl__moonbox'), MOONSKY, 200, 'dpl__mstars');
+  }
+
+  // the Earth, drawn the way the Hero draws it: every pixel of a disc is looked up in the same Earth and cloud maps, lit from the
+  // upper left, with a thin blue rim of atmosphere. One turn in 40 s. Runs only while it is seen; one still frame under reduced motion.
+  function planet(root) {
+    var host = root.querySelector('.dpl__planet'), cv = host && host.querySelector('canvas');
+    if (!cv || !cv.getContext || !D.earth) return;
+    var ctx = cv.getContext('2d'), E = null, C = null, G = null, EW = 1600, EH = 800, CW = 1600, CH = 800, TAU = Math.PI * 2, TR = 0.2;
+    var seen = false, ready = false, raf = 0, last = 0, t0 = 0, now0 = 0;
+    function load(src, done) { var i = new Image(); i.crossOrigin = 'anonymous'; i.onload = function () { done(i); }; i.onerror = function () { done(null); }; i.src = src; }
+    function px(img, w, h, mono) {
+      var c = document.createElement('canvas'); c.width = w; c.height = h;
+      var x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(img, 0, 0, w, h);
+      var d = x.getImageData(0, 0, w, h).data; if (!mono) return d;
+      var m = new Uint8Array(w * h); for (var i = 0; i < m.length; i++) m[i] = d[i * 4]; return m;
+    }
+    function rowOf(lat, h) { return Math.min(h - 1, Math.max(0, Math.round((0.5 - lat / Math.PI) * (h - 1)))); }
+    function geo() {
+      var S = Math.round(cv.clientWidth * Math.min(window.devicePixelRatio || 1, 1.5));
+      if (!S) return false;
+      if (G && G.S === S) return true;
+      cv.width = cv.height = S;
+      var n = S * S, h = S / 2, k = 0, tilt = 0.36, ct = Math.cos(tilt), st = Math.sin(tilt), L = [-0.5, 0.42, 0.76], ll = Math.sqrt(L[0] * L[0] + L[1] * L[1] + L[2] * L[2]);
+      L = [L[0] / ll, L[1] / ll, L[2] / ll];
+      var g = { S: S, n: 0, idx: new Int32Array(n), lon: new Float32Array(n), row: new Uint16Array(n), crow: new Uint16Array(n), sh: new Float32Array(n), rim: new Float32Array(n), limb: new Float32Array(n), img: ctx.createImageData(S, S) };
+      for (var y = 0; y < S; y++) for (var x = 0; x < S; x++) {
+        var T = (x + 0.5 - h) / h, U = -(y + 0.5 - h) / h, F = T * T + U * U;
+        if (F >= 1) continue;
+        var R = Math.sqrt(1 - F), X = U * ct + R * st, Z = -U * st + R * ct, lat = Math.asin(X), q = y * S + x;
+        g.idx[k] = q * 4; g.lon[k] = Math.atan2(T, Z); g.row[k] = rowOf(lat, EH); g.crow[k] = rowOf(lat, CH);
+        var j = Math.max(0, Math.min(1, (T * L[0] + U * L[1] + R * L[2]) * 1.1 + 0.1));
+        g.sh[k] = 0.12 + 0.96 * Math.pow(j, 0.85); g.rim[k] = Math.pow(1 - R, 2.6) * (0.3 + 0.7 * j); g.limb[k] = Math.pow(1 - R, 9) * (0.35 + 0.65 * j);
+        g.img.data[q * 4 + 3] = Math.round(Math.min(1, (1 - Math.sqrt(F)) * h / 1.4) * 255);
+        k++;
+      }
+      g.n = k; G = g; return true;
+    }
+    function draw(t) {
+      if (!G || !E) return;
+      var d = G.img.data, X = reduce ? 0 : t * TAU / 40, Z = TR - X, V = TR - X * 1.05 + 0.8, M = 1 / TAU;
+      for (var q = 0; q < G.n; q++) {
+        var u = (G.lon[q] + Z) * M + 0.5; u -= Math.floor(u);
+        var p = (G.row[q] * EW + ((u * EW) | 0)) * 4, r = E[p], g = E[p + 1], b = E[p + 2], c = 0;
+        if (C) { var w = (G.lon[q] + V) * M + 0.5; w -= Math.floor(w); c = C[G.crow[q] * CW + ((w * CW) | 0)] * 0.0033; }
+        r += (248 - r) * c; g += (251 - g) * c; b += (255 - b) * c;
+        var sh = G.sh[q], rm = G.rim[q], lb = G.limb[q], o = G.idx[q];
+        d[o] = r * sh + rm * 120 + lb * 175; d[o + 1] = g * sh + rm * 185 + lb * 215; d[o + 2] = b * sh + rm * 255 + lb * 255;
+      }
+      ctx.putImageData(G.img, 0, 0);
+    }
+    function tick(now) {
+      raf = 0; if (!seen || document.hidden || !ready) return;
+      if (!now0) now0 = now;
+      if (now - last >= 33) { last = now; draw((now - now0) / 1000); }
+      raf = requestAnimationFrame(tick);
+    }
+    function go() { if (!raf && ready && seen && !reduce) raf = requestAnimationFrame(tick); }
+    function start() {
+      load(D.earth, function (i) {
+        if (!i) return;
+        try { E = px(i, EW, EH, false); } catch (e) { return; }
+        load(D.clouds, function (c) {
+          try { C = c ? px(c, CW, CH, true) : null; } catch (e) { C = null; }
+          ready = true;
+          if (geo()) { draw(0); host.setAttribute('data-ready', ''); }
+          go();
+        });
+      });
+    }
+    (window.requestIdleCallback || function (f) { setTimeout(f, 900); })(start, { timeout: 2500 });
+    if (window.ResizeObserver) new ResizeObserver(function () { if (ready && geo()) draw(0); }).observe(host);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { seen = es.some(function (e) { return e.isIntersecting; }); go(); }).observe(host);
+    else { seen = true; go(); }
+    document.addEventListener('visibilitychange', go);
   }
 
   // the Bio Dunlop window: a mouse hovering opens it, leaving closes it; a tap, Enter or Space opens it for good (native <details>)
