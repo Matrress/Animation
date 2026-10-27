@@ -19,10 +19,12 @@
 .dpl__planet{position:absolute;right:0;top:0;width:calc(36px + 2.2 * clamp(31px,3.7vw,50px));aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 36% 30%,#2e6aa3,#143e68 52%,#08182c);box-shadow:0 0 0 1px rgba(150,200,255,.16),0 0 46px 6px rgba(70,140,255,.3),0 0 120px 20px rgba(60,120,230,.12);pointer-events:none}
 .dpl__planet canvas{position:absolute;inset:0;display:block;width:100%;height:100%;border-radius:50%;opacity:0;transition:opacity 1.4s ease}
 .dpl__planet[data-ready] canvas{opacity:1}
-.dpl .dpl__pband{position:absolute;left:5%;right:5%;top:50%;transform:translateY(-50%);padding:5px 4px 6px;text-align:center;background:rgba(9,22,38,.68);color:#fff;font-size:16px;line-height:1.12;text-shadow:0 1px 3px rgba(0,0,0,.85),0 0 8px rgba(0,0,0,.6);-webkit-text-stroke:.2px currentColor}
-.dpl .dpl__pband span{display:block;font-weight:400}
+/* the slogan sits under the Earth, not on it, centred on it (the Earth stays clear) */
+.dpl .dpl__pband{position:absolute;left:-10%;right:-10%;top:calc(100% + 12px);text-align:center;color:var(--ink);font-size:16px;line-height:1.2;text-shadow:0 1px 6px rgba(6,18,30,.9);-webkit-text-stroke:.2px currentColor}
+.dpl .dpl__pband span{display:block;font-weight:400;color:var(--ink2)}
 .dpl .dpl__pband b{display:block;font-weight:600;font-size:17px;-webkit-text-stroke:.35px currentColor}
-.dpl__stars{position:absolute;left:18px;top:8px;width:220px;height:290px;pointer-events:none;overflow:visible}
+/* Orion: about 30% smaller than before and up in the top-left corner, so it leaves the composition room to breathe */
+.dpl__stars{position:absolute;left:4px;top:0;width:154px;height:203px;pointer-events:none;overflow:visible}
 .dpl__stars .ol{fill:none;stroke:rgba(190,215,255,.13);stroke-width:.9;stroke-linecap:round}
 .dpl .t{opacity:.62;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 3px rgba(220,235,255,.55));animation:dpl-or 16s ease-in-out infinite;animation-delay:calc(var(--i) * 1.9s)}
 @keyframes dpl-or{0%,24%,100%{opacity:.62;transform:scale(1)}8%{opacity:1;transform:scale(1.22);filter:drop-shadow(0 0 7px rgba(235,243,255,.95))}}
