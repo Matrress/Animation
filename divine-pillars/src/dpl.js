@@ -213,9 +213,9 @@
 
     bioMark(root);
 
-    // draw the rings when the band comes into view (immediately under reduced motion or without IntersectionObserver)
+    // draw the rings when the row of circles comes into view (the whole band is far taller than a phone screen) (immediately under reduced motion or without IntersectionObserver)
     if (reduce || !('IntersectionObserver' in window)) root.classList.add('is-in');
-    else { var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { root.classList.add('is-in'); io.disconnect(); } }, { threshold: 0.15 }); io.observe(root); }
+    else { var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { root.classList.add('is-in'); io.disconnect(); } }, { threshold: 0.15 }); io.observe(sun); }
 
     // deep links: #dpl-support, #dpl-adapt, #dpl-breathe, #dpl-natural open that law; #dpl-compare opens the comparison
     function fromHash() {

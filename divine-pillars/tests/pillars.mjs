@@ -34,7 +34,7 @@ const ok = (c, msg) => { if (c) pass++; else { fail++; console.log('  FAIL', msg
   ok(!/Hotel Line/.test(all), 'Hotel Line is not here');
   for (const p of PILLARS) ok(text.includes(p.title) && text.includes(p.key[0]), `law ${p.n}: "${p.title}" and its key number ${p.key[0]} are static HTML`);
   for (const t of DIFF.tiles) ok(text.includes(t.title) && text.includes(t.text), `difference card "${t.title}" is static HTML`);
-  ok((html.match(/class="dpl__tl"/g) || []).length === 6, 'six difference cards');
+  ok((html.match(/class="dpl__tl"/g) || []).length === 9, 'nine difference cards');
   ok(/Natural Latex Mattress/.test(text) && /Natural Latex Topper/.test(text), 'the section says "Natural Latex Mattress" and "Natural Latex Topper"');
   ok(/No springs, no memory foam, no synthetic foam core/.test(text) && /coconut coir in our Orthopaedic is natural/.test(text), 'pure latex in the approved wording, and the coir said to be natural');
   ok(/A latex mattress for support and a latex topper for comfort, with nothing between them/.test(text), 'Dual Plush: latex mattress for support, latex topper for comfort');
@@ -42,6 +42,10 @@ const ok = (c, msg) => { if (c) pass++; else { fail++; console.log('  FAIL', msg
   ok(/63, 75, 83 and 88 kg\/m³/.test(text), 'firmness densities 63, 75, 83, 88 kg/m³');
   ok(!/\b(\d{2,3}\s?(–|-|to)\s?\d{2,3}\s?kg|up to 48|from 120)\b/.test(text.replace(/kg\/m³/g, '')), 'no body-weight ranges here (they live in the Firmness block and the Hero)');
   ok(/Not one mattress for everyone/.test(text), 'the closing statement');
+  ok(/Engineering Research/.test(text) && /shop online with peace of mind/.test(text) && /Comfort is personal/.test(text) && /regulations and service without compromises/.test(text), 'Engineering Research: shop online with peace of mind, comfort is personal, regulations and service without compromises');
+  ok(/Custom Made, in High Variety/.test(text) && /Heights are customised too, not only the standard size/.test(text) && /verified, certified solutions/.test(text), 'Custom Made: variety, customised heights, verified and certified solutions');
+  ok(/Wellness is not an add-on or an extra feature/.test(text) && /outcome of an engineered sleep concept/.test(text) && /Anatomical adaptation that follows the natural curves of the body/.test(text) && /Continuous ventilation and thermal balance/.test(text) && /what wellness means in real sleep engineering/.test(text), "Wellness: the owner's text, complete");
+  ok(html.includes('<details class="dpl__rd"><summary class="dpl__btn">Full Wellness Concept</summary>'), 'the full wellness text sits in a native details (readable without script)');
   for (const m of MATERIALS) ok(text.includes(m.name), `comparison row "${m.name}" is static HTML`);
   for (const n of ['63', '75', '83', '20–35', '85', '4.5–5.4', '40–55%', '3–15 seconds']) ok(text.includes(n), `number ${n} in the comparison`);
   ok(/TEMPUR® is a registered trademark/.test(text), 'TEMPUR® trademark note');
@@ -69,9 +73,12 @@ for (const [name, motion] of [['desktop', 'no-preference'], ['phone', 'no-prefer
   ok(await q(() => !document.querySelector('[data-need="#ddhd-system"]').hidden), `${tag}: the link to the System tile shows when the System tile is there`);
   ok(await q(() => [...document.querySelectorAll('.dpl__ctas [data-need]')].every((a) => !a.hidden === !!document.querySelector(a.getAttribute('data-need')))), `${tag}: links to the navigator and to Firmness show only when their target is on the page`);
   const dif = await q(() => { const t = [...document.querySelectorAll('.dpl__tl')]; return { n: t.length, over: t.filter((e) => e.scrollHeight > e.clientHeight + 1).length, widths: new Set(t.map((e) => Math.round(e.getBoundingClientRect().width))).size, rows: new Set(t.map((e) => Math.round(e.getBoundingClientRect().top))).size, cols: Math.round(document.querySelector('.dpl__tiles').getBoundingClientRect().width / t[0].getBoundingClientRect().width) }; });
-  ok(dif.n === 6 && dif.over === 0 && dif.widths === 1, `${tag}: six equal cards, no text overflows a card`);
-  if (name === 'desktop') ok(dif.rows === 2, `${tag}: three cards to a row, two rows (${dif.rows} rows)`);
-  if (name === 'phone') ok(dif.rows === 6, `${tag}: one card to a row on the phone (${dif.rows} rows)`);
+  ok(dif.n === 9 && dif.over === 0 && dif.widths === 1, `${tag}: nine equal cards, no text overflows a card`);
+  if (name === 'desktop') ok(dif.rows === 3, `${tag}: three cards to a row, three rows (${dif.rows} rows)`);
+  if (name === 'phone') ok(dif.rows === 9, `${tag}: one card to a row on the phone (${dif.rows} rows)`);
+  const wl = await q(() => { const d = document.querySelector('.dpl__rd'), card = d.closest('.dpl__tl'); const h0 = card.getBoundingClientRect().height; d.open = true; const h1 = card.getBoundingClientRect().height, pr = d.querySelector('.dpl__rb').getBoundingClientRect(), cr = card.getBoundingClientRect(); const out = { grew: h1 > h0 + 100, wide: cr.width > card.parentElement.getBoundingClientRect().width * 0.95 || window.innerWidth < 700, inside: pr.left >= cr.left - 1 && pr.right <= cr.right + 1 && pr.bottom <= cr.bottom + 1, items: d.querySelectorAll('.dpl__rl li').length }; d.open = false; return out; });
+  ok(wl.grew && wl.wide && wl.inside && wl.items === 4, `${tag}: the wellness cell opens across the whole row with the full concept, four requirements`);
+  ok(await q(() => document.querySelector('.dpl__tl').querySelector('.dpl__rd') !== null), `${tag}: Wellness leads the nine cells`);
   await q(() => document.querySelector('#dpl').scrollIntoView()); await page.waitForTimeout(1600);
   ok(await q(() => document.querySelector('#dpl').classList.contains('is-in')), `${tag}: rings drawn in when the band is seen`);
   // the Bio Dunlop mark: the owner's drawing loads, hover opens its window, leaving closes it, Escape closes it

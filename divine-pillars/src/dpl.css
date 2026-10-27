@@ -194,9 +194,23 @@
 .dpl__hd2{margin-bottom:clamp(32px,4vw,52px)}
 .dpl__tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.8vw,22px)}
 .dpl .dpl__tl{display:flex;flex-direction:column;padding:clamp(22px,2.4vw,30px);border-radius:28px;background:linear-gradient(160deg,rgba(26,70,90,.55),rgba(12,32,45,.55));box-shadow:inset 0 0 0 1px var(--line),0 30px 60px -44px #000;min-width:0}
+.dpl__ic svg{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .dpl__ic{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;box-shadow:0 0 0 1.5px var(--acc);color:var(--acc);flex:none}
 .dpl .dpl__tt{margin-top:18px;font-size:clamp(21px,1.75vw,24px);line-height:1.2;font-weight:600;color:var(--ink)!important;-webkit-text-stroke:.35px currentColor}
 .dpl .dpl__tx2{margin-top:10px;color:var(--ink2);font-size:17px;line-height:1.6}
+.dpl .dpl__rd{margin-top:18px}
+.dpl .dpl__rd>summary{align-self:flex-start}
+.dpl__rd[open]>summary{border-color:var(--acc);background:rgba(79,211,203,.1)}
+.dpl__tl:has(.dpl__rd[open]){grid-column:1/-1}
+.dpl .dpl__rb{margin-top:6px;padding-top:2px}
+.dpl__rd[open] .dpl__rb{columns:2;column-gap:clamp(28px,4vw,56px)}
+.dpl .dpl__rb p:first-child{margin-top:0}
+.dpl .dpl__rb>*{break-inside:avoid}
+.dpl .dpl__rb p{margin-top:14px;color:var(--ink2);font-size:17px;line-height:1.6}
+.dpl .dpl__rb p b{color:var(--ink);-webkit-text-stroke:.3px currentColor}
+.dpl .dpl__rl{display:grid;gap:10px;margin-top:14px}
+.dpl .dpl__rl li{position:relative;padding-left:22px;color:var(--ink);font-size:17px;line-height:1.55}
+.dpl .dpl__rl li::before{content:"";position:absolute;left:2px;top:.62em;width:9px;height:9px;border-radius:50%;background:var(--acc)}
 .dpl .dpl__q2{max-width:760px;margin:clamp(36px,5vw,56px) auto 0;padding:4px 0 4px 20px;border-left:3px solid var(--acc);color:var(--ink);font-size:clamp(21px,2vw,27px);line-height:1.35;font-weight:600;-webkit-text-stroke:.3px currentColor}
 .dpl .dpl__ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:clamp(28px,4vw,40px)}
 
@@ -213,6 +227,8 @@ html.dpl-lock,html.dpl-lock body{overflow:hidden!important}
 /* tablet: two circles per row */
 @media (max-width:999px){
   .dpl__tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dpl__tiles>.dpl__tl:first-child{grid-column:1/-1}
+  .dpl__rd[open] .dpl__rb{columns:1}
   .dpl__sun{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:44px;--orb:clamp(190px,30vw,230px)}
   .dpl__sun::before,.dpl__sun::after{display:none}
   .dpl__pin{grid-template-columns:1fr}

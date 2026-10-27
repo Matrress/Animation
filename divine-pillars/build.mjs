@@ -10,7 +10,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { HEAD, MATERIALS, COMPARE, PILLARS, FOOT, DIFF, CREED } from './src/content.mjs';
 
-const VERSION = '0.11.2';
+const VERSION = '0.12.0';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DPL_REF || 'main-preview';
 const BASE = process.env.DPL_BASE || `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-pillars/release/${VERSION}/`;
@@ -44,9 +44,13 @@ const ICON = {
   partners: '<rect x="6" y="12" width="16" height="24" rx="5"/><rect x="26" y="12" width="16" height="24" rx="5"/>',
   spine: '<path d="M24 6v36"/><circle cx="24" cy="12" r="3.4"/><circle cx="24" cy="24" r="3.4"/><circle cx="24" cy="36" r="3.4"/><path d="M12 24h6M30 24h6"/>',
   frame: '<path d="M8 16V8h8M32 8h8v8M40 32v8h-8M16 40H8v-8"/><circle cx="24" cy="24" r="5"/>',
+  research: '<circle cx="21" cy="21" r="12"/><path d="M30 30l11 11M15 21.5l4.5 4.5 8-9"/>',
+  stack: '<rect x="8" y="30" width="32" height="8" rx="3"/><rect x="8" y="18" width="32" height="8" rx="3"/><path d="M24 12V5M20 9l4-4 4 4"/>',
+  moon: '<path d="M35 31A15 15 0 1 1 19 9a12 12 0 0 0 16 22Z"/><circle cx="37" cy="13" r="1.8"/>',
 };
-const dtile = (t) => `<li class="dpl__tl"><span class="dpl__ic"><svg viewBox="0 0 48 48" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICON[t.icon]}</svg></span>
-<h3 class="dpl__tt">${esc(t.title)}</h3><p class="dpl__tx2">${esc(t.text)}</p></li>`;
+const more = (m) => `<details class="dpl__rd"><summary class="dpl__btn">${esc(m.label)}</summary><div class="dpl__rb">${m.paras.map((t) => `<p>${esc(t)}</p>`).join('')}<ul class="dpl__rl">${m.list.map((t) => `<li>${esc(t)}</li>`).join('')}</ul><p><b>${esc(m.close)}</b></p></div></details>`;
+const dtile = (t) => `<li class="dpl__tl"><span class="dpl__ic"><svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true" focusable="false">${ICON[t.icon]}</svg></span>
+<h3 class="dpl__tt">${esc(t.title)}</h3><p class="dpl__tx2">${esc(t.text)}</p>${t.more ? more(t.more) : ''}</li>`;
 
 // the creed: the owner's words next to the Bio Dunlop mark (his drawing, the same file and the same hover as under the Hero in the Collection)
 const BIO_IMG = 'https://cdn.jsdelivr.net/gh/Matrress/Animation@9d681f860c9dae7dd866236d6824f413443b8512/divine-home-discovery/assets/bio-dunlop.svg';
@@ -113,7 +117,7 @@ for (const m of tile.matchAll(/class="dpl__btn[^"]*"[^>]*>([^<]+)/g)) {   // but
   for (const w of m[1].trim().split(/\s+/)) if (/^[a-z]/.test(w) && !['and', 'or'].includes(w)) throw new Error(`button not in Title Case: "${m[1].trim()}"`);
 }
 if (PILLARS.length !== 4) throw new Error('expected four laws');
-if (DIFF.tiles.length !== 6) throw new Error('expected six difference cards');
+if (DIFF.tiles.length !== 9) throw new Error('expected nine difference cards');
 if (!/Natural Latex Mattress/.test(tile) || !/Natural Latex Topper/.test(tile)) throw new Error('the section must say "Natural Latex Mattress" and "Natural Latex Topper"');
 for (const p of PILLARS) if (!fs.existsSync(path.join(here, 'assets', `${p.img}.webp`))) throw new Error(`missing photo assets/${p.img}.webp`);
 const ids = [...tile.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);

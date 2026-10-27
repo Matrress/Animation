@@ -206,14 +206,36 @@ export const CREED = {
 export const DIFF = {
   eyebrow: 'How We Are Different',
   title: 'Only Natural Dunlop Latex. <b>Engineered Around You.</b>',
-  lede: 'The four laws belong to the material. What we do with it is ours: custom-made production, firmness regulated by engineering rules, and solutions for one sleeper, for two, and for firm orthopaedic comfort. Every Natural Latex Mattress and Natural Latex Topper is made to order.',
+  lede: 'The four laws belong to the material. What we do with it is ours: engineering research, custom-made production, firmness regulated by engineering rules, and solutions for one sleeper, for two, and for firm orthopaedic comfort. Every Natural Latex Mattress and Natural Latex Topper is made to order.',
+  // nine cells, three to a row. Wellness leads; 'more' = its longer text, a native <details> in the cell (readable without script) that opens across the whole row.
   tiles: [
+    {
+      id: 'wellness', icon: 'moon', title: 'Wellness by Engineering',
+      text: 'Wellness is not an add-on or an extra feature. It is the outcome of an engineered sleep concept.',
+      more: {
+        label: 'Full Wellness Concept',
+        paras: [
+          'Sleep is the body’s most powerful natural regenerative process. During sleep, cellular regeneration is at its strongest, and the nervous and musculoskeletal systems recover at a deep level.',
+          'Cell division is essential for tissue repair, recovery and long-term balance in the body. It happens most effectively during deep, uninterrupted sleep. When the body is given the right conditions, this process unfolds naturally and correctly, without stress or disruption.',
+          'For this regeneration to happen properly, the body needs a correctly engineered sleep environment, not a subjective feeling of softness or comfort:',
+        ],
+        list: [
+          'Anatomical adaptation that follows the natural curves of the body.',
+          'Orthopaedic support that stabilises the spine and distributes load correctly.',
+          'A genuinely natural and clean environment, free from synthetic foams and harmful emissions.',
+          'Continuous ventilation and thermal balance for calm, uninterrupted sleep.',
+        ],
+        close: 'When these elements work together by design, sleep becomes deep, stable and regenerative. That is what wellness means in real sleep engineering.',
+      },
+    },
+    { id: 'research', icon: 'research', title: 'Engineering Research', text: 'Everything we regulate follows one idea: you can shop online with peace of mind. We give you rules for every choice, not only a list of our options, so when you follow our regulations your selection is in order. Comfort is personal. Even so, we keep regulations and service without compromises.' },
     { id: 'pure', icon: 'leaf', title: 'Pure Natural Dunlop Latex', text: 'Natural Dunlop latex in every Natural Latex Mattress and Natural Latex Topper. No springs, no memory foam, no synthetic foam core. Even the coconut coir in our Orthopaedic is natural.' },
     { id: 'regulated', icon: 'slider', title: 'Firmness Regulated by Body Weight', text: 'Your weight sets Soft, Medium, Firm or Extra Firm by engineering rules, not by guesswork. The whole core is made at 63, 75, 83 and 88 kg/m³.' },
     { id: 'dual', icon: 'pair', title: 'The Dual Plush System', text: 'A latex mattress for support and a latex topper for comfort, with nothing between them. The topper is regulated to the next adequate firmness, not chosen freely, so the comfort is tuned and the support stays secured.' },
     { id: 'partners', icon: 'partners', title: 'Partner’s Comfort', text: 'A side for her and a side for him. Mattress for Partners is two individually regulated latex mattresses under one shared topper, so each side has the firmness its sleeper needs.' },
     { id: 'ortho', icon: 'spine', title: 'Firm Orthopaedic Comfort', text: 'For sleepers who want only firm comfort: Extra Firm natural Dunlop latex stabilised with natural coconut coir, with two firm sides and seven-zone support.' },
-    { id: 'order', icon: 'frame', title: 'Custom-Made, Fine-Tuned', text: 'Size, depth, firmness and cover are confirmed with you, so every sleep system is made for one body and one bed.' },
+    { id: 'custom', icon: 'stack', title: 'Custom Made, in High Variety', text: 'Every Natural Latex Mattress and Natural Latex Topper is custom made. You choose among many variations to reach the balance you need between anatomical support and design, and bring home a selection of verified, certified solutions. Heights are customised too, not only the standard size, because individuality is part of the product.' },
+    { id: 'order', icon: 'frame', title: 'Fine-Tuned Before It Is Made', text: 'Size, depth, firmness and cover are confirmed with you, so every sleep system is made for one body and one bed.' },
   ],
   quote: 'Not one mattress for everyone. A natural latex solution made for you.',
   ctas: { mattress: 'Find Your Natural Latex Mattress', topper: 'Find Your Natural Latex Topper', firmness: 'Find Your Firmness' },
