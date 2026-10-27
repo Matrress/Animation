@@ -20,15 +20,10 @@
 .dpl .dpl__pband{position:absolute;left:8%;right:8%;top:50%;transform:translateY(-50%);padding:9px 8px 10px;text-align:center;background:rgba(9,22,38,.78);color:#fff;font-size:17px;line-height:1.28;-webkit-text-stroke:.2px currentColor}
 .dpl .dpl__pband span{display:block;font-weight:400;letter-spacing:.02em}
 .dpl .dpl__pband b{display:block;margin-top:1px;font-weight:600;font-size:18px;-webkit-text-stroke:.35px currentColor}
-.dpl__stars,.dpl__mstars{position:absolute;pointer-events:none;overflow:visible}
-.dpl__stars{left:-6px;top:4px;width:300px;height:300px}
-.dpl .t{fill:#EAF4FF;transform-box:fill-box;transform-origin:center;animation:dpl-tw 4s ease-in-out infinite}
-.dpl .t.b{fill:#FFF4D8;filter:drop-shadow(0 0 4px rgba(255,236,190,.95))}
-.dpl .t:nth-child(3n){animation-duration:3.1s;animation-delay:-1.2s}
-.dpl .t:nth-child(3n+1){animation-duration:5.3s;animation-delay:-2.7s}
-.dpl .t:nth-child(3n+2){animation-duration:4.2s;animation-delay:-.5s}
-.dpl .t:nth-child(5n){animation-duration:6.4s;animation-delay:-3.9s}
-@keyframes dpl-tw{0%,100%{opacity:.25;transform:scale(.75)}50%{opacity:1;transform:scale(1.3)}}
+.dpl__stars{position:absolute;left:18px;top:8px;width:220px;height:290px;pointer-events:none;overflow:visible}
+.dpl__stars .ol{fill:none;stroke:rgba(190,215,255,.13);stroke-width:.9;stroke-linecap:round}
+.dpl .t{opacity:.62;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 3px rgba(220,235,255,.55));animation:dpl-or 16s ease-in-out infinite;animation-delay:calc(var(--i) * 1.9s)}
+@keyframes dpl-or{0%,24%,100%{opacity:.62;transform:scale(1)}8%{opacity:1;transform:scale(1.22);filter:drop-shadow(0 0 7px rgba(235,243,255,.95))}}
 @media (max-width:1179px){.dpl__planet,.dpl__stars{display:none}}
 
 /* header */
@@ -160,9 +155,7 @@
 .dpl .dpl__creed{position:relative;display:grid;grid-template-columns:minmax(190px,250px) minmax(0,1fr) clamp(110px,11vw,160px);align-items:center;gap:clamp(24px,3.4vw,52px);max-width:1180px;margin:clamp(64px,8vw,112px) auto 0;padding:clamp(18px,2.4vw,32px) clamp(12px,2vw,28px);background:radial-gradient(ellipse closest-side at 50% 50%,rgba(0,146,137,.13),transparent)}
 .dpl .dpl__cq,.dpl .dpl__ct{text-align:center}
 .dpl__moonbox{position:relative;justify-self:center;width:clamp(110px,11vw,160px);aspect-ratio:1}
-.dpl .dpl__moon{position:relative;display:block;width:100%;height:100%;animation:dpl-moon 9s ease-in-out infinite}
-.dpl__mstars{inset:-22%;width:144%;height:144%}
-@keyframes dpl-moon{0%,100%{filter:brightness(.95) drop-shadow(0 0 16px rgba(255,226,160,.22))}50%{filter:brightness(1.07) drop-shadow(0 0 30px rgba(255,226,160,.45))}}
+.dpl .dpl__moon{position:relative;display:block;width:100%;height:100%;filter:drop-shadow(0 0 22px rgba(255,226,160,.3))}
 /* the Bio Dunlop mark and its window: the same file and the same hover as under the Hero in the Collection */
 .dpl__bio{position:relative;display:block}
 .dpl__bio-s{display:block;list-style:none;cursor:pointer;padding:6px;border-radius:14px;-webkit-tap-highlight-color:transparent}
@@ -294,5 +287,5 @@ html.dpl-lock,html.dpl-lock body{overflow:hidden!important}
   .dpl *,.dpl *::before,.dpl *::after{animation:none!important;transition:none!important}
   .dpl.is-js:not(.is-in) .dpl__ring .val{stroke-dashoffset:0}
   .dpl .ln{opacity:.8}
-  .dpl .t{opacity:.8;transform:none}
+  .dpl .t{opacity:.85;transform:none}
 }

@@ -3,7 +3,7 @@
    law at a time in the panel under them (as large as it needs), and turns "Compare All Materials" into a window.
    Data is injected at build time from src/content.mjs. Around each circle sit the phases of the moon, lit in turn.
    A line with a travelling light joins the four circles (desktop). A tropical night frames the band: the Earth turns in the
-   top-right corner (the Hero's own way of drawing it, scaled down), stars flash softly in the top-left, a moon rises beside the
+   top-right corner (the Hero's own way of drawing it, scaled down), Orion glows in the top-left, a still moon sits beside the
    creed. Under reduced motion nothing moves. */
 (function () {
   'use strict';
@@ -231,18 +231,18 @@
   }
 
   // ---- the tropical night ----
-  // stars: x, y, radius, bright. Six of them follow the stars of the Hero's night scene (the curve of the Plough).
-  var SKY = [[41,52,2.4,1],[110,36,2.8,1],[131,46,2.2,1],[149,58,2.4,1],[154,80,2.6,1],[212,82,2.8,1],[14,20,1.2],[66,18,1.4],[92,64,1.2],[120,104,1.5],[176,30,1.3],[190,58,1.1],[230,40,1.4],[262,66,1.2],[248,110,1.3],[28,100,1.4],[70,128,1.2],[150,134,1.5],[206,138,1.2],[262,22,1.3],[172,108,1.1],[54,76,1.1]];
-  var MOONSKY = [[20,34,1.3],[170,22,1.8,1],[188,98,1.3],[160,172,1.4],[30,160,1.6,1],[12,98,1.2],[122,10,1.2],[104,190,1.1]];
-  function stars(parent, data, vb, cls) {
-    if (!parent || parent.querySelector('.' + cls)) return;
-    var svg = sv('svg', { 'class': cls, viewBox: '0 0 ' + vb + ' ' + vb, 'aria-hidden': 'true', focusable: 'false' });
-    data.forEach(function (a) { svg.appendChild(sv('circle', { cx: a[0], cy: a[1], r: a[2], 'class': a[3] ? 't b' : 't' })); });
-    parent.insertBefore(svg, parent.firstChild);
-  }
+  // Orion, and only Orion: the seven stars that outline it, in the empty space top-left (x, y, radius, colour). Betelgeuse is warm, Rigel blue-white.
+  // They brighten one after another, very slowly (one pass in 16 s); a barely visible line joins them so the figure reads as a constellation.
+  // positions from the real sky (right ascension and declination, 15 px per degree), so the figure has the true shape of Orion
+  var ORION = [[30,14,3.4,'#FFCFA6'],[143,30,2.9,'#E6F0FF'],[84,154,2.5,'#F2F7FF'],[102,143,2.7,'#F2F7FF'],[118,130,2.5,'#F2F7FF'],[57,270,2.7,'#E6F0FF'],[183,248,3.8,'#D3E7FF']];
+  var ORION_LINES = 'M30 14L143 30M30 14L84 154M143 30L118 130M84 154L118 130M84 154L57 270M118 130L183 248';
   function night(root) {
-    stars(root.querySelector('.dpl__in'), SKY, 300, 'dpl__stars');
-    stars(root.querySelector('.dpl__moonbox'), MOONSKY, 200, 'dpl__mstars');
+    var in_ = root.querySelector('.dpl__in');
+    if (!in_ || in_.querySelector('.dpl__stars')) return;
+    var svg = sv('svg', { 'class': 'dpl__stars', viewBox: '0 0 220 290', 'aria-hidden': 'true', focusable: 'false' });
+    svg.appendChild(sv('path', { 'class': 'ol', d: ORION_LINES }));
+    ORION.forEach(function (a, i) { svg.appendChild(sv('circle', { cx: a[0], cy: a[1], r: a[2], fill: a[3], 'class': 't', style: '--i:' + i })); });
+    in_.insertBefore(svg, in_.firstChild);
   }
 
   // the Earth, drawn the way the Hero draws it: every pixel of a disc is looked up in the same Earth and cloud maps, lit from the
