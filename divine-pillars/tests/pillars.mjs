@@ -91,12 +91,16 @@ for (const [name, motion] of [['desktop', 'no-preference'], ['phone', 'no-prefer
     await page.waitForFunction(() => document.querySelector('.dpl__planet[data-ready]'), null, { timeout: 15000 }).catch(() => {});
     const snap = () => page.evaluate(() => { const c = document.querySelector('.dpl__planet canvas'), x = c.getContext('2d'), s = c.width, d = x.getImageData(0, Math.round(s * 0.2), s, 1).data; let h = 0, n = 0; for (let i = 0; i < d.length; i += 4) { h = (h * 31 + d[i] + d[i + 1] * 3 + d[i + 2] * 7) >>> 0; if (d[i + 3] > 200) n++; } return { h, n, w: s }; });
     const p1 = await snap(); await page.waitForTimeout(2500); const p2 = await snap();
-    ok(p1.w > 150 && p1.n > p1.w * 0.4, `${tag}: the Earth is drawn on the canvas (${p1.n} solid pixels in a row of ${p1.w})`);
+    ok(p1.w > 100 && p1.n > p1.w * 0.4, `${tag}: the Earth is drawn on the canvas (${p1.n} solid pixels in a row of ${p1.w})`);
     if (motion === 'reduce') ok(p1.h === p2.h, `${tag}: the Earth stands still`); else ok(p1.h !== p2.h, `${tag}: the Earth turns`);
     const tw = await q(() => { const t = [...document.querySelectorAll('.dpl__stars .t')], cs = getComputedStyle(t[0]), sx = document.querySelector('.dpl__sun').getBoundingClientRect(), bb = document.querySelector('.dpl__stars').getBoundingClientRect(); return { a: cs.animationName, dur: parseFloat(cs.animationDuration), delays: new Set(t.map((e) => getComputedStyle(e).animationDelay)).size, lines: document.querySelectorAll('.dpl__stars .ol').length, clear: bb.bottom < sx.top + 6 }; });
     if (motion === 'reduce') ok(tw.a === 'none', `${tag}: Orion stands still`); else ok(tw.a === 'dpl-or' && tw.dur >= 12 && tw.delays === 7, `${tag}: the seven stars of Orion brighten one after another, very slowly (${tw.dur} s a pass)`);
     ok(tw.lines === 1 && tw.clear, `${tag}: Orion is one faint figure and stays above the circles`);
     ok(await q(() => !document.querySelector('.dpl__mstars')), `${tag}: no stars around the moon`);
+  }
+  if (wide) {   // the Earth is as tall as the first three lines (heading + two title lines) and level with them
+    const gm = await q(() => { const pl = document.querySelector('.dpl__planet').getBoundingClientRect(), eb = document.createRange(), h2 = document.createRange(); eb.selectNodeContents(document.querySelector('.dpl__hd .dpl__eb')); h2.selectNodeContents(document.querySelector('.dpl__hd .dpl__h')); const a = eb.getBoundingClientRect(), b = h2.getBoundingClientRect(); return { d: pl.height, w: pl.width, block: b.bottom - a.top, off: pl.top - a.top }; });
+    ok(Math.abs(gm.d - gm.block) <= 10 && Math.abs(gm.off) <= 10 && Math.abs(gm.d - gm.w) < 1, `${tag}: the Earth (${Math.round(gm.d)} px) is as tall as the first three lines (${Math.round(gm.block)} px) and level with them`);
   }
   // nothing of the night touches the text (title, lede, eyebrow) at this width
   const hit = await q(() => { const rs = []; for (const sel of ['.dpl__hd .dpl__eb', '.dpl__hd .dpl__h', '.dpl__hd .dpl__lede']) { const r = document.createRange(); r.selectNodeContents(document.querySelector(sel)); rs.push(...[...r.getClientRects()].filter((b) => b.width > 2)); } const boxes = [...document.querySelectorAll('.dpl__planet, .dpl__stars .t')].filter((e) => e.getBoundingClientRect().width && getComputedStyle(e.closest('.dpl__planet, .dpl__stars')).display !== 'none').map((e) => e.getBoundingClientRect()); return boxes.filter((b) => rs.some((t) => b.left < t.right + 6 && b.right > t.left - 6 && b.top < t.bottom + 6 && b.bottom > t.top - 6)).length; });
