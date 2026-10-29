@@ -1340,7 +1340,7 @@ html:has(.ddh[data-ddh-state=night]) .ins-tile--header svg{color:#e8edf3!importa
 .ddh .ddh__hint em{font:400 clamp(14px,1.1vw,16px)/1.3 DDHChillax,"Comfortaa",system-ui,sans-serif;font-style:normal;letter-spacing:0;color:#14323a}
 .ddh .ddh__hint .ddh__hint-t{display:none}
 @media not all and (any-hover:hover) and (any-pointer:fine){.ddh .ddh__hint .ddh__hint-h{display:none}.ddh .ddh__hint .ddh__hint-t{display:block}}
-@media (max-width:700px) and (orientation:portrait){.ddh .ddh__hint{display:none!important}}
+/* 1.20.5: on an upright phone the invitation is the way into the explanation: a compact two-line button (see the end of this file) */
 /* --- longer translated names: they wrap to two lines instead of being cut; the family tag line and the chip give way (English keeps them) --- */
 .ddh .ddh__sheet--mattress:not(:lang(en)) .ddh__mc--cube .ddh__mc-n{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal;overflow:hidden;line-height:1.18}
 @container ddsh (max-width:1200px){.ddh .ddh__sheet--mattress:not(:lang(en)) .ddh__mc-tag{display:none}}
@@ -1954,3 +1954,99 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk-r{min-height:0;gap:6px}
 .ddh.ddh.ddh .ddh__sheet .ddh__pv .ddh__dsk .ddh__fw{flex:none;align-self:center;display:inline-block;min-width:0;padding:2px 8px;border-radius:8px;letter-spacing:0;text-transform:none;font-size:var(--dr-f);background:var(--bd);background-image:none;text-shadow:none}
 }
+
+/* ===== 1.20.5 the invitation (upper left) is a button: it opens "Our sleep system", the explanation of what we build, how we personalise comfort and why buying online is safe ===== */
+.ddh.ddh .ddh__hint{appearance:none;-webkit-appearance:none;border:0;font:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;pointer-events:none;transition:opacity .3s ease,box-shadow .25s ease,transform .25s ease}
+.ddh.ddh .ddh__hint[data-on]{pointer-events:auto}
+.ddh .ddh__hint:focus-visible{outline:2px solid #23665f;outline-offset:3px}
+.ddh .ddh__hint u{position:relative;flex:none;width:30px;height:30px;margin-left:4px;border-radius:50%;background:#23665f;text-decoration:none;transition:transform .25s ease}
+.ddh .ddh__hint u::before{content:"";position:absolute;left:8px;top:14px;width:13px;height:2px;border-radius:2px;background:#fff}
+.ddh .ddh__hint u::after{content:"";position:absolute;left:14px;top:11px;width:7px;height:7px;border:solid #fff;border-width:2px 2px 0 0;transform:rotate(45deg)}
+@media (any-hover:hover){.ddh.ddh .ddh__hint[data-on]:hover{box-shadow:0 16px 34px -16px rgba(18,52,62,.75),inset 0 0 0 1px #fff;transform:translateY(-1px)}.ddh .ddh__hint:hover u{transform:translateX(3px)}}
+/* retired after three points: the short first line stays, so the way into the explanation never disappears */
+.ddh.ddh .ddh__hint[data-gone][data-on]{opacity:1;visibility:visible}
+.ddh.ddh .ddh__hint[data-gone] em{display:none}
+.ddh.ddh .ddh__hint[data-gone]{padding:8px 8px 8px 14px}
+/* while a point, a card, a size guide or any window is open the button steps aside (and takes no clicks) */
+.ddh.ddh[data-ddh-state] .ddh__hint[data-on],.ddh.ddh[data-ddh-open-sheet] .ddh__hint[data-on],.ddh.ddh[data-ddh-sizes] .ddh__hint[data-on]{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .25s ease,visibility 0s .25s}
+@media (max-width:700px){
+.ddh.ddh .ddh__hint{max-width:calc(50vw - 38px);gap:8px;padding:8px 8px 8px 13px}
+.ddh.ddh .ddh__hint i,.ddh.ddh .ddh__hint em{display:none}
+.ddh.ddh .ddh__hint b{white-space:normal;font-size:10.5px;letter-spacing:.1em;line-height:1.3}
+.ddh.ddh .ddh__hint span{flex:1 1 auto}
+.ddh.ddh .ddh__hint u{width:26px;height:26px;margin-left:0}
+.ddh .ddh__hint u::before{left:6px;top:12px}.ddh .ddh__hint u::after{left:12px;top:9px}
+}
+@media (forced-colors:active){.ddh .ddh__hint{border:1px solid CanvasText}}
+
+/* ===== 1.20.5 the window "Our sleep system": a logical system in three linked steps (foundation, personalisation, confidence), then what they add up to. Text first: large, calm, one idea per block. ===== */
+.ddh .ddh__sheet--sys{--sy1:#1d4f74;--sy2:#25799f;--sy3:#23665f;--sy1t:rgba(29,79,116,.08);--sy2t:rgba(37,121,159,.09);--sy3t:rgba(35,102,95,.09);--sy-ink:#2a3233}
+.ddh .ddh__sheet--sys .ddh__sh-in{display:grid;align-content:start;gap:clamp(14px,2.2vh,24px);box-sizing:border-box}
+.ddh .ddh__sheet--sys .ddh__sh-in>:not(.ddh__sh-x){width:100%;max-width:1160px;margin-inline:auto}
+.ddh .ddh__sy-head{display:grid;gap:6px;padding-right:46px}
+.ddh .ddh__sy-h{margin:0;font-size:clamp(24px,2.5vw,38px);line-height:1.1}
+.ddh .ddh__sy-h span,.ddh .ddh__sy-h em{display:block}
+.ddh .ddh__sy-h em{color:var(--sy2)}
+.ddh .ddh__sy-lede{max-width:50em;margin-top:.3em;font-size:clamp(15px,1.15vw,17px);line-height:1.5;color:var(--sy-ink)}
+.ddh .ddh__sy-lede b{font-weight:600;color:var(--sh-ink)}
+.ddh .ddh__sy-steps{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin:0;padding:0;list-style:none;counter-reset:none}
+.ddh .ddh__sy-s{--c:var(--sy1);--ct:var(--sy1t);display:grid;align-content:start;gap:10px;padding:18px 20px 20px;border-radius:20px;background:var(--sh-card);box-shadow:inset 0 0 0 1px var(--sh-line),inset 0 4px 0 var(--c)}
+.ddh .ddh__sy-s--2{--c:var(--sy2);--ct:var(--sy2t)}
+.ddh .ddh__sy-s--3{--c:var(--sy3);--ct:var(--sy3t)}
+.ddh .ddh__sy-n{display:flex;align-items:center;gap:10px;margin-top:4px}
+.ddh .ddh__sy-n i{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--c);color:#fff;font:600 14px/1 DDHChillax,"Comfortaa",system-ui,sans-serif;letter-spacing:.04em}
+.ddh .ddh__sy-k{font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--c)}
+.ddh .ddh__sy-n::after{content:"";flex:1 1 auto;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--c),transparent)}
+.ddh .ddh__sy-s--3 .ddh__sy-n::after{display:none}
+.ddh .ddh__sy-t{margin:0;font-size:clamp(19px,1.5vw,22px);font-weight:600;line-height:1.2;color:var(--sh-ink)}
+.ddh .ddh__sy-l{font-size:15px;line-height:1.5;color:var(--sy-ink)}
+.ddh .ddh__sy-b{display:grid;gap:9px;margin:2px 0 0;padding:0;list-style:none}
+.ddh .ddh__sy-b li{position:relative;display:block;padding-left:18px;font-size:15px;line-height:1.45;color:var(--sy-ink)}
+.ddh .ddh__sy-b li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--c)}
+.ddh .ddh__sy-b b{display:block;font-size:15.5px;font-weight:600;color:var(--sh-ink)}
+.ddh .ddh__sy-p{margin-top:4px;padding:11px 14px;border-radius:14px;background:var(--ct);box-shadow:inset 3px 0 0 var(--c);font-size:15px;font-weight:600;line-height:1.4;color:var(--sh-ink)}
+.ddh .ddh__sy-end{display:grid;gap:10px;align-items:center;padding-top:2px}
+.ddh .ddh__sy-fin{font-size:clamp(18px,1.5vw,22px);font-weight:600;line-height:1.2;color:var(--sh-ink)}
+.ddh .ddh__sy-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.ddh .ddh__sy-chips li{padding:7px 14px;border-radius:999px;box-shadow:inset 0 0 0 1px #c9bfae;background:var(--sh-card);font-size:14px;font-weight:600;line-height:1.2;color:var(--sh-ink)}
+@media (min-width:900px){
+.ddh .ddh__sy-b b{display:inline;margin-right:.4em}
+.ddh .ddh__sy-b{gap:8px}
+.ddh .ddh__sy-steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.ddh .ddh__sy-s--1 .ddh__sy-n::after,.ddh .ddh__sy-s--2 .ddh__sy-n::after{margin-right:-30px;background:linear-gradient(90deg,var(--c),var(--sy2));opacity:.55}
+.ddh .ddh__sy-s--2 .ddh__sy-n::after{background:linear-gradient(90deg,var(--c),var(--sy3))}
+.ddh .ddh__sy-end{grid-template-columns:auto minmax(0,1fr);column-gap:22px}
+}
+@media (max-width:700px){
+.ddh .ddh__sheet--sys .ddh__sh-in{padding:56px 16px 28px}
+.ddh .ddh__sy-head{padding-right:0}
+.ddh .ddh__sy-s{padding:14px 0 6px;border-radius:0;background:none;box-shadow:inset 0 3px 0 var(--c)}
+.ddh .ddh__sy-p{margin-top:6px}
+.ddh .ddh__sy-lede,.ddh .ddh__sy-l,.ddh .ddh__sy-b li,.ddh .ddh__sy-p{font-size:15.5px}
+.ddh .ddh__sy-chips li{font-size:14px}
+}
+/* the three steps share their rows (title, lead, points, principle), so what belongs together lines up across the columns */
+@supports (grid-template-rows:subgrid){@media (min-width:900px){
+.ddh .ddh__sy-steps{grid-template-rows:auto auto auto 1fr auto;row-gap:0}
+.ddh .ddh__sy-s{grid-row:span 5;grid-template-rows:subgrid;row-gap:10px}
+.ddh .ddh__sheet--sys .ddh__sy-s{row-gap:8px}
+}}
+/* the window over the picture (desktop with a pointer): a tighter rhythm so the three steps and the end line sit inside it, between the header and the Shop buttons */
+@media (min-width:1051px) and (any-hover:hover){
+.ddh .ddh__sheet--sys .ddh__sh-in{gap:clamp(10px,1.6vh,18px);padding:clamp(16px,2.2vh,26px) clamp(22px,2.4vw,40px)}
+.ddh .ddh__sheet--sys .ddh__sy-head{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);column-gap:clamp(20px,3vw,48px);align-items:end}
+.ddh .ddh__sheet--sys .ddh__sy-head .ddh__sh-eye{grid-column:1/-1}
+.ddh .ddh__sheet--sys .ddh__sy-lede{margin:0 0 .2em;font-size:clamp(14.5px,1.05vw,16px)}
+.ddh .ddh__sheet--sys .ddh__sy-s{gap:8px;padding:14px 18px 16px}
+}
+@container ddsh (max-height:760px){
+.ddh .ddh__sheet--sys .ddh__sy-h{font-size:clamp(22px,2vw,30px)}
+.ddh .ddh__sheet--sys .ddh__sy-l,.ddh .ddh__sheet--sys .ddh__sy-b li,.ddh .ddh__sheet--sys .ddh__sy-p{font-size:14px;line-height:1.4}
+.ddh .ddh__sheet--sys .ddh__sy-b b{font-size:14.5px}
+.ddh .ddh__sheet--sys .ddh__sy-b{gap:6px}
+.ddh .ddh__sheet--sys .ddh__sy-n i{width:32px;height:32px;font-size:13px}
+.ddh .ddh__sheet--sys .ddh__sy-t{font-size:17px}
+.ddh .ddh__sheet--sys .ddh__sy-p{padding:8px 12px}
+.ddh .ddh__sheet--sys .ddh__sy-chips li{padding:5px 12px;font-size:13.5px}
+}
+@media (forced-colors:active){.ddh .ddh__sy-s{border:1px solid CanvasText}.ddh .ddh__sy-chips li{border:1px solid CanvasText}}

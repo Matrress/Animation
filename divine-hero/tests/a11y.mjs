@@ -14,7 +14,7 @@ for (const [w, h] of [[1440, 900], [390, 844]]) {
 for (const [w, h, touch] of [[1440, 900, false], [390, 844, true]]) {
   const p = await (await b.newContext({ viewport: { width: w, height: h }, hasTouch: touch, isMobile: touch })).newPage();
   await p.goto(url); await p.waitForFunction(() => document.querySelector('.ddh__sheets'), null, { timeout: 8000 }); await p.addScriptTag({ content: axe });
-  for (const name of ['bio', 'mattress', 'topper']) {
+  for (const name of ['bio', 'mattress', 'topper', 'sys']) {
     await p.evaluate((n) => { document.querySelectorAll('.ddh__sheet').forEach((s) => { s.hidden = s.id !== 'ddh-sheet-' + n; }); }, name); await p.waitForTimeout(500);
     const r = await p.evaluate(async (n) => (await axe.run('#ddh-sheet-' + n, { runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa', 'best-practice'], rules: { region: { enabled: false } } })).violations.map((v) => `${v.impact} ${v.id}: ${v.nodes.slice(0, 3).map((x) => x.target.join(' ')).join(' | ')}`), name);
     console.log(`${w}x${h} sheet ${name} axe violations: ${r.length}`); r.forEach((x) => console.log('   ' + x));

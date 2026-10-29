@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.20.4 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.20.5 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.20.4';
+  var VERSION = '1.20.5';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -205,9 +205,11 @@
       if (!hintEl || !key || hintSeen[key]) return; hintSeen[key] = 1;
       if (++hintN >= 3) { hintEl.setAttribute('data-gone', ''); try { w.sessionStorage.setItem('ddh-hint', '1'); } catch (e) { /* private mode: the invitation simply returns on the next page */ } }
     }
-    if (hintEl && !hintDone()) {
+    if (hintEl) {
+      // 1.20.5: the invitation is a button that opens "our sleep system" (the explanation, sheet #ddh-sheet-sys). Once retired it stays, as its short first line only.
       hintEl.hidden = false; hintT = w.setTimeout(function () { hintEl.setAttribute('data-on', ''); }, 60);
-      cleanups.push(function () { w.clearTimeout(hintT); hintEl.hidden = true; hintEl.removeAttribute('data-on'); hintEl.removeAttribute('data-gone'); });
+      if (hintDone()) hintEl.setAttribute('data-gone', '');
+      cleanups.push(function () { w.clearTimeout(hintT); hintEl.hidden = true; hintEl.removeAttribute('data-on'); hintEl.removeAttribute('data-gone'); hintEl.setAttribute('aria-expanded', 'false'); });
     }
 
     // Interaction graphics (~15 KB) load on first sign of intent, not with the page.
@@ -405,6 +407,7 @@
     var dpc = null, overDpc = false, dpcT = 0, hcs = null, cardDownAt = 0;   // 1.11.1 the Dual Plush card (revealed with the lifted mattress)
     var pvT = 0, sheetPT = '', backFocus = false, szBtn = root.querySelector('.ddh__sz'), szEl = null, szMode = '', szT = 0;   // 1.11.1 model previews, size guide
     var ctas = [].slice.call(root.querySelectorAll('[data-ddh-sheet]')), bioPoint = group.querySelector('[data-ddh-point=bio]');
+    var SYS = 'sys';   // 1.20.5: the explanation window ("Our sleep system"), opened by the invitation button
     var deskMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (any-hover:hover)') : { matches: true };
     // 1.10.1: tablets, laptops and monitors only. On a phone (either way up) the screens never open: the Bio point is
     // hidden (CSS, same query) and the Shop buttons go straight to the collections. The screens' text is still loaded
@@ -447,7 +450,7 @@
     function eager(el) { [].forEach.call(el.querySelectorAll('img'), function (im) { if (im.loading !== 'eager' && !im.closest('[data-ddh-pv][hidden]')) { im.setAttribute('fetchpriority', 'low'); im.loading = 'eager'; } }); }
     function lock(on) { var s = d.documentElement.style; if (on) { if (!root.hasAttribute('data-ddh-lock')) { root.setAttribute('data-ddh-lock', s.overflow || ''); s.overflow = 'hidden'; } } else if (root.hasAttribute('data-ddh-lock')) { s.overflow = root.getAttribute('data-ddh-lock'); root.removeAttribute('data-ddh-lock'); } }
     function openSheet(name, mode, from, via) {
-      if (phoneMQ.matches) return;
+      if (phoneMQ.matches && name !== SYS) return;   // 1.20.5: on a phone only the explanation of the system opens
       if (!sheetBox) { sheetWait = function () { openSheet(name, mode, from, via); }; loadSheets(); return; }
       var el = sheetBox.querySelector('#ddh-sheet-' + name); if (!el) return;
       w.clearTimeout(hoverT);
@@ -825,12 +828,17 @@
       on(szBtn, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode !== 'pin') { w.clearTimeout(szT); szT = w.setTimeout(szClose, 280); } }, { passive: true });
       on(szBtn, 'click', function () { if (szEl && !szEl.hidden && szMode === 'pin') szClose(); else if (szEl && !szEl.hidden) szMode = 'pin'; else szOpen('pin'); });
     }
+    // 1.20.5: the invitation (upper left) opens the explanation of our sleep system; the same button closes it. Escape, the close button or a click outside close it too (see above).
+    if (hintEl) on(hintEl, 'click', function () {
+      if (sheet && sheet.id === 'ddh-sheet-' + SYS) { closeSheet(); return; }
+      openSheet(SYS, 'modal', hintEl);
+    });
     // 1.19.6: the site header's "Mattresses" / "Toppers" links are plain links again: no preview opens from them (hover, focus, click or tap); only the two Shop buttons below open the previews.
     on(d, 'keydown', function (ev) { if ((ev.key === 'Escape' || ev.key === 'Esc') && szEl && !szEl.hidden) { szClose(true); ev.stopPropagation(); } });
     on(d, 'click', function (ev) { if (szEl && !szEl.hidden && !szEl.contains(ev.target) && !(szBtn && szBtn.contains(ev.target))) szClose(); });
     on(d, 'keydown', function (ev) { if (sheet && (ev.key === 'Escape' || ev.key === 'Esc')) closeSheet(); });
     on(d, 'click', function (ev) { if (sheet && sheetMode === 'modal' && Date.now() - openedAt > 300 && !sheet.contains(ev.target) && !(sheetFrom && sheetFrom.contains(ev.target)) && !(bioPoint && bioPoint.contains(ev.target))) closeSheet(true); });
-    on(w, 'resize', function () { if (sheet && (phoneMQ.matches || (sheetMode === 'hover' && !deskMQ.matches))) closeSheet(true); if (active) placeCard(active); if (orbOn) { orbLayout(); orbPrep(); } }, { passive: true });
+    on(w, 'resize', function () { if (sheet && ((phoneMQ.matches && sheet.id !== 'ddh-sheet-' + SYS) || (sheetMode === 'hover' && !deskMQ.matches))) closeSheet(true); if (active) placeCard(active); if (orbOn) { orbLayout(); orbPrep(); } }, { passive: true });
     // 1.10.1 loading in two stages: the first paint is the plain scene (photo, lettering, buttons) and nothing else.
     // Once the page has loaded and the browser is idle, the other modes follow at low priority: the screens' text
     // (every device: it is what search engines index), then on tablets/computers the hotspot graphics, the night
