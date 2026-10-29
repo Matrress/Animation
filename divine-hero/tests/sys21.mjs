@@ -11,9 +11,16 @@ const open = (p) => p.evaluate(() => document.querySelector('.ddh').getAttribute
 { // desktop
   const p = await page({ width: 1440, height: 900 });
   ok(await p.evaluate(() => { const h = document.querySelector('.ddh__hint'); return h.tagName === 'BUTTON' && !h.hidden && getComputedStyle(h).opacity === '1' && getComputedStyle(h).pointerEvents === 'auto'; }), 'pill is a visible, clickable button');
+  // hover opens, leaving closes, click pins
+  { const bb = await (await p.$('.ddh__hint')).boundingBox(); await p.mouse.move(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.waitForTimeout(500);
+    ok(await open(p) === 'sys', 'hovering the pill opens the window');
+    await p.mouse.move(700, 880); await p.waitForTimeout(700); ok(await open(p) === null, 'leaving closes a hover-opened window');
+    await p.mouse.move(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.waitForTimeout(500); await p.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.mouse.move(700, 880); await p.waitForTimeout(700);
+    ok(await open(p) === 'sys', 'a click pins it open (it stays when the pointer leaves)');
+    await p.keyboard.press('Escape'); await p.waitForTimeout(400); }
   await p.click('.ddh__hint'); await p.waitForTimeout(700);
   ok(await open(p) === 'sys' && await p.evaluate(() => document.querySelector('.ddh__hint').getAttribute('aria-expanded')) === 'true', 'click opens the window (aria-expanded true)');
-  ok(await p.evaluate(() => getComputedStyle(document.querySelector('.ddh__hint')).visibility) === 'hidden', 'pill steps aside while open');
+  ok(await p.evaluate(() => getComputedStyle(document.querySelector('.ddh__hint')).opacity) === '0', 'pill steps aside (dimmed) while open');
   await p.keyboard.press('Escape'); await p.waitForTimeout(400);
   ok(await open(p) === null, 'Escape closes');
   ok(await p.evaluate(() => document.activeElement === document.querySelector('.ddh__hint')), 'focus returns to the pill');

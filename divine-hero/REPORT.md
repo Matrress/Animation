@@ -1019,6 +1019,12 @@ Owner brief (Bulgarian, with a screenshot of the card): in the Dual Plush point 
 ## 1.20.4 - new product link for Botanic
 Owner request: the Botanic model URL changed. The link is now https://divinedunlop.com/products/botanic-original-100-organic-latex-mattress-dunlop (the model preview, the Firmness Regulation list and the model selector card; the old `...-831592302` link is gone from the release). Nothing else changed: hero.css and hero.js are byte-identical to 1.20.3 apart from the version string. The Botanic Dual Plush links are different products and are untouched.
 
+## 1.20.6: the sleep-system window opens on hover, rises over the header, reads as a sequence (2026-10-29) - PREVIEW, awaiting owner approval
+- Hover over the invitation button opens the window on a desktop with a pointer (140 ms rest, leaves close it after 280 ms); click/tap opens it everywhere; a click inside pins it. A 700 ms guard stops it re-opening under a resting pointer after Escape/close.
+- The window now rises over the header like the other windows (top 10 px, close button there), so the text has room; Safari-risky subgrid removed.
+- Three boxes in one blue family (white / mid blue / deep slate, white type on 2 and 3), CSS arrows between boxes; the five closing phrases are a chevron line instead of pills.
+- Checked in Chromium only (1440x900, 1366x1024, 1920x1080 mouse; 1180x820 touch; 390x844 phone). Not yet seen on a real iPad. Translations are machine translations.
+
 ## 1.20.5 - the invitation opens "Our sleep system"
 Owner brief (Bulgarian, with a screenshot and the text): the button at the far left ("Explore the sleep system / Hover over the glowing points") must open an information window like the points do, so a visitor reads who we are, what we build and why the way we sell is safe; text first, easy to read, in a logical system (explaining a system with a system); for desktop, tablets and phones; fit the window between the header bar and the Shop buttons; nothing else may change.
 - `.ddh__hint` is now a `<button>` (it was an `aria-hidden` paragraph) with `aria-haspopup="dialog"`, `aria-controls`, `aria-expanded`, a visible arrow and a screen-reader line (`hint_sr`). It opens the new sheet `#ddh-sheet-sys` through the existing sheet code (`openSheet('sys','modal',hint)`): Escape, the close button, a click outside, the focus trap and the return of focus are the sheets' own. Closing is also a second click on the button.

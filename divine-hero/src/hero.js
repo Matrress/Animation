@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.20.5 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.20.6 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.20.5';
+  var VERSION = '1.20.6';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -407,6 +407,7 @@
     var dpc = null, overDpc = false, dpcT = 0, hcs = null, cardDownAt = 0;   // 1.11.1 the Dual Plush card (revealed with the lifted mattress)
     var pvT = 0, sheetPT = '', backFocus = false, szBtn = root.querySelector('.ddh__sz'), szEl = null, szMode = '', szT = 0;   // 1.11.1 model previews, size guide
     var ctas = [].slice.call(root.querySelectorAll('[data-ddh-sheet]')), bioPoint = group.querySelector('[data-ddh-point=bio]');
+    var closedAt = 0;   // 1.20.6: when a window last closed (the invitation does not reopen it under a pointer that has not moved)
     var SYS = 'sys';   // 1.20.5: the explanation window ("Our sleep system"), opened by the invitation button
     var deskMQ = w.matchMedia ? w.matchMedia('(min-width:1051px) and (any-hover:hover)') : { matches: true };
     // 1.10.1: tablets, laptops and monitors only. On a phone (either way up) the screens never open: the Bio point is
@@ -472,7 +473,7 @@
       if (!sheet) return;
       var from = sheetFrom, modal = sheetMode === 'modal';
       var inside = sheet.contains(d.activeElement);
-      sheet.hidden = true; root.removeAttribute('data-ddh-open-sheet'); root.removeAttribute('data-ddh-via'); lock(false); navGrace = false; navOrigin = null;
+      closedAt = Date.now(); sheet.hidden = true; root.removeAttribute('data-ddh-open-sheet'); root.removeAttribute('data-ddh-via'); lock(false); navGrace = false; navOrigin = null;
       if (from) from.setAttribute('aria-expanded', 'false');
       sheet = null; sheetFrom = null; sheetMode = '';
       if ((modal || inside) && !quiet && from && from.offsetWidth) { backFocus = true; from.focus({ preventScroll: true }); backFocus = false; }   // focus comes back without reopening
@@ -490,6 +491,7 @@
       on(sheetBox, 'pointerdown', function (ev) { sheetPT = ev.pointerType; }, { passive: true });
       on(sheetBox, 'click', function (ev) {
         var t = ev.target;
+        if (sheet && sheetMode === 'hover' && sheet.id === 'ddh-sheet-' + SYS && sheet.contains(t) && !t.closest('[data-ddh-close]')) { sheetMode = 'modal'; sheet.setAttribute('aria-modal', 'true'); }   // 1.20.6: a click in the window opened by hover pins it
         if (t.closest('[data-ddh-close]')) { if (t.closest('#ddh-sizes')) szClose(true); else closeSheet(); return; }
         // 1.11.1: a model card is a plain link to its product. A touch on a card that is not the one previewed shows its
         // preview first (the preview's own button, or a second touch, leads on); a mouse click goes straight there.
@@ -828,11 +830,20 @@
       on(szBtn, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch' && szMode !== 'pin') { w.clearTimeout(szT); szT = w.setTimeout(szClose, 280); } }, { passive: true });
       on(szBtn, 'click', function () { if (szEl && !szEl.hidden && szMode === 'pin') szClose(); else if (szEl && !szEl.hidden) szMode = 'pin'; else szOpen('pin'); });
     }
-    // 1.20.5: the invitation (upper left) opens the explanation of our sleep system; the same button closes it. Escape, the close button or a click outside close it too (see above).
-    if (hintEl) on(hintEl, 'click', function () {
-      if (sheet && sheet.id === 'ddh-sheet-' + SYS) { closeSheet(); return; }
-      openSheet(SYS, 'modal', hintEl);
-    });
+    // 1.20.5: the invitation (upper left) opens the explanation of our sleep system. On a computer it opens when the pointer rests on the button (like the Shop previews and the
+    // Bio Comfort point) and closes when the pointer leaves; a click pins it open, and the same button closes it again. Touch: tap. Escape, the close button and a click outside close it.
+    if (hintEl) {
+      on(hintEl, 'pointerenter', function (ev) {
+        if (ev.pointerType === 'touch' || !deskMQ.matches || (sheet && sheetMode === 'modal') || Date.now() - closedAt < 700) return;
+        loadSheets(); w.clearTimeout(hoverT);
+        hoverT = w.setTimeout(function () { if (!(sheet && sheetMode === 'modal')) openSheet(SYS, 'hover', hintEl); }, sheet ? 0 : 140);
+      }, { passive: true });
+      on(hintEl, 'pointerleave', function (ev) { if (ev.pointerType !== 'touch') { if (!sheet) w.clearTimeout(hoverT); later(); } }, { passive: true });
+      on(hintEl, 'click', function () {
+        if (sheet && sheet.id === 'ddh-sheet-' + SYS && sheetMode === 'modal') { closeSheet(); return; }
+        openSheet(SYS, 'modal', hintEl);                                  // from the hover state this pins it open
+      });
+    }
     // 1.19.6: the site header's "Mattresses" / "Toppers" links are plain links again: no preview opens from them (hover, focus, click or tap); only the two Shop buttons below open the previews.
     on(d, 'keydown', function (ev) { if ((ev.key === 'Escape' || ev.key === 'Esc') && szEl && !szEl.hidden) { szClose(true); ev.stopPropagation(); } });
     on(d, 'click', function (ev) { if (szEl && !szEl.hidden && !szEl.contains(ev.target) && !(szBtn && szBtn.contains(ev.target))) szClose(); });
