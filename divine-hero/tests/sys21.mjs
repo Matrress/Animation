@@ -54,6 +54,12 @@ const open = (p) => p.evaluate(() => document.querySelector('.ddh').getAttribute
   const r = await p.evaluate(() => { const i = document.querySelector('#ddh-sheet-sys .ddh__sh-in'); return { h1: document.querySelector('.ddh__sy-h span').textContent, sw: i.scrollWidth, cw: i.clientWidth, sh: i.scrollHeight, ch: i.clientHeight, sr: document.querySelector('.ddh__hint small').textContent }; });
   ok(r.h1 === 'Das Fundament entwickeln.' && r.sw <= r.cw + 1, 'German text, no sideways overflow ' + JSON.stringify(r));
 }
+{ // 1.20.7: a picture on top of each of the three boxes; no overflow at 1440x900
+  const p = await page({ width: 1440, height: 900 }); await p.click('.ddh__hint'); await p.waitForTimeout(900);
+  const r = await p.evaluate(() => { const v = [...document.querySelectorAll('#ddh-sheet-sys .ddh__sy-v')], i = document.querySelector('#ddh-sheet-sys .ddh__sh-in'); return { n: v.length, hid: v.every((x) => x.getAttribute('aria-hidden') === 'true'), top: v.every((x) => x.getBoundingClientRect().height > 60 && x.getBoundingClientRect().width > 150), sh: i.scrollHeight, ch: i.clientHeight }; });
+  ok(r.n === 3 && r.hid && r.top, 'three pictures, hidden from screen readers, visible ' + JSON.stringify(r));
+  ok(r.sh <= r.ch + 1, 'whole window fits at 1440x900 without scrolling ' + JSON.stringify(r));
+}
 { // tablet touch, landscape: full-screen window
   const p = await page({ width: 1180, height: 820 }, { hasTouch: true });
   await p.tap('.ddh__hint'); await p.waitForTimeout(800);

@@ -1019,6 +1019,11 @@ Owner brief (Bulgarian, with a screenshot of the card): in the Dual Plush point 
 ## 1.20.4 - new product link for Botanic
 Owner request: the Botanic model URL changed. The link is now https://divinedunlop.com/products/botanic-original-100-organic-latex-mattress-dunlop (the model preview, the Firmness Regulation list and the model selector card; the old `...-831592302` link is gone from the release). Nothing else changed: hero.css and hero.js are byte-identical to 1.20.3 apart from the version string. The Botanic Dual Plush links are different products and are untouched.
 
+## 1.20.7: pictures on top of the three boxes of "Our sleep system" (2026-10-30) - PREVIEW, awaiting owner approval
+- Only the sleep-system window changed. Each box starts with a picture in its own tone: 1 engineered latex layers with air holes and measuring lines, 2 four firmness steps with a slider, 3 options converging into one secure, made-to-order choice (shield with a tick, order slip). No text inside the drawings, so nothing to translate; hidden from screen readers; gentle motion only without reduced-motion (air holes breathe, slider moves, tick draws).
+- To make room on a desktop window lower than 820 px, the three lead sentences are visually hidden (kept in the page for screen readers); in a taller window they show and the pictures grow. Tablets and phones show everything and scroll. The closing chevron line now fits on one line from 1366 px wide.
+- Checked in Chromium: 1440x900 fits without scrolling, 1366x1024, 1920x1080, 1180x820 touch, 390x844. Not seen on a real iPad.
+
 ## 1.20.6: the sleep-system window opens on hover, rises over the header, reads as a sequence (2026-10-29) - PREVIEW, awaiting owner approval
 - Hover over the invitation button opens the window on a desktop with a pointer (140 ms rest, leaves close it after 280 ms); click/tap opens it everywhere; a click inside pins it. A 700 ms guard stops it re-opening under a resting pointer after Escape/close.
 - The window now rises over the header like the other windows (top 10 px, close button there), so the text has room; Safari-risky subgrid removed.
