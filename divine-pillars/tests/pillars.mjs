@@ -134,12 +134,23 @@ for (const [name, motion] of [['desktop', 'no-preference'], ['phone', 'no-prefer
   const critOpen = async () => { if (VIEWPORTS[name].touch) await page.tap('.dpl__crit-b'); else await page.hover('.dpl__crit-b'); await page.waitForTimeout(550); };
   const critShut = () => q(() => getComputedStyle(document.querySelector('#dpl-crit')).display === 'none' && document.querySelector('.dpl__crit-b').getAttribute('aria-expanded') === 'false');
   await critOpen();
-  const co = await q(() => { const p = document.querySelector('#dpl-crit'), r = p.getBoundingClientRect(), b = document.querySelector('.dpl__crit-b'), small = [...p.querySelectorAll('p, b, span')].filter((e) => e.children.length === 0 && e.textContent.trim() && parseFloat(getComputedStyle(e).fontSize) < 16).length; return { open: getComputedStyle(p).display !== 'none' && b.getAttribute('aria-expanded') === 'true', items: p.querySelectorAll('.dpl__crit-o li').length, text: p.textContent.replace(/\s+/g, ' '), fits: r.left >= 0 && r.right <= innerWidth + 1, small, below: r.top >= document.querySelector('.dpl__h').getBoundingClientRect().bottom - 8 }; });
-  ok(co.open && co.items === 4 && ['Natural & Bio Origin', 'Support', 'Adaptability', 'Ventilation'].every((w) => co.text.includes(w)), `${tag}: "Criteria" opens the four criteria (${co.items} listed)`);
-  ok(/one of these criteria, or two/.test(co.text) && /All four together belong to the natural latex mattress/.test(co.text) && /Make these four your search/.test(co.text) && !/layer|approximately|~/i.test(co.text), `${tag}: the panel says what the combination of all four means and asks the reader to search by them`);
-  ok(co.fits && co.small === 0 && co.below, `${tag}: the criteria panel is under the title, inside the screen, text 16 px or more`);
+  const co = await q(() => { const p = document.querySelector('#dpl-crit'), r = p.getBoundingClientRect(), b = document.querySelector('.dpl__crit-b'), small = [...p.querySelectorAll('p, b, span, button')].filter((e) => !e.querySelector('*') && e.textContent.trim() && parseFloat(getComputedStyle(e).fontSize) < 16).length; return { open: getComputedStyle(p).display !== 'none' && b.getAttribute('aria-expanded') === 'true', cards: [...p.querySelectorAll('.dpl__crit-k')].map((k) => k.getAttribute('aria-pressed')), text: p.textContent.replace(/\s+/g, ' '), fits: r.left >= 0 && r.right <= innerWidth + 1, small, below: r.top >= document.querySelector('.dpl__h').getBoundingClientRect().bottom - 8, copy: (p.querySelector('.dpl__crit-cp') || {}).textContent, ok: !!p.querySelector('.dpl__crit-r.is-ok') }; });
+  ok(co.open && co.cards.length === 4 && co.cards.every((v) => v === 'true') && co.ok && ['Natural & Bio Origin', 'Support', 'Adaptability', 'Ventilation'].every((w) => co.text.includes(w)), `${tag}: "Criteria" opens the Search Formula: four criteria cards, all on, and the result "Healthy Sleep"`);
+  ok(/one criterion, or two/.test(co.text) && /All four together belong to the natural latex mattress/.test(co.text) && /start every search with these four questions/.test(co.text) && /Healthy Sleep/.test(co.text) && !/layer|approximately|~/i.test(co.text), `${tag}: the panel teaches the formula (combination of all four, start every search with the four questions)`);
+  ok(co.fits && co.small === 0 && co.below, `${tag}: the criteria panel is under the title, inside the screen, text 16 px or more (${co.small} smaller)`);
+  ok(co.copy === 'Copy Your Four Questions', `${tag}: the panel offers "Copy Your Four Questions"`);
+  // switching a criterion off drops the result and names what is lost; switching it on restores it; closing starts fresh
+  await page.click('.dpl__crit-k[data-i="2"]'); await page.waitForTimeout(250);
+  const off = await q(() => { const p = document.querySelector('#dpl-crit'), r = p.querySelector('.dpl__crit-r'); return { pressed: p.querySelector('.dpl__crit-k[data-i="2"]').getAttribute('aria-pressed'), down: r.classList.contains('is-down'), text: r.textContent }; });
+  ok(off.pressed === 'false' && off.down && /Healthy Sleep Falls/.test(off.text) && /Without Adaptability: pressure builds/.test(off.text), `${tag}: switching Adaptability off makes the result fall and says what is lost`);
+  await page.click('.dpl__crit-k[data-i="2"]'); await page.waitForTimeout(250);
+  ok(await q(() => !!document.querySelector('#dpl-crit .dpl__crit-r.is-ok') && /formula holds/.test(document.querySelector('#dpl-crit .dpl__crit-r').textContent)), `${tag}: switching it on again restores the formula`);
+  await page.click('.dpl__crit-k[data-i="0"]'); await page.waitForTimeout(150);
   await page.keyboard.press('Escape'); await page.waitForTimeout(350);
   ok(await critShut(), `${tag}: Escape closes the criteria`);
+  await critOpen();
+  ok(await q(() => [...document.querySelectorAll('#dpl-crit .dpl__crit-k')].every((k) => k.getAttribute('aria-pressed') === 'true') && !!document.querySelector('#dpl-crit .dpl__crit-r.is-ok')), `${tag}: a closed panel starts fresh (all four on) next time`);
+  await page.keyboard.press('Escape'); await page.waitForTimeout(350);
   if (!VIEWPORTS[name].touch) {
     await page.hover('.dpl__crit-b'); await page.waitForTimeout(450); await page.mouse.move(5, 5); await page.waitForTimeout(800);
     ok(await critShut(), `${tag}: leaving the word closes the criteria`);

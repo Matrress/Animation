@@ -63,9 +63,7 @@ const creed = `<figure class="dpl__creed">${bio}<div><blockquote class="dpl__cq"
 // the four criteria: the word "Criteria" in the title is a button; dpl.js opens this panel on hover (mouse), tap or Enter.
 // Without dpl.js the panel is simply shown under the title (dpl.css), so nothing is lost.
 const critBtn = `<button type="button" class="dpl__crit-b" aria-expanded="false" aria-controls="dpl-crit">Criteria</button>`;
-const crit = `<div class="dpl__crit" id="dpl-crit" role="region" aria-label="${esc(CRIT.label)}"><p class="dpl__crit-h">${esc(CRIT.title)}</p><p class="dpl__crit-l">${esc(CRIT.lede)}</p>
-<ol class="dpl__crit-o">${CRIT.items.map((c, i) => `<li><span class="dpl__crit-n" aria-hidden="true">${i + 1}</span><span class="dpl__crit-t"><b>${esc(c[0])}</b><span class="dpl__crit-q">${esc(c[1])}</span><span class="dpl__crit-a">${esc(c[2])}</span></span></li>`).join('\n')}</ol>
-<p class="dpl__crit-c">${esc(CRIT.close)}</p><p class="dpl__crit-x"><b>${esc(CRIT.act)}</b></p></div>`;
+const crit = `<div class="dpl__crit" id="dpl-crit" role="region" aria-label="${esc(CRIT.label)}"><p class="dpl__crit-h">${esc(CRIT.title)}</p><p class="dpl__crit-l">${esc(CRIT.lede)}</p><p class="dpl__crit-c">${esc(CRIT.combo)}</p><p class="dpl__crit-x"><b>${esc(CRIT.act)}</b></p></div>`;
 if (!HEAD.title.includes('{CRIT}')) throw new Error('HEAD.title must carry the {CRIT} token');
 
 // the turning Earth in the top-right corner (dpl.js draws it on the canvas); the slogan is real text
@@ -113,13 +111,14 @@ ${loader}
 const data = {
   version: VERSION, compare: FOOT.compare, earth: HERO_ASSETS + 'earth.webp', clouds: HERO_ASSETS + 'clouds.webp',
   materials: MATERIALS.map(({ id, name, ours }) => ({ id, name, ours: !!ours })),
+  crit: CRIT,
   pillars: PILLARS.map(({ id, label, n, title, verb, img, alt, head, chain, body, quote, sub, stats, vs, chart }) => ({ id, label, n, title, verb, img, alt, head, chain, body, quote, sub, stats, vs, chart })),
 };
 let js = fs.readFileSync(path.join(here, 'src/dpl.js'), 'utf8').replace('__DPL_DATA__', JSON.stringify(data));
 let css = `@font-face{font-family:DPLChillax;src:url(${FONT_BASE}chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:DPLChillax;src:url(${FONT_BASE}chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}\n` + fs.readFileSync(path.join(here, 'src/dpl.css'), 'utf8');
 
 // ---- the owner's standing rules, checked on everything a reader can see ----
-const visible = (tile.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<script[\s\S]*?<\/script>/g, '') + JSON.stringify(data.pillars)).replace(/<[^>]+>/g, ' ');
+const visible = (tile.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<script[\s\S]*?<\/script>/g, '') + JSON.stringify(data.pillars) + JSON.stringify(CRIT)).replace(/<[^>]+>/g, ' ');
 const guards = [
   [/\blayers?\b/i, 'the word "layer"'],
   [/approximately|~/i, '"approximately" or "~"'],

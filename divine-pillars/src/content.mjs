@@ -10,20 +10,30 @@ export const HEAD = {
   lede: 'A good mattress has to come from clean material, carry the body, adapt to it and let it breathe. Natural Dunlop latex does all four in one material, in every Natural Latex Mattress and Natural Latex Topper we make. Tap a circle to see the engineering and the numbers behind it.',
 };
 
-// the four laws as four search criteria: opens from the word "Criteria" in the title (hover on a mouse, tap or Enter elsewhere).
-// Owner's idea (2026-10-31): people have no criteria for searching; teach them these four, at engineering level, and the choice moves from what is offered to what is asked for.
+// the four laws taught as ONE search formula (owner's idea, 2026-10-31): people have no criteria for searching, so we give them four questions that they
+// ask together, every time. The criteria multiply, they do not add: switch one off and the product falls. Opens from the word "Criteria" in the title.
+// The panel is drawn by dpl.js from this data (it does not count against Ecwid's size limit); without JS the title, the lede and the closing lines are shown.
 export const CRIT = {
   label: 'The four criteria',
-  title: 'Four Criteria to Search By',
-  lede: 'The four laws are also the four criteria for choosing a mattress. Ask every seller for all four, and for the numbers behind each one.',
-  items: [   // [law, the question to ask, the engineering answer]
-    ['Natural & Bio Origin', 'What is the core made of?', '100% natural Dunlop latex.'],
-    ['Support', 'How much does the whole core carry?', 'The density of the whole core, from 63 to 88 kg/m³, set by your body weight.'],
-    ['Adaptability', 'How fast does it adapt and recover?', 'Immediately, with a progressive response (SAG) of 4.5–5.4.'],
-    ['Ventilation', 'How does the air move?', 'Through channels moulded in the full depth of the core.'],
+  title: 'The Search Formula',
+  lede: 'Four criteria, asked together, every time. This is how to choose a mattress by what you ask for, not by what is offered.',
+  hint: 'The criteria multiply, they do not add. Switch one off and see what is lost.',
+  items: [   // [criterion, the question to ask, what is lost without it]
+    ['Natural & Bio Origin', 'What exactly is the core made of, and what proves it?', 'every other number rests on an unknown material.'],
+    ['Support', 'What is the density of the whole core, and for which body weight?', 'the spine loses its line and the body sinks in instead of resting on it.'],
+    ['Adaptability', 'How fast does it adapt and recover? Ask for the number.', 'pressure builds where the body is heaviest, and you keep turning all night.'],
+    ['Ventilation', 'Where does the air go: through the full depth, or only the surface?', 'heat and moisture stay in the core, and sleep turns restless.'],
   ],
-  close: 'Many mattresses meet one of these criteria, or two. A spring mattress can ventilate well and still adapt poorly. All four together belong to the natural latex mattress, and that combination is what gives a mattress its quality.',
-  act: 'Make these four your search. Hold every offer against them, in numbers, not in promises of comfort.',
+  result: 'Healthy Sleep',
+  ok: 'All four present: the formula holds.',
+  fall: 'Healthy Sleep Falls',
+  down: 'Without',
+  combo: 'Many mattresses meet one criterion, or two. A spring mattress can ventilate well and still adapt poorly. All four together belong to the natural latex mattress, and that combination is what gives a mattress its quality.',
+  act: 'From now on, start every search with these four questions. Put every offer through all four, and choose by the answers, not by promises of comfort.',
+  copy: 'Copy Your Four Questions',
+  copied: 'Copied',
+  note: 'My four criteria for a healthy mattress. I ask every seller:',
+  foot: 'All four, together, every time.',
 };
 
 // the six material classes of the comparison. TEMPUR is its own class, never mixed with ordinary memory foam.

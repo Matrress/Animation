@@ -335,24 +335,51 @@
     document.addEventListener('pointerdown', function (e) { if (b.open && !b.contains(e.target)) shut(); });
   }
 
-  // the four criteria: the word "Criteria" in the title opens them. Mouse: hover opens, leaving closes, a click keeps it open.
-  // Touch and keyboard: tap or Enter toggles. Escape, a press outside, or Tab away closes. The panel holds no controls.
+  // the four criteria, taught as one search formula. The word "Criteria" in the title opens the panel: a mouse hovers, touch and keyboard tap or press Enter.
+  // The four criteria are cards that multiply: switch one off and the result falls and says what is lost. Escape, a press outside, or Tab away closes it.
+  function critHtml(c) {
+    var cards = c.items.map(function (it, i) {
+      return '<button type="button" class="dpl__crit-k" data-i="' + i + '" aria-pressed="true"><span class="dpl__crit-kn" aria-hidden="true">' + (i + 1) + '</span><span class="dpl__crit-kt">' + esc(it[0]) + '</span><span class="dpl__crit-kq">' + esc(it[1]) + '</span></button>';
+    }).join('');
+    return '<p class="dpl__crit-h">' + esc(c.title) + '</p><p class="dpl__crit-l">' + esc(c.lede) + '</p><p class="dpl__crit-hint">' + esc(c.hint) + '</p>' +
+      '<div class="dpl__crit-g" role="group" aria-label="' + esc(c.label) + '">' + cards + '</div>' +
+      '<div class="dpl__crit-r is-ok" aria-live="polite"><span class="dpl__crit-eq" aria-hidden="true">=</span><b class="dpl__crit-rt">' + esc(c.result) + '</b><span class="dpl__crit-rs">' + esc(c.ok) + '</span></div>' +
+      '<p class="dpl__crit-c">' + esc(c.combo) + '</p><p class="dpl__crit-x"><b>' + esc(c.act) + '</b></p>' +
+      '<button type="button" class="dpl__btn dpl__crit-cp">' + esc(c.copy) + '</button>';
+  }
   function crit(root) {
-    var ht = root.querySelector('.dpl__ht'), b = ht && ht.querySelector('.dpl__crit-b'), p = ht && ht.querySelector('.dpl__crit'), t = 0, hover = false, key = false;
-    if (!b || !p) return;
+    var ht = root.querySelector('.dpl__ht'), b = ht && ht.querySelector('.dpl__crit-b'), p = ht && ht.querySelector('.dpl__crit'), c = D.crit, t = 0, hover = false, key = false;
+    if (!b || !p || !c) return;
+    p.innerHTML = critHtml(c);
+    var cards = [].slice.call(p.querySelectorAll('.dpl__crit-k')), res = p.querySelector('.dpl__crit-r'), rt = res.querySelector('.dpl__crit-rt'), rs = res.querySelector('.dpl__crit-rs'), cp = p.querySelector('.dpl__crit-cp'), ct = 0;
+    function paint() {
+      var off = [];
+      cards.forEach(function (k, i) { var on = k.getAttribute('aria-pressed') === 'true'; k.classList.toggle('is-off', !on); if (!on) off.push(i); });
+      res.classList.toggle('is-ok', !off.length); res.classList.toggle('is-down', off.length > 0);
+      rt.textContent = off.length ? c.fall : c.result;
+      rs.textContent = off.length ? off.map(function (i) { return c.down + ' ' + c.items[i][0] + ': ' + c.items[i][2]; }).join(' ') : c.ok;
+    }
+    cards.forEach(function (k) { k.addEventListener('click', function () { k.setAttribute('aria-pressed', k.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); paint(); }); });
+    function copyText() { return c.note + '\n' + c.items.map(function (it, i) { return (i + 1) + '. ' + it[1]; }).join('\n') + '\n' + c.foot; }
+    function done() { cp.textContent = c.copied; clearTimeout(ct); ct = setTimeout(function () { cp.textContent = c.copy; }, 2200); }
+    cp.addEventListener('click', function () {
+      var txt = copyText();
+      function legacy() { var a = document.createElement('textarea'); a.value = txt; a.setAttribute('readonly', ''); a.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a); done(); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, legacy); else legacy();
+    });
     var isOpen = function () { return p.classList.contains('is-open'); };
     var show = function (byHover) { clearTimeout(t); hover = !!byHover; p.classList.add('is-open'); b.setAttribute('aria-expanded', 'true'); };
-    var shut = function () { clearTimeout(t); hover = false; p.classList.remove('is-open'); b.setAttribute('aria-expanded', 'false'); };
+    var shut = function () { clearTimeout(t); hover = false; p.classList.remove('is-open'); b.setAttribute('aria-expanded', 'false'); cards.forEach(function (k) { k.setAttribute('aria-pressed', 'true'); }); paint(); };   // a closed panel starts fresh next time
     var inside = function (n) { return n && (b.contains(n) || p.contains(n)); };
     [b, p].forEach(function (el) {
       el.addEventListener('pointerover', function (e) { if (e.pointerType !== 'mouse') return; clearTimeout(t); if (!isOpen()) show(true); });
       el.addEventListener('pointerout', function (e) {
         if (e.pointerType !== 'mouse' || !hover || inside(e.relatedTarget)) return;
-        t = setTimeout(function () { if (hover) shut(); }, 260);
+        t = setTimeout(function () { if (hover) shut(); }, 320);
       });
+      el.addEventListener('focusout', function (e) { if (key && !hover && isOpen() && !inside(e.relatedTarget)) shut(); });
     });
     b.addEventListener('click', function () { if (hover) { hover = false; return; } if (isOpen()) shut(); else show(false); });   // a click on a hover-opened panel keeps it open
-    b.addEventListener('blur', function () { if (key && !hover && isOpen()) shut(); });
     document.addEventListener('keydown', function (e) { key = true; if (e.key === 'Escape' && isOpen()) { var was = document.activeElement; shut(); if (inside(was)) b.focus(); } });
     document.addEventListener('pointerdown', function (e) { key = false; if (isOpen() && !inside(e.target)) shut(); });
   }
