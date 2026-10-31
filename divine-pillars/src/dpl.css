@@ -22,7 +22,7 @@
 .dpl__planet canvas{position:absolute;inset:0;display:block;width:100%;height:100%;border-radius:50%;opacity:0;transition:opacity 1.4s ease}
 .dpl__planet[data-ready] canvas{opacity:1}
 /* the slogan sits under the Earth, not on it, centred on it (the Earth stays clear) */
-.dpl .dpl__pband{position:absolute;left:-10%;right:-10%;top:calc(100% + 30px);text-align:center;color:var(--ink);font-size:16px;line-height:1.2;text-shadow:0 1px 6px rgba(6,18,30,.9);-webkit-text-stroke:.2px currentColor}
+.dpl .dpl__pband{position:absolute;left:-10%;right:-10%;top:calc(100% + 22px);text-align:center;color:var(--ink);font-size:16px;line-height:1.2;text-shadow:0 1px 6px rgba(6,18,30,.9);-webkit-text-stroke:.2px currentColor}
 .dpl .dpl__pband span{display:block;font-weight:400;color:var(--ink2)}
 .dpl .dpl__pband b{display:block;font-weight:600;font-size:17px;-webkit-text-stroke:.35px currentColor}
 /* Orion: about 30% smaller than before and up in the top-left corner, so it leaves the composition room to breathe */
