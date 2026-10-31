@@ -126,6 +126,40 @@ for (const [name, motion] of [['desktop', 'no-preference'], ['phone', 'no-prefer
     await page.mouse.move(5, 5); await page.waitForTimeout(600);
     ok(await q(() => !document.querySelector('.dpl__bio').open), `${tag}: leaving the mark closes the window`);
   }
+  // the four criteria: the word "Criteria" in the title opens them (hover with a mouse, tap on touch); Escape and leaving close them
+  await q(() => document.querySelector('.dpl__hd').scrollIntoView({ block: 'center' })); await page.waitForTimeout(600);
+  const cs = await q(() => { const b = document.querySelector('.dpl__crit-b'), p = document.querySelector('#dpl-crit'); return { word: b && b.textContent.trim(), shut: !!p && getComputedStyle(p).display === 'none' && b.getAttribute('aria-expanded') === 'false', ctl: !!b && b.getAttribute('aria-controls') === 'dpl-crit', title: document.querySelector('.dpl__h').textContent.replace(/\s+/g, ' ').trim() }; });
+  ok(cs.word === 'Criteria' && cs.title === 'One Natural Material. Four Laws and Criteria for Healthy Sleep.', `${tag}: the title reads "${cs.title}", with "Criteria" as the button`);
+  ok(cs.shut && cs.ctl, `${tag}: the four criteria stay closed until asked for`);
+  const critOpen = async () => { if (VIEWPORTS[name].touch) await page.tap('.dpl__crit-b'); else await page.hover('.dpl__crit-b'); await page.waitForTimeout(550); };
+  const critShut = () => q(() => getComputedStyle(document.querySelector('#dpl-crit')).display === 'none' && document.querySelector('.dpl__crit-b').getAttribute('aria-expanded') === 'false');
+  await critOpen();
+  const co = await q(() => { const p = document.querySelector('#dpl-crit'), r = p.getBoundingClientRect(), b = document.querySelector('.dpl__crit-b'), small = [...p.querySelectorAll('p, b, span')].filter((e) => e.children.length === 0 && e.textContent.trim() && parseFloat(getComputedStyle(e).fontSize) < 16).length; return { open: getComputedStyle(p).display !== 'none' && b.getAttribute('aria-expanded') === 'true', items: p.querySelectorAll('.dpl__crit-o li').length, text: p.textContent.replace(/\s+/g, ' '), fits: r.left >= 0 && r.right <= innerWidth + 1, small, below: r.top >= document.querySelector('.dpl__h').getBoundingClientRect().bottom - 8 }; });
+  ok(co.open && co.items === 4 && ['Natural & Bio Origin', 'Support', 'Adaptability', 'Ventilation'].every((w) => co.text.includes(w)), `${tag}: "Criteria" opens the four criteria (${co.items} listed)`);
+  ok(/one of these criteria, or two/.test(co.text) && /All four together belong to the natural latex mattress/.test(co.text) && /Make these four your search/.test(co.text) && !/layer|approximately|~/i.test(co.text), `${tag}: the panel says what the combination of all four means and asks the reader to search by them`);
+  ok(co.fits && co.small === 0 && co.below, `${tag}: the criteria panel is under the title, inside the screen, text 16 px or more`);
+  await page.keyboard.press('Escape'); await page.waitForTimeout(350);
+  ok(await critShut(), `${tag}: Escape closes the criteria`);
+  if (!VIEWPORTS[name].touch) {
+    await page.hover('.dpl__crit-b'); await page.waitForTimeout(450); await page.mouse.move(5, 5); await page.waitForTimeout(800);
+    ok(await critShut(), `${tag}: leaving the word closes the criteria`);
+    await page.hover('.dpl__crit-b'); await page.waitForTimeout(450); await page.click('.dpl__crit-b'); await page.mouse.move(5, 5); await page.waitForTimeout(800);
+    ok(!(await critShut()), `${tag}: a click keeps the criteria open until Escape`);
+    await page.keyboard.press('Escape'); await page.waitForTimeout(350);
+  } else {
+    await critOpen(); await page.tap('.dpl__crit-b'); await page.waitForTimeout(350);
+    ok(await critShut(), `${tag}: a second tap closes the criteria`);
+  }
+  // the foot of this band flows into the Seven Zones band under it (when that band is on the page): same colour on both sides of the seam
+  if (name === 'desktop') {
+    const seam = await q(() => { const s = document.querySelector('section.dpl'), z = document.querySelector('.dz7'); if (!z) return null; const a = s.getBoundingClientRect(), b = z.getBoundingClientRect(); return { y: a.bottom + scrollY, gap: Math.abs(b.top - a.bottom) }; });
+    if (seam && seam.gap <= 2) {
+      await q((y) => scrollTo(0, y - 450), seam.y); await page.waitForTimeout(900);
+      const shot = (await page.screenshot({ clip: { x: 0, y: 440, width: 1440, height: 20 } })).toString('base64');   // the seam sits at 450 px on screen
+      const diff = await q(async (b64) => { const im = new Image(); im.src = 'data:image/png;base64,' + b64; await im.decode(); const c = document.createElement('canvas'); c.width = im.width; c.height = im.height; const g = c.getContext('2d'); g.drawImage(im, 0, 0); const px = (x, y) => g.getImageData(x, y, 1, 1).data; let m = 0; for (const x of [60, 360, 720, 1080, 1380]) { const a = px(x, 6), b = px(x, 14); m = Math.max(m, Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]), Math.abs(a[2] - b[2])); } return m; }, shot);
+      ok(diff <= 7, `${tag}: no seam between this band and the Seven Zones band (largest colour step ${diff} of 255)`);
+    }
+  }
   // text size: every visible text in the band 16 px or more
   const small = await q(() => { const out = []; const w = document.createTreeWalker(document.querySelector('#dpl'), NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { const t = n.textContent.trim(); const e = n.parentElement; if (!t || !e.offsetParent || e.closest('[aria-hidden="true"]') || e.closest('caption') || e.closest('.dpl__num')) continue; const fs = parseFloat(getComputedStyle(e).fontSize); if (fs < 15.9) out.push(`${t.slice(0, 30)} ${fs}px`); } return out; });
   ok(small.length === 0, `${tag}: all visible text 16 px or more ${small.slice(0, 4).join(' | ')}`);

@@ -2,7 +2,9 @@
    Readers with +3 dioptres: text 16 px and up, contrast 7:1 or more on the dark ground, no thin weights. */
 .dpl{--bg:#0C202D;--bg2:#12303F;--ink:#EEF4F5;--ink2:#C9D7DB;--mut:#AFC3C9;--acc:#4FD3CB;--acc2:#A4D4DC;--line:rgba(164,212,220,.2);--f:DPLChillax,Chillax,Outfit,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   position:relative;overflow:hidden;padding:clamp(56px,7vw,104px) 16px clamp(56px,7vw,96px)!important;margin:0!important;color:var(--ink)!important;font-family:var(--f)!important;font-size:17px;line-height:1.6;
-  background:radial-gradient(1100px 620px at 50% -8%,rgba(79,211,203,.13),transparent 64%),radial-gradient(900px 700px at 100% 100%,rgba(164,212,220,.07),transparent 60%),linear-gradient(180deg,#0E2533,#0A1B26)!important;text-align:left}
+  /* the foot of this band flows into the Seven Zones band below it: from 560 px above the end the ground rises to the zones' own top colour (#0E2533), and the teal glow
+     that crowns that band is mirrored across the seam at the same distance (104 px) and strength, so the two read as one screen, not two wallpapers */
+  background:radial-gradient(1100px 620px at 50% calc(100% + 104px),rgba(79,211,203,.13),transparent 64%),linear-gradient(180deg,rgba(14,37,51,0) calc(100% - 560px),#0E2533 100%),radial-gradient(1100px 620px at 50% -8%,rgba(79,211,203,.13),transparent 64%),radial-gradient(900px 700px at 100% 100%,rgba(164,212,220,.07),transparent 60%),linear-gradient(180deg,#0E2533,#0A1B26)!important;text-align:left}
 .dpl *,.dpl *::before,.dpl *::after{box-sizing:border-box}
 .dpl [hidden]{display:none!important}
 .dpl h2,.dpl h3,.dpl p,.dpl ul,.dpl ol,.dpl li,.dpl table,.dpl figure,.dpl blockquote,.dpl dl,.dpl dt,.dpl dd{margin:0;padding:0;font-family:var(--f)!important;letter-spacing:normal;text-transform:none}
@@ -35,6 +37,35 @@
 .dpl .dpl__eb{color:var(--acc);font-size:16px;line-height:1.4;font-weight:600;letter-spacing:.16em;text-transform:uppercase;-webkit-text-stroke:.2px currentColor}
 .dpl .dpl__h{margin-top:14px;font-size:clamp(31px,3.7vw,50px);line-height:1.1;font-weight:400;letter-spacing:-.015em;color:var(--ink)!important;-webkit-text-stroke:.3px currentColor;text-wrap:balance}
 .dpl .dpl__h b{font-weight:600;color:var(--acc);-webkit-text-stroke:.5px currentColor}
+
+/* the four criteria: the word "Criteria" in the title opens them (hover on a mouse, tap or Enter elsewhere); without JS they are simply shown */
+.dpl__ht{position:relative}
+.dpl .dpl__crit-b{position:relative;display:inline;padding:0 .04em;color:var(--acc);font:inherit;font-weight:600;letter-spacing:inherit;-webkit-text-stroke:.5px currentColor;border-bottom:.07em dotted var(--acc);border-radius:4px 4px 0 0;cursor:help;transition:background .25s ease,border-color .25s ease}
+.dpl .dpl__crit-b::after{content:"";position:absolute;right:-.1em;top:.04em;width:.24em;height:.24em;border-radius:50%;background:var(--acc);box-shadow:0 0 0 0 rgba(79,211,203,.55);animation:dpl-ping 2.8s ease-out infinite;pointer-events:none}
+.dpl:not(.is-js) .dpl__crit-b{cursor:inherit}
+.dpl .dpl__crit-b:hover,.dpl .dpl__crit-b[aria-expanded="true"]{background:rgba(79,211,203,.14);border-bottom-style:solid}
+.dpl .dpl__crit-b:focus-visible{outline:2px solid var(--acc2);outline-offset:5px}
+@keyframes dpl-ping{0%{box-shadow:0 0 0 0 rgba(79,211,203,.55)}70%,100%{box-shadow:0 0 0 .5em rgba(79,211,203,0)}}
+.dpl .dpl__crit{position:absolute;z-index:30;left:50%;top:calc(100% + 4px);width:min(760px,100%);transform:translateX(-50%);padding:clamp(22px,3vw,34px);text-align:left;border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,#14323F,#0B1F2B);box-shadow:0 34px 90px rgba(2,10,16,.62),0 0 0 1px rgba(79,211,203,.16),0 0 70px rgba(79,211,203,.1)}
+.dpl .dpl__crit::before{content:"";position:absolute;left:0;right:0;top:-28px;height:28px}
+.dpl.is-js .dpl__crit{display:none}
+.dpl.is-js .dpl__crit.is-open{display:block;animation:dpl-crit .34s cubic-bezier(.2,.7,.2,1) both}
+@keyframes dpl-crit{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%)}}
+.dpl:not(.is-js) .dpl__crit{position:relative;left:auto;top:auto;width:auto;max-width:760px;margin:26px auto 0;transform:none;box-shadow:none}
+.dpl:not(.is-js) .dpl__crit::before{display:none}
+.dpl .dpl__crit-h{color:var(--ink);font-size:clamp(22px,2.2vw,27px);line-height:1.2;font-weight:600;-webkit-text-stroke:.3px currentColor}
+.dpl .dpl__crit-l{margin-top:10px;color:var(--ink2);font-size:17px;line-height:1.55}
+.dpl .dpl__crit-o{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+@media (max-width:760px){.dpl .dpl__crit-o{grid-template-columns:1fr}}
+.dpl .dpl__crit-o li{display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:start;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:rgba(79,211,203,.06)}
+.dpl .dpl__crit-n{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--acc);color:var(--acc);font-size:17px;font-weight:600;line-height:1}
+.dpl .dpl__crit-t{display:block}
+.dpl .dpl__crit-t b{display:block;color:var(--ink);font-size:18px;line-height:1.3;font-weight:600;-webkit-text-stroke:.25px currentColor}
+.dpl .dpl__crit-q{display:block;margin-top:2px;color:var(--ink2);font-size:16px;line-height:1.5}
+.dpl .dpl__crit-a{display:block;margin-top:2px;color:var(--acc2);font-size:16px;line-height:1.5;font-weight:600;-webkit-text-stroke:.2px currentColor}
+.dpl .dpl__crit-c{margin-top:18px;color:var(--ink2);font-size:17px;line-height:1.55}
+.dpl .dpl__crit-x{margin-top:12px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink);font-size:17px;line-height:1.5}
+.dpl .dpl__crit-x b{font-weight:600;-webkit-text-stroke:.3px currentColor}
 .dpl .dpl__lede{margin:18px auto 0;max-width:700px;color:var(--ink2);font-size:clamp(17px,1.35vw,19px);line-height:1.6;-webkit-text-stroke:.15px currentColor}
 
 /* the sun row: four circles joined by one line, and a light that runs along it again and again (each law leads to the next) */

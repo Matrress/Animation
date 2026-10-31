@@ -214,6 +214,7 @@
     [].forEach.call(root.querySelectorAll('[data-need]'), function (el) { if (document.querySelector(el.getAttribute('data-need'))) el.hidden = false; });
 
     bioMark(root);
+    crit(root);
     planet(root);
     night(root);
 
@@ -332,6 +333,28 @@
     b.querySelector('summary').addEventListener('click', function (e) { if (b.hasAttribute('data-hover')) { e.preventDefault(); b.removeAttribute('data-hover'); } });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && b.open) shut(); });
     document.addEventListener('pointerdown', function (e) { if (b.open && !b.contains(e.target)) shut(); });
+  }
+
+  // the four criteria: the word "Criteria" in the title opens them. Mouse: hover opens, leaving closes, a click keeps it open.
+  // Touch and keyboard: tap or Enter toggles. Escape, a press outside, or Tab away closes. The panel holds no controls.
+  function crit(root) {
+    var ht = root.querySelector('.dpl__ht'), b = ht && ht.querySelector('.dpl__crit-b'), p = ht && ht.querySelector('.dpl__crit'), t = 0, hover = false, key = false;
+    if (!b || !p) return;
+    var isOpen = function () { return p.classList.contains('is-open'); };
+    var show = function (byHover) { clearTimeout(t); hover = !!byHover; p.classList.add('is-open'); b.setAttribute('aria-expanded', 'true'); };
+    var shut = function () { clearTimeout(t); hover = false; p.classList.remove('is-open'); b.setAttribute('aria-expanded', 'false'); };
+    var inside = function (n) { return n && (b.contains(n) || p.contains(n)); };
+    [b, p].forEach(function (el) {
+      el.addEventListener('pointerover', function (e) { if (e.pointerType !== 'mouse') return; clearTimeout(t); if (!isOpen()) show(true); });
+      el.addEventListener('pointerout', function (e) {
+        if (e.pointerType !== 'mouse' || !hover || inside(e.relatedTarget)) return;
+        t = setTimeout(function () { if (hover) shut(); }, 260);
+      });
+    });
+    b.addEventListener('click', function () { if (hover) { hover = false; return; } if (isOpen()) shut(); else show(false); });   // a click on a hover-opened panel keeps it open
+    b.addEventListener('blur', function () { if (key && !hover && isOpen()) shut(); });
+    document.addEventListener('keydown', function (e) { key = true; if (e.key === 'Escape' && isOpen()) { var was = document.activeElement; shut(); if (inside(was)) b.focus(); } });
+    document.addEventListener('pointerdown', function (e) { key = false; if (isOpen() && !inside(e.target)) shut(); });
   }
 
   function scan() { [].forEach.call(document.querySelectorAll('section.dpl'), init); }

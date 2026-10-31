@@ -5,9 +5,25 @@
 
 export const HEAD = {
   eyebrow: 'Why Natural Latex Mattresses and Toppers',
-  title: 'One Natural Material. <b>Four Laws</b> of Good Sleep.',
+  title: 'One Natural Material. <b>Four Laws</b> and {CRIT} for Healthy Sleep.',   // {CRIT} becomes the word-button that opens the four criteria (build.mjs)
   planet: ['Healthy for Us', 'Healthy for', 'Our Planet'],   // the slogan across the turning Earth (the Hero's own words)
   lede: 'A good mattress has to come from clean material, carry the body, adapt to it and let it breathe. Natural Dunlop latex does all four in one material, in every Natural Latex Mattress and Natural Latex Topper we make. Tap a circle to see the engineering and the numbers behind it.',
+};
+
+// the four laws as four search criteria: opens from the word "Criteria" in the title (hover on a mouse, tap or Enter elsewhere).
+// Owner's idea (2026-10-31): people have no criteria for searching; teach them these four, at engineering level, and the choice moves from what is offered to what is asked for.
+export const CRIT = {
+  label: 'The four criteria',
+  title: 'Four Criteria to Search By',
+  lede: 'The four laws are also the four criteria for choosing a mattress. Ask every seller for all four, and for the numbers behind each one.',
+  items: [   // [law, the question to ask, the engineering answer]
+    ['Natural & Bio Origin', 'What is the core made of?', '100% natural Dunlop latex.'],
+    ['Support', 'How much does the whole core carry?', 'The density of the whole core, from 63 to 88 kg/m³, set by your body weight.'],
+    ['Adaptability', 'How fast does it adapt and recover?', 'Immediately, with a progressive response (SAG) of 4.5–5.4.'],
+    ['Ventilation', 'How does the air move?', 'Through channels moulded in the full depth of the core.'],
+  ],
+  close: 'Many mattresses meet one of these criteria, or two. A spring mattress can ventilate well and still adapt poorly. All four together belong to the natural latex mattress, and that combination is what gives a mattress its quality.',
+  act: 'Make these four your search. Hold every offer against them, in numbers, not in promises of comfort.',
 };
 
 // the six material classes of the comparison. TEMPUR is its own class, never mixed with ordinary memory foam.

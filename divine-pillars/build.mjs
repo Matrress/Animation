@@ -8,9 +8,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { HEAD, MATERIALS, COMPARE, PILLARS, FOOT, DIFF, CREED } from './src/content.mjs';
+import { HEAD, MATERIALS, COMPARE, PILLARS, FOOT, DIFF, CREED, CRIT } from './src/content.mjs';
 
-const VERSION = '0.13.4';
+const VERSION = '0.13.5';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REF = process.env.DPL_REF || 'main-preview';
 const BASE = process.env.DPL_BASE || `https://cdn.jsdelivr.net/gh/Matrress/Animation@${REF}/divine-pillars/release/${VERSION}/`;
@@ -60,6 +60,14 @@ const bio = `<details class="dpl__bio"><summary class="dpl__bio-s"><img class="d
 const creed = `<figure class="dpl__creed">${bio}<div><blockquote class="dpl__cq"><p>${esc(CREED.quote[0])}</p><p><b>${esc(CREED.quote[1])}</b></p></blockquote>
 <figcaption class="dpl__ct">${esc(CREED.text)}</figcaption></div><div class="dpl__moonbox"><img class="dpl__moon" src="${BASE}moon.webp" width="280" height="280" loading="lazy" decoding="async" alt=""></div></figure>`;
 
+// the four criteria: the word "Criteria" in the title is a button; dpl.js opens this panel on hover (mouse), tap or Enter.
+// Without dpl.js the panel is simply shown under the title (dpl.css), so nothing is lost.
+const critBtn = `<button type="button" class="dpl__crit-b" aria-expanded="false" aria-controls="dpl-crit">Criteria</button>`;
+const crit = `<div class="dpl__crit" id="dpl-crit" role="region" aria-label="${esc(CRIT.label)}"><p class="dpl__crit-h">${esc(CRIT.title)}</p><p class="dpl__crit-l">${esc(CRIT.lede)}</p>
+<ol class="dpl__crit-o">${CRIT.items.map((c, i) => `<li><span class="dpl__crit-n" aria-hidden="true">${i + 1}</span><span class="dpl__crit-t"><b>${esc(c[0])}</b><span class="dpl__crit-q">${esc(c[1])}</span><span class="dpl__crit-a">${esc(c[2])}</span></span></li>`).join('\n')}</ol>
+<p class="dpl__crit-c">${esc(CRIT.close)}</p><p class="dpl__crit-x"><b>${esc(CRIT.act)}</b></p></div>`;
+if (!HEAD.title.includes('{CRIT}')) throw new Error('HEAD.title must carry the {CRIT} token');
+
 // the turning Earth in the top-right corner (dpl.js draws it on the canvas); the slogan is real text
 const planet = `<div class="dpl__planet"><canvas aria-hidden="true"></canvas><p class="dpl__pband"><span>${esc(HEAD.planet[0])}</span><b>${esc(HEAD.planet[1])}<br>${esc(HEAD.planet[2])}</b></p></div>`;
 
@@ -70,7 +78,8 @@ const tile = `<link rel="stylesheet" href="${BASE}dpl.css">
 <div class="dpl__in">
 ${planet}
 <header class="dpl__hd"><p class="dpl__eb">${esc(HEAD.eyebrow)}</p>
-<h2 class="dpl__h" id="dpl-h">${HEAD.title}</h2>
+<div class="dpl__ht"><h2 class="dpl__h" id="dpl-h">${HEAD.title.replace('{CRIT}', critBtn)}</h2>
+${crit}</div>
 <p class="dpl__lede">${esc(HEAD.lede)}</p></header>
 <ol class="dpl__sun">
 ${PILLARS.map(card).join('\n')}
