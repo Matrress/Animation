@@ -78,7 +78,8 @@
 .dpl .dpl__crit-c{margin-top:24px;color:var(--ink2);font-size:17px;line-height:1.55}
 .dpl .dpl__crit-x{margin-top:12px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink);font-size:17px;line-height:1.5}
 .dpl .dpl__crit-x b{font-weight:600;-webkit-text-stroke:.3px currentColor}
-.dpl .dpl__crit-cp{margin-top:16px}
+.dpl .dpl__crit-cp{justify-self:end;margin-top:10px;padding:4px 0;color:var(--acc2);font:inherit;font-size:16px;line-height:1.4;font-weight:400;text-decoration:underline;text-underline-offset:.22em;text-decoration-color:rgba(164,212,220,.55);background:none;border:0;cursor:pointer}
+.dpl .dpl__crit-cp:hover,.dpl .dpl__crit-cp:focus-visible{color:var(--acc);text-decoration-color:var(--acc)}
 @media (max-width:760px){
   .dpl .dpl__crit-g{grid-template-columns:1fr}
   .dpl .dpl__crit-k:nth-child(odd)::after{content:none}

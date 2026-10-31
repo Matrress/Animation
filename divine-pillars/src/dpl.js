@@ -345,7 +345,7 @@
       '<div class="dpl__crit-g" role="group" aria-label="' + esc(c.label) + '">' + cards + '</div>' +
       '<div class="dpl__crit-r is-ok" aria-live="polite"><span class="dpl__crit-eq" aria-hidden="true">=</span><b class="dpl__crit-rt">' + esc(c.result) + '</b><span class="dpl__crit-rs">' + esc(c.ok) + '</span></div>' +
       '<p class="dpl__crit-c">' + esc(c.combo) + '</p><p class="dpl__crit-x"><b>' + esc(c.act) + '</b></p>' +
-      '<button type="button" class="dpl__btn dpl__crit-cp">' + esc(c.copy) + '</button>';
+      '<button type="button" class="dpl__crit-cp">' + esc(c.copy) + '</button>';
   }
   function crit(root) {
     var ht = root.querySelector('.dpl__ht'), b = ht && ht.querySelector('.dpl__crit-b'), p = ht && ht.querySelector('.dpl__crit'), c = D.crit, t = 0, hover = false, key = false;
