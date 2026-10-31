@@ -158,12 +158,12 @@ else scanAndMaybeObserve();
 
 1. **Push the Config B files to GitHub** on the `claude/divine-collection`
    branch. Note the resulting commit SHA.
-2. **Replace `__COMMIT_SHA__`** in `ecwid/loader-3.13.2-configB.html` with
-   the actual commit SHA, or construct the loader manually:
+2. **Copy the loader from `ecwid/loader-3.13.2-configB.html`** (already pinned
+   to commit `08088112777cbf09aa9bf7dad1386cb474bd5eae`):
 
    ```html
    <!-- Divine DunlopDreams Collection 3.13.2-configB loader (Track A isolation test — conditional observer). -->
-   <script>(function(d,b){if(window.__ddcLoader)return;window.__ddcLoader=1;var h=d.documentElement,off=function(){h.classList.remove('ddc-js')};h.classList.add('ddc-js');var l=d.createElement('link');l.rel='stylesheet';l.href=b+'ddc.css';l.onerror=off;d.head.appendChild(l);var s=d.createElement('script');s.src=b+'ddc.js';s.defer=true;s.onerror=off;d.head.appendChild(s);setTimeout(function(){if(!window.DDC)off()},8000)})(document,'https://cdn.jsdelivr.net/gh/Matrress/Animation@<COMMIT_SHA>/divine-collection/release/3.13.2-configB/');</script>
+   <script>(function(d,b){if(window.__ddcLoader)return;window.__ddcLoader=1;var h=d.documentElement,off=function(){h.classList.remove('ddc-js')};h.classList.add('ddc-js');var l=d.createElement('link');l.rel='stylesheet';l.href=b+'ddc.css';l.onerror=off;d.head.appendChild(l);var s=d.createElement('script');s.src=b+'ddc.js';s.defer=true;s.onerror=off;d.head.appendChild(s);setTimeout(function(){if(!window.DDC)off()},8000)})(document,'https://cdn.jsdelivr.net/gh/Matrress/Animation@08088112777cbf09aa9bf7dad1386cb474bd5eae/divine-collection/release/3.13.2-configB/');</script>
    ```
 
 3. **Ecwid admin → Settings → General → Site-wide custom code → HEAD section.**
@@ -268,8 +268,8 @@ issue** and will be investigated independently:
 | Config B source | `src/ddc-configB.js` | ✅ Ready |
 | Config B release build | `release/3.13.2-configB/ddc.js` | ✅ Ready |
 | Config B CSS (unchanged) | `release/3.13.2-configB/ddc.css` | ✅ Ready |
-| Config B loader (HTML) | `ecwid/loader-3.13.2-configB.html` | ✅ Ready (needs commit SHA) |
-| Config B loader (JS) | `ecwid/loader-3.13.2-configB.js` | ✅ Ready (needs commit SHA) |
+| Config B loader (HTML) | `ecwid/loader-3.13.2-configB.html` | ✅ Ready (pinned to `0808811`) |
+| Config B loader (JS) | `ecwid/loader-3.13.2-configB.js` | ✅ Ready (pinned to `0808811`) |
 | Config A instructions | This document | ✅ Ready |
 | Config B diff | This document + `diff -u src/ddc.js src/ddc-configB.js` | ✅ Ready |
 | Testing protocol | This document | ✅ Ready |
