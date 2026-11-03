@@ -27,6 +27,7 @@ def main():
     css = open(CSS, encoding='utf8').read()
     s04 = open(P04, encoding='utf8').read()
     inline = '\n'.join(b for b in re.findall(r'<style[^>]*>(.*?)</style>', s04, re.S) if '.dnchk' not in b[:60])
+    must(open(os.path.join(HERE,'hero_fit.html'),encoding='utf8').read() in s04, 'section 04 must contain page/hero_fit.html')
     must(inline == css, 'section 04 inline styles and page/firmnesses.css differ: change both together')
     s07 = LINK_RE.sub('', open(P07, encoding='utf8').read())
     must('id="dn-wd"' in s07, '07 changed shape')

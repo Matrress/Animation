@@ -60,7 +60,7 @@ def build_css():
         '#ddv[data-sw]{display:flex;flex-direction:column;justify-content:center}'
         '#ddv[data-sw] .ddv-stage{width:min(100%,var(--ddv-sw))!important}'
         '#dn .dn-ra a{justify-content:space-between!important}'
-        '.dn-a .dn-side>.dn-nt{margin:0;max-width:100%;font-size:14px;font-size:max(11px,5.8cqi);line-height:1.3;color:var(--ink2);text-align:left;text-wrap:balance}'
+        '.dn-a .dn-side>.dn-nt{margin:0;max-width:100%;font-size:14px;font-size:max(11px,4.5cqi);line-height:1.3;white-space:nowrap;color:var(--ink2);text-align:justify;text-align-last:justify}@media (max-width:640px){.dn-a .dn-side>.dn-nt{font-size:13px;text-align:left;text-align-last:auto;white-space:normal}}'
         '/* the hint "More below" becomes a real link on the front page */'
         '#dn .dn-body::after{content:none!important}'
         '#dn .fq-more{display:block;margin-top:10px;padding-top:8px;border-top:1px solid rgba(126,136,135,.5);font-size:12.5px;letter-spacing:.03em;color:var(--t2);text-align:center;text-decoration:none}'
@@ -102,7 +102,7 @@ def tile_a(css_url):
     body = s03[i:]
     must('class="dn-top"' in body, 'hero block not found in 03')
     # notice sits in the heading block, OUTSIDE the monitor; it inherits the .dn font and ink colour
-    notice = '<p class="dn-nt"><b>This is not an animation.</b> These are Dunlop regulations, based on engineering research.</p>'
+    notice = '<p class="dn-nt"><b>This is not an animation.</b> These are Dunlop<br>regulations, based on engineering research.</p>'
     end = '</div></div></section>\n<section class="dn dn-b"'
     must(end in body, 'heading/monitor boundary not found in tile A')
     body = body.replace('<div class="dn-side"></div>', '<div class="dn-side">' + notice + '</div>', 1)
@@ -143,7 +143,8 @@ def tile_b(js_url):
     sect = '<section class="dn dn-c" id="dn">' + STUBS + act + row + '</div></section>'
     loader = ("<script>(function(){var d=document,s=d.createElement('script');s.src='%s';s.defer=true;"
               "s.onerror=function(){d.documentElement.classList.add('ddv-fit')};d.head.appendChild(s)})();</script>") % js_url
-    return ('<!-- Divine DunlopDreams Firmness front block %s · tile B of 2: cards + points text + loader · paste second, right after tile A -->' % VER) + sect + zx.group(0) + loader
+    hero_fit = open(os.path.join(ROOT, 'page', 'hero_fit.html'), encoding='utf8').read()
+    return ('<!-- Divine DunlopDreams Firmness front block %s · tile B of 2: cards + points text + loader · paste second, right after tile A -->' % VER) + sect + zx.group(0) + loader + hero_fit
 
 
 def main():
