@@ -13,7 +13,7 @@ so the verified JS runs unchanged.
 """
 import re, sys, os, argparse
 
-VER = '0.4.0'
+VER = '0.5.0'
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SRC = os.path.join(ROOT, 'release', '1.0.0-inline')
@@ -99,8 +99,7 @@ def tile_a(css_url):
     s03 = rd('03_Markup_intro_visual.html')
     i = s03.index('<section class="dn dn-a">')
     body = s03[i:]
-    must(OLD_P in body, 'heading text not found in 03')
-    body = body.replace(OLD_P, NEW_P)
+    must('class="dn-head dn-hero"' in body, 'hero heading not found in 03')
     # notice sits in the heading block, OUTSIDE the monitor; it inherits the .dn font and ink colour
     notice = ('<p style="margin:0;padding:10px 14px;border-left:3px solid var(--accd);border-radius:0 12px 12px 0;background:#fff;'
               'font-size:14.5px;line-height:1.5;color:var(--ink)"><b>This is not an animation.</b> These are Dunlop regulations, based on engineering research.</p>')
