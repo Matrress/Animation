@@ -13,7 +13,7 @@ so the verified JS runs unchanged.
 """
 import re, sys, os, argparse
 
-VER = '0.6.0'
+VER = '0.7.0'
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SRC = os.path.join(ROOT, 'release', '1.0.0-inline')
@@ -60,7 +60,7 @@ def build_css():
         '#ddv[data-sw]{display:flex;flex-direction:column;justify-content:center}'
         '#ddv[data-sw] .ddv-stage{width:min(100%,var(--ddv-sw))!important}'
         '#dn .dn-ra a{justify-content:space-between!important}'
-        '.dn-nt{margin:0;padding:10px 14px;border-left:3px solid var(--accd);border-radius:0 12px 12px 0;background:#fff;font-size:14.5px;line-height:1.5;color:var(--ink)}'
+        '.dn-nt{margin:8px clamp(44px,4.4vw,60px) 0 auto;max-width:min(100%,420px);font-size:13px;line-height:1.45;color:var(--ink2);text-align:left}@media (max-width:699px){.dn-nt{max-width:100%}}'
         '/* the hint "More below" becomes a real link on the front page */'
         '#dn .dn-body::after{content:none!important}'
         '#dn .fq-more{display:block;margin-top:10px;padding-top:8px;border-top:1px solid rgba(126,136,135,.5);font-size:12.5px;letter-spacing:.03em;color:var(--t2);text-align:center;text-decoration:none}'
