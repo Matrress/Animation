@@ -13,7 +13,7 @@ so the verified JS runs unchanged.
 """
 import re, sys, os, argparse
 
-VER = '0.5.0'
+VER = '0.6.0'
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SRC = os.path.join(ROOT, 'release', '1.0.0-inline')
@@ -60,6 +60,7 @@ def build_css():
         '#ddv[data-sw]{display:flex;flex-direction:column;justify-content:center}'
         '#ddv[data-sw] .ddv-stage{width:min(100%,var(--ddv-sw))!important}'
         '#dn .dn-ra a{justify-content:space-between!important}'
+        '.dn-nt{margin:0;padding:10px 14px;border-left:3px solid var(--accd);border-radius:0 12px 12px 0;background:#fff;font-size:14.5px;line-height:1.5;color:var(--ink)}'
         '/* the hint "More below" becomes a real link on the front page */'
         '#dn .dn-body::after{content:none!important}'
         '#dn .fq-more{display:block;margin-top:10px;padding-top:8px;border-top:1px solid rgba(126,136,135,.5);font-size:12.5px;letter-spacing:.03em;color:var(--t2);text-align:center;text-decoration:none}'
@@ -99,10 +100,9 @@ def tile_a(css_url):
     s03 = rd('03_Markup_intro_visual.html')
     i = s03.index('<section class="dn dn-a">')
     body = s03[i:]
-    must('class="dn-head dn-hero"' in body, 'hero heading not found in 03')
+    must('class="dn-blk"' in body, 'hero block not found in 03')
     # notice sits in the heading block, OUTSIDE the monitor; it inherits the .dn font and ink colour
-    notice = ('<p style="margin:0;padding:10px 14px;border-left:3px solid var(--accd);border-radius:0 12px 12px 0;background:#fff;'
-              'font-size:14.5px;line-height:1.5;color:var(--ink)"><b>This is not an animation.</b> These are Dunlop regulations, based on engineering research.</p>')
+    notice = '<p class="dn-nt"><b>This is not an animation.</b> These are Dunlop regulations, based on engineering research.</p>'
     end = '</div></div></section>\n<section class="dn dn-b"'
     must(end in body, 'heading/monitor boundary not found in tile A')
     body = body.replace(end, '</div>' + notice + '</div></section>\n<section class="dn dn-b"', 1)
