@@ -60,7 +60,7 @@ def build_css():
         '#ddv[data-sw]{display:flex;flex-direction:column;justify-content:center}'
         '#ddv[data-sw] .ddv-stage{width:min(100%,var(--ddv-sw))!important}'
         '#dn .dn-ra a{justify-content:space-between!important}'
-        '.dn-nt{grid-area:note;justify-self:end;max-width:min(100%,360px);margin:0;font-size:13px;line-height:1.45;color:var(--ink2);text-align:left}'
+        '.dn-nt{margin:0;max-width:100%;font-size:12.5px;font-size:max(11px,3.4cqi);line-height:1.45;color:var(--ink2);text-align:left}'
         '/* the hint "More below" becomes a real link on the front page */'
         '#dn .dn-body::after{content:none!important}'
         '#dn .fq-more{display:block;margin-top:10px;padding-top:8px;border-top:1px solid rgba(126,136,135,.5);font-size:12.5px;letter-spacing:.03em;color:var(--t2);text-align:center;text-decoration:none}'
@@ -105,7 +105,7 @@ def tile_a(css_url):
     notice = '<p class="dn-nt"><b>This is not an animation.</b> These are Dunlop regulations, based on engineering research.</p>'
     end = '</div></div></section>\n<section class="dn dn-b"'
     must(end in body, 'heading/monitor boundary not found in tile A')
-    body = body.replace(end, notice + end, 1)
+    body = body.replace('</div><div class="dn-bot">', notice + '</div><div class="dn-bot">', 1)
     head = ('<!-- Firmness front %s · tile A of 2 -->'
             '<link rel="stylesheet" href="%s">'
             "<script>(function(h){h.classList.add('ddv-wait');setTimeout(function(){h.classList.add('ddv-fit')},5000)})(document.documentElement)</script>") % (VER, css_url)
