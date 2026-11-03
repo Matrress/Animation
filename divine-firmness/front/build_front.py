@@ -60,7 +60,7 @@ def build_css():
         '#ddv[data-sw]{display:flex;flex-direction:column;justify-content:center}'
         '#ddv[data-sw] .ddv-stage{width:min(100%,var(--ddv-sw))!important}'
         '#dn .dn-ra a{justify-content:space-between!important}'
-        '.dn-nt{margin:8px clamp(44px,4.4vw,60px) 0 auto;max-width:min(100%,420px);font-size:13px;line-height:1.45;color:var(--ink2);text-align:left}@media (max-width:699px){.dn-nt{max-width:100%}}'
+        '.dn-nt{grid-area:note;justify-self:end;max-width:min(100%,360px);margin:0;font-size:13px;line-height:1.45;color:var(--ink2);text-align:left}'
         '/* the hint "More below" becomes a real link on the front page */'
         '#dn .dn-body::after{content:none!important}'
         '#dn .fq-more{display:block;margin-top:10px;padding-top:8px;border-top:1px solid rgba(126,136,135,.5);font-size:12.5px;letter-spacing:.03em;color:var(--t2);text-align:center;text-decoration:none}'
@@ -100,12 +100,12 @@ def tile_a(css_url):
     s03 = rd('03_Markup_intro_visual.html')
     i = s03.index('<section class="dn dn-a">')
     body = s03[i:]
-    must('class="dn-blk"' in body, 'hero block not found in 03')
+    must('class="dn-top"' in body, 'hero block not found in 03')
     # notice sits in the heading block, OUTSIDE the monitor; it inherits the .dn font and ink colour
     notice = '<p class="dn-nt"><b>This is not an animation.</b> These are Dunlop regulations, based on engineering research.</p>'
     end = '</div></div></section>\n<section class="dn dn-b"'
     must(end in body, 'heading/monitor boundary not found in tile A')
-    body = body.replace(end, '</div>' + notice + '</div></section>\n<section class="dn dn-b"', 1)
+    body = body.replace(end, notice + end, 1)
     head = ('<!-- Firmness front %s · tile A of 2 -->'
             '<link rel="stylesheet" href="%s">'
             "<script>(function(h){h.classList.add('ddv-wait');setTimeout(function(){h.classList.add('ddv-fit')},5000)})(document.documentElement)</script>") % (VER, css_url)
