@@ -105,7 +105,7 @@ def tile_a(css_url):
     notice = '<p class="dn-nt"><b>This is not an animation.</b> These are Dunlop regulations, based on engineering research.</p>'
     end = '</div></div></section>\n<section class="dn dn-b"'
     must(end in body, 'heading/monitor boundary not found in tile A')
-    body = body.replace('</div><div class="dn-bot">', notice + '</div><div class="dn-bot">', 1)
+    body = body.replace('<div class="dn-side"></div>', '<div class="dn-side">' + notice + '</div>', 1)
     head = ('<!-- Firmness front %s · tile A of 2 -->'
             '<link rel="stylesheet" href="%s">'
             "<script>(function(h){h.classList.add('ddv-wait');setTimeout(function(){h.classList.add('ddv-fit')},5000)})(document.documentElement)</script>") % (VER, css_url)
