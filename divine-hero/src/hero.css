@@ -2003,7 +2003,7 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh .ddh__sy-gb{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;justify-content:space-between;text-align:right;padding-right:6px;border-left:2px solid #1d4f74;padding-left:10px;font-size:clamp(11.5px,.95vw,14px);line-height:1.2;font-weight:600;color:#1c2a2c;border-radius:2px}
 .ddh .ddh__sheet--sys:not(:lang(en)) .ddh__sy-gb{font-size:clamp(10px,.8vw,11.5px)}
 .ddh .ddh__sy-lt{margin-top:7%}.ddh .ddh__sy-lm{margin-bottom:7%}
-.ddh .ddh__sy-list{display:grid;gap:12px;min-width:0}
+.ddh .ddh__sy-list{display:grid;gap:12px;min-width:0;container-type:inline-size}
 .ddh .ddh__sy-k{flex:none;width:44px;height:34px;overflow:visible}
 .ddh .ddh__sy-k .k-lt,.ddh .ddh__sy-k .k-ct{fill:#bcd9e6}.ddh .ddh__sy-k .k-ll,.ddh .ddh__sy-k .k-cl{fill:#8fbcd3}.ddh .ddh__sy-k .k-lr,.ddh .ddh__sy-k .k-cr{fill:#7aaec9}
 .ddh .ddh__sy-k .k-cl{fill:#25648a}.ddh .ddh__sy-k .k-cr{fill:#1f5575}.ddh .ddh__sy-k .k-ct{fill:#3b84ae}
@@ -2017,19 +2017,20 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh .ddh__sy-reg .ddh__sy-k rect{stroke:#fff;stroke-width:1.5}
 .ddh .ddh__sy-rb{display:grid;gap:5px;min-width:0}
 .ddh .ddh__sy-rk{margin:0;font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#cfe3f0}
-.ddh .ddh__sy-rt{margin:0;font-size:clamp(18px,1.5vw,21px);font-weight:600;line-height:1.2;color:#fff}
-.ddh .ddh__sy-rd{margin:0;font-size:15px;line-height:1.5;color:#eef2f6}
+.ddh .ddh__sy-rt{margin:0;font-size:clamp(19px,1.65vw,24px);font-weight:600;line-height:1.2;color:#fff}
+.ddh .ddh__sy-rd{margin:0;font-size:15.5px;line-height:1.45;color:#f4f7fa}
 .ddh .ddh__sy-fw{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 0;padding:0;list-style:none}
-.ddh .ddh__sy-fw li{padding:6px 12px;border-radius:9px;font-size:13.5px;font-weight:600;line-height:1.2;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.85)}
+.ddh .ddh__sy-fw li{padding:7px 14px;border-radius:9px;font-size:15px;font-weight:600;line-height:1.2;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.85)}
 .ddh .ddh__sy-fw .fs{background:#2f7da8}.ddh .ddh__sy-fw .fm{background:#25648a}.ddh .ddh__sy-fw .ff{background:#4a5664}.ddh .ddh__sy-fw .fx{background:#313d4c}
-.ddh .ddh__sy-free{margin:4px 0 0;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#1d4f74}
+.ddh .ddh__sy-free{--ls:1.72;display:block;margin:8px calc(var(--ls) * -1cqw) 0 0;font-size:clamp(12px,2.5cqw,19px);font-weight:700;line-height:1.3;letter-spacing:calc(var(--ls) * 1cqw);text-transform:uppercase;text-align:justify;text-align-last:justify;color:#1d4f74}
+/* the tracking is set per language so the line fills the whole width of the card above it (measured, not scripted) */
+.ddh .ddh__sheet--sys:lang(de) .ddh__sy-free{--ls:1.9}.ddh .ddh__sheet--sys:lang(fr) .ddh__sy-free{--ls:1.85}.ddh .ddh__sheet--sys:lang(es) .ddh__sy-free{--ls:1.9}.ddh .ddh__sheet--sys:lang(it) .ddh__sy-free{--ls:1.37}.ddh .ddh__sheet--sys:lang(pt) .ddh__sy-free{--ls:2.17}.ddh .ddh__sheet--sys:lang(sv) .ddh__sy-free{--ls:2.24}.ddh .ddh__sheet--sys:lang(fi) .ddh__sy-free{--ls:1.83}.ddh .ddh__sheet--sys:lang(el) .ddh__sy-free{--ls:.98}
 .ddh .ddh__sy-rows{display:grid;gap:4px;margin:0;padding:0;list-style:none}
 .ddh .ddh__sy-rows>li{display:flex;gap:14px;align-items:flex-start;padding:10px 4px 10px 0;border-top:1px solid rgba(29,79,116,.2)}
-.ddh .ddh__sy-rows h3{margin:0 0 2px;font-size:16px;font-weight:600;line-height:1.25;color:#1c2a2c}
-.ddh .ddh__sy-rows p{margin:0;font-size:14.5px;line-height:1.45;color:#2f393b}
-.ddh .ddh__sy-cvs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px;margin:8px 0 0;padding:0;list-style:none}
-.ddh .ddh__sy-cvs li{display:flex;align-items:center;gap:8px;font-size:14px;line-height:1.25;color:#2f393b}
-.ddh .ddh__sy-cvs .ddh__sw{flex:none;width:26px;height:20px;border-radius:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.16)}
+.ddh .ddh__sy-rows h3{margin:0 0 1px;font-size:17.5px;font-weight:700;line-height:1.25;color:#1c2a2c}
+.ddh .ddh__sy-rows p{margin:0;font-size:15.5px;line-height:1.45;color:#26302f}
+.ddh .ddh__sy-cvs{display:flex;flex-wrap:wrap;margin:6px 0 0;padding:0;list-style:none;font-size:14px;font-weight:600;line-height:1.45;color:#1c2a2c}
+.ddh .ddh__sy-cvs li:not(:last-child)::after{content:"·";margin:0 .55em;font-weight:700;color:#1d4f74}
 /* the confidence band */
 .ddh .ddh__sy-band{display:grid;gap:12px;align-items:center;padding:16px 22px;border-radius:20px;background:linear-gradient(165deg,#2a76a3 0,#1f5b82 100%);color:#fff;box-shadow:0 18px 40px -26px rgba(12,40,64,.7)}
 .ddh .ddh__sy-bt{margin:0;font-size:clamp(18px,1.5vw,22px);font-weight:600;line-height:1.2;color:#fff}
@@ -2047,7 +2048,7 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh .ddh__sy-head{padding-right:0}
 .ddh .ddh__sy-reg{padding:16px 16px 18px;gap:12px}
 .ddh .ddh__sy-lede,.ddh .ddh__sy-rd,.ddh .ddh__sy-rows p{font-size:15.5px}
-.ddh .ddh__sy-cvs{grid-template-columns:minmax(0,1fr)}
+.ddh .ddh__sheet--sys .ddh__sy-free{text-align-last:auto;letter-spacing:.22em;margin-right:0;font-size:14px}
 .ddh .ddh__sy-grp{gap:4px}
 .ddh .ddh__sy-gl{font-size:10.5px;letter-spacing:0}
 .ddh .ddh__sy-gb{padding:0 4px 0 6px;font-size:10.5px}
@@ -2060,8 +2061,8 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh .ddh__sheet--sys .ddh__sy-lc{grid-template-rows:auto minmax(0,1fr);align-self:stretch}
 .ddh .ddh__sheet--sys .ddh__sy-fig{align-self:center}
 .ddh .ddh__sheet--sys .ddh__sy-lede{margin:.2em 0 0;font-size:clamp(14.5px,1.05vw,16px)}
-.ddh .ddh__sheet--sys .ddh__sy-reg{padding:14px 18px 16px}
-.ddh .ddh__sheet--sys .ddh__sy-rows>li{padding:8px 4px 8px 0}
+.ddh .ddh__sheet--sys .ddh__sy-reg{padding:12px 18px 14px}
+.ddh .ddh__sheet--sys .ddh__sy-rows>li{padding:7px 4px 7px 0}
 .ddh .ddh__sheet--sys .ddh__sy-band{padding:14px 22px}
 }
 @container ddsh (max-height:700px){
@@ -2071,9 +2072,22 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh .ddh__sheet--sys .ddh__sh-in{gap:12px;padding-top:16px;padding-bottom:14px}
 .ddh .ddh__sheet--sys .ddh__sy-reg{padding:12px 18px 14px}
 .ddh .ddh__sheet--sys .ddh__sy-rows>li{padding:5px 4px 5px 0}
-.ddh .ddh__sheet--sys .ddh__sy-cvs{gap:3px 16px;margin-top:5px}
 .ddh .ddh__sheet--sys .ddh__sy-band{padding:10px 22px}
 .ddh .ddh__sheet--sys .ddh__sy-bt{font-size:19px}
+}
+/* hover (pointer devices, CSS only, instant): a row or the regulated block lights up the part of the drawing it changes and quiets the rest */
+@media (hover:hover){
+.ddh .ddh__sy-rows>li:hover,.ddh .ddh__sy-reg:hover{box-shadow:inset 3px 0 0 #25799f}
+.ddh .ddh__sy-rows>li:hover{background:rgba(37,121,159,.07)}
+.ddh .ddh__sy-main:has(.ddh__sy-reg:hover) :is(.d-top,.d-cov,.d-dim,.d-hgt){opacity:.28}
+.ddh .ddh__sy-main:has(.ddh__sy-rows>li:nth-child(1):hover) :is(.d-core,.d-cov,.d-dim,.d-hgt){opacity:.28}
+.ddh .ddh__sy-main:has(.ddh__sy-rows>li:nth-child(2):hover) :is(.d-cov,.d-dim,.d-hgt){opacity:.28}
+.ddh .ddh__sy-main:has(.ddh__sy-rows>li:nth-child(3):hover) :is(.d-core,.d-top,.d-cov,.d-hgt){opacity:.28}
+.ddh .ddh__sy-main:has(.ddh__sy-rows>li:nth-child(3):hover) .d-dim path{stroke-width:3.4}
+.ddh .ddh__sy-main:has(.ddh__sy-rows>li:nth-child(4):hover) :is(.d-core,.d-top,.d-cov,.d-dim){opacity:.28}
+.ddh .ddh__sy-main:has(.ddh__sy-rows>li:nth-child(4):hover) .d-hgt{stroke-width:3.4}
+.ddh .ddh__sy-main:has(.ddh__sy-rows>li:nth-child(5):hover) :is(.d-core,.d-top,.d-dim,.d-hgt){opacity:.28}
+.ddh .ddh__sy-main:has(.ddh__sy-rows>li:nth-child(5):hover) .d-cov{fill-opacity:1;stroke:#1d4f74;stroke-dasharray:none}
 }
 @media (forced-colors:active){.ddh .ddh__sy-reg,.ddh .ddh__sy-band{border:1px solid CanvasText}}
 /* hover-opened window: the button underneath keeps its place (the pointer rests on it), only dimmed */

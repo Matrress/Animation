@@ -62,6 +62,16 @@ const open = (p) => p.evaluate(() => document.querySelector('.ddh').getAttribute
   ok(!r.trial && r.warranty && r.days && !r.guar, 'no trial claim, no guarantee wording, 15-year warranty and ~20 working days present');
   ok(r.sh <= r.ch + 1, 'whole window fits at 1440x900 without scrolling ' + JSON.stringify(r));
 }
+{ // 1.20.10: the label spans the whole regulated card, tracked bold caps; covers are one line of names (no swatches); hovering a row lights up its part of the drawing
+  const p = await page({ width: 1440, height: 900 }); await p.click('.ddh__hint'); await p.waitForTimeout(900);
+  const r = await p.evaluate(() => { const sh = document.querySelector('#ddh-sheet-sys'), f = sh.querySelector('.ddh__sy-free'), reg = sh.querySelector('.ddh__sy-reg'), cs = getComputedStyle(f), fr = f.getBoundingClientRect(), rr = reg.getBoundingClientRect(); return { dw: Math.abs((fr.width + parseFloat(cs.marginRight || 0) * 0) - rr.width), ls: parseFloat(cs.letterSpacing), up: cs.textTransform, fw: +cs.fontWeight, sw: sh.querySelectorAll('.ddh__sy-cvs .ddh__sw, .ddh__sy-cvs i').length, cv: sh.querySelectorAll('.ddh__sy-cvs li').length }; });
+  ok(r.dw <= 40 && r.ls > 6 && r.up === 'uppercase' && r.fw >= 700, 'label: full card width, tracked bold caps ' + JSON.stringify(r));
+  ok(r.sw === 0 && r.cv === 4, 'covers: one line of four names, no swatches');
+  const row = await p.evaluate(() => { const r = document.querySelector('#ddh-sheet-sys .ddh__sy-rows > li:nth-child(3)').getBoundingClientRect(); return [r.left + 200, r.top + r.height / 2]; });
+  await p.mouse.move(row[0], row[1]); await p.waitForTimeout(150);
+  const h = await p.evaluate(() => { const g = (q) => getComputedStyle(document.querySelector('#ddh-sheet-sys ' + q)).opacity; return { core: g('.d-core'), top: g('.d-top'), dim: g('.d-dim path') }; });
+  ok(+h.core < 1 && +h.top < 1 && +h.dim === 1, 'hover on "Your size" quiets the slabs and keeps the size arrows ' + JSON.stringify(h));
+}
 { // tablet touch, landscape: full-screen window
   const p = await page({ width: 1180, height: 820 }, { hasTouch: true });
   await p.tap('.ddh__hint'); await p.waitForTimeout(800);
