@@ -1,0 +1,251 @@
+{
+ "_doc": "1.11.0 global size guide (no prices). Names stay in UK English in every language (they are the store's size names).",
+ "sizes": [
+  {
+   "name": "Small Single",
+   "cm": [
+    75,
+    190
+   ],
+   "in": [
+    "29.5",
+    "74.8"
+   ]
+  },
+  {
+   "name": "Small Special Single",
+   "cm": [
+    75,
+    200
+   ],
+   "in": [
+    "29.5",
+    "78.7"
+   ]
+  },
+  {
+   "name": "Euro Special Single",
+   "cm": [
+    80,
+    200
+   ],
+   "in": [
+    "31.5",
+    "78.7"
+   ]
+  },
+  {
+   "name": "Single",
+   "cm": [
+    90,
+    190
+   ],
+   "in": [
+    "35.4",
+    "74.8"
+   ]
+  },
+  {
+   "name": "Special Single",
+   "cm": [
+    90,
+    200
+   ],
+   "in": [
+    "35.4",
+    "78.7"
+   ]
+  },
+  {
+   "name": "Large Single",
+   "cm": [
+    100,
+    200
+   ],
+   "in": [
+    "39.4",
+    "78.7"
+   ]
+  },
+  {
+   "name": "Small Double",
+   "cm": [
+    120,
+    190
+   ],
+   "in": [
+    "47.2",
+    "74.8"
+   ]
+  },
+  {
+   "name": "Special Small Double",
+   "cm": [
+    120,
+    200
+   ],
+   "in": [
+    "47.2",
+    "78.7"
+   ]
+  },
+  {
+   "name": "UK Double",
+   "cm": [
+    135,
+    190
+   ],
+   "in": [
+    "53.1",
+    "74.8"
+   ]
+  },
+  {
+   "name": "Compact Double",
+   "cm": [
+    140,
+    190
+   ],
+   "in": [
+    "55.1",
+    "74.8"
+   ]
+  },
+  {
+   "name": "Euro Double",
+   "cm": [
+    140,
+    200
+   ],
+   "in": [
+    "55.1",
+    "78.7"
+   ]
+  },
+  {
+   "name": "UK King",
+   "cm": [
+    150,
+    200
+   ],
+   "in": [
+    "59.1",
+    "78.7"
+   ]
+  },
+  {
+   "name": "King Long",
+   "cm": [
+    150,
+    210
+   ],
+   "in": [
+    "59.1",
+    "82.7"
+   ]
+  },
+  {
+   "name": "Euro King",
+   "cm": [
+    160,
+    200
+   ],
+   "in": [
+    "63.0",
+    "78.7"
+   ]
+  },
+  {
+   "name": "Euro King Long",
+   "cm": [
+    160,
+    210
+   ],
+   "in": [
+    "63.0",
+    "82.7"
+   ]
+  },
+  {
+   "name": "Euro King XL",
+   "cm": [
+    160,
+    220
+   ],
+   "in": [
+    "63.0",
+    "86.6"
+   ]
+  },
+  {
+   "name": "Super King",
+   "cm": [
+    180,
+    200
+   ],
+   "in": [
+    "70.9",
+    "78.7"
+   ]
+  },
+  {
+   "name": "Super King Long",
+   "cm": [
+    180,
+    210
+   ],
+   "in": [
+    "70.9",
+    "82.7"
+   ]
+  },
+  {
+   "name": "Super King XL",
+   "cm": [
+    180,
+    220
+   ],
+   "in": [
+    "70.9",
+    "86.6"
+   ]
+  },
+  {
+   "name": "Emperor",
+   "cm": [
+    200,
+    200
+   ],
+   "in": [
+    "78.7",
+    "78.7"
+   ]
+  },
+  {
+   "name": "Emperor Long",
+   "cm": [
+    200,
+    210
+   ],
+   "in": [
+    "78.7",
+    "82.7"
+   ]
+  },
+  {
+   "name": "Emperor XL",
+   "cm": [
+    200,
+    220
+   ],
+   "in": [
+    "78.7",
+    "86.6"
+   ]
+  }
+ ],
+ "custom": {
+  "key": "sz_custom"
+ },
+ "contactUrl": null
+}

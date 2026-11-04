@@ -1,0 +1,7 @@
+# Cloudflare Pages / Netlify header rules for the hero's static files.
+# Versioned folders (/divine-hero/1.0.0/...) never change after publish, so cache them for a year.
+/divine-hero/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+  Cross-Origin-Resource-Policy: cross-origin
