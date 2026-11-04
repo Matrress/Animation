@@ -1,4 +1,4 @@
-// 1.20.5: the invitation button (upper left) opens the window "Our sleep system". usage: node tests/sys21.mjs <page>   (default preview/section-local.html, served on 8765)
+// 1.20.5/1.20.9: the invitation button (upper left) opens the window "Full customisation means luxury" (once "Our sleep system"). usage: node tests/sys21.mjs <page>   (default preview/section-local.html, served on 8765)
 import { chromium } from 'playwright';
 const PAGE = process.argv[2] || 'preview/section-local.html';
 const b = await chromium.launch(); const out = [];
@@ -52,12 +52,14 @@ const open = (p) => p.evaluate(() => document.querySelector('.ddh').getAttribute
   const p = await page({ width: 1440, height: 900 }, {}, '&ddh-lang=de'); await p.waitForTimeout(1500);
   await p.click('.ddh__hint'); await p.waitForTimeout(800);
   const r = await p.evaluate(() => { const i = document.querySelector('#ddh-sheet-sys .ddh__sh-in'); return { h1: document.querySelector('.ddh__sy-h span').textContent, sw: i.scrollWidth, cw: i.clientWidth, sh: i.scrollHeight, ch: i.clientHeight, sr: document.querySelector('.ddh__hint small').textContent }; });
-  ok(r.h1 === 'Das Fundament entwickeln.' && r.sw <= r.cw + 1, 'German text, no sideways overflow ' + JSON.stringify(r));
+  ok(r.h1 === 'Vollständige Individualisierung' && r.sw <= r.cw + 1, 'German text, no sideways overflow ' + JSON.stringify(r));
 }
-{ // 1.20.7: a picture on top of each of the three boxes; no overflow at 1440x900
+{ // 1.20.9 "Full customisation means luxury": drawing, one regulated block, five choices, confidence band; static (no motion), no trial claim; fits at 1440x900
   const p = await page({ width: 1440, height: 900 }); await p.click('.ddh__hint'); await p.waitForTimeout(900);
-  const r = await p.evaluate(() => { const v = [...document.querySelectorAll('#ddh-sheet-sys .ddh__sy-v')], i = document.querySelector('#ddh-sheet-sys .ddh__sh-in'); return { n: v.length, hid: v.every((x) => x.getAttribute('aria-hidden') === 'true'), top: v.every((x) => x.getBoundingClientRect().height > 60 && x.getBoundingClientRect().width > 150), sh: i.scrollHeight, ch: i.clientHeight }; });
-  ok(r.n === 3 && r.hid && r.top, 'three pictures, hidden from screen readers, visible ' + JSON.stringify(r));
+  const r = await p.evaluate(() => { const sh = document.querySelector('#ddh-sheet-sys'), i = sh.querySelector('.ddh__sh-in'), f = sh.querySelector('.ddh__sy-fig'), d = sh.querySelector('.ddh__sy-d').getBoundingClientRect(); const anim = [...sh.querySelectorAll('*')].filter((e) => getComputedStyle(e).animationName !== 'none').length; const t = sh.textContent; return { fig: f.getAttribute('aria-hidden') === 'true' && d.width > 250, chips: sh.querySelectorAll('.ddh__sy-fw li').length, rows: sh.querySelectorAll('.ddh__sy-rows > li').length, facts: sh.querySelectorAll('.ddh__sy-facts li').length, anim, trial: /trial/i.test(t), warranty: /15-year warranty/.test(t), days: /20 working days/.test(t), guar: /guarantee/i.test(t), sh: i.scrollHeight, ch: i.clientHeight }; });
+  ok(r.fig && r.chips === 4 && r.rows === 5 && r.facts === 3, 'drawing hidden from readers, 4 firmness chips, 5 choices, 3 facts ' + JSON.stringify(r));
+  ok(r.anim === 0, 'no animation in the window');
+  ok(!r.trial && r.warranty && r.days && !r.guar, 'no trial claim, no guarantee wording, 15-year warranty and ~20 working days present');
   ok(r.sh <= r.ch + 1, 'whole window fits at 1440x900 without scrolling ' + JSON.stringify(r));
 }
 { // tablet touch, landscape: full-screen window
