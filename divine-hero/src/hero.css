@@ -2003,6 +2003,13 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh .ddh__sy-gb{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;justify-content:space-between;text-align:right;padding-right:6px;border-left:2px solid #1d4f74;padding-left:10px;font-size:clamp(11.5px,.95vw,14px);line-height:1.2;font-weight:600;color:#1c2a2c;border-radius:2px}
 .ddh .ddh__sheet--sys:not(:lang(en)) .ddh__sy-gb{font-size:clamp(10px,.8vw,11.5px)}
 .ddh .ddh__sy-lt{margin-top:7%}.ddh .ddh__sy-lm{margin-bottom:7%}
+/* the three things we make, side by side: the mattress on its own, the topper on its own, both together as the Dual Plush system */
+.ddh .ddh__sy-eq{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;padding:0;list-style:none}
+.ddh .ddh__sy-eq li{display:grid;justify-items:center;gap:2px;padding:4px 6px;text-align:center;border-left:1px solid rgba(29,79,116,.22)}
+.ddh .ddh__sy-eq li:first-child{border-left:0}
+.ddh .ddh__sy-eq .ddh__sy-k{width:54px;height:41px}
+.ddh .ddh__sy-eq b{font-size:15px;font-weight:700;line-height:1.2;color:#1c2a2c}
+.ddh .ddh__sy-eq span{font-size:13.5px;line-height:1.25;color:#3a4647}
 .ddh .ddh__sy-list{display:grid;gap:12px;min-width:0;container-type:inline-size}
 .ddh .ddh__sy-k{flex:none;width:44px;height:34px;overflow:visible}
 .ddh .ddh__sy-k .k-lt,.ddh .ddh__sy-k .k-ct{fill:#bcd9e6}.ddh .ddh__sy-k .k-ll,.ddh .ddh__sy-k .k-cl{fill:#8fbcd3}.ddh .ddh__sy-k .k-lr,.ddh .ddh__sy-k .k-cr{fill:#7aaec9}
@@ -2062,7 +2069,7 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 .ddh .ddh__sheet--sys .ddh__sy-fig{align-self:center}
 .ddh .ddh__sheet--sys .ddh__sy-lede{margin:.2em 0 0;font-size:clamp(14.5px,1.05vw,16px)}
 .ddh .ddh__sheet--sys .ddh__sy-reg{padding:12px 18px 14px}
-.ddh .ddh__sheet--sys .ddh__sy-rows>li{padding:7px 4px 7px 0}
+.ddh .ddh__sheet--sys .ddh__sy-rows>li{padding:5px 4px 5px 0}
 .ddh .ddh__sheet--sys .ddh__sy-band{padding:14px 22px}
 }
 @container ddsh (max-height:700px){
@@ -2079,6 +2086,9 @@ html:has(.ddh[data-ddh-cards][data-ddh-state=head]:not([data-ddh-noorb])) .ins-t
 @media (hover:hover){
 .ddh .ddh__sy-rows>li:hover,.ddh .ddh__sy-reg:hover{box-shadow:inset 3px 0 0 #25799f}
 .ddh .ddh__sy-rows>li:hover{background:rgba(37,121,159,.07)}
+.ddh .ddh__sy-main:has(.ddh__sy-eq li:nth-child(1):hover) :is(.d-top,.d-cov,.d-dim,.d-hgt){opacity:.28}
+.ddh .ddh__sy-main:has(.ddh__sy-eq li:nth-child(2):hover) :is(.d-core,.d-cov,.d-dim,.d-hgt){opacity:.28}
+.ddh .ddh__sy-main:has(.ddh__sy-eq li:nth-child(3):hover) :is(.d-cov,.d-dim,.d-hgt){opacity:.28}
 .ddh .ddh__sy-main:has(.ddh__sy-reg:hover) :is(.d-top,.d-cov,.d-dim,.d-hgt){opacity:.28}
 .ddh .ddh__sy-main:has(.ddh__sy-rows>li:nth-child(1):hover) :is(.d-core,.d-cov,.d-dim,.d-hgt){opacity:.28}
 .ddh .ddh__sy-main:has(.ddh__sy-rows>li:nth-child(2):hover) :is(.d-cov,.d-dim,.d-hgt){opacity:.28}
