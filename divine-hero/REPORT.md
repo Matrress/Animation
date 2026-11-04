@@ -1019,6 +1019,11 @@ Owner brief (Bulgarian, with a screenshot of the card): in the Dual Plush point 
 ## 1.20.4 - new product link for Botanic
 Owner request: the Botanic model URL changed. The link is now https://divinedunlop.com/products/botanic-original-100-organic-latex-mattress-dunlop (the model preview, the Firmness Regulation list and the model selector card; the old `...-831592302` link is gone from the release). Nothing else changed: hero.css and hero.js are byte-identical to 1.20.3 apart from the version string. The Botanic Dual Plush links are different products and are untouched.
 
+## 1.20.11: toppers shown as their own product in "Full customisation means luxury" (2026-11-04) - PREVIEW, awaiting owner approval
+- Under the drawing: three things we make side by side, each with its own small picture: Latex mattress (on its own), Latex topper (on its own), Dual Plush system (both together). The row "Mattresses and toppers" says both are made to order, each on its own, and that within a model they also work together as the Dual Plush system. Size and height rows now say they apply to mattresses and toppers.
+- Hovering one of the three lights up the matching slab in the drawing (CSS only). New texts (2 keys plus 4 changed) in 9 languages, machine translations.
+- Checked in Chromium: 1440x900 fits without scrolling, 1366x1024, 1180x820 touch, 390 phone; German and Greek scroll a little at 1440x900.
+
 ## 1.20.10: "Full customisation means luxury" - covers as one line, tracked label across the card, hover lights the drawing (2026-11-04) - PREVIEW, awaiting owner approval
 - The four covers are one line of names (100% Organic Cotton · Cotton & Wool · Aloe Vera Cotton · Cashmere with Silver Ions) instead of four swatches; the freed height makes the regulated block, the five choices and their text larger and stronger.
 - "EVERYTHING ELSE IS YOUR CHOICE" is bold caps with space after every letter, spanning the whole width of the Firmness Regulation card above it. CSS only: the tracking is set per language (measured) so each translation fills the card; on phones it is a normal tracked line.
