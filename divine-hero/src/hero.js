@@ -1,9 +1,9 @@
-/*! Divine DunlopDreams Hero 1.20.12 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
+/*! Divine DunlopDreams Hero 1.20.13 | vanilla, no dependencies | window.DDHero = {init, destroy, boot, version} */
 (function (w, d) {
   'use strict';
   if (w.DDHero && w.DDHero.boot) { w.DDHero.boot(); return; } // script re-executed by a section re-render
 
-  var VERSION = '1.20.12';
+  var VERSION = '1.20.13';
   var TRANSLATED = /(^|\s)translated-(ltr|rtl)(\s|$)/;
   // Proximity radii (fraction of artwork width) and the back-zone rectangle — unchanged from v26.
   var R = { shoulder: .075, back: .06, zones: .085, head: .085, system: .09, firmness: .062, temperature: .062, sizes: .055, weight: .06, night: .07, bio: .055 };
@@ -912,8 +912,30 @@
     var inst = find(root); if (inst) inst.destroy();
   }
 
+  // 1.20.13: the stylesheet is the section's own <link>. If it is missing or did not apply (Instant Site re-rendering the section,
+  // a flaky connection) the section would show as bare HTML. So: look for the marker the stylesheet sets, fetch the file again from
+  // the folder hero.js lives in (twice at most, the second time with a changing query), and if it still does not apply hide the bare
+  // section (the inline rule in the section: .ddh[data-ddh-nocss]) instead of showing it unstyled.
+  var cssBase = (function () {
+    var s = d.currentScript, u = s && s.src;
+    if (!u) { var all = d.querySelectorAll('script[src*="hero.js"]'); u = all.length ? all[all.length - 1].src : ''; }
+    return u.replace(/hero\.js(\?.*)?$/, '');
+  })();
+  var cssTries = 0;
+  function cssOk(el) { try { return w.getComputedStyle(el).getPropertyValue('--ddh-css').replace(/\s/g, '') === '1'; } catch (e) { return true; } }
+  function ensureCss(root) {
+    if (cssOk(root)) { root.removeAttribute('data-ddh-nocss'); return; }
+    if (cssTries >= 2) { root.setAttribute('data-ddh-nocss', ''); return; }
+    if (!cssBase || root.hasAttribute('data-ddh-csswait')) return;
+    root.setAttribute('data-ddh-csswait', '1'); cssTries++;
+    var l = d.createElement('link'); l.rel = 'stylesheet'; l.href = cssBase + 'hero.css' + (cssTries > 1 ? '?r=' + Date.now() : '');
+    l.onload = l.onerror = function () { l.onload = l.onerror = null; w.setTimeout(function () { root.removeAttribute('data-ddh-csswait'); boot(); }, 60); };
+    (d.head || d.documentElement).appendChild(l);
+  }
+
   // Idempotent: drops instances whose section was removed by Instant Site, initialises new ones.
   function boot() {
+    [].forEach.call(d.querySelectorAll('.ddh'), ensureCss);
     instances.slice().forEach(function (inst) { if (!inst.root.isConnected) inst.destroy(); else if (inst.layout) inst.layout(); });
     [].forEach.call(d.querySelectorAll('.ddh'), init);
   }

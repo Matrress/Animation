@@ -1019,6 +1019,12 @@ Owner brief (Bulgarian, with a screenshot of the card): in the Dual Plush point 
 ## 1.20.4 - new product link for Botanic
 Owner request: the Botanic model URL changed. The link is now https://divinedunlop.com/products/botanic-original-100-organic-latex-mattress-dunlop (the model preview, the Firmness Regulation list and the model selector card; the old `...-831592302` link is gone from the release). Nothing else changed: hero.css and hero.js are byte-identical to 1.20.3 apart from the version string. The Botanic Dual Plush links are different products and are untouched.
 
+## 1.20.13: the section can no longer show up as bare, unstyled HTML (2026-11-04) - PREVIEW, awaiting owner approval
+- Owner report (iPad Safari, 4 Nov 10:18): after pasting the 1.20.12 candidate the whole hero showed as raw HTML (headline text, "Explore the sleep system" as plain text, full-size pictures, no points). The script had run (the invitation button was un-hidden) but the stylesheet had not applied.
+- Checked from here: hero.css, hero.js, sheets and assets of 1.20.12 all answer HTTP 200 at the pinned address, in gzip, brotli and plain, byte-identical to the build; the same pasted code renders correctly in Chromium against the real CDN. So the files were fine; the stylesheet did not reach or apply on that page load (cause not reproducible here: no Safari available).
+- Fix (loading only, no look or content change): hero.css sets a marker (--ddh-css:1); hero.js checks it at start and on every Instant Site re-render; if it is missing it fetches hero.css again from the folder hero.js was loaded from (twice at most, the second time with a changing query); if it still does not apply, the bare section is hidden (.ddh[data-ddh-nocss], an inline rule in the section) instead of showing raw HTML. Tests: tests/cssfallback.mjs (normal load requests the stylesheet once; first request failing recovers; never arriving hides the section).
+- All earlier features untouched (same CSS and HTML as 1.20.12 apart from the marker and the inline hide rule).
+
 ## 1.20.12: "Everything else is your choice" stronger (2026-11-04) - PREVIEW, awaiting owner approval
 - The spaced caps label is larger (up to 22 px), darker and set with more presence; its tracking is re-measured per language so it still spans the full width of the Firmness Regulation card. No other change.
 - Checked in Chromium: English, German, Italian, Greek at 1440x900; window tests 30/30; accessibility 0 violations.
