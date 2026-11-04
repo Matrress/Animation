@@ -2,7 +2,7 @@
 // copy of the stable Hero 1.20.4 jsDelivr section with the intro additions inserted) and a local preview page.
 // usage: node tools/build.mjs            (JSDELIVR_REF=<sha> to pin the candidate's intro files to a commit)
 import fs from 'node:fs'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
-const VER = '0.4.1-dev', HERO = '1.20.8', HERO_SHA = '20e6b5903589702a3dd33c881cefe9ba95421ab7';
+const VER = '0.4.1-dev', HERO = '1.20.9', HERO_SHA = 'cde36fa725e4ec89cac58ea4eda5fda0dde600c2';
 const here = path.dirname(new URL(import.meta.url).pathname), mod = path.join(here, '..'), repo = path.join(mod, '..');
 const rel = path.join(mod, 'release', VER);
 fs.mkdirSync(path.join(rel, 'assets'), { recursive: true });
