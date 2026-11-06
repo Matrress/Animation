@@ -1,0 +1,177 @@
+/* Divine DunlopDreams · Dunlop Baby & Junior · product description
+   Namespace: .dbj (every selector starts with it; no global rules).
+   build.py adds !important to every declaration so Ecwid's id-prefixed
+   storefront CSS cannot override the layout. No JavaScript is used. */
+
+@font-face{font-family:"DBJChillax";font-style:normal;font-weight:400;font-display:swap;src:url({{FONT400}}) format("woff2")}
+@font-face{font-family:"DBJChillax";font-style:normal;font-weight:600;font-display:swap;src:url({{FONT600}}) format("woff2")}
+
+/* ---------- tokens ---------- */
+.dbj{
+  --navy-900:#001B33; --navy-800:#002A4F; --navy-700:#003A68; --blue-600:#004F80; --blue-500:#006591;
+  --sky-200:#B2E3FB; --sky-100:#E3F4FD; --turq-300:#91E8F1;
+  --grey-200:#D3DAE6; --grey-100:#E4E8F0; --grey-50:#F4F6FA; --white:#FFFFFF;
+  --ink:#0B1726; --ink-2:#34465C; --cream:#F3EDE3; --cream-edge:#D8CDBB;
+  --r-lg:22px; --r-md:16px; --r-sm:10px;
+  --s1:8px; --s2:12px; --s3:16px; --s4:24px; --s5:32px; --s6:48px; --s7:72px;
+  font-family:"DBJChillax",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink); background:var(--white);
+  font-size:17px; line-height:1.6; font-weight:400; text-align:left;
+  max-width:1180px; margin:0 auto; padding:0;
+  -webkit-text-size-adjust:100%; text-rendering:optimizeLegibility;
+}
+.dbj *,.dbj *::before,.dbj *::after{box-sizing:border-box}
+.dbj h2,.dbj h3,.dbj h4,.dbj p,.dbj ul,.dbj ol,.dbj li,.dbj figure,.dbj dl,.dbj dt,.dbj dd{margin:0;padding:0;font-family:inherit;text-transform:none;letter-spacing:normal;color:inherit;background:none;border:0;text-align:left}
+.dbj ul,.dbj ol,.dbj li{list-style:none}
+.dbj p,.dbj li,.dbj dd,.dbj dt{font-size:inherit;line-height:inherit}
+.dbj li::before,.dbj li::marker{content:none}
+.dbj img{display:block;max-width:100%;height:auto;border:0;border-radius:0;box-shadow:none;margin:0}
+.dbj a{color:var(--blue-500);text-decoration:underline;text-underline-offset:3px;font-weight:600}
+.dbj strong,.dbj b{font-weight:600;color:inherit}
+
+/* ---------- type ---------- */
+.dbj .dbj-label{display:inline-block;font-size:12.5px;line-height:1.2;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-500)}
+.dbj .dbj-h1{font-size:clamp(30px,4.2vw,46px);line-height:1.1;font-weight:600;letter-spacing:-.012em;color:var(--navy-700)}
+.dbj .dbj-h2{font-size:clamp(26px,3.2vw,36px);line-height:1.15;font-weight:600;letter-spacing:-.01em;color:var(--navy-700)}
+.dbj .dbj-h3{font-size:20px;line-height:1.3;font-weight:600;color:var(--navy-800)}
+.dbj .dbj-lead{font-size:clamp(18px,1.6vw,20px);line-height:1.55;color:var(--ink-2);max-width:62ch}
+.dbj .dbj-p{font-size:17px;line-height:1.65;color:var(--ink-2);max-width:68ch}
+.dbj .dbj-small{font-size:15px;line-height:1.55;color:var(--ink-2)}
+
+/* ---------- section rhythm ---------- */
+.dbj .dbj-sec{padding:var(--s7) var(--s4);border-top:1px solid var(--grey-100)}
+.dbj .dbj-sec:first-child{border-top:0}
+.dbj .dbj-head{display:flex;flex-direction:column;gap:var(--s2);margin-bottom:var(--s5)}
+.dbj .dbj-head .dbj-lead,.dbj .dbj-head .dbj-p{margin-top:var(--s1)}
+.dbj .dbj-index{font-size:12.5px;font-weight:600;letter-spacing:.14em;color:var(--ink-2);text-transform:uppercase}
+
+/* ---------- A · intro ---------- */
+.dbj .dbj-hero{display:grid;grid-template-columns:1fr;gap:var(--s5);align-items:center}
+.dbj .dbj-hero-media{background:var(--grey-50);border-radius:var(--r-lg);overflow:hidden}
+.dbj .dbj-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--s2);margin-top:var(--s5)}
+.dbj .dbj-fact{background:var(--white);border:1px solid var(--grey-200);border-radius:var(--r-md);padding:var(--s3) var(--s3) 14px;display:flex;flex-direction:column;gap:6px;border-top:3px solid var(--navy-700)}
+.dbj .dbj-fact-v{font-size:22px;line-height:1.15;font-weight:600;color:var(--navy-700)}
+.dbj .dbj-fact-k{font-size:14.5px;line-height:1.4;color:var(--ink-2)}
+
+/* ---------- B · construction (image with numbered points) ---------- */
+.dbj .dbj-build{display:grid;grid-template-columns:1fr;gap:var(--s5);align-items:start}
+.dbj .dbj-plate{position:relative;background:var(--grey-50);border-radius:var(--r-lg);overflow:hidden}
+.dbj .dbj-plate-in{position:relative;transform:scale(1.22);transform-origin:50% 56%}
+.dbj .dbj-pin{position:absolute;left:var(--x);top:var(--y);width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:var(--navy-700);color:var(--white);font-size:12.5px;font-weight:600;line-height:26px;text-align:center;box-shadow:0 0 0 4px rgba(255,255,255,.85)}
+.dbj .dbj-steps{display:grid;gap:var(--s2)}
+.dbj .dbj-step{display:grid;grid-template-columns:30px 1fr;gap:var(--s3);padding:var(--s3);border:1px solid var(--grey-200);border-radius:var(--r-md);background:var(--white)}
+.dbj .dbj-step-n{width:30px;height:30px;border-radius:50%;background:var(--navy-700);color:var(--white);font-size:14px;font-weight:600;line-height:30px;text-align:center}
+.dbj .dbj-step .dbj-h3{font-size:18px}
+.dbj .dbj-step .dbj-small{margin-top:4px}
+
+/* ---------- C · cards ---------- */
+.dbj .dbj-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:var(--s3)}
+.dbj .dbj-card{background:var(--grey-50);border-radius:var(--r-md);padding:var(--s4);display:flex;flex-direction:column;gap:var(--s2);border-bottom:3px solid var(--blue-500)}
+.dbj .dbj-card dl{display:grid;gap:10px;margin-top:var(--s1)}
+.dbj .dbj-card dt{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-500)}
+.dbj .dbj-card dd{font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:2px}
+.dbj .dbj-card--sky{background:var(--sky-100);border-bottom-color:var(--navy-700)}
+
+/* ---------- D · heights ---------- */
+.dbj .dbj-heights{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);align-items:end;background:var(--grey-50);border-radius:var(--r-lg);padding:var(--s5) var(--s4) var(--s4)}
+.dbj .dbj-hcol{display:flex;flex-direction:column;gap:var(--s2)}
+.dbj .dbj-slab{position:relative;height:calc(var(--h) * 7px);background:var(--cream);border:1px solid var(--cream-edge);border-radius:12px 12px 10px 10px;box-shadow:inset 0 9px 0 0 #FBF8F2}
+.dbj .dbj-slab::after{content:"";position:absolute;left:10px;right:10px;top:12px;height:2px;border-radius:2px;background:#FFFFFF;opacity:.9}
+.dbj .dbj-hv{font-size:26px;line-height:1.1;font-weight:600;color:var(--navy-700)}
+.dbj .dbj-hv span{font-size:15px;font-weight:400;color:var(--ink-2);margin-left:6px}
+.dbj .dbj-hnote{font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.dbj .dbj-ruler{display:flex;gap:var(--s2);align-items:center;margin-top:var(--s3);font-size:14.5px;color:var(--ink-2)}
+.dbj .dbj-ruler::before{content:"";flex:0 0 36px;height:2px;background:var(--turq-300);border-radius:2px}
+.dbj .dbj-photo{margin-top:var(--s4);border-radius:var(--r-lg);overflow:hidden;background:#F3ECE6}
+
+/* ---------- E · sizes ---------- */
+.dbj .dbj-ranges{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--s3)}
+.dbj .dbj-range{border:1px solid var(--grey-200);border-radius:var(--r-lg);padding:var(--s4);background:var(--white)}
+.dbj .dbj-range-top{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s2);padding-bottom:var(--s3);margin-bottom:var(--s3);border-bottom:2px solid var(--turq-300)}
+.dbj .dbj-chips{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s2)}
+.dbj .dbj-chip{border-radius:var(--r-sm);background:var(--grey-50);border:1px solid var(--grey-100);padding:12px 14px;font-size:18px;font-weight:600;color:var(--navy-700);line-height:1.2}
+.dbj .dbj-chip small{display:block;font-size:13.5px;font-weight:400;color:var(--ink-2);margin-top:3px}
+.dbj .dbj-measure{margin-top:var(--s4);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--s3)}
+.dbj .dbj-mstep{background:var(--sky-100);border-radius:var(--r-md);padding:var(--s3) var(--s4)}
+.dbj .dbj-mstep .dbj-label{color:var(--navy-700)}
+.dbj .dbj-mstep p{font-size:16px;line-height:1.5;color:var(--ink);margin-top:6px}
+
+/* ---------- F · firmness ---------- */
+.dbj .dbj-firm{display:grid;grid-template-columns:1fr;gap:var(--s4);border:1px solid var(--grey-200);border-radius:var(--r-lg);padding:var(--s5) var(--s4)}
+.dbj .dbj-scale{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.dbj .dbj-scale span{display:block;text-align:center;padding:12px 6px;border-radius:var(--r-sm);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:var(--grey-50);color:var(--ink-2);border:1px solid var(--grey-100)}
+.dbj .dbj-scale .dbj-on{background:var(--navy-700);color:var(--white);border-color:var(--navy-700)}
+.dbj .dbj-tag{display:inline-block;align-self:flex-start;padding:6px 12px;border-radius:999px;background:var(--sky-100);color:var(--navy-700);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+
+/* ---------- G · certification modules ---------- */
+.dbj .dbj-certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--s3)}
+.dbj .dbj-cert{border:1px dashed var(--grey-200);border-radius:var(--r-md);padding:var(--s4);display:flex;flex-direction:column;gap:var(--s1);background:var(--white)}
+.dbj .dbj-cert-scope{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+
+/* ---------- H · care ---------- */
+.dbj .dbj-care{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s3)}
+.dbj .dbj-care-item{border-left:3px solid var(--blue-500);padding:var(--s1) 0 var(--s1) var(--s3)}
+.dbj .dbj-care-item .dbj-small{margin-top:4px}
+.dbj .dbj-notice{margin-top:var(--s4);background:var(--grey-50);border-radius:var(--r-md);padding:var(--s4);display:grid;gap:6px;border-left:3px solid var(--navy-700)}
+
+/* ---------- I · specs (native details) ---------- */
+.dbj .dbj-acc{border-top:1px solid var(--grey-200)}
+.dbj .dbj-acc details{border-bottom:1px solid var(--grey-200)}
+.dbj .dbj-acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:var(--s3);padding:20px 4px;font-size:18px;font-weight:600;color:var(--navy-700);line-height:1.3}
+.dbj .dbj-acc summary::-webkit-details-marker{display:none}
+.dbj .dbj-acc summary::after{content:"+";flex:0 0 32px;height:32px;border-radius:50%;border:1px solid var(--grey-200);text-align:center;line-height:30px;font-size:20px;font-weight:400;color:var(--blue-500)}
+.dbj .dbj-acc details[open] summary::after{content:"\2212"}
+.dbj .dbj-acc summary:focus-visible{outline:2px solid var(--blue-500);outline-offset:2px;border-radius:6px}
+.dbj .dbj-acc .dbj-acc-body{padding:0 4px 24px}
+.dbj .dbj-table{display:grid;grid-template-columns:minmax(130px,34%) 1fr;border:1px solid var(--grey-100);border-radius:var(--r-md);overflow:hidden}
+.dbj .dbj-table dt,.dbj .dbj-table dd{padding:12px 16px;border-top:1px solid var(--grey-100);font-size:16px;line-height:1.45}
+.dbj .dbj-table dt{background:var(--grey-50);font-weight:600;color:var(--navy-800)}
+.dbj .dbj-table dd{color:var(--ink)}
+.dbj .dbj-table dt:first-of-type,.dbj .dbj-table dd:first-of-type{border-top:0}
+
+/* ---------- J · summary ---------- */
+.dbj .dbj-close{background:var(--grey-50);border-radius:var(--r-lg);padding:var(--s6) var(--s4);display:grid;gap:var(--s4);border-top:3px solid var(--turq-300)}
+.dbj .dbj-close-media{border-radius:var(--r-md);overflow:hidden;background:var(--white)}
+.dbj .dbj-close-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--s2)}
+.dbj .dbj-close-cube{background:var(--white);border-radius:var(--r-md);padding:var(--s3);border:1px solid var(--grey-100)}
+.dbj .dbj-close-cube b{display:block;font-size:17px;color:var(--navy-700)}
+.dbj .dbj-close-cube span{display:block;font-size:15px;color:var(--ink-2);margin-top:2px}
+
+/* ---------- position / size classes (no inline styles: Ecwid may strip them) ---------- */
+.dbj .dbj-head--flush{margin-bottom:0}
+.dbj .dbj-firm-side{display:grid;gap:var(--s3);align-content:center}
+.dbj .dbj-pin--1{--x:66%;--y:33%}
+.dbj .dbj-pin--2{--x:61.5%;--y:54%}
+.dbj .dbj-pin--3{--x:46%;--y:64%}
+.dbj .dbj-pin--4{--x:31%;--y:58%}
+.dbj .dbj-slab--10{--h:10}
+.dbj .dbj-slab--12{--h:12}
+.dbj .dbj-slab--14{--h:14}
+
+/*R*//* ---------- review marks (prototype only; build removes them) ---------- */
+.dbj .dbj-rv{display:block;margin-top:var(--s2);padding:10px 14px;border-radius:var(--r-sm);background:#FFF6E0;border:1px dashed #C99A2E;color:#5A4210;font-size:14px;line-height:1.45}
+.dbj .dbj-rv::before{content:"REVIEW  ";font-weight:600;letter-spacing:.12em}
+/*/R*/
+
+/* ---------- wider screens ---------- */
+@media (min-width:860px){
+  .dbj .dbj-sec{padding:96px var(--s5)}
+  .dbj .dbj-build{grid-template-columns:1.25fr 1fr;gap:var(--s6)}
+  .dbj .dbj-firm{grid-template-columns:1fr 1fr;gap:var(--s6);padding:var(--s6)}
+  .dbj .dbj-close{padding:var(--s7) var(--s6)}
+  .dbj .dbj-heights{gap:var(--s5);padding:var(--s6) var(--s6) var(--s5)}
+  .dbj .dbj-slab{height:calc(var(--h) * 9px)}
+}
+@media (max-width:520px){
+  .dbj{font-size:16.5px}
+  .dbj .dbj-sec{padding:var(--s6) var(--s3)}
+  .dbj .dbj-heights{padding:var(--s4) var(--s3) var(--s3);gap:var(--s2)}
+  .dbj .dbj-hv{font-size:21px}
+  .dbj .dbj-hv span{display:block;margin:2px 0 0}
+  .dbj .dbj-plate-in{transform:scale(1.4);transform-origin:50% 58%}
+  .dbj .dbj-pin{width:21px;height:21px;margin:-10.5px 0 0 -10.5px;line-height:21px;font-size:11px;box-shadow:0 0 0 3px rgba(255,255,255,.85)}
+  .dbj .dbj-close-media img{transform:scale(1.35);transform-origin:50% 55%}
+  .dbj .dbj-table{grid-template-columns:1fr}
+  .dbj .dbj-table dd{border-top:0;padding-top:0}
+  .dbj .dbj-chips{grid-template-columns:1fr 1fr}
+}
