@@ -1,8 +1,10 @@
-/* Divine DunlopDreams · mattress selector (dbs) 0.8.0
+/* Divine DunlopDreams · mattress selector and presentation (dbs) 0.9.0
  *
- * Turns a static, readable block of types, sizes and heights (marked with data-dbs) into a visual selector:
- * buttons, a live dimensioned drawing, centimetres and inches, and a summary. The choice is copied into
- * Ecwid's own option dropdowns, so Ecwid keeps the price, the cart and the checkout.
+ * Turns a static, readable block (marked with data-dbs) into two equal cubes side by side: the selection on the
+ * left (buttons for type, size and height, a summary) and the presentation on the right (tabs and panels; pressing
+ * a selection button opens the matching panel, e.g. a size opens the dimensioned drawing). Everything is in
+ * centimetres and inches. The choice is copied into Ecwid's own option dropdowns, so Ecwid keeps the price,
+ * the cart and the checkout.
  *
  * Safe by design:
  *  - acts only on elements marked [data-dbs]; every element it creates lives inside them;
@@ -15,6 +17,7 @@
  *     .dbs-group[data-group="range"]  li[data-set="cot"]
  *     .dbs-group[data-group="size"]   ul[data-sizes="cot"]  li[data-range="cot" data-w="60" data-l="120"]  (cm)
  *     .dbs-group[data-group="height"] li[data-h="12"]                                                       (cm)
+ *     [data-panel="size|height|detail|..." data-title="Size"]  articles shown in the presentation cube, as tabs
  * Each li holds <span class="dbs-cm"> and <span class="dbs-in"> text. Any model with width x length x height works.
  */
 (function () {
@@ -136,7 +139,9 @@
       units.appendChild(b);
     });
     head.appendChild(units);
-    root.insertBefore(head, root.firstChild);
+    var left = $('.dbs-controls', root) || root;
+    left.className += ' dbs-cube dbs-sel';
+    left.insertBefore(head, left.firstChild);
 
     /* the drawing */
     var stageWrap = el('div', 'dbs-stage-wrap');
@@ -151,16 +156,46 @@
     stageWrap.appendChild(stage);
     var legend = el('p', 'dbs-leg', 'Dashed outline: the largest size, ' + big.w + ' × ' + big.l + ' cm (' + inch(big.w) + ' × ' + inch(big.l) + ' in). Drawn to scale.');
     stageWrap.appendChild(legend);
-    root.appendChild(stageWrap);
 
     /* summary */
     var sum = el('div', 'dbs-sum'); sum.setAttribute('aria-live', 'polite');
     var sumK = el('p', 'dbs-sk', 'Your choice'), sumV = el('p', 'dbs-sv'), sumV2 = el('p', 'dbs-sv2'), sumSt = el('p', 'dbs-st');
     var sumRow = el('div', 'dbs-row'), sumPrice = el('p', 'dbs-price'), cta = el('button', 'dbs-cta', 'Add to bag'); cta.type = 'button';
+    var see = el('button', 'dbs-see'); see.type = 'button'; see.hidden = true;
     [sumK, sumV, sumV2, sumSt].forEach(function (n) { sum.appendChild(n); });
     sumRow.appendChild(sumPrice); sumRow.appendChild(cta); sum.appendChild(sumRow);
-    root.appendChild(sum);
+    left.appendChild(sum);
     cta.addEventListener('click', function () { var b = nativeAddToBag(root); if (b) { b.click(); } });
+
+    /* the presentation cube: tabs and panels */
+    var panels = $$('[data-panel]', root).map(function (p, i) { return { el: p, key: p.getAttribute('data-panel'), title: p.getAttribute('data-title') || p.getAttribute('data-panel'), i: i }; });
+    var pres = el('div', 'dbs-pres dbs-cube'), tabs = el('div', 'dbs-tabs'), pbody = el('div', 'dbs-pbody');
+    tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', 'Presentation');
+    var uid = 'dbs' + Math.round(Math.random() * 1e6);
+    panels.forEach(function (pn) {
+      var t = el('button', 'dbs-tab', pn.title); t.type = 'button'; t.setAttribute('role', 'tab'); t.id = uid + '-t' + pn.i; t.setAttribute('aria-controls', uid + '-p' + pn.i);
+      pn.el.id = uid + '-p' + pn.i; pn.el.setAttribute('role', 'tabpanel'); pn.el.setAttribute('aria-labelledby', t.id);
+      t.addEventListener('click', function () { openPanel(pn.key); });
+      t.addEventListener('keydown', function (e) {
+        var k = e.key || e.keyCode, d = 0;
+        if (k === 'ArrowRight' || k === 39) { d = 1; } else if (k === 'ArrowLeft' || k === 37) { d = -1; } else if (k === 'Home') { d = -99; } else if (k === 'End') { d = 99; } else { return; }
+        var n = d === -99 ? 0 : d === 99 ? panels.length - 1 : (pn.i + d + panels.length) % panels.length;
+        e.preventDefault(); panels[n].tab.focus(); openPanel(panels[n].key);
+      });
+      pn.tab = t; tabs.appendChild(t); pbody.appendChild(pn.el);
+    });
+    pres.appendChild(tabs); pres.appendChild(pbody);
+    if (panels.length) { root.appendChild(pres); root.insertBefore(see, pres); }   /* phones: the button sits between the two cubes */
+    see.addEventListener('click', function () { try { pres.scrollIntoView(reduce ? undefined : { behavior: 'smooth', block: 'start' }); } catch (e3) { pres.scrollIntoView(); } });
+    function panelByKey(k) { for (var i = 0; i < panels.length; i++) { if (panels[i].key === k) { return panels[i]; } } return null; }
+    function openPanel(key) {
+      var found = panelByKey(key); if (!found) { return; }
+      see.hidden = false; see.textContent = 'See the ' + found.title.toLowerCase() + ' view';
+      panels.forEach(function (pn) { var on = pn === found; pn.el.hidden = !on; pn.tab.setAttribute('aria-selected', on ? 'true' : 'false'); pn.tab.tabIndex = on ? 0 : -1; });
+    }
+    var sizePanel = panelByKey('size');
+    if (sizePanel) { var after = $('.dbj-tt', sizePanel.el); sizePanel.el.insertBefore(stageWrap, after ? after.nextSibling : sizePanel.el.firstChild); }
+    else { (panels.length ? pres : left).appendChild(stageWrap); }
 
     /* geometry */
     var cur = { L: 0, W: 0, H: 0 };
@@ -227,6 +262,7 @@
       sizes.forEach(function (z) { z.btn.tabIndex = (z.li === state.size || (!sizeObj() && z === firstVisible)) ? 0 : -1; });
       heights.forEach(function (h, i) { var on = h.li === state.h; h.btn.setAttribute('aria-checked', on ? 'true' : 'false'); h.btn.tabIndex = (on || (!heightObj() && i === 0)) ? 0 : -1; });
 
+      $$('[data-ht]', root).forEach(function (n) { var hv = heightObj(); n.className = n.className.replace(/\s*is-on/, '') + (hv && +n.getAttribute('data-ht') === hv.h ? ' is-on' : ''); });
       var z = sizeObj() || firstOfRange(shown), h = heightObj() || heights[Math.min(1, heights.length - 1)];
       var pending = !sizeObj() || !heightObj();
       root.setAttribute('data-pending', pending ? 'true' : 'false');
@@ -275,6 +311,7 @@
       } else if (kind === 'size') { state.size = it.li; state.range = it.range || state.range; }
       else { state.h = it.li; }
       sync(); render();
+      openPanel(kind === 'height' ? 'height' : 'size');
     }
 
     /* events: click and arrow keys on every radio group */
@@ -302,11 +339,12 @@
       if (m) { sizes.forEach(function (z) { if ((m.a === z.w && m.b === z.l) || (m.a === z.l && m.b === z.w)) { state.size = z.li; state.range = z.range || state.range; changed = true; } }); }
       var hv = hs ? parseHeight(selectedText(hs)) : null;
       if (hv !== null) { heights.forEach(function (h) { if (h.h === hv) { state.h = h.li; changed = true; } }); }
-      if (changed) { state.synced = (sizeObj() && heightObj() && ss && hs) ? 'ok' : 'none'; if (state.synced === 'ok') { pricePoll(8); } render(); }
+      if (changed) { openPanel(m ? 'size' : 'height'); state.synced = (sizeObj() && heightObj() && ss && hs) ? 'ok' : 'none'; if (state.synced === 'ok') { pricePoll(8); } render(); }
     }
     document.addEventListener('change', function (e) { var t = e.target; if (t && t.tagName === 'SELECT' && t.closest && t.closest('.details-product-option')) { fromNative(); } }, true);
 
     root.className += ' dbs--on';
+    openPanel(panels.length ? panels[0].key : '');
     draw(big.l, big.w, heights[Math.min(1, heights.length - 1)].h);
     fromNative();
     render();
