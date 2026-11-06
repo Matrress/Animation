@@ -9,14 +9,15 @@ Usage: python3 build.py
 """
 import re, pathlib
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
+ASSET_VERSION = "0.1.0"                                     # images did not change
 ASSET_COMMIT = "c3cafc0705ba2ae2e9c8374bafa7ef7bed16bc63"   # commit that added release/0.1.0/assets
 FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"    # Chillax files already used by Hero 1.17.1 and Collection
 CDN = "https://cdn.jsdelivr.net/gh/Matrress/Animation@"
 FONT400 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-400.woff2"
 FONT600 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-600.woff2"
-REMOTE_ASSETS = f"{CDN}{ASSET_COMMIT}/divine-baby-junior/release/{VERSION}/assets/"
-LOCAL_ASSETS = f"../release/{VERSION}/assets/"
+REMOTE_ASSETS = f"{CDN}{ASSET_COMMIT}/divine-baby-junior/release/{ASSET_VERSION}/assets/"
+LOCAL_ASSETS = f"../release/{ASSET_VERSION}/assets/"
 
 IMAGES = {  # key: (file stem, width, height of the 1600 px file)
     "closed":  ("dunlop-baby-junior-latex-mattress-cotton-cover-closed", 1600, 800),
@@ -37,7 +38,8 @@ def build_css(src: str, keep_review: bool) -> str:
 
     def harden(m):
         sel, body = m.group(1), m.group(2)
-        if sel.strip().startswith("@font-face"):
+        s0 = sel.strip()
+        if s0.startswith("@font-face") or s0 in ("from", "to") or s0.endswith("%"):  # !important is invalid in @keyframes
             decls = [d.strip() for d in body.split(";") if d.strip()]
         else:
             decls = []
@@ -63,7 +65,7 @@ def build_html(src: str, assets: str, keep_review: bool) -> str:
         prio = ' fetchpriority="high"' if eager else ""
         return (f'<img src="{assets}{stem}-1600.webp" '
                 f'srcset="{assets}{stem}-800.webp 800w, {assets}{stem}-1600.webp 1600w" '
-                f'sizes="(min-width: 1180px) 620px, (min-width: 860px) 52vw, 100vw" '
+                f'sizes="(min-width: 1120px) 1080px, 100vw" '
                 f'width="{w}" height="{h}" alt="{alt}" '
                 f'loading="{"eager" if eager else "lazy"}" decoding="async"'
                 f'{prio}>')
