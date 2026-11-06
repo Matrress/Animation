@@ -33,6 +33,7 @@ body = re.sub(r"<!--DESC-->.*?<!--/DESC-->", lambda m: '<div class="product-deta
 body = body.replace("../release/0.1.0/assets/", "assets/").replace(
     "Prototype · unpublished draft · dashed boxes are review items, removed from the Ecwid code",
     "Preview · unpublished draft · not live · this is the code that would go into the Ecwid description")
+body = re.sub(r'<script src="\.\./release/([^"]+)"></script>', lambda m: "<script>" + (root / "release" / m.group(1)).read_text() + "</script>", body)
 page = f"""<title>Baby &amp; Junior Preview</title>
 <style>
 @font-face{{font-family:"DBJChillax";font-style:normal;font-weight:400;font-display:swap;src:url({f400}) format("woff2")}}
