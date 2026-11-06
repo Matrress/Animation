@@ -10,7 +10,7 @@ Usage: python3 build.py
 """
 import re, pathlib
 
-VERSION = "0.5.0"
+VERSION = "0.6.0"
 CDN = "https://cdn.jsdelivr.net/gh/Matrress/Animation@"
 FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"    # Chillax files already used by Hero 1.17.1 and Collection
 FONT400 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-400.woff2"
@@ -32,6 +32,10 @@ IMAGES = {
     "zip":    ("v2", "dunlop-baby-junior-cotton-cover-zip-detail", [340], 340, 220, "(min-width: 960px) 360px, 100vw"),
     "stack":  ("v2", "dunlop-baby-junior-heights-10-12-14-cm-stack", [700, 1060], 1060, 450, BIG),
 }
+
+# Bio Dunlop logo: the file already used by the 7 zones section, pinned to the commit that holds it (a copy is in src/assets)
+LOGO_REMOTE = f"{CDN}9d681f860c9dae7dd866236d6824f413443b8512/divine-home-discovery/assets/bio-dunlop.svg"
+LOGO_LOCAL = "../src/assets/bio-dunlop.svg"
 
 root = pathlib.Path(__file__).parent
 css_src = (root / "src/dbj.css").read_text()
@@ -85,6 +89,7 @@ def build_html(src: str, remote: bool, keep_review: bool) -> str:
                 f'loading="{"eager" if eager else "lazy"}" decoding="async"{prio}>')
 
     out = re.sub(r"\{\{IMG:(\w+)\|([^|]+)\|(\w+)\}\}", img, src)
+    out = out.replace("{{LOGO}}", LOGO_REMOTE if remote else LOGO_LOCAL)
     if keep_review:
         out = out.replace("<!--R-->", "").replace("<!--/R-->", "")
     else:
@@ -103,9 +108,8 @@ css = build_css(css_src, keep_review=True)
 prod_html = build_html(html_src, remote=True, keep_review=False)
 assert "dbj-rv" not in prod_html and "REVIEW" not in prod_html and "dbj-rv" not in css_prod
 assert "coir" not in prod_html.lower() and "coconut" not in prod_html.lower() and "coir" not in css_prod.lower()
-# palette guard: only white, cool greys and blues may appear (no warm, brown, pink or orange tones)
-ALLOWED = {"001B33", "002A4F", "003A68", "006591", "B2E3FB", "91E8F1", "D3DAE6", "E4E8F0", "F3F5F9", "FFFFFF", "FFF",
-           "0B1726", "4A5A6E", "0B4F85", "EEF2F7"}
+# palette guard: only the Bio Comfort white, cool greys and blues may appear (no dark, warm, brown, pink or orange tones)
+ALLOWED = {"003A68", "006591", "B2E3FB", "91E8F1", "D3DAE6", "E4E8F0", "F5F7FA", "E6F4FC", "FFFFFF", "FFF", "0B1726", "4A5A6E"}
 used = {h.upper().lstrip("#") for h in re.findall(r"#[0-9A-Fa-f]{3,8}\b", css_prod)}
 assert used <= ALLOWED, f"colours outside the palette: {sorted(used - ALLOWED)}"
 prod = (f"<!-- Divine DunlopDreams · Dunlop Baby & Junior description {VERSION} · scoped to .dbj · no JavaScript -->"

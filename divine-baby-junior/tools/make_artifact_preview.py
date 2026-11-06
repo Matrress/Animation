@@ -24,6 +24,8 @@ f600 = "data:font/woff2;base64," + b64(out / "chillax-600.woff2")
 prod = re.sub(r"https://cdn\.jsdelivr\.net/gh/Matrress/Animation@[0-9a-f]{40}/divine-hero/release/1\.17\.1/assets/chillax-400\.woff2", f400, prod)
 prod = re.sub(r"https://cdn\.jsdelivr\.net/gh/Matrress/Animation@[0-9a-f]{40}/divine-hero/release/1\.17\.1/assets/chillax-600\.woff2", f600, prod)
 prod = re.sub(r"https://cdn\.jsdelivr\.net/gh/Matrress/Animation@[0-9a-f]{40}/divine-baby-junior/release/0\.[12]\.0/assets/", "assets/", prod)
+prod = re.sub(r"https://cdn\.jsdelivr\.net/gh/Matrress/Animation@[0-9a-f]{40}/divine-home-discovery/assets/bio-dunlop\.svg", "assets/bio-dunlop.svg", prod)
+shutil.copy(root / "src/assets/bio-dunlop.svg", out / "assets" / "bio-dunlop.svg")
 assert "jsdelivr" not in prod
 css = re.search(r"/\* Prototype shell.*?\*/\n(.*?)</style>", proto, re.S).group(1)
 pdp = re.search(r'(<div class="proto-bar">.*?)<div class="product-details__description">', proto, re.S).group(1)
