@@ -1,0 +1,1 @@
+(function(d,u){if(window.__dbsLoader)return;window.__dbsLoader=1;var s=d.createElement('script');s.src=u;s.defer=true;d.head.appendChild(s)})(document,'https://cdn.jsdelivr.net/gh/Matrress/Animation@PENDING/divine-baby-junior/release/0.8.0/dbs.js');

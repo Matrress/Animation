@@ -134,6 +134,86 @@
 .dbj .dbj-final .dbj-logo{margin-top:0}
 .dbj .dbj-final .dbj-h2{margin-top:16px}
 
+/* ---------- selector (dbs): static list first, interactive when dbs.js has run ---------- */
+.dbj .dbs{margin-top:22px;background:var(--surf);border:1px solid var(--line-s);border-radius:var(--r-lg);padding:18px}
+.dbj .dbs [hidden]{display:none}
+.dbj .dbs-group + .dbs-group{margin-top:20px}
+.dbj .dbs-gl{font-size:12px;line-height:1.3;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong);margin-bottom:10px}
+.dbj .dbs-sl{font-size:13px;font-weight:600;color:var(--ink);margin:12px 0 8px}
+.dbj .dbs-list{display:grid;gap:8px}
+.dbj .dbs-list--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.dbj .dbs-list--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.dbj .dbs-list li{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line-f);border-radius:var(--r-sm);padding:12px 14px}
+.dbj .dbs-cm{display:block;font-size:16.5px;line-height:1.25;font-weight:600;color:var(--ink)}
+.dbj .dbs-in{display:block;font-size:13.5px;line-height:1.3;color:var(--ink-s);margin-top:2px}
+.dbj .dbs-sub{display:block;font-size:13.5px;line-height:1.3;color:var(--ink-s);margin-top:2px}
+.dbj .dbs-fixed{font-size:15px;line-height:1.5;color:var(--ink-s);margin-top:18px}
+.dbj .dbs-fixed b{color:var(--ink);font-weight:600}
+.dbj .dbs-head,.dbj .dbs-stage-wrap,.dbj .dbs-sum{display:none}
+
+/* interactive state */
+.dbj .dbs--on{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;grid-template-areas:"head" "stage" "controls" "sum"}
+.dbj .dbs--on .dbs-head{display:flex;grid-area:head}
+.dbj .dbs--on .dbs-stage-wrap{display:block;grid-area:stage}
+.dbj .dbs--on .dbs-controls{grid-area:controls}
+.dbj .dbs--on .dbs-sum{display:block;grid-area:sum}
+.dbj .dbs--on .dbs-sl{display:none}
+.dbj .dbs--on .dbs-list li{background:none;border:0;padding:0;display:block}
+.dbj .dbs-head{align-items:center;justify-content:space-between;gap:12px}
+.dbj .dbs-ht{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong)}
+.dbj .dbs-units{display:inline-flex;gap:2px;background:#fff;border:1px solid var(--line-s);border-radius:999px;padding:3px}
+.dbj .dbs-u{appearance:none;border:0;background:none;color:var(--ink);font:inherit;font-size:13.5px;font-weight:600;line-height:1;padding:9px 14px;border-radius:999px;cursor:pointer;min-height:36px}
+.dbj .dbs-u[aria-checked="true"]{background:var(--strong);color:#fff}
+
+/* radio buttons */
+.dbj .dbs-btn{appearance:none;display:flex;flex-direction:column;justify-content:center;width:100%;min-height:58px;margin:0;text-align:left;font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line-s);border-radius:var(--r-sm);padding:11px 14px;cursor:pointer;transition:border-color .2s ease,background-color .2s ease,color .2s ease,transform .2s ease}
+.dbj .dbs-btn:hover{border-color:var(--ink)}
+.dbj .dbs-btn:active{transform:scale(.98)}
+.dbj .dbs-btn:focus-visible,.dbj .dbs-u:focus-visible,.dbj .dbs-cta:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.dbj .dbs-btn[aria-checked="true"]{background:var(--strong);border-color:var(--strong);color:#fff}
+.dbj .dbs-btn[aria-checked="true"] .dbs-cm{color:#fff}
+.dbj .dbs-btn[aria-checked="true"] .dbs-in,.dbj .dbs-btn[aria-checked="true"] .dbs-sub{color:rgba(255,255,255,.88)}
+.dbj .dbs-glyph{display:block;width:100%;max-width:56px;margin:0 0 8px;border:1px solid var(--ink);border-radius:5px;background:#fff;box-sizing:border-box}
+.dbj .dbs-btn[aria-checked="true"] .dbs-glyph{border-color:#fff;background:var(--strong)}
+.dbj .dbs-list--3 .dbs-btn{min-height:0}
+
+/* inches first: swap the two lines everywhere */
+.dbj .dbs[data-unit="in"] .dbs-btn .dbs-in,.dbj .dbs[data-unit="in"] .dbs-lab .dbs-in{order:1;font-size:16.5px;font-weight:600;color:var(--ink);margin:0}
+.dbj .dbs[data-unit="in"] .dbs-btn .dbs-cm,.dbj .dbs[data-unit="in"] .dbs-lab .dbs-cm{order:2;font-size:13.5px;font-weight:400;color:var(--ink-s);margin-top:2px}
+.dbj .dbs[data-unit="in"] .dbs-btn[aria-checked="true"] .dbs-in{color:#fff}
+.dbj .dbs[data-unit="in"] .dbs-btn[aria-checked="true"] .dbs-cm{color:rgba(255,255,255,.88)}
+.dbj .dbs[data-unit="in"] .dbs-lab .dbs-in{font-size:13px}
+.dbj .dbs[data-unit="in"] .dbs-lab .dbs-cm{font-size:11.5px}
+
+/* the drawing */
+.dbj .dbs-stage{position:relative;aspect-ratio:640 / 380;background:#fff;border:1px solid var(--line-f);border-radius:var(--r);overflow:hidden}
+.dbj .dbs-svg{position:absolute;left:0;top:0;width:100%;height:100%}
+.dbj .dbs-ft{fill:#fff;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round}
+.dbj .dbs-fr{fill:var(--surf);stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round}
+.dbj .dbs-fl{fill:var(--sky);fill-opacity:.55;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round}
+.dbj .dbs-quilt{fill:none;stroke:var(--ink);stroke-opacity:.16;stroke-width:1}
+.dbj .dbs-ghost{fill:none;stroke:var(--ink);stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:5 5}
+.dbj .dbs-dim{fill:none;stroke:var(--ink);stroke-opacity:.45;stroke-width:1}
+.dbj .dbs-lab{position:absolute;display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-50%);background:#fff;border:1px solid var(--line-s);border-radius:8px;padding:3px 8px;text-align:center;white-space:nowrap;transition:opacity .3s ease}
+.dbj .dbs-lab .dbs-cm{font-size:13px;line-height:1.2;font-weight:600;color:var(--ink)}
+.dbj .dbs-lab .dbs-in{font-size:11.5px;line-height:1.2;color:var(--ink-s);margin:0}
+.dbj .dbs[data-pending="true"] .dbs-svg,.dbj .dbs[data-pending="true"] .dbs-lab{opacity:.45}
+.dbj .dbs-leg{font-size:13px;line-height:1.45;color:var(--ink-s);margin-top:8px}
+
+/* summary */
+.dbj .dbs-sum{background:#fff;border:1px solid var(--line-s);border-radius:var(--r);padding:16px 18px}
+.dbj .dbs-sk{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong);margin-bottom:6px}
+.dbj .dbs-sv{font-size:18px;line-height:1.35;font-weight:600;color:var(--ink)}
+.dbj .dbs-sv2{font-size:14.5px;line-height:1.4;color:var(--ink-s);margin-top:2px}
+.dbj .dbs-st{font-size:14px;line-height:1.45;color:var(--ink-s);margin-top:10px}
+.dbj .dbs-st[data-state="ok"]{color:var(--ink);font-weight:600}
+.dbj .dbs-st[data-state="ok"]::before{content:"\2713\00a0";color:var(--strong)}
+.dbj .dbs-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
+.dbj .dbs-price{font-size:22px;font-weight:600;color:var(--ink)}
+.dbj .dbs-row[data-has-price="false"] .dbs-price{display:none}
+.dbj .dbs-cta{appearance:none;border:0;background:var(--strong);color:#fff;font:inherit;font-size:15.5px;font-weight:600;border-radius:var(--r-sm);padding:13px 20px;min-height:48px;cursor:pointer;margin-left:auto}
+.dbj .dbs-cta:hover{background:var(--ink)}
+
 /*R*/
 /* ---------- review marks (prototype only; build removes them): same quiet family as the page ---------- */
 .dbj .dbj-rv{display:block;margin:14px 0 0;padding:12px 16px;border-radius:var(--r-sm);background:#fff;border:1px dashed var(--line-s);color:var(--ink-s);font-size:14px;line-height:1.5;text-align:left}
@@ -181,6 +261,9 @@
   .dbj .dbj-ht .dbj-tt{font-size:15px}
   .dbj .dbj-chips li{font-size:19px}
   .dbj .dbj-card--sky .dbj-display{font-size:52px}
+  .dbj .dbs{padding:22px 24px}
+  .dbj .dbs--on{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);column-gap:24px;grid-template-areas:"head head" "controls stage" "controls sum";align-items:start}
+  .dbj .dbs--on .dbs-sum,.dbj .dbs--on .dbs-stage-wrap{position:relative}
   .dbj .dbj-acc-body{padding:18px 22px}
   .dbj .dbj-specs div{grid-template-columns:minmax(0,1fr) minmax(0,2.4fr);gap:20px}
 }
