@@ -1,10 +1,10 @@
 # Divine DunlopDreams · Dunlop Baby & Junior · product description
 
-Status: **0.8.0 prototype (Bio Comfort model + visual selector), not published.** Nothing in Ecwid has been changed.
+Status: **0.9.0 prototype (Bio Comfort model, 50/50 selection and presentation), not published.** Nothing in Ecwid has been changed.
 
 - Analysis, design system, review questions and business model: [`ANALYSIS.md`](ANALYSIS.md)
 - Prototype (open in a browser): [`preview/prototype.html`](preview/prototype.html)
-- Paste-ready Ecwid Description: [`ecwid/description-0.8.0.html`](ecwid/description-0.8.0.html)
+- Paste-ready Ecwid Description: [`ecwid/description-0.9.0.html`](ecwid/description-0.9.0.html)
 - Screenshots: [`docs/shots/`](docs/shots/)
 - Earlier builds (0.1.0, 0.2.0) are in git history only, so an old description cannot be pasted by mistake.
 
@@ -15,7 +15,7 @@ python3 build.py
 Edit only `src/description.html` and `src/dbj.css`. Blocks wrapped in `<!--R-->…<!--/R-->` (HTML) and `/*R*/…/*/R*/` (CSS) are review notes: they show in the prototype and are removed from the Ecwid file. The build fails if anything from review remains in the Ecwid file.
 
 ## Selector (dbs.js)
-`src/dbs.js` (copied to `release/0.8.0/dbs.js`) turns the static list of types, sizes and heights into buttons, a live drawing with centimetres and inches, a summary and an Add to bag proxy. It fills Ecwid's own option dropdowns (price, bag and checkout stay with Ecwid). It is loaded by a 283-character site-wide loader (`ecwid/loader-0.8.0.html`, pinned to the commit that holds the script); **not installed, needs approval**. Without it the description still shows the full static list. Tests: `node tests/dbs-test.js preview/prototype.html OUT_DIR` and `node tests/dbs-live.js src/dbs.js` (reads the live Bio Comfort page in the browser only).
+`src/dbs.js` (copied to `release/0.9.0/dbs.js`) builds two equal cubes side by side: selection (type, size, height, summary, Add to bag proxy) on the left and a tabbed presentation on the right; pressing a selection button opens the matching panel (a size opens the dimensioned drawing in centimetres and inches, a height opens the height comparison). It fills Ecwid's own option dropdowns (price, bag and checkout stay with Ecwid). It is loaded by a 283-character site-wide loader (`ecwid/loader-0.9.0.html`, pinned to the commit that holds the script); **not installed, needs approval**. Without it the description still shows the full static list. Tests: `node tests/dbs-test.js preview/prototype.html OUT_DIR` and `node tests/dbs-live.js src/dbs.js` (reads the live Bio Comfort page in the browser only).
 
 ## Preview as a web page
 ```
@@ -37,6 +37,6 @@ The result is one HTML file plus `assets/` that can be published as a private pr
 
 ## Installing (only after approval)
 1. Ecwid admin → the Baby & Junior **draft** product → Description → `<>` (HTML) mode.
-2. Replace the content with the whole of `ecwid/description-0.8.0.html`. Save. Keep the product unpublished.
+2. Replace the content with the whole of `ecwid/description-0.9.0.html`. Save. Keep the product unpublished.
 3. Preview the draft on desktop, iPad and iPhone.
-4. If the description is truncated (length limit not yet verified; file is about 39,200 characters), move the CSS into a pinned jsDelivr file loaded by the existing site-wide loader.
+4. If the description is truncated (length limit not yet verified; file is about 42,500 characters), move the CSS into a pinned jsDelivr file loaded by the existing site-wide loader.
