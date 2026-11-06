@@ -1,7 +1,9 @@
-/* Divine DunlopDreams · Dunlop Baby & Junior · product description 0.2.0
-   Direction: Apple-style product page. Rounded cubes (bento tiles), big centred type,
-   products standing on soft tiles, calm and light for a baby range.
+/* Divine DunlopDreams · Dunlop Baby & Junior · product description 0.3.0
+   Direction: Apple-style product page. Rounded cubes (bento tiles), big centred type, details cropped
+   from the product photos and set on tinted tiles. Calm and light for a baby range.
    Namespace: .dbj (every selector starts with it; no global rules).
+   Layout follows the width of the description itself (container queries), not the screen, because Ecwid
+   decides how wide the description area is. Without container-query support the single-column layout stays.
    build.py adds !important to every declaration against Ecwid's id-prefixed CSS. No JavaScript. */
 
 @font-face{font-family:"DBJChillax";font-style:normal;font-weight:400;font-display:swap;src:url({{FONT400}}) format("woff2")}
@@ -12,13 +14,14 @@
   --navy-900:#001B33; --navy-800:#002A4F; --navy-700:#003A68; --blue-600:#004F80; --blue-500:#006591;
   --sky-200:#B2E3FB; --sky-100:#E6F5FD; --turq-300:#91E8F1;
   --grey-200:#D3DAE6; --grey-100:#E4E8F0; --tile:#F3F5F9; --white:#FFFFFF;
+  --warm:#F6F1EB; --blush:#EBDDD5;
   --ink:#0B1726; --ink-2:#4A5A6E;
-  --latex:#F6E4AE; --latex-2:#EBCF86; --cream:#F3EDE3; --cream-edge:#DDD2C0;
   --r-xl:32px; --r-lg:28px; --r-md:20px; --r-sm:14px;
   font-family:"DBJChillax",system-ui,-apple-system,"Segoe UI",sans-serif;
   color:var(--ink); background:var(--white);
   font-size:17px; line-height:1.5; font-weight:400; text-align:left;
-  max-width:1120px; margin:0 auto; padding:0;
+  width:100%; max-width:1120px; margin:0 auto; padding:0;
+  container-type:inline-size;
   -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:100%;
 }
 .dbj *,.dbj *::before,.dbj *::after{box-sizing:border-box}
@@ -28,123 +31,111 @@
 .dbj p,.dbj li,.dbj dd,.dbj dt{font-size:inherit;line-height:inherit}
 .dbj img{display:block;width:100%;max-width:100%;height:auto;border:0;border-radius:0;box-shadow:none;margin:0}
 .dbj b,.dbj strong{font-weight:600}
-.dbj i{font-style:normal}
 
-/* ---------- type (Apple-like scale, Chillax 400/600) ---------- */
+/* ---------- type: small-screen sizes first, larger steps in the container queries below ---------- */
 .dbj .dbj-center{text-align:center}
-.dbj .dbj-eyebrow{font-size:19px;line-height:1.2;font-weight:600;color:var(--blue-500);text-align:center;margin-bottom:12px}
-.dbj .dbj-display{font-size:clamp(44px,7.4vw,84px);line-height:1.03;font-weight:600;letter-spacing:-.025em;color:var(--navy-700);text-align:center}
-.dbj .dbj-display--s{font-size:clamp(38px,6vw,68px)}
-.dbj .dbj-h2{font-size:clamp(34px,5.2vw,58px);line-height:1.06;font-weight:600;letter-spacing:-.02em;color:var(--navy-700);text-align:center}
-.dbj .dbj-h3{font-size:clamp(24px,2.4vw,30px);line-height:1.15;font-weight:600;letter-spacing:-.01em;color:var(--navy-700)}
-.dbj .dbj-sub{font-size:clamp(19px,1.9vw,23px);line-height:1.42;color:var(--ink-2);text-align:center;max-width:720px;margin:22px auto 0}
-.dbj .dbj-sub--tight{font-size:18px;max-width:640px}
-.dbj .dbj-tt{font-size:clamp(22px,2.3vw,28px);line-height:1.22;font-weight:600;letter-spacing:-.01em;color:var(--ink-2)}
+.dbj .dbj-eyebrow{font-size:18px;line-height:1.2;font-weight:600;color:var(--blue-500);text-align:center;margin-bottom:12px}
+.dbj .dbj-display{font-size:40px;line-height:1.04;font-weight:600;letter-spacing:-.025em;color:var(--navy-700);text-align:center}
+.dbj .dbj-display--s{font-size:36px}
+.dbj .dbj-h2{font-size:34px;line-height:1.07;font-weight:600;letter-spacing:-.02em;color:var(--navy-700);text-align:center}
+.dbj .dbj-h3{font-size:25px;line-height:1.15;font-weight:600;letter-spacing:-.01em;color:var(--navy-700)}
+.dbj .dbj-sub{font-size:18.5px;line-height:1.42;color:var(--ink-2);text-align:center;max-width:720px;margin:20px auto 0}
+.dbj .dbj-sub--tight{font-size:17.5px;max-width:640px}
+.dbj .dbj-tt{font-size:22px;line-height:1.24;font-weight:600;letter-spacing:-.01em;color:var(--ink-2)}
 .dbj .dbj-tt b{color:var(--navy-700)}
-.dbj .dbj-tt--s{font-size:18px;line-height:1.42;font-weight:400;letter-spacing:0}
+.dbj .dbj-tt--s{font-size:17.5px;line-height:1.42;font-weight:400;letter-spacing:0}
 .dbj .dbj-tt--s b{font-weight:600}
-.dbj .dbj-big{font-size:clamp(40px,4.6vw,56px);line-height:1.02;font-weight:600;letter-spacing:-.025em;color:var(--navy-700)}
+.dbj .dbj-big{font-size:40px;line-height:1.03;font-weight:600;letter-spacing:-.025em;color:var(--navy-700)}
 .dbj .dbj-k{font-size:13px;line-height:1.2;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-500);margin-bottom:10px}
-.dbj .dbj-note{font-size:15px;line-height:1.45;color:var(--ink-2);text-align:center;margin-top:18px}
+.dbj .dbj-note{font-size:15px;line-height:1.45;color:var(--ink-2);text-align:center;margin-top:16px}
 
 /* ---------- section rhythm ---------- */
-.dbj .dbj-sec{padding:110px 22px 0}
-.dbj .dbj-sec:last-child{padding-bottom:110px}
-.dbj .dbj-hero{padding-top:72px}
+.dbj .dbj-sec{padding:76px 16px 0}
+.dbj .dbj-sec:last-child{padding-bottom:76px}
+.dbj .dbj-hero{padding-top:44px}
 
 /* ---------- tiles: the rounded cube ---------- */
-.dbj .dbj-tile{position:relative;background:var(--tile);border-radius:var(--r-lg);padding:40px;overflow:hidden}
+.dbj .dbj-tile{--pad:28px;position:relative;background:var(--tile);border-radius:24px;padding:var(--pad);overflow:hidden}
 .dbj .dbj-tile img{mix-blend-mode:multiply;filter:brightness(1.012)}
 .dbj .dbj-tile--sky{background:var(--sky-100)}
+.dbj .dbj-tile--warm{background:var(--warm)}
+.dbj .dbj-tile--navy{background:var(--navy-700)}
+.dbj .dbj-tile--navy .dbj-big{color:var(--white)}
+.dbj .dbj-tile--navy .dbj-tt--s{color:var(--sky-200)}
+.dbj .dbj-tile--navy .dbj-tt b{color:var(--white)}
 .dbj .dbj-tile--line{background:var(--white);border:1px solid var(--grey-200)}
 .dbj .dbj-tile--pending{background:var(--white);border:1.5px dashed var(--grey-200)}
-.dbj .dbj-tile--hero{margin-top:48px;padding:24px 0 0;border-radius:var(--r-xl)}
-.dbj .dbj-tile--hero img{width:86%;margin:0 auto}
-.dbj .dbj-tile--photo{margin-top:16px;padding:0;background:#F4ECE6}
-.dbj .dbj-tile--photo img{mix-blend-mode:normal;filter:none}
+.dbj .dbj-tile--hero{margin-top:36px;padding:12px 0 0;background:var(--sky-100)}
+.dbj .dbj-tile--hero img{width:100%;transform:scale(1.3);transform-origin:50% 55%}
+.dbj .dbj-tile--stack{margin-top:40px;padding:0;background:var(--blush)}
+.dbj .dbj-tile--stack img{mix-blend-mode:normal;filter:none}
 
-/* bento grid */
-.dbj .dbj-bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;margin-top:48px}
-.dbj .dbj-span-2{grid-column:span 2}
-.dbj .dbj-span-3{grid-column:span 3}
-.dbj .dbj-span-4{grid-column:span 4}
-.dbj .dbj-span-6{grid-column:span 6}
-.dbj .dbj-bento .dbj-tile{display:flex;flex-direction:column;gap:14px;min-height:240px}
-.dbj .dbj-bento .dbj-tile .dbj-big + .dbj-tt--s{margin-top:auto}
-.dbj .dbj-bento--text .dbj-tile{min-height:0;padding:32px 36px}
+/* cropped photo details sitting in a tile, bleeding to its edges */
+.dbj .dbj-crop{margin:auto calc(var(--pad) * -1) calc(var(--pad) * -1);padding-top:18px}
+.dbj .dbj-tile--one .dbj-crop{position:relative;aspect-ratio:2 / 1;margin-top:18px;padding-top:0}
+.dbj .dbj-tile--one .dbj-crop img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:40% 55%}
 
-/* highlights: CSS latex core with ventilation holes */
-.dbj .dbj-bento .dbj-tile--core{grid-row:span 2;justify-content:space-between;background:linear-gradient(180deg,var(--tile) 0%,#EEF2F7 100%)}
-.dbj .dbj-tile--core .dbj-tt{max-width:440px}
-.dbj .dbj-core{width:78%;margin:32px auto 8px;filter:drop-shadow(0 26px 28px rgba(0,42,79,.14))}
-.dbj .dbj-core-top{height:190px;border-radius:26px 26px 6px 6px;background-color:var(--latex);background-image:radial-gradient(circle,var(--latex-2) 0 3.2px,transparent 3.8px);background-size:26px 26px;background-position:13px 13px;transform:perspective(700px) rotateX(52deg);transform-origin:50% 100%}
-.dbj .dbj-core-front{height:40px;margin:-2px 2.5% 0;border-radius:4px 4px 16px 16px;background:linear-gradient(180deg,#EED593,#E2C47A)}
-.dbj .dbj-mini{display:flex;align-items:flex-end;gap:12px;height:72px;max-width:300px}
-.dbj .dbj-mini i{display:block;flex:1;border-radius:10px;background:var(--cream);border:1px solid var(--cream-edge)}
-.dbj .dbj-m10{height:40px}.dbj .dbj-m12{height:52px}.dbj .dbj-m14{height:64px}
-.dbj .dbj-mini + .dbj-tt--s{margin-top:auto}
+/* bento grid: one column on small widths */
+.dbj .dbj-bento{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-top:36px}
+.dbj .dbj-bento .dbj-tile{display:flex;flex-direction:column;gap:12px;min-height:0}
+.dbj .dbj-bento .dbj-tile .dbj-big + .dbj-tt--s{margin-top:0}
+.dbj .dbj-bento--text .dbj-tile{padding:26px 28px}
 
 /* construction */
-.dbj .dbj-tile--plate{margin-top:48px;padding:0;border-radius:var(--r-xl);background:var(--tile)}
-.dbj .dbj-plate-in{position:relative;transform:scale(1.22);transform-origin:50% 56%}
-.dbj .dbj-pin{position:absolute;left:var(--x);top:var(--y);width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:var(--navy-700);color:var(--white);font-size:12.5px;font-weight:600;line-height:26px;text-align:center;box-shadow:0 0 0 5px rgba(255,255,255,.75)}
+.dbj .dbj-tile--plate{margin-top:36px;padding:0;background:var(--tile)}
+.dbj .dbj-plate-in{position:relative;transform:scale(1.42);transform-origin:50% 58%}
+.dbj .dbj-pin{position:absolute;left:var(--x);top:var(--y);width:21px;height:21px;margin:-10.5px 0 0 -10.5px;border-radius:50%;background:var(--navy-700);color:var(--white);font-size:11px;font-weight:600;line-height:21px;text-align:center;box-shadow:0 0 0 3px rgba(255,255,255,.8)}
 .dbj .dbj-pin--1{--x:66%;--y:33%}
 .dbj .dbj-pin--2{--x:61.5%;--y:54%}
 .dbj .dbj-pin--3{--x:46%;--y:64%}
 .dbj .dbj-pin--4{--x:31%;--y:58%}
-.dbj .dbj-legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:16px}
-.dbj .dbj-cube{background:var(--tile);border-radius:var(--r-md);padding:24px;display:flex;flex-direction:column;gap:14px}
-.dbj .dbj-n{width:30px;height:30px;border-radius:50%;background:var(--navy-700);color:var(--white);font-size:14px;font-weight:600;line-height:30px;text-align:center}
+.dbj .dbj-legend{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-top:12px}
+.dbj .dbj-cube{background:var(--tile);border-radius:var(--r-md);padding:20px;display:flex;flex-direction:row;align-items:flex-start;gap:14px}
+.dbj .dbj-n{flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:var(--navy-700);color:var(--white);font-size:14px;font-weight:600;line-height:30px;text-align:center}
 
 /* materials */
-.dbj .dbj-dl{display:grid;gap:16px;margin-top:22px}
+.dbj .dbj-dl{display:grid;gap:16px;margin-top:20px}
 .dbj .dbj-dl dt{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
 .dbj .dbj-dl dd{font-size:18px;line-height:1.4;color:var(--ink);margin-top:3px}
-.dbj .dbj-bento .dbj-tile--row{flex-direction:row;min-height:0;justify-content:space-around;text-align:center;padding:44px 32px}
-.dbj .dbj-stat{display:flex;flex-direction:column;gap:6px;align-items:center}
-.dbj .dbj-stat .dbj-big{font-size:clamp(56px,6vw,80px)}
+.dbj .dbj-bento .dbj-tile--slim{padding:30px 28px}
 
 /* heights */
-.dbj .dbj-bento .dbj-tile--h{justify-content:flex-end;min-height:300px}
-.dbj .dbj-slab{height:calc(var(--h) * 9px);border-radius:16px 16px 12px 12px;background:var(--cream);border:1px solid var(--cream-edge);box-shadow:inset 0 10px 0 0 #FBF8F2,0 18px 24px -14px rgba(0,42,79,.25);margin-bottom:auto;margin-top:auto}
-.dbj .dbj-slab--10{--h:10}.dbj .dbj-slab--12{--h:12}.dbj .dbj-slab--14{--h:14}
-.dbj .dbj-num{font-size:clamp(52px,5.6vw,72px);line-height:1;font-weight:600;letter-spacing:-.03em;color:var(--navy-700)}
+.dbj .dbj-num{font-size:52px;line-height:1;font-weight:600;letter-spacing:-.03em;color:var(--navy-700)}
 .dbj .dbj-num span{font-size:.36em;letter-spacing:0;margin-left:6px;color:var(--ink-2)}
 
 /* sizes */
 .dbj .dbj-chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:6px}
-.dbj .dbj-chips li{background:var(--white);border-radius:var(--r-sm);padding:18px 18px 16px;font-size:24px;line-height:1.1;font-weight:600;letter-spacing:-.01em;color:var(--navy-700)}
+.dbj .dbj-chips li{background:var(--white);border-radius:var(--r-sm);padding:16px 12px 14px;font-size:19px;line-height:1.1;white-space:nowrap;font-weight:600;letter-spacing:-.01em;color:var(--navy-700)}
 .dbj .dbj-chips small{display:block;font-size:14px;font-weight:400;letter-spacing:0;color:var(--ink-2);margin-top:4px}
 .dbj .dbj-step{width:44px;height:44px;border-radius:50%;background:var(--white);color:var(--navy-700);font-size:20px;font-weight:600;line-height:44px;text-align:center}
-.dbj .dbj-step + .dbj-tt--s{margin-top:auto}
 
 /* firmness */
-.dbj .dbj-tile--firm{padding:64px 32px;border-radius:var(--r-xl);display:flex;flex-direction:column;align-items:center}
+.dbj .dbj-tile--firm{padding:48px 22px;display:flex;flex-direction:column;align-items:center}
 .dbj .dbj-tag{margin-top:18px;padding:7px 14px;border-radius:999px;background:var(--white);color:var(--navy-700);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
-.dbj .dbj-seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;width:min(460px,100%);margin-top:32px;padding:4px;border-radius:999px;background:var(--grey-100)}
+.dbj .dbj-seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;width:min(460px,100%);margin-top:28px;padding:4px;border-radius:999px;background:var(--grey-100)}
 .dbj .dbj-seg span{display:block;padding:12px 6px;border-radius:999px;text-align:center;font-size:16px;font-weight:600;color:var(--ink-2)}
 .dbj .dbj-seg .dbj-on{background:var(--white);color:var(--navy-700);box-shadow:0 3px 10px rgba(0,42,79,.12)}
 
 /* tech specs (Apple layout) */
-.dbj .dbj-specs{margin-top:56px;border-top:1px solid var(--grey-200)}
-.dbj .dbj-spec{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);gap:24px;padding:30px 4px;border-bottom:1px solid var(--grey-200)}
-.dbj .dbj-spec-k{font-size:22px;line-height:1.25;font-weight:600;color:var(--navy-700)}
+.dbj .dbj-specs{margin-top:44px;border-top:1px solid var(--grey-200)}
+.dbj .dbj-spec{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:24px 2px;border-bottom:1px solid var(--grey-200)}
+.dbj .dbj-spec-k{font-size:20px;line-height:1.25;font-weight:600;color:var(--navy-700)}
 .dbj .dbj-spec-v{display:grid;gap:6px;font-size:18px;line-height:1.45;color:var(--ink)}
 .dbj .dbj-spec-s{font-size:15px;color:var(--ink-2)}
 .dbj .dbj-spec-v--cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.dbj .dbj-spec-v--cols b{display:block;font-size:26px;line-height:1.1;color:var(--navy-700)}
-.dbj .dbj-acc{margin-top:48px;display:grid;gap:12px}
-.dbj .dbj-acc details{background:var(--tile);border-radius:var(--r-md);padding:0 26px}
-.dbj .dbj-acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:24px 0;font-size:19px;font-weight:600;line-height:1.3;color:var(--navy-700)}
+.dbj .dbj-spec-v--cols b{display:block;font-size:24px;line-height:1.1;color:var(--navy-700)}
+.dbj .dbj-acc{margin-top:40px;display:grid;gap:12px}
+.dbj .dbj-acc details{background:var(--tile);border-radius:var(--r-md);padding:0 20px}
+.dbj .dbj-acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 0;font-size:17.5px;font-weight:600;line-height:1.3;color:var(--navy-700)}
 .dbj .dbj-acc summary::-webkit-details-marker{display:none}
 .dbj .dbj-acc summary::after{content:"+";flex:0 0 34px;height:34px;border-radius:50%;background:var(--white);text-align:center;line-height:34px;font-size:22px;font-weight:400;color:var(--blue-500)}
 .dbj .dbj-acc details[open] summary::after{content:"\2212"}
 .dbj .dbj-acc summary:focus-visible{outline:2px solid var(--blue-500);outline-offset:4px;border-radius:8px}
-.dbj .dbj-acc details .dbj-tt--s{padding:0 0 26px;max-width:720px}
+.dbj .dbj-acc details .dbj-tt--s{padding:0 0 24px;max-width:720px}
 
 /* final */
 .dbj .dbj-final{text-align:center}
-.dbj .dbj-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:40px}
+.dbj .dbj-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:36px}
 .dbj .dbj-pills li{padding:12px 20px;border-radius:999px;background:var(--tile);font-size:16px;font-weight:600;color:var(--navy-700)}
 
 /*R*/
@@ -161,43 +152,75 @@
 }
 @keyframes dbj-rise{from{opacity:.25;transform:translateY(28px) scale(.985)}to{opacity:1;transform:none}}
 
-/* ---------- tablet ---------- */
-@media (max-width:980px){
-  .dbj .dbj-bento{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .dbj .dbj-span-2,.dbj .dbj-span-3{grid-column:span 1}
-  .dbj .dbj-span-4,.dbj .dbj-span-6{grid-column:span 2}
-  .dbj .dbj-bento .dbj-tile--core{grid-row:auto}
-  .dbj .dbj-legend{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .dbj .dbj-bento > .dbj-tile--h:last-child{grid-column:span 2}
+/* ---------- container width 640 px and up (tablet-like) ---------- */
+@container (min-width:640px){
+  .dbj .dbj-sec{padding:96px 22px 0}
+  .dbj .dbj-sec:last-child{padding-bottom:96px}
+  .dbj .dbj-hero{padding-top:64px}
+  .dbj .dbj-eyebrow{font-size:19px}
+  .dbj .dbj-display{font-size:60px}
+  .dbj .dbj-display--s{font-size:52px}
+  .dbj .dbj-h2{font-size:44px}
+  .dbj .dbj-h3{font-size:28px}
+  .dbj .dbj-sub{font-size:20.5px;margin-top:22px}
+  .dbj .dbj-sub--tight{font-size:18px}
+  .dbj .dbj-tt{font-size:25px}
+  .dbj .dbj-tt--s{font-size:18px}
+  .dbj .dbj-big{font-size:46px}
+  .dbj .dbj-num{font-size:60px}
+  .dbj .dbj-tile{--pad:34px;border-radius:28px}
+  .dbj .dbj-tile--hero{margin-top:44px;padding:20px 0 0}
+  .dbj .dbj-tile--hero img{width:88%;margin:0 auto;transform:none}
+  .dbj .dbj-tile--stack{margin-top:44px}
+  .dbj .dbj-tile--plate{margin-top:44px}
+  .dbj .dbj-plate-in{transform:scale(1.22);transform-origin:50% 56%}
+  .dbj .dbj-pin{width:26px;height:26px;margin:-13px 0 0 -13px;line-height:26px;font-size:12.5px;box-shadow:0 0 0 5px rgba(255,255,255,.75)}
+  .dbj .dbj-bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:44px}
+  .dbj .dbj-bento .dbj-tile .dbj-big + .dbj-tt--s{margin-top:auto}
+  .dbj .dbj-bento .dbj-span-4,.dbj .dbj-bento .dbj-span-6,.dbj .dbj-bento > .dbj-tile--h:last-child{grid-column:span 2}
+  .dbj .dbj-bento--text .dbj-tile{padding:30px 34px}
+  .dbj .dbj-legend{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+  .dbj .dbj-cube{flex-direction:column;padding:24px;gap:14px}
+  .dbj .dbj-chips li{font-size:24px;padding:18px 18px 16px;white-space:normal}
+  .dbj .dbj-tile--firm{padding:64px 32px}
+  .dbj .dbj-specs{margin-top:56px}
+  .dbj .dbj-spec{grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);gap:24px;padding:30px 4px}
+  .dbj .dbj-spec-k{font-size:22px}
+  .dbj .dbj-spec-v--cols b{font-size:26px}
+  .dbj .dbj-acc details{padding:0 26px}
+  .dbj .dbj-acc summary{font-size:19px;padding:24px 0}
 }
-/* ---------- phone ---------- */
-@media (max-width:600px){
-  .dbj{font-size:16.5px}
-  .dbj .dbj-sec{padding:76px 16px 0}
-  .dbj .dbj-sec:last-child{padding-bottom:76px}
-  .dbj .dbj-hero{padding-top:44px}
-  .dbj .dbj-bento{grid-template-columns:1fr;gap:12px;margin-top:36px}
-  .dbj .dbj-span-2,.dbj .dbj-span-3,.dbj .dbj-span-4,.dbj .dbj-span-6,.dbj .dbj-bento > .dbj-tile--h:last-child{grid-column:auto}
-  .dbj .dbj-tile{padding:28px;border-radius:24px}
-  .dbj .dbj-bento .dbj-tile{min-height:0}
-  .dbj .dbj-tile--hero{margin-top:36px;padding:12px 0 0}
-  .dbj .dbj-tile--hero img{width:100%;transform:scale(1.3);transform-origin:50% 55%}
-  .dbj .dbj-core{width:92%}
-  .dbj .dbj-core-top{height:130px}
-  .dbj .dbj-core-front{height:30px}
-  .dbj .dbj-tile--plate{margin-top:36px;padding:0;border-radius:24px}
-  .dbj .dbj-plate-in{transform:scale(1.42);transform-origin:50% 58%}
-  .dbj .dbj-pin{width:21px;height:21px;margin:-10.5px 0 0 -10.5px;line-height:21px;font-size:11px;box-shadow:0 0 0 3px rgba(255,255,255,.8)}
-  .dbj .dbj-legend{grid-template-columns:1fr;gap:12px}
-  .dbj .dbj-cube{flex-direction:row;align-items:flex-start;padding:20px}
-  .dbj .dbj-n{flex:0 0 30px}
-  .dbj .dbj-bento .dbj-tile--row{flex-direction:column;gap:28px;padding:36px 24px}
-  .dbj .dbj-bento .dbj-tile--h{min-height:0;flex-direction:row;align-items:center;flex-wrap:wrap;gap:4px 16px}
-  .dbj .dbj-tile--h .dbj-slab{flex:0 0 100%;height:calc(var(--h) * 6px);margin:0 0 14px}
-  .dbj .dbj-tile--h .dbj-num{font-size:48px}
-  .dbj .dbj-tile--firm{padding:48px 22px;border-radius:24px}
-  .dbj .dbj-spec{grid-template-columns:1fr;gap:10px;padding:24px 2px}
-  .dbj .dbj-spec-k{font-size:20px}
-  .dbj .dbj-acc details{padding:0 20px}
-  .dbj .dbj-acc summary{font-size:17.5px}
+
+/* ---------- container width 960 px and up (desktop-like): six-column bento ---------- */
+@container (min-width:960px){
+  .dbj .dbj-sec{padding-top:110px}
+  .dbj .dbj-sec:last-child{padding-bottom:110px}
+  .dbj .dbj-hero{padding-top:72px}
+  .dbj .dbj-display{font-size:80px}
+  .dbj .dbj-display--s{font-size:66px}
+  .dbj .dbj-h2{font-size:56px}
+  .dbj .dbj-h3{font-size:30px}
+  .dbj .dbj-sub{font-size:23px}
+  .dbj .dbj-tt{font-size:28px}
+  .dbj .dbj-tt--s{font-size:18px}
+  .dbj .dbj-big{font-size:54px}
+  .dbj .dbj-num{font-size:72px}
+  .dbj .dbj-tile{--pad:40px;border-radius:var(--r-lg)}
+  .dbj .dbj-tile--hero{border-radius:var(--r-xl);margin-top:48px}
+  .dbj .dbj-tile--hero img{width:86%}
+  .dbj .dbj-tile--stack,.dbj .dbj-tile--plate{border-radius:var(--r-xl)}
+  .dbj .dbj-bento{grid-template-columns:repeat(6,minmax(0,1fr));margin-top:48px}
+  .dbj .dbj-bento .dbj-tile{min-height:240px}
+  .dbj .dbj-bento .dbj-tile--slim{min-height:0}
+  .dbj .dbj-bento--text .dbj-tile{min-height:0;padding:32px 36px}
+  .dbj .dbj-bento .dbj-span-2{grid-column:span 2}
+  .dbj .dbj-bento .dbj-span-3{grid-column:span 3}
+  .dbj .dbj-bento .dbj-span-4{grid-column:span 4}
+  .dbj .dbj-bento .dbj-span-6{grid-column:span 6}
+  .dbj .dbj-bento > .dbj-tile--h:last-child{grid-column:span 2}
+  .dbj .dbj-bento .dbj-tile--h{min-height:0}
+  .dbj .dbj-bento .dbj-tile--one{grid-row:span 2}
+  .dbj .dbj-tile--one .dbj-crop{aspect-ratio:auto;flex:1 1 auto;min-height:280px}
+  .dbj .dbj-legend{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .dbj .dbj-tile--firm{border-radius:var(--r-xl)}
 }

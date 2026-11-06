@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Build the Baby & Junior description from one source.
 
-  preview/prototype.html        full page mock-up, review notes visible, local images
+  preview/prototype.html        full page mock-up inside an imitation of the Ecwid product page,
+                                review notes visible, local images
   ecwid/description-<v>.html    paste-ready Ecwid Description (<> mode), review notes removed,
                                 CSS inlined and scoped to .dbj, images and fonts on pinned jsDelivr URLs
 
@@ -9,25 +10,39 @@ Usage: python3 build.py
 """
 import re, pathlib
 
-VERSION = "0.2.0"
-ASSET_VERSION = "0.1.0"                                     # images did not change
-ASSET_COMMIT = "c3cafc0705ba2ae2e9c8374bafa7ef7bed16bc63"   # commit that added release/0.1.0/assets
-FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"    # Chillax files already used by Hero 1.17.1 and Collection
+VERSION = "0.3.0"
 CDN = "https://cdn.jsdelivr.net/gh/Matrress/Animation@"
+FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"    # Chillax files already used by Hero 1.17.1 and Collection
 FONT400 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-400.woff2"
 FONT600 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-600.woff2"
-REMOTE_ASSETS = f"{CDN}{ASSET_COMMIT}/divine-baby-junior/release/{ASSET_VERSION}/assets/"
-LOCAL_ASSETS = f"../release/{ASSET_VERSION}/assets/"
 
-IMAGES = {  # key: (file stem, width, height of the 1600 px file)
-    "closed":  ("dunlop-baby-junior-latex-mattress-cotton-cover-closed", 1600, 800),
-    "open":    ("dunlop-baby-junior-latex-core-cotton-cover-open", 1600, 800),
-    "heights": ("dunlop-baby-junior-latex-mattress-heights-10-12-14-cm", 1600, 800),
+# Each asset folder is pinned to the commit that added it.
+ASSETS = {
+    "v1": dict(commit="c3cafc0705ba2ae2e9c8374bafa7ef7bed16bc63", dir="release/0.1.0/assets/"),
+    "v2": dict(commit="b0c161a67ae725da9db1cfeaa2eae2b82d7e9b0f", dir="release/0.2.0/assets/"),
+}
+
+# key: (asset set, file stem, widths available, width, height of the largest file, sizes attribute)
+BIG = "(min-width: 1120px) 1080px, 100vw"
+IMAGES = {
+    "closed": ("v1", "dunlop-baby-junior-latex-mattress-cotton-cover-closed", [800, 1600], 1600, 800, BIG),
+    "open":   ("v1", "dunlop-baby-junior-latex-core-cotton-cover-open", [800, 1600], 1600, 800, BIG),
+    "latex":  ("v2", "dunlop-baby-junior-natural-latex-core-ventilation-detail", [690], 690, 350, "(min-width: 960px) 700px, 100vw"),
+    "quilt":  ("v2", "dunlop-baby-junior-cotton-cover-quilting-detail", [660], 660, 300, "(min-width: 960px) 360px, 100vw"),
+    "zip":    ("v2", "dunlop-baby-junior-cotton-cover-zip-detail", [340], 340, 220, "(min-width: 960px) 360px, 100vw"),
+    "stack":  ("v2", "dunlop-baby-junior-heights-10-12-14-cm-stack", [700, 1060], 1060, 450, BIG),
 }
 
 root = pathlib.Path(__file__).parent
 css_src = (root / "src/dbj.css").read_text()
 html_src = (root / "src/description.html").read_text()
+
+
+def asset_base(setname: str, remote: bool) -> str:
+    a = ASSETS[setname]
+    if remote:
+        return f"{CDN}{a['commit']}/divine-baby-junior/{a['dir']}"
+    return f"../{a['dir']}"
 
 
 def build_css(src: str, keep_review: bool) -> str:
@@ -57,18 +72,17 @@ def build_css(src: str, keep_review: bool) -> str:
     return css
 
 
-def build_html(src: str, assets: str, keep_review: bool) -> str:
+def build_html(src: str, remote: bool, keep_review: bool) -> str:
     def img(m):
         key, alt, mode = m.group(1), m.group(2), m.group(3)
-        stem, w, h = IMAGES[key]
+        setname, stem, widths, w, h, sizes = IMAGES[key]
+        base = asset_base(setname, remote)
         eager = mode == "eager"
         prio = ' fetchpriority="high"' if eager else ""
-        return (f'<img src="{assets}{stem}-1600.webp" '
-                f'srcset="{assets}{stem}-800.webp 800w, {assets}{stem}-1600.webp 1600w" '
-                f'sizes="(min-width: 1120px) 1080px, 100vw" '
+        srcset = ", ".join(f"{base}{stem}-{x}.webp {x}w" for x in widths)
+        return (f'<img src="{base}{stem}-{widths[-1]}.webp" srcset="{srcset}" sizes="{sizes}" '
                 f'width="{w}" height="{h}" alt="{alt}" '
-                f'loading="{"eager" if eager else "lazy"}" decoding="async"'
-                f'{prio}>')
+                f'loading="{"eager" if eager else "lazy"}" decoding="async"{prio}>')
 
     out = re.sub(r"\{\{IMG:(\w+)\|([^|]+)\|(\w+)\}\}", img, src)
     if keep_review:
@@ -86,16 +100,23 @@ css_prod = build_css(css_src, keep_review=False)
 css = build_css(css_src, keep_review=True)
 
 # ---------- production (Ecwid Description, <> mode) ----------
-prod_html = build_html(html_src, REMOTE_ASSETS, keep_review=False)
+prod_html = build_html(html_src, remote=True, keep_review=False)
 assert "dbj-rv" not in prod_html and "REVIEW" not in prod_html and "dbj-rv" not in css_prod
+assert "coir" not in prod_html.lower() and "coconut" not in prod_html.lower() and "coir" not in css_prod.lower()
 prod = (f"<!-- Divine DunlopDreams · Dunlop Baby & Junior description {VERSION} · scoped to .dbj · no JavaScript -->"
         f"<style>{css_prod}</style>{prod_html}")
 (root / "ecwid").mkdir(exist_ok=True)
 (root / f"ecwid/description-{VERSION}.html").write_text(prod + "\n")
 
-# ---------- prototype (full page mock-up) ----------
-proto_html = build_html(html_src, LOCAL_ASSETS, keep_review=True)
-closed = IMAGES["closed"][0]
+# ---------- prototype (imitation of the Ecwid product page) ----------
+proto_html = build_html(html_src, remote=False, keep_review=True)
+v1 = asset_base("v1", remote=False)
+g_closed = f"{v1}{IMAGES['closed'][1]}-800.webp"
+g_open = f"{v1}{IMAGES['open'][1]}-800.webp"
+g_heights = f"{v1}dunlop-baby-junior-latex-mattress-heights-10-12-14-cm-800.webp"
+sizes_opts = "".join(f"<option>{o}</option>" for o in [
+    "Baby Cot · 60 × 110 cm", "Baby Cot · 60 × 120 cm", "Baby Cot · 70 × 130 cm", "Baby Cot · 70 × 140 cm",
+    "Junior · 70 × 160 cm", "Junior · 80 × 160 cm", "Junior · 80 × 180 cm", "Junior · 80 × 200 cm"])
 shell = f"""<!doctype html>
 <html lang="en-GB" id="ecwid_html">
 <head>
@@ -108,20 +129,25 @@ html#ecwid_html body#ecwid_body h2, html#ecwid_html body#ecwid_body h3{{font-fam
 html#ecwid_html body#ecwid_body p{{line-height:2.4;margin:0 0 30px;font-size:13px}}
 html#ecwid_html body#ecwid_body ul li{{list-style:disc;margin-left:20px}}
 html#ecwid_html body#ecwid_body img{{border:4px solid #000;border-radius:0}}
-/* Prototype shell (not part of the Ecwid code) */
+/* Prototype shell: an imitation of the Ecwid product page. It is not part of the Ecwid code. */
 body{{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#0B1726}}
 .proto-bar{{background:#003A68;color:#fff;font:600 12.5px/1.3 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;text-align:center}}
 .proto-pdp{{max-width:1180px;margin:0 auto;padding:32px 24px 8px;display:grid;gap:32px;grid-template-columns:1fr}}
-.proto-gallery{{background:#F4F6FA;border-radius:22px;overflow:hidden}}
-.proto-gallery img{{display:block;width:100%;height:auto;border:0!important}}
+.proto-gallery{{display:grid;gap:10px}}
+.proto-main{{background:#F4F6FA;border-radius:22px;overflow:hidden}}
+.proto-main img{{display:block;width:100%;height:auto;border:0!important}}
+.proto-thumbs{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}}
+.proto-thumbs div{{background:#F4F6FA;border-radius:14px;overflow:hidden;opacity:.9}}
+.proto-thumbs div:first-child{{box-shadow:0 0 0 2px #003A68}}
+.proto-thumbs img{{display:block;width:100%;height:auto;border:0!important}}
 .proto-buy h1{{font:600 28px/1.2 "DBJChillax",system-ui,sans-serif;color:#003A68;margin:0 0 8px}}
 .proto-price{{font:600 15px/1.4 system-ui;color:#34465C;letter-spacing:.12em;text-transform:uppercase;margin:0 0 20px}}
-.proto-opt{{margin:0 0 18px}}
-.proto-opt b{{display:block;font:600 12.5px/1 system-ui;letter-spacing:.14em;text-transform:uppercase;color:#006591;margin-bottom:8px}}
-.proto-opt span{{display:inline-block;margin:0 6px 6px 0;padding:9px 12px;border:1px solid #D3DAE6;border-radius:10px;font:500 14px/1 system-ui}}
-.proto-opt span.on{{border-color:#003A68;box-shadow:inset 0 0 0 1px #003A68}}
+.proto-opt{{margin:0 0 16px}}
+.proto-opt label{{display:block;font:600 12.5px/1 system-ui;letter-spacing:.14em;text-transform:uppercase;color:#006591;margin-bottom:8px}}
+.proto-opt select{{width:100%;appearance:auto;padding:13px 12px;border:1px solid #D3DAE6;border-radius:10px;font:500 15px/1.2 system-ui;background:#fff;color:#0B1726}}
 .proto-cta{{display:block;text-align:center;background:#006591;color:#fff;border-radius:12px;padding:15px;font:600 14px/1 system-ui;letter-spacing:.12em;text-transform:uppercase;opacity:.55}}
 .proto-note{{font:400 13px/1.5 system-ui;color:#34465C;margin-top:10px}}
+.product-details__description{{max-width:1180px;margin:0 auto;padding:0 24px}}
 @media (min-width:860px){{.proto-pdp{{grid-template-columns:1.2fr 1fr;align-items:start}}}}
 </style>
 <style>{css}</style>
@@ -129,18 +155,22 @@ body{{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#0B1726}}
 <body id="ecwid_body">
 <div class="proto-bar">Prototype · unpublished draft · amber boxes are review items, removed from the Ecwid code</div>
 <div class="proto-pdp" aria-label="Simulated Ecwid product header (not part of the description)">
-  <div class="proto-gallery"><img src="{LOCAL_ASSETS}{closed}-1600.webp" width="1600" height="800" alt=""></div>
+  <div class="proto-gallery">
+    <div class="proto-main"><img src="{g_closed}" width="800" height="400" alt=""></div>
+    <div class="proto-thumbs"><div><img src="{g_closed}" width="800" height="400" alt=""></div><div><img src="{g_open}" width="800" height="400" alt=""></div><div><img src="{g_heights}" width="800" height="400" alt=""></div></div>
+  </div>
   <div class="proto-buy">
     <h1>Dunlop Baby &amp; Junior 100% Natural Latex Mattress</h1>
     <p class="proto-price">Price set in Ecwid</p>
-    <div class="proto-opt"><b>Range</b><span class="on">Baby Cot</span><span>Junior</span></div>
-    <div class="proto-opt"><b>Size</b><span>60 × 110</span><span class="on">60 × 120</span><span>70 × 130</span><span>70 × 140</span></div>
-    <div class="proto-opt"><b>Height</b><span class="on">10 cm</span><span>12 cm</span><span>14 cm</span></div>
+    <div class="proto-opt"><label for="p-size">Size</label><select id="p-size">{sizes_opts}</select></div>
+    <div class="proto-opt"><label for="p-height">Height</label><select id="p-height"><option>10 cm</option><option>12 cm</option><option>14 cm</option></select></div>
     <span class="proto-cta">Add to bag</span>
-    <p class="proto-note">This block imitates Ecwid's own product options. It is not in the description code: prices, options and checkout stay with Ecwid.</p>
+    <p class="proto-note">This block imitates Ecwid's own gallery and dropdown options. It is not in the description code: prices, options and checkout stay with Ecwid.</p>
   </div>
 </div>
+<div class="product-details__description">
 {proto_html}
+</div>
 </body>
 </html>
 """
