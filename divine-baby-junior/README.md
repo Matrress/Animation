@@ -1,10 +1,10 @@
 # Divine DunlopDreams · Dunlop Baby & Junior · product description
 
-Status: **0.6.0 prototype (fine and light), not published.** Nothing in Ecwid has been changed.
+Status: **0.7.0 prototype (Bio Comfort model), not published.** Nothing in Ecwid has been changed.
 
 - Analysis, design system, review questions and business model: [`ANALYSIS.md`](ANALYSIS.md)
 - Prototype (open in a browser): [`preview/prototype.html`](preview/prototype.html)
-- Paste-ready Ecwid Description: [`ecwid/description-0.6.0.html`](ecwid/description-0.6.0.html)
+- Paste-ready Ecwid Description: [`ecwid/description-0.7.0.html`](ecwid/description-0.7.0.html)
 - Screenshots: [`docs/shots/`](docs/shots/)
 - Earlier builds (0.1.0, 0.2.0) are in git history only, so an old description cannot be pasted by mistake.
 
@@ -26,7 +26,7 @@ The result is one HTML file plus `assets/` that can be published as a private pr
 - No JavaScript, no `id`-dependent behaviour, no inline `style=""`. Expandable sections are native `<details>`.
 - Chillax 400/600 from the pinned files already used by Hero and Collection, as family `DBJChillax`.
 - Images on jsDelivr pinned to the commits that added them (`release/0.1.0/assets` and `release/0.2.0/assets`, see `build.py`). Detail crops are taken from the approved photos without retouching.
-- Palette is the gentle Bio Comfort set (white, cool grey, a pale blue tint, navy for text); the build fails on any other colour. No dark panels. Photos stay clean, never tinted. One firmness only (Medium); no Soft/Firm anywhere.
+- Palette and structure follow the live Bio Comfort description (its `--bc-*` tokens): ink #003A68 for all text, surface #E4E8F0 with fine outlines, #B2E3FB (55%) for key numbers, strong blue #006591 with white text only on small bars (label, chips, facts strip, toggles). The build fails on any hex colour outside those six. No dark panels, no gradients. One firmness only (Medium); no Soft/Firm anywhere.
 - The Bio Dunlop logo is `src/assets/bio-dunlop.svg` (the same file the 7 zones section uses), pinned on jsDelivr.
 - Motion is CSS only (transform and opacity), off under reduced motion; no JavaScript and no blur filters.
 - Layout follows the width of the description (container queries), not the screen, because Ecwid decides how wide the description area is.
@@ -34,6 +34,6 @@ The result is one HTML file plus `assets/` that can be published as a private pr
 
 ## Installing (only after approval)
 1. Ecwid admin → the Baby & Junior **draft** product → Description → `<>` (HTML) mode.
-2. Replace the content with the whole of `ecwid/description-0.6.0.html`. Save. Keep the product unpublished.
+2. Replace the content with the whole of `ecwid/description-0.7.0.html`. Save. Keep the product unpublished.
 3. Preview the draft on desktop, iPad and iPhone.
-4. If the description is truncated (length limit not yet verified; file is about 31,400 characters), move the CSS into a pinned jsDelivr file loaded by the existing site-wide loader.
+4. If the description is truncated (length limit not yet verified; file is about 29,000 characters), move the CSS into a pinned jsDelivr file loaded by the existing site-wide loader.

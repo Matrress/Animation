@@ -28,21 +28,19 @@ prod = re.sub(r"https://cdn\.jsdelivr\.net/gh/Matrress/Animation@[0-9a-f]{40}/di
 shutil.copy(root / "src/assets/bio-dunlop.svg", out / "assets" / "bio-dunlop.svg")
 assert "jsdelivr" not in prod
 css = re.search(r"/\* Prototype shell.*?\*/\n(.*?)</style>", proto, re.S).group(1)
-pdp = re.search(r'(<div class="proto-bar">.*?)<div class="product-details__description">', proto, re.S).group(1)
-pdp = pdp.replace("../release/0.1.0/assets/", "assets/").replace(
-    "Prototype · unpublished draft · amber boxes are review items, removed from the Ecwid code",
+body = re.search(r'<body id="ecwid_body">\n(.*?)\n</body>', proto, re.S).group(1)
+body = re.sub(r"<!--DESC-->.*?<!--/DESC-->", lambda m: '<div class="product-details__description">\n' + prod + "\n</div>", body, flags=re.S)
+body = body.replace("../release/0.1.0/assets/", "assets/").replace(
+    "Prototype · unpublished draft · dashed boxes are review items, removed from the Ecwid code",
     "Preview · unpublished draft · not live · this is the code that would go into the Ecwid description")
 page = f"""<title>Baby &amp; Junior Preview</title>
 <style>
-body{{background:#fff;color:#0B1726}}
 @font-face{{font-family:"DBJChillax";font-style:normal;font-weight:400;font-display:swap;src:url({f400}) format("woff2")}}
 @font-face{{font-family:"DBJChillax";font-style:normal;font-weight:600;font-display:swap;src:url({f600}) format("woff2")}}
 {css}
 </style>
-{pdp}<div class="product-details__description">
-{prod}
-</div>
+{body}
 """
-page = page.replace('body{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#0B1726}', "")
+page = page.replace('body{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#003A68}', "body{background:#fff;color:#003A68}")
 (out / "baby-junior-preview.html").write_text(page)
 print(version, len(page) // 1024, "KB")

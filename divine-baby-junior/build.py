@@ -10,7 +10,7 @@ Usage: python3 build.py
 """
 import re, pathlib
 
-VERSION = "0.6.0"
+VERSION = "0.7.0"
 CDN = "https://cdn.jsdelivr.net/gh/Matrress/Animation@"
 FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"    # Chillax files already used by Hero 1.17.1 and Collection
 FONT400 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-400.woff2"
@@ -108,8 +108,8 @@ css = build_css(css_src, keep_review=True)
 prod_html = build_html(html_src, remote=True, keep_review=False)
 assert "dbj-rv" not in prod_html and "REVIEW" not in prod_html and "dbj-rv" not in css_prod
 assert "coir" not in prod_html.lower() and "coconut" not in prod_html.lower() and "coir" not in css_prod.lower()
-# palette guard: only the Bio Comfort white, cool greys and blues may appear (no dark, warm, brown, pink or orange tones)
-ALLOWED = {"003A68", "006591", "B2E3FB", "91E8F1", "D3DAE6", "E4E8F0", "F5F7FA", "E6F4FC", "FFFFFF", "FFF", "0B1726", "4A5A6E"}
+# palette guard: only the six Bio Comfort colours may appear as hex values (shades come from rgba of the same colours)
+ALLOWED = {"003A68", "006591", "B2E3FB", "91E8F1", "E4E8F0", "FFFFFF", "FFF"}
 used = {h.upper().lstrip("#") for h in re.findall(r"#[0-9A-Fa-f]{3,8}\b", css_prod)}
 assert used <= ALLOWED, f"colours outside the palette: {sorted(used - ALLOWED)}"
 prod = (f"<!-- Divine DunlopDreams · Dunlop Baby & Junior description {VERSION} · scoped to .dbj · no JavaScript -->"
@@ -138,32 +138,36 @@ html#ecwid_html body#ecwid_body h2, html#ecwid_html body#ecwid_body h3{{font-fam
 html#ecwid_html body#ecwid_body p{{line-height:2.4;margin:0 0 30px;font-size:13px}}
 html#ecwid_html body#ecwid_body ul li{{list-style:disc;margin-left:20px}}
 html#ecwid_html body#ecwid_body img{{border:4px solid #000;border-radius:0}}
-/* Prototype shell: an imitation of the Ecwid product page. It is not part of the Ecwid code. */
-body{{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#0B1726}}
-.proto-bar{{background:#003A68;color:#fff;font:600 12.5px/1.3 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;text-align:center}}
-.proto-pdp{{max-width:1180px;margin:0 auto;padding:32px 24px 8px;display:grid;gap:32px;grid-template-columns:1fr}}
-.proto-gallery{{display:grid;gap:10px}}
-.proto-main{{background:#F4F6FA;border-radius:22px;overflow:hidden}}
+/* Prototype shell: an imitation of the Ecwid product page (gallery and description on the left, options on the right,
+   the way Bio Comfort is laid out). It is not part of the Ecwid code. */
+body{{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#003A68}}
+.proto-bar{{background:#006591;color:#fff;font:600 12.5px/1.3 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;text-align:center}}
+.proto-pdp{{max-width:1180px;margin:0 auto;padding:32px 24px 8px;display:grid;gap:28px 48px;grid-template-columns:minmax(0,1fr);grid-template-areas:"gal" "buy" "desc"}}
+.proto-gallery{{grid-area:gal;display:grid;gap:10px}}
+.proto-main{{background:#fff;border:1px solid rgba(0,58,104,.18);border-radius:16px;overflow:hidden}}
 .proto-main img{{display:block;width:100%;height:auto;border:0!important}}
 .proto-thumbs{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}}
-.proto-thumbs div{{background:#F4F6FA;border-radius:14px;overflow:hidden;opacity:.9}}
-.proto-thumbs div:first-child{{box-shadow:0 0 0 2px #003A68}}
+.proto-thumbs div{{background:#fff;border:1px solid rgba(0,58,104,.18);border-radius:10px;overflow:hidden}}
+.proto-thumbs div:first-child{{border-color:#003A68}}
 .proto-thumbs img{{display:block;width:100%;height:auto;border:0!important}}
-.proto-buy h1{{font:600 28px/1.2 "DBJChillax",system-ui,sans-serif;color:#003A68;margin:0 0 8px}}
-.proto-price{{font:600 15px/1.4 system-ui;color:#34465C;letter-spacing:.12em;text-transform:uppercase;margin:0 0 20px}}
+.proto-buy{{grid-area:buy}}
+.proto-buy h1{{font:600 26px/1.2 "DBJChillax",system-ui,sans-serif;color:#003A68;margin:0 0 8px}}
+.proto-price{{font:600 14px/1.4 system-ui;color:rgba(0,58,104,.78);letter-spacing:.12em;text-transform:uppercase;margin:0 0 20px}}
 .proto-opt{{margin:0 0 16px}}
-.proto-opt label{{display:block;font:600 12.5px/1 system-ui;letter-spacing:.14em;text-transform:uppercase;color:#006591;margin-bottom:8px}}
-.proto-opt select{{width:100%;appearance:auto;padding:13px 12px;border:1px solid #D3DAE6;border-radius:10px;font:500 15px/1.2 system-ui;background:#fff;color:#0B1726}}
-.proto-cta{{display:block;text-align:center;background:#006591;color:#fff;border-radius:12px;padding:15px;font:600 14px/1 system-ui;letter-spacing:.12em;text-transform:uppercase;opacity:.55}}
-.proto-note{{font:400 13px/1.5 system-ui;color:#34465C;margin-top:10px}}
-.product-details__description{{max-width:1180px;margin:0 auto;padding:0 24px}}
-@media (min-width:860px){{.proto-pdp{{grid-template-columns:1.2fr 1fr;align-items:start}}}}
+.proto-opt label{{display:block;font:600 12px/1 system-ui;letter-spacing:.14em;text-transform:uppercase;color:#006591;margin-bottom:8px}}
+.proto-opt select{{width:100%;appearance:auto;padding:13px 12px;border:1px solid rgba(0,58,104,.18);border-radius:10px;font:500 15px/1.2 system-ui;background:#fff;color:#003A68}}
+.proto-cta{{display:block;text-align:center;background:#003A68;color:#fff;border-radius:10px;padding:15px;font:600 14px/1 system-ui;letter-spacing:.12em;text-transform:uppercase}}
+.proto-note{{font:400 13px/1.5 system-ui;color:rgba(0,58,104,.78);margin-top:10px}}
+.proto-desc{{grid-area:desc}}
+.proto-dh{{font:600 16px/1.3 system-ui;color:#003A68;margin:8px 0 14px;letter-spacing:0;text-transform:none;text-align:left}}
+.product-details__description{{padding:0}}
+@media (min-width:860px){{.proto-pdp{{grid-template-columns:minmax(0,730px) minmax(0,1fr);grid-template-areas:"gal buy" "desc buy"}}.proto-buy{{align-self:start;position:sticky;top:24px}}}}
 </style>
 <style>{css}</style>
 </head>
 <body id="ecwid_body">
-<div class="proto-bar">Prototype · unpublished draft · amber boxes are review items, removed from the Ecwid code</div>
-<div class="proto-pdp" aria-label="Simulated Ecwid product header (not part of the description)">
+<div class="proto-bar">Prototype · unpublished draft · dashed boxes are review items, removed from the Ecwid code</div>
+<div class="proto-pdp" aria-label="Simulated Ecwid product page (not part of the description)">
   <div class="proto-gallery">
     <div class="proto-main"><img src="{g_closed}" width="800" height="400" alt=""></div>
     <div class="proto-thumbs"><div><img src="{g_closed}" width="800" height="400" alt=""></div><div><img src="{g_open}" width="800" height="400" alt=""></div><div><img src="{g_heights}" width="800" height="400" alt=""></div></div>
@@ -176,9 +180,14 @@ body{{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#0B1726}}
     <span class="proto-cta">Add to bag</span>
     <p class="proto-note">This block imitates Ecwid's own gallery and dropdown options. It is not in the description code: prices, options and checkout stay with Ecwid.</p>
   </div>
-</div>
+  <div class="proto-desc">
+    <div class="proto-dh">Product Details</div>
+<!--DESC-->
 <div class="product-details__description">
 {proto_html}
+</div>
+<!--/DESC-->
+  </div>
 </div>
 </body>
 </html>
