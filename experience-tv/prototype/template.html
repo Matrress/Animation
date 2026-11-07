@@ -21,7 +21,9 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
 .product-details__sidebar { display: flex; flex-direction: column; gap: 16px; padding: 20px 22px 22px; background: #fff; border: 1px solid var(--line); border-radius: 18px; font-family: Arial, sans-serif; }
 .mock-tag { margin: 0; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
 .product-details__product-title { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 700; }
-.mock-price { font-size: 14px; color: var(--soft); padding: 12px 14px; border: 1px dashed var(--line); border-radius: 10px; }
+.mock-price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 14px; color: var(--soft); }
+.details-product-price__value { font-size: 26px; font-weight: 700; color: var(--ink); }
+.details-product-price__compare { font-size: 15px; text-decoration: line-through; color: var(--soft); }
 .details-product-option { border: 0; margin: 0; padding: 0; }
 .details-product-option__title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
 .details-product-option select { width: 100%; min-height: 46px; font-size: 15px; }
@@ -53,7 +55,10 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
         <!-- STAND-IN FOR NATIVE ECWID. The Experience TV never styles, moves or
              changes anything in this column; it only reads the chosen values. -->
         <h1 class="product-details__product-title">Botanic Experience TV | TEST DRAFT</h1>
-        <div class="mock-price">Price and discounts: rendered by Ecwid</div>
+        <div class="mock-price" title="Demo values from the mock page. Real price and discount come from Ecwid.">
+          <span class="details-product-price__value">£0.00</span>
+          <span class="details-product-price__compare"></span>
+        </div>
 
         <div class="product-details-module details-product-option details-product-option--Size">
           <div class="details-product-option__title">Size</div>
@@ -134,6 +139,27 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
 </script>
 <script>
 /*ENGINE_JS*/
+</script>
+<script>
+/*SCENES_JS*/
+</script>
+<script>
+/* MOCK ECWID PRICE: demonstration numbers only, so the prototype can show
+   the TV mirroring a price that changes with the choices. In the store the
+   price and any discount come from Ecwid; nothing here is a real price. */
+(function () {
+  function idx(sel) { var s = document.querySelector('.details-product-option--' + sel + ' select'); return s ? s.selectedIndex : 0; }
+  function update() {
+    var size = idx('Size'), depth = idx('Depth'), firm = idx('Firmness'), cover = idx('Covers');
+    var price = 400 + size * 14 + [0, 0, 60, 90][depth] + [0, 0, 0, 0, 0][firm] + [0, 0, 45, 70, 120][cover];
+    var cur = document.querySelector('.details-product-price__value');
+    var old = document.querySelector('.details-product-price__compare');
+    cur.textContent = '£' + price.toFixed(2);
+    old.textContent = '£' + (price / 0.9).toFixed(2);
+  }
+  document.addEventListener('change', update);
+  update();
+})();
 </script>
 <script>DDTV.boot();</script>
 </body>

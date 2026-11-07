@@ -13,11 +13,12 @@ content, and puts everything back for Classic View.
 | Path | What it is |
 |---|---|
 | `source/botanic-original-description.html` | Original description, verbatim. Single source of content. |
-| `products/botanic.config.js` | Everything specific to Botanic: chapters, screens, option matching, sync rules, media registry. |
-| `engine/ddtv-engine.js` / `.css` | Shared engine, no dependencies, ES5, all styles scoped. |
+| `products/botanic.config.js` | Everything specific to Botanic: chapters, which scene each screen uses, where its content is in the source, option matching, media registry, what is deliberately not shown. |
+| `engine/ddtv-engine.js` / `.css` | Shared shell: navigation, Ecwid connector (reads and drives the native options, reads the price), media, views. |
+| `engine/ddtv-scenes.js` / `.css` | Shared scene library: turns the description's content into screens made for the monitor. |
 | `prototype/template.html` | Mock Ecwid product page used for testing (not shipped). |
 | `tools/build.mjs` | Builds `dist/botanic-experience-tv-demo.html`, one self-contained file. |
-| `tests/smoke.mjs` | 99 automated checks across desktop, iPad, iPhone, including alignment, a pinned selection and that the Ecwid options column is untouched. |
+| `tests/smoke.mjs` | 104 automated checks across desktop, iPad, iPhone: every source text is on a screen, choices made in the TV reach Ecwid, the Ecwid column is untouched, no pills or circles. |
 | `docs/MASTER-PLAN.md` | Inventory, chapter matrix, media registry, architecture, layout plan, risks. **Read this first.** |
 
 ## Try it
@@ -45,6 +46,6 @@ NODE_PATH=$(npm root -g) node tests/smoke.mjs [screenshot-folder]
 
 ## Add another mattress
 
-Create `products/<model>.config.js` with the model's chapters and `take` selectors,
+Create `products/<model>.config.js` with the model's chapters, a scene per screen and the selectors of its content,
 option rules and media registry. The engine needs no changes for a different number of
 chapters.

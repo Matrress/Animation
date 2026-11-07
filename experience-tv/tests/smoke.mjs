@@ -1,7 +1,7 @@
 // Smoke test for the Experience TV prototype.
 //   node tools/build.mjs && node tests/smoke.mjs [screenshot-dir]
-// Uses the pre-installed Playwright + Chromium. External media may be
-// blocked in CI; the test checks structure and behaviour, not playback.
+// Uses the pre-installed Playwright + Chromium. External media is blocked,
+// so the test checks structure and behaviour, not video playback.
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -17,24 +17,72 @@ const shots = process.argv[2];
 if (shots) mkdirSync(shots, { recursive: true });
 
 let failures = 0;
+const ok = (cond, msg) => { console.log((cond ? 'PASS ' : 'FAIL ') + msg); if (!cond) failures++; };
 // Let transitions finish and move the pointer away before a screenshot.
 const settle = async (page) => { await page.mouse.move(0, 0); await page.waitForTimeout(450); return page; };
-const ok = (cond, msg) => { console.log((cond ? 'PASS ' : 'FAIL ') + msg); if (!cond) failures++; };
 
 const browser = await chromium.launch();
 
-async function open(viewport, extra = {}) {
+async function open(viewport, extra = {}, { splash = false, query = '' } = {}) {
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: 1, ...extra });
+  if (!splash) await ctx.addInitScript(() => sessionStorage.setItem('ddtv:botanic:splash', '1'));
   await ctx.route(/^https?:\/\//, (r) => r.abort()); // offline: no media, no fonts
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
-  await page.goto(url);
+  await page.goto(url + query);
   await page.waitForTimeout(300);
   return { ctx, page, errors };
 }
 
-/* ---------- Desktop ---------- */
+const NATIVE = {
+  size: '.details-product-option--Size select',
+  depth: '.details-product-option--Depth select',
+  firmness: '.details-product-option--Firmness select',
+  cover: '.details-product-option--Covers select',
+};
+const nativeText = (page, key) => page.evaluate((s) => { const el = document.querySelector(s); return el.selectedIndex > 0 ? el.options[el.selectedIndex].text : ''; }, NATIVE[key]);
+
+/* ====================================================================== */
+/* Nothing from the description is lost                                    */
+/* ====================================================================== */
+{
+  // Every sentence, label and number of the source must be on a screen,
+  // except what the config explicitly lists as not shown (with a reason).
+  const { ctx, page } = await open({ width: 1440, height: 900 });
+  const coverage = await page.evaluate(() => {
+    const T = DDTV.current, src = document.querySelector('#bp-top'), excl = T.product.notInTelevision || [];
+    const sels = excl.filter((x) => x.selector).map((x) => x.selector), strips = excl.filter((x) => x.strip).map((x) => x.strip);
+    const norm = (s) => { strips.forEach((r) => { s = s.replace(r, ' '); }); return s.toLowerCase().replace(/[^a-z0-9£%]+/g, ' ').trim(); };
+    const skip = (n) => sels.some((s) => { try { return n.closest(s); } catch (e) { return false; } });
+    let tv = '';
+    document.querySelectorAll('.ddtv__panel').forEach((p) => {
+      const w = document.createTreeWalker(p, NodeFilter.SHOW_TEXT);
+      let n;
+      while ((n = w.nextNode())) tv += ' ' + n.nodeValue;
+    });
+    tv = ' ' + norm(tv) + ' ';
+    const missing = [];
+    let checked = 0;
+    src.querySelectorAll('*').forEach((n) => {
+      if (['STYLE', 'SCRIPT', 'VIDEO', 'SOURCE'].includes(n.tagName.toUpperCase()) || n.closest('svg') || n.tagName.toLowerCase() === 'svg' || skip(n)) return;
+      if (!(n.children.length === 0 || n.tagName === 'P')) return;
+      const c = n.cloneNode(true);
+      c.querySelectorAll('br').forEach((b) => b.replaceWith(' '));
+      const t = norm(c.textContent);
+      if (!t) return;
+      checked++;
+      if (tv.indexOf(' ' + t + ' ') < 0) missing.push(n.tagName + '.' + n.className + ': ' + c.textContent.replace(/\s+/g, ' ').trim().slice(0, 70));
+    });
+    return { checked, missing };
+  });
+  ok(coverage.missing.length === 0, `every one of the ${coverage.checked} source texts is shown on a screen` + (coverage.missing.length ? ' — missing: ' + coverage.missing.slice(0, 6).join(' | ') : ''));
+  await ctx.close();
+}
+
+/* ====================================================================== */
+/* Desktop                                                                 */
+/* ====================================================================== */
 {
   const { ctx, page, errors } = await open({ width: 1440, height: 900 });
   ok(errors.length === 0, 'no page errors on desktop ' + errors.join(' | '));
@@ -50,129 +98,143 @@ async function open(viewport, extra = {}) {
   // "7-Zone" is a name; numbering looks like "01 —", "1.", "2)" or "A."
   const numbered = /^\s*(\d+\s*[.)—:]|0\d|[A-Z][.)]\s)/;
   ok(buttons.every((b) => !numbered.test(b)), 'no numbering on chapter buttons');
-  const heads = await page.evaluate(() => [...document.querySelectorAll('.ddtv__tab, .ddtv__title')].map((n) => n.textContent));
-  ok(heads.every((h) => !numbered.test(h)), 'no numbering in screen headings or tabs');
 
-  // Alignment: the top frame of the monitor starts exactly where the SIZE row starts
+  /* ---- layout ---- */
   const align = await page.evaluate(() => {
-    const screen = document.querySelector('.ddtv__screen').getBoundingClientRect().top;
-    const size = document.querySelector('.details-product-option--Size').getBoundingClientRect().top;
-    const layout = document.querySelector('.product-details__layout').getBoundingClientRect().top;
-    const header = document.querySelector('.ddtv-top').getBoundingClientRect().top;
-    const bar = document.querySelector('.ddtv__bar--top').getBoundingClientRect().top;
-    return { frame: Math.round(screen - size), lead: Math.round(header - layout), headerToBar: Math.round(bar - document.querySelector('.ddtv-top').getBoundingClientRect().bottom) };
+    const r = (s) => document.querySelector(s).getBoundingClientRect();
+    return { frame: Math.round(r('.ddtv__screen').top - r('.details-product-option--Size').top), lead: Math.round(r('.ddtv-top').top - r('.product-details__layout').top), gap: Math.round(r('.ddtv__bar--top').top - r('.ddtv-top').bottom) };
   });
   ok(Math.abs(align.frame) <= 1, 'monitor top frame aligned with the top of the SIZE row (' + align.frame + 'px)');
-  ok(align.lead <= 24, 'no empty band above the header row (' + align.lead + 'px from the top of the layout)');
-  ok(align.headerToBar <= 26, 'chapter buttons sit close under the header (' + align.headerToBar + 'px)');
+  ok(align.lead <= 24, 'no empty band above the header row (' + align.lead + 'px)');
+  ok(align.gap <= 26, 'chapter buttons sit close under the header (' + align.gap + 'px)');
   const compact = await page.evaluate(() => ({ btn: document.querySelector('.ddtv__bar--bottom .ddtv__btn').offsetHeight, sw: document.querySelector('.ddtv-switch button').offsetHeight }));
-  ok(compact.btn <= 44 && compact.sw <= 38, 'compact controls (button ' + compact.btn + 'px, switch ' + compact.sw + 'px) while text stays 13px or more');
-  const fonts = await page.evaluate(() => [...document.querySelectorAll('.ddtv__btn, .ddtv__tab, .ddtv__nav, .ddtv__play, .ddtv-switch button')].map((n) => parseFloat(getComputedStyle(n).fontSize)));
+  ok(compact.btn <= 44 && compact.sw <= 38, 'compact controls (button ' + compact.btn + 'px, switch ' + compact.sw + 'px)');
+  const fonts = await page.evaluate(() => [...document.querySelectorAll('.ddtv__btn, .ddtv__tab, .ddtv__nav, .ddtv__play, .ddtv-switch button, .sc-btn, .sc-topic')].map((n) => parseFloat(getComputedStyle(n).fontSize)));
   ok(Math.min(...fonts) >= 13, 'every control keeps a readable size (min ' + Math.min(...fonts) + 'px)');
-
-  // Product Details heading and description hidden in Interactive View
   ok(!(await page.locator('.product-details__description-title').isVisible()), 'Product Details heading hidden');
   ok(!(await page.locator('#bp-top').isVisible()), 'long description hidden in Interactive View');
 
-  // Every chapter and every internal panel has visible content
-  const chapters = await page.evaluate(() => DDTV.current.product.chapters.map((c) => ({ id: c.id, panels: c.panels.map((p) => p.id) })));
+  /* ---- every chapter and screen is built from the source ---- */
+  const chapters = await page.evaluate(() => DDTV.current.product.chapters.map((c) => ({ id: c.id, panels: c.panels.map((p) => ({ id: p.id, group: p.group || '', result: !!p.result })) })));
+  const total = chapters.reduce((n, c) => n + c.panels.length, 0);
+  const offenders = new Set();
+  let short = 0;
   for (const c of chapters) {
     await page.click(`.ddtv__btn[data-chapter="${c.id}"]`);
+    const groups = await page.locator('.ddtv__tabgroup').allTextContents();
+    const hasSelect = c.panels.some((p) => p.group === 'Select');
+    ok(hasSelect ? groups.join() === 'Select,Learn' : groups.length === 0, `${c.id}: Explore list ${hasSelect ? 'separates Select from Learn' : 'has no group labels'}`);
     for (let i = 0; i < c.panels.length; i++) {
-      await page.locator('.ddtv__tab').nth(i).click();
+      await page.evaluate(([cid, pid]) => DDTV.current.go(cid, pid), [c.id, c.panels[i].id]);
+      await page.waitForTimeout(60);
       const info = await page.evaluate(() => {
         const p = document.querySelector('.ddtv__panel.is-active');
-        return { id: p && p.dataset.panel, len: p ? p.innerText.trim().length : 0, visible: p && p.offsetHeight > 0 };
+        const bad = [];
+        for (const n of p.querySelectorAll('*')) {
+          const s = getComputedStyle(n), b = n.getBoundingClientRect();
+          const r = parseFloat(s.borderTopLeftRadius) || 0, m = Math.min(b.width, b.height);
+          if (r > 0 && m >= 8 && r >= m / 2 - 0.5 && !(n.tagName === 'IMG')) bad.push(n.className || n.tagName);
+        }
+        return { id: p.dataset.panel, len: p.textContent.trim().length, vis: p.offsetHeight > 0, bad };
       });
-      ok(info.id === c.panels[i] && info.len > 40 && info.visible, `${c.id}/${c.panels[i]} shows content (${info.len} chars)`);
-      if (shots && i === 0) await (await settle(page)).locator('.ddtv-wrap').screenshot({ path: join(shots, `desktop-${c.id}.png`) });
+      if (!(info.id === c.panels[i].id && info.len > 40 && info.vis)) short++;
+      info.bad.forEach((b) => offenders.add(c.id + ':' + b));
+      if (shots) await (await settle(page)).locator('.ddtv-wrap').screenshot({ path: join(shots, `desktop-${c.id}-${c.panels[i].id}.png`) });
     }
   }
+  ok(short === 0, `all ${total} screens render real content`);
+  ok(offenders.size === 0, 'no pills or circles anywhere on the screens' + (offenders.size ? ' (' + [...offenders].slice(0, 5).join(', ') + ')' : ''));
+  const shell = await page.evaluate(() => [...document.querySelectorAll('.ddtv-wrap *')].filter((n) => { const s = getComputedStyle(n), b = n.getBoundingClientRect(), r = parseFloat(s.borderTopLeftRadius) || 0, m = Math.min(b.width, b.height); return r > 0 && m >= 8 && r >= m / 2 - 0.5 && n.tagName !== 'IMG' && !n.closest('.ddtv__panel'); }).map((n) => n.className));
+  ok(shell.length === 0, 'no pills or circles in the shell either' + (shell.length ? ' (' + shell.slice(0, 4).join(', ') + ')' : ''));
 
-  // Ventilation: video visible immediately on opening the chapter
+  /* ---- Discover, video ---- */
   await page.click('.ddtv__btn[data-chapter="ventilation"]');
-  ok(await page.locator('.ddtv__panel.is-active video').isVisible(), 'ventilation video visible on chapter open');
-  const vidTop = await page.evaluate(() => {
-    const v = document.querySelector('.ddtv__panel.is-active video').getBoundingClientRect();
-    const vp = document.querySelector('.ddtv__viewport').getBoundingClientRect();
-    return v.top >= vp.top && v.bottom <= vp.bottom + 2;
-  });
-  ok(vidTop, 'ventilation video fully inside the screen without scrolling');
-
-  // Discover: full video plays inside the screen
+  ok(await page.locator('.ddtv__panel.is-active video').isVisible(), 'ventilation video visible as soon as the chapter opens');
+  ok(await page.evaluate(() => { const v = document.querySelector('.ddtv__panel.is-active video').getBoundingClientRect(), vp = document.querySelector('.ddtv__viewport').getBoundingClientRect(); return v.top >= vp.top && v.bottom <= vp.bottom + 2; }), 'ventilation video fully inside the screen without scrolling');
   await page.click('.ddtv__btn[data-chapter="discover"]');
-  await page.locator('.ddtv__tab').first().click();
-  await page.click('.ddtv a[href="#botanic-main-video-modal"]');
-  ok(await page.locator('.ddtv__overlay .b-video-modal.is-open').isVisible(), 'full video opens inside the screen');
-  ok(await page.evaluate(() => !!document.querySelector('.ddtv__overlay video source[src*="presentation-full"]')), 'full video source loaded on demand');
+  ok(await page.evaluate(() => !document.querySelector('.ddtv-player')), 'full video not created until asked for');
+  await page.click('.ddtv__panel.is-active .sc-play');
+  ok(await page.locator('.ddtv-player video').isVisible(), 'full video opens inside the monitor');
+  ok(await page.evaluate(() => /presentation-full\.mp4$/.test(document.querySelector('.ddtv-player video').getAttribute('src'))), 'it plays the original full presentation file');
   await page.keyboard.press('Escape');
-  ok(!(await page.locator('.ddtv__overlay').isVisible()), 'Escape closes the full video');
+  ok(await page.evaluate(() => !document.querySelector('.ddtv-player') && document.querySelector('.ddtv__overlay').hidden), 'Escape closes it and releases the file');
+  await page.click('.ddtv__panel.is-active .sc-hero .sc-btn--solid');
+  ok(await page.locator('.ddtv__btn[data-chapter="firmness"].is-active').count() === 1, 'hero "Choose Your Firmness" opens the Firmness chapter');
+  ok(await page.locator('.ddtv__tab.is-active').innerText() === 'Choose', '… on its choose screen');
 
-  // In-content anchor navigates to the chapter
-  await page.click('.ddtv .b-btn-hero-p');
-  ok(await page.locator('.ddtv__btn[data-chapter="firmness"].is-active').count() === 1, 'hero "Choose Your Firmness" opens Firmness chapter');
+  /* ---- selection and price: nothing assumed ---- */
+  const markup = () => { const c = document.querySelector('.product-details__sidebar').cloneNode(true); c.querySelectorAll('.details-product-price__value, .details-product-price__compare').forEach((n) => { n.textContent = ''; }); return c.outerHTML; };
+  const before = await page.evaluate(markup);
+  ok(await page.locator('.ddtv__chip.is-set').count() === 0, 'no selection assumed before the customer chooses');
+  ok(await page.locator('.ddtv__tab.has-value').count() === 0, 'no "ready" ticks before any choice');
+  const priceBefore = await page.locator('.ddtv__price-v').innerText();
+  ok(priceBefore === (await page.locator('.details-product-price__value').innerText()), 'price shown in the television is the price Ecwid shows (' + priceBefore + ')');
+  await page.click('.ddtv__tab:has-text("Your firmness")');
+  ok(await page.locator('.ddtv__panel.is-active .sc-empty').isVisible(), '"Your firmness" says nothing is chosen yet (no guess)');
+  await page.click('.ddtv__panel.is-active .sc-empty .sc-btn');
+  ok(await page.locator('.ddtv__tab.is-active').innerText() === 'Choose', 'its button leads to the choose screen');
 
-  // "Your selection" is pinned and fully visible on every chapter and screen
-  const pinned = async (label) => {
-    const r = await page.evaluate(() => {
-      const aside = document.querySelector('.ddtv__aside').getBoundingClientRect();
-      const chips = [...document.querySelectorAll('.ddtv__chip')].map((c) => c.getBoundingClientRect());
-      return { n: chips.length, inside: chips.every((c) => c.height > 0 && c.top >= aside.top - 1 && c.bottom <= aside.bottom + 1), vis: getComputedStyle(document.querySelector('.ddtv__mine')).visibility };
-    });
-    ok(r.n === 4 && r.inside && r.vis === 'visible', label + ': all four selection rows fully visible');
-  };
-  await pinned('before any choice');
-  for (const c of chapters) { await page.click(`.ddtv__btn[data-chapter="${c.id}"]`); if (c.id === 'discover' || c.id === 'delivery') await pinned('chapter ' + c.id); }
-  await page.click('.ddtv__btn[data-chapter="firmness"]');
+  /* ---- choosing inside the television drives the native control ---- */
+  await page.evaluate(() => { window.__native = []; document.querySelectorAll('.product-details__sidebar select').forEach((s) => s.addEventListener('change', () => window.__native.push(s.closest('.details-product-option').querySelector('.details-product-option__title').textContent))); });
+  await page.locator('.ddtv__panel.is-active .sc-seg', { hasText: 'Extra Firm' }).click();
+  ok((await nativeText(page, 'firmness')).startsWith('Extra Firm'), 'tapping Extra Firm in the TV sets the Ecwid dropdown (' + await nativeText(page, 'firmness') + ')');
+  await page.locator('.ddtv__panel.is-active .sc-seg:has(.sc-seg__n:text-is("Firm"))').click();
+  ok((await nativeText(page, 'firmness')).startsWith('Firm ·'), '"Firm" is not confused with "Extra Firm" (' + await nativeText(page, 'firmness') + ')');
+  ok(await page.locator('.ddtv__panel.is-active .sc-seg.is-selected .sc-seg__n').innerText() === 'Firm', 'the tapped range is shown as selected');
+  ok(await page.evaluate(() => window.__native.length) >= 2, 'Ecwid received real change events from the television');
+  ok(await page.locator('.ddtv__chip[data-opt="firmness"] .ddtv__chip-v').innerText() === 'Firm', '"Your selection" follows at once');
+  ok(await page.locator('.ddtv__tab[data-opt="firmness"].has-value').count() === 1, '"Your firmness" is ticked as ready');
+  await page.click('.ddtv__tab:has-text("Your firmness")');
+  ok(/Firm/.test(await page.locator('.ddtv__panel.is-active .sc-big').innerText()) && /88 – 114 kg/.test(await page.locator('.ddtv__panel.is-active .sc-result').innerText()), '"Your firmness" shows the chosen range from the source text');
 
-  // Ecwid sync: nothing selected yet
-  ok((await page.locator('.ddtv__chip.is-set').count()) === 0, 'no selection assumed before the customer chooses');
-  await page.selectOption('.details-product-option--Depth select', { index: 3 });
-  await page.waitForTimeout(200);
-  ok(await page.evaluate(() => { const c = document.querySelector('.ddtv__chip.is-set .ddtv__chip-v'); const a = document.querySelector('.ddtv__aside').getBoundingClientRect(); const r = c && c.getBoundingClientRect(); return !!c && /26/.test(c.textContent) && r.top >= a.top && r.bottom <= a.bottom; }), 'a choice appears in Your selection the moment it is made');
-  ok(await page.locator('.ddtv__chip.is-flash').count() === 1, 'the new choice is highlighted briefly');
-  await page.selectOption('.details-product-option--Firmness select', { index: 2 }); // Medium
-  await page.selectOption('.details-product-option--Depth select', { index: 2 }); // 24 cm
-  await page.selectOption('.details-product-option--Covers select', { index: 3 }); // Aloe Vera
-  await page.selectOption('.details-product-option--Size select', { index: 17 }); // Super King
-  await page.waitForTimeout(250);
-  ok(await page.evaluate(() => DDTV.current.chapterIndex) === 1, 'changing options does not move the customer off the current chapter');
-  const sync = await page.evaluate(() => ({
-    firm: [...document.querySelectorAll('.b-fc.ddtv-selected .b-fc__name')].map((n) => n.textContent.trim()),
-    depth: [...document.querySelectorAll('.b-hcol.ddtv-selected .b-hcol__cm')].map((n) => n.textContent.trim()),
-    size: [...document.querySelectorAll('.b-si.ddtv-selected .b-si__n')].map((n) => n.textContent.trim()),
-    cover: document.querySelector('#bp-cover-micro-3').checked,
-    chips: document.querySelectorAll('.ddtv__chip.is-set').length,
-    depthViz: [...document.querySelectorAll('.ddtv-depth__col.is-selected')].map((n) => n.dataset.depth),
-  }));
-  ok(sync.firm.join() === 'Medium', 'firmness card follows native selection (' + sync.firm + ')');
-  ok(sync.depth.join() === '24', 'height column follows native Depth (' + sync.depth + ')');
-  ok(sync.size.join() === 'Super King', 'size reference follows native Size (' + sync.size + ')');
-  ok(sync.cover, 'cover texture viewer shows the selected cover');
-  ok(sync.chips === 4, 'all four selection chips set');
-  ok(sync.depthViz.join() === '24', 'depth visualisation follows native Depth');
-
-  await page.selectOption('.details-product-option--Firmness select', { index: 4 }); // Extra Firm
+  await page.click('.ddtv__btn[data-chapter="height"]');
+  await page.locator('.ddtv__panel.is-active .sc-slabcard', { hasText: 'Deep Comfort' }).click();
+  ok((await nativeText(page, 'depth')) === '24 cm', 'height tapped in the TV sets the Ecwid dropdown');
+  await page.click('.ddtv__tab:has-text("Choose size")');
+  await page.locator('.ddtv__panel.is-active .sc-size', { hasText: '180 × 200' }).first().click();
+  ok((await nativeText(page, 'size')).includes('180 × 200'), 'size tapped in the TV sets the Ecwid dropdown');
+  ok(await page.locator('.ddtv__panel.is-active .sc-print').count() === 1, 'the chosen size is drawn to scale');
+  await page.click('.ddtv__btn[data-chapter="covers"]');
+  await page.locator('.ddtv__panel.is-active .sc-swatch', { hasText: 'Cotton & Wool' }).click();
+  ok((await nativeText(page, 'cover')) === 'Cotton & Wool', 'cover tapped in the TV sets the Ecwid dropdown');
+  ok(await page.locator('.ddtv__panel.is-active .sc-viewer__badge').textContent() === 'Selected', 'the texture viewer marks it as selected');
   await page.waitForTimeout(150);
-  ok((await page.evaluate(() => [...document.querySelectorAll('.b-fc.ddtv-selected .b-fc__name')].map((n) => n.textContent.trim()).join())) === 'Extra Firm', '"Extra Firm" is not confused with "Firm"');
+  ok(await page.locator('.ddtv__chip.is-set').count() === 4, 'all four choices appear in "Your selection"');
+  const priceAfter = await page.locator('.ddtv__price-v').innerText();
+  ok(priceAfter !== priceBefore && priceAfter === (await page.locator('.details-product-price__value').innerText()), 'the price follows Ecwid after the choices (' + priceBefore + ' → ' + priceAfter + ')');
+  const after = await page.evaluate(markup);
+  ok(after === before, 'Ecwid column markup is unchanged (price text aside, which Ecwid updates): only the chosen values moved');
 
+  // selection made in Ecwid's own dropdown reaches the television too
+  await page.selectOption(NATIVE.cover, { index: 3 });
+  await page.waitForTimeout(200);
+  await page.click('.ddtv__tab:has-text("Your cover")');
+  ok(await page.locator('.ddtv__panel.is-active .sc-big').innerText() === 'Aloe Vera + Cotton', 'a choice made in the Ecwid dropdown shows on "Your cover"');
+  ok(await page.locator('.ddtv__panel.is-active .sc-result .sc-facts dd').first().innerText() === '+2 cm total (1 cm top + 1 cm bottom)', 'cover facts come from the source text');
+  await page.click('.ddtv__btn[data-chapter="height"]');
+  ok(await page.locator('.ddtv__tab.is-active').innerText() === 'Choose height', 'changing options never moved the customer away from what they were reading');
+
+  /* ---- summary and brand ---- */
   await page.click('.ddtv__btn[data-chapter="delivery"]');
-  await page.locator('.ddtv__tab').nth(1).click();
-  const summary = await page.locator('.ddtv-summary').innerText();
-  ok(/Extra Firm/.test(summary) && /115\+ kg/.test(summary) && /Aloe Vera/.test(summary) && /24 cm/.test(summary), 'summary confirms the full configuration from content');
-  if (shots) await (await settle(page)).locator('.ddtv-wrap').screenshot({ path: join(shots, 'desktop-summary.png') });
+  await page.locator('.ddtv__tab:has-text("Your Botanic")').click();
+  const sum = await page.locator('.ddtv__panel.is-active .sc-sum').innerText();
+  ok(/Firm/.test(sum) && /24 cm/.test(sum) && /Aloe Vera/.test(sum) && /180/.test(sum) && /Every choice is made/.test(sum), 'summary confirms the whole configuration');
+  ok(/£/.test(await page.locator('.ddtv__panel.is-active .sc-sum__price').innerText()), 'summary shows the Ecwid price');
+  ok(await page.locator('.ddtv__panel.is-active .sc-sum__sign .ddtv-mark').innerText().then((t) => /Divine\s*DunlopDreams/.test(t)), 'the brand mark signs off the summary');
+  if (shots) await (await settle(page)).locator('.ddtv-wrap').screenshot({ path: join(shots, 'desktop-summary-done.png') });
 
-  // Play presentation advances on its own
-  await page.click('.ddtv__btn[data-chapter="comfort"]');
-  await page.evaluate(() => { DDTV.current.opts.tourMin = 300; DDTV.current.opts.tourMax = 300; });
+  /* ---- presentation ---- */
+  await page.evaluate(() => { DDTV.current.opts.tourMin = 250; DDTV.current.opts.tourMax = 250; });
+  await page.click('.ddtv__btn[data-chapter="firmness"]');
   await page.click('.ddtv__play');
-  await page.waitForTimeout(800);
-  const after = await page.evaluate(() => DDTV.current.product.chapters[DDTV.current.chapterIndex].id);
-  ok(after !== 'comfort' || (await page.evaluate(() => DDTV.current.panelIndex.comfort)) > 0, 'play presentation advances');
+  await page.evaluate(() => DDTV.current.step(1));
+  ok(await page.locator('.ddtv__tab.is-active').innerText() === 'Correct vs Softer', 'the presentation skips "Your …" screens');
+  await page.waitForTimeout(700);
+  ok(await page.evaluate(() => DDTV.current.playing), 'the presentation keeps going on its own');
   await page.click('.ddtv__btn[data-chapter="comfort"]');
   ok(!(await page.evaluate(() => DDTV.current.playing)), 'manual navigation pauses the presentation');
 
-  // Classic View restores the original page exactly once
+  /* ---- Classic View ---- */
   await page.click('.ddtv-switch button[data-view="classic"]');
   const classic = await page.evaluate(() => ({
     tv: document.querySelector('.ddtv').hidden,
@@ -181,105 +243,118 @@ async function open(viewport, extra = {}) {
     numbering: document.querySelector('#bp-firmness .b-sh__n').offsetParent !== null,
     order: [...document.querySelectorAll('#bp-top section[id^="bp-"]')].map((s) => s.id).join(','),
     firmSel: document.querySelectorAll('#bp-top .b-fc.ddtv-selected').length,
-    radio: document.querySelector('.details-product-option--Firmness select').selectedIndex === 4,
+    kept: document.querySelector('.details-product-option--Cover s select, .details-product-option--Covers select').selectedIndex,
+    inHeroFrame: !!document.querySelector('#bp-main-video-card .b-main-video-frame video'),
   }));
   ok(classic.tv, 'television hidden in Classic View');
   ok(classic.sections === 13, 'Classic View has all 13 original sections (' + classic.sections + ')');
-  ok(classic.videos === 7, 'exactly 7 videos in the page, no duplicates (' + classic.videos + ')');
+  ok(classic.videos === 7 && classic.inHeroFrame, 'the 7 original videos are back where they were, none duplicated (' + classic.videos + ')');
   ok(classic.numbering, 'original section numbering visible in Classic View');
   ok(classic.order === 'bp-firmness,bp-comfort,bp-height,bp-covers,bp-benefits,bp-support,bp-adaptation,bp-zones,bp-ventilation,bp-hygiene,bp-certs,bp-warranty,bp-delivery', 'original section order preserved');
-  ok(classic.radio, 'native selections untouched by view switch');
-  ok(classic.firmSel === 1, 'selection highlight also shown in Classic View');
+  ok(classic.kept === 3, 'selections kept when switching view');
+  ok(classic.firmSel === 1, 'the customer\'s firmness is highlighted on the original card in Classic View');
   if (shots) await (await settle(page)).screenshot({ path: join(shots, 'desktop-classic.png') });
-
   await page.click('.ddtv-switch button[data-view="interactive"]');
-  ok(await page.locator('.ddtv').isVisible(), 'switch back to Interactive View');
-  ok(await page.evaluate(() => document.querySelectorAll('video').length) === 7, 'still 7 videos after round trip');
-
-  if (shots) {
-    await page.click('.ddtv__btn[data-chapter="discover"]');
-    await page.locator('.ddtv__tab').first().click();
-    await (await settle(page)).screenshot({ path: join(shots, 'desktop-page.png') });
-  }
+  ok(await page.locator('.ddtv').isVisible() && await page.evaluate(() => document.querySelectorAll('video').length) === 7, 'back to Interactive View, still 7 videos');
+  ok(await page.locator('.ddtv__chip.is-set').count() === 4, 'choices survive a view round trip');
   await ctx.close();
 }
 
-/* ---------- iPad landscape and portrait ---------- */
+/* ====================================================================== */
+/* Brand moment                                                            */
+/* ====================================================================== */
+{
+  const { ctx, page } = await open({ width: 1440, height: 900 }, {}, { splash: true });
+  const shown = await page.evaluate(() => { const b = document.querySelector('.ddtv__brand'); return b.classList.contains('is-on') && /Divine\s*DunlopDreams/.test(b.textContent) && getComputedStyle(b).pointerEvents === 'none'; });
+  ok(shown, 'the brand mark appears when the television first opens, without blocking input');
+  await page.click('.ddtv__btn[data-chapter="comfort"]');
+  ok(await page.locator('.ddtv__btn[data-chapter="comfort"].is-active').count() === 1, 'the chapter buttons work while it is showing');
+  await page.waitForTimeout(1800);
+  ok(await page.evaluate(() => document.querySelector('.ddtv__brand').hidden), 'it fades away on its own');
+  await ctx.close();
+}
+
+/* ====================================================================== */
+/* iPad landscape and portrait                                             */
+/* ====================================================================== */
 for (const [name, vp] of [['ipad-landscape', { width: 1180, height: 820 }], ['ipad-portrait', { width: 820, height: 1180 }]]) {
   const { ctx, page, errors } = await open(vp, { hasTouch: true });
   ok(errors.length === 0, `no page errors on ${name}`);
   ok(await page.locator('.ddtv').isVisible(), `television visible on ${name}`);
-  const fits = await page.evaluate(() => document.querySelector('.ddtv').getBoundingClientRect().height <= window.innerHeight);
-  ok(fits, `television fits within the ${name} viewport`);
-  const noHScroll = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
-  ok(noHScroll, `no horizontal page scroll on ${name}`);
-  for (const sel of [0, 1, 2, 3]) await page.selectOption(['.details-product-option--Size', '.details-product-option--Depth', '.details-product-option--Firmness', '.details-product-option--Covers'][sel] + ' select', { index: 1 });
-  await page.waitForTimeout(200);
-  const padOk = await page.evaluate(() => { const a = document.querySelector('.ddtv__aside').getBoundingClientRect(); return [...document.querySelectorAll('.ddtv__chip.is-set')].length === 4 && [...document.querySelectorAll('.ddtv__chip')].every((c) => c.getBoundingClientRect().bottom <= a.bottom + 1); });
-  ok(padOk, `all four choices visible in Your selection on ${name}`);
+  ok(await page.evaluate(() => document.querySelector('.ddtv').getBoundingClientRect().height <= window.innerHeight), `television fits within the ${name} viewport`);
+  ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `no horizontal page scroll on ${name}`);
+  await page.tap('.ddtv__btn[data-chapter="firmness"]');
+  await page.locator('.ddtv__panel.is-active .sc-seg', { hasText: 'Medium' }).tap();
+  await page.tap('.ddtv__btn[data-chapter="height"]');
+  await page.locator('.ddtv__panel.is-active .sc-slabcard').nth(1).tap();
+  await page.tap('.ddtv__btn[data-chapter="covers"]');
+  await page.locator('.ddtv__panel.is-active .sc-swatch').nth(2).tap();
+  await page.tap('.ddtv__tab:has-text("Choose")');
+  await page.waitForTimeout(150);
+  ok(await page.evaluate(() => { const a = document.querySelector('.ddtv__aside').getBoundingClientRect(); return document.querySelectorAll('.ddtv__chip.is-set').length === 3 && [...document.querySelectorAll('.ddtv__chip')].every((c) => c.getBoundingClientRect().bottom <= a.bottom + 1); }), `choices made by touch show in Your selection on ${name}`);
+  const fits = await page.evaluate(() => {
+    // each screen must stay inside the monitor horizontally (no sideways scrolling)
+    const bad = [];
+    for (const p of document.querySelectorAll('.ddtv__panel')) { if (p.scrollWidth > p.clientWidth + 2) bad.push(p.dataset.chapter + '/' + p.dataset.panel); }
+    return bad;
+  });
+  ok(fits.length === 0, `no screen scrolls sideways on ${name}` + (fits.length ? ': ' + fits.join(',') : ''));
   if (shots) {
-    await page.click('.ddtv__btn[data-chapter="firmness"]');
-    await (await settle(page)).locator('.ddtv-wrap').screenshot({ path: join(shots, `${name}-firmness.png`) });
+    for (const [c, pn] of [['firmness', 'choose'], ['covers', 'choose'], ['height', 'sizes'], ['zones', 'map']]) {
+      await page.evaluate(([c, pn]) => DDTV.current.go(c, pn), [c, pn]);
+      await (await settle(page)).locator('.ddtv-wrap').screenshot({ path: join(shots, `${name}-${c}-${pn}.png`) });
+    }
   }
   await ctx.close();
 }
 
-/* ---------- iPhone: Classic View only ---------- */
+/* ====================================================================== */
+/* iPhone: Classic View only                                               */
+/* ====================================================================== */
 {
   const { ctx, page, errors } = await open(devices['iPhone 13'].viewport, { ...devices['iPhone 13'], deviceScaleFactor: 1 });
   ok(errors.length === 0, 'no page errors on iPhone');
   ok(!(await page.locator('.ddtv').isVisible()), 'no television on iPhone');
   ok(!(await page.locator('.ddtv-switch').isVisible()), 'no view switch on iPhone');
   ok(await page.locator('#bp-firmness').isVisible(), 'Classic View content visible on iPhone');
-  const parked = await page.evaluate(() => document.querySelectorAll('video[data-ddtv-parked]').length);
-  ok(parked >= 6, 'off-screen videos deferred on iPhone (' + parked + ' parked)');
-  const noHScroll = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
-  ok(noHScroll, 'no horizontal page scroll on iPhone');
+  ok(await page.evaluate(() => document.querySelectorAll('video[data-ddtv-parked]').length) >= 6, 'off-screen videos deferred on iPhone');
+  ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'no horizontal page scroll on iPhone');
   if (shots) await (await settle(page)).screenshot({ path: join(shots, 'iphone.png') });
   await ctx.close();
 }
 
-/* ---------- Kill switch ---------- */
+/* ====================================================================== */
+/* Kill switch, and the native column with the engine off / on             */
+/* ====================================================================== */
 {
-  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-  await ctx.route(/^https?:\/\//, (r) => r.abort());
-  const page = await ctx.newPage();
-  await page.goto(url + '?ddtv=off');
-  ok((await page.locator('.ddtv').count()) === 0 && (await page.locator('#bp-top').isVisible()), '?ddtv=off leaves the original page untouched');
-  await ctx.close();
-}
-
-/* ---------- The native Ecwid selection column is never touched ---------- */
-{
-  // Snapshot markup, inline styles, computed look and geometry of every
-  // control in the options column, with the engine off and on, in both views.
   const snapshot = () => {
     const side = document.querySelector('.product-details__sidebar');
     const r = side.getBoundingClientRect();
-    const look = [...side.querySelectorAll('*')].map((n) => {
-      const s = getComputedStyle(n);
-      const b = n.getBoundingClientRect();
+    const clone = side.cloneNode(true);
+    clone.querySelectorAll('.details-product-price__value, .details-product-price__compare').forEach((n) => { n.textContent = ''; });
+    const look = [...side.querySelectorAll('*')].filter((n) => !n.closest('.mock-price')).map((n) => {
+      const s = getComputedStyle(n), b = n.getBoundingClientRect();
       return [n.tagName, s.display, s.visibility, s.fontSize, s.color, s.backgroundColor, s.borderRadius, Math.round(b.width), Math.round(b.height)].join('|');
     });
-    return { html: side.outerHTML, box: [r.left, r.width, r.height].map(Math.round).join(','), look: look.join('\n') };
+    return { html: clone.outerHTML, box: [r.left, r.width, r.height].map(Math.round).join(','), look: look.join('\n') };
   };
   const take = async (q, act) => {
-    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-    await ctx.route(/^https?:\/\//, (r) => r.abort());
-    const page = await ctx.newPage();
-    await page.goto(url + q);
-    await page.waitForTimeout(300);
+    const { ctx, page } = await open({ width: 1440, height: 900 }, {}, { query: q });
     if (act) await act(page);
     const s = await page.evaluate(snapshot);
+    const killed = (await page.locator('.ddtv').count()) === 0 && (await page.locator('#bp-top').isVisible());
     await ctx.close();
-    return s;
+    return { ...s, killed };
   };
   const off = await take('?ddtv=off');
+  ok(off.killed, '?ddtv=off leaves the original page untouched');
   const on = await take('');
   const classic = await take('', (p) => p.click('.ddtv-switch button[data-view="classic"]'));
-  ok(on.html === off.html && classic.html === off.html, 'Ecwid options column markup identical with the TV on, off and in Classic View');
-  ok(on.look === off.look && classic.look === off.look, 'Ecwid controls keep exactly their own styling (computed styles identical)');
-  ok(on.box === off.box, 'Ecwid options column keeps its position and size (' + on.box + ')');
+  const touched = await take('', async (p) => { await p.click('.ddtv__btn[data-chapter="firmness"]'); await p.locator('.ddtv__panel.is-active .sc-seg').nth(1).click(); await p.click('.ddtv__btn[data-chapter="discover"]'); });
+  ok(on.html === off.html && classic.html === off.html, 'Ecwid options column markup identical with the TV off, on and in Classic View');
+  ok(on.look === off.look && classic.look === off.look && touched.look === off.look, 'Ecwid controls keep exactly their own styling and size');
+  ok(on.box === off.box && touched.box === off.box, 'Ecwid options column keeps its position and size (' + on.box + ')');
+  ok(touched.html === off.html, 'after a choice made in the TV the Ecwid markup is still identical (only the chosen value changed)');
 }
 
 await browser.close();

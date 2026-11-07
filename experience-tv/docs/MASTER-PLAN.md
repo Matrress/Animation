@@ -72,39 +72,52 @@ All CSS-only, no JavaScript:
 
 ## 2. Chapter-by-Chapter Definition Matrix
 
-Every main button opens its chapter on its **lead screen** (the screen with the
-chapter's main visual). Each chapter has internal tabs. Content is moved, never copied.
-Classic View for every chapter is the original section, in original order, with numbering.
+Each main button opens its chapter on its **lead screen**. Each chapter has internal screens
+listed in the Explore sidebar. Chapters that contain a selection keep **Select** (the customer
+chooses, or sees the choice as a result) apart from **Learn** (explanation and presentation).
 
-| Button | Source | Purpose | Internal screens (tabs) | Primary visual | Media | Ecwid link | Acceptance (automated, `tests/smoke.mjs`) |
-|---|---|---|---|---|---|---|---|
-| Discover | `#bp-top .b-hero`, `.b-ocard`, key-features bar | Introduce Botanic, play the presentation | Introduction · At a Glance | Hero with main video card | Loop preview autoplays muted; full video opens inside the screen with sound and controls | None | Loads first; full video opens in-screen, loads only on demand, Escape closes; hero buttons open their chapters |
-| Firmness | `#bp-firmness` | Firmness by individual body weight | By Body Weight · Correct vs Softer · How It Works · Who It Is For | 4 firmness cards + decision row | – | Firmness | Selected card highlighted; "Extra Firm" never matches "Firm" |
-| Comfort | `#bp-comfort` | What comfort to expect | What To Expect · Latex Behaviour | Comfort card | – | – | Content present |
-| Height | `#bp-height` | Depth choice and reference sizes | Heights · Why Height Matters · Sizes | **Depth Visualisation** (engine component) + height table | – | Depth, Size | Selected depth highlighted in table and visual; size highlighted in reference grid |
-| Covers | `#bp-covers` | Cover materials and the cover system | Textures · Materials · Cover System | Original cover micro-slider | 4 texture images | Covers | Slider shows the native selection; selected tab badged; materials card highlighted |
-| Benefits | `#bp-benefits` | Why organic latex | Origin · Why Latex | Origin video beside the benefit cards | `natural-latex-milk-to-foam-origin.mp4` | – | Video visible on open |
-| Support | `#bp-support` | Bearing force (kept distinct from Firmness) | Bearing Force · Support + Adaptation | Benefit cards, data row | – | – | Content present |
-| Adaptation | `#bp-adaptation` | Elasticity and instant response | Elasticity · How It Feels | Elasticity video | `natural-latex-elasticity-adjustable-bed.mp4` | – | Video visible on open |
-| 7-Zone | `#bp-zones` | Seven calibrated zones | Zone Map · Zone By Zone | Original zone grid + video | `natural-latex-7-zone-spinal-alignment.mp4` | – | Video visible on open |
-| Ventilation | `#bp-ventilation` | Airflow and microclimate | Airflow · Why It Matters (includes ventilation chart) | **Airflow video first** | `natural-latex-airflow-ventilation-channels.mp4` | – | Video fully inside the screen without scrolling |
-| Hygiene | `#bp-hygiene` | Cleaner sleep, realistic claims | Cleaner Sleep · Realistic Picture | Benefit cards, data row | – | – | Content present |
-| Certifications | `#bp-certs` | Certifications, testing, production origin | Certifications · Where It Is Made | Durability video beside cards | `natural-latex-durability-pressure-test.mp4` | – | Video visible on open |
-| Warranty | `#bp-warranty` | Warranty and gift | Warranty + Gift · Conditions | Warranty + pillows cards | – | – | Conditions (nested details) present in full |
-| Delivery | `#bp-delivery`, `.b-cta` | Made to order; the customer's own Botanic | Made To Order · Your Botanic | **Selection Summary** (engine component) + original CTA | Cover texture thumbnail from source | All four | Summary reads values and ranges from the content; shows what is still open |
+The screens are composed from the content of the description; they are not the description's
+cards moved into a frame. Every screen below is built by a scene from `ddtv-scenes.js`.
+Classic View of every chapter is the original section, in original order, with numbering.
 
-Not shown inside the television (kept in Classic View), with reason:
+| Button | Screens (Explore list) | What each screen is | Media | Native Ecwid option |
+|---|---|---|---|---|
+| Discover | Introduction · At a Glance | Dark hero with the loop video, "Watch Full Video" plays the original full file in the monitor · facts and the six key features as shortcuts | loop (autoplay), full (on demand) | – |
+| Firmness | **Select:** Choose · Your firmness — **Learn:** Correct vs Softer · How It Works · Who It Is For | One weight scale, tap the range that holds your weight (sets Ecwid) with each range explained and the two decision notes · result screen · statement + analogy · explanation as one page · "for / not for" side by side | – | Firmness |
+| Comfort | What To Expect · Latex Behaviour | Large editorial statement · six topics, pick one to read | – | – |
+| Height | **Select:** Choose height · Your height · Choose size — **Learn:** Why Height Matters | Three depths drawn to scale, tap one (sets Ecwid) · result with big figure and the cross-section · all 22 sizes as tap targets with the chosen one drawn to scale · explanation | – | Depth, Size |
+| Covers | **Select:** Choose cover · Your cover — **Learn:** Materials · Cover System | Large texture viewer, tap a cover (sets Ecwid) · result: texture, description, cover facts · the four materials side by side · cover-system topics | 4 textures | Covers |
+| Benefits | Origin · Why Latex | Video beside six points that open one at a time · four topics | origin loop | – |
+| Support | Bearing Force · Support + Adaptation | Four cards · explanation with two key figures | – | – |
+| Adaptation | Elasticity · How It Feels | Video beside four points · explanation | elasticity loop | – |
+| 7-Zone | Zone Map · Zone By Zone | Seven zones as a head-to-feet strip, tap a zone for its note and text, with the video · overview, zone by zone, additional effects | 7-zone loop | – |
+| Ventilation | Airflow · Why It Matters | **Video first**, four points beside it · explanation with the animated comparison bars | airflow loop | – |
+| Hygiene | Cleaner Sleep · Realistic Picture | Four cards · explanation with the two figures | – | – |
+| Certifications | Certifications · Where It Is Made | Video beside five certifications · four topics with the key-facts table kept in view | durability loop | – |
+| Warranty | Warranty + Gift · Conditions | Two large numerals · conditions as one page | – | – |
+| Delivery | Made To Order · Your Botanic | Statement and production note · **summary of the customer's configuration** with price (from Ecwid), brand sign-off | – | all four |
 
-| Element | Reason |
+**Select and Learn are different screens on purpose.** A "Choose" screen presents the options
+and acts: tapping Cotton & Wool, 24 cm or Medium sets the native Ecwid control, exactly as if
+the customer had used it. A "Your …" screen shows the result of the choice (and says plainly
+when nothing is chosen yet). Explanations never choose anything.
+
+**Nothing is lost.** `tests/smoke.mjs` takes every text in the description (387 of them:
+headings, sentences, labels, numbers) and checks it is on a screen. What the television
+deliberately does not show is listed with a reason in `notInTelevision` (config):
+
+| Not shown | Reason |
 |---|---|
-| Section navigation bar (`nav.b-hero-bar`) | Replaced by the chapter buttons |
-| Leaf dividers | Decoration between long-page sections |
-| Floating Back to Top | The television does not scroll the page |
+| Section navigation bar | Replaced by the chapter buttons |
+| Leaf dividers, floating Back to Top, Back to Top button | Long-page decoration and scrolling |
 | Section numbers `01 —` … `13 —` | Specification: no numbering in Interactive View |
+| Zone codes Z1–Z7 | The zone strip shows position head to feet instead (a decision for you) |
+| Page overlay's close "×"; duplicate "Choose Firmness" on the video card | The monitor has its own; duplicate of the hero button |
+| "All standard sizes — for reference only" and "Select your size from the dropdown menu above…" | The television now lets the customer choose a size, so the sentences would be wrong (a decision for you) |
 
-**Silent-omission guard.** At start-up the engine audits the source: every `section[id]`
-must map to a chapter, every registered media URL must exist in the source, and every
-media file in the source must be registered. The prototype reports zero issues.
+**Silent-omission guards.** At start-up the engine audits the source (every section mapped,
+every registered media URL present, every media file registered), and the test above checks
+every text.
 
 ---
 
@@ -139,86 +152,105 @@ Verified: 7 videos in the page before and after switching views.
 
 ---
 
-## 4. Existing Visual Component Inventory
+## 4. Original components and where their content goes
 
-| Component | Source class | Where in the TV | Notes |
-|---|---|---|---|
-| Hero | `.b-hero` | Discover / Introduction | Two-column, compacted for the screen |
-| Main video card + full-video modal | `.b-main-video-card`, `.b-video-modal` | Discover | Modal opens inside the screen instead of full page |
-| Configuration overview card | `.b-ocard` | Discover / At a Glance | Static list from the source |
-| Key features bar | `.b-hero-bar` (div) | Discover / At a Glance | Links jump to chapters |
-| Firmness notice, analogy, cards, decision row | `.b-fconf*`, `.b-fc`, `.b-fdecision` | Firmness | Cards synced to native Firmness |
-| "Who is it for" panel | `.b-dstack--who` | Firmness | Keeps dark heading |
-| Comfort card | `.b-comfort-card` | Comfort | – |
-| Height table | `.b-htable` | Height | Synced to native Depth |
-| Size reference grid | `.b-sgrid` | Height / Sizes | Synced to native Size |
-| Cover micro-slider | `.b-cover-micro` | Covers / Textures | Same radios; set from native Covers |
-| Cover menus | `.b-cover-menus` | Covers / Materials | Shown open; selected one highlighted |
-| Benefit grid | `.b-bgrid` | Benefits, Support, Adaptation, Ventilation, Hygiene | – |
-| Micro-TV video card | `.b-mtv` | Benefits, Adaptation, 7-Zone, Ventilation, Certifications | Video placed first and kept in view |
-| Zone grid | `.b-zone-grid` | 7-Zone | Original component, unchanged structure |
-| Certification cards | `.b-cert` | Certifications | – |
-| Info tables | `.b-itab` | Covers, Certifications | – |
-| Ventilation chart | `.b-vchart` | Ventilation / Why It Matters | – |
-| Data rows | `.b-drow` | Support, Hygiene | – |
-| Warranty cards | `.b-wc` | Warranty | Nested details become the Conditions screen |
-| CTA | `.b-cta` | Delivery / Your Botanic | Buttons jump to chapters inside the TV |
+The original CSS components (cards, expanders, micro-slider) were designed for a long product
+page. Interactive View keeps their **content** and gives it a layout made for a screen.
 
-New, engine-owned (reusable): **Depth Visualisation** (`depthProfile`) and **Selection
-Summary** (`selectionSummary`). Both read their numbers from the content, not from code.
+| Original component | Source class | New screen |
+|---|---|---|
+| Hero, main video card, full-video modal | `.b-hero`, `.b-main-video-card`, `.b-video-modal` | `hero`: copy, loop video, "Watch Full Video" plays the file from the modal's URL in the monitor |
+| Configuration overview card, key-features bar | `.b-ocard`, `.b-hero-bar` | `facts`: fact tiles and feature shortcuts |
+| Firmness cards, decision row, notice, analogy | `.b-fc`, `.b-fdecision`, `.b-fconf*` | `choose` (weight scale) · `result` · `reader` (statement + analogy) |
+| "Who is it for" | `.b-dstack--who` | `reader` split: for / not for |
+| Height table, size grid | `.b-hcol`, `.b-sgrid` | `choose` (depths to scale) · `result` · `choose` (sizes with to-scale drawing) |
+| Cover micro-slider, cover menus, cover facts | `.b-cover-micro`, `.b-cover-menu`, `.b-itab` | `choose` (texture viewer) · `result` · `compare` · `reader` |
+| Benefit / support / hygiene cards | `.b-bi` | `points` (cards, or points beside a video) |
+| Micro-TV video cards | `.b-mtv` | Video figure inside `points` and `zones` (the same `<video>` element, moved, never cloned) |
+| Zone grid and zone-by-zone text | `.b-zone-pill`, details | `zones` explorer |
+| Certification cards, info tables | `.b-cert`, `.b-itab` | `points` with video · key facts beside the topics |
+| Ventilation chart, data rows | `.b-vchart`, `.b-drow` | Animated bars · key-figure tiles |
+| Warranty cards | `.b-wc` | `numerals` |
+| Expandable explanations | `details` | `reader`: topics picked from a list, or one flowing page |
+| CTA | `.b-cta` | Closing statement of `summary` |
 
 ---
 
 ## 5. Universal Engine Architecture
 
 ```
-engine/ddtv-engine.js   shared, product-agnostic (≈ 48 KB unminified, no dependencies, ES5)
-engine/ddtv-engine.css  shared styles, all scoped under .ddtv-wrap / ddtv-
-products/<model>.config.js  everything specific to one mattress
-source/<model>-original-description.html  the content, untouched
+engine/ddtv-engine.js    shell, navigation, Ecwid connector, media, views     (shared)
+engine/ddtv-scenes.js    scene library: reads the source, composes screens    (shared)
+engine/ddtv-engine.css   shell styles                                          (shared)
+engine/ddtv-scenes.css   screen styles                                         (shared)
+products/<model>.config.js   chapters, which scene each screen uses, where its content is
+source/<model>-original-description.html   the content, untouched
 ```
+
+No dependencies, ES5, all styles scoped. About 150 KB unminified (JS 94 KB, CSS 56 KB); minifying and compressing is part of Phase H.
 
 | Module | Responsibility |
 |---|---|
-| **Relocator** | Moves original nodes into TV panels behind comment markers; restores them in reverse order. One copy of all content; reversible. |
-| **ConfigConnector** | Reads native Ecwid option blocks (title → key by regex; value from checked radio / selected option / pressed swatch). Normalises values (firmness id, depth cm, size dims, cover index). Never writes to Ecwid. |
-| **MediaManager** | Parks every video at start (removes `src` so nothing downloads), plays only the active screen's loops, loads the full video on demand; IntersectionObserver in Classic View/phones. Respects reduced motion. |
-| **Television** | Builds the device: two button rows (split automatically from any number of chapters), screen header with selection chips and internal tabs, viewport, footer with Previous / Play presentation / Next. Handles anchors, keyboard, overlay video, view switching, layout measurement. |
-| **Components** | Registry for configuration-aware visuals. `depthProfile`, `selectionSummary`; new ones are added once and used by any model. |
-| **Audit** | No-silent-omission check at start-up (`DDTV.current.report`). |
-| **Bootstrap** | `DDTV.boot()` uses `Ecwid.OnPageLoaded` and starts only for product IDs listed in a config. `?ddtv=off` kill switch, `?ddtv=classic` for testing. Any error leaves Classic View in place. |
+| **Scenes** | A scene is a function that turns *where the content is* (selectors from the config) into a screen: `hero`, `facts`, `points`, `reader`, `choose`, `result`, `compare`, `zones`, `numerals`, `summary`. It reads text, numbers and media addresses from the description; no wording lives in code. A broken scene shows a notice on that one screen only. |
+| **ConfigConnector** | Reads the native Ecwid options (value from select / radio / swatch) and normalises them. When the customer taps a choice in the TV it activates the matching native option (value + `input`/`change` events). Reads the price and discount text Ecwid renders. Never moves or restyles anything. |
+| **Relocator** | Only for media: moves the original `<video>` into a screen and back, so there is one instance of each video. |
+| **MediaManager** | Every video is parked at start (nothing downloads), only the active screen's loops play, the full video is created on demand and released on close. |
+| **Television** | Two button rows (columns follow the chapter count), monitor with Explore sidebar, pinned "Your selection" and price, footer, presentation tour, measured alignment and height, view switching, brand moments. |
+| **Audit + tests** | Start-up audit of sections and media; the test suite checks every source text is on a screen. |
+| **Bootstrap** | `DDTV.boot()` uses `Ecwid.OnPageLoaded`, starts only for product IDs in a config. `?ddtv=off` kill switch. Any error leaves Classic View in place. |
 
-**Adding another model** = one config file: chapter list with `take` selectors, option
-matching, value tables, sync rules, media registry. No engine change for 9, 12 or 14
-chapters (button rows split and compact themselves; verified with Botanic's 14).
+**Adding another model** = one config file (chapters, scene per screen, selectors, option
+matching, media registry). No engine change for 9, 12 or 14 chapters.
+
+### Design language of the screens
+
+- **Shape:** rounded corners only (6 / 10 / 14 / 18 px). No pills, no circles; verified for
+  every element of every screen by the tests.
+- **Colour:** snow graphite with a tropical-night blue accent, no green. The description's own
+  palette is untouched in Classic View.
+- **Type:** Chillax; 13 px is the smallest control text, body text 15–16.5 px.
+- **Layout:** each screen adapts to the width of the screen itself (container queries) so the
+  monitor works beside the options panel on desktop and iPad, landscape and portrait.
+- **Motion:** restrained (fades, bars growing, slabs lifting); off with reduced-motion.
+- **Brand:** the Divine DunlopDreams mark appears at three moments (opening the television,
+  starting the presentation, completing a configuration) and signs off "Your Botanic". It is a
+  wordmark until the logo file is supplied (`brand.logo` in the config).
 
 ### Customer-facing behaviour
 
-- Chapter buttons show a dot once visited, so the customer sees where they have been.
-- The position is remembered for the session; switching views and back returns to it.
-- "Play presentation" walks through every screen in order, timed by the amount of text
-  (7–22 s); any manual navigation pauses it.
-- Previous/Next name the destination ("Next: Correct vs Softer"), crossing chapters.
-- Changing an option never moves the customer away from the chapter they are reading;
-  the matching selection chip pulses instead.
-- Before a choice is made, nothing is assumed: chips show "—" and the summary lists what
-  is still open.
+- Choose on the TV or in Ecwid's own dropdown: both end in the same native selection.
+- "Your selection" and the price (as Ecwid shows it) are pinned at the foot of the Explore
+  sidebar on every screen; a choice appears there the moment it is made.
+- Result tabs ("Your firmness" …) show a tick once the option is chosen.
+- Chapter buttons show a dot once visited; the position is remembered for the session.
+- "Play presentation" walks through the screens, timed by amount of text (7–22 s), skips the
+  "Your …" screens, and pauses on any manual navigation.
+- Previous/Next name the destination, crossing chapters.
+- Changing an option never moves the customer away from what they are reading.
+- Before a choice is made nothing is assumed: rows show "—" and result screens say so.
 
 ---
 
 ## 6. Ecwid Integration Strategy
 
-**Principle:** native SIZE, Depth, FIRMNESS BY BODY WEIGHT and COVERS stay the single
-source of truth. The TV reads, never writes, never duplicates. Price, discounts, Add to
-Bag and Checkout are not touched.
+**Principle:** native SIZE, Depth, FIRMNESS BY BODY WEIGHT and COVERS stay the single source
+of truth, and Ecwid keeps the design, position and behaviour of its own controls. The
+television never moves, restyles, replaces, wraps or hides them (the hide list refuses anything
+inside the options column). Price, discounts, Add to Bag and Checkout are untouched.
 
-**Hands-off rule (owner's instruction).** The selection controls belong to Ecwid: their
-design, position, dropdowns and behaviour are not moved, restyled, replaced or wrapped.
-The TV works *alongside* them: it listens to what the customer chooses and prepares the
-screen with the matching information. Enforced in code (the hide list refuses anything
-inside the options column or an option block) and in tests: with the engine off, on,
-and in Classic View, the options column's markup, computed styles and geometry are
-identical.
+**What the television does with them (owner's instruction, revised):**
+
+1. *Reads* every choice and the price Ecwid shows, and prepares its screens for them.
+2. *Acts through them:* when the customer taps a choice inside the television, the engine
+   activates the matching native option, the same change a customer would make (value plus
+   `input` and `change` events). Ecwid then does what it always does (price, availability).
+   If no matching native option is found the television says so on screen and asks the
+   customer to choose in the options panel; it never pretends.
+
+Enforced by tests: with the engine off, on, in Classic View, and after choices made in the
+television, the options column's markup, computed styles and geometry are identical (only the
+chosen values, and the price text Ecwid updates, differ). *Must be verified on the real Ecwid
+controls: the way Ecwid builds its dropdowns decides whether a programmatic change is accepted.*
 
 1. **Loading.** Ecwid strips scripts from product descriptions, so the engine cannot live
    inside the description. Proposal: load `ddtv-engine.css`, `ddtv-engine.js` and
@@ -330,7 +362,7 @@ verified: unit fits within the viewport, no horizontal scroll.
 | E. Ecwid synchronisation | Built against a mock using assumed Ecwid markup; verify on 876405767 |
 | F. Layout integration | Measured alignment and height built; tune on the real page, desktop + iPad |
 | G. Classic and mobile | Built; verify on iPhone Safari (older devices included) |
-| H. Testing | `tests/smoke.mjs`: 99 automated checks pass (desktop, iPad landscape/portrait, iPhone, kill switch, Ecwid column untouched). Real-device Safari testing still required |
+| H. Testing | `tests/smoke.mjs`: 104 automated checks pass (desktop, iPad landscape/portrait, iPhone, kill switch, Ecwid column untouched, choices made in the TV reach Ecwid, every source text on a screen, no pills). Real-device Safari testing still required |
 | I. Approval | This document + prototype |
 
 Next steps after approval:
@@ -359,6 +391,22 @@ Next steps after approval:
 6. *Adjustable-base compatibility restrictions*: the spec asks to respect them, but the
    source contains none (only the elasticity video titled "adjustable bed"). Need the
    approved wording.
+
+7. *Firmness Code Collection Interface and Header* (the earlier firmness work you mention): not
+   in this repository, so nothing from it was reused. Please share the files; the weight scale
+   on the Choose screen is where its slider would go.
+8. *The Divine DunlopDreams logo file.* A wordmark stands in (`brand.logo` takes the URL).
+9. *Tools to download for visuals:* none were added on purpose. The screens use CSS and a few
+   lines of JavaScript only, which keeps the page light and stable on iPad Safari. A library
+   can be added for a specific effect if you name one.
+
+**Wording decisions for you** (the television follows the description; these are the places
+where its wording no longer fits the new behaviour)
+
+- "Select your firmness above." (firmness decision note) now sits under the weight scale, so
+  it reads correctly; "Select your size from the dropdown menu above" and "for reference only"
+  (size list) would be wrong now that sizes are chosen in the television, so they are not shown.
+- Zone codes Z1–Z7 are not shown (numbering rule); the zones are shown head to feet.
 
 **Content observations (not changed)**
 - Hero says "20 Days Delivery" and the overview says "20 Days · Custom Made to Order",

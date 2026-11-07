@@ -9,7 +9,7 @@
  *   ConfigConnector   reads native Ecwid Size / Depth / Firmness / Cover
  *   MediaManager      plays only what is on screen, defers heavy video
  *   Television        navigation, screen, panels, tour, layout alignment
- *   Components        configuration-aware visualisations (depth, summary)
+ *   Scenes            screens composed for the monitor (ddtv-scenes.js)
  *
  * No dependencies. ES5 syntax so older Safari can parse it. If anything
  * fails the original description is left untouched (Classic View).
@@ -111,7 +111,10 @@
 
   /* ------------------------------------------------------------------ */
   /* ConfigConnector — native Ecwid options are the single source of     */
-  /* truth. The TV only reads them; it never writes to them.            */
+  /* truth. The TV never moves, restyles or replaces them. It reads them */
+  /* and, when the customer taps a choice inside the TV, performs the    */
+  /* same change a customer would (value + change event). Price and      */
+  /* discount are read from what Ecwid renders, never calculated.        */
   /* ------------------------------------------------------------------ */
 
   var ECWID = {
@@ -183,7 +186,73 @@
       if (!key) return;
       state[key] = self.normalise(key, self.rawValue(block));
     });
+    state.$price = this.readPrice();
     return state;
+  };
+
+  /* Price as rendered by Ecwid (text only). Selectors come from the product
+     config; if they match nothing the TV simply shows no price. */
+  ConfigConnector.prototype.readPrice = function () {
+    var P = this.product.price;
+    if (!P) return null;
+    var c = txt(P.current && $(P.current)), o = txt(P.compare && $(P.compare));
+    if (!c) return null;
+    return { current: c, compare: o && o !== c ? o : '' };
+  };
+
+  /* True when two normalised values describe the same option value. */
+  function sameValue(a, b) {
+    if (!a || !b) return false;
+    return !!((a.id && a.id === b.id) || (a.value != null && a.value === b.value) || (a.dims && a.dims === b.dims));
+  }
+  ConfigConnector.sameValue = sameValue;
+
+  function fire(node, type) {
+    var ev;
+    try { ev = new Event(type, { bubbles: true, cancelable: true }); }
+    catch (e) { ev = doc.createEvent('Event'); ev.initEvent(type, true, true); }
+    node.dispatchEvent(ev);
+  }
+
+  /* Perform a choice in the native control, as the customer would.
+     `ref` is a normalised value (see normalise()). Returns true when a
+     matching native option was found and activated. */
+  ConfigConnector.prototype.choose = function (key, ref) {
+    var self = this, done = false;
+    each($$(ECWID.block), function (block) {
+      if (done) return;
+      var title = txt($(ECWID.title, block)) || block.getAttribute('data-option-name') || '';
+      if (self.keyFor(title) !== key) return;
+      var select = $('select', block), i, n;
+      if (select) {
+        for (i = 0; i < select.options.length; i++) {
+          var o = select.options[i], t = txt(o) || o.value;
+          if (!t) continue;
+          n = self.normalise(key, t);
+          if (sameValue(n, ref)) {
+            select.selectedIndex = i;
+            fire(select, 'input');
+            fire(select, 'change');
+            done = true;
+            return;
+          }
+        }
+        return;
+      }
+      var inputs = $$('input[type="radio"]', block);
+      for (i = 0; i < inputs.length; i++) {
+        var lab = (inputs[i].id && $('label[for="' + inputs[i].id + '"]', block)) || (inputs[i].closest && inputs[i].closest('label'));
+        n = self.normalise(key, txt(lab) || inputs[i].value);
+        if (sameValue(n, ref)) { (lab || inputs[i]).click(); done = true; return; }
+      }
+      var swatches = $$('[role="radio"], [aria-checked], .form-control--radio, .details-product-option__value', block);
+      for (i = 0; i < swatches.length; i++) {
+        n = self.normalise(key, txt(swatches[i]) || swatches[i].getAttribute('title'));
+        if (sameValue(n, ref)) { swatches[i].click(); done = true; return; }
+      }
+    });
+    if (done) this.refresh();
+    return done;
   };
 
   ConfigConnector.prototype.refresh = function () {
@@ -206,8 +275,9 @@
     doc.addEventListener('click', this._onEvent, true);
     if (global.MutationObserver) {
       this.mo = new MutationObserver(this._onEvent);
-      var root = $('.product-details') || doc.body;
-      this.mo.observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'aria-checked', 'checked'] });
+      var L = this.product.layout || {};
+      var root = $(L.sidePanelSelector) || $('.product-details') || doc.body;
+      this.mo.observe(root, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class', 'aria-checked', 'checked'] });
     }
     /* Low-frequency safety net for option widgets that change state without
        a DOM event (re-rendered by Ecwid). */
@@ -296,114 +366,11 @@
   };
 
   /* ------------------------------------------------------------------ */
-  /* Components — engine-generated, configuration-aware visuals          */
+  /* Scenes — screens composed for the monitor from the product content. */
+  /* Registered by engine/ddtv-scenes.js:  DDTV.scenes[name] = fn(ctx)   */
   /* ------------------------------------------------------------------ */
 
-  var Components = {};
-
-  /* Depth Visualisation: compares the available depths read from the
-     content, highlights the native Depth selection, shows cover allowance. */
-  Components.depthProfile = {
-    render: function (tv, panelEl) {
-      var cols = $$('.b-hcol', panelEl);
-      if (!cols.length) return null;
-      var depths = cols.map(function (c) { return parseFloat(txt($('.b-hcol__cm', c))); }).filter(function (n) { return !isNaN(n); });
-      var max = Math.max.apply(Math, depths) + (tv.product.coverAddsCm || 0);
-      var wrap = el('div', { class: 'ddtv-depth', 'aria-label': 'Height comparison' });
-      var head = el('div', { class: 'ddtv-depth__head' }, [
-        el('span', { class: 'ddtv-depth__k', text: 'Height comparison' }),
-        el('span', { class: 'ddtv-depth__sel', 'data-ddtv-depth-label': '' })
-      ]);
-      var row = el('div', { class: 'ddtv-depth__row' });
-      each(depths, function (d) {
-        var cover = tv.product.coverAddsCm || 0;
-        var slab = el('div', { class: 'ddtv-depth__slab', 'data-depth': d, style: 'height:' + ((d + cover) / max * 100).toFixed(1) + '%' }, [
-          el('i', { class: 'ddtv-depth__cover', style: 'height:' + ((cover / 2) / (d + cover) * 100).toFixed(2) + '%' }),
-          el('i', { class: 'ddtv-depth__core' }),
-          el('i', { class: 'ddtv-depth__cover', style: 'height:' + ((cover / 2) / (d + cover) * 100).toFixed(2) + '%' })
-        ]);
-        row.appendChild(el('div', { class: 'ddtv-depth__col', 'data-depth': d }, [
-          el('div', { class: 'ddtv-depth__stage' }, [slab]),
-          el('div', { class: 'ddtv-depth__cm', text: d + ' cm' }),
-          el('div', { class: 'ddtv-depth__tot', text: cover ? '≈ ' + (d + cover) + ' cm with cover' : '' })
-        ]));
-      });
-      wrap.appendChild(head);
-      wrap.appendChild(row);
-      if (tv.product.coverAddsCm) {
-        wrap.appendChild(el('p', { class: 'ddtv-depth__note', text: 'Shaded bands: cover allowance of approximately 1 cm top and 1 cm bottom.' }));
-      }
-      return wrap;
-    },
-    update: function (tv, node, state) {
-      var d = state.depth && state.depth.value;
-      each($$('.ddtv-depth__col', node), function (c) {
-        c.classList.toggle('is-selected', d != null && parseFloat(c.getAttribute('data-depth')) === d);
-      });
-      var label = $('[data-ddtv-depth-label]', node);
-      if (label) label.textContent = d != null ? 'Your selection: ' + d + ' cm' : 'Choose a depth in the options panel';
-    }
-  };
-
-  /* Selection Summary: the customer's configuration confirmed visually,
-     built only from the native selection and existing content. */
-  Components.selectionSummary = {
-    render: function (tv) {
-      var wrap = el('div', { class: 'ddtv-summary', 'aria-live': 'polite' });
-      wrap.appendChild(el('div', { class: 'ddtv-summary__head' }, [
-        el('span', { class: 'ddtv-summary__k', text: 'Your configuration' }),
-        el('span', { class: 'ddtv-summary__state' })
-      ]));
-      wrap.appendChild(el('div', { class: 'ddtv-summary__grid' }));
-      return wrap;
-    },
-    update: function (tv, node, state) {
-      var grid = $('.ddtv-summary__grid', node);
-      grid.innerHTML = '';
-      var opts = tv.product.options, missing = 0;
-      for (var key in opts) {
-        if (!opts.hasOwnProperty(key)) continue;
-        var s = state[key];
-        if (!s) missing++;
-        var detail = s ? Components.selectionSummary.detail(tv, key, s) : 'Not selected yet';
-        var visual = s ? Components.selectionSummary.visual(tv, key, s) : null;
-        grid.appendChild(el('div', { class: 'ddtv-summary__item' + (s ? '' : ' is-missing') }, [
-          visual || el('span', { class: 'ddtv-summary__mark', 'aria-hidden': 'true', text: s ? '✓' : '·' }),
-          el('div', { class: 'ddtv-summary__body' }, [
-            el('div', { class: 'ddtv-summary__lbl', text: opts[key].label }),
-            el('div', { class: 'ddtv-summary__val', text: s ? s.label : '—' }),
-            el('div', { class: 'ddtv-summary__det', text: detail })
-          ]),
-          el('button', { type: 'button', class: 'ddtv-summary__go', 'data-go': opts[key].chapter + '/' + opts[key].panel, text: 'Review' })
-        ]));
-      }
-      $('.ddtv-summary__state', node).textContent = missing
-        ? missing + (missing === 1 ? ' selection' : ' selections') + ' still open in the options panel'
-        : 'Complete — add to bag from the options panel';
-    },
-    detail: function (tv, key, s) {
-      if (key === 'firmness') {
-        var card = tv.find('.b-fc', function (c) { return norm(txt($('.b-fc__name', c))) === norm(s.label); });
-        return card ? txt($('.b-fc__kg', card)) + ' · ' + txt($('.b-fc__st', card)) : '';
-      }
-      if (key === 'depth') {
-        var col = tv.find('.b-hcol', function (c) { return parseFloat(txt($('.b-hcol__cm', c))) === s.value; });
-        return col ? txt($('.b-hcol__n', col)) : '';
-      }
-      if (key === 'cover' && s.index) {
-        var tag = $$('.b-cover-menu', tv.root)[s.index - 1] || $$('.b-cover-menu', tv.sourceRoot)[s.index - 1];
-        return tag ? txt($('.b-cover-menu__tag', tag)) : '';
-      }
-      return '';
-    },
-    visual: function (tv, key, s) {
-      if (key === 'cover' && s.index) {
-        var img = $$('.b-cover-micro-slide img', tv.root)[s.index - 1] || $$('.b-cover-micro-slide img', tv.sourceRoot)[s.index - 1];
-        if (img) return el('span', { class: 'ddtv-summary__swatch', style: 'background-image:url("' + img.getAttribute('src') + '")', 'aria-hidden': 'true' });
-      }
-      return null;
-    }
-  };
+  var scenes = {};
 
   /* ------------------------------------------------------------------ */
   /* Television                                                          */
@@ -419,7 +386,7 @@
     this.chapterIndex = 0;
     this.panelIndex = {};
     this.visited = {};
-    this.components = [];
+    this.scenes = [];
     this.hidden = [];
     this.tourTimer = null;
     this.playing = false;
@@ -430,12 +397,6 @@
   }
 
   Television.prototype.chapters = function () { return this.product.chapters; };
-
-  Television.prototype.find = function (sel, test) {
-    var all = $$(sel, this.root).concat(this.sourceRoot ? $$(sel, this.sourceRoot) : []);
-    for (var i = 0; i < all.length; i++) if (test(all[i])) return all[i];
-    return null;
-  };
 
   /* ---------------- shell ---------------- */
 
@@ -458,10 +419,13 @@
 
     this.stage = el('div', { class: 'ddtv__stage ' + (p.scopeClass || '') });
     this.overlay = el('div', { class: 'ddtv__overlay', hidden: true });
-    this.viewport = el('div', { class: 'ddtv__viewport' }, [this.stage, this.overlay]);
+    this.toastEl = el('p', { class: 'ddtv__toast', role: 'status', 'aria-live': 'polite', hidden: true });
+    this.viewport = el('div', { class: 'ddtv__viewport' }, [this.stage, this.overlay, this.toastEl]);
     this.titleEl = el('h3', { class: 'ddtv__title', id: NS + '-title-' + p.id });
     this.tabsEl = el('div', { class: 'ddtv__tabs', role: 'tablist', 'aria-orientation': 'vertical', 'aria-labelledby': this.titleEl.id });
     this.chipsEl = el('div', { class: 'ddtv__chips', 'aria-label': 'Your selection in the options panel' });
+    this.priceEl = el('div', { class: 'ddtv__price', 'aria-label': 'Price', hidden: true });
+    this.brandEl = el('div', { class: 'ddtv__brand', 'aria-hidden': 'true', hidden: true });
     this.prevBtn = el('button', { type: 'button', class: 'ddtv__nav ddtv__nav--prev', 'aria-label': 'Previous', onclick: function () { self.userAction(); self.step(-1); } }, [el('span', { 'aria-hidden': 'true', text: '‹' }), el('span', { class: 'ddtv__nav-txt' })]);
     this.nextBtn = el('button', { type: 'button', class: 'ddtv__nav ddtv__nav--next', 'aria-label': 'Next', onclick: function () { self.userAction(); self.step(1); } }, [el('span', { class: 'ddtv__nav-txt' }), el('span', { 'aria-hidden': 'true', text: '›' })]);
     this.playBtn = el('button', { type: 'button', class: 'ddtv__play', 'aria-pressed': 'false', onclick: function () { self.togglePlay(); } }, [
@@ -478,18 +442,20 @@
         /* Pinned: always on screen, whatever the chapter or screen height. */
         el('div', { class: 'ddtv__mine', role: 'region', 'aria-label': 'Your selection' }, [
           el('p', { class: 'ddtv__aside-k', text: 'Your selection' }),
-          this.chipsEl
+          this.chipsEl,
+          this.priceEl
         ])
       ]),
       el('div', { class: 'ddtv__main' }, [
         el('div', { class: 'ddtv__head' }, [
-          el('span', { class: 'ddtv__eyebrow', text: p.name + ' Experience' }),
-          this.titleEl
+          this.titleEl,
+          el('span', { class: 'ddtv__eyebrow', text: p.name + ' ' + (p.experienceTitle || 'Experience') })
         ]),
         this.viewport,
         el('div', { class: 'ddtv__foot' }, [this.prevBtn, el('div', { class: 'ddtv__mid' }, [this.playBtn, this.dotsEl]), this.nextBtn])
       ]),
-      this.progressEl
+      this.progressEl,
+      this.brandEl
     ]);
 
     this.tv = el('div', { class: 'ddtv', tabindex: '-1', 'aria-roledescription': 'interactive product presentation' }, [
@@ -515,7 +481,7 @@
       each(c.panels, function (pn) {
         var id = NS + '-' + c.id + '-' + pn.id;
         var panel = el('section', {
-          class: 'ddtv__panel' + (pn.layout ? ' ddtv__panel--' + pn.layout : ''),
+          class: 'ddtv__panel' + (pn.dark ? ' ddtv__panel--dark' : ''),
           id: id, role: 'tabpanel', 'data-chapter': c.id, 'data-panel': pn.id, hidden: true, tabindex: '-1'
         });
         self.stage.appendChild(panel);
@@ -608,49 +574,85 @@
 
   Television.prototype.fill = function () {
     var self = this;
-    /* Resolve every selector before moving anything, so selectors that
-       reference the original structure still match. */
-    var plan = [];
+    this.scenes = [];
     each(this.product.chapters, function (c) {
       each(self.panels[c.id], function (pn) {
-        var nodes = [];
-        each(pn.def.take || [], function (sel) {
-          var found = $$(sel);
-          if (!found.length) warn('No content for ' + c.id + '/' + pn.def.id + ': ' + sel);
-          each(found, function (n) { if (nodes.indexOf(n) < 0) nodes.push(n); });
-        });
-        plan.push({ panel: pn, nodes: nodes });
-      });
-    });
-    each(plan, function (step) {
-      each(step.nodes, function (n) { self.reloc.move(n, step.panel.el); });
-    });
-    /* Components after content so they can read it. */
-    each(this.product.chapters, function (c) {
-      each(self.panels[c.id], function (pn) {
-        each(pn.def.components || [], function (name) {
-          var comp = Components[name];
-          if (!comp) return warn('Unknown component ' + name);
-          var node = comp.render(self, pn.el);
-          if (!node) return;
-          if (name === 'depthProfile') {
-            var anchor = $('.b-htable', pn.el);
-            pn.el.insertBefore(node, anchor || null);
-          } else {
-            pn.el.insertBefore(node, pn.el.firstChild);
-          }
-          self.components.push({ comp: comp, node: node });
-        });
+        var fn = scenes[pn.def.scene], inst;
+        if (!fn) return warn('Unknown scene "' + pn.def.scene + '" for ' + c.id + '/' + pn.def.id);
+        try {
+          inst = fn({ tv: self, def: pn.def, root: pn.el, p: pn.def.params || {}, chapter: c }) || {};
+        } catch (err) {
+          /* One broken screen must never take the rest down. */
+          warn('Screen failed: ' + c.id + '/' + pn.def.id, err);
+          inst = {};
+          pn.el.appendChild(el('p', { class: 'ddtv-empty', text: 'This screen could not be built. Classic View shows the full content.' }));
+        }
+        self.scenes.push({ inst: inst, panel: pn });
       });
     });
     this.applySync(this.connector.state);
   };
 
   Television.prototype.unfill = function () {
-    each(this.components, function (c) { if (c.node.parentNode) c.node.parentNode.removeChild(c.node); });
-    this.components = [];
     this.closeOverlay();
     this.reloc.restoreAll();
+    each(this.scenes || [], function (s) {
+      if (s.inst.destroy) s.inst.destroy();
+      while (s.panel.el.firstChild) s.panel.el.removeChild(s.panel.el.firstChild);
+    });
+    this.scenes = [];
+  };
+
+  /* Moves an original <video> into a screen (one instance, never cloned). */
+  Television.prototype.takeVideo = function (video, container) {
+    if (!video) return null;
+    this.reloc.move(video, container);
+    return video;
+  };
+
+  /* The customer's current native selection (see ConfigConnector.read). */
+  Television.prototype.state = function () { return this.connector.state || {}; };
+
+  /* Customer taps a choice inside the TV: perform it in the native control. */
+  Television.prototype.choose = function (key, ref) {
+    this.userAction();
+    var ok = this.connector.choose(key, ref);
+    if (!ok) this.toast('Please choose “' + (ref && ref.label || '') + '” in the options panel. It could not be set automatically.');
+    return ok;
+  };
+
+  Television.prototype.toast = function (msg) {
+    var self = this;
+    this.toastEl.textContent = msg;
+    this.toastEl.hidden = false;
+    clearTimeout(this._toastT);
+    this._toastT = setTimeout(function () { self.toastEl.hidden = true; }, 5000);
+  };
+
+  /* The brand mark: the logo when one is configured, a wordmark otherwise. */
+  Television.prototype.brandMark = function (cls) {
+    var b = this.product.brand || {}, name = b.name || '';
+    if (b.logo) return el('img', { class: 'ddtv-mark ' + (cls || ''), src: b.logo, alt: name });
+    var i = name.indexOf(' ');
+    return el('span', { class: 'ddtv-mark ddtv-mark--word ' + (cls || ''), 'aria-label': name }, [
+      el('span', { class: 'ddtv-mark__a', text: i < 0 ? name : name.slice(0, i) }),
+      i < 0 ? null : el('span', { class: 'ddtv-mark__b', text: name.slice(i + 1) })
+    ]);
+  };
+
+  /* A short brand moment over the monitor (never blocks input). */
+  Television.prototype.brandMoment = function (label, ms) {
+    var self = this, box = this.brandEl;
+    if (!box || prefersReducedMotion() || !(this.product.brand || {}).name) return;
+    clearTimeout(this._brandT);
+    while (box.firstChild) box.removeChild(box.firstChild);
+    box.appendChild(this.brandMark('ddtv-mark--big'));
+    if (label) box.appendChild(el('p', { class: 'ddtv__brand-label', text: label }));
+    box.hidden = false;
+    box.classList.remove('is-on');
+    void box.offsetWidth;
+    box.classList.add('is-on');
+    this._brandT = setTimeout(function () { box.classList.remove('is-on'); box.hidden = true; }, ms || 1500);
   };
 
   /* ---------------- navigation ---------------- */
@@ -688,16 +690,26 @@
     });
 
     this.titleEl.textContent = c.label;
-    this.tabsEl.innerHTML = '';
+    while (this.tabsEl.firstChild) this.tabsEl.removeChild(this.tabsEl.firstChild);
+    /* When a chapter has both selection screens and explanation screens,
+       the Explore list says which is which. */
+    var groups = [];
+    each(list, function (p) { if (p.def.group && groups.indexOf(p.def.group) < 0) groups.push(p.def.group); });
+    var lastGroup = null;
     each(list, function (p, i) {
+      if (groups.length > 1 && p.def.group !== lastGroup) {
+        lastGroup = p.def.group;
+        self.tabsEl.appendChild(el('p', { class: 'ddtv__tabgroup', role: 'presentation', text: lastGroup || '' }));
+      }
       self.tabsEl.appendChild(el('button', {
         type: 'button', role: 'tab', class: 'ddtv__tab' + (i === pi ? ' is-active' : ''),
         id: p.id + '-tab', 'aria-controls': p.id, 'aria-selected': i === pi ? 'true' : 'false',
-        tabindex: i === pi ? '0' : '-1', text: p.def.label,
+        tabindex: i === pi ? '0' : '-1', 'data-opt': p.def.result || null,
         onclick: function () { self.userAction(); self.show(ci, i); }
-      }));
+      }, [p.def.label]));
       p.el.setAttribute('aria-labelledby', p.id + '-tab');
     });
+    this.markTabs(this.state());
 
     each(this.product.chapters, function (cc) {
       each(self.panels[cc.id], function (p, i) {
@@ -718,8 +730,7 @@
     this.prevBtn.setAttribute('aria-label', prev ? 'Previous: ' + prev.label : 'Previous');
     this.nextBtn.setAttribute('aria-label', next ? 'Next: ' + next.label : 'Next');
 
-    var layout = list[pi].def.layout;
-    this.viewport.classList.toggle('is-dark', layout === 'hero' || layout === 'dark');
+    this.viewport.classList.toggle('is-dark', !!list[pi].def.dark);
     this.media.focus(this.stage, list[pi].el);
     this.updateScrollHint();
     this.restartProgress();
@@ -727,9 +738,9 @@
   };
 
   /* Label of the neighbouring panel, crossing chapter boundaries. */
-  Television.prototype.neighbour = function (dir) {
-    var ch = this.product.chapters, ci = this.chapterIndex, c = ch[ci];
-    var pi = this.panelIndex[c.id] || 0, list = this.panels[c.id];
+  Television.prototype.neighbour = function (dir, from) {
+    var ch = this.product.chapters, ci = from ? from.ci : this.chapterIndex, c = ch[ci];
+    var pi = from ? from.pi : (this.panelIndex[c.id] || 0), list = this.panels[c.id];
     if (pi + dir >= 0 && pi + dir < list.length) return { ci: ci, pi: pi + dir, label: list[pi + dir].def.label };
     var nci = ci + dir;
     if (nci < 0 || nci >= ch.length) return null;
@@ -739,7 +750,10 @@
   };
 
   Television.prototype.step = function (dir) {
-    var n = this.neighbour(dir);
+    var self = this, n = this.neighbour(dir), guard = 0;
+    /* The presentation skips "Your …" result screens (they only mean
+       something once the customer has chosen); manual navigation does not. */
+    while (n && this.playing && guard++ < 40 && this.panels[this.product.chapters[n.ci].id][n.pi].def.tour === false) n = this.neighbour(dir, n);
     if (n) this.show(n.ci, n.pi);
     else if (this.playing) this.togglePlay(false);
   };
@@ -787,6 +801,7 @@
     this.playBtn.setAttribute('aria-pressed', this.playing ? 'true' : 'false');
     this.tv.classList.toggle('is-playing', this.playing);
     $('.ddtv__play-txt', this.playBtn).textContent = this.playing ? 'Pause presentation' : 'Play presentation';
+    if (this.playing) this.brandMoment('Presentation', 1200);
     this.restartProgress();
   };
 
@@ -795,27 +810,11 @@
   /* ---------------- events ---------------- */
 
   Television.prototype.onClick = function (e) {
-    var t = e.target;
-    var go = t.closest && t.closest('[data-go]');
-    if (go) {
-      var parts = go.getAttribute('data-go').split('/');
-      this.userAction();
-      this.go(parts[0], parts[1]);
-      return;
-    }
-    /* Summaries become headings inside the TV: no collapsing. */
-    if (t.closest && t.closest('.ddtv__stage summary')) { e.preventDefault(); return; }
-    var a = t.closest && t.closest('a[href^="#"]');
-    if (!a) return;
-    var id = a.getAttribute('href').slice(1);
-    if (!id) return;
-    var target = doc.getElementById(id);
-    e.preventDefault();
+    var go = e.target.closest && e.target.closest('[data-go]');
+    if (!go) return;
+    var parts = go.getAttribute('data-go').split('/');
     this.userAction();
-    if (target && target.classList.contains('b-video-modal')) return this.openOverlay(target);
-    if (this.overlayNode && (!target || !this.overlay.contains(target))) { this.closeOverlay(); if (!this.chapterFor(id)) return; }
-    var chapter = this.chapterFor(id);
-    if (chapter) this.go(chapter);
+    this.go(parts[0], parts[1]);
   };
 
   /* Map an original anchor (#bp-firmness …) to its chapter. */
@@ -826,39 +825,46 @@
     return null;
   };
 
-  Television.prototype.openOverlay = function (node) {
+  Television.prototype.goHref = function (href) {
+    var c = this.chapterFor(String(href || '').replace(/^#/, ''));
+    if (c) { this.userAction(); this.go(c); }
+  };
+
+  /* Full-length video inside the monitor. Created on demand from the URL in
+     the original description, so nothing heavy loads until it is asked for. */
+  Television.prototype.openPlayer = function (o) {
+    var self = this;
     this.closeOverlay();
-    var marker = doc.createComment(NS + '-overlay');
-    node.parentNode.insertBefore(marker, node);
-    this.overlayNode = node;
-    this.overlayMarker = marker;
-    this.overlay.appendChild(node);
+    var video = el('video', { controls: true, playsinline: true, 'webkit-playsinline': true, preload: 'auto', 'aria-label': o.title });
+    var close = el('button', { type: 'button', class: 'ddtv-player__close', onclick: function () { self.closeOverlay(); } }, ['Close']);
+    this.overlayBox = el('div', { class: 'ddtv-player', role: 'dialog', 'aria-modal': 'true', 'aria-label': o.title }, [
+      el('div', { class: 'ddtv-player__top' }, [el('span', { class: 'ddtv-player__title', text: o.title }), close]),
+      el('div', { class: 'ddtv-player__frame' }, [video])
+    ]);
+    this.overlay.appendChild(this.overlayBox);
     this.overlay.hidden = false;
-    node.classList.add('is-open');
-    var v = $('video', node);
-    if (v) {
-      this.media.unpark(v);
-      var p = v.play();
-      if (p && p.catch) p.catch(noop);
-    }
-    var close = $('.b-video-modal__close', node);
-    if (close) close.focus();
+    video.src = o.src;
+    var pr = video.play();
+    if (pr && pr.catch) pr.catch(noop);
+    close.focus();
   };
 
   Television.prototype.closeOverlay = function () {
-    var node = this.overlayNode;
-    if (!node) return;
-    var v = $('video', node);
-    if (v && !v.paused) try { v.pause(); } catch (e) { /* ignore */ }
-    node.classList.remove('is-open');
-    this.overlayMarker.parentNode.insertBefore(node, this.overlayMarker);
-    this.overlayMarker.parentNode.removeChild(this.overlayMarker);
-    this.overlayNode = this.overlayMarker = null;
+    var box = this.overlayBox;
+    if (!box) return;
+    var v = $('video', box);
+    if (v) {
+      try { v.pause(); } catch (e) { /* ignore */ }
+      v.removeAttribute('src');
+      try { v.load(); } catch (e2) { /* stops the download */ }
+    }
+    if (box.parentNode) box.parentNode.removeChild(box);
+    this.overlayBox = null;
     this.overlay.hidden = true;
   };
 
   Television.prototype.onKey = function (e) {
-    if (e.key === 'Escape' && this.overlayNode) { this.closeOverlay(); return; }
+    if (e.key === 'Escape' && this.overlayBox) { this.closeOverlay(); return; }
     var tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'select' || tag === 'textarea' || tag === 'video') return;
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
@@ -912,36 +918,60 @@
       }
     });
 
-    each(this.components, function (c) { if (c.comp.update) c.comp.update(self, c.node, state); });
+    each(this.scenes || [], function (sc) { if (sc.inst.update) sc.inst.update(state); });
+    this.markTabs(state);
     this.renderChips(state);
+    this.renderPrice(state);
+  };
+
+  /* Result tabs ("Your firmness" …) get a tick once that option is chosen. */
+  Television.prototype.markTabs = function (state) {
+    each($$('.ddtv__tab[data-opt]', this.tabsEl), function (t) {
+      t.classList.toggle('has-value', !!state[t.getAttribute('data-opt')]);
+    });
+  };
+
+  /* Price and discount exactly as Ecwid renders them (read-only mirror). */
+  Television.prototype.renderPrice = function (state) {
+    var box = this.priceEl, pr = state.$price;
+    while (box.firstChild) box.removeChild(box.firstChild);
+    box.hidden = !pr;
+    if (!pr) return;
+    box.appendChild(el('span', { class: 'ddtv__price-k', text: 'Price' }));
+    box.appendChild(el('span', { class: 'ddtv__price-v', text: pr.current }));
+    if (pr.compare) box.appendChild(el('span', { class: 'ddtv__price-old', text: pr.compare }));
   };
 
   Television.prototype.renderChips = function (state) {
-    var self = this, opts = this.product.options;
-    this.chipsEl.innerHTML = '';
+    var opts = this.product.options;
+    while (this.chipsEl.firstChild) this.chipsEl.removeChild(this.chipsEl.firstChild);
     for (var key in opts) {
       if (!opts.hasOwnProperty(key)) continue;
-      var s = state[key];
+      var v = state[key];
       this.chipsEl.appendChild(el('button', {
-        type: 'button', class: 'ddtv__chip' + (s ? ' is-set' : ''), 'data-go': opts[key].chapter + '/' + opts[key].panel,
-        title: s ? opts[key].label + ': ' + s.raw : opts[key].label + ' not selected yet'
-      }, [el('span', { class: 'ddtv__chip-k', text: opts[key].label }), el('span', { class: 'ddtv__chip-v', text: s ? s.label : '—' })]));
+        type: 'button', class: 'ddtv__chip' + (v ? ' is-set' : ''), 'data-opt': key, 'data-go': opts[key].chapter + '/' + opts[key].panel,
+        title: v ? opts[key].label + ': ' + v.raw : opts[key].label + ' not selected yet'
+      }, [el('span', { class: 'ddtv__chip-k', text: opts[key].label }), el('span', { class: 'ddtv__chip-v', text: v ? v.label : '—' })]));
     }
   };
 
   Television.prototype.onConfigChange = function (state, prev) {
+    var opts = this.product.options, complete = true, wasComplete = true;
     this.applySync(state);
-    /* Signal which selection changed without moving the customer away. */
-    var self = this;
-    for (var k in state) {
-      if (!state.hasOwnProperty(k)) continue;
-      var a = JSON.stringify(state[k]), b = JSON.stringify(prev && prev[k]);
-      if (prev && a !== b && state[k]) {
-        var chip = $('.ddtv__chip[data-go^="' + this.product.options[k].chapter + '/' + this.product.options[k].panel + '"]', this.chipsEl);
+    /* Show which selection just changed, without moving the customer away. */
+    for (var k in opts) {
+      if (!opts.hasOwnProperty(k)) continue;
+      if (!state[k]) complete = false;
+      if (!prev || !prev[k]) wasComplete = false;
+      if (prev && state[k] && JSON.stringify(state[k]) !== JSON.stringify(prev[k])) {
+        var chip = $('.ddtv__chip[data-opt="' + k + '"]', this.chipsEl);
         if (chip) { chip.classList.remove('is-flash'); void chip.offsetWidth; chip.classList.add('is-flash'); }
       }
     }
-    if (this.view === 'interactive') this.updateScrollHint();
+    if (this.view === 'interactive') {
+      if (prev && complete && !wasComplete) this.brandMoment('Your ' + this.product.name, 1400);
+      this.updateScrollHint();
+    }
   };
 
   /* ---------------- views ---------------- */
@@ -997,6 +1027,10 @@
       this.fill();
       this.hideNative(true);
       this.tv.hidden = false;
+      if (!session.get(this.storeKey + ':splash')) {
+        session.set(this.storeKey + ':splash', '1');
+        this.brandMoment((this.product.experienceTitle ? this.product.name + ' ' + this.product.experienceTitle : this.product.name), 1500);
+      }
       var pos = (session.get(this.storeKey + ':pos') || '').split('/');
       if (pos[0] && this.chapterById(pos[0]) >= 0) this.go(pos[0], pos[1]);
       else this.show(0, 0);
@@ -1142,7 +1176,8 @@
     start: start,
     stop: stop,
     current: null,
-    Components: Components,
+    scenes: scenes,
+    util: { $: $, $$: $$, el: el, txt: txt, norm: norm, each: each, clamp: clamp, debounce: debounce, noop: noop, warn: warn, reducedMotion: prefersReducedMotion },
     Television: Television,
     ConfigConnector: ConfigConnector
   };
