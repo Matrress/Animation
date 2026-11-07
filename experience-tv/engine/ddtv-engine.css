@@ -1,0 +1,599 @@
+/* ═══════════════════════════════════════════════════════════
+   Divine DunlopDreams — Experience TV Engine  v0.2.0
+   Shell styles (header, buttons, monitor, navigation, footer).
+   Everything is scoped under .ddtv-wrap / .ddtv or prefixed ddtv-
+   so nothing leaks into the store. The screens themselves are
+   styled in ddtv-scenes.css.
+   Shape rule: rounded corners only. No pills, no circles.
+═══════════════════════════════════════════════════════════ */
+
+.ddtv-wrap {
+  /* Snow graphite + tropical night: cool, no green. */
+  --tv-ink: #26323F;
+  --tv-ink-deep: #1B2430;
+  --tv-ink-frame: #202B38;
+  --tv-ink-mid: #435262;
+  --tv-soft: #667483;
+  --tv-mist: #E4ECF2;
+  --tv-lift: #F1F5F8;
+  --tv-card: #F8FAFC;
+  --tv-line: #D0DAE3;
+  --tv-accent: #3B8FAE;
+  --tv-accent-mid: #2C7894;
+  --tv-accent-pale: #9CC8DA;
+  --tv-on-dark: #EAF2F7;
+  --tv-font: 'Chillax', 'Helvetica Neue', Arial, sans-serif;
+  --r-s: 6px;
+  --r-m: 10px;
+  --r-l: 14px;
+  --r-xl: 18px;
+  --ddtv-view-h: clamp(380px, calc(100vh - 300px), 720px);
+  display: block;
+  width: 100%;
+  /* The television answers to its OWN width (container queries below), not to
+     the window: it sits in a column, or full width, depending on the store. */
+  container: tvw / inline-size;
+  font-family: var(--tv-font);
+  color: var(--tv-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ddtv-wrap *,
+.ddtv-wrap *::before,
+.ddtv-wrap *::after { box-sizing: border-box; }
+/* Stacked placement: breathing room before the store's product block. */
+.ddtv-wrap[data-placement="stacked"] { padding-bottom: 24px; }
+/* The store's own typography must not leak into the screens. */
+.ddtv-wrap :where(h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote) { margin: 0; padding: 0; }
+.ddtv-wrap :where(ul, ol) { list-style: none; }
+.ddtv-wrap :where(button) { font-family: inherit; }
+.ddtv-wrap :where(img) { max-width: 100%; }
+
+
+/* ───────────── Header row: product name + view switch ───────────── */
+.ddtv-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 10px;
+}
+.ddtv-top__brand {
+  margin: 0;
+  font-family: var(--tv-font);
+  font-size: 19px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--tv-ink);
+}
+.ddtv-top__brand b { font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
+.ddtv-switch { display: flex; gap: 6px; }
+.ddtv-switch button {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: var(--r-m);
+  border: 1.5px solid var(--tv-line);
+  background: #fff;
+  font-family: var(--tv-font);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tv-ink);
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.ddtv-switch button:hover { border-color: var(--tv-accent); }
+.ddtv-switch button.is-active {
+  background: var(--tv-ink-deep);
+  border-color: var(--tv-ink-deep);
+  color: #fff;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--tv-accent-pale);
+}
+.ddtv-switch button:focus-visible { outline: 2px solid var(--tv-accent); outline-offset: 3px; }
+.ddtv-wrap.is-phone .ddtv-top { display: none; }
+
+/* ───────────── Unit: button rows + framed monitor ───────────── */
+.ddtv {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  outline: none;
+}
+.ddtv[hidden] { display: none; }
+
+/* ───────────── Chapter buttons: equal tiles, one row each ───────────── */
+.ddtv__bar {
+  display: grid;
+  grid-template-columns: repeat(var(--ddtv-cols, 7), minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+.ddtv__btn {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: var(--ddtv-btn-h, 42px);
+  padding: 4px 8px;
+  border-radius: var(--r-m);
+  border: 1.5px solid var(--tv-line);
+  background: #fff;
+  color: var(--tv-ink);
+  font-family: var(--tv-font);
+  font-size: 13px;
+  font-size: clamp(12px, 1.8cqw, 13.5px);
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  overflow-wrap: normal;
+  word-break: normal;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+.ddtv__btn:hover { border-color: var(--tv-accent); background: var(--tv-card); }
+.ddtv__btn:focus-visible { outline: 2px solid var(--tv-accent); outline-offset: 3px; }
+/* Visited: a small mark in the corner, so the customer sees where they have been. */
+.ddtv__btn-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 5px;
+  height: 5px;
+  border-radius: 2px;
+  background: transparent;
+  transition: background .2s ease;
+}
+.ddtv__btn.is-visited .ddtv__btn-dot { background: var(--tv-accent); }
+.ddtv__btn.is-active {
+  background: var(--tv-ink-deep);
+  border-color: var(--tv-ink-deep);
+  color: #fff;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--tv-accent-pale);
+}
+.ddtv__btn.is-active .ddtv__btn-dot { background: rgba(255,255,255,.7); }
+
+/* ───────────── Monitor ───────────── */
+.ddtv__screen {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(168px, 21%, 244px) minmax(0, 1fr);
+  border: 7px solid var(--tv-ink-frame);
+  border-radius: var(--r-xl);
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 14px 32px rgba(27,36,48,.16);
+}
+
+/* Left: Explore (internal screens) and, pinned underneath, the customer's
+   selection. The selection never scrolls out of view. */
+.ddtv__aside {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+  padding: 14px 12px 12px 14px;
+  background: var(--tv-lift);
+  border-right: 1px solid var(--tv-line);
+  overflow: hidden;
+}
+.ddtv__explore { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.ddtv__aside-k {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--tv-ink);
+}
+.ddtv__tabs { display: flex; flex-direction: column; gap: 2px; }
+.ddtv__tab {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-left: 3px solid transparent;
+  border-radius: 0 var(--r-m) var(--r-m) 0;
+  background: transparent;
+  font-family: var(--tv-font);
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: left;
+  color: var(--tv-ink-mid);
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.ddtv__tab:hover { background: #fff; color: var(--tv-ink); }
+.ddtv__tab.is-active { background: #fff; color: var(--tv-ink); font-weight: 700; border-left-color: var(--tv-accent-mid); }
+.ddtv__tab:focus-visible { outline: 2px solid var(--tv-accent); outline-offset: -2px; }
+
+/* The customer's native Ecwid selection, mirrored read-only */
+.ddtv__mine { padding-top: 10px; border-top: 1px solid var(--tv-line); }
+.ddtv__chips { display: grid; gap: 5px; }
+.ddtv__chip {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  width: 100%;
+  padding: 5px 9px 6px;
+  border-radius: var(--r-m);
+  border: 1px dashed var(--tv-line);
+  background: transparent;
+  font-family: var(--tv-font);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease;
+}
+.ddtv__chip:hover { border-color: var(--tv-accent); }
+.ddtv__chip-k { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--tv-soft); }
+.ddtv__chip-v { font-size: 13.5px; font-weight: 700; color: var(--tv-soft); line-height: 1.2; overflow-wrap: anywhere; }
+.ddtv__chip.is-set { border-style: solid; border-color: var(--tv-accent); background: #fff; padding-right: 24px; }
+.ddtv__chip.is-set::after {
+  content: "";
+  position: absolute;
+  right: 9px;
+  top: calc(50% - 5px);
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid var(--tv-accent-mid);
+  border-bottom: 2px solid var(--tv-accent-mid);
+  transform: rotate(-45deg);
+}
+.ddtv__chip.is-set .ddtv__chip-k { color: var(--tv-accent-mid); }
+.ddtv__chip.is-set .ddtv__chip-v { color: var(--tv-ink); }
+.ddtv__chip.is-flash { animation: ddtv-flash 1.4s ease; }
+@keyframes ddtv-flash {
+  0% { box-shadow: 0 0 0 0 rgba(59,143,174,.55); background: var(--tv-mist); }
+  100% { box-shadow: 0 0 0 10px rgba(59,143,174,0); background: #fff; }
+}
+
+/* Right: chapter heading, content, footer */
+.ddtv__main { display: flex; flex-direction: column; min-width: 0; }
+.ddtv__head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 14px; padding: 12px 24px 4px; }
+.ddtv__eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--tv-accent-mid);
+}
+.ddtv__title {
+  margin: 0;
+  font-family: var(--tv-font);
+  font-size: 24px;
+  font-size: clamp(22px, 3.4cqw, 28px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  color: var(--tv-ink);
+}
+
+/* Viewport: measured height; one panel at a time */
+.ddtv__viewport {
+  position: relative;
+  height: var(--ddtv-view-h);
+  overflow: hidden;
+}
+.ddtv__viewport::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 36px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.96));
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.ddtv__viewport.is-dark::after { background: linear-gradient(to bottom, rgba(27,36,48,0), rgba(27,36,48,.96)); }
+.ddtv__viewport.is-scrollable::after { opacity: 1; }
+.ddtv__viewport.is-scrollable.is-end::after { opacity: 0; }
+
+.ddtv .ddtv__stage { position: static; background: transparent; font-size: 16px; line-height: 1.6; }
+.ddtv .ddtv__panel {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 24px 24px;
+  background: #fff;
+  opacity: 0;
+  transition: opacity .28s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--tv-line) transparent;
+}
+.ddtv .ddtv__panel[hidden] { display: none; }
+.ddtv .ddtv__panel.is-active { opacity: 1; }
+.ddtv .ddtv__panel:focus { outline: none; }
+.ddtv .ddtv__panel > * + * { margin-top: 14px; }
+
+/* Footer: previous / play / dots / next */
+.ddtv__foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 9px 24px 11px;
+  border-top: 1px solid var(--tv-lift);
+}
+.ddtv__nav {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: var(--r-m);
+  border: 1.5px solid var(--tv-line);
+  background: #fff;
+  font-family: var(--tv-font);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tv-ink);
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease;
+}
+.ddtv__nav > span[aria-hidden] { font-size: 18px; line-height: 1; }
+.ddtv__nav--next { justify-self: end; }
+.ddtv__nav--prev { justify-self: start; }
+.ddtv__nav-txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ddtv__nav--next .ddtv__nav-txt::before { content: "Next: "; color: var(--tv-soft); font-weight: 500; }
+.ddtv__nav--next .ddtv__nav-txt:empty::before { content: none; }
+.ddtv__nav:hover:not(:disabled) { border-color: var(--tv-accent); background: var(--tv-card); }
+.ddtv__nav:disabled { opacity: .35; cursor: default; }
+.ddtv__nav:focus-visible, .ddtv__play:focus-visible { outline: 2px solid var(--tv-accent); outline-offset: 2px; }
+
+.ddtv__mid { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.ddtv__play {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 16px 0 6px;
+  border-radius: var(--r-m);
+  border: 0;
+  background: var(--tv-ink-deep);
+  color: #fff;
+  font-family: var(--tv-font);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s ease;
+}
+.ddtv__play:hover { background: var(--tv-accent-mid); }
+.ddtv__play-ico {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--r-s);
+  background: rgba(255,255,255,.14);
+}
+.ddtv__play-ico::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 7px;
+  border-style: solid;
+  border-width: 6px 0 6px 9px;
+  border-color: transparent transparent transparent #fff;
+}
+.ddtv.is-playing .ddtv__play-ico::before {
+  left: 8px;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  border: 0;
+  background:
+    linear-gradient(#fff, #fff) left / 3px 100% no-repeat,
+    linear-gradient(#fff, #fff) right / 3px 100% no-repeat;
+}
+.ddtv__dots { display: flex; gap: 5px; }
+.ddtv__dots i { width: 6px; height: 6px; border-radius: 2px; background: var(--tv-line); transition: background .2s ease, width .2s ease; }
+.ddtv__dots i.is-active { width: 18px; border-radius: 2px; background: var(--tv-accent-mid); }
+
+.ddtv__progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; }
+.ddtv__progress i { display: block; height: 100%; width: 0; background: var(--tv-accent); }
+
+/* ───────────── Configuration-aware highlight (both views) ───────────── */
+.ddtv-selected { position: relative; }
+/* The doubled class lifts these rules above the description's own hover and
+   active states (0,3,0) without needing !important. */
+.dd-botanic-page .ddtv-selected.ddtv-selected:not(label),
+.ddtv .ddtv-selected.ddtv-selected:not(label) {
+  border-color: var(--accent-mid, #2C7894);
+  box-shadow: 0 0 0 2px var(--accent-mid, #2C7894), 0 10px 26px rgba(27,36,48,.14);
+}
+/* The badge sits on the top edge of its card: centred on the edge, no offset. */
+[data-ddtv-badge]::after {
+  content: attr(data-ddtv-badge);
+  position: absolute;
+  top: 0;
+  right: 12px;
+  transform: translateY(-50%);
+  z-index: 2;
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: #26323F;
+  color: #fff;
+  font-family: 'Chillax', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.b-cover-micro-tabs label[data-ddtv-badge]::after { top: 2px; right: 8px; background: #37C7F2; color: #10191C; }
+.b-cover-micro-tabs label.ddtv-selected { overflow: visible; }
+
+
+/* ───────────── Explore list: groups and ready marks ───────────── */
+.ddtv__tabgroup {
+  margin: 12px 0 3px 3px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--tv-soft);
+}
+.ddtv__tabgroup:first-child { margin-top: 0; }
+.ddtv__tab { position: relative; padding-right: 26px; }
+.ddtv__tab.has-value::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: calc(50% - 5px);
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid var(--tv-accent-mid);
+  border-bottom: 2px solid var(--tv-accent-mid);
+  transform: rotate(-45deg);
+}
+
+/* ───────────── Price mirror (what Ecwid shows, read-only) ───────────── */
+.ddtv__price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  margin-top: 8px;
+  padding: 7px 9px;
+  border-radius: var(--r-m);
+  background: var(--tv-ink-deep);
+  color: #fff;
+}
+.ddtv__price[hidden] { display: none; }
+.ddtv__price-k { flex: 0 0 100%; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--tv-accent-pale); }
+.ddtv__price-v { font-size: 20px; font-weight: 700; line-height: 1.1; }
+.ddtv__price-old { font-size: 13px; text-decoration: line-through; color: rgba(255,255,255,.62); }
+.ddtv__price-save { flex: 0 0 100%; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--tv-accent-pale); }
+
+/* ───────────── Notice inside the monitor ───────────── */
+.ddtv__toast {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 14px;
+  z-index: 6;
+  padding: 10px 14px;
+  border-radius: var(--r-m);
+  background: var(--tv-ink-deep);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 8px 22px rgba(27,36,48,.3);
+}
+.ddtv__toast[hidden] { display: none; }
+
+/* ───────────── Brand moment ───────────── */
+.ddtv__brand {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: radial-gradient(circle at 50% 42%, #2C4054 0%, #1B2430 62%);
+  color: #fff;
+  pointer-events: none;
+  opacity: 0;
+}
+.ddtv__brand.is-on { display: flex; animation: ddtv-brand 1.5s ease both; }
+.ddtv__brand-label { font-size: 13px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--tv-accent-pale); }
+@keyframes ddtv-brand {
+  0% { opacity: 0; }
+  18% { opacity: 1; }
+  72% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.ddtv-mark { display: inline-flex; align-items: baseline; gap: .32em; color: inherit; line-height: 1; white-space: nowrap; }
+.ddtv-mark--word .ddtv-mark__a { font-weight: 300; letter-spacing: .02em; }
+.ddtv-mark--word .ddtv-mark__b { font-weight: 700; letter-spacing: .01em; }
+.ddtv-mark--big { font-size: 34px; }
+img.ddtv-mark--big { height: 56px; width: auto; }
+.ddtv-mark--sm { font-size: 15px; }
+img.ddtv-mark--sm { height: 22px; width: auto; }
+
+/* ───────────── Full video player inside the monitor ───────────── */
+.ddtv .ddtv__overlay { position: absolute; inset: 0; z-index: 5; background: rgba(20,28,38,.9); }
+.ddtv .ddtv__overlay[hidden] { display: none; }
+.ddtv-player { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 10px; padding: 14px 18px 16px; }
+.ddtv-player__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #fff; }
+.ddtv-player__title { font-size: 15px; font-weight: 700; }
+.ddtv-player__close {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1.5px solid rgba(255,255,255,.4);
+  border-radius: var(--r-m);
+  background: transparent;
+  color: #fff;
+  font-family: var(--tv-font);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ddtv-player__close:hover { background: rgba(255,255,255,.12); }
+.ddtv-player__close:focus-visible { outline: 2px solid var(--tv-accent-pale); outline-offset: 2px; }
+.ddtv-player__frame { flex: 1 1 auto; min-height: 0; display: flex; border-radius: var(--r-l); overflow: hidden; background: #0E141B; }
+.ddtv-player__frame video { width: 100%; height: 100%; object-fit: contain; background: #0E141B; }
+
+/* ───────────── Responsive shell: the television's own width ───────────── */
+@container tvw (max-width: 900px) {
+  .ddtv { --ddtv-btn-h: 40px; }
+  .ddtv__btn { padding: 3px clamp(3px, .9cqw, 8px); }
+  .ddtv__bar { gap: 6px; }
+  .ddtv__screen { grid-template-columns: 160px minmax(0, 1fr); border-width: 6px; }
+  .ddtv__aside { padding: 12px 8px 10px 10px; }
+  .ddtv__tab { font-size: 14px; padding: 7px 24px 7px 8px; }
+  .ddtv__head, .ddtv__foot { padding-left: 18px; padding-right: 18px; }
+  .ddtv .ddtv__panel { padding-left: 18px; padding-right: 18px; }
+  .ddtv__nav-txt { max-width: 22cqw; }
+  .ddtv__price-v { font-size: 18px; }
+}
+
+/* Touch devices (iPad): every tap target of the shell reaches 44px, the minimum
+   in Apple's guidelines. This answers the kind of input, not the window width,
+   so a desktop browser keeps the compact controls. */
+@media (pointer: coarse) {
+  .ddtv { --ddtv-btn-h: 44px; }
+  .ddtv-switch button { min-height: 44px; }
+  .ddtv__tab { display: flex; align-items: center; min-height: 44px; }
+  .ddtv__nav, .ddtv__play { min-height: 44px; }
+  .ddtv__chip { min-height: 44px; align-content: center; }
+}
+
+/* Phones never render the television; Classic View is the experience. The
+   engine sets .is-phone from the screen size, whatever the orientation. */
+.ddtv-wrap.is-phone .ddtv { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ddtv *, .ddtv-wrap * { transition: none !important; animation: none !important; }
+}
