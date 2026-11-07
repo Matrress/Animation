@@ -105,9 +105,9 @@ async function open(viewport, extra = {}) {
 
   // Ecwid sync: nothing selected yet
   ok((await page.locator('.ddtv__chip.is-set').count()) === 0, 'no selection assumed before the customer chooses');
-  await page.click('label[for="o-fm"]');
-  await page.click('label[for="o-d24"]');
-  await page.click('label[for="o-c3"]');
+  await page.selectOption('.details-product-option--Firmness select', { index: 2 }); // Medium
+  await page.selectOption('.details-product-option--Depth select', { index: 2 }); // 24 cm
+  await page.selectOption('.details-product-option--Covers select', { index: 3 }); // Aloe Vera
   await page.selectOption('.details-product-option--Size select', { index: 17 }); // Super King
   await page.waitForTimeout(250);
   ok(await page.evaluate(() => DDTV.current.chapterIndex) === 1, 'changing options does not move the customer off the current chapter');
@@ -126,7 +126,7 @@ async function open(viewport, extra = {}) {
   ok(sync.chips === 4, 'all four selection chips set');
   ok(sync.depthViz.join() === '24', 'depth visualisation follows native Depth');
 
-  await page.click('label[for="o-fx"]');
+  await page.selectOption('.details-product-option--Firmness select', { index: 4 }); // Extra Firm
   await page.waitForTimeout(150);
   ok((await page.evaluate(() => [...document.querySelectorAll('.b-fc.ddtv-selected .b-fc__name')].map((n) => n.textContent.trim()).join())) === 'Extra Firm', '"Extra Firm" is not confused with "Firm"');
 
@@ -155,7 +155,7 @@ async function open(viewport, extra = {}) {
     numbering: document.querySelector('#bp-firmness .b-sh__n').offsetParent !== null,
     order: [...document.querySelectorAll('#bp-top section[id^="bp-"]')].map((s) => s.id).join(','),
     firmSel: document.querySelectorAll('#bp-top .b-fc.ddtv-selected').length,
-    radio: document.querySelector('#o-fx').checked,
+    radio: document.querySelector('.details-product-option--Firmness select').selectedIndex === 4,
   }));
   ok(classic.tv, 'television hidden in Classic View');
   ok(classic.sections === 13, 'Classic View has all 13 original sections (' + classic.sections + ')');
@@ -217,6 +217,39 @@ for (const [name, vp] of [['ipad-landscape', { width: 1180, height: 820 }], ['ip
   await page.goto(url + '?ddtv=off');
   ok((await page.locator('.ddtv').count()) === 0 && (await page.locator('#bp-top').isVisible()), '?ddtv=off leaves the original page untouched');
   await ctx.close();
+}
+
+/* ---------- The native Ecwid selection column is never touched ---------- */
+{
+  // Snapshot markup, inline styles, computed look and geometry of every
+  // control in the options column, with the engine off and on, in both views.
+  const snapshot = () => {
+    const side = document.querySelector('.product-details__sidebar');
+    const r = side.getBoundingClientRect();
+    const look = [...side.querySelectorAll('*')].map((n) => {
+      const s = getComputedStyle(n);
+      const b = n.getBoundingClientRect();
+      return [n.tagName, s.display, s.visibility, s.fontSize, s.color, s.backgroundColor, s.borderRadius, Math.round(b.width), Math.round(b.height)].join('|');
+    });
+    return { html: side.outerHTML, box: [r.left, r.width, r.height].map(Math.round).join(','), look: look.join('\n') };
+  };
+  const take = async (q, act) => {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    await ctx.route(/^https?:\/\//, (r) => r.abort());
+    const page = await ctx.newPage();
+    await page.goto(url + q);
+    await page.waitForTimeout(300);
+    if (act) await act(page);
+    const s = await page.evaluate(snapshot);
+    await ctx.close();
+    return s;
+  };
+  const off = await take('?ddtv=off');
+  const on = await take('');
+  const classic = await take('', (p) => p.click('.ddtv-switch button[data-view="classic"]'));
+  ok(on.html === off.html && classic.html === off.html, 'Ecwid options column markup identical with the TV on, off and in Classic View');
+  ok(on.look === off.look && classic.look === off.look, 'Ecwid controls keep exactly their own styling (computed styles identical)');
+  ok(on.box === off.box, 'Ecwid options column keeps its position and size (' + on.box + ')');
 }
 
 await browser.close();

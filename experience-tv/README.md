@@ -17,7 +17,7 @@ content, and puts everything back for Classic View.
 | `engine/ddtv-engine.js` / `.css` | Shared engine, no dependencies, ES5, all styles scoped. |
 | `prototype/template.html` | Mock Ecwid product page used for testing (not shipped). |
 | `tools/build.mjs` | Builds `dist/botanic-experience-tv-demo.html`, one self-contained file. |
-| `tests/smoke.mjs` | 85 automated checks across desktop, iPad, iPhone. |
+| `tests/smoke.mjs` | 88 automated checks across desktop, iPad, iPhone, including that the Ecwid options column is untouched. |
 | `docs/MASTER-PLAN.md` | Inventory, chapter matrix, media registry, architecture, layout plan, risks. **Read this first.** |
 
 ## Try it

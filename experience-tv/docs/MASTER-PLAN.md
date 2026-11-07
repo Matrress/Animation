@@ -17,7 +17,7 @@ which is the description exactly as supplied.
 | Item | Status |
 |---|---|
 | Original Botanic description HTML (CSS "ECWID SAFE BLOCK v9.1" + `.dd-botanic-page` markup) | Received, stored verbatim in `source/` |
-| Approved Experience TV prototype | **Not received.** The visual concept here was derived from the existing Botanic design language. See section 10. |
+| Approved Experience TV prototype | Screenshot of V11 received; layout follows it (section 7). Source file not received. |
 | Authoritative Firmness page | **Not received.** Firmness ranges are taken from the description only. |
 | SiteGround instructions | **Not received.** Hosting/integration steps below are proposals until those instructions are supplied. |
 | Live Ecwid DOM of product 876405767 | Not inspected (no store access from this environment). All Ecwid selectors are marked as assumptions. |
@@ -212,6 +212,14 @@ chapters (button rows split and compact themselves; verified with Botanic's 14).
 source of truth. The TV reads, never writes, never duplicates. Price, discounts, Add to
 Bag and Checkout are not touched.
 
+**Hands-off rule (owner's instruction).** The selection controls belong to Ecwid: their
+design, position, dropdowns and behaviour are not moved, restyled, replaced or wrapped.
+The TV works *alongside* them: it listens to what the customer chooses and prepares the
+screen with the matching information. Enforced in code (the hide list refuses anything
+inside the options column or an option block) and in tests: with the engine off, on,
+and in Classic View, the options column's markup, computed styles and geometry are
+identical.
+
 1. **Loading.** Ecwid strips scripts from product descriptions, so the engine cannot live
    inside the description. Proposal: load `ddtv-engine.css`, `ddtv-engine.js` and
    `botanic.config.js` from `media.divinedunlop.com` (or SiteGround) through the site's
@@ -239,13 +247,21 @@ Bag and Checkout are not touched.
 
 ## 7. Desktop and iPad Layout Plan
 
-**Composition.** Left column: the television (top button row, screen, bottom button row,
-in one device body). Right column: native Ecwid panel. Below the TV, a small
-Interactive / Classic switch.
+**Composition (follows the V11 prototype).** Left column, top to bottom: a header row
+("BOTANIC / Experience" with the Interactive / Classic switch), seven equal chapter
+tiles, the framed monitor, seven more tiles. Inside the monitor: an **Explore** sidebar
+listing the chapter's internal screens and, below it, **Your selection** (the native
+choices mirrored read-only, each a shortcut to the matching screen); on the right the
+chapter heading, content, and Previous / Play presentation / Next. Right column: the
+native Ecwid panel, untouched.
+
+Differences from V11, by design: no "01–14" numbers on the tiles (specification §8 forbids
+numbering in Interactive View; can be switched on if you prefer the V11 look), and no
+price or promotion inside the TV (that stays in Ecwid's panel).
 
 **Alignment with SIZE.** After mounting, the engine measures the rendered positions of the
-TV's **upper navigation row** and the SIZE option block, and sets one property,
-`margin-top` on the TV, to the difference. No negative margins, no stacked `!important`.
+**upper chapter row** and the SIZE option block, and sets one property, `margin-top` on
+the TV wrapper, to the difference. No negative margins, no stacked `!important`.
 It re-measures on resize, on font load, and when the right column changes height
 (ResizeObserver). Alignment applies only when the two columns are side by side. Verified
 in the prototype: 0 px difference at 1440 × 900.
@@ -299,7 +315,7 @@ verified: unit fits within the viewport, no horizontal scroll.
 | E. Ecwid synchronisation | Built against a mock using assumed Ecwid markup; verify on 876405767 |
 | F. Layout integration | Measured alignment and height built; tune on the real page, desktop + iPad |
 | G. Classic and mobile | Built; verify on iPhone Safari (older devices included) |
-| H. Testing | `tests/smoke.mjs`: 85 automated checks pass (desktop, iPad landscape/portrait, iPhone, kill switch). Real-device Safari testing still required |
+| H. Testing | `tests/smoke.mjs`: 88 automated checks pass (desktop, iPad landscape/portrait, iPhone, kill switch, Ecwid column untouched). Real-device Safari testing still required |
 | I. Approval | This document + prototype |
 
 Next steps after approval:
@@ -313,9 +329,8 @@ Next steps after approval:
 ## 10. Risks, Conflicts and Missing Dependencies
 
 **Missing inputs**
-1. *Approved Experience TV prototype* not supplied. The design here follows the existing
-   Botanic language (ink body, mist screen, Chillax, pill buttons). It must be compared
-   with the approved prototype before Phase D sign-off.
+1. *Approved Experience TV prototype*: a screenshot of V11 was supplied and the layout now
+   follows it (section 7). The V11 source file itself was not supplied.
 2. *Authoritative Firmness page* not supplied, so possible outdated ranges cannot be
    identified. The description's ranges (Soft 0–48, Medium 49–87, Firm 88–114,
    Extra Firm 115+ kg) are shown as they are. Note a small gap: "up to 7.5 st" then

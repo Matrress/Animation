@@ -444,7 +444,9 @@
     var half = Math.ceil(ch.length / 2);
 
     function bar(list, where) {
-      var nav = el('nav', { class: 'ddtv__bar ddtv__bar--' + where, 'aria-label': p.name + ' chapters' });
+      /* Equal tiles: as many columns as buttons in the row, so 9, 12 or 14
+         chapters all fill the width without code changes. */
+      var nav = el('nav', { class: 'ddtv__bar ddtv__bar--' + where, 'aria-label': p.name + ' chapters', style: '--ddtv-cols:' + list.length });
       each(list, function (c) {
         nav.appendChild(el('button', {
           type: 'button', class: 'ddtv__btn', 'data-chapter': c.id, 'aria-pressed': 'false',
@@ -458,8 +460,8 @@
     this.overlay = el('div', { class: 'ddtv__overlay', hidden: true });
     this.viewport = el('div', { class: 'ddtv__viewport' }, [this.stage, this.overlay]);
     this.titleEl = el('h3', { class: 'ddtv__title', id: NS + '-title-' + p.id });
-    this.tabsEl = el('div', { class: 'ddtv__tabs', role: 'tablist', 'aria-labelledby': this.titleEl.id });
-    this.chipsEl = el('div', { class: 'ddtv__chips', 'aria-label': 'Your selection' });
+    this.tabsEl = el('div', { class: 'ddtv__tabs', role: 'tablist', 'aria-orientation': 'vertical', 'aria-labelledby': this.titleEl.id });
+    this.chipsEl = el('div', { class: 'ddtv__chips', 'aria-label': 'Your selection in the options panel' });
     this.prevBtn = el('button', { type: 'button', class: 'ddtv__nav ddtv__nav--prev', 'aria-label': 'Previous', onclick: function () { self.userAction(); self.step(-1); } }, [el('span', { 'aria-hidden': 'true', text: '‹' }), el('span', { class: 'ddtv__nav-txt' })]);
     this.nextBtn = el('button', { type: 'button', class: 'ddtv__nav ddtv__nav--next', 'aria-label': 'Next', onclick: function () { self.userAction(); self.step(1); } }, [el('span', { class: 'ddtv__nav-txt' }), el('span', { 'aria-hidden': 'true', text: '›' })]);
     this.playBtn = el('button', { type: 'button', class: 'ddtv__play', 'aria-pressed': 'false', onclick: function () { self.togglePlay(); } }, [
@@ -468,17 +470,25 @@
     this.dotsEl = el('div', { class: 'ddtv__dots', 'aria-hidden': 'true' });
     this.progressEl = el('div', { class: 'ddtv__progress', 'aria-hidden': 'true' }, [el('i')]);
 
+    /* Monitor: Explore sidebar (internal screens + read-only selection)
+       beside the chapter content. */
     this.screen = el('div', { class: 'ddtv__screen' }, [
-      el('div', { class: 'ddtv__head' }, [
-        el('div', { class: 'ddtv__heading' }, [
-          el('span', { class: 'ddtv__eyebrow', text: p.name }),
+      el('div', { class: 'ddtv__aside' }, [
+        el('div', {}, [el('p', { class: 'ddtv__aside-k', text: 'Explore' }), this.tabsEl]),
+        el('div', { class: 'ddtv__mine' }, [
+          el('p', { class: 'ddtv__aside-k', text: 'Your selection' }),
+          this.chipsEl,
+          el('p', { class: 'ddtv__mine-note', text: 'Chosen in the options panel. The screen follows your choices.' })
+        ])
+      ]),
+      el('div', { class: 'ddtv__main' }, [
+        el('div', { class: 'ddtv__head' }, [
+          el('span', { class: 'ddtv__eyebrow', text: p.name + ' Experience' }),
           this.titleEl
         ]),
-        this.chipsEl,
-        this.tabsEl
+        this.viewport,
+        el('div', { class: 'ddtv__foot' }, [this.prevBtn, el('div', { class: 'ddtv__mid' }, [this.playBtn, this.dotsEl]), this.nextBtn])
       ]),
-      this.viewport,
-      el('div', { class: 'ddtv__foot' }, [this.prevBtn, el('div', { class: 'ddtv__mid' }, [this.playBtn, this.dotsEl]), this.nextBtn]),
       this.progressEl
     ]);
 
@@ -493,7 +503,10 @@
       el('button', { type: 'button', 'data-view': 'classic', onclick: function () { self.setView('classic', true); }, text: 'Classic View' })
     ]);
 
-    this.root = el('div', { class: 'ddtv-wrap', 'data-ddtv-product': p.id }, [this.tv, this.switchEl]);
+    var brand = el('p', { class: 'ddtv-top__brand' }, [el('b', { text: p.name }), ' / ' + (p.experienceTitle || 'Experience')]);
+    this.topEl = el('div', { class: 'ddtv-top' }, [brand, this.switchEl]);
+
+    this.root = el('div', { class: 'ddtv-wrap', 'data-ddtv-product': p.id }, [this.topEl, this.tv]);
 
     /* Panels */
     this.panels = {};
@@ -530,17 +543,19 @@
   Television.prototype.measureAlign = function () {
     var L = this.product.layout || {};
     var target = $(L.alignToSelector);
-    this.tv.style.marginTop = '';
+    /* One property owned by the engine: the wrapper's top margin. The
+       native options column itself is only measured, never changed. */
+    this.root.style.marginTop = '';
     if (!target || this.view !== 'interactive') return;
     var tvBox = this.tv.getBoundingClientRect();
     var tBox = target.getBoundingClientRect();
     /* Align only when the two columns sit side by side. */
     if (tBox.left < tvBox.right - 4) return;
-    /* The reference is the upper navigation row, not the device body. */
+    /* The reference is the upper chapter row. */
     var barTop = $('.ddtv__bar--top', this.tv).getBoundingClientRect().top;
     var offset = Math.round(tBox.top - barTop);
-    if (offset > 0) this.tv.style.marginTop = offset + 'px';
-    else if (offset < -2) warn('TV starts ' + (-offset) + 'px below the alignment target; check layout.mountSelector.');
+    if (offset > 0) this.root.style.marginTop = offset + 'px';
+    else if (offset < -2) warn('Chapter row starts ' + (-offset) + 'px below the alignment target; check layout.mountSelector.');
   };
 
   Television.prototype.measureHeight = function () {
@@ -548,7 +563,8 @@
     var vh = global.innerHeight || 800;
     var bars = 0;
     each($$('.ddtv__bar', this.tv), function (b) { bars += b.offsetHeight; });
-    var chrome = bars + $('.ddtv__head', this.screen).offsetHeight + $('.ddtv__foot', this.screen).offsetHeight + 28;
+    /* Rows, gaps (2 × 14), monitor frame (2 × 9), heading and footer. */
+    var chrome = bars + 28 + 18 + $('.ddtv__head', this.screen).offsetHeight + $('.ddtv__foot', this.screen).offsetHeight;
     /* Upper bound: the whole unit stays below ~92% of the viewport, so the
        television never fills the entire screen. */
     var max = Math.min(vh - 48, vh * 0.92) - chrome;
@@ -566,24 +582,8 @@
     this.tv.style.setProperty('--ddtv-view-h', Math.round(clamp(target, min, 860)) + 'px');
   };
 
-  /* Keep each button row on one line whatever the number of chapters:
-     first tighten spacing, then drop the visited dots, and only then wrap. */
-  Television.prototype.fitBars = function () {
-    var tv = this.tv, bars = $$('.ddtv__bar', tv);
-    function wraps() {
-      return bars.some(function (b) {
-        var first = b.firstElementChild, last = b.lastElementChild;
-        return first && last && last.offsetTop > first.offsetTop + 2;
-      });
-    }
-    tv.classList.remove('is-compact', 'is-tight');
-    if (wraps()) tv.classList.add('is-compact');
-    if (wraps()) tv.classList.add('is-tight');
-  };
-
   Television.prototype.layout = function () {
     if (this.view !== 'interactive') return;
-    this.fitBars();
     this.measureAlign();
     this.measureHeight();
     this.updateScrollHint();
@@ -939,9 +939,16 @@
   Television.prototype.hideNative = function (hide) {
     var L = this.product.layout || {}, self = this;
     if (hide) {
+      /* The native Ecwid selection area is off limits: nothing inside the
+         options column or any option block is ever hidden or changed. */
+      var protectedAreas = $$(L.sidePanelSelector || '').concat($$(ECWID.block));
       each(L.hideInInteractive || [], function (sel) {
         each($$(sel), function (n) {
           if (self.root.contains(n) || n === self.root) return;
+          for (var i = 0; i < protectedAreas.length; i++) {
+            var a = protectedAreas[i];
+            if (a === n || a.contains(n) || n.contains(a)) { warn('Refusing to hide native option area: ' + sel); return; }
+          }
           self.hidden.push({ n: n, d: n.style.display });
           n.style.display = 'none';
         });
@@ -984,6 +991,7 @@
       if (byUser) this.tv.focus({ preventScroll: true });
     } else {
       this.tv.hidden = true;
+      this.root.style.marginTop = '';
       if (prevView === 'interactive') { this.hideNative(false); this.unfill(); }
       this.media.observe(this.sourceRoot);
       if (byUser && this.sourceRoot) this.sourceRoot.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });

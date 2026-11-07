@@ -14,22 +14,18 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
 .proto-banner { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 24px; background: #263537; color: #EAF5F7; font-size: 13px; }
 .proto-banner b { letter-spacing: .08em; text-transform: uppercase; font-size: 11px; }
 .proto-banner a { color: #DDEBF1; }
-.ec-store { max-width: 1360px; margin: 0 auto; padding: 28px 24px 60px; }
-.product-details__layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); gap: 36px; align-items: start; }
+.ec-store { max-width: 1600px; margin: 0 auto; padding: 28px 24px 60px; }
+.product-details__layout { display: grid; grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr); gap: 28px; align-items: start; }
 .mock-gallery { aspect-ratio: 4 / 3; border-radius: 18px; background: repeating-linear-gradient(45deg, #EDF3F5 0 14px, #E5EEF1 14px 28px); display: grid; place-items: center; color: var(--soft); font-size: 14px; }
-.product-details__sidebar { display: flex; flex-direction: column; gap: 18px; }
-.product-details__product-title { margin: 0; font-size: 26px; line-height: 1.2; font-weight: 700; }
-.mock-price { font-size: 14px; color: var(--soft); padding: 12px 14px; border: 1px dashed var(--line); border-radius: 12px; }
+/* Deliberately plain: this column stands in for Ecwid, which owns its design. */
+.product-details__sidebar { display: flex; flex-direction: column; gap: 16px; padding: 24px; background: #fff; border: 1px solid var(--line); border-radius: 18px; font-family: Arial, sans-serif; }
+.mock-tag { margin: 0; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+.product-details__product-title { margin: 0; font-size: 24px; line-height: 1.2; font-weight: 700; }
+.mock-price { font-size: 14px; color: var(--soft); padding: 12px 14px; border: 1px dashed var(--line); border-radius: 10px; }
 .details-product-option { border: 0; margin: 0; padding: 0; }
-.details-product-option__title { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; }
-.details-product-option select { width: 100%; min-height: 46px; padding: 0 12px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font: inherit; font-size: 15px; color: var(--ink); }
-.form-control__inline { display: flex; flex-wrap: wrap; gap: 8px; }
-.form-control--radio { position: relative; }
-.form-control--radio input { position: absolute; opacity: 0; }
-.form-control--radio label { display: inline-flex; align-items: center; min-height: 42px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
-.form-control--radio input:checked + label { background: var(--ink); color: #fff; border-color: var(--ink); }
-.form-control--radio input:focus-visible + label { outline: 2px solid #759397; outline-offset: 2px; }
-.mock-bag { min-height: 54px; border-radius: 999px; border: 0; background: var(--ink); color: #fff; font: inherit; font-size: 16px; font-weight: 700; opacity: .9; }
+.details-product-option__title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.details-product-option select { width: 100%; min-height: 46px; font-size: 15px; }
+.mock-bag { min-height: 50px; border-radius: 8px; border: 0; background: #9AA5A7; color: #fff; font-size: 16px; font-weight: 700; }
 .mock-note { font-size: 12.5px; color: var(--soft); line-height: 1.5; }
 .product-details__description { margin-top: 48px; }
 .product-details__description-title { font-size: 20px; font-weight: 700; margin: 0 0 16px; }
@@ -54,13 +50,16 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
         <div class="mock-gallery">Native Ecwid product gallery</div>
       </div>
       <div class="product-details__sidebar">
+        <!-- STAND-IN FOR NATIVE ECWID. The Experience TV never styles, moves or
+             changes anything in this column; it only reads the chosen values. -->
+        <p class="mock-tag">Native Ecwid panel (stand-in)</p>
         <h1 class="product-details__product-title">Botanic Experience TV | TEST DRAFT</h1>
-        <div class="mock-price">Price, discounts and savings are rendered by Ecwid (never hard-coded by the TV).</div>
+        <div class="mock-price">Price, discounts and savings: rendered by Ecwid</div>
 
         <div class="product-details-module details-product-option details-product-option--Size">
           <div class="details-product-option__title">Size</div>
           <select aria-label="Size">
-            <option value="">Select size</option>
+            <option value=""></option>
             <option>Small Single — 75 × 190 cm</option>
             <option>Long Small Single — 75 × 200 cm</option>
             <option>EU Small Single — 80 × 200 cm</option>
@@ -88,35 +87,38 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
 
         <div class="product-details-module details-product-option details-product-option--Depth">
           <div class="details-product-option__title">Select Mattress Depth</div>
-          <div class="form-control__inline">
-            <div class="form-control--radio"><input type="radio" name="depth" id="o-d20"><label for="o-d20">20 cm</label></div>
-            <div class="form-control--radio"><input type="radio" name="depth" id="o-d24"><label for="o-d24">24 cm</label></div>
-            <div class="form-control--radio"><input type="radio" name="depth" id="o-d26"><label for="o-d26">26 cm</label></div>
-          </div>
+          <select aria-label="Select Mattress Depth">
+            <option value=""></option>
+            <option>20 cm</option>
+            <option>24 cm</option>
+            <option>26 cm</option>
+          </select>
         </div>
 
         <div class="product-details-module details-product-option details-product-option--Firmness">
           <div class="details-product-option__title">Firmness by body weight</div>
-          <div class="form-control__inline">
-            <div class="form-control--radio"><input type="radio" name="firm" id="o-fs"><label for="o-fs">Soft · 0–48 kg</label></div>
-            <div class="form-control--radio"><input type="radio" name="firm" id="o-fm"><label for="o-fm">Medium · 49–87 kg</label></div>
-            <div class="form-control--radio"><input type="radio" name="firm" id="o-ff"><label for="o-ff">Firm · 88–114 kg</label></div>
-            <div class="form-control--radio"><input type="radio" name="firm" id="o-fx"><label for="o-fx">Extra Firm · 115+ kg</label></div>
-          </div>
+          <select aria-label="Firmness by body weight">
+            <option value=""></option>
+            <option>Soft · 0–48 kg</option>
+            <option>Medium · 49–87 kg</option>
+            <option>Firm · 88–114 kg</option>
+            <option>Extra Firm · 115+ kg</option>
+          </select>
         </div>
 
         <div class="product-details-module details-product-option details-product-option--Covers">
           <div class="details-product-option__title">Covers</div>
-          <div class="form-control__inline">
-            <div class="form-control--radio"><input type="radio" name="cover" id="o-c1"><label for="o-c1">100% Organic Cotton</label></div>
-            <div class="form-control--radio"><input type="radio" name="cover" id="o-c2"><label for="o-c2">Cotton &amp; Wool</label></div>
-            <div class="form-control--radio"><input type="radio" name="cover" id="o-c3"><label for="o-c3">Aloe Vera + Cotton</label></div>
-            <div class="form-control--radio"><input type="radio" name="cover" id="o-c4"><label for="o-c4">Cashmere + Silver Ions</label></div>
-          </div>
+          <select aria-label="Covers">
+            <option value=""></option>
+            <option>100% Organic Cotton</option>
+            <option>Cotton &amp; Wool</option>
+            <option>Aloe Vera + Cotton</option>
+            <option>Cashmere + Silver Ions</option>
+          </select>
         </div>
 
         <button class="mock-bag" type="button" disabled>Add to Bag</button>
-        <p class="mock-note">Option names and values in this mock are illustrative. The connector reads whatever the live Ecwid product renders; names must be confirmed on product 876405767.</p>
+        <p class="mock-note">Plain dropdowns stand in for Ecwid's own controls. Option names and values are illustrative; the TV reads whatever the live product renders (to be confirmed on product 876405767).</p>
       </div>
     </div>
 
