@@ -772,33 +772,25 @@
       return { name: text($(P.map.name, z)), note: text($(P.map.note, z)), body: paras[code] };
     });
 
-    var bar = el('div', { class: 'sc-zonebar', role: 'group', 'aria-label': P.label || 'Zones' });
-    var detail = el('div', { class: 'sc-zonedetail', 'aria-live': 'polite' });
-    var btns = zones.map(function (z, i) {
-      var b = el('button', { type: 'button', class: 'sc-zone', 'aria-pressed': 'false', onclick: function () { tv.userAction(); pick(i); } }, [
-        el('span', { class: 'sc-zone__dots', 'aria-hidden': 'true' }), el('span', { class: 'sc-zone__n', text: z.name })
-      ]);
-      bar.appendChild(b);
-      return b;
-    });
-    var cards = zones.map(function (z) {
-      var card = el('div', { class: 'sc-zonecard' }, [
-        el('h3', { class: 'sc-detail__t', text: z.name }),
+    /* The seven-zone drawing: the picture only, from the front page. */
+    var art = el('div', { class: 'sc-zoneart', role: 'img', 'aria-label': P.label || 'Seven support zones, head to feet' });
+    /* The string is our own static drawing; the HTML parser builds it as a
+       real SVG tree (an imported XML node did not render in the shadow root). */
+    if (tv.product.zonesSvg) art.innerHTML = tv.product.zonesSvg;
+    root.appendChild(art);
+
+    /* Every zone, head to feet, in the same order as the drawing. */
+    var list = el('div', { class: 'sc-zonelist' });
+    each(zones, function (z) {
+      list.appendChild(el('article', { class: 'sc-zoneitem' }, [
+        el('h3', { class: 'sc-card__t', text: z.name }),
         el('p', { class: 'sc-tag', text: z.note }),
         z.body
-      ]);
-      detail.appendChild(card);
-      return card;
+      ]));
     });
-    function pick(i) {
-      each(btns, function (b, k) { b.classList.toggle('is-selected', k === i); b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
-      each(cards, function (cd, k) { cd.hidden = k !== i; });
-    }
-    pick(0);
 
     var mtv = P.media && $(P.media);
-    root.appendChild(bar);
-    root.appendChild(el('div', { class: 'sc-zonerow' }, [detail, mtv ? figure(tv, mtv) : null]));
+    root.appendChild(el('div', { class: 'sc-zonerow' }, [list, mtv ? figure(tv, mtv) : null]));
   };
 
   /* ================================================================== */

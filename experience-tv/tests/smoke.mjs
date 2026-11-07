@@ -195,7 +195,7 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = __q(s); retu
   ok(await page.locator('.ddtv__chip[data-opt="firmness"] .ddtv__chip-v').innerText() === 'Firm', '"Your selection" follows at once');
   ok(await page.locator('.ddtv__tab[data-opt="firmness"].has-value').count() === 1, '"Your firmness" is ticked as ready');
   await page.click('.ddtv__tab:has-text("Your firmness")');
-  ok(/Firm/.test(await page.locator('.ddtv__panel.is-active .sc-big').innerText()) && /88 – 114 kg/.test(await page.locator('.ddtv__panel.is-active .sc-result').innerText()), '"Your firmness" shows the chosen range from the source text');
+  ok(/Firm/.test(await page.locator('.ddtv__panel.is-active .sc-big').innerText()) && /83 – 114 kg/.test(await page.locator('.ddtv__panel.is-active .sc-result').innerText()), '"Your firmness" shows the chosen range from the source text');
 
   await page.click('.ddtv__btn[data-chapter="height"]');
   await page.locator('.ddtv__panel.is-active .sc-slabcard', { hasText: 'Deep Comfort' }).click();

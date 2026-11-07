@@ -378,10 +378,11 @@ Next steps after approval:
 **Missing inputs**
 1. *Approved Experience TV prototype*: a screenshot of V11 was supplied and the layout now
    follows it (section 7). The V11 source file itself was not supplied.
-2. *Authoritative Firmness page* not supplied, so possible outdated ranges cannot be
-   identified. The description's ranges (Soft 0–48, Medium 49–87, Firm 88–114,
-   Extra Firm 115+ kg) are shown as they are. Note a small gap: "up to 7.5 st" then
-   "7.7 – 13.7 st" (48–49 kg); worth checking against the authoritative page.
+2. *Firmness ranges* now follow the front page and the Firmness page (Soft 0–48, Medium 49–83,
+   Firm 83–114, Extra Firm 115+ kg). The stone values for the new bounds are derived from kg
+   (1 st = 6.35 kg), not taken from a source. Open points for the owner: 83 kg appears in both
+   Medium and Firm on the front page; the live Ecwid option reads "Medium 48–85 kg / 7.6–13.4 st",
+   which differs from both and needs a decision before any store change (store changes need approval).
 3. *SiteGround instructions* not supplied. The loading approach in section 6 is a proposal.
 4. *Live description length* (~158k reported vs 141,763 supplied). Whitespace may explain it, or material
    may exist that is not mapped yet; a diff against an export settles it.

@@ -553,7 +553,7 @@
       var sBox = side.getBoundingClientRect();
       if (sBox.left >= tvBox.right - 4) {
         var balanced = sBox.bottom - vp.top - below;
-        if (balanced > min) target = Math.min(max, Math.max(balanced, max * 0.82));
+        if (balanced > min) target = Math.min(max, Math.max(balanced, max * 0.9));
       }
     }
     this.tv.style.setProperty('--ddtv-view-h', Math.round(clamp(target, min, 860)) + 'px');

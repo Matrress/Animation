@@ -14,7 +14,7 @@ const read = (p) => readFileSync(join(root, p), 'utf8');
 const out = read('prototype/template.html')
   .replace('/*ENGINE_CSS*/', () => read('engine/ddtv-engine.css') + '\n' + read('engine/ddtv-scenes.css'))
   .replace('<!--DESCRIPTION-->', () => read('source/botanic-original-description.html'))
-  .replace('/*PRODUCT_CONFIG*/', () => read('products/botanic.config.js'))
+  .replace('/*PRODUCT_CONFIG*/', () => read('products/botanic.config.js') + '\n' + read('products/botanic.zones.js'))
   .replace('/*ENGINE_JS*/', () => read('engine/ddtv-engine.js'))
   .replace('/*SCENES_JS*/', () => read('engine/ddtv-scenes.js'));
 
