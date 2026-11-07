@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Botanic Experience TV — Prototype</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap">
+<style>
+/* ── Mock Ecwid product page (prototype only, not shipped) ── */
+:root { --page: #F7FAFB; --ink: #364849; --line: #D5E0E3; --soft: #6E7B7C; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--page); color: var(--ink); font-family: 'Chillax', 'Helvetica Neue', Arial, sans-serif; }
+.proto-banner { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 24px; background: #263537; color: #EAF5F7; font-size: 13px; }
+.proto-banner b { letter-spacing: .08em; text-transform: uppercase; font-size: 11px; }
+.proto-banner a { color: #DDEBF1; }
+.ec-store { max-width: 1360px; margin: 0 auto; padding: 28px 24px 60px; }
+.product-details__layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); gap: 36px; align-items: start; }
+.mock-gallery { aspect-ratio: 4 / 3; border-radius: 18px; background: repeating-linear-gradient(45deg, #EDF3F5 0 14px, #E5EEF1 14px 28px); display: grid; place-items: center; color: var(--soft); font-size: 14px; }
+.product-details__sidebar { display: flex; flex-direction: column; gap: 18px; }
+.product-details__product-title { margin: 0; font-size: 26px; line-height: 1.2; font-weight: 700; }
+.mock-price { font-size: 14px; color: var(--soft); padding: 12px 14px; border: 1px dashed var(--line); border-radius: 12px; }
+.details-product-option { border: 0; margin: 0; padding: 0; }
+.details-product-option__title { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; }
+.details-product-option select { width: 100%; min-height: 46px; padding: 0 12px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font: inherit; font-size: 15px; color: var(--ink); }
+.form-control__inline { display: flex; flex-wrap: wrap; gap: 8px; }
+.form-control--radio { position: relative; }
+.form-control--radio input { position: absolute; opacity: 0; }
+.form-control--radio label { display: inline-flex; align-items: center; min-height: 42px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
+.form-control--radio input:checked + label { background: var(--ink); color: #fff; border-color: var(--ink); }
+.form-control--radio input:focus-visible + label { outline: 2px solid #759397; outline-offset: 2px; }
+.mock-bag { min-height: 54px; border-radius: 999px; border: 0; background: var(--ink); color: #fff; font: inherit; font-size: 16px; font-weight: 700; opacity: .9; }
+.mock-note { font-size: 12.5px; color: var(--soft); line-height: 1.5; }
+.product-details__description { margin-top: 48px; }
+.product-details__description-title { font-size: 20px; font-weight: 700; margin: 0 0 16px; }
+@media (max-width: 900px) {
+  .product-details__layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 540px) { .ec-store { padding: 16px 0 40px; } .product-details__sidebar { padding: 0 16px; } }
+</style>
+<style>
+/*ENGINE_CSS*/
+</style>
+</head>
+<body>
+<div class="proto-banner">
+  <span><b>Prototype</b> · Mock product page for the Experience TV engine. Not the live store. Prices, gallery and checkout are placeholders.</span>
+  <span>Append <code>?ddtv=classic</code> or <code>?ddtv=off</code> to the URL to test fallbacks.</span>
+</div>
+<div class="ec-size ec-store">
+  <div class="product-details">
+    <div class="product-details__layout">
+      <div class="product-details__gallery">
+        <div class="mock-gallery">Native Ecwid product gallery</div>
+      </div>
+      <div class="product-details__sidebar">
+        <h1 class="product-details__product-title">Botanic Experience TV | TEST DRAFT</h1>
+        <div class="mock-price">Price, discounts and savings are rendered by Ecwid (never hard-coded by the TV).</div>
+
+        <div class="product-details-module details-product-option details-product-option--Size">
+          <div class="details-product-option__title">Size</div>
+          <select aria-label="Size">
+            <option value="">Select size</option>
+            <option>Small Single — 75 × 190 cm</option>
+            <option>Long Small Single — 75 × 200 cm</option>
+            <option>EU Small Single — 80 × 200 cm</option>
+            <option>Single — 90 × 190 cm</option>
+            <option>Euro Single — 90 × 200 cm</option>
+            <option>Large Single — 100 × 200 cm</option>
+            <option>Small Double — 120 × 190 cm</option>
+            <option>Euro Small Double — 120 × 200 cm</option>
+            <option>Double — 135 × 190 cm</option>
+            <option>Compact Double — 140 × 190 cm</option>
+            <option>Euro Double — 140 × 200 cm</option>
+            <option>King — 150 × 200 cm</option>
+            <option>King Long — 150 × 210 cm</option>
+            <option>Euro King — 160 × 200 cm</option>
+            <option>Euro King Long — 160 × 210 cm</option>
+            <option>Euro King XL — 160 × 220 cm</option>
+            <option>Super King — 180 × 200 cm</option>
+            <option>Super King Long — 180 × 210 cm</option>
+            <option>Super King XL — 180 × 220 cm</option>
+            <option>Emperor — 200 × 200 cm</option>
+            <option>Emperor Long — 200 × 210 cm</option>
+            <option>Emperor XL — 200 × 220 cm</option>
+          </select>
+        </div>
+
+        <div class="product-details-module details-product-option details-product-option--Depth">
+          <div class="details-product-option__title">Select Mattress Depth</div>
+          <div class="form-control__inline">
+            <div class="form-control--radio"><input type="radio" name="depth" id="o-d20"><label for="o-d20">20 cm</label></div>
+            <div class="form-control--radio"><input type="radio" name="depth" id="o-d24"><label for="o-d24">24 cm</label></div>
+            <div class="form-control--radio"><input type="radio" name="depth" id="o-d26"><label for="o-d26">26 cm</label></div>
+          </div>
+        </div>
+
+        <div class="product-details-module details-product-option details-product-option--Firmness">
+          <div class="details-product-option__title">Firmness by body weight</div>
+          <div class="form-control__inline">
+            <div class="form-control--radio"><input type="radio" name="firm" id="o-fs"><label for="o-fs">Soft · 0–48 kg</label></div>
+            <div class="form-control--radio"><input type="radio" name="firm" id="o-fm"><label for="o-fm">Medium · 49–87 kg</label></div>
+            <div class="form-control--radio"><input type="radio" name="firm" id="o-ff"><label for="o-ff">Firm · 88–114 kg</label></div>
+            <div class="form-control--radio"><input type="radio" name="firm" id="o-fx"><label for="o-fx">Extra Firm · 115+ kg</label></div>
+          </div>
+        </div>
+
+        <div class="product-details-module details-product-option details-product-option--Covers">
+          <div class="details-product-option__title">Covers</div>
+          <div class="form-control__inline">
+            <div class="form-control--radio"><input type="radio" name="cover" id="o-c1"><label for="o-c1">100% Organic Cotton</label></div>
+            <div class="form-control--radio"><input type="radio" name="cover" id="o-c2"><label for="o-c2">Cotton &amp; Wool</label></div>
+            <div class="form-control--radio"><input type="radio" name="cover" id="o-c3"><label for="o-c3">Aloe Vera + Cotton</label></div>
+            <div class="form-control--radio"><input type="radio" name="cover" id="o-c4"><label for="o-c4">Cashmere + Silver Ions</label></div>
+          </div>
+        </div>
+
+        <button class="mock-bag" type="button" disabled>Add to Bag</button>
+        <p class="mock-note">Option names and values in this mock are illustrative. The connector reads whatever the live Ecwid product renders; names must be confirmed on product 876405767.</p>
+      </div>
+    </div>
+
+    <div class="product-details__description">
+      <div class="product-details__description-title">Product Details</div>
+      <div class="product-details-module__content product-details__product-description">
+<!--DESCRIPTION-->
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+/*PRODUCT_CONFIG*/
+</script>
+<script>
+/*ENGINE_JS*/
+</script>
+<script>DDTV.boot();</script>
+</body>
+</html>
