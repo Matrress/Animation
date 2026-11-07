@@ -106,13 +106,17 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = __q(s); retu
   ok(buttons.every((b) => !numbered.test(b)), 'no numbering on chapter buttons');
 
   /* ---- layout ---- */
+  // Placement (owner's decision): the television starts at the top of its column,
+  // so the space above the options is used by the monitor, and the monitor
+  // balances with the options column. Measured on the mock page.
   const align = await page.evaluate(() => {
     const r = (s) => __q(s).getBoundingClientRect();
-    return { frame: Math.round(r('.ddtv__screen').top - r('.details-product-option--Size').top), lead: Math.round(r('.ddtv-top').top - r('.product-details__layout').top), gap: Math.round(r('.ddtv__bar--top').top - r('.ddtv-top').bottom) };
+    const col = document.querySelector('.product-details__layout').getBoundingClientRect();
+    return { top: Math.round(r('.ddtv-top').top - col.top), gap: Math.round(r('.ddtv__bar--top').top - r('.ddtv-top').bottom), monitor: Math.round(r('.ddtv__screen').height), side: Math.round(document.querySelector('.product-details__sidebar').getBoundingClientRect().bottom - r('.ddtv__screen').top) };
   });
-  ok(Math.abs(align.frame) <= 1, 'monitor top frame aligned with the top of the SIZE row (' + align.frame + 'px)');
-  ok(align.lead <= 24, 'no empty band above the header row (' + align.lead + 'px)');
+  ok(align.top <= 24, 'the television starts at the top of its column, no empty band above it (' + align.top + 'px)');
   ok(align.gap <= 26, 'chapter buttons sit close under the header (' + align.gap + 'px)');
+  ok(align.monitor >= 360, 'the monitor uses the space it is given (' + align.monitor + 'px tall)');
   const compact = await page.evaluate(() => ({ btn: __q('.ddtv__bar--bottom .ddtv__btn').offsetHeight, sw: __q('.ddtv-switch button').offsetHeight }));
   ok(compact.btn <= 44 && compact.sw <= 38, 'compact controls (button ' + compact.btn + 'px, switch ' + compact.sw + 'px)');
   const fonts = await page.evaluate(() => [...__qa('.ddtv__btn, .ddtv__tab, .ddtv__nav, .ddtv__play, .ddtv-switch button, .sc-btn, .sc-topic')].map((n) => parseFloat(getComputedStyle(n).fontSize)));

@@ -521,34 +521,15 @@
     else host.insertBefore(this.host, host.firstChild);
   };
 
-  /* Aligns the top frame of the monitor with the top of the SIZE row.
-     Whatever height Ecwid leaves above SIZE is spent in small, even steps so
-     no single empty band appears: the upper chapter buttons grow a little
-     (up to 8 px), then the space between header and buttons (up to 14 px),
-     then between buttons and monitor (up to 14 px). Only a remainder beyond
-     that becomes top margin. The engine owns just these four values; the
+  /* Placement. The television starts at the top of its column, where the
+     store's gallery starts, so the space above the options is used by the
+     monitor instead of left empty (decision of the owner). The monitor then
+     grows to balance with the native options column (measureHeight). The
      native options column is measured, never changed. */
   Television.prototype.measureAlign = function () {
-    var L = this.product.layout || {};
-    var target = $(L.alignToSelector), root = this.root;
+    var root = this.root;
     root.style.marginTop = '';
     each(['--ddtv-bar-x', '--ddtv-gap-a', '--ddtv-gap-b'], function (v) { root.style.removeProperty(v); });
-    if (!target || this.view !== 'interactive') return;
-    var tvBox = this.tv.getBoundingClientRect();
-    var tBox = target.getBoundingClientRect();
-    /* Align only when the two columns sit side by side. */
-    if (tBox.left < tvBox.right - 4) return;
-    var offset = Math.round(tBox.top - this.screen.getBoundingClientRect().top);
-    if (offset < -2) return warn('Monitor starts ' + (-offset) + 'px below the SIZE row; check layout.mountSelector.');
-    if (offset <= 0) return;
-    var left = offset;
-    var bar = Math.min(left, 8); left -= bar;
-    var ga = Math.min(left, 14); left -= ga;
-    var gb = Math.min(left, 14); left -= gb;
-    root.style.setProperty('--ddtv-bar-x', bar + 'px');
-    root.style.setProperty('--ddtv-gap-a', (10 + ga) + 'px');
-    root.style.setProperty('--ddtv-gap-b', gb + 'px');
-    if (left > 0) root.style.marginTop = left + 'px';
   };
 
   Television.prototype.measureHeight = function () {
