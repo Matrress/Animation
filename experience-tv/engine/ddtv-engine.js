@@ -198,9 +198,11 @@
   ConfigConnector.prototype.readPrice = function () {
     var P = this.product.price;
     if (!P) return null;
-    var c = txt(P.current && $(P.current)), o = txt(P.compare && $(P.compare));
+    var c = txt(P.current && $(P.current)), o = txt(P.compare && $(P.compare)), d = txt(P.discount && $(P.discount));
     if (!c) return null;
-    return { current: c, compare: o && o !== c ? o : '' };
+    /* The struck-through earlier price and the discount note exist in Ecwid's
+       page only once the store shows a discount; until then they are empty. */
+    return { current: c, compare: o && o !== c ? o : '', discount: d };
   };
 
   /* True when two normalised values describe the same option value. */
@@ -401,6 +403,13 @@
 
   Television.prototype.chapters = function () { return this.product.chapters; };
 
+  /* Still the television of the page on screen: mounted, and built from the
+     very description node that is in the page now. */
+  Television.prototype.alive = function () {
+    return !!(this.host && this.host.isConnected && this.sourceRoot && this.sourceRoot.isConnected &&
+      $(this.product.sourceRoot) === this.sourceRoot);
+  };
+
   /* ---------------- shell ---------------- */
 
   Television.prototype.build = function () {
@@ -510,26 +519,57 @@
 
   /* ---------------- mounting & layout ---------------- */
 
-  Television.prototype.mount = function () {
+  /* Two placements, chosen from the width the store really gives the left
+     column (not from the screen size):
+       column  the TV sits at the top of the store's left column, beside the
+               options (desktop, iPad landscape);
+       stacked the column is too narrow for seven chapter buttons per row (iPad
+               portrait), so the TV takes the full width directly above the
+               store's product block, which stays exactly as it is. */
+  Television.prototype.wantedPlacement = function () {
     var L = this.product.layout || {};
-    var host = this.opts.mount || $(L.mountSelector);
-    if (!host) {
-      /* Fallback: directly before the original description. */
-      host = this.sourceRoot.parentNode;
-      host.insertBefore(this.host, this.sourceRoot);
-    } else if (L.mountPosition === 'append') host.appendChild(this.host);
-    else host.insertBefore(this.host, host.firstChild);
+    var col = $(L.mountSelector), ref = $(L.stackBeforeSelector);
+    if (this.opts.mount || !col || !ref || !L.stackBelowColumn) return 'column';
+    return col.getBoundingClientRect().width < L.stackBelowColumn ? 'stacked' : 'column';
   };
 
-  /* Placement. The television starts at the top of its column, where the
-     store's gallery starts, so the space above the options is used by the
-     monitor instead of left empty (decision of the owner). The monitor then
-     grows to balance with the native options column (measureHeight). The
-     native options column is measured, never changed. */
+  Television.prototype.place = function (mode) {
+    var L = this.product.layout || {}, self = this;
+    mode = mode || this.wantedPlacement();
+    /* Only one television may ever exist in the page. */
+    each($$('.ddtv-host'), function (h) { if (h !== self.host && h.parentNode) h.parentNode.removeChild(h); });
+    var host = this.opts.mount || $(L.mountSelector), ref = $(L.stackBeforeSelector);
+    if (mode === 'stacked' && ref && ref.parentNode) ref.parentNode.insertBefore(this.host, ref);
+    else if (!host) {
+      /* Fallback: directly before the original description. */
+      this.sourceRoot.parentNode.insertBefore(this.host, this.sourceRoot);
+      mode = 'column';
+    } else if (L.mountPosition === 'append') host.appendChild(this.host);
+    else host.insertBefore(this.host, host.firstChild);
+    this.placement = mode;
+    this.root.setAttribute('data-placement', mode);
+  };
+
+  Television.prototype.mount = function () { this.place(); };
+
+  /* Vertical position (column placement only). Configured by
+     layout.placement:
+       'top'   the television starts at the top of the store's left column, so
+               the space above the options is used by the monitor instead of
+               being left empty (the owner's decision after the annotated
+               screenshot);
+       'size'  the top row of chapter buttons starts at the same height as the
+               store's SIZE selector (the V11 prototype); the gallery's former
+               space above it stays empty.
+     The store's own elements are only measured, never changed. */
   Television.prototype.measureAlign = function () {
-    var root = this.root;
+    var L = this.product.layout || {}, root = this.root;
     root.style.marginTop = '';
-    each(['--ddtv-bar-x', '--ddtv-gap-a', '--ddtv-gap-b'], function (v) { root.style.removeProperty(v); });
+    if (this.placement !== 'column' || L.placement !== 'size') return;
+    var target = $(L.alignToSelector), firstBar = this.tv.firstElementChild;
+    if (!target || !firstBar) return;
+    var gap = target.getBoundingClientRect().top - firstBar.getBoundingClientRect().top;
+    if (gap > 0) root.style.marginTop = Math.round(gap) + 'px';
   };
 
   Television.prototype.measureHeight = function () {
@@ -546,21 +586,43 @@
     var max = Math.min(vh - 24, vh * 0.92) - chrome;
     var min = 340;
     var target = max;
-    /* Balance with the native options column when it is beside the TV: end
-       the unit at about the same height as that column. */
-    var side = $(L.sidePanelSelector);
-    if (side) {
-      var sBox = side.getBoundingClientRect();
-      if (sBox.left >= tvBox.right - 4) {
-        var balanced = sBox.bottom - vp.top - below;
-        if (balanced > min) target = Math.min(max, Math.max(balanced, max * 0.9));
+    if (this.placement === 'stacked') {
+      /* Full width above the product block: a landscape-leaning monitor. */
+      target = Math.min(max, vp.width * 0.78);
+    } else {
+      /* Balance with the native options column when it is beside the TV: end
+         the unit at about the same height as that column. */
+      var side = $(L.sidePanelSelector);
+      if (side) {
+        var sBox = side.getBoundingClientRect();
+        if (sBox.left >= tvBox.right - 4) {
+          var balanced = sBox.bottom - vp.top - below;
+          /* The 90% floor keeps the monitor generous in the default placement. In
+             'size' the unit starts lower, so it must end with the options column. */
+          var floor = L.placement === 'size' ? 0 : 0.9;
+          if (balanced > min) target = Math.min(max, Math.max(balanced, max * floor));
+        }
       }
+      /* Proportional screen: never much taller than it is wide. */
+      target = Math.min(target, vp.width * 1.3);
     }
     this.tv.style.setProperty('--ddtv-view-h', Math.round(clamp(target, min, 860)) + 'px');
   };
 
+  /* Move between the column and the stacked placement (rotation, resize). */
+  Television.prototype.replace = function (mode) {
+    this.hideNative(false);
+    this.place(mode);
+    this.hideNative(true);
+    /* Moving a node pauses its video; resume the active screen's loop. */
+    var list = this.panels[this.product.chapters[this.chapterIndex].id], pn = list && list[this.panelIndex[this.product.chapters[this.chapterIndex].id] || 0];
+    if (pn) this.media.focus(this.stage, pn.el);
+  };
+
   Television.prototype.layout = function () {
     if (this.view !== 'interactive') return;
+    var want = this.wantedPlacement();
+    if (want !== this.placement) this.replace(want);
     this.measureAlign();
     this.measureHeight();
     this.updateScrollHint();
@@ -936,6 +998,7 @@
     box.appendChild(el('span', { class: 'ddtv__price-k', text: 'Price' }));
     box.appendChild(el('span', { class: 'ddtv__price-v', text: pr.current }));
     if (pr.compare) box.appendChild(el('span', { class: 'ddtv__price-old', text: pr.compare }));
+    if (pr.discount) box.appendChild(el('span', { class: 'ddtv__price-save', text: pr.discount }));
   };
 
   Television.prototype.renderChips = function (state) {
@@ -972,9 +1035,22 @@
 
   /* ---------------- views ---------------- */
 
+  /* A phone is recognised by the shortest side of its screen, so a phone held
+     sideways (a wide window) still gets the complete Classic View. An iPad
+     mini, the smallest tablet, has a short side of 744 px. */
+  Television.prototype.isPhone = function () {
+    var L = this.product.layout || {}, s = global.screen || {};
+    var short = Math.min(s.width || 9999, s.height || 9999);
+    return short < (L.phoneMaxShortSide || 600);
+  };
+
   Television.prototype.canInteract = function () {
     var L = this.product.layout || {};
-    return (global.innerWidth || 0) >= (L.interactiveMinWidth || 768);
+    if (this.isPhone()) return false;
+    if ((global.innerWidth || 0) < (L.interactiveMinWidth || 720)) return false;
+    /* Never render a cramped monitor: it needs a minimum width of its own. */
+    var w = this.host && this.host.isConnected ? this.host.getBoundingClientRect().width : Infinity;
+    return !(w > 0 && w < (L.minTvWidth || 600));
   };
 
   Television.prototype.hideNative = function (hide) {
@@ -983,7 +1059,10 @@
       /* The native Ecwid selection area is off limits: nothing inside the
          options column or any option block is ever hidden or changed. */
       var protectedAreas = $$(L.sidePanelSelector || '').concat($$(ECWID.block));
-      each(L.hideInInteractive || [], function (sel) {
+      /* In the stacked placement the store's own gallery stays visible below the
+         television; only in the column placement does the TV take its place. */
+      var toHide = (L.hideInInteractive || []).concat(this.placement === 'column' ? (L.hideInColumn || []) : []);
+      each(toHide, function (sel) {
         each($$(sel), function (n) {
           if (self.root.contains(n) || n === self.root) return;
           for (var i = 0; i < protectedAreas.length; i++) {
@@ -1124,7 +1203,15 @@
   /* ------------------------------------------------------------------ */
 
   var current = null;
+  /* Every start and stop moves this on; a wait that belongs to an older
+     generation does nothing when its element finally appears. */
+  var generation = 0;
+  var cancelWait = null;
+  var booted = false;
 
+  /* Only a product listed in a config (productIds) is ever matched. With no
+     id (a plain page without Ecwid's API, e.g. the prototype) the config whose
+     source root is on the page is used. */
   function productFor(productId) {
     var all = global.DDTV_PRODUCTS || {};
     for (var k in all) {
@@ -1135,19 +1222,42 @@
     return null;
   }
 
+  /* Waits for a selector; returns a function that cancels the wait. */
   function whenPresent(selector, cb, timeout) {
-    if ($(selector)) return cb();
-    if (!global.MutationObserver) return;
-    var mo = new MutationObserver(function () { if ($(selector)) { mo.disconnect(); cb(); } });
+    if ($(selector)) { cb(); return noop; }
+    if (!global.MutationObserver) return noop;
+    var finished = false, timer = null, mo = new MutationObserver(function () {
+      if (!finished && $(selector)) { finish(); cb(); }
+    });
+    function finish() { finished = true; mo.disconnect(); if (timer) clearTimeout(timer); }
     mo.observe(doc.body || doc.documentElement, { childList: true, subtree: true });
-    setTimeout(function () { mo.disconnect(); }, timeout || 15000);
+    timer = setTimeout(finish, timeout || 15000);
+    return finish;
+  }
+
+  /* The id of the product page on screen, read from the class Ecwid puts on
+     it (…ProductPage-<id>) or from a hash route (#!/…/p/<id>). Used when the
+     store announced the page before this script was loaded. null = not a
+     product page. */
+  function currentProductId() {
+    var n = doc.querySelector('[class*="ecwid-productBrowser-ProductPage-"]');
+    var m = n && /ecwid-productBrowser-ProductPage-(\d+)/.exec(String(n.className));
+    if (m) return Number(m[1]);
+    var h = /\/p\/(\d+)/.exec((global.location && global.location.hash) || '');
+    return h ? Number(h[1]) : null;
   }
 
   function start(productId, options) {
     if (/[?&]ddtv=off/.test((global.location && global.location.search) || '')) return null;
     var product = productFor(productId);
     if (!product) return null;
-    whenPresent(product.sourceRoot, function () {
+    /* The same page announced again keeps the television that is running. */
+    if (current && current.product === product && current.alive()) return true;
+    if (cancelWait) { cancelWait(); cancelWait = null; }
+    var mine = ++generation;
+    cancelWait = whenPresent(product.sourceRoot, function () {
+      if (mine !== generation) return;
+      cancelWait = null;
       try {
         if (current) current.destroy();
         current = new Television(product, options).start();
@@ -1157,19 +1267,29 @@
         warn('Start failed; Classic View remains.', err);
         try { if (current) current.destroy(); } catch (e) { /* ignore */ }
         current = null;
+        DDTV.current = null;
       }
     });
     return true;
   }
 
-  function stop() { if (current) { current.destroy(); current = null; DDTV.current = null; } }
+  function stop() {
+    generation++;
+    if (cancelWait) { cancelWait(); cancelWait = null; }
+    if (current) { current.destroy(); current = null; DDTV.current = null; }
+  }
 
   function boot(options) {
+    if (booted) return;
+    booted = true;
     if (global.Ecwid && global.Ecwid.OnPageLoaded) {
       global.Ecwid.OnPageLoaded.add(function (page) {
-        stop();
-        if (page && page.type === 'PRODUCT') start(page.productId, options);
+        if (page && page.type === 'PRODUCT' && productFor(page.productId)) start(page.productId, options);
+        else stop();
       });
+      /* The store may have announced the current page before this script ran. */
+      var id = currentProductId();
+      if (id != null) start(id, options);
     } else if (doc.readyState === 'loading') {
       doc.addEventListener('DOMContentLoaded', function () { start(null, options); });
     } else start(null, options);

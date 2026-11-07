@@ -29,6 +29,9 @@
 
   function clean(s) { return String(s == null ? '' : s).replace(/\s+/g, ' ').trim(); }
 
+  /* Keeps a number and its unit ("114 kg") on one line when a heading wraps. */
+  function nb(s) { return String(s == null ? '' : s).replace(/\s+(kg|st|cm)\b/g, '\u00a0$1'); }
+
   /* Plain text of a node; <br> reads as a space. */
   function text(node) {
     if (!node) return '';
@@ -492,8 +495,9 @@
       var b = el('button', { type: 'button', class: 'sc-seg', 'aria-pressed': 'false', style: 'flex-grow:' + spans[i], onclick: function () { ctx.pick(it); } }, [
         meter,
         el('span', { class: 'sc-seg__n', text: it.title }),
-        el('span', { class: 'sc-seg__kg', text: it.kg }),
-        el('span', { class: 'sc-seg__st', text: it.st })
+        el('span', { class: 'sc-seg__kg', text: nb(it.kg) }),
+        /* The stone line exists only where the approved copy gives one. */
+        it.st ? el('span', { class: 'sc-seg__st', text: nb(it.st) }) : null
       ]);
       track.appendChild(b);
       return b;
@@ -504,7 +508,7 @@
     var ones = items.map(function (f) {
       return el('div', { class: 'sc-detailone' }, [
         el('h3', { class: 'sc-detail__t', text: f.title }),
-        el('p', { class: 'sc-detail__m', text: f.kg + ' · ' + f.st }),
+        el('p', { class: 'sc-detail__m', text: nb([f.kg, f.st].filter(Boolean).join(' · ')) }),
         rich('p', 'sc-p', f.body)
       ]);
     });
@@ -678,14 +682,14 @@
     each(items, function (x, i) {
       var span = x.hi != null ? x.hi - x.lo + 1 : 22;
       track.appendChild(el('span', { class: 'sc-seg sc-seg--mini' + (x === it ? ' is-selected' : ''), style: 'flex-grow:' + span }, [
-        el('span', { class: 'sc-seg__n', text: x.title }), el('span', { class: 'sc-seg__kg', text: x.kg })
+        el('span', { class: 'sc-seg__n', text: x.title }), el('span', { class: 'sc-seg__kg', text: nb(x.kg) })
       ]));
     });
     box.appendChild(el('div', { class: 'sc-result__main' }, [
       el('p', { class: 'sc-kicker sc-kicker--dark', text: P.kicker }),
       el('h2', { class: 'sc-big', text: it.title }),
-      el('p', { class: 'sc-result__fig', text: it.kg }),
-      el('p', { class: 'sc-result__sub', text: it.st }),
+      el('p', { class: 'sc-result__fig', text: nb(it.kg) }),
+      it.st ? el('p', { class: 'sc-result__sub', text: nb(it.st) }) : null,
       rich('p', 'sc-p sc-p--lg', it.body)
     ]));
     box.appendChild(el('aside', { class: 'sc-result__side' }, [
@@ -839,7 +843,7 @@
       return el('span', { class: 'sc-sum__mark', 'aria-hidden': 'true' }, [el('span', { class: 'sc-meter' }, data.firmness.map(function (x, k) { return el('i', { class: k <= data.firmness.indexOf(it) ? 'on' : '' }); }))]);
     }
     function detailOf(key, it) {
-      if (key === 'firmness') return it.kg + ' · ' + it.st;
+      if (key === 'firmness') return [it.kg, it.st].filter(Boolean).join(' · ');
       if (key === 'depth') return it.title + ' · ≈ ' + (it.value + cover) + ' cm with cover';
       if (key === 'cover') return it.tagline;
       return it.title;
@@ -873,6 +877,7 @@
         priceEl.appendChild(el('span', { class: 'sc-sum__pk', text: 'Price' }));
         priceEl.appendChild(el('b', { text: pr.current }));
         if (pr.compare) priceEl.appendChild(el('s', { text: pr.compare }));
+        if (pr.discount) priceEl.appendChild(el('span', { class: 'sc-sum__save', text: pr.discount }));
       }
     }
 

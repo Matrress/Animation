@@ -30,6 +30,9 @@
   --ddtv-view-h: clamp(380px, calc(100vh - 300px), 720px);
   display: block;
   width: 100%;
+  /* The television answers to its OWN width (container queries below), not to
+     the window: it sits in a column, or full width, depending on the store. */
+  container: tvw / inline-size;
   font-family: var(--tv-font);
   color: var(--tv-ink);
   -webkit-font-smoothing: antialiased;
@@ -38,6 +41,8 @@
 .ddtv-wrap *,
 .ddtv-wrap *::before,
 .ddtv-wrap *::after { box-sizing: border-box; }
+/* Stacked placement: breathing room before the store's product block. */
+.ddtv-wrap[data-placement="stacked"] { padding-bottom: 24px; }
 /* The store's own typography must not leak into the screens. */
 .ddtv-wrap :where(h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote) { margin: 0; padding: 0; }
 .ddtv-wrap :where(ul, ol) { list-style: none; }
@@ -52,9 +57,7 @@
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  /* The engine adds spare height here (see measureAlign) so the monitor can
-     start exactly at the SIZE row without leaving a gap above the buttons. */
-  margin: 0 0 var(--ddtv-gap-a, 10px);
+  margin: 0 0 10px;
 }
 .ddtv-top__brand {
   margin: 0;
@@ -125,6 +128,7 @@
   color: var(--tv-ink);
   font-family: var(--tv-font);
   font-size: 13px;
+  font-size: clamp(12px, 1.8cqw, 13.5px);
   font-weight: 700;
   line-height: 1.15;
   text-align: center;
@@ -133,8 +137,6 @@
   cursor: pointer;
   transition: background .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease;
 }
-.ddtv__bar--top { margin-bottom: var(--ddtv-gap-b, 0px); }
-.ddtv__bar--top .ddtv__btn { min-height: calc(var(--ddtv-btn-h, 42px) + var(--ddtv-bar-x, 0px)); }
 .ddtv__btn:hover { border-color: var(--tv-accent); background: var(--tv-card); }
 .ddtv__btn:focus-visible { outline: 2px solid var(--tv-accent); outline-offset: 3px; }
 /* Visited: a small mark in the corner, so the customer sees where they have been. */
@@ -243,10 +245,9 @@
   content: "";
   position: absolute;
   right: 9px;
-  top: 50%;
+  top: calc(50% - 5px);
   width: 10px;
   height: 5px;
-  margin-top: -5px;
   border-left: 2px solid var(--tv-accent-mid);
   border-bottom: 2px solid var(--tv-accent-mid);
   transform: rotate(-45deg);
@@ -273,7 +274,8 @@
 .ddtv__title {
   margin: 0;
   font-family: var(--tv-font);
-  font-size: clamp(22px, 2.1vw, 28px);
+  font-size: 24px;
+  font-size: clamp(22px, 3.4cqw, 28px);
   font-weight: 700;
   line-height: 1.12;
   letter-spacing: -.01em;
@@ -417,16 +419,20 @@
 
 /* ───────────── Configuration-aware highlight (both views) ───────────── */
 .ddtv-selected { position: relative; }
-.dd-botanic-page .ddtv-selected:not(label),
-.ddtv .ddtv-selected:not(label) {
-  border-color: var(--accent-mid, #2C7894) !important;
-  box-shadow: 0 0 0 2px var(--accent-mid, #2C7894), 0 10px 26px rgba(27,36,48,.14) !important;
+/* The doubled class lifts these rules above the description's own hover and
+   active states (0,3,0) without needing !important. */
+.dd-botanic-page .ddtv-selected.ddtv-selected:not(label),
+.ddtv .ddtv-selected.ddtv-selected:not(label) {
+  border-color: var(--accent-mid, #2C7894);
+  box-shadow: 0 0 0 2px var(--accent-mid, #2C7894), 0 10px 26px rgba(27,36,48,.14);
 }
+/* The badge sits on the top edge of its card: centred on the edge, no offset. */
 [data-ddtv-badge]::after {
   content: attr(data-ddtv-badge);
   position: absolute;
-  top: -10px;
+  top: 0;
   right: 12px;
+  transform: translateY(-50%);
   z-index: 2;
   padding: 5px 9px;
   border-radius: 5px;
@@ -441,7 +447,7 @@
   white-space: nowrap;
   pointer-events: none;
 }
-.b-cover-micro-tabs label[data-ddtv-badge]::after { top: -8px; right: 8px; background: #37C7F2; color: #10191C; }
+.b-cover-micro-tabs label[data-ddtv-badge]::after { top: 2px; right: 8px; background: #37C7F2; color: #10191C; }
 .b-cover-micro-tabs label.ddtv-selected { overflow: visible; }
 
 
@@ -460,10 +466,9 @@
   content: "";
   position: absolute;
   right: 10px;
-  top: 50%;
+  top: calc(50% - 5px);
   width: 9px;
   height: 5px;
-  margin-top: -5px;
   border-left: 2px solid var(--tv-accent-mid);
   border-bottom: 2px solid var(--tv-accent-mid);
   transform: rotate(-45deg);
@@ -485,6 +490,7 @@
 .ddtv__price-k { flex: 0 0 100%; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--tv-accent-pale); }
 .ddtv__price-v { font-size: 20px; font-weight: 700; line-height: 1.1; }
 .ddtv__price-old { font-size: 13px; text-decoration: line-through; color: rgba(255,255,255,.62); }
+.ddtv__price-save { flex: 0 0 100%; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--tv-accent-pale); }
 
 /* ───────────── Notice inside the monitor ───────────── */
 .ddtv__toast {
@@ -559,27 +565,34 @@ img.ddtv-mark--sm { height: 22px; width: auto; }
 .ddtv-player__frame { flex: 1 1 auto; min-height: 0; display: flex; border-radius: var(--r-l); overflow: hidden; background: #0E141B; }
 .ddtv-player__frame video { width: 100%; height: 100%; object-fit: contain; background: #0E141B; }
 
-/* ───────────── Responsive shell ───────────── */
-@media (max-width: 1280px) {
+/* ───────────── Responsive shell: the television's own width ───────────── */
+@container tvw (max-width: 900px) {
   .ddtv { --ddtv-btn-h: 40px; }
-  .ddtv__btn { font-size: 13.5px; }
-}
-@media (max-width: 900px) {
-  .ddtv__btn { font-size: 13px; padding: 3px 3px; border-radius: var(--r-m); }
+  .ddtv__btn { padding: 3px clamp(3px, .9cqw, 8px); }
   .ddtv__bar { gap: 6px; }
   .ddtv__screen { grid-template-columns: 160px minmax(0, 1fr); border-width: 6px; }
   .ddtv__aside { padding: 12px 8px 10px 10px; }
   .ddtv__tab { font-size: 14px; padding: 7px 24px 7px 8px; }
   .ddtv__head, .ddtv__foot { padding-left: 18px; padding-right: 18px; }
   .ddtv .ddtv__panel { padding-left: 18px; padding-right: 18px; }
-  .ddtv__nav-txt { max-width: 22vw; }
+  .ddtv__nav-txt { max-width: 22cqw; }
   .ddtv__price-v { font-size: 18px; }
 }
 
-/* Phones never render the television; Classic View is the experience. */
-@media (max-width: 767px) {
-  .ddtv { display: none !important; }
+/* Touch devices (iPad): every tap target of the shell reaches 44px, the minimum
+   in Apple's guidelines. This answers the kind of input, not the window width,
+   so a desktop browser keeps the compact controls. */
+@media (pointer: coarse) {
+  .ddtv { --ddtv-btn-h: 44px; }
+  .ddtv-switch button { min-height: 44px; }
+  .ddtv__tab { display: flex; align-items: center; min-height: 44px; }
+  .ddtv__nav, .ddtv__play { min-height: 44px; }
+  .ddtv__chip { min-height: 44px; align-content: center; }
 }
+
+/* Phones never render the television; Classic View is the experience. The
+   engine sets .is-phone from the screen size, whatever the orientation. */
+.ddtv-wrap.is-phone .ddtv { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .ddtv *, .ddtv-wrap * { transition: none !important; animation: none !important; }

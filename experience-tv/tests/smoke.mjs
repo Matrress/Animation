@@ -42,10 +42,10 @@ async function open(viewport, extra = {}, { splash = false, query = '' } = {}) {
 }
 
 const NATIVE = {
-  size: '.details-product-option--Size select',
-  depth: '.details-product-option--Depth select',
-  firmness: '.details-product-option--Firmness select',
-  cover: '.details-product-option--Covers select',
+  size: '.details-product-option--SIZE select',
+  depth: '.details-product-option--Select-Mattress-Depth select',
+  firmness: '.details-product-option--FIRMNESS-BY-BODY-WEIGHT select',
+  cover: '.details-product-option--COVERS select',
 };
 const nativeText = (page, key) => page.evaluate((s) => { const el = __q(s); return el.selectedIndex > 0 ? el.options[el.selectedIndex].text : ''; }, NATIVE[key]);
 
@@ -187,26 +187,26 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = __q(s); retu
   /* ---- choosing inside the television drives the native control ---- */
   await page.evaluate(() => { window.__native = []; __qa('.product-details__sidebar select').forEach((s) => s.addEventListener('change', () => window.__native.push(s.closest('.details-product-option').querySelector('.details-product-option__title').textContent))); });
   await page.locator('.ddtv__panel.is-active .sc-seg', { hasText: 'Extra Firm' }).click();
-  ok((await nativeText(page, 'firmness')).startsWith('Extra Firm'), 'tapping Extra Firm in the TV sets the Ecwid dropdown (' + await nativeText(page, 'firmness') + ')');
+  ok(/EXTRA FIRM/.test(await nativeText(page, 'firmness')), 'tapping Extra Firm in the TV sets the Ecwid dropdown (' + await nativeText(page, 'firmness') + ')');
   await page.locator('.ddtv__panel.is-active .sc-seg:has(.sc-seg__n:text-is("Firm"))').click();
-  ok((await nativeText(page, 'firmness')).startsWith('Firm ·'), '"Firm" is not confused with "Extra Firm" (' + await nativeText(page, 'firmness') + ')');
+  ok(/ – FIRM$/.test(await nativeText(page, 'firmness')), '"Firm" is not confused with "Extra Firm" (' + await nativeText(page, 'firmness') + ')');
   ok(await page.locator('.ddtv__panel.is-active .sc-seg.is-selected .sc-seg__n').innerText() === 'Firm', 'the tapped range is shown as selected');
   ok(await page.evaluate(() => window.__native.length) >= 2, 'Ecwid received real change events from the television');
   ok(await page.locator('.ddtv__chip[data-opt="firmness"] .ddtv__chip-v').innerText() === 'Firm', '"Your selection" follows at once');
   ok(await page.locator('.ddtv__tab[data-opt="firmness"].has-value').count() === 1, '"Your firmness" is ticked as ready');
   await page.click('.ddtv__tab:has-text("Your firmness")');
-  ok(/Firm/.test(await page.locator('.ddtv__panel.is-active .sc-big').innerText()) && /83 – 114 kg/.test(await page.locator('.ddtv__panel.is-active .sc-result').innerText()), '"Your firmness" shows the chosen range from the source text');
+  ok(/Firm/.test(await page.locator('.ddtv__panel.is-active .sc-big').innerText()) && /83 – 114\skg/.test(await page.locator('.ddtv__panel.is-active .sc-result').innerText()), '"Your firmness" shows the chosen range from the source text');
 
   await page.click('.ddtv__btn[data-chapter="height"]');
   await page.locator('.ddtv__panel.is-active .sc-slabcard', { hasText: 'Deep Comfort' }).click();
-  ok((await nativeText(page, 'depth')) === '24 cm', 'height tapped in the TV sets the Ecwid dropdown');
+  ok(/-24 cm/.test(await nativeText(page, 'depth')), 'height tapped in the TV sets the Ecwid dropdown');
   await page.click('.ddtv__tab:has-text("Choose size")');
   await page.locator('.ddtv__panel.is-active .sc-size', { hasText: '180 × 200' }).first().click();
-  ok((await nativeText(page, 'size')).includes('180 × 200'), 'size tapped in the TV sets the Ecwid dropdown');
+  ok(/Super King 180x200/.test(await nativeText(page, 'size')), 'size tapped in the TV sets the Ecwid dropdown');
   ok(await page.locator('.ddtv__panel.is-active .sc-print').count() === 1, 'the chosen size is drawn to scale');
   await page.click('.ddtv__btn[data-chapter="covers"]');
   await page.locator('.ddtv__panel.is-active .sc-swatch', { hasText: 'Cotton & Wool' }).click();
-  ok((await nativeText(page, 'cover')) === 'Cotton & Wool', 'cover tapped in the TV sets the Ecwid dropdown');
+  ok((await nativeText(page, 'cover')) === '100% Natural Cotton Other Side 100% Natural Wool', 'cover tapped in the TV sets the Ecwid dropdown');
   ok(await page.locator('.ddtv__panel.is-active .sc-viewer__badge').textContent() === 'Selected', 'the texture viewer marks it as selected');
   await page.waitForTimeout(150);
   ok(await page.locator('.ddtv__chip.is-set').count() === 4, 'all four choices appear in "Your selection"');
@@ -253,7 +253,7 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = __q(s); retu
     numbering: __q('#bp-firmness .b-sh__n').offsetParent !== null,
     order: [...__qa('#bp-top section[id^="bp-"]')].map((s) => s.id).join(','),
     firmSel: __qa('#bp-top .b-fc.ddtv-selected').length,
-    kept: __q('.details-product-option--Cover s select, .details-product-option--Covers select').selectedIndex,
+    kept: __q('.details-product-option--COVERS select').selectedIndex,
     inHeroFrame: !!__q('#bp-main-video-card .b-main-video-frame video'),
   }));
   ok(classic.tv, 'television hidden in Classic View');

@@ -7,34 +7,41 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap">
 <style>
-/* ── Mock Ecwid product page (prototype only, not shipped) ── */
+/* ── Offline stand-in for the Ecwid product page (prototype and tests only, not shipped) ──
+   The class names, option titles and option texts below are copied from the DOM of the
+   public live Botanic product (read-only, 2026-11-07). It is still NOT Ecwid. */
 :root { --page: #F4F7FA; --ink: #26323F; --line: #D0DAE3; --soft: #667483; }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--page); color: var(--ink); font-family: 'Chillax', 'Helvetica Neue', Arial, sans-serif; }
 .proto-banner { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 24px; background: #1B2430; color: #EAF2F7; font-size: 13px; }
 .proto-banner b { letter-spacing: .08em; text-transform: uppercase; font-size: 11px; }
 .proto-banner a { color: #A9CFE0; }
-.ec-store { max-width: 1600px; margin: 0 auto; padding: 28px 24px 60px; }
-.product-details__layout { display: grid; grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr); gap: 28px; align-items: start; }
-.mock-gallery { aspect-ratio: 4 / 3; border-radius: 18px; background: repeating-linear-gradient(45deg, #EDF2F6 0 14px, #E4EBF1 14px 28px); display: grid; place-items: center; color: var(--soft); font-size: 14px; }
+/* 1120px of content, like the live product block (1180 − 2 × 30 of padding). */
+.ec-store { max-width: 1180px; margin: 0 auto; padding: 28px 30px 60px; }
+/* Like the live store: two columns (2fr / 1fr), the options column never narrower than 317px. */
+.product-details__layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(317px, 1fr); gap: 0; align-items: start; }
+.mock-gallery { aspect-ratio: 747 / 473; background: repeating-linear-gradient(45deg, #EDF2F6 0 14px, #E4EBF1 14px 28px); display: grid; place-items: center; color: var(--soft); font-size: 14px; }
 /* Deliberately plain: this column stands in for Ecwid, which owns its design. */
-.product-details__sidebar { display: flex; flex-direction: column; gap: 16px; padding: 20px 22px 22px; background: #fff; border: 1px solid var(--line); border-radius: 18px; font-family: Arial, sans-serif; }
-.mock-tag { margin: 0; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
-.product-details__product-title { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 700; }
+.product-details__sidebar { display: flex; flex-direction: column; gap: 30px; padding: 0 16px 22px; font-family: Arial, sans-serif; }
+.product-details__product-title { margin: 0; font-size: 32px; line-height: 40px; font-weight: 700; }
+.mock-badge { width: max-content; padding: 6px 14px; background: #1c5c8f; color: #fff; font-weight: 700; font-size: 18px; }
+.mock-text { margin: 0; font-size: 18px; line-height: 28px; }
 .mock-price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 14px; color: var(--soft); }
 .details-product-price__value { font-size: 26px; font-weight: 700; color: var(--ink); }
-.details-product-price__compare { font-size: 15px; text-decoration: line-through; color: var(--soft); }
 .details-product-option { border: 0; margin: 0; padding: 0; }
 .details-product-option__title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
 .details-product-option select { width: 100%; min-height: 46px; font-size: 15px; }
-.mock-bag { min-height: 50px; border-radius: 8px; border: 0; background: #9AA5A7; color: #fff; font-size: 16px; font-weight: 700; }
+.form-control__button { min-height: 50px; border-radius: 0; border: 0; background: #1b1b1b; color: #fff; font-size: 16px; }
+.mock-error { margin: 0; color: #b00020; font-size: 13px; }
 .mock-note { font-size: 12.5px; color: var(--soft); line-height: 1.5; }
 .product-details__description { margin-top: 48px; }
 .product-details__description-title { font-size: 20px; font-weight: 700; margin: 0 0 16px; }
-@media (max-width: 900px) {
+/* Measured on the live store: still two columns at 744px wide. Where it goes to one column on a
+   phone was not measured; 600px is a guess, and phones get the Classic View whatever the store does. */
+@media (max-width: 600px) {
   .product-details__layout { grid-template-columns: 1fr; }
+  .ec-store { padding: 16px 0 40px; }
 }
-@media (max-width: 540px) { .ec-store { padding: 16px 0 40px; } .product-details__sidebar { padding: 0 16px; } }
 </style>
 <style id="ddtv-styles">
 /*ENGINE_CSS*/
@@ -42,10 +49,10 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
 </head>
 <body>
 <div class="proto-banner">
-  <span><b>Prototype</b> · Mock product page for the Experience TV engine. Not the live store. Prices, gallery and checkout are placeholders.</span>
+  <span><b>Prototype</b> · Offline stand-in for the Ecwid product page, used for development and tests. Not the live store and not Ecwid.</span>
   <span>Append <code>?ddtv=classic</code> or <code>?ddtv=off</code> to the URL to test fallbacks.</span>
 </div>
-<div class="ec-size ec-store">
+<div class="ec-size ec-store ecwid-productBrowser ecwid-productBrowser-ProductPage ecwid-productBrowser-ProductPage-876405767">
   <div class="product-details">
     <div class="product-details__layout">
       <div class="product-details__gallery">
@@ -55,74 +62,84 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
         <!-- STAND-IN FOR NATIVE ECWID. The Experience TV never styles, moves or
              changes anything in this column; it only reads the chosen values. -->
         <h1 class="product-details__product-title">Botanic Experience TV | TEST DRAFT</h1>
-        <div class="mock-price" title="Demo values from the mock page. Real price and discount come from Ecwid.">
-          <span class="details-product-price__value">£0.00</span>
-          <span class="details-product-price__compare"></span>
+        <div class="mock-price" title="Computed from the (+£…) texts of the chosen options, like the store does. Base price £0, as on the live product.">
+          <span class="details-product-price__value">£0</span>
         </div>
+        <!-- Stand-ins for the blocks the live store shows between the price and SIZE (text copied from it). -->
+        <div class="mock-badge">PREMIUM</div>
+        <p class="mock-text">Price incl. Taxes (20%) £0</p>
+        <p class="mock-text">Classical Conception 100% Organic Latex Mattress with 7 zones ANATOMICAL-ORTHOPAEDIC comfor</p>
 
-        <div class="product-details-module details-product-option details-product-option--Size">
-          <div class="details-product-option__title">Size</div>
-          <select aria-label="Size">
-            <option value=""></option>
-            <option>Small Single — 75 × 190 cm</option>
-            <option>Long Small Single — 75 × 200 cm</option>
-            <option>EU Small Single — 80 × 200 cm</option>
-            <option>Single — 90 × 190 cm</option>
-            <option>Euro Single — 90 × 200 cm</option>
-            <option>Large Single — 100 × 200 cm</option>
-            <option>Small Double — 120 × 190 cm</option>
-            <option>Euro Small Double — 120 × 200 cm</option>
-            <option>Double — 135 × 190 cm</option>
-            <option>Compact Double — 140 × 190 cm</option>
-            <option>Euro Double — 140 × 200 cm</option>
-            <option>King — 150 × 200 cm</option>
-            <option>King Long — 150 × 210 cm</option>
-            <option>Euro King — 160 × 200 cm</option>
-            <option>Euro King Long — 160 × 210 cm</option>
-            <option>Euro King XL — 160 × 220 cm</option>
-            <option>Super King — 180 × 200 cm</option>
-            <option>Super King Long — 180 × 210 cm</option>
-            <option>Super King XL — 180 × 220 cm</option>
-            <option>Emperor — 200 × 200 cm</option>
-            <option>Emperor Long — 200 × 210 cm</option>
-            <option>Emperor XL — 200 × 220 cm</option>
+        <div class="product-details-module details-product-option details-product-option--SIZE details-product-option--select">
+          <div class="product-details-module__title ec-header-h6 details-product-option__title">SIZE</div>
+          <select aria-label="SIZE">
+            <option value="">Please choose</option>
+            <option>Small Single 75x190 cm./ 29.5” x 74.8” (+£788)</option>
+            <option>Small Special Single 75x200 cm. (+£793)</option>
+            <option>Euro Special Single 80x200 cm. (+£794)</option>
+            <option>Single 90x190 cm / 35.4” x 74.8” (+£797)</option>
+            <option>Special Single 90x200 cm. (+£800)</option>
+            <option>Large Single 100x200 cm. (+£988)</option>
+            <option>Small Double 120x190 cm. / 47.2” x 74.8” (+£1 000)</option>
+            <option>Special Small Double 120x200 cm. (+£1 100)</option>
+            <option>UK Double 135x190 cm. /53.1” x 74.8” (+£1 111)</option>
+            <option>Compact Double – 140×190 cm (+£1 230)</option>
+            <option>Euro Double 140x200 cm. (+£1 237)</option>
+            <option>UK King 150x200 cm. / 59.1” x 78.7” (+£1 333)</option>
+            <option>King Long – 150×210 cm (+£1 340)</option>
+            <option>Euro King 160x200 cm. / 63.0” x 78.7” (+£1 444)</option>
+            <option>Euro King Long – 160×210 cm (+£1 488)</option>
+            <option>Euro King XL – 160×220 cm (+£1 544)</option>
+            <option>Super King 180x200 cm. / 70.9” x 78.7” (+£1 555)</option>
+            <option>Super King Long – 180×210 cm (+£1 639)</option>
+            <option>Super King XL – 180×220 cm (+£1 699)</option>
+            <option>Emperor 200x200 cm. / 78.7” x 78.7” (+£1 777)</option>
+            <option>Emperor Long – 200×210 cm (+£1 818)</option>
+            <option>Emperor XL – 200×220 cm (+£1 888)</option>
+            <option>For More Options CONTACT US</option>
           </select>
         </div>
 
-        <div class="product-details-module details-product-option details-product-option--Depth">
-          <div class="details-product-option__title">Select Mattress Depth</div>
+        <div class="product-details-module details-product-option details-product-option--Select-Mattress-Depth details-product-option--select">
+          <div class="product-details-module__title ec-header-h6 details-product-option__title">Select Mattress Depth</div>
           <select aria-label="Select Mattress Depth">
-            <option value=""></option>
-            <option>20 cm</option>
-            <option>24 cm</option>
-            <option>26 cm</option>
+            <option value="">Please choose</option>
+            <option>H- 20 cm (8”)  Balanced Comfort</option>
+            <option>H -24 cm (9.5”)  Deep Comfort (+£156)</option>
+            <option>H- 26 cm (10.25”)  Premium Deep Comfort (+£190)</option>
           </select>
         </div>
 
-        <div class="product-details-module details-product-option details-product-option--Firmness">
-          <div class="details-product-option__title">Firmness by body weight</div>
-          <select aria-label="Firmness by body weight">
-            <option value=""></option>
-            <option>Soft · 0–48 kg</option>
-            <option>Medium · 49–83 kg</option>
-            <option>Firm · 83–114 kg</option>
-            <option>Extra Firm · 115+ kg</option>
+        <div class="product-details-module details-product-option details-product-option--FIRMNESS-BY-BODY-WEIGHT details-product-option--select">
+          <div class="product-details-module__title ec-header-h6 details-product-option__title">FIRMNESS BY BODY WEIGHT</div>
+          <select aria-label="FIRMNESS BY BODY WEIGHT">
+            <option value="">Please choose</option>
+            <option>Up to 47 kg / up to 7.4 st body weight – SOFT</option>
+            <option>48–85 kg / 7.6–13.4 st body weight – MEDIUM</option>
+            <option>85–110 kg / 13.4–17.3 st body weight – FIRM</option>
+            <option>Over 120 kg / over 18.9 st body weight – EXTRA FIRM (+£88)</option>
           </select>
         </div>
 
-        <div class="product-details-module details-product-option details-product-option--Covers">
-          <div class="details-product-option__title">Covers</div>
-          <select aria-label="Covers">
-            <option value=""></option>
-            <option>100% Organic Cotton</option>
-            <option>Cotton &amp; Wool</option>
-            <option>Aloe Vera + Cotton</option>
-            <option>Cashmere + Silver Ions</option>
+        <div class="product-details-module details-product-option details-product-option--COVERS details-product-option--select">
+          <div class="product-details-module__title ec-header-h6 details-product-option__title">COVERS</div>
+          <select aria-label="COVERS">
+            <option value="">Please choose</option>
+            <option>100% Natural Cotton</option>
+            <option>100% Natural Cotton Other Side 100% Natural Wool</option>
+            <option>Combination Aloe Vera &amp;Cotton &amp; Viscose</option>
+            <option>Cashmere with Silver Ions (+£77)</option>
           </select>
         </div>
 
-        <button class="mock-bag" type="button" disabled>Add to Bag</button>
-        <p class="mock-note"><b>Native Ecwid panel (stand-in).</b> Plain dropdowns stand in for Ecwid's own controls. Option names and values are illustrative; the TV reads whatever the live product renders (to be confirmed on product 876405767).</p>
+        <div class="mock-text"><b>In stock</b></div>
+        <div class="mock-text"><b>Quantity:</b> <input value="1" size="2" aria-label="Quantity"></div>
+        <!-- Stand-in for Ecwid's Add to Bag. It does what Ecwid does for a required option: it
+             refuses until every option is chosen, then records what was chosen. -->
+        <button class="form-control__button form-control__button--icon-center" type="button" id="mock-add-to-bag">Add to Bag</button>
+        <p class="mock-error" id="mock-bag-error" hidden>Please choose every option.</p>
+        <p class="mock-text"><b>Share this product with your friends</b></p>
+        <p class="mock-note"><b>Offline stand-in for Ecwid.</b> Option titles and texts are copied from the live Botanic product. They are not yet confirmed on product 876405767.</p>
       </div>
     </div>
 
@@ -144,21 +161,31 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
 /*SCENES_JS*/
 </script>
 <script>
-/* MOCK ECWID PRICE: demonstration numbers only, so the prototype can show
-   the TV mirroring a price that changes with the choices. In the store the
-   price and any discount come from Ecwid; nothing here is a real price. */
+/* STAND-IN FOR ECWID'S PRICE AND ADD TO BAG (prototype and tests only).
+   The price is not invented: like the store, it is the sum of the "(+£…)" amounts in the texts
+   of the chosen options, on a base of £0 (the live product's base). In the store, Ecwid
+   alone prices the product. */
 (function () {
-  function idx(sel) { var s = document.querySelector('.details-product-option--' + sel + ' select'); return s ? s.selectedIndex : 0; }
+  function money(t) {
+    var m = /\(\+£\s*([\d\s  .,]+)\)/.exec(t);
+    return m ? parseFloat(m[1].replace(/[\s  ]/g, '').replace(',', '.')) : 0;
+  }
+  function selects() { return [].slice.call(document.querySelectorAll('.details-product-option select')); }
   function update() {
-    var size = idx('Size'), depth = idx('Depth'), firm = idx('Firmness'), cover = idx('Covers');
-    var price = 400 + size * 14 + [0, 0, 60, 90][depth] + [0, 0, 0, 0, 0][firm] + [0, 0, 45, 70, 120][cover];
-    var cur = document.querySelector('.details-product-price__value');
-    var old = document.querySelector('.details-product-price__compare');
-    cur.textContent = '£' + price.toFixed(2);
-    old.textContent = '£' + (price / 0.9).toFixed(2);
+    var sum = 0;
+    selects().forEach(function (s) { var o = s.options[s.selectedIndex]; if (o && s.selectedIndex > 0) sum += money(o.text); });
+    document.querySelector('.details-product-price__value').textContent = '£' + (sum % 1 ? sum.toFixed(2) : sum);
   }
   document.addEventListener('change', update);
   update();
+  window.__bag = [];
+  document.getElementById('mock-add-to-bag').addEventListener('click', function () {
+    var err = document.getElementById('mock-bag-error');
+    var chosen = selects().map(function (s) { return s.selectedIndex > 0 ? s.options[s.selectedIndex].text : null; });
+    if (chosen.some(function (c) { return !c; })) { err.hidden = false; return; }
+    err.hidden = true;
+    window.__bag.push({ options: chosen, price: document.querySelector('.details-product-price__value').textContent });
+  });
 })();
 </script>
 <script>DDTV.boot();</script>

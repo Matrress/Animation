@@ -51,9 +51,9 @@
     brand: { name: 'Divine DunlopDreams', logo: null },
 
     /* ---------------------------------------------------------------
-       Layout integration. Every selector here is an ASSUMPTION about
-       Ecwid's rendered DOM and must be confirmed against the live test
-       product before sign-off.
+       Layout integration. CONFIRMED against the DOM of the public live
+       Botanic product (read-only, local browser, 2026-11-07): the classes
+       below exist there. NOT yet confirmed on the test product 876405767.
        --------------------------------------------------------------- */
     layout: {
       /* Left presentation column. The TV is placed at the start of it. */
@@ -62,29 +62,59 @@
       /* Hidden while Interactive View is active. Never the options column:
          the engine refuses to hide anything inside it. */
       hideInInteractive: [
-        '.product-details__gallery > :not(.ddtv-host)',
         '.product-details__description-title',
         '.product-details-module__title--description'
       ],
-      /* The block whose top edge the monitor's top frame aligns to. */
-      alignToSelector: '.details-product-option--SIZE, .details-product-option--Size',
+      /* Hidden only in the column placement, where the TV takes the place of
+         the store's gallery. In the stacked placement the gallery stays. */
+      hideInColumn: ['.product-details__gallery > :not(.ddtv-host)'],
+
+      /* Vertical position in the column placement:
+           'top'  the TV starts at the top of the left column and covers the
+                  space above the options (the owner's decision after the
+                  annotated screenshot);
+           'size' the top row of chapter buttons starts at the same height as
+                  the native SIZE selector (V11 prototype), and the space above
+                  it stays empty.
+         The two instructions conflict; 'top' is the default until the owner
+         confirms. Changing it is this one line. */
+      placement: 'top',
+      alignToSelector: '.details-product-option--SIZE',
+
       /* The right-hand column, used to balance the monitor height. */
       sidePanelSelector: '.product-details__sidebar',
-      /* Below this width the TV is never rendered (phones get Classic). */
-      interactiveMinWidth: 768
+
+      /* When the left column is narrower than this (iPad portrait), seven
+         chapter buttons per row no longer fit: the TV is placed full width
+         directly above this element instead (the product block, untouched). */
+      stackBelowColumn: 700,
+      stackBeforeSelector: '.product-details',
+
+      /* The TV is never rendered below this window width, nor on a phone (the
+         short side of the screen is below phoneMaxShortSide, whatever the
+         orientation), nor when it would be narrower than minTvWidth. Those
+         visitors get the complete Classic View. */
+      interactiveMinWidth: 720,
+      phoneMaxShortSide: 600,
+      minTvWidth: 600
     },
 
     /* Price and discount exactly as Ecwid renders them. The TV only mirrors
-       this text; it never calculates or stores a price. ASSUMED selectors. */
+       this text; it never calculates or stores a price. Confirmed on the
+       public live product. */
     price: {
       current: '.details-product-price__value',
-      compare: '.details-product-price__compare'
+      /* Real DOM after a choice: "was <s>£156</s> Save 10%". Absent before. */
+      compare: '.details-product-price-compare__container s',
+      discount: '.product-details__product-price-discount'
     },
 
     /* ---------------------------------------------------------------
        Native Ecwid options. `match` is tested against the option title
        rendered by Ecwid; `chapter` / `panel` is the screen where the
-       customer chooses it. Names must be confirmed on the test product.
+       customer chooses it. Live titles: "SIZE", "Select Mattress Depth",
+       "FIRMNESS BY BODY WEIGHT", "COVERS". Not yet confirmed on the test
+       product.
        --------------------------------------------------------------- */
     options: {
       size:     { label: 'Size',     match: /^\s*size/i,     chapter: 'height',   panel: 'sizes' },
