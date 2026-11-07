@@ -53,13 +53,22 @@ async function open(viewport, extra = {}) {
   const heads = await page.evaluate(() => [...document.querySelectorAll('.ddtv__tab, .ddtv__title')].map((n) => n.textContent));
   ok(heads.every((h) => !numbered.test(h)), 'no numbering in screen headings or tabs');
 
-  // Alignment: top bar vs SIZE block
+  // Alignment: the top frame of the monitor starts exactly where the SIZE row starts
   const align = await page.evaluate(() => {
-    const bar = document.querySelector('.ddtv__bar--top').getBoundingClientRect().top;
+    const screen = document.querySelector('.ddtv__screen').getBoundingClientRect().top;
     const size = document.querySelector('.details-product-option--Size').getBoundingClientRect().top;
-    return Math.round(bar - size);
+    const layout = document.querySelector('.product-details__layout').getBoundingClientRect().top;
+    const header = document.querySelector('.ddtv-top').getBoundingClientRect().top;
+    const bar = document.querySelector('.ddtv__bar--top').getBoundingClientRect().top;
+    return { frame: Math.round(screen - size), lead: Math.round(header - layout), headerToBar: Math.round(bar - document.querySelector('.ddtv-top').getBoundingClientRect().bottom) };
   });
-  ok(Math.abs(align) <= 2, 'top navigation row aligned with SIZE selector (' + align + 'px)');
+  ok(Math.abs(align.frame) <= 1, 'monitor top frame aligned with the top of the SIZE row (' + align.frame + 'px)');
+  ok(align.lead <= 24, 'no empty band above the header row (' + align.lead + 'px from the top of the layout)');
+  ok(align.headerToBar <= 26, 'chapter buttons sit close under the header (' + align.headerToBar + 'px)');
+  const compact = await page.evaluate(() => ({ btn: document.querySelector('.ddtv__bar--bottom .ddtv__btn').offsetHeight, sw: document.querySelector('.ddtv-switch button').offsetHeight }));
+  ok(compact.btn <= 44 && compact.sw <= 38, 'compact controls (button ' + compact.btn + 'px, switch ' + compact.sw + 'px) while text stays 13px or more');
+  const fonts = await page.evaluate(() => [...document.querySelectorAll('.ddtv__btn, .ddtv__tab, .ddtv__nav, .ddtv__play, .ddtv-switch button')].map((n) => parseFloat(getComputedStyle(n).fontSize)));
+  ok(Math.min(...fonts) >= 13, 'every control keeps a readable size (min ' + Math.min(...fonts) + 'px)');
 
   // Product Details heading and description hidden in Interactive View
   ok(!(await page.locator('.product-details__description-title').isVisible()), 'Product Details heading hidden');
@@ -103,8 +112,25 @@ async function open(viewport, extra = {}) {
   await page.click('.ddtv .b-btn-hero-p');
   ok(await page.locator('.ddtv__btn[data-chapter="firmness"].is-active').count() === 1, 'hero "Choose Your Firmness" opens Firmness chapter');
 
+  // "Your selection" is pinned and fully visible on every chapter and screen
+  const pinned = async (label) => {
+    const r = await page.evaluate(() => {
+      const aside = document.querySelector('.ddtv__aside').getBoundingClientRect();
+      const chips = [...document.querySelectorAll('.ddtv__chip')].map((c) => c.getBoundingClientRect());
+      return { n: chips.length, inside: chips.every((c) => c.height > 0 && c.top >= aside.top - 1 && c.bottom <= aside.bottom + 1), vis: getComputedStyle(document.querySelector('.ddtv__mine')).visibility };
+    });
+    ok(r.n === 4 && r.inside && r.vis === 'visible', label + ': all four selection rows fully visible');
+  };
+  await pinned('before any choice');
+  for (const c of chapters) { await page.click(`.ddtv__btn[data-chapter="${c.id}"]`); if (c.id === 'discover' || c.id === 'delivery') await pinned('chapter ' + c.id); }
+  await page.click('.ddtv__btn[data-chapter="firmness"]');
+
   // Ecwid sync: nothing selected yet
   ok((await page.locator('.ddtv__chip.is-set').count()) === 0, 'no selection assumed before the customer chooses');
+  await page.selectOption('.details-product-option--Depth select', { index: 3 });
+  await page.waitForTimeout(200);
+  ok(await page.evaluate(() => { const c = document.querySelector('.ddtv__chip.is-set .ddtv__chip-v'); const a = document.querySelector('.ddtv__aside').getBoundingClientRect(); const r = c && c.getBoundingClientRect(); return !!c && /26/.test(c.textContent) && r.top >= a.top && r.bottom <= a.bottom; }), 'a choice appears in Your selection the moment it is made');
+  ok(await page.locator('.ddtv__chip.is-flash').count() === 1, 'the new choice is highlighted briefly');
   await page.selectOption('.details-product-option--Firmness select', { index: 2 }); // Medium
   await page.selectOption('.details-product-option--Depth select', { index: 2 }); // 24 cm
   await page.selectOption('.details-product-option--Covers select', { index: 3 }); // Aloe Vera
@@ -187,6 +213,10 @@ for (const [name, vp] of [['ipad-landscape', { width: 1180, height: 820 }], ['ip
   ok(fits, `television fits within the ${name} viewport`);
   const noHScroll = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
   ok(noHScroll, `no horizontal page scroll on ${name}`);
+  for (const sel of [0, 1, 2, 3]) await page.selectOption(['.details-product-option--Size', '.details-product-option--Depth', '.details-product-option--Firmness', '.details-product-option--Covers'][sel] + ' select', { index: 1 });
+  await page.waitForTimeout(200);
+  const padOk = await page.evaluate(() => { const a = document.querySelector('.ddtv__aside').getBoundingClientRect(); return [...document.querySelectorAll('.ddtv__chip.is-set')].length === 4 && [...document.querySelectorAll('.ddtv__chip')].every((c) => c.getBoundingClientRect().bottom <= a.bottom + 1); });
+  ok(padOk, `all four choices visible in Your selection on ${name}`);
   if (shots) {
     await page.click('.ddtv__btn[data-chapter="firmness"]');
     await (await settle(page)).locator('.ddtv-wrap').screenshot({ path: join(shots, `${name}-firmness.png`) });

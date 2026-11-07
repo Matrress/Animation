@@ -17,7 +17,7 @@ content, and puts everything back for Classic View.
 | `engine/ddtv-engine.js` / `.css` | Shared engine, no dependencies, ES5, all styles scoped. |
 | `prototype/template.html` | Mock Ecwid product page used for testing (not shipped). |
 | `tools/build.mjs` | Builds `dist/botanic-experience-tv-demo.html`, one self-contained file. |
-| `tests/smoke.mjs` | 88 automated checks across desktop, iPad, iPhone, including that the Ecwid options column is untouched. |
+| `tests/smoke.mjs` | 99 automated checks across desktop, iPad, iPhone, including alignment, a pinned selection and that the Ecwid options column is untouched. |
 | `docs/MASTER-PLAN.md` | Inventory, chapter matrix, media registry, architecture, layout plan, risks. **Read this first.** |
 
 ## Try it
@@ -25,6 +25,12 @@ content, and puts everything back for Classic View.
 ```bash
 node tools/build.mjs
 open dist/botanic-experience-tv-demo.html      # or double-click it
+```
+
+Site preview (any static server):
+
+```bash
+cd dist && python3 -m http.server 8765      # then open http://localhost:8765
 ```
 
 Choose options on the right and watch the TV respond. URL switches:

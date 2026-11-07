@@ -8,19 +8,19 @@
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap">
 <style>
 /* ── Mock Ecwid product page (prototype only, not shipped) ── */
-:root { --page: #F7FAFB; --ink: #364849; --line: #D5E0E3; --soft: #6E7B7C; }
+:root { --page: #F4F7FA; --ink: #26323F; --line: #D0DAE3; --soft: #667483; }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--page); color: var(--ink); font-family: 'Chillax', 'Helvetica Neue', Arial, sans-serif; }
-.proto-banner { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 24px; background: #263537; color: #EAF5F7; font-size: 13px; }
+.proto-banner { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 24px; background: #1B2430; color: #EAF2F7; font-size: 13px; }
 .proto-banner b { letter-spacing: .08em; text-transform: uppercase; font-size: 11px; }
-.proto-banner a { color: #DDEBF1; }
+.proto-banner a { color: #A9CFE0; }
 .ec-store { max-width: 1600px; margin: 0 auto; padding: 28px 24px 60px; }
 .product-details__layout { display: grid; grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr); gap: 28px; align-items: start; }
-.mock-gallery { aspect-ratio: 4 / 3; border-radius: 18px; background: repeating-linear-gradient(45deg, #EDF3F5 0 14px, #E5EEF1 14px 28px); display: grid; place-items: center; color: var(--soft); font-size: 14px; }
+.mock-gallery { aspect-ratio: 4 / 3; border-radius: 18px; background: repeating-linear-gradient(45deg, #EDF2F6 0 14px, #E4EBF1 14px 28px); display: grid; place-items: center; color: var(--soft); font-size: 14px; }
 /* Deliberately plain: this column stands in for Ecwid, which owns its design. */
-.product-details__sidebar { display: flex; flex-direction: column; gap: 16px; padding: 24px; background: #fff; border: 1px solid var(--line); border-radius: 18px; font-family: Arial, sans-serif; }
+.product-details__sidebar { display: flex; flex-direction: column; gap: 16px; padding: 20px 22px 22px; background: #fff; border: 1px solid var(--line); border-radius: 18px; font-family: Arial, sans-serif; }
 .mock-tag { margin: 0; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
-.product-details__product-title { margin: 0; font-size: 24px; line-height: 1.2; font-weight: 700; }
+.product-details__product-title { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 700; }
 .mock-price { font-size: 14px; color: var(--soft); padding: 12px 14px; border: 1px dashed var(--line); border-radius: 10px; }
 .details-product-option { border: 0; margin: 0; padding: 0; }
 .details-product-option__title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
@@ -52,9 +52,8 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
       <div class="product-details__sidebar">
         <!-- STAND-IN FOR NATIVE ECWID. The Experience TV never styles, moves or
              changes anything in this column; it only reads the chosen values. -->
-        <p class="mock-tag">Native Ecwid panel (stand-in)</p>
         <h1 class="product-details__product-title">Botanic Experience TV | TEST DRAFT</h1>
-        <div class="mock-price">Price, discounts and savings: rendered by Ecwid</div>
+        <div class="mock-price">Price and discounts: rendered by Ecwid</div>
 
         <div class="product-details-module details-product-option details-product-option--Size">
           <div class="details-product-option__title">Size</div>
@@ -118,7 +117,7 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
         </div>
 
         <button class="mock-bag" type="button" disabled>Add to Bag</button>
-        <p class="mock-note">Plain dropdowns stand in for Ecwid's own controls. Option names and values are illustrative; the TV reads whatever the live product renders (to be confirmed on product 876405767).</p>
+        <p class="mock-note"><b>Native Ecwid panel (stand-in).</b> Plain dropdowns stand in for Ecwid's own controls. Option names and values are illustrative; the TV reads whatever the live product renders (to be confirmed on product 876405767).</p>
       </div>
     </div>
 

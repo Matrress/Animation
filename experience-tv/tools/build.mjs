@@ -1,4 +1,4 @@
-// Builds dist/botanic-experience-tv-demo.html: the mock Ecwid page with the
+// Builds dist/botanic-experience-tv-demo.html (and a copy as dist/index.html): the mock Ecwid page with the
 // original description, the Botanic config and the engine inlined, so the
 // prototype opens from a single file on desktop or iPad.
 //
@@ -20,4 +20,6 @@ const out = read('prototype/template.html')
 mkdirSync(join(root, 'dist'), { recursive: true });
 const file = join(root, 'dist', 'botanic-experience-tv-demo.html');
 writeFileSync(file, out);
-console.log(`Wrote ${file} (${(out.length / 1024).toFixed(1)} KB)`);
+// index.html lets a plain static server (the site preview) open it directly.
+writeFileSync(join(root, 'dist', 'index.html'), out);
+console.log(`Wrote ${file} (${(out.length / 1024).toFixed(1)} KB) and dist/index.html`);

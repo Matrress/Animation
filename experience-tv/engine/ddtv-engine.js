@@ -474,11 +474,11 @@
        beside the chapter content. */
     this.screen = el('div', { class: 'ddtv__screen' }, [
       el('div', { class: 'ddtv__aside' }, [
-        el('div', {}, [el('p', { class: 'ddtv__aside-k', text: 'Explore' }), this.tabsEl]),
-        el('div', { class: 'ddtv__mine' }, [
+        el('div', { class: 'ddtv__explore' }, [el('p', { class: 'ddtv__aside-k', text: 'Explore' }), this.tabsEl]),
+        /* Pinned: always on screen, whatever the chapter or screen height. */
+        el('div', { class: 'ddtv__mine', role: 'region', 'aria-label': 'Your selection' }, [
           el('p', { class: 'ddtv__aside-k', text: 'Your selection' }),
-          this.chipsEl,
-          el('p', { class: 'ddtv__mine-note', text: 'Chosen in the options panel. The screen follows your choices.' })
+          this.chipsEl
         ])
       ]),
       el('div', { class: 'ddtv__main' }, [
@@ -540,43 +540,58 @@
     else host.insertBefore(this.root, host.firstChild);
   };
 
+  /* Aligns the top frame of the monitor with the top of the SIZE row.
+     Whatever height Ecwid leaves above SIZE is spent in small, even steps so
+     no single empty band appears: the upper chapter buttons grow a little
+     (up to 8 px), then the space between header and buttons (up to 14 px),
+     then between buttons and monitor (up to 14 px). Only a remainder beyond
+     that becomes top margin. The engine owns just these four values; the
+     native options column is measured, never changed. */
   Television.prototype.measureAlign = function () {
     var L = this.product.layout || {};
-    var target = $(L.alignToSelector);
-    /* One property owned by the engine: the wrapper's top margin. The
-       native options column itself is only measured, never changed. */
-    this.root.style.marginTop = '';
+    var target = $(L.alignToSelector), root = this.root;
+    root.style.marginTop = '';
+    each(['--ddtv-bar-x', '--ddtv-gap-a', '--ddtv-gap-b'], function (v) { root.style.removeProperty(v); });
     if (!target || this.view !== 'interactive') return;
     var tvBox = this.tv.getBoundingClientRect();
     var tBox = target.getBoundingClientRect();
     /* Align only when the two columns sit side by side. */
     if (tBox.left < tvBox.right - 4) return;
-    /* The reference is the upper chapter row. */
-    var barTop = $('.ddtv__bar--top', this.tv).getBoundingClientRect().top;
-    var offset = Math.round(tBox.top - barTop);
-    if (offset > 0) this.root.style.marginTop = offset + 'px';
-    else if (offset < -2) warn('Chapter row starts ' + (-offset) + 'px below the alignment target; check layout.mountSelector.');
+    var offset = Math.round(tBox.top - this.screen.getBoundingClientRect().top);
+    if (offset < -2) return warn('Monitor starts ' + (-offset) + 'px below the SIZE row; check layout.mountSelector.');
+    if (offset <= 0) return;
+    var left = offset;
+    var bar = Math.min(left, 8); left -= bar;
+    var ga = Math.min(left, 14); left -= ga;
+    var gb = Math.min(left, 14); left -= gb;
+    root.style.setProperty('--ddtv-bar-x', bar + 'px');
+    root.style.setProperty('--ddtv-gap-a', (10 + ga) + 'px');
+    root.style.setProperty('--ddtv-gap-b', gb + 'px');
+    if (left > 0) root.style.marginTop = left + 'px';
   };
 
   Television.prototype.measureHeight = function () {
     var L = this.product.layout || {};
     var vh = global.innerHeight || 800;
-    var bars = 0;
-    each($$('.ddtv__bar', this.tv), function (b) { bars += b.offsetHeight; });
-    /* Rows, gaps (2 × 14), monitor frame (2 × 9), heading and footer. */
-    var chrome = bars + 28 + 18 + $('.ddtv__head', this.screen).offsetHeight + $('.ddtv__foot', this.screen).offsetHeight;
-    /* Upper bound: the whole unit stays below ~92% of the viewport, so the
+    var vp = this.viewport.getBoundingClientRect();
+    var tvBox = this.tv.getBoundingClientRect();
+    /* Everything in the unit that is not the scrolling screen: both button
+       rows, the monitor frame, heading, footer and gaps. */
+    var above = vp.top - tvBox.top, below = tvBox.bottom - vp.bottom;
+    var chrome = above + below;
+    /* Upper bound: the whole unit stays within ~92% of the viewport, so the
        television never fills the entire screen. */
-    var max = Math.min(vh - 48, vh * 0.92) - chrome;
-    var min = 360;
+    var max = Math.min(vh - 24, vh * 0.92) - chrome;
+    var min = 340;
     var target = max;
-    /* Balance with the native options column when it is beside the TV. */
+    /* Balance with the native options column when it is beside the TV: end
+       the unit at about the same height as that column. */
     var side = $(L.sidePanelSelector);
     if (side) {
-      var sBox = side.getBoundingClientRect(), vBox = this.viewport.getBoundingClientRect();
-      if (sBox.left >= this.tv.getBoundingClientRect().right - 4) {
-        var sideBottom = sBox.bottom - vBox.top - $('.ddtv__foot', this.screen).offsetHeight - 16;
-        if (sideBottom > min) target = Math.min(max, Math.max(sideBottom, max * 0.82));
+      var sBox = side.getBoundingClientRect();
+      if (sBox.left >= tvBox.right - 4) {
+        var balanced = sBox.bottom - vp.top - below;
+        if (balanced > min) target = Math.min(max, Math.max(balanced, max * 0.82));
       }
     }
     this.tv.style.setProperty('--ddtv-view-h', Math.round(clamp(target, min, 860)) + 'px');

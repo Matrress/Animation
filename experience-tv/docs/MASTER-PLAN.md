@@ -255,16 +255,31 @@ choices mirrored read-only, each a shortcut to the matching screen); on the righ
 chapter heading, content, and Previous / Play presentation / Next. Right column: the
 native Ecwid panel, untouched.
 
+**Colour.** Cool snow graphite with a tropical-night blue accent, no green. The shell uses
+`--tv-*` tokens; a "theme bridge" in the engine CSS re-points the description's own variables
+(`--ink`, `--accent`, backgrounds, shadows) and its few fixed dark gradients inside the
+television only. Classic View keeps the original Botanic palette unchanged.
+
+**Your selection** is pinned at the foot of the Explore sidebar, so it is on screen on every
+screen, never scrolled away; each choice appears the moment it is made (tick and a brief
+highlight), before any choice the four rows show "—".
+
 Differences from V11, by design: no "01–14" numbers on the tiles (specification §8 forbids
 numbering in Interactive View; can be switched on if you prefer the V11 look), and no
 price or promotion inside the TV (that stays in Ecwid's panel).
 
-**Alignment with SIZE.** After mounting, the engine measures the rendered positions of the
-**upper chapter row** and the SIZE option block, and sets one property, `margin-top` on
-the TV wrapper, to the difference. No negative margins, no stacked `!important`.
-It re-measures on resize, on font load, and when the right column changes height
-(ResizeObserver). Alignment applies only when the two columns are side by side. Verified
-in the prototype: 0 px difference at 1440 × 900.
+**Alignment with SIZE.** The **top frame of the monitor** starts exactly where the SIZE row
+starts (measured from the rendered page: 0 px difference in the prototype at 1440 × 900 and
+iPad landscape). The header row and the upper chapter buttons sit above the monitor, in the
+space beside Ecwid's title and price. Whatever height Ecwid leaves above SIZE is spent in
+small even steps (upper buttons up to 8 px taller, up to 14 px more between header and
+buttons, up to 14 px between buttons and monitor) so no single empty band appears; only a
+remainder beyond that becomes top margin (16 px in the 1440 demo). The engine owns four
+values (wrapper top margin and three spacing variables); no negative margins, no stacked
+`!important`. It re-measures on resize, on font load, and when the right column changes
+height. Alignment applies only when the two columns are side by side. *On the real page the
+leftover depends on how tall Ecwid's title and price block is; it must be checked on
+876405767.*
 
 **Product Details heading.** Hidden with `display: none` (no reserved height) only in
 Interactive View; restored in Classic View.
@@ -315,7 +330,7 @@ verified: unit fits within the viewport, no horizontal scroll.
 | E. Ecwid synchronisation | Built against a mock using assumed Ecwid markup; verify on 876405767 |
 | F. Layout integration | Measured alignment and height built; tune on the real page, desktop + iPad |
 | G. Classic and mobile | Built; verify on iPhone Safari (older devices included) |
-| H. Testing | `tests/smoke.mjs`: 88 automated checks pass (desktop, iPad landscape/portrait, iPhone, kill switch, Ecwid column untouched). Real-device Safari testing still required |
+| H. Testing | `tests/smoke.mjs`: 99 automated checks pass (desktop, iPad landscape/portrait, iPhone, kill switch, Ecwid column untouched). Real-device Safari testing still required |
 | I. Approval | This document + prototype |
 
 Next steps after approval:
