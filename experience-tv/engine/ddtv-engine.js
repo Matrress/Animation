@@ -145,8 +145,11 @@
       return txt(label) || checked.value || null;
     }
     var select = $('select', block);
-    if (select && select.selectedIndex >= 0 && select.value !== '') {
-      return txt(select.options[select.selectedIndex]) || select.value;
+    if (select && select.selectedIndex >= 0) {
+      /* The placeholder ("Please choose") is not a choice. */
+      var o = select.options[select.selectedIndex], label = txt(o) || o.value;
+      if (!label || o.disabled || /^\s*please\s+choose/i.test(label)) return null;
+      return label;
     }
     var swatch = $('[aria-checked="true"], [aria-pressed="true"], .form-control--selected', block);
     if (swatch) return txt(swatch) || swatch.getAttribute('title');
@@ -474,6 +477,18 @@
 
     this.root = el('div', { class: 'ddtv-wrap', 'data-ddtv-product': p.id }, [this.topEl, this.tv]);
 
+    /* Isolation. The store's own stylesheet restyles plain elements (nav,
+       figure, h2, button …) inside its product area with rules that beat
+       any class we could write. The television therefore lives in a shadow
+       root: those rules cannot reach it, and it keeps its own styles. The
+       source description and the Ecwid options stay in the page, untouched. */
+    this.host = el('div', { class: 'ddtv-host', 'data-ddtv-product': p.id });
+    this.host.style.cssText = 'all: initial; display: block; width: 100%;';
+    this.shadow = this.host.attachShadow({ mode: 'open' });
+    var sheet = doc.getElementById('ddtv-styles');
+    this.shadow.appendChild(el('style', { text: sheet ? sheet.textContent : '' }));
+    this.shadow.appendChild(this.root);
+
     /* Panels */
     this.panels = {};
     each(ch, function (c) {
@@ -501,9 +516,9 @@
     if (!host) {
       /* Fallback: directly before the original description. */
       host = this.sourceRoot.parentNode;
-      host.insertBefore(this.root, this.sourceRoot);
-    } else if (L.mountPosition === 'append') host.appendChild(this.root);
-    else host.insertBefore(this.root, host.firstChild);
+      host.insertBefore(this.host, this.sourceRoot);
+    } else if (L.mountPosition === 'append') host.appendChild(this.host);
+    else host.insertBefore(this.host, host.firstChild);
   };
 
   /* Aligns the top frame of the monitor with the top of the SIZE row.
@@ -998,6 +1013,15 @@
           n.style.display = 'none';
         });
       });
+      /* The description's own heading ("Product Details") is not needed on the
+         monitor. Found by its text, since the store's class names vary. */
+      each($$('.product-details-module__title'), function (t) {
+        if (self.root.contains(t) || !/^\s*product\s+details\s*$/i.test(txt(t))) return;
+        var mod = t.closest('.product-details-module') || t;
+        if (mod.contains(self.host) || self.host.contains(mod)) return;
+        self.hidden.push({ n: mod, d: mod.style.display });
+        mod.style.display = 'none';
+      });
       if (this.sourceRoot) { this.hidden.push({ n: this.sourceRoot, d: this.sourceRoot.style.getPropertyValue('display'), p: this.sourceRoot.style.getPropertyPriority('display') }); this.sourceRoot.style.setProperty('display', 'none', 'important'); }
     } else {
       each(this.hidden, function (h) {
@@ -1110,7 +1134,7 @@
     global.removeEventListener('resize', this._resize);
     if (this.ro) this.ro.disconnect();
     doc.removeEventListener('keydown', this._docKey);
-    if (this.root.parentNode) this.root.parentNode.removeChild(this.root);
+    if (this.host.parentNode) this.host.parentNode.removeChild(this.host);
     doc.documentElement.classList.remove(NS + '-ready');
   };
 

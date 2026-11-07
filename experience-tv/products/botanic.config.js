@@ -62,12 +62,12 @@
       /* Hidden while Interactive View is active. Never the options column:
          the engine refuses to hide anything inside it. */
       hideInInteractive: [
-        '.product-details__gallery > :not(.ddtv-wrap)',
+        '.product-details__gallery > :not(.ddtv-host)',
         '.product-details__description-title',
         '.product-details-module__title--description'
       ],
       /* The block whose top edge the monitor's top frame aligns to. */
-      alignToSelector: '.details-product-option--Size',
+      alignToSelector: '.details-product-option--SIZE, .details-product-option--Size',
       /* The right-hand column, used to balance the monitor height. */
       sidePanelSelector: '.product-details__sidebar',
       /* Below this width the TV is never rendered (phones get Classic). */

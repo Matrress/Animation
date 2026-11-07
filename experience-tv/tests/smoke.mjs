@@ -16,6 +16,11 @@ const url = pathToFileURL(join(root, 'dist', 'botanic-experience-tv-demo.html'))
 const shots = process.argv[2];
 if (shots) mkdirSync(shots, { recursive: true });
 
+// The television lives in an open shadow root (the store's CSS cannot reach it).
+// These helpers search the page first, then the television, so tests read the same either way.
+const SHIM = `window.__q = (s) => document.querySelector(s) || (window.DDTV && DDTV.current && DDTV.current.shadow.querySelector(s));
+window.__qa = (s) => [...document.querySelectorAll(s), ...(window.DDTV && DDTV.current ? DDTV.current.shadow.querySelectorAll(s) : [])];`;
+
 let failures = 0;
 const ok = (cond, msg) => { console.log((cond ? 'PASS ' : 'FAIL ') + msg); if (!cond) failures++; };
 // Let transitions finish and move the pointer away before a screenshot.
@@ -26,6 +31,7 @@ const browser = await chromium.launch();
 async function open(viewport, extra = {}, { splash = false, query = '' } = {}) {
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: 1, ...extra });
   if (!splash) await ctx.addInitScript(() => sessionStorage.setItem('ddtv:botanic:splash', '1'));
+  await ctx.addInitScript(SHIM);
   await ctx.route(/^https?:\/\//, (r) => r.abort()); // offline: no media, no fonts
   const page = await ctx.newPage();
   const errors = [];
@@ -41,7 +47,7 @@ const NATIVE = {
   firmness: '.details-product-option--Firmness select',
   cover: '.details-product-option--Covers select',
 };
-const nativeText = (page, key) => page.evaluate((s) => { const el = document.querySelector(s); return el.selectedIndex > 0 ? el.options[el.selectedIndex].text : ''; }, NATIVE[key]);
+const nativeText = (page, key) => page.evaluate((s) => { const el = __q(s); return el.selectedIndex > 0 ? el.options[el.selectedIndex].text : ''; }, NATIVE[key]);
 
 /* ====================================================================== */
 /* Nothing from the description is lost                                    */
@@ -51,12 +57,12 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = document.que
   // except what the config explicitly lists as not shown (with a reason).
   const { ctx, page } = await open({ width: 1440, height: 900 });
   const coverage = await page.evaluate(() => {
-    const T = DDTV.current, src = document.querySelector('#bp-top'), excl = T.product.notInTelevision || [];
+    const T = DDTV.current, src = __q('#bp-top'), excl = T.product.notInTelevision || [];
     const sels = excl.filter((x) => x.selector).map((x) => x.selector), strips = excl.filter((x) => x.strip).map((x) => x.strip);
     const norm = (s) => { strips.forEach((r) => { s = s.replace(r, ' '); }); return s.toLowerCase().replace(/[^a-z0-9£%]+/g, ' ').trim(); };
     const skip = (n) => sels.some((s) => { try { return n.closest(s); } catch (e) { return false; } });
     let tv = '';
-    document.querySelectorAll('.ddtv__panel').forEach((p) => {
+    __qa('.ddtv__panel').forEach((p) => {
       const w = document.createTreeWalker(p, NodeFilter.SHOW_TEXT);
       let n;
       while ((n = w.nextNode())) tv += ' ' + n.nodeValue;
@@ -101,15 +107,15 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = document.que
 
   /* ---- layout ---- */
   const align = await page.evaluate(() => {
-    const r = (s) => document.querySelector(s).getBoundingClientRect();
+    const r = (s) => __q(s).getBoundingClientRect();
     return { frame: Math.round(r('.ddtv__screen').top - r('.details-product-option--Size').top), lead: Math.round(r('.ddtv-top').top - r('.product-details__layout').top), gap: Math.round(r('.ddtv__bar--top').top - r('.ddtv-top').bottom) };
   });
   ok(Math.abs(align.frame) <= 1, 'monitor top frame aligned with the top of the SIZE row (' + align.frame + 'px)');
   ok(align.lead <= 24, 'no empty band above the header row (' + align.lead + 'px)');
   ok(align.gap <= 26, 'chapter buttons sit close under the header (' + align.gap + 'px)');
-  const compact = await page.evaluate(() => ({ btn: document.querySelector('.ddtv__bar--bottom .ddtv__btn').offsetHeight, sw: document.querySelector('.ddtv-switch button').offsetHeight }));
+  const compact = await page.evaluate(() => ({ btn: __q('.ddtv__bar--bottom .ddtv__btn').offsetHeight, sw: __q('.ddtv-switch button').offsetHeight }));
   ok(compact.btn <= 44 && compact.sw <= 38, 'compact controls (button ' + compact.btn + 'px, switch ' + compact.sw + 'px)');
-  const fonts = await page.evaluate(() => [...document.querySelectorAll('.ddtv__btn, .ddtv__tab, .ddtv__nav, .ddtv__play, .ddtv-switch button, .sc-btn, .sc-topic')].map((n) => parseFloat(getComputedStyle(n).fontSize)));
+  const fonts = await page.evaluate(() => [...__qa('.ddtv__btn, .ddtv__tab, .ddtv__nav, .ddtv__play, .ddtv-switch button, .sc-btn, .sc-topic')].map((n) => parseFloat(getComputedStyle(n).fontSize)));
   ok(Math.min(...fonts) >= 13, 'every control keeps a readable size (min ' + Math.min(...fonts) + 'px)');
   ok(!(await page.locator('.product-details__description-title').isVisible()), 'Product Details heading hidden');
   ok(!(await page.locator('#bp-top').isVisible()), 'long description hidden in Interactive View');
@@ -128,7 +134,7 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = document.que
       await page.evaluate(([cid, pid]) => DDTV.current.go(cid, pid), [c.id, c.panels[i].id]);
       await page.waitForTimeout(60);
       const info = await page.evaluate(() => {
-        const p = document.querySelector('.ddtv__panel.is-active');
+        const p = __q('.ddtv__panel.is-active');
         const bad = [];
         for (const n of p.querySelectorAll('*')) {
           const s = getComputedStyle(n), b = n.getBoundingClientRect();
@@ -144,26 +150,26 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = document.que
   }
   ok(short === 0, `all ${total} screens render real content`);
   ok(offenders.size === 0, 'no pills or circles anywhere on the screens' + (offenders.size ? ' (' + [...offenders].slice(0, 5).join(', ') + ')' : ''));
-  const shell = await page.evaluate(() => [...document.querySelectorAll('.ddtv-wrap *')].filter((n) => { const s = getComputedStyle(n), b = n.getBoundingClientRect(), r = parseFloat(s.borderTopLeftRadius) || 0, m = Math.min(b.width, b.height); return r > 0 && m >= 8 && r >= m / 2 - 0.5 && n.tagName !== 'IMG' && !n.closest('.ddtv__panel'); }).map((n) => n.className));
+  const shell = await page.evaluate(() => [...__qa('.ddtv-wrap *')].filter((n) => { const s = getComputedStyle(n), b = n.getBoundingClientRect(), r = parseFloat(s.borderTopLeftRadius) || 0, m = Math.min(b.width, b.height); return r > 0 && m >= 8 && r >= m / 2 - 0.5 && n.tagName !== 'IMG' && !n.closest('.ddtv__panel'); }).map((n) => n.className));
   ok(shell.length === 0, 'no pills or circles in the shell either' + (shell.length ? ' (' + shell.slice(0, 4).join(', ') + ')' : ''));
 
   /* ---- Discover, video ---- */
   await page.click('.ddtv__btn[data-chapter="ventilation"]');
   ok(await page.locator('.ddtv__panel.is-active video').isVisible(), 'ventilation video visible as soon as the chapter opens');
-  ok(await page.evaluate(() => { const v = document.querySelector('.ddtv__panel.is-active video').getBoundingClientRect(), vp = document.querySelector('.ddtv__viewport').getBoundingClientRect(); return v.top >= vp.top && v.bottom <= vp.bottom + 2; }), 'ventilation video fully inside the screen without scrolling');
+  ok(await page.evaluate(() => { const v = __q('.ddtv__panel.is-active video').getBoundingClientRect(), vp = __q('.ddtv__viewport').getBoundingClientRect(); return v.top >= vp.top && v.bottom <= vp.bottom + 2; }), 'ventilation video fully inside the screen without scrolling');
   await page.click('.ddtv__btn[data-chapter="discover"]');
-  ok(await page.evaluate(() => !document.querySelector('.ddtv-player')), 'full video not created until asked for');
+  ok(await page.evaluate(() => !__q('.ddtv-player')), 'full video not created until asked for');
   await page.click('.ddtv__panel.is-active .sc-play');
   ok(await page.locator('.ddtv-player video').isVisible(), 'full video opens inside the monitor');
-  ok(await page.evaluate(() => /presentation-full\.mp4$/.test(document.querySelector('.ddtv-player video').getAttribute('src'))), 'it plays the original full presentation file');
+  ok(await page.evaluate(() => /presentation-full\.mp4$/.test(__q('.ddtv-player video').getAttribute('src'))), 'it plays the original full presentation file');
   await page.keyboard.press('Escape');
-  ok(await page.evaluate(() => !document.querySelector('.ddtv-player') && document.querySelector('.ddtv__overlay').hidden), 'Escape closes it and releases the file');
+  ok(await page.evaluate(() => !__q('.ddtv-player') && __q('.ddtv__overlay').hidden), 'Escape closes it and releases the file');
   await page.click('.ddtv__panel.is-active .sc-hero .sc-btn--solid');
   ok(await page.locator('.ddtv__btn[data-chapter="firmness"].is-active').count() === 1, 'hero "Choose Your Firmness" opens the Firmness chapter');
   ok(await page.locator('.ddtv__tab.is-active').innerText() === 'Choose', '… on its choose screen');
 
   /* ---- selection and price: nothing assumed ---- */
-  const markup = () => { const c = document.querySelector('.product-details__sidebar').cloneNode(true); c.querySelectorAll('.details-product-price__value, .details-product-price__compare').forEach((n) => { n.textContent = ''; }); return c.outerHTML; };
+  const markup = () => { const c = __q('.product-details__sidebar').cloneNode(true); c.querySelectorAll('.details-product-price__value, .details-product-price__compare').forEach((n) => { n.textContent = ''; }); return c.outerHTML; };
   const before = await page.evaluate(markup);
   ok(await page.locator('.ddtv__chip.is-set').count() === 0, 'no selection assumed before the customer chooses');
   ok(await page.locator('.ddtv__tab.has-value').count() === 0, 'no "ready" ticks before any choice');
@@ -175,7 +181,7 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = document.que
   ok(await page.locator('.ddtv__tab.is-active').innerText() === 'Choose', 'its button leads to the choose screen');
 
   /* ---- choosing inside the television drives the native control ---- */
-  await page.evaluate(() => { window.__native = []; document.querySelectorAll('.product-details__sidebar select').forEach((s) => s.addEventListener('change', () => window.__native.push(s.closest('.details-product-option').querySelector('.details-product-option__title').textContent))); });
+  await page.evaluate(() => { window.__native = []; __qa('.product-details__sidebar select').forEach((s) => s.addEventListener('change', () => window.__native.push(s.closest('.details-product-option').querySelector('.details-product-option__title').textContent))); });
   await page.locator('.ddtv__panel.is-active .sc-seg', { hasText: 'Extra Firm' }).click();
   ok((await nativeText(page, 'firmness')).startsWith('Extra Firm'), 'tapping Extra Firm in the TV sets the Ecwid dropdown (' + await nativeText(page, 'firmness') + ')');
   await page.locator('.ddtv__panel.is-active .sc-seg:has(.sc-seg__n:text-is("Firm"))').click();
@@ -237,14 +243,14 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = document.que
   /* ---- Classic View ---- */
   await page.click('.ddtv-switch button[data-view="classic"]');
   const classic = await page.evaluate(() => ({
-    tv: document.querySelector('.ddtv').hidden,
-    sections: document.querySelectorAll('#bp-top section[id^="bp-"]').length,
-    videos: document.querySelectorAll('video').length,
-    numbering: document.querySelector('#bp-firmness .b-sh__n').offsetParent !== null,
-    order: [...document.querySelectorAll('#bp-top section[id^="bp-"]')].map((s) => s.id).join(','),
-    firmSel: document.querySelectorAll('#bp-top .b-fc.ddtv-selected').length,
-    kept: document.querySelector('.details-product-option--Cover s select, .details-product-option--Covers select').selectedIndex,
-    inHeroFrame: !!document.querySelector('#bp-main-video-card .b-main-video-frame video'),
+    tv: __q('.ddtv').hidden,
+    sections: __qa('#bp-top section[id^="bp-"]').length,
+    videos: __qa('video').length,
+    numbering: __q('#bp-firmness .b-sh__n').offsetParent !== null,
+    order: [...__qa('#bp-top section[id^="bp-"]')].map((s) => s.id).join(','),
+    firmSel: __qa('#bp-top .b-fc.ddtv-selected').length,
+    kept: __q('.details-product-option--Cover s select, .details-product-option--Covers select').selectedIndex,
+    inHeroFrame: !!__q('#bp-main-video-card .b-main-video-frame video'),
   }));
   ok(classic.tv, 'television hidden in Classic View');
   ok(classic.sections === 13, 'Classic View has all 13 original sections (' + classic.sections + ')');
@@ -255,7 +261,7 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = document.que
   ok(classic.firmSel === 1, 'the customer\'s firmness is highlighted on the original card in Classic View');
   if (shots) await (await settle(page)).screenshot({ path: join(shots, 'desktop-classic.png') });
   await page.click('.ddtv-switch button[data-view="interactive"]');
-  ok(await page.locator('.ddtv').isVisible() && await page.evaluate(() => document.querySelectorAll('video').length) === 7, 'back to Interactive View, still 7 videos');
+  ok(await page.locator('.ddtv').isVisible() && await page.evaluate(() => __qa('video').length) === 7, 'back to Interactive View, still 7 videos');
   ok(await page.locator('.ddtv__chip.is-set').count() === 4, 'choices survive a view round trip');
   await ctx.close();
 }
@@ -265,12 +271,12 @@ const nativeText = (page, key) => page.evaluate((s) => { const el = document.que
 /* ====================================================================== */
 {
   const { ctx, page } = await open({ width: 1440, height: 900 }, {}, { splash: true });
-  const shown = await page.evaluate(() => { const b = document.querySelector('.ddtv__brand'); return b.classList.contains('is-on') && /Divine\s*DunlopDreams/.test(b.textContent) && getComputedStyle(b).pointerEvents === 'none'; });
+  const shown = await page.evaluate(() => { const b = __q('.ddtv__brand'); return b.classList.contains('is-on') && /Divine\s*DunlopDreams/.test(b.textContent) && getComputedStyle(b).pointerEvents === 'none'; });
   ok(shown, 'the brand mark appears when the television first opens, without blocking input');
   await page.click('.ddtv__btn[data-chapter="comfort"]');
   ok(await page.locator('.ddtv__btn[data-chapter="comfort"].is-active').count() === 1, 'the chapter buttons work while it is showing');
   await page.waitForTimeout(1800);
-  ok(await page.evaluate(() => document.querySelector('.ddtv__brand').hidden), 'it fades away on its own');
+  ok(await page.evaluate(() => __q('.ddtv__brand').hidden), 'it fades away on its own');
   await ctx.close();
 }
 
@@ -281,7 +287,7 @@ for (const [name, vp] of [['ipad-landscape', { width: 1180, height: 820 }], ['ip
   const { ctx, page, errors } = await open(vp, { hasTouch: true });
   ok(errors.length === 0, `no page errors on ${name}`);
   ok(await page.locator('.ddtv').isVisible(), `television visible on ${name}`);
-  ok(await page.evaluate(() => document.querySelector('.ddtv').getBoundingClientRect().height <= window.innerHeight), `television fits within the ${name} viewport`);
+  ok(await page.evaluate(() => __q('.ddtv').getBoundingClientRect().height <= window.innerHeight), `television fits within the ${name} viewport`);
   ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `no horizontal page scroll on ${name}`);
   await page.tap('.ddtv__btn[data-chapter="firmness"]');
   await page.locator('.ddtv__panel.is-active .sc-seg', { hasText: 'Medium' }).tap();
@@ -291,11 +297,11 @@ for (const [name, vp] of [['ipad-landscape', { width: 1180, height: 820 }], ['ip
   await page.locator('.ddtv__panel.is-active .sc-swatch').nth(2).tap();
   await page.tap('.ddtv__tab:has-text("Choose")');
   await page.waitForTimeout(150);
-  ok(await page.evaluate(() => { const a = document.querySelector('.ddtv__aside').getBoundingClientRect(); return document.querySelectorAll('.ddtv__chip.is-set').length === 3 && [...document.querySelectorAll('.ddtv__chip')].every((c) => c.getBoundingClientRect().bottom <= a.bottom + 1); }), `choices made by touch show in Your selection on ${name}`);
+  ok(await page.evaluate(() => { const a = __q('.ddtv__aside').getBoundingClientRect(); return __qa('.ddtv__chip.is-set').length === 3 && [...__qa('.ddtv__chip')].every((c) => c.getBoundingClientRect().bottom <= a.bottom + 1); }), `choices made by touch show in Your selection on ${name}`);
   const fits = await page.evaluate(() => {
     // each screen must stay inside the monitor horizontally (no sideways scrolling)
     const bad = [];
-    for (const p of document.querySelectorAll('.ddtv__panel')) { if (p.scrollWidth > p.clientWidth + 2) bad.push(p.dataset.chapter + '/' + p.dataset.panel); }
+    for (const p of __qa('.ddtv__panel')) { if (p.scrollWidth > p.clientWidth + 2) bad.push(p.dataset.chapter + '/' + p.dataset.panel); }
     return bad;
   });
   ok(fits.length === 0, `no screen scrolls sideways on ${name}` + (fits.length ? ': ' + fits.join(',') : ''));
@@ -317,7 +323,7 @@ for (const [name, vp] of [['ipad-landscape', { width: 1180, height: 820 }], ['ip
   ok(!(await page.locator('.ddtv').isVisible()), 'no television on iPhone');
   ok(!(await page.locator('.ddtv-switch').isVisible()), 'no view switch on iPhone');
   ok(await page.locator('#bp-firmness').isVisible(), 'Classic View content visible on iPhone');
-  ok(await page.evaluate(() => document.querySelectorAll('video[data-ddtv-parked]').length) >= 6, 'off-screen videos deferred on iPhone');
+  ok(await page.evaluate(() => __qa('video[data-ddtv-parked]').length) >= 6, 'off-screen videos deferred on iPhone');
   ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'no horizontal page scroll on iPhone');
   if (shots) await (await settle(page)).screenshot({ path: join(shots, 'iphone.png') });
   await ctx.close();
@@ -328,7 +334,7 @@ for (const [name, vp] of [['ipad-landscape', { width: 1180, height: 820 }], ['ip
 /* ====================================================================== */
 {
   const snapshot = () => {
-    const side = document.querySelector('.product-details__sidebar');
+    const side = __q('.product-details__sidebar');
     const r = side.getBoundingClientRect();
     const clone = side.cloneNode(true);
     clone.querySelectorAll('.details-product-price__value, .details-product-price__compare').forEach((n) => { n.textContent = ''; });

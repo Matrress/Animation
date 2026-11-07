@@ -124,11 +124,12 @@
   background: #fff;
   color: var(--tv-ink);
   font-family: var(--tv-font);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   line-height: 1.15;
   text-align: center;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
   cursor: pointer;
   transition: background .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease;
 }
