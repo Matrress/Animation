@@ -38,7 +38,7 @@ ok(s.sel.join() === 'medium' && !s.dim.includes('medium'), `a dimmed card can st
 await p.locator('.gx-card.rec', { hasText: 'Firm' }).click(); await p.waitForTimeout(1500); s = await state(); await snap('7-guided-chosen'); ok(s.sel.join() === 'firm', 'the guided card is chosen');
 await p.locator('.gx-btn').click(); await p.waitForTimeout(400); const d = await p.evaluate(() => document.querySelector('.gx-btn').innerHTML); ok(d === 'Continue to <b>Cover</b>', `depth step button: "${d}"`);
 await p.locator('.gx-bar', { hasText: 'Deep Comfort' }).click(); await p.waitForTimeout(1500); await p.locator('.gx-btn').click(); await p.waitForTimeout(400);
-const c = await p.evaluate(() => document.querySelector('.gx-btn').innerHTML); ok(c === '<b>Review</b> &amp; order', `cover step button: "${c}"`);
+const c = await p.evaluate(() => document.querySelector('.gx-btn').innerHTML); ok(c === 'Review Your <b>Order</b>', `cover step button: "${c}"`);
 await p.locator('[data-role=cover]', { hasText: 'Aloe' }).click(); await p.waitForTimeout(1500); await p.locator('.gx-btn').click(); await p.waitForTimeout(500); await snap('8-review');
 const r = await p.evaluate(() => ({ btn: document.querySelector('.gx-btn').innerHTML, chosen: Object.values(__cfg.sync.read().options).filter(o => o.chosen).length }));
 ok(r.btn === 'Go to <b>Add to Bag</b>' && r.chosen === 4, `review button: "${r.btn}", ${r.chosen} native selections`);

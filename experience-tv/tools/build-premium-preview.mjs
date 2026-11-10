@@ -69,6 +69,7 @@ const DATA = {
   coverFacts: { height: content.itab[0].join(': ') },
   why: { size: content.intro.split('. ').pop(), firmness: content.firmness.sub, depth: content.depthSub, cover: content.coverSub, review: content.delivery },
   reviewFacts: content.keyFeatures.filter(k => /Warranty|Pillows|Delivery|Made/.test(k)),
+  specialist: { key: 'xfirm', label: 'Specialist Model: Orthopaedic Coconut Core', url: 'https://divinedunlop.com/products/orthopaedic-coconut-coirs-100-organic-latex', note: 'Extra Firm is a specialist route, not a standard BOTANIC configuration' },
   standin: { options: probe.initial.options.map(o => ({ role: roleOf(o.title), title: o.title, choices: o.choices.map(c => c.t).filter(t => !/^please choose$/i.test(t)) })) }
 };
 // the dual-plush sentence is the description's own ("Consider Botanic Dual Plush — designed for this situation.")
@@ -76,10 +77,10 @@ DATA.firmness.decision2 = 'Unsure between two levels? ' + content.firmness.decis
 
 /* ---------- 3. refined Variant C body: the description's own markup, regrouped ---------- */
 const cHtml = rd('docs/mobile/options/option-c.html');
-const body = await (async () => {
+async function buildBody(sketch) {
   const pg = await b.newPage(); await pg.route('**/*', r => (r.request().url().startsWith('http') ? r.abort() : r.continue()));
   await pg.setContent(cHtml);
-  const out = await pg.evaluate(() => {
+  const out = await pg.evaluate((sketch) => {
     const q = (r, s) => r.querySelector(s), qa = (r, s) => Array.from(r.querySelectorAll(s)), root = q(document, '#bp-top');
     const ICONS = {
       latex: '<path d="M12 3c4 3 6 6 6 9a6 6 0 0 1-12 0c0-3 2-6 6-9z"/><path d="M12 9v9"/>',
@@ -102,13 +103,39 @@ const body = await (async () => {
     const names = qa(body, '.b-zone-pill__name').map(n => n.textContent.trim());
     const bands = names.map((n, i) => { const y = 8 + i * 33; const op = 0.35 + (i % 2) * 0.2; return '<rect x="14" y="' + y + '" width="76" height="31" rx="6" fill="#759397" opacity="' + op + '"/><text x="52" y="' + (y + 19) + '" text-anchor="middle" font-size="10" font-weight="700" fill="#364849" font-family="Chillax,Arial,sans-serif">Z' + (i + 1) + '</text>'; }).join('');
     const svg = '<svg class="p-zones-svg" viewBox="0 0 104 250" role="img" aria-label="Seven support zones from head to feet"><rect x="10" y="4" width="84" height="242" rx="14" fill="#fff" stroke="#364849" stroke-width="1.5"/>' + bands + '</svg>';
-    const wrap = document.createElement('div'); wrap.className = 'p-zonewrap'; wrap.innerHTML = svg; const grid = q(body, '.b-zone-grid'); wrap.appendChild(grid);
+    const wrap = document.createElement('div'); wrap.className = sketch ? 'p-zonewrap p-zonewrap--sketch' : 'p-zonewrap'; const grid = q(body, '.b-zone-grid');
+    if (sketch) {
+      /* the original seven-zone sketch (geometry unchanged), static; the seven approved zone names and notes become the legend */
+      const TONE = { 1: 'c', 2: 's', 3: 'c', 4: 'r', 5: 'c', 6: 's', 7: 's' };
+      qa(grid, '.b-zone-pill').forEach((pl, i) => { pl.setAttribute('data-tone', TONE[i + 1]); });
+      const art = document.createElement('div'); art.className = 'p-zs'; art.innerHTML = sketch;
+      const lg = document.createElement('p'); lg.className = 'p-zlegend'; lg.innerHTML = '<span class="s"><i></i>Softer response</span><span class="c"><i></i>Calibrated</span><span class="r"><i></i>Reinforced</span>';
+      wrap.append(art, lg, grid);
+    } else { wrap.innerHTML = svg; wrap.appendChild(grid); }
     feat.append(head, wrap); qa(body, '.b-dstack').forEach(x => feat.appendChild(x)); const mtv = q(body, '.b-mtv'); if (mtv) feat.appendChild(mtv);
     note.remove(); (q(root, '#bp-firmness') || q(root, '.p-notes')).before(feat);
     return Array.from(document.querySelectorAll('style')).map(s => s.outerHTML).join('') + document.getElementById('productDescription').innerHTML.replace(/<style[\s\S]*?<\/style>/g, '');
-  });
+  }, sketch);
   await pg.close(); return out;
-})();
+}
+const body = await buildBody(null);
+
+/* the original seven-zone sketch, recoloured to the Graphite Blue family; its paths are the original geometry */
+function sketchSvg() {
+  const z = rd('products/botanic.zones.js'); const svg = JSON.parse(z.match(/zonesSvg = ("(?:[^"\\]|\\.)*")/s)[1]);
+  const map = { '#1B5568': '#2A3950', '#0B2A38': '#151C26', '#D9EEF0': '#E4EBF5', '#9ACFD5': '#B4C4DB', '#66B3BA': '#8CA2C2', '#E9FFFD': '#E4EBF5', '#8CEBE4': '#B4C4DB', '#4FD3CB': '#8CA2C2', '#7FE8E0': '#A9BDD9' };
+  let out = svg.replace(/#[0-9A-Fa-f]{6}/g, m => map[m.toUpperCase()] || m).replace('rgba(79,211,203,.18)', 'rgba(140,162,194,.18)').replace('rgba(79,211,203,.20)', 'rgba(140,162,194,.20)');
+  const tier = { 1: 'c', 2: 's', 3: 'c', 4: 'r', 5: 'c', 6: 's', 7: 's' };   // from the approved zone notes: Softer perforation / response / soft landing (2, 6, 7), Reinforced (4), the rest calibrated
+  let n = 0; out = out.replace(/(<g data-z="(\d)"[^>]*>)(<g clip-path="url\(#dz7-z\d\)"><g><use href="#dz7-mp" fill=")url\(#dz7-gz\)/g, (m, a, zz, c) => { n++; return a.replace('<g data-z="' + zz + '"', '<g data-z="' + zz + '" data-tone="' + tier[zz] + '"') + c + 'url(#zt-' + tier[zz] + ')'; });
+  if (n !== 7) throw new Error('expected 7 zone fills, found ' + n);
+  const grad = (id, c, a, b2, c2) => '<linearGradient id="zt-' + id + '" gradientUnits="userSpaceOnUse" x1="0" y1="250" x2="0" y2="760"><stop offset="0" stop-color="' + c + '" stop-opacity="' + a + '"/><stop offset=".4" stop-color="' + c + '" stop-opacity="' + b2 + '"/><stop offset="1" stop-color="' + c + '" stop-opacity="' + c2 + '"/></linearGradient>';
+  out = out.replace('</defs>', grad('s', '#B7C9E3', .82, .58, .34) + grad('c', '#7C97C0', .84, .60, .36) + grad('r', '#46628F', .96, .78, .55) + '</defs>');
+  const cx = [367, 870, 1260, 1610, 1975, 2285, 2532];
+  const labels = '<g aria-hidden="true">' + cx.map((x, i) => '<text x="' + x + '" y="655" text-anchor="middle" font-size="84" font-weight="700" fill="' + (tier[i + 1] === 's' ? '#151C26' : '#F2F6FB') + '" font-family="Chillax,Arial,sans-serif">Z' + (i + 1) + '</text>').join('') + '</g>';
+  const at = out.indexOf('<use href="#dz7-bd" fill="rgba('); if (at < 0) throw new Error('body outline not found');
+  return out.slice(0, at) + labels + out.slice(at);
+}
+const bodySketch = await buildBody(sketchSvg());
 
 /* ---------- 4. assemble ---------- */
 const S = f => readFileSync(join(P, 'src', f), 'utf8');
@@ -133,7 +160,7 @@ const html = `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><met
 // the stand-in builds #cfg and #desc-slot: patch its template
 const final = html;
 const graphite = html.replace('<style id="premium-css">', '<style id="premium-css">' + S('graphite.css') + '\n').replace(/<script id="configurator">[\s\S]*?<\/script>/, () => '<script id="configurator">' + S('graphite.js') + '</script>').replace('<b>Design preview · not deployed · Ecwid block is a stand-in</b><button data-c="sheet">1 Sheet</button><button data-c="stage">2 Stage</button><button data-c="journey">3 Journey</button>', '<b>Design preview · not deployed · Ecwid block is a stand-in</b><button class="on">Graphite Blue</button>');
-writeFileSync(join(P, 'preview', 'graphite.html'), graphite);
+writeFileSync(join(P, 'preview', 'graphite.html'), graphite.replace(body, () => bodySketch));
 mkdirSync(join(P, 'preview'), { recursive: true });
 writeFileSync(join(P, 'preview', 'index.html'), final);
 const sizes = { total: Buffer.byteLength(final), gzip: gzipSync(final).length, firmnessCoreBytes: coreSrc.length, syncBytes: S('sync.js').length, configuratorBytes: S('configurator.js').length, premiumCssBytes: S('premium.css').length, contentCssBytes: S('content.css').length };

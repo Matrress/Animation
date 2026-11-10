@@ -39,3 +39,30 @@ Real phones, the on-screen keyboard, VoiceOver, the test product (E3). The real 
 4. Panel first, or Ecwid's menus first (see above)?
 5. Move the whole page to graphite blue?
 6. I read "дамаските" as the cover textures and used the description's own files. Correct?
+
+---
+
+# Refinements (second round, approved by the owner)
+
+Applied to `docs/mobile/premium/preview/graphite.html` first. Preview only; nothing is deployed, the live Ecwid store and the test product 876405767 are untouched. The three-concept preview (`index.html`) keeps its earlier content; its zone block is unchanged.
+
+## 1. Extra Firm and Orthopaedic Coconut Core
+- All four levels stay visible. Under **Extra Firm**, a quiet label: `Specialist Model: Orthopaedic Coconut Core`. Soft, Medium and Firm are unchanged buttons.
+- Extra Firm is a **plain link** (`<a href>`), followed only when the customer taps it (or presses Enter): the weight and height sliders can show Extra Firm as the guided result, fade the other three and say that choosing it opens the specialist model, but **never navigate** (tested with a real drag through the range). The panel writes nothing to Ecwid when it routes.
+- The URL, **verified on the public site before use** (`tests/live/specialist-url-check.cjs`, `docs/mobile/premium/data/specialist-url-check.json`): `https://divinedunlop.com/products/orthopaedic-coconut-coirs-100-organic-latex` answers 200 with no redirect, its canonical is the same address, it is indexable, and Ecwid reports a PRODUCT page (id 644846882) with options and Add to Bag. It is the address the published Firmness Navigator and the site's home page use. Note: the page's own name is "Orthopaedic Coconut **Coirs**"; the label uses your wording ("Core").
+- The URL and label are data in the build (`DDDATA.specialist`), not hard-coded in the panel.
+- **To note**: the native Ecwid Firmness menu of BOTANIC still lists Extra Firm (+£88). The panel routes away; the native menu does not. Changing that is an Ecwid Admin edit and was not made.
+
+## 2. Review Your Order
+Heading `Review Your Order`, every word capitalised, **Order** heavier (500 against 700), Chillax kept. The cover-step button reads `Review Your Order` with **Order** bold to match; "Continue to **Depth**" is unchanged for Soft, Medium and Firm.
+
+## 3. Seven-zone construction
+The seven-zone illustration is the one already reused by the television (`products/botanic.zones.js`, from the front page's "Seven Zones 2.7.0"): the mattress and body paths are **unchanged, path for path** (checked against the original). Changes: a static tone per zone, the numbers Z1 to Z7 on the mattress, a dark Graphite card behind it, and a legend made of the seven approved zone names and notes.
+- Tones come from the approved zone texts and say nothing about firmness (the text states the latex firmness is consistent and perforation differs): **softer response** Z2, Z6, Z7 (softer perforation, softer response, soft landing); **reinforced** Z4; **calibrated** Z1, Z3, Z5.
+- Stationary: no SMIL, no CSS animation, no transition, no script; two captures 1.5 s apart are pixel-identical. 127 nodes, 12 KB, nothing external. The earlier teal of the illustration was recoloured to the Graphite family (the paths were not touched).
+
+## Tests
+`tools/graphite-full-test.mjs`: **62 checks pass** (`docs/mobile/premium/data/graphite-full-test.json`): the full flow, the button and heading typography, the four cards and their types, Extra Firm routing by tap and by keyboard, no navigation from the sliders or a drag, the native option left unset, zone geometry, tones, legend, stillness, weight, three widths without overflow, every step on one screen at 390×844, 390×700 and 360×640, and Size and Depth screens identical byte for byte to the previously approved preview. `tools/graphite-firmness-shots.mjs` (fade behaviour) also passes.
+
+## Not verified
+Real phones; the redirect on a real device; the test product; the real cover textures. The cover-tile redesign (`graphite-cover-proposal.html`) is still a separate proposal, not merged.

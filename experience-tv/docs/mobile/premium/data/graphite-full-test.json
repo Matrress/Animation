@@ -1,0 +1,255 @@
+{
+ "date": "2026-11-10T20:39:20.010Z",
+ "total": 62,
+ "failed": 0,
+ "results": [
+  {
+   "ok": true,
+   "m": "size step: heading \"Choose Your Size\", button \"Continue to <b>Firmness</b>\""
+  },
+  {
+   "ok": true,
+   "m": "Soft chosen: button stays \"Continue to <b>Depth</b>\""
+  },
+  {
+   "ok": true,
+   "m": "Medium chosen: button stays \"Continue to <b>Depth</b>\""
+  },
+  {
+   "ok": true,
+   "m": "Firm chosen: button stays \"Continue to <b>Depth</b>\""
+  },
+  {
+   "ok": true,
+   "m": "depth step button \"Continue to <b>Cover</b>\""
+  },
+  {
+   "ok": true,
+   "m": "cover step button \"Review Your <b>Order</b>\""
+  },
+  {
+   "ok": true,
+   "m": "review heading is \"Review Your <b>Order</b>\""
+  },
+  {
+   "ok": true,
+   "m": "every word capitalised; \"Order\" is heavier (500 vs 700)"
+  },
+  {
+   "ok": true,
+   "m": "Chillax stays the heading typeface (Chillax)"
+  },
+  {
+   "ok": true,
+   "m": "four native selections made through the flow (size:UK King 150x200 cm | depth:H -24 cm (9.5”) De | firmness:85–110 kg / 13.4–1 | cover:Combination Aloe V)"
+  },
+  {
+   "ok": true,
+   "m": "no page errors in the full flow"
+  },
+  {
+   "ok": true,
+   "m": "all four firmness levels are visible: Soft, Medium, Firm, Extra Firm"
+  },
+  {
+   "ok": true,
+   "m": "label under Extra Firm: \"Extra FirmSpecialist Model: Orthopaedic Coconut Core\""
+  },
+  {
+   "ok": true,
+   "m": "the other three cards are unchanged buttons with no specialist label"
+  },
+  {
+   "ok": true,
+   "m": "Extra Firm is a plain link to https://divinedunlop.com/products/orthopaedic-coconut-coirs-100-organic-latex"
+  },
+  {
+   "ok": true,
+   "m": "125 kg / 185 cm: Extra Firm is the guided result, the other three fade (soft,medium,firm)"
+  },
+  {
+   "ok": true,
+   "m": "no navigation and no request to the store while the sliders indicate Extra Firm (navigations 1, requests 0)"
+  },
+  {
+   "ok": true,
+   "m": "the guidance says that choosing Extra Firm opens the specialist model"
+  },
+  {
+   "ok": true,
+   "m": "the native Ecwid firmness is still unset (the panel wrote nothing)"
+  },
+  {
+   "ok": true,
+   "m": "tapping Extra Firm goes to https://divinedunlop.com/products/orthopaedic-coconut-coirs-100-organic-latex"
+  },
+  {
+   "ok": true,
+   "m": "no page errors"
+  },
+  {
+   "ok": true,
+   "m": "keyboard focus reaches Extra Firm with a visible focus ring (solid 3px)"
+  },
+  {
+   "ok": true,
+   "m": "Enter on Extra Firm follows the link"
+  },
+  {
+   "ok": true,
+   "m": "a live drag passed through firm > xfirm without leaving the page"
+  },
+  {
+   "ok": true,
+   "m": "the seven-zone sketch is in the structural section"
+  },
+  {
+   "ok": true,
+   "m": "the mattress and body geometry are the original sketch, path for path (viewBox unchanged)"
+  },
+  {
+   "ok": true,
+   "m": "seven zones, Z1 to Z7"
+  },
+  {
+   "ok": true,
+   "m": "each zone is numbered on the mattress"
+  },
+  {
+   "ok": true,
+   "m": "the numbers are drawn on the mattress, not parked in <defs>"
+  },
+  {
+   "ok": true,
+   "m": "three tones: softer response (Z2, Z6, Z7), calibrated (Z1, Z3, Z5), reinforced (Z4)"
+  },
+  {
+   "ok": true,
+   "m": "the three tones differ (#B7C9E3 @0.82 | #7C97C0 @0.84 | #46628F @0.96)"
+  },
+  {
+   "ok": true,
+   "m": "the legend is the seven approved zone names and notes, each carrying its zone tone"
+  },
+  {
+   "ok": true,
+   "m": "legend: Softer responseCalibratedReinforced"
+  },
+  {
+   "ok": true,
+   "m": "nothing in the drawing can move: 0 SMIL animations, 0 CSS animations, 0 transitions"
+  },
+  {
+   "ok": true,
+   "m": "the drawing is pixel-identical 1.5 s apart: stationary"
+  },
+  {
+   "ok": true,
+   "m": "lightweight: 127 nodes, 12.3 KB, no script, no external resource"
+  },
+  {
+   "ok": true,
+   "m": "360 px wide: no horizontal overflow; sketch 302x90 px, zone numbers 11 px high (rendered, legible)"
+  },
+  {
+   "ok": true,
+   "m": "390 px wide: no horizontal overflow; sketch 332x99 px, zone numbers 12 px high (rendered, legible)"
+  },
+  {
+   "ok": true,
+   "m": "430 px wide: no horizontal overflow; sketch 372x111 px, zone numbers 14 px high (rendered, legible)"
+  },
+  {
+   "ok": true,
+   "m": "390x844 size: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x844 firmness: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x844 firmness (Extra Firm guided: three lines in its card): fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x844 depth: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x844 cover: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x844 review: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x844: no page errors"
+  },
+  {
+   "ok": true,
+   "m": "390x700 size: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x700 firmness: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x700 firmness (Extra Firm guided: three lines in its card): fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x700 depth: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x700 cover: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x700 review: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "390x700: no page errors"
+  },
+  {
+   "ok": true,
+   "m": "360x640 size: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "360x640 firmness: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "360x640 firmness (Extra Firm guided: three lines in its card): fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "360x640 depth: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "360x640 cover: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "360x640 review: fits one screen"
+  },
+  {
+   "ok": true,
+   "m": "360x640: no page errors"
+  },
+  {
+   "ok": true,
+   "m": "Size screen: identical to the approved preview, byte for byte"
+  },
+  {
+   "ok": true,
+   "m": "Depth screen: identical to the approved preview, byte for byte"
+  }
+ ]
+}

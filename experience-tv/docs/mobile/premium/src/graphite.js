@@ -50,14 +50,23 @@
       return '<g opacity="' + (dim ? '.3' : '1') + '"><rect x="' + (x + 1) + '" y="12" width="78" height="14" rx="7" fill="' + fills[i] + '"/></g>' + (recK === s[0] ? '<path d="M' + (x + 40) + ' 9 l6 -8 h-12z" fill="#C3D5ED"/>' : '') + (curK === s[0] ? '<circle cx="' + (x + 40) + '" cy="19" r="5.5" fill="#fff"/>' : '') + '<text x="' + (x + 40) + '" y="41" opacity="' + (dim ? '.4' : '1') + '">' + s[1] + '</text>';
     }).join('') + '</svg>';
   }
+  function guideHtml(rec, recK) {
+    if (!rec) return 'Set your weight and height for guidance, or choose directly.';
+    return 'Guidance for your body: <b>' + esc(rec.display.charAt(0) + rec.display.slice(1).toLowerCase()) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') + (recK === D.specialist.key ? ' Choosing Extra Firm opens the specialist model, Orthopaedic Coconut Core.' : '');
+  }
   function firmDyn() {
     var o = S.native.options.firmness, cur = chosen('firmness'), curK = cur ? fKey(cur.label) : '', rec = (S.weight != null && S.height != null) ? core.recommend(S.weight, S.height) : null;
     var recK = rec ? { 'SOFT': 'soft', 'MEDIUM': 'medium', 'FIRM': 'firm', 'EXTRA FIRM': 'xfirm' }[rec.display] : '', h = scaleSvg(recK, curK);
-    h += '<p class="gx-guide">' + (rec ? 'Guidance for your body: <b>' + esc(rec.display.charAt(0) + rec.display.slice(1).toLowerCase()) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.') + '</p><div class="gx-2">';
+    h += '<p class="gx-guide">' + guideHtml(rec, recK) + '</p><div class="gx-2">';
     D.firmness.cards.forEach(function (c) {
-      var ch = o.choices.filter(function (x) { return fKey(x.label) === c.key; })[0]; if (!ch) return;
-      var isRec = recK === c.key, isCur = curK === c.key, dim = recK && !isRec && !isCur;
-      h += '<button class="gx-card' + (isRec ? ' rec' : '') + (dim ? ' dim' : '') + '" data-act="pick" data-role="firmness" data-key="' + c.key + '" data-value="' + esc(ch.value) + '" aria-pressed="' + isCur + '" aria-label="' + esc(c.name + (isRec ? ', your guided firmness' : (recK ? ', other option' : ''))) + '">' + esc(c.name) + (isRec ? '<small>For you</small>' : '') + '</button>';
+      var ch = o.choices.filter(function (x) { return fKey(x.label) === c.key; })[0]; if (!ch && c.key !== D.specialist.key) return;
+      var isRec = recK === c.key, isCur = curK === c.key, dim = recK && !isRec && !isCur, cls = 'gx-card' + (isRec ? ' rec' : '') + (dim ? ' dim' : '');
+      if (c.key === D.specialist.key) {
+        /* a specialist route, not a standard BOTANIC configuration: a plain link, followed only when the customer taps it. The sliders never navigate. */
+        h += '<a class="' + cls + ' sp' + (isCur ? ' is-on' : '') + '" href="' + esc(D.specialist.url) + '" data-key="' + c.key + '" aria-label="' + esc(c.name + ', specialist model Orthopaedic Coconut Core, opens its product page') + '">' + esc(c.name) + '<span class="sp-l">' + esc(D.specialist.label) + '</span>' + (isRec ? '<small>For you</small>' : '') + '</a>';
+        return;
+      }
+      h += '<button class="' + cls + '" data-act="pick" data-role="firmness" data-key="' + c.key + '" data-value="' + esc(ch.value) + '" aria-pressed="' + isCur + '" aria-label="' + esc(c.name + (isRec ? ', your guided firmness' : (recK ? ', other option' : ''))) + '">' + esc(c.name) + (isRec ? '<small>For you</small>' : '') + '</button>';
     });
     var shown = D.firmness.cards.filter(function (c) { return c.key === (curK || recK); })[0];
     return h + '</div><p class="gx-desc">' + (shown ? esc(shown.desc) : esc(D.firmness.notice)) + ' <a href="https://divinedunlop.com/firmnesses" target="_blank" rel="noopener">Full Firmness Navigator</a></p>';
@@ -94,7 +103,7 @@
     return h;
   }
   var BODY = { size: bodySize, firmness: bodyFirm, depth: bodyDepth, cover: bodyCover, review: bodyReview };
-  var TITLE = { size: 'Choose Your Size', firmness: 'Choose Your Firmness', depth: 'Choose Your Depth', cover: 'Choose Your Cover', review: 'Your Mattress' };
+  var TITLE = { size: 'Choose Your Size', firmness: 'Choose Your Firmness', depth: 'Choose Your Depth', cover: 'Choose Your Cover', review: 'Review Your <b>Order</b>' };
   function sub() {
     if (S.step === 'size') return (S.sizeCount || 22) + ' dimensions · Custom made to order';
     if (S.step === 'firmness') return first(D.firmness.sub);
@@ -115,7 +124,7 @@
     var pv = contact ? 'Contact us' : (!size && !done() ? '—' : price);
     var pl = rv || !only ? 'Your price' : 'Starting price';
     var cap = only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid';
-    var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: '<b>Review</b> & order', review: done() === 4 ? 'Go to <b>Add to Bag</b>' : 'See <b>Ecwid’s options</b>' }[st];
+    var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: 'Review Your <b>Order</b>', review: done() === 4 ? 'Go to <b>Add to Bag</b>' : 'See <b>Ecwid’s options</b>' }[st];
     var dis = !rv && !cur;
     return '<section class="gx-dock" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small><b>' + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
   }
@@ -128,7 +137,7 @@
     if (!S.open) { root.innerHTML = ''; root.className = 'cfg'; return; }
     var idx = STEPS.indexOf(S.step), body = d.querySelector('.gx-body'), st = body ? body.scrollTop : 0;
     root.className = 'cfg cfg--gx open';
-    root.innerHTML = '<div class="gx" role="dialog" aria-modal="true" aria-label="Configure your mattress">' + rail() + '<div class="gx-main"><div class="gx-top"><b>Divine DunlopDreams</b><span>' + (S.step === 'review' ? 'Review' : '0' + (idx + 1) + ' / 04') + '<button class="gx-x" data-act="close" aria-label="Close configuration">×</button></span></div><div><h2 tabindex="-1">' + TITLE[S.step] + '</h2><p class="gx-sub">' + esc(sub()) + '</p></div><div class="gx-body">' + BODY[S.step]() + '</div>' + dock() + '</div></div>';
+    root.innerHTML = '<div class="gx" role="dialog" aria-modal="true" aria-label="Configure your mattress">' + rail() + '<div class="gx-main"><div class="gx-top"><b>Divine DunlopDreams</b><span>' + (S.step === 'review' ? 'Review' : '0' + (idx + 1) + ' / 04') + '<button class="gx-x" data-act="close" aria-label="Close configuration">×</button></span></div><div><h2 tabindex="-1"' + (S.step === 'review' ? ' class="rv"' : '') + '>' + TITLE[S.step] + '</h2><p class="gx-sub">' + esc(sub()) + '</p></div><div class="gx-body">' + BODY[S.step]() + '</div>' + dock() + '</div></div>';
     var nb = d.querySelector('.gx-body'); if (nb) nb.scrollTop = st;
   }
 
@@ -159,7 +168,7 @@
     var rec = (S.weight != null && S.height != null) ? core.recommend(S.weight, S.height) : null, cur = chosen('firmness'), curK = cur ? fKey(cur.label) : '';
     var recK = rec ? { 'SOFT': 'soft', 'MEDIUM': 'medium', 'FIRM': 'firm', 'EXTRA FIRM': 'xfirm' }[rec.display] : '';
     var sc = g.querySelector('.gx-scale'); if (sc) sc.outerHTML = scaleSvg(recK, curK);
-    var gd = g.querySelector('.gx-guide'); if (gd) gd.innerHTML = rec ? 'Guidance for your body: <b>' + esc(rec.display.charAt(0) + rec.display.slice(1).toLowerCase()) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';
+    var gd = g.querySelector('.gx-guide'); if (gd) gd.innerHTML = guideHtml(rec, recK);
     g.querySelectorAll('.gx-card').forEach(function (c) {
       var k = c.getAttribute('data-key'), isRec = recK === k, isCur = curK === k, sm = c.querySelector('small');
       c.classList.toggle('rec', isRec); c.classList.toggle('dim', !!recK && !isRec && !isCur);

@@ -49,3 +49,13 @@
 #bp-top .b-cta { border-radius: var(--rl); margin: 24px 0 8px; }
 
 .p-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* seven-zone sketch (graphite preview): the original illustration, static; the legend is the approved zone list */
+#bp-top .p-feature .p-zonewrap--sketch { display: block; margin: 14px 0; grid-template-columns: none; }
+#bp-top .p-zs { margin: 0 0 6px; padding: 12px 8px 8px; border-radius: 14px; background: #1A2332; border: 1.5px solid #3A4659; } #bp-top .p-zs svg { display: block; width: 100%; height: auto; }
+#bp-top .p-zlegend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 4px 0 12px; font-size: .8rem; color: var(--mid); }
+#bp-top .p-zlegend span { display: inline-flex; align-items: center; gap: 6px; } #bp-top .p-zlegend i { width: 14px; height: 10px; border-radius: 3px; display: inline-block; }
+#bp-top .p-zlegend .s i { background: #B7C9E3; } #bp-top .p-zlegend .c i { background: #7C97C0; } #bp-top .p-zlegend .r i { background: #46628F; }
+#bp-top .p-zonewrap--sketch .b-zone-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+#bp-top .p-zonewrap--sketch .b-zone-pill { border-left: 4px solid var(--tone, #7F98BD); }
+#bp-top .p-zonewrap--sketch .b-zone-pill[data-tone=s] { --tone: #B7C9E3; } #bp-top .p-zonewrap--sketch .b-zone-pill[data-tone=c] { --tone: #7C97C0; } #bp-top .p-zonewrap--sketch .b-zone-pill[data-tone=r] { --tone: #46628F; }
