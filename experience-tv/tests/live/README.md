@@ -16,6 +16,8 @@ copy**; the shipped build lists 876405767 alone.
     NODE_PATH=$(npm root -g) node tests/live/errors-and-addtobag.cjs
     NODE_PATH=$(npm root -g) node tests/live/gallery-e2.cjs        # gallery integration on the real gallery (39 checks)
     NODE_PATH=$(npm root -g) node tests/live/restore-e2.cjs        # storefront source, Standard Product View restoration, cycles, stacked layout, video (39 checks)
+    NODE_PATH=$(npm root -g) node tests/live/baseline.cjs iphone 3 out.json     # lab baseline of the page as visitors get it (no engine); iphone | ipad | desktop
+    NODE_PATH=$(npm root -g) node tests/live/engine-cost.cjs iphone 2 out.json  # what the television bundle adds, by device
     NODE_PATH=$(npm root -g) node tests/live/gallery-shots.cjs <out-dir>   # screenshots of the same, for review
 
 `restore-e2.cjs` needs `ffmpeg`: the production media host is not reachable from this environment, so a **synthetic**

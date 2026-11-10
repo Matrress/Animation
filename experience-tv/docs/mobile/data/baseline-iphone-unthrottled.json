@@ -1,0 +1,1988 @@
+{
+ "url": "https://divinedunlop.com/products/botanic-original-100-organic-latex-mattress-dunlop",
+ "profile": "iphone",
+ "throttled": false,
+ "cpuRate": 4,
+ "net": {
+  "down": 200000,
+  "up": 93750,
+  "latency": 150
+ },
+ "date": "2026-11-10T13:19:04.865Z",
+ "runs": [
+  {
+   "run": 1,
+   "navErr": null,
+   "loadEventMs": 1936,
+   "atLoad": {
+    "label": "after load + 8 s idle (no scrolling)",
+    "requests": 98,
+    "totalBytes": 2380628,
+    "byType": {
+     "Document": {
+      "n": 1,
+      "bytes": 70287
+     },
+     "Stylesheet": {
+      "n": 16,
+      "bytes": 293770
+     },
+     "Image": {
+      "n": 23,
+      "bytes": 592036
+     },
+     "Script": {
+      "n": 44,
+      "bytes": 1057198
+     },
+     "Font": {
+      "n": 3,
+      "bytes": 115216
+     },
+     "Fetch": {
+      "n": 6,
+      "bytes": 252121
+     },
+     "Preflight": {
+      "n": 5,
+      "bytes": 0
+     }
+    },
+    "byHost": {
+     "site (divinedunlop.com)": {
+      "n": 1,
+      "bytes": 70287
+     },
+     "ecwid cdn (cloudfront)": {
+      "n": 79,
+      "bytes": 1952243
+     },
+     "ecwid api": {
+      "n": 13,
+      "bytes": 287312
+     },
+     "other: cdn.jsdelivr.net": {
+      "n": 2,
+      "bytes": 18129
+     },
+     "google (tags/fonts)": {
+      "n": 2,
+      "bytes": 52657
+     },
+     "other: ": {
+      "n": 1,
+      "bytes": 0
+     }
+    },
+    "media": [
+     {
+      "file": "5139577104.webp",
+      "host": "ecwid",
+      "bytes": 38414,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "tZLmG6B-600x600.webp",
+      "host": "ecwid",
+      "bytes": 35385,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-milk-to-foam-origin.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-elasticity-adjustable-bed.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-7-zone-spinal-alignment.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-airflow-ventilation-channels.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-durability-pressure-test.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-milk-to-foam-origin.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-elasticity-adjustable-bed.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-7-zone-spinal-alignment.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-airflow-ventilation-channels.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-durability-pressure-test.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "5499471050.webp",
+      "host": "ecwid",
+      "bytes": 18376,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5480424608.webp",
+      "host": "ecwid",
+      "bytes": 37218,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4706741739.webp",
+      "host": "ecwid",
+      "bytes": 14928,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5509593549.webp",
+      "host": "ecwid",
+      "bytes": 22804,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5493930640.webp",
+      "host": "ecwid",
+      "bytes": 12600,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4989848759.webp",
+      "host": "ecwid",
+      "bytes": 35403,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4881883141.webp",
+      "host": "ecwid",
+      "bytes": 47649,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4388938284.webp",
+      "host": "ecwid",
+      "bytes": 65881,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4881856265.webp",
+      "host": "ecwid",
+      "bytes": 32691,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4337680265.jpg",
+      "host": "ecwid",
+      "bytes": 28413,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4683904108.webp",
+      "host": "ecwid",
+      "bytes": 14327,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5493926158.webp",
+      "host": "ecwid",
+      "bytes": 58703,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5726401328.webp",
+      "host": "ecwid",
+      "bytes": 36081,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4884200906.webp",
+      "host": "ecwid",
+      "bytes": 45319,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5494150804.webp",
+      "host": "ecwid",
+      "bytes": 8894,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5639415939.webp",
+      "host": "ecwid",
+      "bytes": 13115,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5499236844.webp",
+      "host": "ecwid",
+      "bytes": 3256,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4368226229.webp",
+      "host": "ecwid",
+      "bytes": 10297,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5724148576.webp",
+      "host": "ecwid",
+      "bytes": 4856,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5721385315.webp",
+      "host": "ecwid",
+      "bytes": 7426,
+      "status": 200,
+      "canceled": false
+     }
+    ],
+    "topScripts": [
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/vuega/static/2026/all/website/js/website-cdyo16e7.js",
+      "bytes": 386183
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/vendor-mlfedrps.js",
+      "bytes": 88871
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/vuega/static/2026/all/website/js/vendor-irhtyyij.js",
+      "bytes": 85558
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/shared-tfganu7x.js",
+      "bytes": 74030
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-page-product",
+      "bytes": 55877
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-lc2p314c.js",
+      "bytes": 52722
+     },
+     {
+      "file": "storage.googleapis.com/ems-cdn-assets-store-bucket/ecwid/pro/latest/js/prod.packlink.store",
+      "bytes": 38063
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-chunk-produc",
+      "bytes": 34425
+     }
+    ],
+    "dom": {
+     "domAll": 2056,
+     "descriptionCopies": 1,
+     "productPageContainers": 1,
+     "domDescription": 1090,
+     "domOther": 966,
+     "videoElements": 7,
+     "docHeight": 32305,
+     "vw": 390,
+     "descHeight": 25534,
+     "descHeights": [
+      25534
+     ],
+     "details": 20,
+     "detailsOpen": 0,
+     "imgs": 17,
+     "videos": [
+      {
+       "src": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+       "preload": "auto",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+       "preload": "auto",
+       "autoplay": false,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-milk-to-foam-origin.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-elasticity-adjustable-bed.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-7-zone-spinal-alignment.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-airflow-ventilation-channels.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-durability-pressure-test.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      }
+     ],
+     "lcp": 5656,
+     "lcpEl": "DIV.details-gallery__thumb-bg details-galler",
+     "cls": 0,
+     "fcp": 1092,
+     "longTasks": 3,
+     "tbtApprox": 74,
+     "shifts": []
+    },
+    "cpu": {
+     "scriptMs": 123,
+     "taskMs": 1066,
+     "layoutMs": 72,
+     "styleMs": 164,
+     "layouts": 26,
+     "restyles": 392
+    },
+    "heapMB": 18.6,
+    "nodes": 13123,
+    "listeners": 467
+   },
+   "afterScroll": {
+    "label": "after scrolling the whole page",
+    "requests": 104,
+    "totalBytes": 2448812,
+    "byType": {
+     "Document": {
+      "n": 1,
+      "bytes": 70287
+     },
+     "Stylesheet": {
+      "n": 16,
+      "bytes": 293770
+     },
+     "Image": {
+      "n": 29,
+      "bytes": 660220
+     },
+     "Script": {
+      "n": 44,
+      "bytes": 1057198
+     },
+     "Font": {
+      "n": 3,
+      "bytes": 115216
+     },
+     "Fetch": {
+      "n": 6,
+      "bytes": 252121
+     },
+     "Preflight": {
+      "n": 5,
+      "bytes": 0
+     }
+    },
+    "byHost": {
+     "site (divinedunlop.com)": {
+      "n": 1,
+      "bytes": 70287
+     },
+     "ecwid cdn (cloudfront)": {
+      "n": 85,
+      "bytes": 2020427
+     },
+     "ecwid api": {
+      "n": 13,
+      "bytes": 287312
+     },
+     "other: cdn.jsdelivr.net": {
+      "n": 2,
+      "bytes": 18129
+     },
+     "google (tags/fonts)": {
+      "n": 2,
+      "bytes": 52657
+     },
+     "other: ": {
+      "n": 1,
+      "bytes": 0
+     }
+    },
+    "media": [
+     {
+      "file": "5139577104.webp",
+      "host": "ecwid",
+      "bytes": 38414,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "tZLmG6B-600x600.webp",
+      "host": "ecwid",
+      "bytes": 35385,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-milk-to-foam-origin.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-elasticity-adjustable-bed.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-7-zone-spinal-alignment.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-airflow-ventilation-channels.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-durability-pressure-test.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-milk-to-foam-origin.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-elasticity-adjustable-bed.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-7-zone-spinal-alignment.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-airflow-ventilation-channels.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-durability-pressure-test.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "5499471050.webp",
+      "host": "ecwid",
+      "bytes": 18376,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5480424608.webp",
+      "host": "ecwid",
+      "bytes": 37218,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4706741739.webp",
+      "host": "ecwid",
+      "bytes": 14928,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5509593549.webp",
+      "host": "ecwid",
+      "bytes": 22804,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5493930640.webp",
+      "host": "ecwid",
+      "bytes": 12600,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4989848759.webp",
+      "host": "ecwid",
+      "bytes": 35403,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4881883141.webp",
+      "host": "ecwid",
+      "bytes": 47649,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4388938284.webp",
+      "host": "ecwid",
+      "bytes": 65881,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4881856265.webp",
+      "host": "ecwid",
+      "bytes": 32691,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4337680265.jpg",
+      "host": "ecwid",
+      "bytes": 28413,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4683904108.webp",
+      "host": "ecwid",
+      "bytes": 14327,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5493926158.webp",
+      "host": "ecwid",
+      "bytes": 58703,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5726401328.webp",
+      "host": "ecwid",
+      "bytes": 36081,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4884200906.webp",
+      "host": "ecwid",
+      "bytes": 45319,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5494150804.webp",
+      "host": "ecwid",
+      "bytes": 8894,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5639415939.webp",
+      "host": "ecwid",
+      "bytes": 13115,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5499236844.webp",
+      "host": "ecwid",
+      "bytes": 3256,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4368226229.webp",
+      "host": "ecwid",
+      "bytes": 10297,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5724148576.webp",
+      "host": "ecwid",
+      "bytes": 4856,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5721385315.webp",
+      "host": "ecwid",
+      "bytes": 7426,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "natural-cotton-cover-texture.webp",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "cotton-wool-cover-texture.webp",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "aloe-vera-cotton-viscose-cover-texture.webp",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "cashmere-silver-ions-cover-texture.webp",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "5499236859.webp",
+      "host": "ecwid",
+      "bytes": 11768,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4686170143.webp",
+      "host": "ecwid",
+      "bytes": 11035,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5499428504.png",
+      "host": "ecwid",
+      "bytes": 26587,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4370824366.webp",
+      "host": "ecwid",
+      "bytes": 6966,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5747931912.webp",
+      "host": "ecwid",
+      "bytes": 6300,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5716987316.webp",
+      "host": "ecwid",
+      "bytes": 5528,
+      "status": 200,
+      "canceled": false
+     }
+    ],
+    "topScripts": [
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/vuega/static/2026/all/website/js/website-cdyo16e7.js",
+      "bytes": 386183
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/vendor-mlfedrps.js",
+      "bytes": 88871
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/vuega/static/2026/all/website/js/vendor-irhtyyij.js",
+      "bytes": 85558
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/shared-tfganu7x.js",
+      "bytes": 74030
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-page-product",
+      "bytes": 55877
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-lc2p314c.js",
+      "bytes": 52722
+     },
+     {
+      "file": "storage.googleapis.com/ems-cdn-assets-store-bucket/ecwid/pro/latest/js/prod.packlink.store",
+      "bytes": 38063
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-chunk-produc",
+      "bytes": 34425
+     }
+    ],
+    "dom": {
+     "domAll": 2056,
+     "descriptionCopies": 1,
+     "productPageContainers": 1,
+     "domDescription": 1090,
+     "domOther": 966,
+     "videoElements": 7,
+     "docHeight": 32305,
+     "vw": 390,
+     "descHeight": 25534,
+     "descHeights": [
+      25534
+     ],
+     "details": 20,
+     "detailsOpen": 0,
+     "imgs": 17,
+     "videos": [
+      {
+       "src": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+       "preload": "auto",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+       "preload": "auto",
+       "autoplay": false,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-milk-to-foam-origin.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-elasticity-adjustable-bed.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-7-zone-spinal-alignment.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-airflow-ventilation-channels.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-durability-pressure-test.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      }
+     ],
+     "lcp": 5656,
+     "lcpEl": "DIV.details-gallery__thumb-bg details-galler",
+     "cls": 0,
+     "fcp": 1092,
+     "longTasks": 3,
+     "tbtApprox": 74,
+     "shifts": []
+    },
+    "cpu": {
+     "scriptMs": 163,
+     "taskMs": 3086,
+     "layoutMs": 76,
+     "styleMs": 265,
+     "layouts": 35,
+     "restyles": 2329
+    },
+    "heapMB": 16.6,
+    "nodes": 6811,
+    "listeners": 364
+   }
+  },
+  {
+   "run": 2,
+   "navErr": null,
+   "loadEventMs": 2285,
+   "atLoad": {
+    "label": "after load + 8 s idle (no scrolling)",
+    "requests": 98,
+    "totalBytes": 2420724,
+    "byType": {
+     "Document": {
+      "n": 1,
+      "bytes": 70288
+     },
+     "Stylesheet": {
+      "n": 16,
+      "bytes": 293772
+     },
+     "Image": {
+      "n": 23,
+      "bytes": 606155
+     },
+     "Script": {
+      "n": 44,
+      "bytes": 1057210
+     },
+     "Font": {
+      "n": 3,
+      "bytes": 115216
+     },
+     "Preflight": {
+      "n": 5,
+      "bytes": 0
+     },
+     "Fetch": {
+      "n": 6,
+      "bytes": 278083
+     }
+    },
+    "byHost": {
+     "site (divinedunlop.com)": {
+      "n": 1,
+      "bytes": 70288
+     },
+     "ecwid cdn (cloudfront)": {
+      "n": 79,
+      "bytes": 1966360
+     },
+     "ecwid api": {
+      "n": 13,
+      "bytes": 313295
+     },
+     "other: cdn.jsdelivr.net": {
+      "n": 2,
+      "bytes": 18131
+     },
+     "google (tags/fonts)": {
+      "n": 2,
+      "bytes": 52650
+     },
+     "other: ": {
+      "n": 1,
+      "bytes": 0
+     }
+    },
+    "media": [
+     {
+      "file": "5139577104.webp",
+      "host": "ecwid",
+      "bytes": 38414,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "tZLmG6B-600x600.webp",
+      "host": "ecwid",
+      "bytes": 35385,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-milk-to-foam-origin.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-elasticity-adjustable-bed.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-7-zone-spinal-alignment.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-airflow-ventilation-channels.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-durability-pressure-test.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-milk-to-foam-origin.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-elasticity-adjustable-bed.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-7-zone-spinal-alignment.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-airflow-ventilation-channels.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-durability-pressure-test.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "5499471050.webp",
+      "host": "ecwid",
+      "bytes": 18376,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5480424608.webp",
+      "host": "ecwid",
+      "bytes": 37218,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4706741739.webp",
+      "host": "ecwid",
+      "bytes": 14928,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5509593549.webp",
+      "host": "ecwid",
+      "bytes": 22804,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5493930640.webp",
+      "host": "ecwid",
+      "bytes": 12600,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4989848759.webp",
+      "host": "ecwid",
+      "bytes": 35403,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4881883141.webp",
+      "host": "ecwid",
+      "bytes": 47649,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4388938284.webp",
+      "host": "ecwid",
+      "bytes": 65881,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4881856265.webp",
+      "host": "ecwid",
+      "bytes": 32691,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4337680265.jpg",
+      "host": "ecwid",
+      "bytes": 28413,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4683904108.webp",
+      "host": "ecwid",
+      "bytes": 14327,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5493926158.webp",
+      "host": "ecwid",
+      "bytes": 58703,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5726401328.webp",
+      "host": "ecwid",
+      "bytes": 36081,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4884200906.webp",
+      "host": "ecwid",
+      "bytes": 45319,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5494150804.webp",
+      "host": "ecwid",
+      "bytes": 8894,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5639415939.webp",
+      "host": "ecwid",
+      "bytes": 13113,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4225119432.jpg",
+      "host": "ecwid",
+      "bytes": 10057,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4337666074.webp",
+      "host": "ecwid",
+      "bytes": 6774,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5235627487.webp",
+      "host": "ecwid",
+      "bytes": 9562,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5493930635.webp",
+      "host": "ecwid",
+      "bytes": 13563,
+      "status": 200,
+      "canceled": false
+     }
+    ],
+    "topScripts": [
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/vuega/static/2026/all/website/js/website-cdyo16e7.js",
+      "bytes": 386175
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/vendor-mlfedrps.js",
+      "bytes": 88871
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/vuega/static/2026/all/website/js/vendor-irhtyyij.js",
+      "bytes": 85558
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/shared-tfganu7x.js",
+      "bytes": 74030
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-page-product",
+      "bytes": 55884
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-lc2p314c.js",
+      "bytes": 52729
+     },
+     {
+      "file": "storage.googleapis.com/ems-cdn-assets-store-bucket/ecwid/pro/latest/js/prod.packlink.store",
+      "bytes": 38056
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-chunk-produc",
+      "bytes": 34425
+     }
+    ],
+    "dom": {
+     "domAll": 2057,
+     "descriptionCopies": 1,
+     "productPageContainers": 1,
+     "domDescription": 1090,
+     "domOther": 967,
+     "videoElements": 7,
+     "docHeight": 32637,
+     "vw": 390,
+     "descHeight": 25534,
+     "descHeights": [
+      25534
+     ],
+     "details": 20,
+     "detailsOpen": 0,
+     "imgs": 17,
+     "videos": [
+      {
+       "src": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+       "preload": "auto",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+       "preload": "auto",
+       "autoplay": false,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-milk-to-foam-origin.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-elasticity-adjustable-bed.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-7-zone-spinal-alignment.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-airflow-ventilation-channels.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-durability-pressure-test.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      }
+     ],
+     "lcp": 5588,
+     "lcpEl": "DIV.details-gallery__thumb-bg details-galler",
+     "cls": 0,
+     "fcp": 1432,
+     "longTasks": 3,
+     "tbtApprox": 53,
+     "shifts": []
+    },
+    "cpu": {
+     "scriptMs": 126,
+     "taskMs": 1061,
+     "layoutMs": 55,
+     "styleMs": 161,
+     "layouts": 27,
+     "restyles": 388
+    },
+    "heapMB": 20.4,
+    "nodes": 13115,
+    "listeners": 467
+   },
+   "afterScroll": {
+    "label": "after scrolling the whole page",
+    "requests": 104,
+    "totalBytes": 2503939,
+    "byType": {
+     "Document": {
+      "n": 1,
+      "bytes": 70288
+     },
+     "Stylesheet": {
+      "n": 16,
+      "bytes": 293772
+     },
+     "Image": {
+      "n": 29,
+      "bytes": 689370
+     },
+     "Script": {
+      "n": 44,
+      "bytes": 1057210
+     },
+     "Font": {
+      "n": 3,
+      "bytes": 115216
+     },
+     "Preflight": {
+      "n": 5,
+      "bytes": 0
+     },
+     "Fetch": {
+      "n": 6,
+      "bytes": 278083
+     }
+    },
+    "byHost": {
+     "site (divinedunlop.com)": {
+      "n": 1,
+      "bytes": 70288
+     },
+     "ecwid cdn (cloudfront)": {
+      "n": 85,
+      "bytes": 2049575
+     },
+     "ecwid api": {
+      "n": 13,
+      "bytes": 313295
+     },
+     "other: cdn.jsdelivr.net": {
+      "n": 2,
+      "bytes": 18131
+     },
+     "google (tags/fonts)": {
+      "n": 2,
+      "bytes": 52650
+     },
+     "other: ": {
+      "n": 1,
+      "bytes": 0
+     }
+    },
+    "media": [
+     {
+      "file": "5139577104.webp",
+      "host": "ecwid",
+      "bytes": 38414,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "tZLmG6B-600x600.webp",
+      "host": "ecwid",
+      "bytes": 35385,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-milk-to-foam-origin.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-elasticity-adjustable-bed.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-7-zone-spinal-alignment.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-airflow-ventilation-channels.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-durability-pressure-test.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-milk-to-foam-origin.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-elasticity-adjustable-bed.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-7-zone-spinal-alignment.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-airflow-ventilation-channels.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "natural-latex-durability-pressure-test.mp4",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "5499471050.webp",
+      "host": "ecwid",
+      "bytes": 18376,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5480424608.webp",
+      "host": "ecwid",
+      "bytes": 37218,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4706741739.webp",
+      "host": "ecwid",
+      "bytes": 14928,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5509593549.webp",
+      "host": "ecwid",
+      "bytes": 22804,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5493930640.webp",
+      "host": "ecwid",
+      "bytes": 12600,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4989848759.webp",
+      "host": "ecwid",
+      "bytes": 35403,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4881883141.webp",
+      "host": "ecwid",
+      "bytes": 47649,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4388938284.webp",
+      "host": "ecwid",
+      "bytes": 65881,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4881856265.webp",
+      "host": "ecwid",
+      "bytes": 32691,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4337680265.jpg",
+      "host": "ecwid",
+      "bytes": 28413,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4683904108.webp",
+      "host": "ecwid",
+      "bytes": 14327,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5493926158.webp",
+      "host": "ecwid",
+      "bytes": 58703,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5726401328.webp",
+      "host": "ecwid",
+      "bytes": 36081,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4884200906.webp",
+      "host": "ecwid",
+      "bytes": 45319,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5494150804.webp",
+      "host": "ecwid",
+      "bytes": 8894,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5639415939.webp",
+      "host": "ecwid",
+      "bytes": 13113,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4225119432.jpg",
+      "host": "ecwid",
+      "bytes": 10057,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4337666074.webp",
+      "host": "ecwid",
+      "bytes": 6774,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5235627487.webp",
+      "host": "ecwid",
+      "bytes": 9562,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5493930635.webp",
+      "host": "ecwid",
+      "bytes": 13563,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "natural-cotton-cover-texture.webp",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "cotton-wool-cover-texture.webp",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "aloe-vera-cotton-viscose-cover-texture.webp",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "cashmere-silver-ions-cover-texture.webp",
+      "host": "media",
+      "bytes": 0,
+      "status": 0,
+      "canceled": false
+     },
+     {
+      "file": "5823988421.jpg",
+      "host": "ecwid",
+      "bytes": 19864,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5824002190.jpg",
+      "host": "ecwid",
+      "bytes": 23641,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5499236835.webp",
+      "host": "ecwid",
+      "bytes": 9706,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "4368321062.webp",
+      "host": "ecwid",
+      "bytes": 9052,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5705487484.webp",
+      "host": "ecwid",
+      "bytes": 7133,
+      "status": 200,
+      "canceled": false
+     },
+     {
+      "file": "5574291661.webp",
+      "host": "ecwid",
+      "bytes": 13819,
+      "status": 200,
+      "canceled": false
+     }
+    ],
+    "topScripts": [
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/vuega/static/2026/all/website/js/website-cdyo16e7.js",
+      "bytes": 386175
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/vendor-mlfedrps.js",
+      "bytes": 88871
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/vuega/static/2026/all/website/js/vendor-irhtyyij.js",
+      "bytes": 85558
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/shared-tfganu7x.js",
+      "bytes": 74030
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-page-product",
+      "bytes": 55884
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-lc2p314c.js",
+      "bytes": 52729
+     },
+     {
+      "file": "storage.googleapis.com/ems-cdn-assets-store-bucket/ecwid/pro/latest/js/prod.packlink.store",
+      "bytes": 38056
+     },
+     {
+      "file": "d34ikvsdm2rlij.cloudfront.net/storefront/static/2026/all/apps-product-browser-chunk-produc",
+      "bytes": 34425
+     }
+    ],
+    "dom": {
+     "domAll": 2057,
+     "descriptionCopies": 1,
+     "productPageContainers": 1,
+     "domDescription": 1090,
+     "domOther": 967,
+     "videoElements": 7,
+     "docHeight": 32637,
+     "vw": 390,
+     "descHeight": 25534,
+     "descHeights": [
+      25534
+     ],
+     "details": 20,
+     "detailsOpen": 0,
+     "imgs": 17,
+     "videos": [
+      {
+       "src": "botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+       "preload": "auto",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "botanic-natural-latex-mattress-premium-presentation-full.mp4",
+       "preload": "auto",
+       "autoplay": false,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-milk-to-foam-origin.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-elasticity-adjustable-bed.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-7-zone-spinal-alignment.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-airflow-ventilation-channels.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      },
+      {
+       "src": "natural-latex-durability-pressure-test.mp4",
+       "preload": "metadata",
+       "autoplay": true,
+       "ready": 0,
+       "paused": true,
+       "buffered": 0,
+       "dur": null,
+       "inView": false
+      }
+     ],
+     "lcp": 5588,
+     "lcpEl": "DIV.details-gallery__thumb-bg details-galler",
+     "cls": 0,
+     "fcp": 1432,
+     "longTasks": 3,
+     "tbtApprox": 53,
+     "shifts": []
+    },
+    "cpu": {
+     "scriptMs": 167,
+     "taskMs": 3105,
+     "layoutMs": 59,
+     "styleMs": 270,
+     "layouts": 33,
+     "restyles": 2346
+    },
+    "heapMB": 17,
+    "nodes": 6801,
+    "listeners": 342
+   }
+  }
+ ]
+}

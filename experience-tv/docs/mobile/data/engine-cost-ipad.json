@@ -1,0 +1,76 @@
+{
+ "profile": "ipad",
+ "throttle": {
+  "cpu": 2,
+  "net": {
+   "down": 1125000,
+   "up": 562500,
+   "latency": 60
+  }
+ },
+ "date": "2026-11-10T13:22:51.490Z",
+ "runs": [
+  {
+   "run": 1,
+   "bundleBytes": 284194,
+   "bundleGzipBytes": 72664,
+   "evalMs": 274,
+   "scriptMsAdded": 21,
+   "taskMsAdded": 785,
+   "layoutMsAdded": 28,
+   "styleMsAdded": 216,
+   "domAdded": -11,
+   "listenersAdded": 135,
+   "heapAddedMB": 2.21,
+   "requestsAfterInjection": 12,
+   "requests": [
+    "api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap",
+    "media.divinedunlop.com/covers/natural-cotton-cover-texture.webp",
+    "media.divinedunlop.com/covers/cotton-wool-cover-texture.webp",
+    "media.divinedunlop.com/covers/aloe-vera-cotton-viscose-cover-texture.webp",
+    "media.divinedunlop.com/covers/cashmere-silver-ions-cover-texture.webp",
+    "d2j6dbq0eux0bg.cloudfront.net/images/100333285/products/644988233/5499236867.webp",
+    "d2j6dbq0eux0bg.cloudfront.net/images/100333285/products/644988233/4381718778.webp",
+    "d2j6dbq0eux0bg.cloudfront.net/images/100333285/products/644846882/5823988421.jpg"
+   ],
+   "hostPresent": true,
+   "isPhoneClass": false,
+   "view": "interactive",
+   "tvVisible": true,
+   "dom": 2119,
+   "shadowNodes": 1113,
+   "styleTags": 2
+  },
+  {
+   "run": 2,
+   "bundleBytes": 284194,
+   "bundleGzipBytes": 72664,
+   "evalMs": 212,
+   "scriptMsAdded": 15,
+   "taskMsAdded": 675,
+   "layoutMsAdded": 24,
+   "styleMsAdded": 174,
+   "domAdded": -11,
+   "listenersAdded": 135,
+   "heapAddedMB": 2.22,
+   "requestsAfterInjection": 12,
+   "requests": [
+    "api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap",
+    "media.divinedunlop.com/covers/natural-cotton-cover-texture.webp",
+    "media.divinedunlop.com/covers/cotton-wool-cover-texture.webp",
+    "media.divinedunlop.com/covers/aloe-vera-cotton-viscose-cover-texture.webp",
+    "media.divinedunlop.com/covers/cashmere-silver-ions-cover-texture.webp",
+    "d2j6dbq0eux0bg.cloudfront.net/images/100333285/products/644988233/5499236867.webp",
+    "d2j6dbq0eux0bg.cloudfront.net/images/100333285/products/644988233/4381718778.webp",
+    "d2j6dbq0eux0bg.cloudfront.net/images/100333285/products/644846882/5823988421.jpg"
+   ],
+   "hostPresent": true,
+   "isPhoneClass": false,
+   "view": "interactive",
+   "tvVisible": true,
+   "dom": 2119,
+   "shadowNodes": 1113,
+   "styleTags": 2
+  }
+ ]
+}

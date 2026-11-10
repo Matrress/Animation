@@ -37,6 +37,7 @@ content, and puts everything back for Classic View.
 | `docs/GALLERY-ARCHITECTURE.md` | The existing architecture, the real Ecwid gallery, feasibility, the mechanism, owner decisions, the test plan and the verified results. |
 | `tests/live/` | Read-only checks against the **public** live store's real DOM and runtime (local browser, nothing saved). `gallery-e2.cjs` and `restore-e2.cjs` cover the gallery integration and the restoration of Standard Product View (39 checks each). See its README. |
 | `docs/AUDIT-EMBED.md`, `docs/TEST-MATRIX.md`, `docs/DEPLOYMENT.md` | Audit of the embed files, what was verified where (and what was not), and the step-by-step deployment to the test product. |
+| `docs/mobile/MOBILE-OPTIMISATION-STUDY.md` | **Study (not implemented, awaiting approval):** the phone, tablet and desktop optimisation audit, the content architecture, three phone design previews (`docs/mobile/options/`, screenshots in `docs/mobile/shots/`), the measured baseline (`docs/mobile/data/`), the recommendation, the roadmap and the owner's decisions. Tools: `tests/live/baseline.cjs`, `tests/live/engine-cost.cjs`, `tools/audit-description.mjs`, `tools/mobile-prototypes.mjs`, `tools/mobile-shots.mjs`. |
 | `docs/MASTER-PLAN.md` | Inventory, chapter matrix, media registry, architecture, layout plan, risks. **Read this first.** |
 
 ## Try it

@@ -1,0 +1,62 @@
+{
+ "profile": "iphone",
+ "throttle": {
+  "cpu": 4,
+  "net": {
+   "down": 200000,
+   "up": 93750,
+   "latency": 150
+  }
+ },
+ "date": "2026-11-10T13:22:13.201Z",
+ "runs": [
+  {
+   "run": 1,
+   "bundleBytes": 284194,
+   "bundleGzipBytes": 72664,
+   "evalMs": 404,
+   "scriptMsAdded": 25,
+   "taskMsAdded": 2218,
+   "layoutMsAdded": 17,
+   "styleMsAdded": 356,
+   "domAdded": 4,
+   "listenersAdded": 33,
+   "heapAddedMB": 1.38,
+   "requestsAfterInjection": 1,
+   "requests": [
+    "api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap"
+   ],
+   "hostPresent": true,
+   "isPhoneClass": true,
+   "view": "classic",
+   "tvVisible": false,
+   "dom": 3789,
+   "shadowNodes": 124,
+   "styleTags": 1
+  },
+  {
+   "run": 2,
+   "bundleBytes": 284194,
+   "bundleGzipBytes": 72664,
+   "evalMs": 417,
+   "scriptMsAdded": 25,
+   "taskMsAdded": 2325,
+   "layoutMsAdded": 16,
+   "styleMsAdded": 383,
+   "domAdded": 4,
+   "listenersAdded": -8,
+   "heapAddedMB": -4.79,
+   "requestsAfterInjection": 1,
+   "requests": [
+    "api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap"
+   ],
+   "hostPresent": true,
+   "isPhoneClass": true,
+   "view": "classic",
+   "tvVisible": false,
+   "dom": 3789,
+   "shadowNodes": 124,
+   "styleTags": 1
+  }
+ ]
+}
