@@ -1,6 +1,6 @@
 # Test matrix: Botanic Experience TV store embed
 
-Date of the runs: 2026-11-07. Build: see `dist/embed/MANIFEST.txt` (hash of `botanic-tv.js`).
+Date of the runs: 2026-11-07 (store embed) and 2026-11-10 (gallery integration; this is the current build). Build: see `dist/embed/MANIFEST.txt` (hash of `botanic-tv.js`).
 
 ## Read this first: what each environment proves
 
@@ -19,7 +19,11 @@ A **PASS in E1 is not a live Ecwid verification.** Only E3 and E4 are, and neith
 |---|---|---|---|
 | `tests/smoke.mjs` | E1 | `node tools/build.mjs && node tests/smoke.mjs` | **104 / 104 pass**: all 14 chapters and every screen, no pills or circles, choices drive the native controls, price mirrors the store, Classic View (13 sections, 7 videos), iPad, iPhone, `?ddtv=off`. |
 | `tests/embed.mjs` | E1 | `node tools/build-embed.mjs && node tests/embed.mjs` | **175 / 175 pass**: guard, events, navigation, rotation, device sweep, phones, Add to Bag (simulated), both placement modes. A mutation check (the product guard deliberately widened) made at least 8 of them fail (the listing was cut at 8), so they do detect a regression. |
-| `tests/live/*.cjs` | E2 | see `tests/live/README.md` | Results below. |
+| `tests/gallery.mjs` | E1 | `node tools/build-embed.mjs && node tests/gallery.mjs` | **115 / 115 pass** (simulated store with the real gallery markup and the 14 real image records): adapter, manifest merge, isolation and exact restore, 25 round trips, the store re-creating its gallery, View Model Gallery, image failures, performance, fail-safe, devices, commerce, no write requests. Mutation checks (isolation or restore switched off) made 11+ and 5 of them fail. |
+| `tests/live/gallery-e2.cjs` | **E2** | `node tools/build-embed.mjs && node tests/live/gallery-e2.cjs` | **39 / 39 pass** on the real Ecwid gallery of the public product (injected locally, read-only): adapter on the real 14 thumbnails, isolation and restore, the store re-creating its gallery after options, 25 round trips, Ecwid navigation away and back, View Model Gallery with real CDN photos (with and without a manifest), request sizes, price mirrored with the gallery open, Add to Bag present (not clicked), iPad portrait and landscape, iPhone. Log: `tests/live/gallery-e2.last-run.txt`. |
+| other `tests/live/*.cjs` | E2 | see `tests/live/README.md` | Results below. |
+
+`tests/embed.mjs` was updated on 2026-11-10: the stacked placement used to leave the store's gallery visible; it is now isolated in both placements, so three assertions were rewritten (they now check the gallery is hidden, not removed, in each placement and through rotation). All other assertions are unchanged.
 
 ## Device matrix
 
@@ -82,4 +86,7 @@ Rotation without reload (E1): 1180×820 → 820×1180 → 1180×820 moves the TV
 2. Safari on a real iPad and iPhone: touch feel, momentum scrolling inside the monitor, video autoplay of muted loops, full video playback, rotation.
 3. Video and cover-photo playback from `media.divinedunlop.com` (blocked from this environment).
 4. Whether the store's Custom JavaScript field accepts a ~190 KB script pasted inline, and where exactly it is in the admin. A hosted file with a one-line loader avoids the question.
-5. A re-render of the product page by Ecwid that fires no `OnPageLoaded` event. The engine rebuilds only when told; it does not watch the page.
+5. A re-render of the product page by Ecwid that fires no `OnPageLoaded` event. The engine rebuilds only when told; it does not watch the page. (The native gallery is the exception: its container is watched, and it was verified to recover from the store re-creating it, E1 and E2.)
+6. The gallery integration on the real test product 876405767 (E3) and in real Safari on iPad and iPhone (E4): not done. See `docs/GALLERY-ARCHITECTURE.md`, 7.3.
+7. Image upload in the Ecwid admin: the engine only reads (no write request in any run), but the upload flow itself was not exercised. The real Add to Bag action was never clicked.
+8. The test product has no media manifest yet; the classification used in the gallery tests is arbitrary and exists only to exercise the categories.

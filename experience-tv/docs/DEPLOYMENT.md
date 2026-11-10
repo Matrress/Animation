@@ -96,6 +96,10 @@ document.querySelectorAll('.ddtv-host').length   // [1]
 [...document.querySelectorAll('.details-product-option__title')].map(e => e.textContent)
         // the four option titles; send them if the television shows fewer than four choices
 document.querySelector('[class*="ProductPage-"]').className   // contains ProductPage-876405767
+DDTV.current.modelGallery.adapter.report()
+        // {mode:'native', native:N, shown:N, ...}: N is how many images the product's gallery has.
+        // If N is 0 or wrong, send this line: the gallery selectors need checking on this product.
+document.querySelector('.product-details__gallery').getAttribute('data-ddtv-gallery')   // ['isolated'] while the TV shows
 ```
 
 Then, by eye:
@@ -103,27 +107,44 @@ Then, by eye:
 | Check | Expected |
 |---|---|
 | Desktop and iPad landscape | The television at the top of the left column, the options beside it, unchanged. |
-| iPad portrait | The television full width above the product block; the gallery and options below, unchanged. |
+| iPad portrait | The television full width above the product block; the options below, unchanged. The store's own gallery is hidden while the television shows, so its place beside the options is empty (open decision 5). |
+| **View Model Gallery** | The button in the monitor's header on every screen. It opens the product's own images inside the monitor; arrows, swipe and the thumbnail strip browse them; Close or Escape returns to the same screen. The store's options, price and Add to Bag stay usable. |
+| Optimised Preview / Standard Product View | The switch under the monitor. Standard Product View shows the store's original gallery and description again, with all 14 (or however many) thumbnails and no page reload; switching back hides the gallery again. Switch ten times: still one television, no duplicate gallery. |
+| Upload a new image to the test product in Ecwid, then reload | The Standard Product View shows it. The model gallery does **not** show it yet if a manifest exists (it is reported as unlisted until classified); with no manifest it shows it. |
 | Chapter buttons | Two rows of seven, every label fully visible, no numbers. |
 | Choose a firmness, a depth, a size and a cover **in the television** | The store's four dropdowns show the same choices; **the store's price and the monitor's price are identical**; if the store shows a discount, so does the monitor. |
 | Choose in the store's own dropdowns | The monitor's "Your selection" follows. |
 | **Add to Bag** with all four chosen | Adds the right item at the store's price; the cart shows the four choices. (Do this on the test product only. If the disabled product cannot be bought, decide with the owner whether to enable it for the test window; nothing else changes.) |
 | Add to Bag with a choice missing | The store refuses, as without the television. |
-| Classic View | Original description back, 13 sections, 7 videos. |
+| Standard Product View | Original description and gallery back, 13 sections, 7 videos. |
 | Click another product, then back | The television disappears, then returns once. |
 | Open the live Botanic product | **No television and no change at all.** |
 | `?ddtv=off` on the test product | No television; the original description. |
 
 If it does not start, in order: is `__ddtvEmbedLoaded` true (no: the loader or file address is wrong, or SRI blocked it: open the Network tab and look for `botanic-tv.js`); is `typeof DDTV` object; are the four option titles present; is `#bp-top` in the page. Send what the console prints.
 
+## Step 7b. Media manifest for the model gallery (optional, Owner + Anyone)
+
+Without a manifest the model gallery shows every image of the product's own Ecwid gallery, at the size the store's page supplies (about 800 px). That works from the first day and is the fallback.
+
+A manifest adds classification (main, gallery, seven-zone, covers, lifestyle, details, technical, shared) and larger sizes. The images stay in Ecwid; the manifest is data about them.
+
+1. Export the product's record (the storefront's product JSON with `mediaItems`; `tests/live/capture-media.cjs` shows how it was read for the public product).
+2. `node tools/media-manifest.mjs product.json --product-id 876405767 --out products/botanic.media.js`
+3. Open the file and set `category` and `customerGallery` for each image (new images start hidden, as `unclassified`).
+4. `node tools/build-embed.mjs`, upload `botanic-tv.js` again.
+5. When images are added or replaced in Ecwid: `node tools/media-manifest.mjs product.json --product-id 876405767 --merge products/botanic.media.js --out products/botanic.media.js`. Until then the console's `DDTV.current.modelGallery.adapter.report()` lists them as `unlisted` (new) or `stale` (replaced; they are left out of the gallery, never shown broken).
+
+Never type an image address by hand: the tool copies the addresses Ecwid returned, and an address of one size cannot be worked out from another.
+
 ## Step 8. Check on real devices: E4 (Owner or tester)
 
 A real iPad (portrait and landscape; if possible two sizes) and a real iPhone, in Safari:
 
-- iPad: chapter taps, the monitor's internal scrolling, tapping choices, rotating while a chapter is open, the Classic View switch.
+- iPad: chapter taps, the monitor's internal scrolling, tapping choices, rotating while a chapter is open, the Optimised Preview / Standard Product View switch, **View Model Gallery** (open, swipe, thumbnails, close, rotate while it is open).
 - Videos: the muted loops start by themselves; the full video opens inside the monitor and plays with sound on tap; the seven-zone video plays.
 - Cover photos and video thumbnails load from `media.divinedunlop.com`.
-- iPhone, both orientations: no television, no view switch, the complete Classic View, no sideways scroll.
+- iPhone, both orientations: no television, no view switch, no View Model Gallery button, the complete standard page with the store's own gallery, no sideways scroll.
 - The store's controls and Add to Bag work as before.
 
 ## Step 9. Rollback (Owner)
@@ -145,3 +166,5 @@ Only after the owner approves, and not before the open decisions below are settl
 2. **Firmness ranges:** 83 kg is in both Medium and Firm on the homepage; the approved Firmness page was not available; the store's options say 48–85 / 85–110 / over 120 kg (110–120 kg has no option). Stone values for Medium and Firm are not shown until an approved source gives them.
 3. **Subresource Integrity:** on or off (off by default).
 4. **Brand logo:** the wordmark "Divine DunlopDreams" is used until a logo file is supplied.
+5. **Empty left column in the stacked placement (iPad portrait):** hiding the store's gallery leaves its place beside the options empty, because Ecwid's layout cannot be restyled. Accept it, or decide on another arrangement (`docs/GALLERY-ARCHITECTURE.md`, 2.4 and 5).
+6. **Unlisted images:** with a manifest, an image uploaded in Ecwid stays out of the model gallery until it is classified (default), or is shown at once (`unlisted: 'show'`).

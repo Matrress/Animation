@@ -131,7 +131,10 @@ const MEASURE = () => {
   for (let i = 0; i < foot.length; i++) for (let j = i + 1; j < foot.length; j++) if (foot[i].width && foot[j].width && foot[i].left < foot[j].right - 0.5 && foot[j].left < foot[i].right - 0.5) overlap++;
   const box = (s) => { const r = root.querySelector(s).getBoundingClientRect(); return { w: Math.round(r.width), h: Math.round(r.height), top: Math.round(r.top) }; };
   const heights = (s) => [...root.querySelectorAll(s)].map((n) => n.getBoundingClientRect().height);
-  const gallery = document.querySelector('.mock-gallery');
+  /* The store's own gallery (its real markup in the stand-in page): isolated, not removed. */
+  const gcol = document.querySelector('.product-details__gallery');
+  const gthumbs = gcol ? gcol.querySelectorAll('.details-gallery__thumb') : [];
+  const gallery = gthumbs[0] || null;
   return {
     placement: tv.getAttribute('data-placement'), phone: tv.classList.contains('is-phone'),
     hosts: document.querySelectorAll('.ddtv-host').length,
@@ -140,7 +143,9 @@ const MEASURE = () => {
     docScroll: document.documentElement.scrollWidth - window.innerWidth,
     screen: box('.ddtv__screen'), unit: box('.ddtv'), innerH: window.innerHeight,
     minBtn: Math.min(...heights('.ddtv__btn')), minTab: Math.min(...heights('.ddtv__tab')), minNav: Math.min(...heights('.ddtv__nav, .ddtv__play')), minChip: Math.min(...heights('.ddtv__chip')),
-    galleryShown: gallery ? gallery.offsetParent !== null : null,
+    galleryShown: gallery ? gallery.getBoundingClientRect().height > 0 : null,
+    galleryThumbs: gthumbs.length,
+    galleryAttr: gcol ? gcol.getAttribute('data-ddtv-gallery') : null,
     columnW: Math.round(document.querySelector('.product-details__gallery').getBoundingClientRect().width),
     sideAside: Math.round(root.querySelector('.ddtv__aside').getBoundingClientRect().width),
   };
@@ -171,7 +176,7 @@ for (const [name, vp, touch] of DEVICES) {
   ok(m.unit.h <= m.innerH, `${name}: the television unit fits the screen height (${m.unit.h} ≤ ${m.innerH})`);
   ok(m.screen.h <= m.screen.w * 1.35, `${name}: the monitor stays proportional (${m.screen.w}×${m.screen.h})`);
   if (touch) ok(m.minBtn >= 43.5 && m.minTab >= 43.5 && m.minNav >= 43.5 && m.minChip >= 43.5, `${name}: every tap target of the shell is at least 44px (chapter ${m.minBtn.toFixed(0)}, tab ${m.minTab.toFixed(0)}, nav ${m.minNav.toFixed(0)}, selection ${m.minChip.toFixed(0)})`);
-  ok(m.placement === 'column' ? m.galleryShown === false : m.galleryShown === true, `${name}: the store gallery is ${m.placement === 'column' ? 'replaced by the television' : 'left visible below it'}`);
+  ok(m.galleryShown === false && m.galleryAttr === 'isolated' && m.galleryThumbs > 0, `${name}: the store's own gallery is isolated while the television shows, in the ${m.placement} placement (hidden, not removed: ${m.galleryThumbs} thumbnails still in the page)`);
   await ctx.close();
 }
 
@@ -191,7 +196,7 @@ for (const [name, vp, touch] of DEVICES) {
   const m3 = await page.evaluate(MEASURE);
   ok(m1.placement === 'column' && m2.placement === 'stacked' && m3.placement === 'column', `rotation moves the television between column and stacked and back (${m1.placement} → ${m2.placement} → ${m3.placement})`);
   ok(m1.hosts === 1 && m2.hosts === 1 && m3.hosts === 1, 'rotation never leaves two televisions');
-  ok(m2.galleryShown === true && m3.galleryShown === false, 'the store gallery comes back when stacked and is replaced again in the column');
+  ok(m1.galleryShown === false && m2.galleryShown === false && m3.galleryShown === false && m1.galleryThumbs === m3.galleryThumbs && m3.galleryThumbs > 0 && m3.galleryAttr === 'isolated', 'the store gallery stays isolated through rotation in both placements, with all its thumbnails still in the page');
   ok(await page.evaluate(() => DDTV.current.chapterIndex === 1 && !!document.querySelector('#bp-top') && document.getElementById('bp-top').offsetParent === null), 'rotation keeps the chapter the customer was on, and the long description stays hidden');
   ok((await sideMarkup(page)) === sideBefore, 'the store options column is identical after rotating twice');
   ok(errors.length === 0, 'no page errors while rotating ' + errors.join(' | '));

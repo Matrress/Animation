@@ -22,7 +22,12 @@ content, and puts everything back for Classic View.
 | `tools/compare-description.mjs` | Compares the raw description exported from the Ecwid API with the source and says where they differ. |
 | `tests/smoke.mjs` | 104 checks on the stand-in page: every source text is on a screen, choices made in the TV reach the native dropdowns, the column is untouched, no pills or circles. |
 | `tests/embed.mjs` | 175 checks of the store embed on a **simulated** Ecwid: product guard, repeated and missed events, navigation, rotation, ten iPad sizes, phones, Add to Bag (simulated), both placement modes. |
-| `tests/live/` | Read-only checks against the **public** live store's real DOM and runtime (local browser, nothing saved). See its README. |
+| `engine/ddtv-gallery.js` / `.css` | The **gallery integration**: a reusable image adapter (normalises Ecwid's own image data and an optional per-product manifest), the *View Model Gallery* button and the gallery inside the monitor. Loaded as an engine extension (`DDTV.use`). |
+| `products/botanic.media.js` | Media manifest for the product (images stay in Ecwid; this is data about them). `null` for now: the gallery then shows the product's own gallery images. |
+| `tools/media-manifest.mjs` | Drafts or merges a manifest from a product export. Copies the addresses Ecwid returned; never invents one. |
+| `tests/gallery.mjs` | 115 checks of the gallery integration on a simulated store with the real gallery markup and real image records. |
+| `docs/GALLERY-ARCHITECTURE.md` | The existing architecture, the real Ecwid gallery, feasibility, the mechanism, owner decisions, the test plan and the verified results. |
+| `tests/live/` | Read-only checks against the **public** live store's real DOM and runtime (local browser, nothing saved). `gallery-e2.cjs` covers the gallery integration (39 checks). See its README. |
 | `docs/AUDIT-EMBED.md`, `docs/TEST-MATRIX.md`, `docs/DEPLOYMENT.md` | Audit of the embed files, what was verified where (and what was not), and the step-by-step deployment to the test product. |
 | `docs/MASTER-PLAN.md` | Inventory, chapter matrix, media registry, architecture, layout plan, risks. **Read this first.** |
 
@@ -48,10 +53,16 @@ Choose options on the right and watch the TV respond. URL switches:
 node tools/build.mjs && node tools/build-embed.mjs
 NODE_PATH=$(npm root -g) node tests/smoke.mjs [screenshot-folder]
 NODE_PATH=$(npm root -g) node tests/embed.mjs
+NODE_PATH=$(npm root -g) node tests/gallery.mjs
 ```
 
-Both suites run against the stand-in page or a simulated Ecwid, in Chromium. They are **not** a verification of the real
+These suites run against the stand-in page or a simulated Ecwid, in Chromium. They are **not** a verification of the real
 Ecwid store or of Safari; `docs/TEST-MATRIX.md` says exactly what was and was not verified, and where.
+`tests/live/gallery-e2.cjs` is the exception in kind (the real Ecwid gallery of the public product, injected locally and
+read-only), but it is still not the test product and not a real device.
+
+The two views are called **Optimised Preview** (the television; the store's own gallery is hidden, not removed) and
+**Standard Product View** (the original page and gallery). `?ddtv=standard` / `classic` and `?ddtv=optimised` / `interactive` select them.
 
 ## Add another mattress
 

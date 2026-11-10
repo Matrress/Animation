@@ -377,6 +377,10 @@
 
   var scenes = {};
 
+  /* Extensions attached to every television: fn(tv) returns { view(v), destroy() }.
+     The model gallery registers itself here (engine/ddtv-gallery.js). */
+  var extensions = [];
+
   /* ------------------------------------------------------------------ */
   /* Television                                                          */
   /* ------------------------------------------------------------------ */
@@ -399,6 +403,11 @@
     this.storeKey = NS + ':' + product.id;
     this._layout = debounce(this.layout.bind(this), 80);
     this._key = this.onKey.bind(this);
+    this.gallery = new NativeGallery(this);   /* isolation of the store's own gallery */
+    this.ext = [];                            /* extensions attached with DDTV.use (e.g. the model gallery) */
+    this.overlayCleanup = null;
+    this.overlayKeys = null;
+    this._recover = debounce(this.recover.bind(this), 60);
   }
 
   Television.prototype.chapters = function () { return this.product.chapters; };
@@ -476,9 +485,12 @@
       bar(ch.slice(half), 'bottom')
     ]);
 
-    this.switchEl = el('div', { class: 'ddtv-switch', role: 'group', 'aria-label': 'Presentation view' }, [
-      el('button', { type: 'button', 'data-view': 'interactive', onclick: function () { self.setView('interactive', true); }, text: 'Interactive View' }),
-      el('button', { type: 'button', 'data-view': 'classic', onclick: function () { self.setView('classic', true); }, text: 'Classic View' })
+    /* The two modes over the same Ecwid data. Internal ids stay 'interactive'
+       and 'classic'; the names the customer sees come from the config. */
+    var VL = p.viewLabels || {};
+    this.switchEl = el('div', { class: 'ddtv-switch', role: 'group', 'aria-label': 'Product presentation' }, [
+      el('button', { type: 'button', 'data-view': 'interactive', onclick: function () { self.setView('interactive', true); }, text: VL.interactive || 'Optimised Preview' }),
+      el('button', { type: 'button', 'data-view': 'classic', onclick: function () { self.setView('classic', true); }, text: VL.classic || 'Standard Product View' })
     ]);
 
     var brand = el('p', { class: 'ddtv-top__brand' }, [el('b', { text: p.name }), ' / ' + (p.experienceTitle || 'Experience')]);
@@ -551,6 +563,125 @@
   };
 
   Television.prototype.mount = function () { this.place(); };
+
+  /* ---------------- the store's own gallery: scoped isolation ---------------- */
+
+  /* In Optimised Preview the store's image gallery must not appear as a
+     second interface, but it must never be deleted, cloned or edited: the
+     store owns the images and may re-render the gallery at any moment (it does:
+     choosing options re-creates the gallery's children, navigating replaces the
+     whole element). So the gallery is not hidden node by node with inline
+     styles. The page carries ONE rule that matches only a gallery that has our
+     attribute, and the attribute is set only while this product's television
+     is showing:
+
+       <gallery selector>[data-ddtv-gallery="isolated"] > :not(.ddtv-host) { display: none }
+
+     Other products, Standard Product View and ?ddtv=off never have the
+     attribute, so the rule matches nothing there. Whatever the store renders
+     inside an isolated gallery is hidden at once, with no flash. */
+  var GALLERY_ATTR = 'data-ddtv-gallery';
+  var GALLERY_STYLE = 'ddtv-gallery-style';
+
+  function NativeGallery(tv) { this.tv = tv; this.on = false; this.mo = null; }
+
+  NativeGallery.prototype.selector = function () {
+    var G = (this.tv.product.layout || {}).gallery || {};
+    return G.container || '.product-details__gallery';
+  };
+
+  NativeGallery.prototype.style = function (on) {
+    var s = doc.getElementById(GALLERY_STYLE);
+    if (!on) { if (s && s.parentNode) s.parentNode.removeChild(s); return; }
+    if (s) return;
+    s = el('style', { id: GALLERY_STYLE });
+    s.textContent = this.selector() + '[' + GALLERY_ATTR + '="isolated"] > :not(.ddtv-host) { display: none; }';
+    (doc.head || doc.documentElement).appendChild(s);
+  };
+
+  /* Puts the attribute on the gallery that is in the page now. */
+  NativeGallery.prototype.apply = function () {
+    var c = $(this.selector());
+    if (c && c.getAttribute(GALLERY_ATTR) !== 'isolated') c.setAttribute(GALLERY_ATTR, 'isolated');
+    return c;
+  };
+
+  NativeGallery.prototype.isolate = function () {
+    this.on = true;
+    this.style(true);
+    this.apply();
+    this.watch();
+  };
+
+  NativeGallery.prototype.restore = function () {
+    this.on = false;
+    this.unwatch();
+    each($$('[' + GALLERY_ATTR + ']'), function (n) { n.removeAttribute(GALLERY_ATTR); });
+    this.style(false);
+  };
+
+  /* Watches only the parents of the gallery and of the product block, for
+     children being added or removed (no subtree, no attributes): cheap even on
+     a page that Ecwid keeps re-rendering. */
+  NativeGallery.prototype.watch = function () {
+    this.unwatch();
+    if (!global.MutationObserver) return;
+    var tv = this.tv, self = this, L = tv.product.layout || {};
+    var parents = [], c = $(this.selector()), r = $(L.stackBeforeSelector);
+    if (c) parents.push(c);                       /* the store removing our host from inside the gallery */
+    if (c && c.parentNode) parents.push(c.parentNode);
+    if (r && r.parentNode && parents.indexOf(r.parentNode) < 0) parents.push(r.parentNode);
+    if (!parents.length) return;
+    this.mo = new MutationObserver(function () { tv._recover(); });
+    each(parents, function (n) { self.mo.observe(n, { childList: true }); });
+  };
+
+  NativeGallery.prototype.unwatch = function () { if (this.mo) { this.mo.disconnect(); this.mo = null; } };
+
+  /* The store replaced the gallery or the product block: put the television
+     back where it belongs and isolate the new gallery. */
+  Television.prototype.recover = function () {
+    if (!this.host || this.failed) return;
+    var L = this.product.layout || {}, remounted = false;
+    var want = this.opts.mount || $(L.mountSelector);
+    if (!this.host.isConnected || (this.placement === 'column' && want && this.host.parentNode !== want)) { this.place(this.placement); remounted = true; }
+    if (this.view === 'interactive' && this.gallery.on) {
+      this.gallery.apply();
+      if (remounted) { this.gallery.watch(); this._layout(); }
+    }
+  };
+
+  /* Whatever goes wrong while the television is showing, the customer must end
+     up with the store's own, working product page: native gallery back, original
+     description back, television gone. */
+  Television.prototype.failSafe = function (why, err) {
+    warn('Optimised Preview stopped (' + why + '). The standard product view is restored.', err);
+    this.failed = true;
+    this.clearWatchdog();
+    try { this.togglePlay(false); } catch (e1) { /* ignore */ }
+    try { this.closeOverlay(); } catch (e2) { /* ignore */ }
+    try { this.gallery.restore(); } catch (e3) { /* ignore */ }
+    try { this.hideNative(false); } catch (e4) { /* ignore */ }
+    try { this.unfill(); } catch (e5) { /* ignore */ }
+    this.view = 'classic';
+    try { this.media.observe(this.sourceRoot); } catch (e6) { /* ignore */ }
+    if (this.tv) this.tv.hidden = true;
+    if (this.host) this.host.style.display = 'none';
+  };
+
+  /* A render check shortly after the television is shown: if it is not
+     visible (a style conflict, a script error elsewhere), restore the store's page. */
+  Television.prototype.armWatchdog = function () {
+    var self = this;
+    this.clearWatchdog();
+    this._wd = setTimeout(function () {
+      if (self.view !== 'interactive' || self.failed || !self.host.isConnected) return;
+      var r = self.tv.getBoundingClientRect(), panel = $('.ddtv__panel.is-active', self.tv);
+      if (!(r.width > 40 && r.height > 40 && panel && panel.offsetHeight > 0)) self.failSafe('the television is not visible');
+    }, this.opts.watchdogMs != null ? this.opts.watchdogMs : 2500);
+  };
+
+  Television.prototype.clearWatchdog = function () { if (this._wd) { clearTimeout(this._wd); this._wd = null; } };
 
   /* Vertical position (column placement only). Configured by
      layout.placement:
@@ -910,6 +1041,10 @@
   Television.prototype.closeOverlay = function () {
     var box = this.overlayBox;
     if (!box) return;
+    var cleanup = this.overlayCleanup;
+    this.overlayCleanup = null;
+    this.overlayKeys = null;
+    if (cleanup) { try { cleanup(); } catch (e0) { warn('Overlay cleanup failed', e0); } }
     var v = $('video', box);
     if (v) {
       try { v.pause(); } catch (e) { /* ignore */ }
@@ -922,6 +1057,8 @@
   };
 
   Television.prototype.onKey = function (e) {
+    /* An open overlay may take keys first (the model gallery uses the arrows). */
+    if (this.overlayBox && this.overlayKeys && this.overlayKeys(e)) return;
     if (e.key === 'Escape' && this.overlayBox) { this.closeOverlay(); return; }
     var tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'select' || tag === 'textarea' || tag === 'video') return;
@@ -1059,10 +1196,9 @@
       /* The native Ecwid selection area is off limits: nothing inside the
          options column or any option block is ever hidden or changed. */
       var protectedAreas = $$(L.sidePanelSelector || '').concat($$(ECWID.block));
-      /* In the stacked placement the store's own gallery stays visible below the
-         television; only in the column placement does the TV take its place. */
-      var toHide = (L.hideInInteractive || []).concat(this.placement === 'column' ? (L.hideInColumn || []) : []);
-      each(toHide, function (sel) {
+      /* The store's image gallery is NOT handled here: it is isolated by the
+         scoped attribute rule of NativeGallery, in both placements. */
+      each(L.hideInInteractive || [], function (sel) {
         each($$(sel), function (n) {
           if (self.root.contains(n) || n === self.root) return;
           for (var i = 0; i < protectedAreas.length; i++) {
@@ -1107,30 +1243,45 @@
     this.root.classList.toggle('is-phone', !this.canInteract());
 
     if (view === 'interactive') {
-      this.media.unobserve();
-      this.fill();
-      this.hideNative(true);
-      this.tv.hidden = false;
-      if (!session.get(this.storeKey + ':splash')) {
-        session.set(this.storeKey + ':splash', '1');
-        this.brandMoment((this.product.experienceTitle ? this.product.name + ' ' + this.product.experienceTitle : this.product.name), 1500);
+      /* Optimised Preview. The store's gallery is isolated only AFTER the
+         screens were built and the television is visible; any failure on the
+         way restores the store's page (failSafe). */
+      try {
+        this.media.unobserve();
+        this.fill();
+        this.hideNative(true);
+        this.tv.hidden = false;
+        this.gallery.isolate();
+        if (!session.get(this.storeKey + ':splash')) {
+          session.set(this.storeKey + ':splash', '1');
+          this.brandMoment((this.product.experienceTitle ? this.product.name + ' ' + this.product.experienceTitle : this.product.name), 1500);
+        }
+        var pos = (session.get(this.storeKey + ':pos') || '').split('/');
+        if (pos[0] && this.chapterById(pos[0]) >= 0) this.go(pos[0], pos[1]);
+        else this.show(0, 0);
+        this.layout();
+        var self = this;
+        if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { self.layout(); });
+        if (byUser) this.tv.focus({ preventScroll: true });
+        this.armWatchdog();
+      } catch (err) {
+        this.failSafe('a screen failed to build', err);
+        return;
       }
-      var pos = (session.get(this.storeKey + ':pos') || '').split('/');
-      if (pos[0] && this.chapterById(pos[0]) >= 0) this.go(pos[0], pos[1]);
-      else this.show(0, 0);
-      this.layout();
-      var self = this;
-      if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { self.layout(); });
-      if (byUser) this.tv.focus({ preventScroll: true });
     } else {
+      /* Standard Product View: the store's own page, gallery included. */
+      this.clearWatchdog();
+      try { this.closeOverlay(); } catch (e0) { /* ignore */ }
       this.tv.hidden = true;
       this.root.style.marginTop = '';
+      this.gallery.restore();
       if (prevView === 'interactive') { this.hideNative(false); this.unfill(); }
       this.media.observe(this.sourceRoot);
       if (byUser && this.sourceRoot) this.sourceRoot.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
     }
     if (byUser) local.set(this.storeKey + ':view', view);
     this.applySync(this.connector.state);
+    each(this.ext, function (x) { if (x.view) { try { x.view(view); } catch (e) { warn('Extension failed', e); } } });
   };
 
   /* ---------------- audit: no silent omissions ---------------- */
@@ -1165,9 +1316,16 @@
     var self = this;
     each($$('video', this.sourceRoot), function (v) { self.media.park(v); });
 
-    var param = (global.location && /[?&]ddtv=(classic|interactive)/.exec(global.location.search)) || [];
+    /* Extensions (the model gallery) attach before the first view is set, so
+       they see it. One that fails to attach never stops the television. */
+    each(extensions, function (fn) {
+      try { var x = fn(self); if (x) self.ext.push(x); } catch (e) { warn('Extension failed to attach', e); }
+    });
+
+    var param = (global.location && /[?&]ddtv=(classic|interactive|standard|optimi[sz]ed)/.exec(global.location.search)) || [];
+    var wanted = { standard: 'classic', optimised: 'interactive', optimized: 'interactive' }[param[1]] || param[1];
     var saved = local.get(this.storeKey + ':view');
-    this.setView(param[1] || saved || 'interactive');
+    this.setView(wanted || saved || 'interactive');
 
     this._resize = debounce(function () {
       var want = self.canInteract() ? (local.get(self.storeKey + ':view') || 'interactive') : 'classic';
@@ -1186,7 +1344,12 @@
   };
 
   Television.prototype.destroy = function () {
+    this.clearWatchdog();
+    each(this.ext, function (x) { if (x.destroy) { try { x.destroy(); } catch (e) { warn('Extension failed to detach', e); } } });
+    this.ext = [];
+    try { this.closeOverlay(); } catch (e0) { /* ignore */ }
     this.togglePlay(false);
+    this.gallery.restore();
     if (this.view === 'interactive') { this.hideNative(false); this.unfill(); }
     this.media.unobserve();
     this.media.restoreAll();
@@ -1298,6 +1461,7 @@
   var DDTV = {
     version: VERSION,
     boot: boot,
+    use: function (fn) { extensions.push(fn); },
     start: start,
     stop: stop,
     current: null,

@@ -44,6 +44,23 @@
     /* Root element of the original description. */
     sourceRoot: '#bp-top',
 
+    /* The two presentation modes over the same Ecwid data. Internal ids are
+       'interactive' and 'classic'. */
+    viewLabels: { interactive: 'Optimised Preview', classic: 'Standard Product View' },
+
+    /* The View Model Gallery inside the television. Ecwid owns the images: the
+       television only reads them. `native` says where to read the store's own
+       gallery (a snapshot when the television starts). `mediaManifest` (see
+       products/botanic.media.js) adds the sizes the store's page does not
+       carry, categories, and which images are meant for the customer gallery.
+       `manifestUrl` may point at a hosted copy instead (fetched only when needed). */
+    modelGallery: {
+      label: 'View Model Gallery',
+      title: 'Model Gallery',
+      native: { thumb: '.details-gallery__thumb' },
+      manifestUrl: null
+    },
+
     /* Brand mark for the short brand moments (opening, presentation, a
        completed configuration) and the sign-off on "Your Botanic".
        `logo` takes the URL of the official logo file once supplied; until
@@ -65,9 +82,11 @@
         '.product-details__description-title',
         '.product-details-module__title--description'
       ],
-      /* Hidden only in the column placement, where the TV takes the place of
-         the store's gallery. In the stacked placement the gallery stays. */
-      hideInColumn: ['.product-details__gallery > :not(.ddtv-host)'],
+      /* The store's own image gallery. In Optimised Preview it is isolated, in
+         both placements, by one scoped attribute rule (never deleted, never
+         cloned, never edited); in Standard Product View it is back, untouched.
+         See docs/GALLERY-ARCHITECTURE.md. */
+      gallery: { container: '.product-details__gallery' },
 
       /* Vertical position in the column placement:
            'top'  the TV starts at the top of the left column and covers the

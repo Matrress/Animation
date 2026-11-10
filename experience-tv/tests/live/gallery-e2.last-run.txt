@@ -1,0 +1,49 @@
+NOTE: real Ecwid DOM and runtime of the PUBLIC live product, local injection, read-only. Not the test product, not Safari.
+
+PASS the real store gallery before anything: 14 thumbnails with real height (75px), children {"details-gallery__wrap":"block","details-gallery__scroll":"none"}
+PASS the television mounted on the real page (late injection)
+INFO adapter addresses that are not one of the store's own five files for the same position: none; sizes read: 2,2,2,2,2,2,2,2,2,2,1,2,2,2
+PASS the adapter read the real gallery: 14 images, in the store's order, each address one of the store's own files for that image (no manifest)
+PASS the button reads "View Model Gallery14 photos"
+PASS the real gallery is isolated while the television shows (every child hidden)
+PASS the real store did re-create its gallery after the options were chosen (its main image changed: 5139577104.webp → 4888579387.webp)
+PASS the new nodes the store created are hidden, the television is still there (one)
+PASS the model gallery still lists the product's own 14 images (the option-driven image is not adopted)
+PASS 25 round trips on the real page: the real gallery is shown (children exactly as before) and hidden every time, one television, no duplicates
+PASS Standard Product View: the real gallery is back, 14 thumbnails with real height (75px), children as before
+PASS Standard Product View: the 14 thumbnail boxes are exactly the size they were before the television existed
+INFO main picture box before [[631,473]] / after [[631,440]] (differs: the store itself swapped its main image when the options were chosen, so a different photo has a different shape)
+PASS leaving the product page through Ecwid: television, attribute and rule are gone (nothing is left behind on other pages)
+PASS coming back: one television again (new gallery element, new adapter)
+PASS coming back: the new real gallery is isolated, 14 thumbnails, one television
+PASS the model gallery opened on the real page showing real photo 1 of 14 (800px wide file)
+PASS the photo is the store's own file for that image (the 800 px address the store rendered)
+INFO opening the gallery (no manifest): 9 new image request(s), 351 KB
+PASS arrow keys browse the real photos
+PASS with the gallery open the real options still work and the real price is mirrored (£854.10)
+PASS the real Add to Bag button is present, enabled and not covered (not clicked)
+PASS Escape returns to the presentation
+PASS no write request to the store was made by the page while this ran
+PASS no page error beyond the two the store itself logs (seen with no injection at all) [Uncaught (in promise) #<Object> ; Timeout exceeded (250 ms) ; Timeout exceeded (250 ms)]
+PASS the injected copy carries the manifest (the shipped build still has none)
+PASS manifest mode: the television mounted
+PASS manifest mode on the real data: 12 customer images, all verified against the real gallery, 2 resources kept out, nothing stale or unlisted ({"mode":"manifest","native":14,"shown":12,"unlisted":[],"stale":[],"unverified":0,"resources":2})
+PASS the first image is the store's first image (store order)
+INFO button "View Model Gallery12 photos", categories main, gallery, seven-zone, covers, lifestyle, details, technical
+INFO manifest mode, opening the gallery: 12 new image request(s), 29 KB; stage 531px; large photo 5499471050.webp
+PASS the original (full-size) files are never requested
+PASS the large photo is the size that fits the screen (531px stage)
+PASS the real photo loaded from the store's CDN (800×600), counted "1 / 12"
+PASS category chips are shown (8) because the manifest has more than one category
+PASS choosing a category narrows the gallery (1 / 1)
+PASS no write request to the store was made by the page while this ran
+PASS iPad portrait 820×1180: the real gallery is isolated in the stacked placement
+PASS iPad portrait 820×1180: the gallery fits the monitor (456×307px photo), the button is 44px tall, no sideways scroll
+PASS iPad portrait 820×1180: Standard Product View gives the real gallery back (children exactly as before, thumbnails 48px)
+PASS iPad landscape 1180×820: the real gallery is isolated in the column placement
+PASS iPad landscape 1180×820: the gallery fits the monitor (427×323px photo), the button is 44px tall, no sideways scroll
+PASS iPad landscape 1180×820: Standard Product View gives the real gallery back (children exactly as before, thumbnails 75px)
+PASS iPhone (390×844): no television, no gallery button, no rule, the real store gallery untouched (children exactly as before: {"details-gallery__wrap":"block","details-gallery__scroll":"block"})
+
+All checks passed (real Ecwid DOM of the public product; the test product and real devices are not covered)
+E2 exit 0

@@ -14,5 +14,11 @@ copy**; the shipped build lists 876405767 alone.
     NODE_PATH=$(npm root -g) node tests/live/inject.cjs desktop 1440 900 0      # name width height touch [choose] [top|size]
     NODE_PATH=$(npm root -g) node tests/live/events.cjs            # real OnPageLoaded: late load, navigation, back
     NODE_PATH=$(npm root -g) node tests/live/errors-and-addtobag.cjs
+    NODE_PATH=$(npm root -g) node tests/live/gallery-e2.cjs        # gallery integration on the real gallery (39 checks)
+    NODE_PATH=$(npm root -g) node tests/live/gallery-shots.cjs <out-dir>   # screenshots of the same, for review
+
+`gallery-e2.cjs` also injects a manifest built from `tests/fixtures/live-media-831592302.json` into its local copy of
+the embed, with an arbitrary test classification. `capture-media.cjs` and `gallery-inspect*.cjs` are the read-only
+scripts that captured that fixture and the gallery's markup.
 
 The live site is reached over the network; a timeout is the network, not the engine: run it again.
