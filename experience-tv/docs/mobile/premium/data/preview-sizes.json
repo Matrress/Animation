@@ -1,10 +1,10 @@
 {
  "sizes": {
-  "total": 207825,
-  "gzip": 47740,
+  "total": 211259,
+  "gzip": 48872,
   "firmnessCoreBytes": 4405,
   "syncBytes": 8476,
-  "configuratorBytes": 19869,
+  "configuratorBytes": 21333,
   "premiumCssBytes": 14389,
   "contentCssBytes": 5332
  },

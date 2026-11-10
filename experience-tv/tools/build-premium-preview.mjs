@@ -52,6 +52,7 @@ const content = await (async () => {
       depths: q('.b-hcol').map(h => ({ cm: T(h.querySelector('.b-hcol__cm')), inch: T(h.querySelector('.b-hcol__in')), name: T(h.querySelector('.b-hcol__n')), desc: T(h.querySelector('.b-hcol__d')) })),
       depthSub: T(document.querySelector('#bp-height .b-sh__s')), coverSub: T(document.querySelector('#bp-covers .b-sh__s')),
       covers: q('.b-cover-menu').map((c, i) => ({ key: ['cotton', 'wool', 'aloe', 'cashmere'][i], name: T(c.querySelector('strong')), tag: T(c.querySelector('.b-cover-menu__tag')), body: T(c.querySelector('.b-cbody-cover')) })),
+      coverImgs: q('#bp-covers .b-cover-micro-slide img').map(i => i.getAttribute('src')),
       itab: q('.b-itab .b-irow').map(r => [T(r.querySelector('.b-ilab')), T(r.querySelector('.b-ival'))]),
       delivery: T(document.querySelector('#bp-delivery .b-sh__s')), zones: q('.b-zone-pill').map(z => [T(z.querySelector('.b-zone-pill__name')), T(z.querySelector('.b-zone-pill__note'))])
     };
@@ -64,7 +65,7 @@ const roleOf = t => /size/i.test(t) ? 'size' : /depth/i.test(t) ? 'depth' : /fir
 const DATA = {
   product: { name: 'Botanic Original 100% Organic Latex Mattress', intro: content.intro },
   images: fx.mediaItems.filter(m => m.type === 'PICTURE').slice(0, 8).map(m => m.image800pxUrl),
-  keyFeatures: content.keyFeatures, firmness: content.firmness, depths: content.depths, covers: content.covers, depthSub: content.depthSub, coverSub: content.coverSub,
+  keyFeatures: content.keyFeatures, firmness: content.firmness, depths: content.depths, covers: content.covers.map((c, i) => ({ ...c, img: content.coverImgs[i] || '' })), mattressSvg: readFileSync(join(P, 'assets', 'botanic-mattress.svg'), 'utf8').replace(/<!--[\s\S]*?-->/g, '').replace(/<title>[\s\S]*?<\/title>/, '').replace('<svg ', '<svg class="gx-mat-svg" '), depthSub: content.depthSub, coverSub: content.coverSub,
   coverFacts: { height: content.itab[0].join(': ') },
   why: { size: content.intro.split('. ').pop(), firmness: content.firmness.sub, depth: content.depthSub, cover: content.coverSub, review: content.delivery },
   reviewFacts: content.keyFeatures.filter(k => /Warranty|Pillows|Delivery|Made/.test(k)),
@@ -131,6 +132,8 @@ const html = `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><met
 <script>${gallery}</script><script id="configurator">${S('configurator.js')}</script><script>${chromeJs}</script></body></html>`;
 // the stand-in builds #cfg and #desc-slot: patch its template
 const final = html;
+const graphite = html.replace('<style id="premium-css">', '<style id="premium-css">' + S('graphite.css') + '\n').replace(/<script id="configurator">[\s\S]*?<\/script>/, () => '<script id="configurator">' + S('graphite.js') + '</script>').replace('<b>Design preview · not deployed · Ecwid block is a stand-in</b><button data-c="sheet">1 Sheet</button><button data-c="stage">2 Stage</button><button data-c="journey">3 Journey</button>', '<b>Design preview · not deployed · Ecwid block is a stand-in</b><button class="on">Graphite Blue</button>');
+writeFileSync(join(P, 'preview', 'graphite.html'), graphite);
 mkdirSync(join(P, 'preview'), { recursive: true });
 writeFileSync(join(P, 'preview', 'index.html'), final);
 const sizes = { total: Buffer.byteLength(final), gzip: gzipSync(final).length, firmnessCoreBytes: coreSrc.length, syncBytes: S('sync.js').length, configuratorBytes: S('configurator.js').length, premiumCssBytes: S('premium.css').length, contentCssBytes: S('content.css').length };

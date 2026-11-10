@@ -174,8 +174,14 @@
   });
   root.addEventListener('input', function (e) {
     var t = e.target; if (t.getAttribute('data-act') !== 'body') return;
-    S[t.getAttribute('data-k')] = +t.value; var o = t.parentElement.querySelectorAll('output'); render();
-    var again = root.querySelector('#' + t.id); if (again) again.focus({ preventScroll: true });
+    S[t.getAttribute('data-k')] = +t.value;                                   /* patch what depends on the slider; never replace the slider being dragged */
+    var out = t.parentElement.previousElementSibling && t.parentElement.previousElementSibling.querySelector ? null : null;
+    var rows = root.querySelectorAll('.fg__row output'); if (rows[0]) rows[0].textContent = S.weight == null ? '—' : S.weight + ' kg'; if (rows[1]) rows[1].textContent = S.height == null ? '—' : S.height + ' cm';
+    var rec = (S.weight != null && S.height != null) ? core.recommend(S.weight, S.height) : null, recK = rec ? { 'SOFT': 'soft', 'MEDIUM': 'medium', 'FIRM': 'firm', 'EXTRA FIRM': 'xfirm' }[rec.display] : '';
+    var cur = chosen('firmness'), curK = cur ? fKey(cur.label) : '';
+    var sc = root.querySelector('.scale'); if (sc) sc.outerHTML = scale(recK, curK);
+    var g = root.querySelector('.guide'); if (g) g.innerHTML = rec ? 'Guidance for your body: <b>' + esc(rec.display.charAt(0) + rec.display.slice(1).toLowerCase()) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Move both sliders for guidance from the Divine Firmness Navigator, or choose directly below.';
+    root.querySelectorAll('.fcard').forEach(function (cd) { var k = fKey(cd.getAttribute('data-label') || cd.textContent); var n = cd.querySelector('.fcard__n'); if (!n) return; var i = n.querySelector('i'); var want = recK && n.textContent.replace('for you', '').trim().toLowerCase().replace(' ', '') === (recK === 'xfirm' ? 'extrafirm' : recK); cd.classList.toggle('rec', !!want); if (want && !i) n.insertAdjacentHTML('beforeend', '<i>for you</i>'); if (!want && i) i.remove(); });
   });
   d.addEventListener('click', function (e) {
     var t = e.target.closest && e.target.closest('#cfg-cta [data-act="open"]'); if (!t) return;
