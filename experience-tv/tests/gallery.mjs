@@ -305,6 +305,31 @@ for (const [label, q] of [['another product (111)', '?pid=111'], ['the live Bota
   }
   ok(everywhere, 'the View Model Gallery button is on screen in every one of the 14 chapters');
 
+  // A primary control: on the title row, large, high contrast, not over the screen, not over the title.
+  await page.evaluate(() => DDTV.current.go('discover'));
+  const P = await page.evaluate(() => {
+    const root = DDTV.current.root, b = DDTV.current.modelGallery.ui.btn, bs = getComputedStyle(b);
+    const r = b.getBoundingClientRect(), head = root.querySelector('.ddtv__head').getBoundingClientRect();
+    const t = root.querySelector('.ddtv__title').getBoundingClientRect(), e = root.querySelector('.ddtv__eyebrow').getBoundingClientRect();
+    const v = DDTV.current.viewport.getBoundingClientRect();
+    const rgb = (s) => (s.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+    const lum = ([R, G, B]) => { const f = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }; return 0.2126 * f(R) + 0.7152 * f(G) + 0.0722 * f(B); };
+    const a = lum(rgb(bs.color)), c = lum(rgb(bs.backgroundColor));
+    return {
+      h: r.height, w: r.width, font: parseFloat(bs.fontSize), weight: Number(bs.fontWeight), family: bs.fontFamily,
+      contrast: (Math.max(a, c) + 0.05) / (Math.min(a, c) + 0.05),
+      onTitleRow: r.top >= head.top - 1 && r.bottom <= head.bottom + 1 && Math.abs((r.top + r.height / 2) - (head.top + head.height / 2)) < head.height / 2,
+      besideTitle: r.left >= Math.max(t.right, e.right) - 1,
+      aboveScreen: r.bottom <= v.top + 1, radius: bs.borderTopLeftRadius,
+    };
+  });
+  ok(P.h >= 44 && P.w >= 180, `the button is large (${Math.round(P.w)}×${Math.round(P.h)}px)`);
+  ok(P.font >= 14.5 && P.weight >= 600 && /Chillax/.test(P.family), `its text is ${P.font}px, weight ${P.weight}, in the television's typeface (Chillax first in the stack)`);
+  ok(P.contrast >= 4.5, `its text has at least AA contrast against the lightest part of its background (${P.contrast.toFixed(1)}:1)`);
+  ok(P.onTitleRow && P.besideTitle, 'it sits on the title row, beside the heading and the eyebrow (it does not wrap under them)');
+  ok(P.aboveScreen, 'it is above the monitor\'s screen: it never covers the video or the content');
+  ok(parseFloat(P.radius) > 0 && parseFloat(P.radius) < 20, `rounded corners, not a pill or a circle (radius ${P.radius})`);
+
   await page.evaluate(() => DDTV.current.go('comfort'));
   const where0 = await page.evaluate(() => ({ ci: DDTV.current.chapterIndex, pi: JSON.stringify(DDTV.current.panelIndex) }));
   await page.locator('.ddtv__galbtn').click();
@@ -355,6 +380,28 @@ for (const [label, q] of [['another product (111)', '?pid=111'], ['the live Bota
   await page.locator('.ddtv__galbtn').click();
   await page.locator('.ddtv-gal__close').click();
   ok(await page.evaluate(() => !DDTV.current.shadow.querySelector('.ddtv-gal') && DDTV.current.overlay.hidden), '"Back to presentation" closes it too');
+  // Video and photos: nothing plays behind the gallery; the presentation's loops resume when it closes;
+  // switching ten times never reloads the page or leaves a second gallery.
+  await page.evaluate(() => DDTV.current.go('discover'));
+  await page.evaluate(() => {
+    window.__plays = 0; window.__pauses = 0;
+    const P = HTMLMediaElement.prototype, play = P.play, pause = P.pause;
+    P.play = function () { window.__plays++; return play.apply(this, arguments); };
+    P.pause = function () { window.__pauses++; return pause.apply(this, arguments); };
+  });
+  const loops = await page.evaluate(() => [...DDTV.current.shadow.querySelectorAll('video[loop]')].length);
+  const plays0 = await page.evaluate(() => window.__plays);
+  let sw = true, detail = '';
+  for (let i = 0; i < 10; i++) {
+    await page.locator('.ddtv__galbtn').click();
+    const a = await page.evaluate(() => ({ gal: DDTV.current.shadow.querySelectorAll('.ddtv-gal').length, playing: [...DDTV.current.shadow.querySelectorAll('video')].filter((v) => !v.paused).length, ov: DDTV.current.overlay.children.length, nonce: window.__nonce }));
+    await page.locator('.ddtv-gal__close').click();
+    const c = await page.evaluate(() => ({ gal: DDTV.current.shadow.querySelectorAll('.ddtv-gal').length, ov: DDTV.current.overlay.children.length, hidden: DDTV.current.overlay.hidden, hosts: document.querySelectorAll('.ddtv-host').length, nonce: window.__nonce, btns: DDTV.current.shadow.querySelectorAll('.ddtv__galbtn').length }));
+    if (!(a.gal === 1 && a.playing === 0 && a.ov === 1 && c.gal === 0 && c.ov === 0 && c.hidden && c.hosts === 1 && c.btns === 1 && a.nonce === c.nonce)) { sw = false; detail = JSON.stringify({ i, a, c }); }
+  }
+  ok(sw, 'ten times photos ↔ presentation: one gallery while open, none after, no video playing behind it, one television, the page never reloaded' + (sw ? '' : ' — ' + detail));
+  const plays1 = await page.evaluate(() => window.__plays);
+  ok(loops === 0 || plays1 - plays0 >= 10, `the presentation's looping videos are started again each time the gallery closes (${loops} loop video(s) on this screen, ${plays1 - plays0} play calls over 10 returns)`);
   // Standard Product View closes it as well
   await page.locator('.ddtv__galbtn').click();
   await page.click('.ddtv-switch button[data-view="classic"]');

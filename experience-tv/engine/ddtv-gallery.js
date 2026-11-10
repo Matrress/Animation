@@ -319,7 +319,7 @@
       el('span', { class: 'ddtv__galbtn-n' })
     ]);
     var head = $('.ddtv__head', tv.root);
-    if (head) head.appendChild(this.btn);
+    if (head) { head.classList.add('ddtv__head--gal'); head.appendChild(this.btn); }
     this.ad.onChange(function () { self.update(); });
     this.ad.snap();
     this.update();
@@ -539,7 +539,10 @@
     each(this.timers, function (t) { clearTimeout(t); });
     this.timers = [];
     if (this.mo) { this.mo.disconnect(); this.mo = null; }
-    if (this.btn && this.btn.parentNode) this.btn.parentNode.removeChild(this.btn);
+    if (this.btn && this.btn.parentNode) {
+      this.btn.parentNode.classList.remove('ddtv__head--gal');
+      this.btn.parentNode.removeChild(this.btn);
+    }
   };
 
   /* ================================================================== */

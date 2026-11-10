@@ -174,11 +174,11 @@ The native gallery is isolated only after the TV has built; if building or the f
 
 ## 7. Verified results
 
-Build under test: `dist/embed/botanic-tv.js`, sha256 `1269c6fcc589e36e9968fdaf3f927069d5a8d794deb033df8e35c4bacf1ea291`. Runs of 2026-11-10, Chromium only.
+Build under test: `dist/embed/botanic-tv.js`, sha256 `767a7f725e824ff4356e4cb665da5a4652f1ae0ff2f230ef867dec9421302364`. Runs of 2026-11-10, Chromium only.
 
 | Suite | Level | Result |
 |---|---|---|
-| `tests/gallery.mjs` | E1, simulated store with the real gallery markup and the 14 real image records | **115 / 115** |
+| `tests/gallery.mjs` | E1, simulated store with the real gallery markup and the 14 real image records | **123 / 123** (incl. the primary-button and video ↔ photos checks of 7.2.1) |
 | `tests/embed.mjs` | E1 | **175 / 175** (three assertions rewritten: the stacked placement now isolates the native gallery as well; see below) |
 | `tests/smoke.mjs` | E1 | **104 / 104** |
 | `tests/live/gallery-e2.cjs` | **E2**, the real Ecwid DOM and runtime of the public product 831592302, local injection, read-only | **39 / 39** (log: `tests/live/gallery-e2.last-run.txt`) |
@@ -202,11 +202,24 @@ Mutation checks on the new tests: switching off `apply()` made 11 or more of the
 
 ### 7.2 Performance (measured)
 
-- Build: `botanic-tv.js` 233.5 KiB raw, 58.7 KiB gzip. The gallery (JS and CSS) adds 32.6 KiB raw, 9.7 KiB gzip.
+- Build: `botanic-tv.js` 235.1 KiB raw, 59.1 KiB gzip. The gallery (JS and CSS) adds 34.1 KiB raw, 10.2 KiB gzip.
 - The TV adds **no image request** on load. Gallery images are requested only after *View Model Gallery* is pressed.
 - Opening, no manifest: 9 image requests, 351 KB (the store's page supplies one size per image, about 800 px, so the strip uses those).
 - Opening, manifest: 12 requests, 29 KB (160 px thumbnails; the large photo is the smallest supplied size that fits the stage, 800 px at a 531 px stage). The full-size originals are never requested.
 - The strip is lazy; the neighbouring photo is preloaded unless the visitor has data saving on.
+
+### 7.2.1 The View Model Gallery as a primary feature (added 2026-11-10)
+
+| Requirement | Result |
+|---|---|
+| Prominent, premium button inside the television | The one solid, saturated control in the monitor's header: 297×48 px, 15 px / 600 in Chillax (the television's typeface, loaded from Fontshare; if it is blocked the stack falls back to Helvetica Neue), white on `#2C7894` at 5.0:1, rounded corners, picture-set icon, photo count set off by a divider. On the title row beside the heading, above the screen: it never covers the video or the options. |
+| Left and right arrows, swipe, counter, close | 48 px arrows with a stronger outline, swipe on touch (tested on iPad sizes), counter `1 / 12`, *Back to presentation*, Escape. |
+| Largest practical size, proportions kept | The photo fills the stage with `object-fit: contain`; the file size is the smallest supplied one that fits the stage at the device pixel ratio. |
+| Real Ecwid addresses, store order | Yes (section 7.1, criteria 2 and 4). |
+| Full size on demand, neighbour preloaded | The strip is lazy; the next photo is preloaded; originals are never requested. Without a manifest the largest size the store's page supplies is about 800 px, so the "full size" is that until a manifest provides 1500 px. |
+| Repeated switching without a reload | Ten round trips: one gallery while open, none after, no video playing behind it, the page never reloaded; the looping videos start again on each return. |
+| Never leave Optimised Preview to see photos | The gallery is inside the monitor; the store's own gallery stays isolated and is available in Standard Product View. |
+| Phones | Unchanged: a phone always gets the standard page with the store's own gallery. No television, no button, no gallery module work (E1 iPhone portrait; E2 iPhone 390×844; phones of either orientation are recognised by the screen's short side). |
 
 ### 7.3 What this does not prove
 

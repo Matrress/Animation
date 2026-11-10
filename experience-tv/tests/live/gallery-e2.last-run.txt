@@ -38,10 +38,10 @@ PASS category chips are shown (8) because the manifest has more than one categor
 PASS choosing a category narrows the gallery (1 / 1)
 PASS no write request to the store was made by the page while this ran
 PASS iPad portrait 820×1180: the real gallery is isolated in the stacked placement
-PASS iPad portrait 820×1180: the gallery fits the monitor (456×307px photo), the button is 44px tall, no sideways scroll
+PASS iPad portrait 820×1180: the gallery fits the monitor (448×307px photo), the button is 48px tall, no sideways scroll
 PASS iPad portrait 820×1180: Standard Product View gives the real gallery back (children exactly as before, thumbnails 48px)
 PASS iPad landscape 1180×820: the real gallery is isolated in the column placement
-PASS iPad landscape 1180×820: the gallery fits the monitor (427×323px photo), the button is 44px tall, no sideways scroll
+PASS iPad landscape 1180×820: the gallery fits the monitor (419×340px photo), the button is 48px tall, no sideways scroll
 PASS iPad landscape 1180×820: Standard Product View gives the real gallery back (children exactly as before, thumbnails 75px)
 PASS iPhone (390×844): no television, no gallery button, no rule, the real store gallery untouched (children exactly as before: {"details-gallery__wrap":"block","details-gallery__scroll":"block"})
 
