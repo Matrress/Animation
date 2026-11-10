@@ -9,8 +9,10 @@
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
-import { readFileSync, mkdirSync, statSync } from 'node:fs';
+import { readFileSync, mkdirSync, statSync, mkdtempSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
+import { execFileSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
@@ -31,15 +33,44 @@ const browser = await chromium.launch();
 const COLOURS = ['#2C7894', '#3B8FAE', '#1B5568', '#6A8CA0', '#8BA9B8', '#435262', '#5D7F8F', '#7FA6B6', '#2A6076', '#4F7F93'];
 
 /* A page with the store's CDN answered locally (a labelled SVG per file) and every request recorded. */
-async function open(query = '', viewport = { width: 1440, height: 900 }, extra = {}, { failUrls = [] } = {}) {
+/* `storefront`: a stand-in for the storefront API endpoint the real page calls for its product
+   ({ mode: 'ok' | 'fail' | 'partial', delay: ms, items: [...] }); null = the page made no such request. */
+const SF_URL = 'https://eu-test-storefront-api.ecwid.com/storefront/api/v1/100333285/catalog/product';
+
+/* A SYNTHETIC H.264 MP4 (ffmpeg test pattern) answers every request to the production media host, which is not
+   reachable from this environment. The browser's media engine really decodes and plays it, so play, pause and time
+   are observed for real; but it is not the production media. */
+let VIDEO = null;
+try {
+  const d = mkdtempSync(join(tmpdir(), 'ddtv-video-'));
+  VIDEO = join(d, 'loop.mp4');
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'lavfi', '-i', 'testsrc2=size=480x270:rate=24', '-t', '8', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-an', VIDEO], { stdio: 'ignore' });
+} catch (e) { VIDEO = null; }
+const MEDIA_BODY = () => readFileSync(VIDEO);
+
+async function open(query = '', viewport = { width: 1440, height: 900 }, extra = {}, { failUrls = [], storefront = null, media = false } = {}) {
   const ctx = await browser.newContext({ viewport, screen: extra.screen || { width: 1920, height: 1080 }, deviceScaleFactor: 1, ...extra });
   await ctx.addInitScript(() => { sessionStorage.setItem('ddtv:botanic:splash', '1'); window.__nonce = Math.random(); });
   await ctx.addInitScript(SHIM);
-  const reqs = [], all = [];
+  const reqs = [], all = [], sf = { hits: [] };
   const fail = new Set(failUrls);
   ctx.on('request', (r) => { all.push({ method: r.method(), url: r.url() }); });
-  await ctx.route(/^https?:\/\//, (r) => {
+  await ctx.route(/^https?:\/\//, async (r) => {
     const u = r.request().url();
+    if (/^https:\/\/media\.divinedunlop\.com\//.test(u)) {
+      if (!media || !VIDEO) return r.abort();
+      return r.fulfill({ status: 200, contentType: 'video/mp4', body: MEDIA_BODY() });
+    }
+    if (/\/storefront\/api\/v1\/\d+\/catalog\/product/.test(u)) {
+      const cors = { 'access-control-allow-origin': '*', 'access-control-allow-headers': 'content-type', 'access-control-allow-methods': 'POST' };
+      if (r.request().method() === 'OPTIONS') return r.fulfill({ status: 204, headers: cors });
+      sf.hits.push({ method: r.request().method(), body: r.request().postData() });
+      if (!storefront) return r.abort();
+      if (storefront.delay) await new Promise((res) => setTimeout(res, storefront.delay));
+      if (storefront.mode === 'fail') return r.fulfill({ status: 500, body: 'nope', headers: cors });
+      const items = storefront.items || (storefront.mode === 'partial' ? fixture.mediaItems.slice(0, 5) : fixture.mediaItems);
+      return r.fulfill({ status: 200, contentType: 'application/json', headers: cors, body: JSON.stringify({ defaultOptionsOverrides: { variationOverrides: { mediaItems: items } } }) });
+    }
     if (!/d2j6dbq0eux0bg\.cloudfront\.net/.test(u)) return r.abort();
     reqs.push(u);
     if (fail.has(u)) return r.fulfill({ status: 404, body: 'gone' });
@@ -51,7 +82,13 @@ async function open(query = '', viewport = { width: 1440, height: 900 }, extra =
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(page0 + query);
-  return { ctx, page, errors, reqs, all };
+  if (storefront) {
+    /* The real page loads its product from the storefront API; do the same once so the page's resource timings
+       carry the endpoint, then forget that request: only what the television asks for is counted. */
+    await page.evaluate((u) => fetch(u, { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' }).catch(() => {}), SF_URL);
+    sf.hits.length = 0;
+  }
+  return { ctx, page, errors, reqs, all, sf };
 }
 const mounted = (page) => page.waitForFunction(() => document.querySelectorAll('.ddtv-host').length === 1 && window.DDTV && DDTV.current && DDTV.current.modelGallery, null, { timeout: 5000 }).then(() => true, () => false);
 const settle = (page, ms = 350) => page.waitForTimeout(ms);
@@ -480,7 +517,8 @@ for (const [label, q] of [['another product (111)', '?pid=111'], ['the live Bota
   const f = join(root, 'dist', 'embed', 'botanic-tv.js'), raw = readFileSync(f);
   const gal = readFileSync(join(root, 'engine', 'ddtv-gallery.js')), galCss = readFileSync(join(root, 'engine', 'ddtv-gallery.css'));
   console.log(`INFO botanic-tv.js ${(raw.length / 1024).toFixed(1)} KB raw, ${(gzipSync(raw).length / 1024).toFixed(1)} KB gzip; the gallery adds ${((gal.length + galCss.length) / 1024).toFixed(1)} KB raw (${(gzipSync(Buffer.concat([gal, galCss])).length / 1024).toFixed(1)} KB gzip)`);
-  ok(gal.length + galCss.length < 40 * 1024, 'the gallery code and styles stay under 40 KB raw');
+  ok(gal.length + galCss.length < 48 * 1024, 'the gallery code and styles stay under 48 KB raw (the budget after the storefront image source was added)');
+  ok(gzipSync(Buffer.concat([gal, galCss])).length < 14 * 1024, 'and under 14 KiB gzipped');
 }
 
 /* ====================================================================== */
@@ -599,6 +637,269 @@ for (const [name, vp, touch, expectTv] of [['desktop 1440×900', { width: 1440, 
   const writes = all.filter((r) => r.method !== 'GET' && r.method !== 'OPTIONS' && r.method !== 'HEAD');
   ok(writes.length === 0, `the engine issued no write request of any kind (${all.length} requests, all GET); it only reads, so uploading images in Ecwid is unaffected`);
   ok(await page.evaluate(() => !document.querySelector('.details-gallery__thumb-img[data-ddtv]') && document.querySelectorAll('.details-gallery__thumb').length === 14), 'the store\'s gallery was never edited or cloned (still 14 thumbnails of its own)');
+  await ctx.close();
+}
+
+/* ====================================================================== */
+/* 12. The storefront image source (automatic sizes, alt text, order)       */
+/* ====================================================================== */
+const report = (page) => page.evaluate(() => { const ad = DDTV.current.modelGallery.adapter; return { rep: ad.report(), imgs: ad.images().map((i) => ({ key: i.key, src: i.source, u1500: i.urls[1500] || '', alt: i.alt, cat: i.category, main: i.isMain, ids: i.ids })) }; });
+{
+  const { ctx, page, errors, sf, all } = await open('', { width: 1440, height: 900 }, {}, { storefront: { mode: 'ok' } });
+  await mounted(page);
+  await settle(page, 400);
+  ok(sf.hits.length === 0, 'nothing is requested from the storefront API until the visitor reaches for the gallery');
+  const r0 = await report(page);
+  ok(r0.rep.sizes === 'native' && r0.imgs.length === 14 && r0.imgs.every((i) => !i.u1500), 'before that, the gallery lists the page\'s own 14 images (one size each, none at 1500 px)');
+  await page.hover('.ddtv__galbtn');
+  await settle(page, 500);
+  ok(sf.hits.length === 1 && sf.hits[0].method === 'POST', 'hovering the button makes exactly one request: a POST to the page\'s own endpoint');
+  ok(JSON.stringify(JSON.parse(sf.hits[0].body)) === JSON.stringify({ productIdentifier: { type: 'PUBLISHED', productId: 876405767 } }), 'its body is only the product identifier: no other field is sent or invented');
+  const r1 = await report(page);
+  ok(r1.rep.sizes === 'storefront' && r1.rep.storefront === 'ok' && r1.imgs.length === 14, 'the storefront records are accepted: they agree with the page\'s own gallery (14 of 14)');
+  ok(r1.imgs.every((im, i) => im.u1500 === fixture.mediaItems[i].image1500pxUrl && im.src === 'storefront'), 'every image now has its 1500 px file, exactly as supplied, in the store\'s order');
+  ok(r1.imgs.every((im, i) => im.alt === fixture.mediaItems[i].alt.replace(/\s+/g, ' ').trim()) && r1.imgs[0].main === true && r1.imgs.filter((i) => i.main).length === 1, 'alt text and the main-image flag come from the store\'s records');
+  for (let i = 0; i < 4; i++) { await page.locator('.ddtv__galbtn').click(); await page.keyboard.press('Escape'); await page.hover('.ddtv__galbtn'); }
+  ok(sf.hits.length === 1, 'opening the gallery again and again never repeats the request (1 request in total)');
+  const nonGet = all.filter((r) => r.method !== 'GET' && r.method !== 'OPTIONS' && r.method !== 'HEAD');
+  ok(nonGet.length === 2 && nonGet.every((r) => r.method === 'POST' && /\/catalog\/product/.test(r.url)), 'the only non-GET requests are that one read (plus the test\'s own primer): no write of any kind');
+  ok(errors.length === 0, 'no page errors ' + errors.join(' | '));
+  await ctx.close();
+}
+{
+  // on a retina iPad the large photo is the 1500 px file, and it is upgraded in place when the records arrive while the gallery is open
+  const vp = { width: 820, height: 1180 };
+  const { ctx, page, sf } = await open('', vp, { hasTouch: true, isMobile: true, screen: vp, deviceScaleFactor: 2 }, { storefront: { mode: 'ok', delay: 900 } });
+  await mounted(page);
+  await settle(page, 400);
+  await page.locator('.ddtv__galbtn').click();           // no hover on touch: the request starts on opening
+  await settle(page, 200);
+  const early = await page.evaluate(() => { const b = DDTV.current.shadow.querySelector('.ddtv-gal'); return { src: b.querySelector('.ddtv-gal__img').getAttribute('src'), n: b.querySelector('.ddtv-gal__count').textContent }; });
+  ok(early.n === '1 / 14' && fixture.mediaItems.some((m) => m.image800pxUrl === early.src), 'the gallery opens at once on what the page shows (800 px) while the request is still running');
+  await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowRight');
+  await settle(page, 1400);
+  const late = await page.evaluate(() => { const b = DDTV.current.shadow.querySelector('.ddtv-gal'); return { src: b.querySelector('.ddtv-gal__img').getAttribute('src'), n: b.querySelector('.ddtv-gal__count').textContent, thumbs: b.querySelectorAll('.ddtv-gal__thumb').length }; });
+  ok(late.n === '3 / 14' && late.thumbs === 14, 'when the records arrive the visitor stays on the same photo (3 / 14); nothing jumps');
+  ok(late.src === fixture.mediaItems[2].image1500pxUrl, 'and that photo is upgraded to its 1500 px file, sharp on a retina screen');
+  ok(sf.hits.length === 1, 'one request');
+  await ctx.close();
+}
+{
+  // records that disagree with the page are ignored
+  const { ctx, page, sf, errors } = await open('', { width: 1440, height: 900 }, {}, { storefront: { mode: 'partial' } });
+  await mounted(page);
+  await page.hover('.ddtv__galbtn');
+  await settle(page, 500);
+  const r = await report(page);
+  ok(sf.hits.length === 1 && r.rep.sizes === 'native' && r.rep.storefront === 'mismatch' && r.imgs.length === 14, 'records that do not contain every image the page shows (5 of 14) are ignored: the gallery keeps the page\'s own 14');
+  ok(errors.length === 0, 'no page errors ' + errors.join(' | '));
+  await ctx.close();
+}
+{
+  // a failing endpoint changes nothing for the visitor, and is not retried
+  const { ctx, page, sf, errors } = await open('', { width: 1440, height: 900 }, {}, { storefront: { mode: 'fail' } });
+  await mounted(page);
+  await page.hover('.ddtv__galbtn');
+  await settle(page, 500);
+  await page.locator('.ddtv__galbtn').click(); await settle(page, 300);
+  const r = await report(page);
+  const open1 = await page.evaluate(() => DDTV.current.shadow.querySelector('.ddtv-gal__count').textContent);
+  ok(r.rep.sizes === 'native' && r.rep.storefront === 'failed' && open1 === '1 / 14', 'an HTTP 500 from the endpoint changes nothing: the gallery opens on the page\'s own 14 images');
+  await page.keyboard.press('Escape'); await page.hover('.ddtv__galbtn'); await page.locator('.ddtv__galbtn').click(); await page.keyboard.press('Escape');
+  ok(sf.hits.length === 1, 'a failed request is not retried (1 request)');
+  ok(errors.length === 0, 'no page error ' + errors.join(' | '));
+  await ctx.close();
+}
+{
+  // no endpoint in the page's resource timings: no request is made at all
+  const { ctx, page, sf } = await open();
+  await mounted(page);
+  await page.hover('.ddtv__galbtn'); await page.locator('.ddtv__galbtn').click(); await settle(page, 400);
+  ok(sf.hits.length === 0 && (await report(page)).rep.sizes === 'native', 'when the page made no storefront request the engine makes none, and the gallery works on what the page shows');
+  await ctx.close();
+}
+{
+  // switched off in the product config
+  const { ctx, page, sf } = await open('', { width: 1440, height: 900 }, {}, { storefront: { mode: 'ok' } });
+  await mounted(page);
+  await page.evaluate(() => { DDTV.current.modelGallery.adapter.G.storefront = false; });
+  await page.hover('.ddtv__galbtn'); await settle(page, 400);
+  ok(sf.hits.length === 0, '`storefront: false` in the product config: no request');
+  await ctx.close();
+}
+{
+  // with a manifest that has only one size and no alt text, the records fill the gaps and never override the manifest
+  const { ctx, page } = await open('', { width: 1440, height: 900 }, {}, { storefront: { mode: 'ok' } });
+  await mounted(page);
+  const lean = testManifest();
+  lean.images = lean.images.map((m) => ({ type: m.type, id: m.id, image800pxUrl: m.image800pxUrl, category: m.category, customerGallery: m.customerGallery, alt: m.category === 'main' ? 'Our own alt text' : '' }));
+  await setManifest(page, lean);
+  const a = await report(page);
+  ok(a.imgs.length === 12 && a.imgs.every((i) => !i.u1500), 'a lean manifest (800 px only) gives 12 images, none at 1500 px yet');
+  await page.hover('.ddtv__galbtn'); await settle(page, 500);
+  const b = await report(page);
+  ok(b.rep.mode === 'manifest' && b.rep.sizes === 'storefront' && b.imgs.length === 12 && b.rep.unlisted.length === 0 && b.rep.stale.length === 0, 'after the records arrive: still the manifest\'s 12 images, none unlisted, none stale');
+  ok(b.imgs.every((im, i) => im.u1500 === fixture.mediaItems[i].image1500pxUrl), 'their 1500 px files were filled in from the records');
+  ok(b.imgs[0].alt === 'Our own alt text' && b.imgs[1].alt === fixture.mediaItems[1].alt.replace(/\s+/g, ' ').trim(), 'the manifest\'s own alt text is kept; missing alt text is filled in from the records');
+  ok(b.imgs.map((i) => i.cat).join() === lean.images.slice(0, 12).map((m) => m.category).join(), 'the categories are the manifest\'s: the records never classify anything');
+  ok(await page.evaluate(() => DDTV.current.modelGallery.adapter.report().resources === 2), 'the 2 supporting resources stay out of the customer gallery');
+  await ctx.close();
+}
+
+/* ====================================================================== */
+/* 13. Real media playback (synthetic MP4, real browser media engine)       */
+/* ====================================================================== */
+if (!VIDEO) console.log('SKIP real-media playback: ffmpeg is not available here, so no test video could be made (this is NOT counted as a pass)');
+else {
+  const { ctx, page, errors } = await open('', { width: 1440, height: 900 }, {}, { media: true });
+  await mounted(page);
+  const probe = () => page.evaluate(() => {
+    const vs = [...DDTV.current.shadow.querySelectorAll('video')], vis = vs.filter((v) => v.getClientRects().length > 0), loops = vis.filter((v) => v.loop);
+    return { total: vs.length, loops: loops.length, playing: vs.filter((v) => !v.paused && !v.ended).length, loopsPlaying: loops.filter((v) => !v.paused).length, times: loops.map((v) => v.currentTime), errs: vs.filter((v) => v.error).length, players: DDTV.current.shadow.querySelectorAll('.ddtv-player video').length };
+  });
+  const advancing = async (ms = 700) => { const a = await probe(); await page.waitForTimeout(ms); const b = await probe(); return a.times.length > 0 && a.times.length === b.times.length && b.times.every((t, i) => t > a.times[i] + 0.2); };
+  const frozen = async (ms = 600) => { const a = await page.evaluate(() => [...DDTV.current.shadow.querySelectorAll('video')].map((v) => v.currentTime)); await page.waitForTimeout(ms); const b = await page.evaluate(() => [...DDTV.current.shadow.querySelectorAll('video')].map((v) => v.currentTime)); return a.every((t, i) => t === b[i]); };
+  await page.waitForFunction(() => [...DDTV.current.shadow.querySelectorAll('video')].some((v) => v.loop && !v.paused && v.currentTime > 0.3), null, { timeout: 10000 }).catch(() => {});
+  const p0 = await probe();
+  ok(p0.loops >= 1 && p0.loopsPlaying === p0.loops && await advancing(), `the browser is really playing the screen's ${p0.loops} looping video(s): currentTime advances`);
+  ok(p0.playing === p0.loopsPlaying, 'only the visible screen\'s loops play; nothing plays hidden');
+  await page.locator('.ddtv__galbtn').click();
+  await page.waitForTimeout(300);
+  const p1 = await probe();
+  ok(p1.playing === 0 && await frozen(), 'with the gallery open no video plays and every currentTime is frozen');
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => [...DDTV.current.shadow.querySelectorAll('video')].some((v) => v.loop && !v.paused), null, { timeout: 5000 }).catch(() => {});
+  const p2 = await probe();
+  ok(p2.loopsPlaying === p2.loops && p2.playing === p2.loopsPlaying && await advancing(), 'closing the gallery plays the same loops again, one playback each, time advancing');
+  let clean = true, detail = '';
+  for (let i = 0; i < 10; i++) {
+    await page.locator('.ddtv__galbtn').click(); await page.waitForTimeout(150);
+    const a = await probe();
+    await page.keyboard.press('Escape'); await page.waitForTimeout(500);
+    const b = await probe();
+    if (!(a.playing === 0 && b.playing === b.loops && b.loopsPlaying === b.loops && b.total === p0.total && b.errs === 0)) { clean = false; detail = JSON.stringify({ i, a, b }); }
+  }
+  ok(clean, 'ten gallery round trips: always 0 playing while open, always exactly the visible loops playing after, the same number of video elements, no media error' + (clean ? '' : ' — ' + detail));
+  // the full video (a player overlay with sound): opening the gallery stops and closes it, and closing the gallery does not reopen it
+  await page.getByRole('button', { name: /Watch Full Video/i }).first().click();
+  await page.waitForFunction(() => { const v = DDTV.current.shadow.querySelector('.ddtv-player video'); return v && !v.paused && v.currentTime > 0.3; }, null, { timeout: 8000 }).catch(() => {});
+  const pp = await probe();
+  ok(pp.players === 1 && pp.playing >= 1, 'the full video opens in the monitor and really plays');
+  await page.locator('.ddtv__galbtn').click(); await page.waitForTimeout(400);
+  const pg = await probe();
+  ok(pg.players === 0 && pg.playing === 0 && await frozen(), 'opening the gallery over the full video stops it and closes the player: nothing plays');
+  await page.keyboard.press('Escape'); await page.waitForTimeout(700);
+  const pa = await probe();
+  ok(pa.players === 0 && pa.loopsPlaying === pa.loops && pa.errs === 0, 'closing the gallery goes back to the presentation (its loops), not to the full video, with no media error');
+  ok(errors.length === 0, 'no page errors during the media tests ' + errors.join(' | '));
+  await ctx.close();
+}
+
+/* ====================================================================== */
+/* 14. Standard Product View restored completely; options kept; repeatable  */
+/* ====================================================================== */
+{
+  const { ctx, page, errors } = await open();
+  await mounted(page);
+  await settle(page, 500);
+  const cdp = await ctx.newCDPSession(page);
+  const counters = async () => { await cdp.send('HeapProfiler.collectGarbage').catch(() => {}); return cdp.send('Memory.getDOMCounters'); };
+  const sel = () => page.evaluate(() => [...document.querySelectorAll('.details-product-option select')].map((s) => s.value).join('|'));
+  const snap = () => page.evaluate(() => {
+    const g = document.querySelector('.product-details__gallery'), kids = g ? [...g.children].filter((c) => !c.classList.contains('ddtv-host')) : [], T = DDTV.current;
+    const th = g.querySelectorAll('.details-gallery__thumb');
+    const r = th[0] ? th[0].getBoundingClientRect() : { height: 0 }, tvr = T.tv.getBoundingClientRect();
+    return {
+      attr: g.getAttribute('data-ddtv-gallery'), stack: document.querySelectorAll('[data-ddtv-stacked]').length,
+      hidden: kids.length > 0 && kids.every((c) => getComputedStyle(c).display === 'none'), shown: kids.length > 0 && kids.every((c) => getComputedStyle(c).display !== 'none'),
+      thumbs: th.length, thumbH: Math.round(r.height), hosts: document.querySelectorAll('.ddtv-host').length, styles: document.querySelectorAll('#ddtv-gallery-style').length,
+      tvVisible: tvr.width > 0 && tvr.height > 0, btn: !!T.modelGallery && T.modelGallery.ui.btn.offsetParent !== null, overlay: !!T.shadow.querySelector('.ddtv-gal'),
+      price: document.querySelector('.details-product-price__value').textContent, tvPrice: T.shadow.querySelector('.ddtv__price-v').textContent,
+      chips: [...T.shadow.querySelectorAll('.ddtv__chip .ddtv__chip-v')].map((c) => c.textContent).join('|'),
+      height: document.documentElement.scrollHeight, xs: document.documentElement.scrollWidth - window.innerWidth,
+      over: document.documentElement.scrollWidth > window.innerWidth ? [...document.querySelectorAll('body *')].filter((n) => n.getClientRects().length && n.getBoundingClientRect().right > window.innerWidth + 1).slice(0, 4).map((n) => n.tagName.toLowerCase() + '.' + String(n.className).slice(0, 40) + ' r=' + Math.round(n.getBoundingClientRect().right)) : [],
+    };
+  });
+  await page.selectOption('.details-product-option--SIZE select', { index: 4 });
+  await page.selectOption('.details-product-option--Select-Mattress-Depth select', { index: 2 });
+  await page.selectOption('.details-product-option--FIRMNESS-BY-BODY-WEIGHT select', { index: 2 });
+  await page.selectOption('.details-product-option--COVERS select', { index: 2 });
+  await settle(page, 400);
+  const sel0 = await sel(), opt0 = await snap();
+  ok(opt0.hidden && opt0.attr === 'isolated' && opt0.tvVisible && opt0.btn && opt0.hosts === 1 && opt0.price === opt0.tvPrice, 'Optimised Preview with four options chosen: native gallery isolated, television and button visible, price mirrored');
+  // two warm-up cycles, then count
+  for (let i = 0; i < 2; i++) { await page.click('.ddtv-switch button[data-view="classic"]'); await page.click('.ddtv-switch button[data-view="interactive"]'); }
+  await settle(page, 300);
+  const c0 = await counters(), std0 = (await (async () => { await page.click('.ddtv-switch button[data-view="classic"]'); await settle(page, 250); const s = await snap(); await page.click('.ddtv-switch button[data-view="interactive"]'); await settle(page, 250); return s; })());
+  const stdHeights = [], optHeights = [];
+  let bad = 0, detail = '';
+  for (let i = 0; i < 12; i++) {
+    await page.click('.ddtv-switch button[data-view="classic"]'); await settle(page, 200);
+    const s = await snap(), sv = await sel();
+    stdHeights.push(s.height);
+    const goodStd = s.shown && s.attr === null && s.stack === 0 && s.thumbs === 14 && s.thumbH === std0.thumbH && s.styles === 0 && !s.tvVisible && !s.overlay && s.hosts === 1 && sv === sel0 && s.price === opt0.price && s.xs <= 0;
+    // the native gallery must be really usable: its thumbnails are what a click on their centre hits
+    const hitInfo = await page.evaluate(() => { const t = document.querySelectorAll('.details-gallery__thumb')[3]; t.scrollIntoView({ block: 'center' }); const r = t.getBoundingClientRect(), e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); window.scrollTo(0, 0); return { ok: t === e || t.contains(e), at: e ? e.tagName.toLowerCase() + '.' + String(e.className).slice(0, 40) : null, box: [Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)], vh: innerHeight }; }); const hit = hitInfo.ok;
+    await page.click('.ddtv-switch button[data-view="interactive"]'); await settle(page, 200);
+    if (i % 3 === 0) { await page.locator('.ddtv__galbtn').click(); await page.keyboard.press('Escape'); }
+    const o = await snap(), ov = await sel();
+    optHeights.push(o.height);
+    const goodOpt = o.hidden && o.attr === 'isolated' && o.thumbs === 14 && o.tvVisible && o.btn && !o.overlay && o.hosts === 1 && o.styles === 1 && ov === sel0 && o.price === opt0.price && o.tvPrice === opt0.price && o.chips === opt0.chips && o.xs <= 0;
+    if (!(goodStd && hit && goodOpt)) { bad++; detail = JSON.stringify({ i, goodStd, hitInfo, goodOpt, std: { xs: s.xs, over: s.over, thumbH: s.thumbH }, opt: { xs: o.xs, over: o.over } }).slice(0, 900); }
+  }
+  ok(bad === 0, '12 cycles Optimised → Standard → Optimised: every time the native gallery is back (same 14 thumbnails, same size, clickable) and then isolated again; television, button, options, price and selection chips identical; no duplicates; no sideways scroll' + (bad ? ' — ' + detail : ''));
+  ok(Math.max(...stdHeights) - Math.min(...stdHeights) <= 2 && Math.max(...optHeights) - Math.min(...optHeights) <= 2, `page height is stable in each mode over the cycles (Standard ${Math.min(...stdHeights)}–${Math.max(...stdHeights)} px, Optimised ${Math.min(...optHeights)}–${Math.max(...optHeights)} px): no layout drift`);
+  const c1 = await counters();
+  console.log(`INFO after the warm-up, 12 cycles + 4 gallery visits: documents ${c0.documents}→${c1.documents}, DOM nodes ${c0.nodes}→${c1.nodes}, JS event listeners ${c0.jsEventListeners}→${c1.jsEventListeners}`);
+  ok(c1.documents === c0.documents && c1.jsEventListeners - c0.jsEventListeners <= 5 && c1.nodes - c0.nodes <= 40, 'no accumulation: no extra documents, event listeners (+' + (c1.jsEventListeners - c0.jsEventListeners) + ') or DOM nodes (+' + (c1.nodes - c0.nodes) + ') after 12 more cycles');
+  // an option changed in Standard Product View is what the television shows on return; Add to Bag works in both views
+  await page.click('.ddtv-switch button[data-view="classic"]'); await settle(page, 250);
+  await page.selectOption('.details-product-option--SIZE select', { index: 3 });
+  await settle(page, 300);
+  await page.evaluate(() => document.getElementById('mock-add-to-bag').scrollIntoView({ block: 'center' }));
+  await page.click('#mock-add-to-bag');
+  const stdBag = await page.evaluate(() => ({ n: window.__bag.length, size: window.__bag[0].options[0] }));
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.click('.ddtv-switch button[data-view="interactive"]'); await settle(page, 400);
+  const back = await snap();
+  ok(stdBag.n === 1 && back.price === back.tvPrice && (await sel()) !== sel0 && back.chips !== opt0.chips, 'a size changed in Standard Product View is carried back to the television (its chips and price follow); Add to Bag worked in Standard Product View');
+  await page.evaluate(() => document.getElementById('mock-add-to-bag').scrollIntoView({ block: 'center' }));
+  await page.click('#mock-add-to-bag');
+  ok(await page.evaluate(() => window.__bag.length === 2), 'and Add to Bag works in Optimised Preview too');
+  ok(errors.length === 0, 'no page errors across all the cycles ' + errors.join(' | '));
+  await ctx.close();
+}
+
+/* ====================================================================== */
+/* 15. Stacked layout: no unused left column (iPad portrait)                */
+/* ====================================================================== */
+{
+  const vp = { width: 820, height: 1180 };
+  const { ctx, page } = await open('', vp, { hasTouch: true, isMobile: true, screen: vp });
+  await mounted(page);
+  await settle(page, 500);
+  const info = () => page.evaluate(() => ({ placement: DDTV.current.placement, attr: document.querySelector('.product-details').getAttribute('data-ddtv-stacked'), rule: (document.getElementById('ddtv-gallery-style') || {}).textContent || '', xs: document.documentElement.scrollWidth - innerWidth }));
+  const a = await info();
+  ok(a.placement === 'stacked' && a.attr === '1', 'iPad portrait: stacked placement, and the product block carries the stacked-layout attribute');
+  ok(/\[data-ddtv-stacked="1"\] > \.product-details__sidebar/.test(a.rule) && /\.product-details\[data-ddtv-stacked="1"\] > \.product-details__description/.test(a.rule), 'the one rule that uses it is scoped to that attribute and names only the store\'s sidebar and description');
+  await page.click('.ddtv-switch button[data-view="classic"]'); await settle(page, 300);
+  const b = await info();
+  ok(b.attr === null && b.rule === '', 'Standard Product View removes the attribute and the rule: the store\'s own layout is back');
+  await page.click('.ddtv-switch button[data-view="interactive"]'); await settle(page, 300);
+  ok((await info()).attr === '1', 'and Optimised Preview applies it again');
+  await page.setViewportSize({ width: 1180, height: 820 }); await settle(page, 700);
+  const c = await info();
+  ok(c.placement === 'column' && c.attr === null, 'rotating to landscape (column placement) removes the stacked layout');
+  await page.setViewportSize(vp); await settle(page, 700);
+  const d = await info();
+  ok(d.placement === 'stacked' && d.attr === '1' && d.xs <= 0, 'rotating back to portrait applies it again, with no sideways scroll');
+  await ctx.close();
+}
+{
+  // other products and ?ddtv=off never get the attribute
+  const { ctx, page } = await open('?ddtv=off', { width: 820, height: 1180 }, { hasTouch: true, isMobile: true });
+  await settle(page, 500);
+  ok(await page.evaluate(() => document.querySelectorAll('[data-ddtv-stacked],[data-ddtv-gallery]').length === 0 && !document.getElementById('ddtv-gallery-style')), '?ddtv=off: no attribute and no rule anywhere on the page');
   await ctx.close();
 }
 

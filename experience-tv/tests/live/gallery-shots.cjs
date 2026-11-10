@@ -48,6 +48,12 @@ const shot = async (p, name, clip) => { const f = path.join(OUT, name); await p.
   await s.p.evaluate(() => { const r = document.querySelector('.ddtv-host').getBoundingClientRect(); scrollTo(0, Math.max(0, r.top + scrollY - 20)); });
   await s.p.waitForTimeout(600);
   await shot(s.p, '4-ipad-portrait-optimised-preview.png');
+  // the product block under the television: the store's options in one column, no unused left column
+  await s.p.evaluate(() => { const r = document.querySelector('.ddtv-host').getBoundingClientRect(); scrollTo(0, Math.max(0, r.bottom + scrollY - 140)); });
+  await s.p.waitForTimeout(600);
+  await shot(s.p, '6-ipad-portrait-options-under-the-television.png');
+  await s.p.evaluate(() => { const r = document.querySelector('.ddtv-host').getBoundingClientRect(); scrollTo(0, Math.max(0, r.top + scrollY - 20)); });
+  await s.p.waitForTimeout(400);
   await s.p.locator('.ddtv__galbtn').click(); await s.p.waitForTimeout(2500);
   await shot(s.p, '5-ipad-portrait-view-model-gallery.png');
   await s.b.close();

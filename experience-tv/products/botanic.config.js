@@ -58,7 +58,13 @@
       label: 'View Model Gallery',
       title: 'Model Gallery',
       native: { thumb: '.details-gallery__thumb' },
-      manifestUrl: null
+      manifestUrl: null,
+      /* Automatic image data: the same storefront request Ecwid's own page makes,
+         repeated once (no credentials, only when the visitor reaches for the
+         gallery) to obtain the 1500 px files, alt text and order. Verified against
+         the page's own gallery and ignored if it disagrees or fails. Set false to
+         use only what the page itself shows (about 800 px) and the manifest. */
+      storefront: true
     },
 
     /* Brand mark for the short brand moments (opening, presentation, a
@@ -87,6 +93,15 @@
          cloned, never edited); in Standard Product View it is back, untouched.
          See docs/GALLERY-ARCHITECTURE.md. */
       gallery: { container: '.product-details__gallery' },
+
+      /* Stacked placement only (iPad portrait): the store floats its gallery and
+         description left and its options right. With the gallery isolated and the
+         description mostly hidden that leaves the left column empty, so while the
+         television is stacked the store's own sidebar and description take the
+         single column the store uses on small screens (one attribute on the
+         product block, one rule, removed on Standard Product View or when the
+         placement returns to the column). Nothing is moved or hidden. */
+      stacked: { block: '.product-details', fill: ['.product-details__sidebar', '.product-details__description'] },
 
       /* Vertical position in the column placement:
            'top'  the TV starts at the top of the left column and covers the

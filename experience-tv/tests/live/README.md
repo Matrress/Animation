@@ -15,7 +15,12 @@ copy**; the shipped build lists 876405767 alone.
     NODE_PATH=$(npm root -g) node tests/live/events.cjs            # real OnPageLoaded: late load, navigation, back
     NODE_PATH=$(npm root -g) node tests/live/errors-and-addtobag.cjs
     NODE_PATH=$(npm root -g) node tests/live/gallery-e2.cjs        # gallery integration on the real gallery (39 checks)
+    NODE_PATH=$(npm root -g) node tests/live/restore-e2.cjs        # storefront source, Standard Product View restoration, cycles, stacked layout, video (39 checks)
     NODE_PATH=$(npm root -g) node tests/live/gallery-shots.cjs <out-dir>   # screenshots of the same, for review
+
+`restore-e2.cjs` needs `ffmpeg`: the production media host is not reachable from this environment, so a **synthetic**
+H.264 test pattern answers it. The browser really plays it, so play/pause/resume are observed for real, but it is not
+the production media. Without ffmpeg the video checks print SKIP (they are not counted as passes).
 
 `gallery-e2.cjs` also injects a manifest built from `tests/fixtures/live-media-831592302.json` into its local copy of
 the embed, with an arbitrary test classification. `capture-media.cjs` and `gallery-inspect*.cjs` are the read-only

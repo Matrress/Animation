@@ -8,6 +8,28 @@ Status: development environment only. Nothing is published to the live storefron
 
 ---
 
+## 0. Permanent requirements (binding for all Product TV work)
+
+This section records the owner's consolidated brief of 2026-11-10. It is part of the project, not a temporary instruction. The rest of this document says how each point is met and what evidence exists.
+
+**The final architectural rule.** Ecwid owns the product images, the native gallery and the commerce functionality. Divine Product TV owns the optimised interactive presentation. Both modes coexist, share the same underlying product data and switch reversibly, without losing the native gallery or the customer's configuration.
+
+1. **Two reversible modes on one Ecwid product page.** *Optimised Preview*: the Product TV, with its own prominent photographic gallery. *Standard Product View*: the original Ecwid interface, with the original gallery at its normal place. Both share the same Ecwid images, configuration and commerce. Reusable across product models, never hardcoded for one mattress.
+2. **Ecwid stays the image repository.** Images are uploaded, managed and ordered in Ecwid Admin. No separate upload platform. No migration of images to SiteGround or GitHub. GitHub may hold code, documentation and generated manifests. Ecwid is the source of truth.
+3. **Image data is retrieved automatically where technically possible, never invented.** Product identification, Ecwid order, sizes (1500 px where supplied), identifiers, alt text, main image. A manifest is data about the images (classification), not a place to type URLs. Stale images are detected. Customer-facing photographs are separated from supporting resources; an upload does not by itself enter the customer gallery.
+4. **Optimised Preview.** The native gallery is not visible as a second gallery, but stays mounted and available. *View Model Gallery* is a primary control: in the television's header, above the screen, about 297 × 48 px, Chillax 15 px / 600, strong contrast, rounded corners, visible count, never covering video or product controls. The gallery inside the television: correct Ecwid images, original proportions, visible arrows, swipe, counter, Back to presentation, keyboard and Escape, sizes on demand, neighbour preload without downloading full-resolution files needlessly, repeated switching between photos and video without a reload. A customer never has to enter Standard Product View to see photographs.
+5. **Standard Product View is a complete restoration (release blocker).** Not just closing an overlay: the whole original presentation returns. The native gallery is visible and fully interactive at its normal place (thumbnails, navigation, zoom/lightbox), no custom restriction remains, the television and its overlay neither obstruct nor duplicate it, selected options, price, availability and Add to Bag are preserved, no page reload unless unavoidable. The native gallery must not stay hidden.
+6. **Returning to Optimised Preview** restores the television, isolates the native gallery again, keeps Ecwid's data, restores the button, preserves the configuration, prevents duplicates and layout shifts. Repeatable.
+7. **Isolation and lifecycle.** Reversible, mode-scoped visibility; the native gallery stays mounted where feasible; no global Ecwid setting changed; no broad selectors; no destructive removal of commerce components; dynamic rendering, client-side navigation and re-initialisation handled; a re-rendered native gallery gets the current mode re-applied; if the television fails to start the original page stays accessible; never a blank image area or inaccessible purchasing.
+8. **Video.** Opening the gallery pauses background playback; closing it restores the intended presentation without duplicate playback, lost state or needless loading. Actual playback must be observed before it is claimed.
+9. **Devices.** Desktop and iPad (portrait and landscape): both modes, with the custom gallery. Phones: Standard Ecwid view only, original gallery, no Product TV button, until a future requirement says otherwise. No unused left column on iPad portrait. No wrapping, overlap, clipping, sideways overflow or excess blank space. Suitable for older iPads and iPhones.
+10. **Evidence.** Simulated tests, real-browser tests and real-device tests are always labelled as such. A simulated pass is never described as a live verification.
+11. **Deployment safety.** No deployment to the live storefront and no change to live galleries without explicit approval. No gallery image, price, option, stock, checkout or Add to Bag change. Development environment and the approved test product (876405767) first. A rollback path is kept; the original Ecwid experience is the fallback.
+
+The consolidated implementation report is `docs/IMPLEMENTATION-REPORT.md`; the permanent test plan is section 6 here and `docs/TEST-MATRIX.md`.
+
+---
+
 ## 1. Part A: the architecture as found
 
 ### 1.1 The Product TV before this work
@@ -76,7 +98,9 @@ Consequences: hiding must **not** depend on inline styles of nodes Ecwid replace
 
 ### 2.4 Layout when the gallery is hidden
 
-Hiding the gallery's children, or the container itself, gives the same result: the options column stays in its right-hand grid column and the left column is empty (the description, which the TV also hides, would move up into it). Collapsing the left column would mean restyling Ecwid's layout grid around the options, which the hands-off rule forbids. **Result: in the stacked placement (iPad portrait and some landscape sizes) there is an empty left column beside the options.** It is a visual cost of the requirement; options in section 5.
+Hiding the gallery's children, or the container itself, gives the same result: the options column stays in its right-hand grid column and the left column is empty (the description, which the TV also hides, would move up into it). Collapsing the left column would mean restyling Ecwid's layout grid around the options, which the hands-off rule forbids. **First result (2026-11-07): in the stacked placement (iPad portrait and some landscape sizes) there was an empty left column beside the options.**
+
+**Resolved (2026-11-10).** The real store is not a grid: it floats the gallery and the description left (443 px at 820 px wide) and the sidebar right (317 px) under Ecwid's `.ec-size` rules, and it already has its own single-column layout for small screens (its sidebar and description become 83% wide and centred). While, and only while, the television is **stacked and showing**, the product block carries `data-ddtv-stacked="1"` and the same one stylesheet gives the store's own sidebar and description `float: none; width: 100%; margin-left/right: 0; padding-left: 0; clear: both`. The store's selectors are too specific to beat without `!important`, so those five properties use it, behind that attribute and nowhere else. Nothing is moved, wrapped or hidden: the options, price and Add to Bag stay the store's own elements. The attribute and the rule go away in Standard Product View and when the placement returns to the column; the store's sidebar, description and block then measure exactly what they measured before the television existed (E2, 820 and 744 px). Configuration: `layout.stacked` in the product config. The store's own dropdowns keep their native width (about 296 px), so there is still blank space to their right; widening them would restyle the store's controls and was not done.
 
 ---
 
@@ -88,7 +112,7 @@ Hiding the gallery's children, or the container itself, gives the same result: t
 | Native gallery hidden only in Optimised Preview, not deleted | Yes | Scoped attribute plus a stylesheet that only matches that attribute (section 4.2). Survives Ecwid re-render. |
 | Restore without reload, no duplicates | Yes | Remove the attribute. No cloning of the native gallery, ever. |
 | View Model Gallery inside the TV | Yes | Overlay inside the monitor, built on demand. |
-| Image URLs retrieved, normalised, not invented | Yes, with one honest limit | Native DOM gives 800 px; sizes up to 1500 px/original need the manifest. |
+| Image URLs retrieved, normalised, not invented | Yes | The native DOM gives one size (about 800 px). The storefront's own product request gives all sizes up to 1500 px, alt text and order (section 4.3). A manifest is needed only to classify. |
 | Do not hardcode URLs in components | Yes | Components read the adapter; URLs live in a manifest (data), not in code. |
 | Deleting an image must not be assumed to keep its URL | Yes | Runtime cross-check against the native DOM plus `onerror` fallback; stale entries are dropped and reported. |
 | Media categories; customer gallery vs supporting resources | Yes | Manifest fields `category`, `customerGallery`, `usedIn`. Ecwid itself has no such classification; it exists only in the manifest. |
@@ -133,6 +157,18 @@ Merge rules:
 3. If no manifest: the snapshot images, all shown (800 px).
 4. Every URL in the result is a URL that Ecwid or the manifest supplied. Nothing is constructed.
 
+**The storefront source (automatic sizes, alt text, order).** Ecwid's own page loads the product with `POST <api host>/storefront/api/v1/<store id>/catalog/product`, and the response carries, per image, `image160pxUrl … image1500pxUrl`, `imageOriginalUrl`, `id`, `isMain`, `width`, `height`, `alt` and `altType`. Replaying that request with only `{"productIdentifier":{"type":"PUBLISHED","productId":<id>}}` returns the same records in the same order (E2: 14 of 14 identical 1500 px URLs). The engine does this, as an enhancement and never as a dependency:
+- The endpoint is **undocumented**. The address is taken from the page's own resource timings (host and region are never guessed); no such entry, no request.
+- One request, no credentials, made only when the visitor reaches for the gallery (hover, focus, touch, or opening it), so visitors who never do pay nothing. It is not repeated, also not after a failure. It was 29 KB on the wire for the public product, because the product record includes the description.
+- The records are used only if they **agree with the page**: every image the store's own gallery shows must be among them; otherwise they are ignored (state `mismatch`).
+- Records fill in what a manifest lacks (sizes, alt, dimensions, id) and never override it, never classify, and never decide which images are shown; with no manifest they supply the sizes of the page's own images in the page's own order.
+- If the visitor is already in the gallery when the records arrive, the strip is rebuilt and they stay on the same photo; on a 2x screen the photo is upgraded in place to its 1500 px file.
+- Any failure (HTTP error, no records, mismatch, no `fetch`) leaves the gallery exactly as before. `modelGallery.storefront: false` switches it off.
+
+*Is a manifest still necessary?* Not for URLs. It is the only place where the owner says which images are customer photographs and which are supporting resources, and in which category. Stale images are detected without it (a manifest entry that the store's gallery no longer lists is dropped and reported; an image the store lists that the manifest does not is hidden and reported). A manifest is regenerated with `tools/media-manifest.mjs --merge` when images are added or replaced.
+
+*The "Divine DunlopDreams Ecwid Bridge".* The brief prefers it as a source. **Nothing by that name exists in this repository, and no description of it was available to this work, so it was not used and no claim is made about it.** If it exposes the same records, it can be added as one more source behind the adapter (the merge rules above stay the same).
+
 ### 4.4 Gallery component
 
 The button **View Model Gallery** sits in the monitor's header row, on every screen. The overlay shows one large image (size chosen from the viewer's width and the screen density), previous/next, a counter, a thumbnail strip (smallest sufficient size, lazy), category chips when more than one category is present, swipe on touch, arrow keys, Escape, and **Back to presentation**, which returns to the screen the customer was on. Nothing is requested before it opens.
@@ -145,9 +181,10 @@ The native gallery is isolated only after the TV has built; if building or the f
 
 ## 5. Decisions and limits for the owner
 
-1. **Empty left column in the stacked placement** (section 2.4). Alternatives: accept it (implemented); keep the native gallery visible in the stacked placement only (contradicts requirement 3); restyle Ecwid's grid (violates the hands-off rule).
+1. **Empty left column in the stacked placement**: resolved on 2026-11-10 (section 2.4). Remaining owner choice: the store's own dropdowns keep their native width (about 296 px), leaving blank space to their right; widening them would restyle the store's controls.
 2. **Unlisted images**: with a manifest they stay out of the TV gallery until classified. The alternative (show everything) would let an upload appear without review.
-3. **Manifest production**: sizes above 800 px need a manifest generated from a product export (`tools/media-manifest.mjs`). It must be regenerated when images are added or replaced; until then new images are reported as unlisted and replaced images as stale.
+3. **Manifest production**: sizes no longer need a manifest (the storefront source supplies them, section 4.3). A manifest is only for classification, and is regenerated when images are added or replaced; until then new images are reported as unlisted and replaced images as stale.
+3a. **The storefront source is an undocumented Ecwid endpoint.** It is optional, verified against the page and fail-safe, but Ecwid may change it without notice. The consequence of a change is that the gallery silently uses the page's own 800 px images (or the manifest's sizes); it does not break. Switch off with `modelGallery.storefront: false`. The owner should decide whether this dependency is acceptable.
 4. **Option-driven images**: Ecwid swaps in images when options are chosen. The TV gallery does not follow them.
 5. The test product's own images and their classification are not known to this work; the repository carries a draft with no classification for it, and a real-data fixture from the public product for tests.
 
@@ -174,16 +211,19 @@ The native gallery is isolated only after the TV has built; if building or the f
 
 ## 7. Verified results
 
-Build under test: `dist/embed/botanic-tv.js`, sha256 `767a7f725e824ff4356e4cb665da5a4652f1ae0ff2f230ef867dec9421302364`. Runs of 2026-11-10, Chromium only.
+Build under test: `dist/embed/botanic-tv.js`, sha256 `72911e6e15bf3da29fd94c865c02bed990e2b035c93f95b08bfb99b7655e0c87`. Runs of 2026-11-10, Chromium only. (Sections 7.1 to 7.3 were written for the earlier build and still describe the behaviour they tested; the figures that changed are in 7.2 and 7.5.)
 
 | Suite | Level | Result |
 |---|---|---|
-| `tests/gallery.mjs` | E1, simulated store with the real gallery markup and the 14 real image records | **123 / 123** (incl. the primary-button and video ↔ photos checks of 7.2.1) |
-| `tests/embed.mjs` | E1 | **175 / 175** (three assertions rewritten: the stacked placement now isolates the native gallery as well; see below) |
+| `tests/gallery.mjs` | E1, simulated store with the real gallery markup and the 14 real image records; **synthetic MP4** played by the real browser media engine | **174 / 174** |
+| `tests/embed.mjs` | E1 | **175 / 175** (three assertions rewritten earlier: the stacked placement isolates the native gallery as well) |
 | `tests/smoke.mjs` | E1 | **104 / 104** |
 | `tests/live/gallery-e2.cjs` | **E2**, the real Ecwid DOM and runtime of the public product 831592302, local injection, read-only | **39 / 39** (log: `tests/live/gallery-e2.last-run.txt`) |
+| `tests/live/restore-e2.cjs` | **E2**, same conditions; the production media host is unreachable so a **synthetic MP4** answers it | **39 / 39** (log: `tests/live/restore-e2.last-run.txt`) |
 
-Mutation checks on the new tests: switching off `apply()` made 11 or more of the gallery checks fail, and switching off the restore made 5 fail; both were reverted and the build re-verified. The tests do detect a broken controller.
+Mutation checks: switching off the isolation, the restore, the video resume on closing the gallery, and the removal of the stacked attribute each made the matching checks fail (at least 5 each time); all were reverted and the build hash re-verified. The tests do detect a broken controller.
+
+**Bugs found by the new tests and fixed.** (1) A photo that finished loading after the gallery was closed ran its load handler on a null element (`Cannot read properties of null (reading 'classList')`); quick open/close cycles exposed it. The handlers now act only while their own image element is the one on screen. (2) The stand-in page's native gallery had no size and let the main photo overflow, so it could not tell a restored gallery from a broken one; it now has the sizes measured on the real page.
 
 ### 7.1 The ten acceptance criteria
 
@@ -202,10 +242,12 @@ Mutation checks on the new tests: switching off `apply()` made 11 or more of the
 
 ### 7.2 Performance (measured)
 
-- Build: `botanic-tv.js` 235.1 KiB raw, 59.1 KiB gzip. The gallery (JS and CSS) adds 34.1 KiB raw, 10.2 KiB gzip.
+- Build (current): `botanic-tv.js` 245.7 KiB raw, 62.4 KiB gzip. The gallery (JS and CSS) is 41.7 KiB raw, 12.5 KiB gzip; budget 48 KiB raw and 14 KiB gzip, checked by `tests/gallery.mjs`. (It grew from 34.1 KiB with the storefront source and the stacked layout.)
 - The TV adds **no image request** on load. Gallery images are requested only after *View Model Gallery* is pressed.
-- Opening, no manifest: 9 image requests, 351 KB (the store's page supplies one size per image, about 800 px, so the strip uses those).
+- The storefront request (section 4.3) is made once, when the visitor reaches for the gallery: 29 KB on the wire for the public product. Visitors who never reach for the gallery do not pay it.
+- Opening, no manifest, before the records arrive: 9 image requests, 351 KB (the page supplies one size per image, about 800 px). With the records, a 2x screen gets the 1500 px file for the photo it is looking at (E2: 1500×1124 px in a 560 px stage).
 - Opening, manifest: 12 requests, 29 KB (160 px thumbnails; the large photo is the smallest supplied size that fits the stage, 800 px at a 531 px stage). The full-size originals are never requested.
+- Listeners and nodes over 12 Optimised ↔ Standard cycles with gallery visits: E1 149 → 149 listeners, 6730 → 6719 nodes; E2 (the store's own activity included) 648 → 648 listeners, 8710 → 8700 nodes, documents unchanged.
 - The strip is lazy; the neighbouring photo is preloaded unless the visitor has data saving on.
 
 ### 7.2.1 The View Model Gallery as a primary feature (added 2026-11-10)
@@ -230,4 +272,25 @@ Mutation checks on the new tests: switching off `apply()` made 11 or more of the
 5. **The REST API's field names for media** are not verified (the documentation host was blocked). The manifest tool accepts the storefront's `mediaItems`, which were verified, and a REST-shaped export on a best-effort basis.
 6. **The classification used in the tests** (which of the 14 public images is "seven-zone", "covers" and so on) is arbitrary and exists only to exercise the categories. The test product has no manifest yet; until it has one, its gallery shows every image its own gallery shows.
 7. **Option-driven images**: the store swaps in other images when options are chosen (observed on the real page). The TV gallery stays on the product's own images.
-8. **An empty left column in the stacked placement** (section 2.4) is a visible consequence of hiding the gallery and needs an owner decision.
+8. ~~An empty left column in the stacked placement~~: resolved (section 2.4). What remains: the store's own dropdowns keep their native width.
+9. **Video.** Playback was observed in a real browser media engine, but with a **synthetic H.264 test pattern** answering the production media host, which is not reachable from this environment. That proves the play/pause/resume behaviour, not the production files (their encoding, size, start-up time or poster behaviour), and not iPadOS/iOS playback restrictions (muted autoplay, inline playback, the full video with sound).
+10. **Real devices and Safari**: nothing in this document was observed in WebKit. Memory behaviour on an older iPad is unmeasured; only DOM node and listener counts were checked.
+11. **The storefront source is an undocumented endpoint** (section 5, item 3a).
+
+### 7.5 The consolidated brief of 2026-11-10: evidence per requirement
+
+Level: E1 = simulated store; E2 = real Ecwid DOM of the public product (local, read-only); **none of it is E3 or E4**.
+
+| Requirement | Evidence | Level |
+|---|---|---|
+| Images uploaded to Ecwid are retrieved; order matches Ecwid | Adapter on the 14 real records; storefront records equal the page's own response (14/14 URLs, same order); the page's own gallery order used for sorting. Uploading itself is not exercised. | E1, E2 |
+| Sizes selected correctly (1500 px where supplied) | Smallest sufficient size at the device ratio; a 2x iPad gets the 1500 px file (E2 1500×1124); originals never requested. | E1, E2 |
+| New, removed, reordered images handled safely; missing images do not break it | Manifest merge tests (reorder, deleted → stale, new → unlisted); records that disagree with the page are ignored; a failing file falls back to another size and then is dropped; a failing endpoint changes nothing. | E1 |
+| Optimised Preview: native gallery hidden, television correct, button prominent and working, arrows/swipe/counter/close, no distortion | Computed display of every native child; button size/typeface/contrast/position checks; keyboard, swipe (touch events), `object-fit: contain`. | E1, E2 |
+| Standard Product View: original gallery back at the top, controls work, thumbnails and images open and navigate, not obstructed | Real page: children exactly as before the television, 14 thumbnails of 75 px; click on a native thumbnail changes the main picture; the store's own PhotoSwipe lightbox opens on that photo (3 / 14), its own arrow moves it (4 / 14), Escape closes it; the television leaves no overlay. | E2 |
+| Options, price, availability and Add to Bag intact | Four real options chosen in Optimised Preview stay chosen through 12 cycles and the price (£854.10) never changes; a cover changed in Standard Product View is kept on return; the real Add to Bag is present, enabled and uncovered in both views (**never clicked**). Simulated Add to Bag works in both views (E1). | E1, E2 |
+| At least 10 consecutive cycles; both galleries checked after each transition; no duplicates, lost selections, reloads, accumulated listeners or media errors | 12 cycles (3 or 4 with a gallery visit) in E1 and E2: one television, one style element, no overlay left, selections and price identical, no page reload (E1 checks a page nonce; in E2 a reload would remove the injected television and fail every later check), listeners flat (149→149, 648→648), no media error. | E1, E2 |
+| iPad portrait: no unused left column; no wrapping, overlap, clipping or overflow | Stacked layout at 820 and 744 px: sidebar and description take the block's full width, the options start 24 px under the television, no sideways scroll, and Standard Product View measures exactly what the store had before; rotation both ways. | E2 |
+| Video: pause on opening, resume on closing, no duplicate playback | Real media engine, synthetic MP4: time advances; frozen with the gallery open; the same loops play again, one playback each; 10 (E1) and 8 (E2) round trips with no media error; the full video player is stopped and closed when the gallery opens and is not reopened. | E1, E2 (synthetic media) |
+| Phones: standard only, no button | iPhone 390×844: no television, no button, no attribute, no rule, the store's own gallery unchanged, and **no storefront request** from the television. | E1, E2 |
+| Desktop browsers; **iPad Safari portrait and landscape; iPhone Safari; actual production video** | Desktop and iPad/iPhone **emulation in Chromium** only. **Not done: real Safari, real devices, production media.** | not verified |

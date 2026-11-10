@@ -590,19 +590,47 @@
     return G.container || '.product-details__gallery';
   };
 
+  /* Stacked placement (the television full width above the product block): with
+     the store's gallery isolated and most of the description hidden, the store's
+     two-column float layout (gallery and description left, options right) leaves
+     the left column empty. While, and only while, this product's television is
+     stacked and showing, the product block carries a second attribute and the
+     same stylesheet gives the store's own sidebar and description the single
+     column the store itself uses on small screens, so the options sit directly
+     under the television. Nothing is moved, wrapped or hidden. The store's own
+     rules are more specific than any selector we can reasonably write, hence the
+     one !important, on five properties, behind the attribute. Config:
+       layout.stacked = { block: '.product-details', fill: ['.product-details__sidebar', ...] } */
+  var STACK_ATTR = 'data-ddtv-stacked';
+
+  NativeGallery.prototype.stackedCfg = function () {
+    var S = (this.tv.product.layout || {}).stacked;
+    return S && S.block && S.fill && S.fill.length ? S : null;
+  };
+
   NativeGallery.prototype.style = function (on) {
     var s = doc.getElementById(GALLERY_STYLE);
     if (!on) { if (s && s.parentNode) s.parentNode.removeChild(s); return; }
     if (s) return;
     s = el('style', { id: GALLERY_STYLE });
-    s.textContent = this.selector() + '[' + GALLERY_ATTR + '="isolated"] > :not(.ddtv-host) { display: none; }';
+    var css = this.selector() + '[' + GALLERY_ATTR + '="isolated"] > :not(.ddtv-host) { display: none; }', S = this.stackedCfg();
+    if (S) {
+      css += '\n' + S.fill.map(function (f) { return S.block + '[' + STACK_ATTR + '="1"] > ' + f; }).join(', ') +
+        ' { float: none !important; width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; clear: both !important; }';
+    }
+    s.textContent = css;
     (doc.head || doc.documentElement).appendChild(s);
   };
 
-  /* Puts the attribute on the gallery that is in the page now. */
+  /* Puts the attribute(s) on the gallery and product block that are in the page now. */
   NativeGallery.prototype.apply = function () {
-    var c = $(this.selector());
+    var c = $(this.selector()), S = this.stackedCfg();
     if (c && c.getAttribute(GALLERY_ATTR) !== 'isolated') c.setAttribute(GALLERY_ATTR, 'isolated');
+    if (S) {
+      var b = $(S.block), want = this.on && this.tv.placement === 'stacked';
+      each($$('[' + STACK_ATTR + ']'), function (n) { if (n !== b || !want) n.removeAttribute(STACK_ATTR); });
+      if (b && want && b.getAttribute(STACK_ATTR) !== '1') b.setAttribute(STACK_ATTR, '1');
+    }
     return c;
   };
 
@@ -617,6 +645,7 @@
     this.on = false;
     this.unwatch();
     each($$('[' + GALLERY_ATTR + ']'), function (n) { n.removeAttribute(GALLERY_ATTR); });
+    each($$('[' + STACK_ATTR + ']'), function (n) { n.removeAttribute(STACK_ATTR); });
     this.style(false);
   };
 
@@ -745,6 +774,7 @@
     this.hideNative(false);
     this.place(mode);
     this.hideNative(true);
+    if (this.gallery.on) this.gallery.apply();     /* the stacked layout follows the placement */
     /* Moving a node pauses its video; resume the active screen's loop. */
     var list = this.panels[this.product.chapters[this.chapterIndex].id], pn = list && list[this.panelIndex[this.product.chapters[this.chapterIndex].id] || 0];
     if (pn) this.media.focus(this.stage, pn.el);

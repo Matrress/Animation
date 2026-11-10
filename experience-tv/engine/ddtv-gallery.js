@@ -152,6 +152,8 @@
     this.rep = null;
     this.listeners = [];
     this.remoteTried = false;
+    this.store = null;            /* the storefront's own image records for this product, once fetched and normalised */
+    this.storeState = 'idle';     /* 'idle' | 'loading' | 'ok' | 'failed' | 'unavailable' */
   }
 
   /* Read the store's gallery now. */
@@ -177,6 +179,82 @@
     if (this.signature() !== before) this.notify();
   };
 
+  /* ---- The storefront's own image records (automatic sizes, alt text, order) ----
+     The store's page loads its product from the storefront API
+     (POST <api host>/storefront/api/v1/<store id>/catalog/product). The same
+     request, with only the product id, returns the same image records, including
+     the 1500 px files the page itself never uses. The endpoint is not
+     documented, so it is used as an enhancement, never as a dependency:
+       - the address is taken from the page's own resource timings (the host,
+         and so the region, is never guessed); no such request, no enhancement;
+       - one request, no credentials, only when the visitor reaches for the
+         gallery (hover, focus, touch, or opening it);
+       - the records are used only if they match the store's own gallery
+         (every image the page shows must be among them), else they are ignored;
+       - any failure leaves the gallery exactly as it was (native or manifest). */
+  function pageProductId() {
+    var n = doc.querySelector('[class*="ecwid-productBrowser-ProductPage-"]');
+    var m = n && /ecwid-productBrowser-ProductPage-(\d+)/.exec(String(n.className));
+    if (m) return Number(m[1]);
+    var h = /\/p\/(\d+)/.exec((global.location && global.location.hash) || '');
+    return h ? Number(h[1]) : null;
+  }
+
+  function storefrontEndpoint() {
+    var perf = global.performance, entries, i;
+    if (!perf || !perf.getEntriesByType) return '';
+    entries = perf.getEntriesByType('resource') || [];
+    for (i = entries.length - 1; i >= 0; i--) {
+      var m = /^(https:\/\/[a-z0-9.-]+\.ecwid\.com\/storefront\/api\/v1\/\d+\/catalog\/product)(?:\?|$)/i.exec(entries[i].name || '');
+      if (m) return m[1];
+    }
+    return '';
+  }
+
+  Adapter.prototype.loadStorefront = function (done) {
+    var self = this, url, pid;
+    done = done || function () {};
+    if (this.storeState !== 'idle') { done(this.storeState === 'ok'); return; }
+    if (this.G.storefront === false || !global.fetch) { this.storeState = 'unavailable'; done(false); return; }
+    url = storefrontEndpoint();
+    pid = pageProductId();
+    if (!url || !pid || !has(this.tv.product.productIds || [pid], pid)) { done(false); return; }   /* try again later: the page may still be loading */
+    this.storeState = 'loading';
+    global.fetch(url, {
+      method: 'POST', credentials: 'omit', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ productIdentifier: { type: 'PUBLISHED', productId: pid } })
+    }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function (j) {
+      var o = j && j.defaultOptionsOverrides && j.defaultOptionsOverrides.variationOverrides, items = o && o.mediaItems;
+      if (!items || !items.length) throw new Error('no image records in the response');
+      var raw = [];
+      each(items, function (m) { if (!m.type || m.type === 'PICTURE') raw.push(m); });
+      var list = normaliseList(raw);
+      each(list, function (im) { im.source = 'storefront'; });
+      self.store = list;
+      self.storeState = 'ok';
+      self.list = null;
+      self.notify();
+      done(true);
+    }).catch(function (e) {
+      self.storeState = 'failed';
+      warn('The storefront image records could not be used; the gallery keeps what the page shows.', e);
+      done(false);
+    });
+  };
+
+  /* The storefront records, but only when they agree with the page: the store's
+     own gallery was read completely and every image in it is among the records. */
+  Adapter.prototype.verifiedStore = function (snap, readable) {
+    if (!this.store || !readable) return null;
+    var byId = {};
+    each(this.store, function (im) { each(im.ids, function (id) { byId[id] = im; }); });
+    for (var i = 0; i < snap.length; i++) if (!byId[snap[i].id]) { this.storeState = 'mismatch'; return null; }
+    return { list: this.store, byId: byId };
+  };
+
   /* The customer gallery: which images, in which order. */
   Adapter.prototype.images = function () { return this.list || this.build(); };
 
@@ -187,12 +265,16 @@
     var readable = snap.length > 0 && snap.complete !== false;    /* the store's full listing was read */
     each(snap, function (s) { known[s.id] = true; });
     var man = this.manifest;
+    var st = this.verifiedStore(snap, readable);       /* the storefront's records, if they agree with the page */
+    rep.sizes = st ? 'storefront' : (man ? 'manifest' : 'native');
+    rep.storefront = this.storeState;
 
     if (man) {
       /* The manifest says which images are meant for the customer gallery and
          what they are. The store's gallery says which of them still exist. */
       rep.mode = 'manifest';
       var items = normaliseList(man.images);
+      if (st) each(items, function (im) { enrich(im, st); });   /* fills in sizes and alt text the manifest lacks; never overrides it */
       each(items, function (im) {
         /* Only images meant for the customer gallery are checked against the
            store's gallery. A supporting resource (used elsewhere in the
@@ -229,13 +311,24 @@
         each(snap, function (s, n) {
           var listed = false;
           each(items, function (im) { if (has(im.ids, s.id)) listed = true; });
-          if (!listed) out.push(nativeItem(s, n));
+          if (!listed) out.push(st && st.byId[s.id] ? fromStore(st.byId[s.id], n) : nativeItem(s, n));
         });
       }
     } else {
       /* No manifest (a product not yet migrated): every image of the store's own gallery. */
       rep.mode = 'native';
-      each(snap, function (s, n) { out.push(nativeItem(s, n)); });
+      if (st) {
+        /* The storefront's records, in the order the store's own gallery shows them. */
+        var pos2 = {};
+        each(snap, function (s, n) { pos2[s.id] = n; });
+        each(st.list, function (r, n) {
+          var c = fromStore(r, n), p = 1e6;
+          each(r.ids, function (id) { if (pos2[id] != null && pos2[id] < p) p = pos2[id]; });
+          c.sortKey = p;
+          out.push(c);
+        });
+        out.sort(function (a, b) { return (a.sortKey - b.sortKey) || (a.order - b.order); });
+      } else each(snap, function (s, n) { out.push(nativeItem(s, n)); });
     }
 
     each(out, function (im, n) { im.index = n; });
@@ -244,6 +337,33 @@
     this.rep = rep;
     return out;
   };
+
+  /* A storefront record as a customer-gallery image (a copy: the record stays as fetched). */
+  function fromStore(r, n) {
+    var urls = {}, k;
+    for (k in r.urls) if (r.urls.hasOwnProperty(k)) urls[k] = r.urls[k];
+    return {
+      id: r.id, key: r.key, order: n, isMain: r.isMain, width: r.width, height: r.height, alt: r.alt, altType: r.altType, caption: '',
+      category: 'gallery', customerGallery: true, usedIn: [], urls: urls, ids: r.ids.slice(), source: 'storefront', verified: true
+    };
+  }
+
+  /* Fills what a manifest entry lacks (sized files, alt text, dimensions, id)
+     from the matching storefront record. Anything the manifest states stays. */
+  function enrich(im, st) {
+    var r = null;
+    each(im.ids, function (id) { if (!r && st.byId[id]) r = st.byId[id]; });
+    if (!r) return;
+    each(WIDTHS, function (w) {
+      if (!im.urls[w] && r.urls[w]) { im.urls[w] = r.urls[w]; im.ids.push(assetId(r.urls[w])); }
+    });
+    if (!im.urls.original && r.urls.original) { im.urls.original = r.urls.original; im.ids.push(assetId(r.urls.original)); }
+    if (!im.width) im.width = r.width;
+    if (!im.height) im.height = r.height;
+    if (!im.alt) { im.alt = r.alt; im.altType = r.altType; }
+    if (!im.id) im.id = r.id;
+    if (!im.isMain) im.isMain = r.isMain;
+  }
 
   function nativeItem(s, n) {
     return {
@@ -320,7 +440,13 @@
     ]);
     var head = $('.ddtv__head', tv.root);
     if (head) { head.classList.add('ddtv__head--gal'); head.appendChild(this.btn); }
-    this.ad.onChange(function () { self.update(); });
+    /* The storefront's image records (1500 px files, alt text) are fetched once, when the
+       visitor reaches for the gallery, so nothing is requested for visitors who never do. */
+    function warm() { try { self.ad.loadStorefront(); } catch (e) { /* the gallery works without it */ } }
+    this.btn.addEventListener('pointerenter', warm);
+    this.btn.addEventListener('focus', warm);
+    this.btn.addEventListener('touchstart', warm, { passive: true });
+    this.ad.onChange(function () { self.update(); if (self.box) self.refreshOpen(); });
     this.ad.snap();
     this.update();
     /* The store may not have rendered its gallery yet: read again shortly, and
@@ -381,6 +507,7 @@
     if (this.box || tv.failed || tv.view !== 'interactive') return;
     this.ad.refresh();                     /* the store may have changed since the television started */
     if (!this.shown().length) { this.update(); return; }
+    try { this.ad.loadStorefront(); } catch (e0) { /* the gallery works without it */ }
     tv.userAction();                       /* pauses the presentation */
     tv.closeOverlay();
 
@@ -458,6 +585,17 @@
 
   Gallery.prototype.step = function (d) { this.show(this.cur + d); };
 
+  /* The image list changed while the gallery is open (better data arrived, or the
+     store changed): rebuild the strip and stay on the photo the visitor is looking at. */
+  Gallery.prototype.refreshOpen = function () {
+    var list = this.shown(), at = 0, ids = this.curIds || [];
+    if (!list.length) { this.tv.closeOverlay(); return; }
+    each(list, function (im, i) { each(im.ids, function (id) { if (has(ids, id)) at = i; }); });
+    this.buildCats();
+    this.buildStrip();
+    this.show(at);
+  };
+
   /* Show one photo. Only this one large image is requested (and its next
      neighbour, once it has loaded). */
   Gallery.prototype.show = function (n) {
@@ -465,19 +603,24 @@
     if (!list.length || !this.box) return;
     n = (n + list.length) % list.length;
     this.cur = n;
+    this.curIds = list[n].ids;
     var im = list[n], width = this.stage.clientWidth || 600, urls = candidates(im, width, global.devicePixelRatio || 1), tryAt = 0;
     this.count.textContent = (n + 1) + ' / ' + list.length;
     this.img.alt = im.alt || ('Model photo ' + (n + 1) + ' of ' + list.length);
     this.cap.textContent = im.caption || '';
     this.cap.hidden = !im.caption;
-    this.img.classList.add('is-loading');
-    this.img.onload = function () { self.img.classList.remove('is-loading'); self.preload(n); };
-    this.img.onerror = function () {
+    var img = this.img;
+    img.classList.add('is-loading');
+    /* A photo can finish loading after the gallery was closed (or after another photo was chosen):
+       the handlers act only while this very image element is the one on screen. */
+    img.onload = function () { if (self.img !== img) return; img.classList.remove('is-loading'); self.preload(n); };
+    img.onerror = function () {
+      if (self.img !== img) return;
       tryAt++;
-      if (urls[tryAt]) { self.img.src = urls[tryAt]; return; }
+      if (urls[tryAt]) { img.src = urls[tryAt]; return; }
       self.drop(im);                        /* none of its files could be loaded: the store no longer has it */
     };
-    this.img.src = urls[0] || '';
+    img.src = urls[0] || '';
     each($$('.ddtv-gal__thumb', this.strip), function (b) {
       var on = Number(b.getAttribute('data-i')) === n;
       b.classList.toggle('is-on', on);

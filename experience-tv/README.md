@@ -25,9 +25,10 @@ content, and puts everything back for Classic View.
 | `engine/ddtv-gallery.js` / `.css` | The **gallery integration**: a reusable image adapter (normalises Ecwid's own image data and an optional per-product manifest), the *View Model Gallery* button and the gallery inside the monitor. Loaded as an engine extension (`DDTV.use`). |
 | `products/botanic.media.js` | Media manifest for the product (images stay in Ecwid; this is data about them). `null` for now: the gallery then shows the product's own gallery images. |
 | `tools/media-manifest.mjs` | Drafts or merges a manifest from a product export. Copies the addresses Ecwid returned; never invents one. |
-| `tests/gallery.mjs` | 123 checks of the gallery integration on a simulated store with the real gallery markup and real image records. |
+| `tests/gallery.mjs` | 174 checks of the gallery integration on a simulated store with the real gallery markup and real image records, a fake storefront endpoint and a synthetic MP4 (needs `ffmpeg` for the media checks; without it they are reported as SKIP, not as passes). |
+| `docs/IMPLEMENTATION-REPORT.md` | The consolidated report: what existed, what changed, how images are sourced, how the native gallery is isolated and restored, how configuration is preserved, which tests were simulated and which real, and the release blockers. |
 | `docs/GALLERY-ARCHITECTURE.md` | The existing architecture, the real Ecwid gallery, feasibility, the mechanism, owner decisions, the test plan and the verified results. |
-| `tests/live/` | Read-only checks against the **public** live store's real DOM and runtime (local browser, nothing saved). `gallery-e2.cjs` covers the gallery integration (39 checks). See its README. |
+| `tests/live/` | Read-only checks against the **public** live store's real DOM and runtime (local browser, nothing saved). `gallery-e2.cjs` and `restore-e2.cjs` cover the gallery integration and the restoration of Standard Product View (39 checks each). See its README. |
 | `docs/AUDIT-EMBED.md`, `docs/TEST-MATRIX.md`, `docs/DEPLOYMENT.md` | Audit of the embed files, what was verified where (and what was not), and the step-by-step deployment to the test product. |
 | `docs/MASTER-PLAN.md` | Inventory, chapter matrix, media registry, architecture, layout plan, risks. **Read this first.** |
 

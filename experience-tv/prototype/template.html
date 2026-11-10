@@ -42,6 +42,12 @@ html, body { margin: 0; background: var(--page); color: var(--ink); font-family:
   .product-details__layout { grid-template-columns: 1fr; }
   .ec-store { padding: 16px 0 40px; }
 }
+/* The store's own gallery sizing, as measured on the real page (E2): thumbnails 100 x 75 px, the main
+   picture limited to its column. The stand-in has no Ecwid stylesheet, so without this the native gallery
+   would have no size and the restoration tests could not tell a restored gallery from a broken one. */
+.details-gallery__thumb { position: relative; width: 100px; height: 75px; margin: 0 0 6px; cursor: pointer; }
+.details-gallery__thumb-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.details-gallery__picture { display: block; max-width: 100%; height: auto; }
 </style>
 <style id="ddtv-styles">
 /*ENGINE_CSS*/
