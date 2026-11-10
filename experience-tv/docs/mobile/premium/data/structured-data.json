@@ -1,0 +1,36 @@
+{
+ "rawServerHtml": [
+  {
+   "type": "Product",
+   "price": "0.0",
+   "currency": "GBP",
+   "availability": "http://schema.org/InStock"
+  }
+ ],
+ "renderedBeforeChoice": [
+  {
+   "type": "Product",
+   "name": "Botanic Original 100% Organic Latex Mattress | Dunlop",
+   "offerType": "Offer",
+   "price": "0.0",
+   "currency": "GBP",
+   "availability": "http://schema.org/InStock",
+   "bytes": 16477
+  }
+ ],
+ "renderedAfterSizeChoice": [
+  {
+   "type": "Product",
+   "name": "Botanic Original 100% Organic Latex Mattress | Dunlop",
+   "offerType": "Offer",
+   "price": "0.0",
+   "currency": "GBP",
+   "availability": "http://schema.org/InStock",
+   "bytes": 16477
+  }
+ ],
+ "visiblePriceAfterChoice": "£1 199.70",
+ "metaPrice": [
+  "null=GBP"
+ ]
+}

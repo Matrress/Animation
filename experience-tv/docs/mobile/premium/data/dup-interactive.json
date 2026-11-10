@@ -1,0 +1,76 @@
+{
+ "initial": [
+  {
+   "copy": 0,
+   "inPopup": false,
+   "selects": 1,
+   "size": "Please choose",
+   "sizeLabel": "Please choose",
+   "price": "£0",
+   "visible": true
+  },
+  {
+   "copy": 1,
+   "inPopup": true,
+   "selects": 1,
+   "size": "Please choose",
+   "sizeLabel": "Please choose",
+   "price": "£0",
+   "visible": true
+  }
+ ],
+ "steps": [
+  {
+   "changedCopy": 0,
+   "result": {
+    "ok": true
+   },
+   "after": [
+    {
+     "copy": 0,
+     "inPopup": false,
+     "selects": 1,
+     "size": "UK King 150x200 cm. / 59.1” x 78.7”",
+     "sizeLabel": "UK King 150x200 cm. / 59.1” x 78.7” (+£1 333)",
+     "price": "£1 199.70",
+     "visible": true
+    },
+    {
+     "copy": 1,
+     "inPopup": true,
+     "selects": 1,
+     "size": "Please choose",
+     "sizeLabel": "Please choose",
+     "price": "£0",
+     "visible": true
+    }
+   ]
+  },
+  {
+   "changedCopy": 1,
+   "result": {
+    "ok": true
+   },
+   "after": [
+    {
+     "copy": 0,
+     "inPopup": false,
+     "selects": 1,
+     "size": "Please choose",
+     "sizeLabel": "Please choose",
+     "price": "£0",
+     "visible": true
+    },
+    {
+     "copy": 1,
+     "inPopup": true,
+     "selects": 1,
+     "size": "UK King 150x200 cm. / 59.1” x 78.7”",
+     "sizeLabel": "UK King 150x200 cm. / 59.1” x 78.7” (+£1 333)",
+     "price": "£1 199.70",
+     "visible": true
+    }
+   ]
+  }
+ ]
+}
