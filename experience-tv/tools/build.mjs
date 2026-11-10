@@ -17,10 +17,12 @@ const out = read('prototype/template.html')
   .replace('<!--MOCK_GALLERY-->', () => mockGalleryHtml())
   .replace('/*MOCK_GALLERY_SCRIPT*/', () => MOCK_GALLERY_SCRIPT)
   .replace('<!--DESCRIPTION-->', () => read('source/botanic-original-description.html'))
-  .replace('/*PRODUCT_CONFIG*/', () => read('products/botanic.config.js') + '\n' + read('products/botanic.zones.js') + '\n' + read('products/botanic.media.js'))
+  .replace('/*PRODUCT_CONFIG*/', () => read('products/botanic.config.js') + '\n' + read('products/botanic.zones.js') + '\n' + read('products/botanic.media.js') + '\n' + read('products/botanic.assets.js'))
   .replace('/*ENGINE_JS*/', () => read('engine/ddtv-engine.js'))
   .replace('/*SCENES_JS*/', () => read('engine/ddtv-scenes.js'))
-  .replace('/*GALLERY_JS*/', () => read('engine/ddtv-gallery.js'));
+  .replace('/*GALLERY_JS*/', () => read('engine/ddtv-gallery.js'))
+  .replace('/*ASSETS_JS*/', () => read('engine/ddtv-assets.js'))
+  .replace('/*MODEL_JS*/', () => read('engine/ddtv-model.js'));
 
 mkdirSync(join(root, 'dist'), { recursive: true });
 const file = join(root, 'dist', 'botanic-experience-tv-demo.html');

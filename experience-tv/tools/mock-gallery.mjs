@@ -11,9 +11,9 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
-export function mockGalleryHtml() {
-  const fx = JSON.parse(readFileSync(join(root, 'tests', 'fixtures', 'live-media-831592302.json'), 'utf8'));
-  const items = fx.mediaItems;
+// `items`: optional list of Ecwid-shaped image records (default: the public product's real records).
+export function mockGalleryHtml(records) {
+  const items = records || JSON.parse(readFileSync(join(root, 'tests', 'fixtures', 'live-media-831592302.json'), 'utf8')).mediaItems;
   const main = items[0];
   const thumbs = items.map((m, i) => {
     const u = m.image800pxUrl;

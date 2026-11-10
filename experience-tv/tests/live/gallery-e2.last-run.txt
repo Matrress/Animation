@@ -18,7 +18,7 @@ PASS coming back: one television again (new gallery element, new adapter)
 PASS coming back: the new real gallery is isolated, 14 thumbnails, one television
 PASS the model gallery opened on the real page showing real photo 1 of 14 (800px wide file)
 PASS the photo is the store's own file for that image (the 800 px address the store rendered)
-INFO opening the gallery (no manifest): 9 new image request(s), 351 KB
+INFO opening the gallery (no manifest): 23 new image request(s), 387 KB
 PASS arrow keys browse the real photos
 PASS with the gallery open the real options still work and the real price is mirrored (£854.10)
 PASS the real Add to Bag button is present, enabled and not covered (not clicked)
@@ -27,7 +27,7 @@ PASS no write request to the store was made by the page while this ran
 PASS no page error beyond the two the store itself logs (seen with no injection at all) [Uncaught (in promise) #<Object> ; Timeout exceeded (250 ms) ; Timeout exceeded (250 ms)]
 PASS the injected copy carries the manifest (the shipped build still has none)
 PASS manifest mode: the television mounted
-PASS manifest mode on the real data: 12 customer images, all verified against the real gallery, 2 resources kept out, nothing stale or unlisted ({"mode":"manifest","native":14,"shown":12,"unlisted":[],"stale":[],"unverified":0,"resources":2})
+PASS manifest mode on the real data: 12 customer images, all verified against the real gallery, 2 resources kept out, nothing stale or unlisted ({"mode":"manifest","native":14,"shown":12,"unlisted":[],"stale":[],"unverified":0,"resources":2,"sizes":"manifest","storefront":"idle"})
 PASS the first image is the store's first image (store order)
 INFO button "View Model Gallery12 photos", categories main, gallery, seven-zone, covers, lifestyle, details, technical
 INFO manifest mode, opening the gallery: 12 new image request(s), 29 KB; stage 531px; large photo 5499471050.webp
@@ -46,4 +46,4 @@ PASS iPad landscape 1180×820: Standard Product View gives the real gallery back
 PASS iPhone (390×844): no television, no gallery button, no rule, the real store gallery untouched (children exactly as before: {"details-gallery__wrap":"block","details-gallery__scroll":"block"})
 
 All checks passed (real Ecwid DOM of the public product; the test product and real devices are not covered)
-E2 exit 0
+GAL exit 0

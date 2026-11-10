@@ -1,0 +1,35 @@
+[
+  {
+    "id": "botanic",
+    "name": "Botanic",
+    "status": "test",
+    "config": "products/botanic.config.js",
+    "assets": "products/botanic.assets.js",
+    "source": "source/botanic-original-description.html",
+    "ecwid": {
+      "test": [
+        876405767
+      ],
+      "live": [
+        831592302
+      ]
+    },
+    "deployment": "not-authorised",
+    "production": true
+  },
+  {
+    "id": "placeholder",
+    "name": "Placeholder",
+    "status": "placeholder",
+    "config": "products/examples/placeholder-model.config.js",
+    "assets": "products/examples/placeholder-model.assets.js",
+    "source": "source/examples/placeholder-model-description.html",
+    "profile": "products/profiles/divine-store.profile.js",
+    "ecwid": {
+      "test": [],
+      "live": []
+    },
+    "deployment": "not-authorised",
+    "production": false
+  }
+]

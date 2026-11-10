@@ -26,6 +26,8 @@ This section records the owner's consolidated brief of 2026-11-10. It is part of
 10. **Evidence.** Simulated tests, real-browser tests and real-device tests are always labelled as such. A simulated pass is never described as a live verification.
 11. **Deployment safety.** No deployment to the live storefront and no change to live galleries without explicit approval. No gallery image, price, option, stock, checkout or Add to Bag change. Development environment and the approved test product (876405767) first. A rollback path is kept; the original Ecwid experience is the fallback.
 
+For the reusable, multi-model architecture that this gallery is one part of (shared engine, model configuration, visual asset registry, onboarding, reuse proof), see `docs/ARCHITECTURE-MULTI-MODEL.md`.
+
 The consolidated implementation report is `docs/IMPLEMENTATION-REPORT.md`; the permanent test plan is section 6 here and `docs/TEST-MATRIX.md`.
 
 ---

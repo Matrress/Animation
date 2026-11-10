@@ -88,6 +88,7 @@
 
 /* ───────────── Discover ───────────── */
 .ddtv .sc-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 26px; align-items: center; min-height: 100%; padding: 22px 26px; }
+.ddtv .sc-hero--solo { grid-template-columns: minmax(0, 1fr); }
 .ddtv .sc-hero__brand { margin: 6px 0 0; font-size: clamp(40px, 13cqw, 60px); line-height: 1; font-weight: 700; letter-spacing: -.035em; color: #fff; }
 .ddtv .sc-hero__line { margin: 4px 0 14px; font-size: clamp(20px, 6cqw, 28px); line-height: 1.15; font-weight: 300; letter-spacing: -.01em; color: #fff; }
 .ddtv .sc-hero__intro { max-width: 46ch; margin-bottom: 16px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,.88); }
@@ -334,6 +335,8 @@
 
 /* Height slabs */
 .ddtv .sc-slabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+/* The generic chooser (any option kind without its own drawing): as many cards as choices. */
+.ddtv .sc-slabs--list { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
 .ddtv .sc-slabcard {
   -webkit-appearance: none;
   appearance: none;

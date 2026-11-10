@@ -27,6 +27,39 @@
   /* Reading the source                                                  */
   /* ================================================================== */
 
+  /* ---- The content dialect ------------------------------------------------
+     The scenes read a description written in the house markup: headings,
+     stat rows, fact tables, video cards, cover menus. Those class names are
+     collected HERE, once, instead of being scattered through the readers, so
+     that a model whose description uses other markup can say so in its config
+     (`dialect: { statsRow: 'x-stats', … }`) instead of editing the shared code.
+     Keys ending in `Row`, `Table`, `Wide`, `quote` and `chart` are class tokens
+     (matched inside a class attribute); every other value is a CSS selector. A
+     model overrides only what differs. Unknown keys are ignored (and reported
+     by tools/validate-model.mjs). The values below are the markup of the
+     Botanic description, the only one written so far. */
+  var DIALECT_DEFAULT = {
+    summaryNoise: '.sum-idx, .sum-arr, .b-cover-menu__tag',
+    quote: 'b-fconf__analogy',
+    statsRow: 'b-drow', statsItem: '.b-di', statsValue: '.b-dv', statsLabel: '.b-dl',
+    factsTable: 'b-itab', factsRow: '.b-irow', factsKey: '.b-ilab', factsValue: '.b-ival',
+    chart: 'b-vchart', chartTitle: '.b-over', chartRow: '.b-vrow', chartName: '.b-vn', chartPct: '.b-vpct',
+    headTitle: '.b-sh__t', headNumber: '.b-sh__n', headSub: '.b-sh__s',
+    mediaMode: '.b-mtv__mode', mediaTitle: '.b-mtv__title', mediaDesc: '.b-mtv__desc',
+    factLabel: '.b-ocard__lbl', factValue: '.b-ocard__val', factPills: '.b-ocard__pills span', factNote: '.b-ocard__note', factWide: '--full',
+    coverTag: '.b-cover-menu__tag', coverBody: '.b-cbody-cover',
+    decisionMark: '.b-fdecision__mark', decisionLabel: '.b-fdecision__label', decisionHint: '.b-fdecision__hint',
+    detailBody: '.d-body'
+  };
+  var DL = {};
+  function setDialect(over) {
+    var k;
+    for (k in DIALECT_DEFAULT) if (DIALECT_DEFAULT.hasOwnProperty(k)) DL[k] = DIALECT_DEFAULT[k];
+    if (over) for (k in over) if (over.hasOwnProperty(k) && DIALECT_DEFAULT.hasOwnProperty(k)) DL[k] = over[k];
+  }
+  setDialect();
+  DDTV.dialect = { defaults: DIALECT_DEFAULT, current: DL, use: setDialect, reset: function () { setDialect(); } };
+
   function clean(s) { return String(s == null ? '' : s).replace(/\s+/g, ' ').trim(); }
 
   /* Keeps a number and its unit ("114 kg") on one line when a heading wraps. */
@@ -82,7 +115,7 @@
     var s = $('summary', d);
     if (!s) return '';
     var c = s.cloneNode(true);
-    each($$('.sum-idx, .sum-arr, .b-cover-menu__tag', c), function (n) { n.parentNode.removeChild(n); });
+    each($$(DL.summaryNoise, c), function (n) { n.parentNode.removeChild(n); });
     return clean(c.textContent);
   }
 
@@ -94,10 +127,10 @@
       var cls = n.className || '', tag = n.tagName.toLowerCase();
       if (tag === 'p') out.push({ t: 'p', n: n });
       else if (tag === 'h4') out.push({ t: 'h', text: text(n) });
-      else if (/b-fconf__analogy/.test(cls)) out.push({ t: 'quote', n: $('p', n) || n });
-      else if (/b-drow/.test(cls)) out.push({ t: 'stats', items: $$('.b-di', n).map(function (d) { return { v: text($('.b-dv', d)), l: text($('.b-dl', d)) }; }) });
-      else if (/b-itab/.test(cls)) out.push({ t: 'facts', rows: $$('.b-irow', n).map(function (r) { return { k: text($('.b-ilab', r)), v: text($('.b-ival', r)) }; }) });
-      else if (/b-vchart/.test(cls)) out.push({ t: 'chart', title: text($('.b-over', n)), rows: $$('.b-vrow', n).map(function (r) { return { name: text($('.b-vn', r)), pct: text($('.b-vpct', r)) }; }) });
+      else if (cls.indexOf(DL.quote) >= 0) out.push({ t: 'quote', n: $('p', n) || n });
+      else if (cls.indexOf(DL.statsRow) >= 0) out.push({ t: 'stats', items: $$(DL.statsItem, n).map(function (d) { return { v: text($(DL.statsValue, d)), l: text($(DL.statsLabel, d)) }; }) });
+      else if (cls.indexOf(DL.factsTable) >= 0) out.push({ t: 'facts', rows: $$(DL.factsRow, n).map(function (r) { return { k: text($(DL.factsKey, r)), v: text($(DL.factsValue, r)) }; }) });
+      else if (cls.indexOf(DL.chart) >= 0) out.push({ t: 'chart', title: text($(DL.chartTitle, n)), rows: $$(DL.chartRow, n).map(function (r) { return { name: text($(DL.chartName, r)), pct: text($(DL.chartPct, r)) }; }) });
       else blocks(n, out);
     });
     return out;
@@ -119,9 +152,9 @@
   function readHead(sel) {
     var r = sel && $(sel);
     if (!r) return null;
-    var t = text($('.b-sh__t', r));
-    if (!t) t = clean(text($('.b-sh__n', r)).replace(/^\s*\d+\s*[—–-]\s*/, ''));
-    return { title: t, sub: $('.b-sh__s', r) };
+    var t = text($(DL.headTitle, r));
+    if (!t) t = clean(text($(DL.headNumber, r)).replace(/^\s*\d+\s*[—–-]\s*/, ''));
+    return { title: t, sub: $(DL.headSub, r) };
   }
 
   /* ================================================================== */
@@ -176,13 +209,13 @@
   function figure(tv, mtv) {
     var frame = el('div', { class: 'sc-video' });
     tv.takeVideo($('video', mtv), frame);
-    var tag = text($('.b-mtv__mode', mtv));
+    var tag = text($(DL.mediaMode, mtv));
     return el('figure', { class: 'sc-figure' }, [
       frame,
       el('figcaption', { class: 'sc-figcap' }, [
         tag ? el('span', { class: 'sc-tag', text: tag }) : null,
-        el('strong', { text: text($('.b-mtv__title', mtv)) }),
-        el('span', { class: 'sc-figdesc', text: text($('.b-mtv__desc', mtv)) })
+        el('strong', { text: text($(DL.mediaTitle, mtv)) }),
+        el('span', { class: 'sc-figdesc', text: text($(DL.mediaDesc, mtv)) })
       ])
     ]);
   }
@@ -214,6 +247,8 @@
       }))
     ]);
 
+    /* A model with no video simply has no stage: the copy takes the whole screen. */
+    if (!(P.video && $(P.video))) { root.appendChild(el('div', { class: 'sc-hero sc-hero--solo' }, [copy])); return; }
     var frame = el('div', { class: 'sc-video sc-video--hero' });
     tv.takeVideo($(P.video), frame);
     var full = srcOf($(P.fullSrc));
@@ -235,9 +270,9 @@
     var P = c.p, tv = c.tv, root = c.root;
     var facts = $$(P.facts).map(function (it) {
       return {
-        label: text($('.b-ocard__lbl', it)), value: text($('.b-ocard__val', it)),
-        pills: $$('.b-ocard__pills span', it).map(text), note: text($('.b-ocard__note', it)),
-        wide: /--full/.test(it.className)
+        label: text($(DL.factLabel, it)), value: text($(DL.factValue, it)),
+        pills: $$(DL.factPills, it).map(text), note: text($(DL.factNote, it)),
+        wide: String(it.className).indexOf(DL.factWide) >= 0
       };
     });
     var grid = el('div', { class: 'sc-factgrid' });
@@ -324,7 +359,7 @@
 
     var d = P.details && $(P.details);
     var title = d ? summaryTitle(d) : '';
-    var list = d ? blocks($('.d-body', d)) : blocks($(P.container));
+    var list = d ? blocks($(DL.detailBody, d)) : blocks($(P.container));
     var split = topicsOf(list, P.introTitle);
     var topics = split.topics, figures = split.figures;
     var titled = topics.filter(function (t) { return t.title; }).length;
@@ -384,44 +419,62 @@
   /* Selections: reading the options from the source                     */
   /* ================================================================== */
 
+  /* An option's KIND decides how its choices are read and drawn. A model names
+     the kind in its config (`options.<key>.kind`); without one the kind is the
+     key itself (what the first model, Botanic, relies on). Kinds:
+       firmness  choices with weight ranges (kg / st), drawn on a scale
+       depth     choices with a height in cm, drawn as slabs
+       size      choices with width × length, drawn to scale
+       cover     choices with a texture photo and a short name
+       list      anything else: a title, an optional detail line and a text.
+                 Nothing about the product is assumed. */
+  function kindOf(tv, key) { return ((tv.product.options || {})[key] || {}).kind || key; }
+  function readerFor(tv, key) { return READERS[kindOf(tv, key)] || READERS.list; }
+
   var READERS = {
-    firmness: function (I, tv) {
+    list: function (I, tv, key) {
+      return $$(I.sel).map(function (n) {
+        var title = text($(I.title, n));
+        return { title: title, detail: I.detail ? text($(I.detail, n)) : '', body: I.text ? $(I.text, n) : null, ref: tv.connector.normalise(key, title) };
+      });
+    },
+    firmness: function (I, tv, key) {
       return $$(I.sel).map(function (n) {
         var title = text($(I.title, n)), kg = text($(I.kg, n));
         var range = kg.match(/(\d+)\s*[–-]\s*(\d+)/), open = kg.match(/(\d+)\s*\+/);
         return {
           title: title, kg: kg, st: text($(I.st, n)), body: $(I.text, n),
           lo: range ? +range[1] : open ? +open[1] : 0, hi: range ? +range[2] : null,
-          ref: tv.connector.normalise('firmness', title)
+          ref: tv.connector.normalise(key || 'firmness', title)
         };
       });
     },
-    depth: function (I, tv) {
+    depth: function (I, tv, key) {
       return $$(I.sel).map(function (n) {
         var cm = text($(I.cm, n));
         return {
           value: parseFloat(cm), cm: cm, inch: text($(I.inch, n)), title: text($(I.name, n)), body: $(I.text, n),
-          ref: tv.connector.normalise('depth', cm + ' cm')
+          ref: tv.connector.normalise(key || 'depth', cm + ' cm')
         };
       });
     },
-    cover: function (I, tv) {
+    cover: function (I, tv, key) {
       var imgs = $$(I.img), tabs = $$(I.tab), menus = $$(I.menu);
       return $$(I.micro).map(function (m, i) {
         var name = text($('strong', m)), full = text(m), menu = menus[i];
         /* The tagline is the loose text after the bold name. */
         return {
           title: name, tagline: clean(full.indexOf(name) === 0 ? full.slice(name.length) : full), short: text(tabs[i]), src: imgs[i] ? imgs[i].getAttribute('src') : '', alt: imgs[i] ? imgs[i].getAttribute('alt') : name,
-          menuName: menu ? text($('strong', menu)) : name, menuTag: menu ? text($('.b-cover-menu__tag', menu)) : '', body: menu ? $('.b-cbody-cover', menu) : null,
-          ref: tv.connector.normalise('cover', name), index: i + 1
+          menuName: menu ? text($('strong', menu)) : name, menuTag: menu ? text($(DL.coverTag, menu)) : '', body: menu ? $(DL.coverBody, menu) : null,
+          ref: tv.connector.normalise(key || 'cover', name), index: i + 1
         };
       });
     },
-    size: function (I, tv) {
+    size: function (I, tv, key) {
       return $$(I.sel).map(function (n) {
         var name = text($(I.name, n)), dims = text($(I.dims, n));
         var d = dims.match(/(\d+)\s*[×x]\s*(\d+)/);
-        return { title: name, dims: dims, w: d ? +d[1] : 0, l: d ? +d[2] : 0, ref: tv.connector.normalise('size', name + ' — ' + dims) };
+        return { title: name, dims: dims, w: d ? +d[1] : 0, l: d ? +d[2] : 0, ref: tv.connector.normalise(key || 'size', name + ' — ' + dims) };
       });
     }
   };
@@ -460,7 +513,7 @@
 
   scenes.choose = function (c) {
     var P = c.p, tv = c.tv, root = c.root, key = P.option;
-    var items = READERS[key](P.items, tv);
+    var items = readerFor(tv, key)(P.items, tv, key);
     var head = readHead(P.head) || (P.title ? { title: P.title } : null);
     if (head) root.appendChild(headBlock(head, 'sc-head--tight'));
     var ctx = {
@@ -519,8 +572,8 @@
     var decisions = el('div', { class: 'sc-decide' });
     each($$(P.decision), function (d) {
       decisions.appendChild(el('div', { class: 'sc-decide__i' }, [
-        el('span', { class: 'sc-decide__mk', 'aria-hidden': 'true', text: text($('.b-fdecision__mark', d)) }),
-        el('div', {}, [el('p', { class: 'sc-decide__t', text: text($('.b-fdecision__label', d)) }), rich('p', 'sc-decide__p', $('.b-fdecision__hint', d))])
+        el('span', { class: 'sc-decide__mk', 'aria-hidden': 'true', text: text($(DL.decisionMark, d)) }),
+        el('div', {}, [el('p', { class: 'sc-decide__t', text: text($(DL.decisionLabel, d)) }), rich('p', 'sc-decide__p', $(DL.decisionHint, d))])
       ]));
     });
 
@@ -543,6 +596,36 @@
         });
         each(ones, function (o, i) { o.hidden = ctx.focus !== items[i]; });
         hint.hidden = !!ctx.focus;
+        cta.hidden = !ctx.selected;
+      }
+    };
+  };
+
+  /* Any other option: one card per choice, with only what the source says
+     (title, an optional detail line, an optional text). */
+  VISUALS.list = function (ctx) {
+    var tv = ctx.tv, items = ctx.items;
+    var row = el('div', { class: 'sc-slabs sc-slabs--list', role: 'group', 'aria-label': ctx.P.label || ctx.key });
+    var cards = items.map(function (it) {
+      var b = el('button', { type: 'button', class: 'sc-slabcard', 'aria-pressed': 'false', onclick: function () { ctx.pick(it); } }, [
+        el('span', { class: 'sc-slabcard__n', text: it.title }),
+        it.detail ? el('span', { class: 'sc-slabcard__in', text: it.detail }) : null,
+        it.body ? rich('span', 'sc-slabcard__p', it.body) : null
+      ]);
+      row.appendChild(b);
+      return b;
+    });
+    var cta = button(ctx.P.resultLabel || 'Your choice', 'sc-btn--solid', function () { tv.userAction(); tv.go(ctx.c.chapter.id, ctx.P.result); });
+    cta.hidden = true;
+    return {
+      el: el('div', { class: 'sc-choose' }, [row, el('div', { class: 'sc-detailrow sc-detailrow--end' }, [cta])]),
+      render: function () {
+        each(items, function (it, i) {
+          var on = ctx.selected === it;
+          cards[i].classList.toggle('is-selected', on);
+          cards[i].classList.toggle('is-preview', !on && ctx.preview === it);
+          cards[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
         cta.hidden = !ctx.selected;
       }
     };
@@ -658,7 +741,7 @@
 
   scenes.result = function (c) {
     var P = c.p, tv = c.tv, root = c.root, key = P.option;
-    var items = READERS[key](P.items, tv);
+    var items = readerFor(tv, key)(P.items, tv, key);
     var box = el('div', { class: 'sc-result' });
     root.appendChild(box);
     var goChoose = { chapter: c.chapter.id, panel: P.choose };
@@ -676,6 +759,16 @@
   };
 
   var RESULTS = {};
+
+  RESULTS.list = function (tv, P, items, it, box, change) {
+    box.appendChild(el('div', { class: 'sc-result__main' }, [
+      el('p', { class: 'sc-kicker sc-kicker--dark', text: P.kicker }),
+      el('h2', { class: 'sc-big', text: it.title }),
+      it.detail ? el('p', { class: 'sc-result__sub', text: it.detail }) : null,
+      it.body ? rich('p', 'sc-p sc-p--lg', it.body) : null,
+      change
+    ]));
+  };
 
   RESULTS.firmness = function (tv, P, items, it, box, change) {
     var track = el('div', { class: 'sc-scale sc-scale--mini', 'aria-hidden': 'true' });
@@ -716,7 +809,7 @@
 
   RESULTS.cover = function (tv, P, items, it, box, change) {
     var facts = P.facts && $(P.facts), rows = [];
-    if (facts) each($$('.b-irow', facts), function (r) { rows.push(el('dt', { text: text($('.b-ilab', r)) })); rows.push(el('dd', { text: text($('.b-ival', r)) })); });
+    if (facts) each($$(DL.factsRow, facts), function (r) { rows.push(el('dt', { text: text($(DL.factsKey, r)) })); rows.push(el('dd', { text: text($(DL.factsValue, r)) })); });
     box.appendChild(el('figure', { class: 'sc-viewer sc-viewer--result' }, [
       el('img', { class: 'sc-viewer__img', src: it.src, alt: it.alt || it.title }),
       el('span', { class: 'sc-viewer__badge is-selected', text: 'Selected' })
@@ -743,8 +836,8 @@
       grid.appendChild(el('article', { class: 'sc-mat' }, [
         imgs[i] ? el('img', { class: 'sc-mat__img', src: imgs[i].getAttribute('src'), alt: imgs[i].getAttribute('alt') || '', loading: 'lazy' }) : null,
         el('h3', { class: 'sc-card__t', text: text($('strong', m)) }),
-        el('p', { class: 'sc-card__s', text: text($('.b-cover-menu__tag', m)) }),
-        rich('p', 'sc-card__p', $('.b-cbody-cover', m))
+        el('p', { class: 'sc-card__s', text: text($(DL.coverTag, m)) }),
+        rich('p', 'sc-card__p', $(DL.coverBody, m))
       ]));
     });
     root.appendChild(grid);
@@ -760,7 +853,7 @@
     if (head) root.appendChild(headBlock(head, 'sc-head--tight'));
 
     var d = $(P.details), paras = {};
-    each(d ? blocks($('.d-body', d)) : [], function (b) {
+    each(d ? blocks($(DL.detailBody, d)) : [], function (b) {
       if (b.t !== 'p') return;
       var s = $('strong', b.n), m = s && text(s).match(/\(Z(\d)\)/);
       if (!m) return;
@@ -823,10 +916,17 @@
 
   scenes.summary = function (c) {
     var P = c.p, tv = c.tv, root = c.root, opts = tv.product.options;
-    var data = {};
-    each(['size', 'depth', 'firmness', 'cover'], function (k) { if (P.items[k]) data[k] = READERS[k](P.items[k], tv); });
+    /* The model's own options, in the order its config lists them; each one read
+       and drawn according to its kind. */
+    var data = {}, order = [], kinds = {}, depthKey = null, k;
+    for (k in opts) if (opts.hasOwnProperty(k) && P.items[k]) {
+      order.push(k);
+      kinds[k] = kindOf(tv, k);
+      data[k] = readerFor(tv, k)(P.items[k], tv, k);
+      if (kinds[k] === 'depth' && !depthKey) depthKey = k;
+    }
     var cover = tv.product.coverAddsCm || 0;
-    var maxDepth = data.depth ? Math.max.apply(Math, data.depth.map(function (i) { return i.value; })) + cover : 0;
+    var maxDepth = depthKey ? Math.max.apply(Math, data[depthKey].map(function (i) { return i.value; })) + cover : 0;
 
     var statusEl = el('p', { class: 'sc-sum__state' }), grid = el('div', { class: 'sc-sum__grid' });
     var priceEl = el('p', { class: 'sc-sum__price' });
@@ -837,24 +937,28 @@
     ]);
 
     function visual(key, it) {
-      if (key === 'cover') return el('span', { class: 'sc-sum__img', style: 'background-image:url("' + it.src + '")', 'aria-hidden': 'true' });
-      if (key === 'depth') return el('span', { class: 'sc-sum__art', 'aria-hidden': 'true' }, [slabVisual(it.value, cover, maxDepth)]);
-      if (key === 'size') return el('span', { class: 'sc-sum__art', 'aria-hidden': 'true' }, [footprint(it.w, it.l, 54)]);
-      return el('span', { class: 'sc-sum__mark', 'aria-hidden': 'true' }, [el('span', { class: 'sc-meter' }, data.firmness.map(function (x, k) { return el('i', { class: k <= data.firmness.indexOf(it) ? 'on' : '' }); }))]);
+      var kind = kinds[key];
+      if (kind === 'cover') return el('span', { class: 'sc-sum__img', style: 'background-image:url("' + it.src + '")', 'aria-hidden': 'true' });
+      if (kind === 'depth') return el('span', { class: 'sc-sum__art', 'aria-hidden': 'true' }, [slabVisual(it.value, cover, maxDepth)]);
+      if (kind === 'size') return el('span', { class: 'sc-sum__art', 'aria-hidden': 'true' }, [footprint(it.w, it.l, 54)]);
+      if (kind === 'firmness') return el('span', { class: 'sc-sum__mark', 'aria-hidden': 'true' }, [el('span', { class: 'sc-meter' }, data[key].map(function (x, i) { return el('i', { class: i <= data[key].indexOf(it) ? 'on' : '' }); }))]);
+      /* Any other kind: a position marker, "n of m", with no meaning beyond the order of the choices. */
+      return el('span', { class: 'sc-sum__mark', 'aria-hidden': 'true' }, [el('span', { class: 'sc-meter' }, data[key].map(function (x, i) { return el('i', { class: i <= data[key].indexOf(it) ? 'on' : '' }); }))]);
     }
     function detailOf(key, it) {
-      if (key === 'firmness') return [it.kg, it.st].filter(Boolean).join(' · ');
-      if (key === 'depth') return it.title + ' · ≈ ' + (it.value + cover) + ' cm with cover';
-      if (key === 'cover') return it.tagline;
-      return it.title;
+      var kind = kinds[key];
+      if (kind === 'firmness') return [it.kg, it.st].filter(Boolean).join(' · ');
+      if (kind === 'depth') return it.title + ' · ≈ ' + (it.value + cover) + ' cm with cover';
+      if (kind === 'cover') return it.tagline;
+      if (kind === 'size') return it.title;
+      return it.detail || '';
     }
 
     function render(state) {
       state = state || tv.state();
       clear(grid);
       var open = 0;
-      each(['size', 'depth', 'firmness', 'cover'], function (key) {
-        if (!data[key]) return;
+      each(order, function (key) {
         var it = selectedOf(tv, key, data[key]), o = opts[key];
         if (!it) open++;
         var go = o.chapter + '/' + o.panel;
@@ -862,7 +966,7 @@
           it ? visual(key, it) : el('span', { class: 'sc-sum__mark is-empty', 'aria-hidden': 'true' }),
           el('div', { class: 'sc-sum__body' }, [
             el('p', { class: 'sc-sum__k', text: o.label }),
-            el('p', { class: 'sc-sum__v', text: it ? (key === 'size' ? it.title + ' · ' + it.dims : key === 'depth' ? it.cm + ' cm' : it.title) : 'Not chosen yet' }),
+            el('p', { class: 'sc-sum__v', text: it ? (kinds[key] === 'size' ? it.title + ' · ' + it.dims : kinds[key] === 'depth' ? it.cm + ' cm' : it.title) : 'Not chosen yet' }),
             it ? el('p', { class: 'sc-sum__d', text: detailOf(key, it) }) : null
           ]),
           el('button', { type: 'button', class: 'sc-btn sc-btn--ghost sc-btn--sm', 'data-go': go }, [it ? (P.changeLabel || 'Change') : (P.chooseLabel || 'Choose')])
@@ -889,6 +993,16 @@
     render();
     return { update: render };
   };
+
+  /* The extension surface for a model that needs a kind of option the library does not know. Register, in a file the
+     model loads after the engine and the scenes:
+       DDTV.kinds.readers.<kind>     = function (items, tv, key) → [{ title, ref, … }]   (how its choices are read)
+       DDTV.kinds.visuals.<name>     = function (ctx) → { el, render }                    (how the chooser is drawn)
+       DDTV.kinds.results.<name>     = function (tv, P, items, it, box, change)           (how "Your …" is drawn)
+       DDTV.kinds.normalisers.<kind> = function (raw, out)                                (how the store's text is parsed)
+     and name the kind in the model's config (options.<key>.kind, panel params visual). A kind that is not registered is
+     read as a plain list, so a model never breaks the shared code. */
+  DDTV.kinds = { readers: READERS, visuals: VISUALS, results: RESULTS, normalisers: {} };
 
   DDTV.extract = { text: text, blocks: blocks, topicsOf: topicsOf, readHead: readHead, summaryTitle: summaryTitle };
 })(window);

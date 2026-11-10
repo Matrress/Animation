@@ -146,7 +146,8 @@
   function Adapter(tv) {
     this.tv = tv;
     this.G = tv.product.modelGallery || {};
-    this.manifest = validManifest(tv.product, tv.product.mediaManifest);
+    /* A hand-made manifest wins; otherwise the model's asset registry, if it has one with customer-gallery images. */
+    this.manifest = validManifest(tv.product, tv.product.mediaManifest || (global.DDTV.assets ? global.DDTV.assets.manifestFor(tv.product) : null));
     this.snapshot = [];
     this.list = null;
     this.rep = null;
@@ -215,7 +216,7 @@
     var self = this, url, pid;
     done = done || function () {};
     if (this.storeState !== 'idle') { done(this.storeState === 'ok'); return; }
-    if (this.G.storefront === false || !global.fetch) { this.storeState = 'unavailable'; done(false); return; }
+    if (this.G.storefront === false || (this.tv.model && this.tv.model.features.storefrontImages === false) || !global.fetch) { this.storeState = 'unavailable'; done(false); return; }
     url = storefrontEndpoint();
     pid = pageProductId();
     if (!url || !pid || !has(this.tv.product.productIds || [pid], pid)) { done(false); return; }   /* try again later: the page may still be loading */
@@ -694,7 +695,7 @@
 
   DDTV.use(function (tv) {
     var cfg = tv.product.modelGallery;
-    if (!cfg) return null;
+    if (!cfg || (tv.model && tv.model.features.modelGallery === false)) return null;
     var adapter = new Adapter(tv), ui = new Gallery(tv, adapter, cfg);
     tv.modelGallery = { adapter: adapter, ui: ui };
     try { ui.init(); } catch (err) {

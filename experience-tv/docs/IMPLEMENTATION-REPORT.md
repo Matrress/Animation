@@ -1,5 +1,7 @@
 # Divine Product TV + Ecwid native gallery: consolidated implementation report
 
+*This report covers the gallery and restoration phase. The reusable multi-model architecture that followed is in `docs/ARCHITECTURE-MULTI-MODEL.md`.*
+
 Date: 2026-11-10. Build: `dist/embed/botanic-tv.js`, sha256 `72911e6e15bf3da29fd94c865c02bed990e2b035c93f95b08bfb99b7655e0c87`.
 Branch `claude/funny-johnson-b4mod7`, draft PR #9. **Nothing has been deployed. Nothing was changed on the live storefront. Approval to deploy is NOT requested by this report: see section 10, the release blockers.**
 

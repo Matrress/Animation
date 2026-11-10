@@ -23,6 +23,13 @@ content, and puts everything back for Classic View.
 | `tests/smoke.mjs` | 104 checks on the stand-in page: every source text is on a screen, choices made in the TV reach the native dropdowns, the column is untouched, no pills or circles. |
 | `tests/embed.mjs` | 175 checks of the store embed on a **simulated** Ecwid: product guard, repeated and missed events, navigation, rotation, ten iPad sizes, phones, Add to Bag (simulated), both placement modes. |
 | `engine/ddtv-gallery.js` / `.css` | The **gallery integration**: a reusable image adapter (normalises Ecwid's own image data and an optional per-product manifest), the *View Model Gallery* button and the gallery inside the monitor. Loaded as an engine extension (`DDTV.use`). |
+| `engine/ddtv-assets.js`, `engine/ddtv-model.js` | The **Visual Asset Registry** (data about assets; Ecwid owns the photographs) and the **model descriptor** with the contracts between the subsystems. |
+| `schema/ddtv-schema.js` | The schemas and validation rules (model config, asset registry, contextual visual, models index), one dependency-free module for Node and the browser. Reference: `docs/SCHEMA-REFERENCE.md` (generated). |
+| `products/models.json` | The models index: which models exist, their status, where they may run, whether any is authorised. **No model is authorised for deployment.** |
+| `products/profiles/` | The store profile (`divine-store`): the Ecwid theme's layout, price and gallery selectors, shared by every model that `extends` it. |
+| `products/examples/`, `source/examples/` | A **non-production placeholder model** (invented data) that proves a second model runs on the same engine. Never part of a production build. |
+| `tools/validate-model.mjs`, `tools/new-model.mjs`, `tools/asset-registry.mjs`, `tools/build-example.mjs`, `tools/schema-docs.mjs` | Validate a model (structure, semantics, cross-model integrity, selectors against its own description), scaffold a new one, migrate/check a registry, build the placeholder page, generate the schema reference. See `docs/ONBOARDING-NEW-MODEL.md`. |
+| `docs/ARCHITECTURE-MULTI-MODEL.md`, `docs/ONBOARDING-NEW-MODEL.md`, `docs/SCHEMA-REFERENCE.md` | The multi-model architecture (audit, engine design, schemas, contracts, reuse proof, roadmap, risks, decisions), the onboarding procedure, and the generated schema reference. |
 | `products/botanic.media.js` | Media manifest for the product (images stay in Ecwid; this is data about them). `null` for now: the gallery then shows the product's own gallery images. |
 | `tools/media-manifest.mjs` | Drafts or merges a manifest from a product export. Copies the addresses Ecwid returned; never invents one. |
 | `tests/gallery.mjs` | 174 checks of the gallery integration on a simulated store with the real gallery markup and real image records, a fake storefront endpoint and a synthetic MP4 (needs `ffmpeg` for the media checks; without it they are reported as SKIP, not as passes). |
@@ -55,6 +62,8 @@ node tools/build.mjs && node tools/build-embed.mjs
 NODE_PATH=$(npm root -g) node tests/smoke.mjs [screenshot-folder]
 NODE_PATH=$(npm root -g) node tests/embed.mjs
 NODE_PATH=$(npm root -g) node tests/gallery.mjs
+node tools/build-example.mjs && NODE_PATH=$(npm root -g) node tests/model-reuse.mjs      # the multi-model architecture
+NODE_PATH=$(npm root -g) node tools/validate-model.mjs --source-check                  # every model: schema, semantics, selectors
 ```
 
 These suites run against the stand-in page or a simulated Ecwid, in Chromium. They are **not** a verification of the real
@@ -67,6 +76,8 @@ The two views are called **Optimised Preview** (the television; the store's own 
 
 ## Add another mattress
 
-Create `products/<model>.config.js` with the model's chapters, a scene per screen and the selectors of its content,
-option rules and media registry. The engine needs no changes for a different number of
-chapters.
+Do not copy Botanic. Run `node tools/new-model.mjs <id> --name "NAME" --product-id <TEST product id>` and follow
+`docs/ONBOARDING-NEW-MODEL.md`: a model is configuration and approved content (its config, its description, its asset
+registry) on the shared engine, scene library and store profile. The shared engine is not edited for a model: a model
+that needs something else uses a documented extension mechanism (`docs/ARCHITECTURE-MULTI-MODEL.md`, 3.3). Nothing is
+deployed without the owner's explicit approval.

@@ -9,7 +9,7 @@ PASS each image's 1500 px file is exactly what the page's own response lists for
 PASS alt text and the single main-image flag come from the store's records
 PASS Optimised Preview with four real options chosen: gallery isolated, television and button visible, store price mirrored (£854.10)
 PASS 12 cycles Optimised → Standard → Optimised on the real page: every time the store's own gallery is exactly as before the television existed (same children, 14 thumbnails of 75 px) and then isolated again; the four chosen options and the price never change; one television, no duplicates, no sideways scroll
-INFO real page, 12 cycles + 3 gallery visits: documents 3→3, DOM nodes 8710→8700, JS event listeners 648→648
+INFO real page, 12 cycles + 3 gallery visits: documents 3→3, DOM nodes 8708→8698, JS event listeners 636→636
 PASS no accumulation: no extra documents; event listeners +0, DOM nodes +-10 over 12 cycles (the store's own activity included)
 PASS Standard Product View: clicking the store's own thumbnail 3 changes its main picture (4888579387.webp → 4706741738.webp)
 PASS the store's own zoom/lightbox opens on that photo (3 / 14)
@@ -43,3 +43,4 @@ PASS iPhone 390×844: standard Ecwid view only: no television, no gallery button
 PASS and the television made no storefront request
 
 All checks passed (real Ecwid DOM of the public product; synthetic media; the test product and real devices are not covered)
+RESTORE exit 0

@@ -34,6 +34,8 @@
   global.DDTV_PRODUCTS.botanic = {
     id: 'botanic',
     name: 'Botanic',
+    /* 'test': it may run on the test product only. The live product is not authorised. */
+    status: 'test',
     experienceTitle: 'Experience',
 
     /* Ecwid product IDs the engine may run on.

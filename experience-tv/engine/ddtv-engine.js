@@ -165,11 +165,17 @@
         if (table[i].test.test(raw)) { out.id = table[i].id; out.label = table[i].label; out.index = table[i].index; break; }
       }
     }
-    if (key === 'depth') {
+    /* How the raw text is parsed depends on the option's KIND (config:
+       options.<key>.kind), not on what the option is called. Without a kind the
+       kind is the key, which is what the first model relies on. */
+    var kind = ((this.product.options || {})[key] || {}).kind || key;
+    var custom = global.DDTV && global.DDTV.kinds && global.DDTV.kinds.normalisers[kind];
+    if (custom) custom(raw, out);          /* a kind registered by a model: DDTV.kinds.normalisers.<kind> = function (raw, out) */
+    if (kind === 'depth') {
       var m = raw.match(/(\d{2}(?:[.,]\d+)?)\s*cm/i) || raw.match(/(\d{2})/);
       if (m) { out.value = parseFloat(m[1].replace(',', '.')); out.label = out.value + ' cm'; }
     }
-    if (key === 'size') {
+    if (kind === 'size') {
       var d = raw.match(/(\d{2,3})\s*[x×*]\s*(\d{2,3})/i);
       if (d) {
         out.dims = d[1] + 'x' + d[2];
@@ -271,6 +277,17 @@
   };
 
   ConfigConnector.prototype.subscribe = function (fn) { this.listeners.push(fn); fn(this.state, null); };
+
+  /* What this connector can and cannot do, stated rather than assumed (docs/ARCHITECTURE-MULTI-MODEL.md, section 7).
+     Ecwid stays the only authority: the television reads the native controls and drives them as a customer would. It
+     does not know which combinations are valid, never writes a price, and has no way to set several options at once. */
+  ConfigConnector.prototype.capabilities = function () {
+    return {
+      read: true, choose: true, subscribe: true, price: !!this.product.price,
+      nativeToTelevision: true, televisionToNative: true,   /* by events and a low-frequency safety poll */
+      validateCombination: false, atomicSet: false, writesPrice: false
+    };
+  };
 
   ConfigConnector.prototype.start = function () {
     var self = this;
@@ -387,6 +404,9 @@
 
   function Television(product, options) {
     this.product = product;
+    /* The model as the engine sees it (identity, options, topics, features): see ddtv-model.js.
+       Without that file every feature behaves as the config alone says. */
+    this.model = (global.DDTV && global.DDTV.model) ? global.DDTV.model.resolve(product) : null;
     this.opts = options || {};
     this.reloc = new Relocator();
     this.media = new MediaManager();
@@ -604,6 +624,7 @@
   var STACK_ATTR = 'data-ddtv-stacked';
 
   NativeGallery.prototype.stackedCfg = function () {
+    if (this.tv.model && this.tv.model.features.stackedLayout === false) return null;
     var S = (this.tv.product.layout || {}).stacked;
     return S && S.block && S.fill && S.fill.length ? S : null;
   };
@@ -796,7 +817,8 @@
     this.scenes = [];
     each(this.product.chapters, function (c) {
       each(self.panels[c.id], function (pn) {
-        var fn = scenes[pn.def.scene], inst;
+        /* A model may bring scenes of its own (config: `scenes: { name: function (ctx) {…} }`); they win over the library's. */
+        var fn = (self.product.scenes && self.product.scenes[pn.def.scene]) || scenes[pn.def.scene], inst;
         if (!fn) return warn('Unknown scene "' + pn.def.scene + '" for ' + c.id + '/' + pn.def.id);
         try {
           inst = fn({ tv: self, def: pn.def, root: pn.el, p: pn.def.params || {}, chapter: c }) || {};
@@ -1107,7 +1129,7 @@
     var self = this;
     var roots = [this.root, this.sourceRoot].filter(Boolean);
 
-    each(this.product.sync || [], function (rule) {
+    each(this.model && this.model.features.classicHighlight === false ? [] : (this.product.sync || []), function (rule) {
       var sel = state[rule.option];
       var items = [];
       each(roots, function (r) { items = items.concat($$(rule.items, r)); });
@@ -1337,6 +1359,10 @@
 
   Television.prototype.start = function () {
     if (!this.sourceRoot) throw new Error('Source root ' + this.product.sourceRoot + ' not found');
+    /* The class vocabulary of this model's description (config: `dialect`; the
+       scene library's default is the markup of the first model). One television
+       per page, so one dialect at a time. */
+    if (global.DDTV && global.DDTV.dialect) global.DDTV.dialect.use(this.product.dialect);
     this.build();
     this.mount();
     this.audit();
@@ -1375,6 +1401,7 @@
 
   Television.prototype.destroy = function () {
     this.clearWatchdog();
+    if (global.DDTV && global.DDTV.dialect) global.DDTV.dialect.reset();
     each(this.ext, function (x) { if (x.destroy) { try { x.destroy(); } catch (e) { warn('Extension failed to detach', e); } } });
     this.ext = [];
     try { this.closeOverlay(); } catch (e0) { /* ignore */ }
@@ -1405,12 +1432,41 @@
   /* Only a product listed in a config (productIds) is ever matched. With no
      id (a plain page without Ecwid's API, e.g. the prototype) the config whose
      source root is on the page is used. */
+  /* A model config may say `extends: '<profile>'`. A PROFILE (window.DDTV_PROFILES)
+     holds what belongs to the store's theme rather than to a mattress: the
+     layout selectors, the price selectors, the view labels, the gallery selectors.
+     The model's own values win; objects are merged key by key, everything else
+     (arrays, regular expressions, functions, strings) is replaced. */
+  function isPlain(o) { return !!o && typeof o === 'object' && Object.prototype.toString.call(o) === '[object Object]'; }
+  function mergeConfig(base, over) {
+    var out = {}, k;
+    for (k in base) if (base.hasOwnProperty(k)) out[k] = base[k];
+    for (k in over) {
+      if (!over.hasOwnProperty(k) || k === 'extends') continue;
+      out[k] = isPlain(out[k]) && isPlain(over[k]) ? mergeConfig(out[k], over[k]) : over[k];
+    }
+    return out;
+  }
+  /* The merged config of one model must be the SAME object every time it is asked for (the engine's idempotent start
+     compares products by identity), but a config that was replaced must be merged again: so the cache is keyed on the
+     identity of the raw config and of the profile, not on a name. */
+  var resolvedCache = [];
+  function resolveProfile(p) {
+    if (!p.extends) return p;
+    var base = (global.DDTV_PROFILES || {})[p.extends], i;
+    if (!base) { warn('Profile "' + p.extends + '" (extended by ' + p.id + ') is not loaded; using the model config as it is.'); return p; }
+    for (i = 0; i < resolvedCache.length; i++) if (resolvedCache[i].raw === p && resolvedCache[i].base === base) return resolvedCache[i].out;
+    var out = mergeConfig(base, p);
+    resolvedCache.push({ raw: p, base: base, out: out });
+    return out;
+  }
+
   function productFor(productId) {
     var all = global.DDTV_PRODUCTS || {};
     for (var k in all) {
       if (!all.hasOwnProperty(k)) continue;
       var p = all[k];
-      if (productId == null ? !!$(p.sourceRoot) : (p.productIds || []).indexOf(Number(productId)) >= 0) return p;
+      if (productId == null ? !!$(p.sourceRoot) : (p.productIds || []).indexOf(Number(productId)) >= 0) return resolveProfile(p);
     }
     return null;
   }
