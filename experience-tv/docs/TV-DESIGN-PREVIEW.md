@@ -33,6 +33,10 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 - **Depth is a mattress in profile**: long, both ends visible, a graphite cover around a latex core, the thickness varies (20, 24, 26 cm) with the 26 cm outline dashed behind. It is drawn about 1.5 times thicker than life so the difference can be seen. (This replaces the earlier use of the traced front edge of the core drawing, which read as a thin slanted strip.)
 - **Covers:** the four photographs and the information board have the same height and align.
 
+## "Select here": telling the customer where to choose
+
+A clear invitation tells the customer that the whole selection is made in this interface: a bar above the television, "Select your Botanic here: four choices, step by step: size, firmness, depth and cover. Then add it to your bag", with an arrow pointing down to the television; "Select here" in the heading row of the stage on every step; and, while nothing is chosen, a line in "Your selection" saying that the choices appear there as they are made. (In the shop the television sits above Ecwid's own options, so the bar points at it. The wording is the owner's to change.)
+
 ## Add to Bag and Go to Checkout (one button, two faces)
 
 Add to Bag sits in "Your selection", under the price, on every step, and again on the Review step. It is disabled until size, firmness, depth and cover are all chosen. Once the mattress is in the bag the same button, in the same place, becomes **Go to Checkout** (the same bright blue, with an arrow instead of the bag), and says "Added to your bag". If the customer then changes any of the four choices, it becomes Add to Bag again, because the new configuration is not in the bag. The shop's own button under the television is the same button: both always show the same face.
