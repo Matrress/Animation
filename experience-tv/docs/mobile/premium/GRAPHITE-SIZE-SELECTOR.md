@@ -190,3 +190,11 @@ The lead version is H with the blue-teal turquoise, saved as `preview/graphite.h
 Open point for the owner: "the cards around the TVs should only be at the sides". Not implemented yet: it is not clear whether the card should sit only at the side of the frame or around the whole block with its title.
 
 Tests: `tools/graphite-full-test.mjs`, 62 of 62.
+
+## Cover options in the same palette (owner, preview only)
+
+The four cover options (Organic Cotton, Double-Sided Cotton / Wool, Aloe Vera Blend, Cashmere + Silver Ions) are turquoise cards with white text and the same ambient light as the videos. The labels are white on the dark card. The cover video and the cover options now share one system; the configurator steps are unchanged.
+
+A colour audit of the visible description found no green, apart from the dock leaf in the configurator, which stays green by the owner's instruction. Hidden elements still carry the older grey-green `#364849`; they are not visible and do not appear on the page.
+
+Tests: 62 of 62.

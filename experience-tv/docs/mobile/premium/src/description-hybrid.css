@@ -46,3 +46,17 @@
   background: radial-gradient(closest-side, rgba(80, 205, 253, .42), transparent); filter: blur(9px); pointer-events: none;
 }
 #bp-top .b-cover-micro-wrap, #bp-top .b-cover-micro-wrap * { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+/* the cover options module (Organic Cotton, Double-Sided, Aloe Vera, Cashmere): the same turquoise card and ambient light as the videos */
+#bp-top .b-cover-menu {
+  position: relative; isolation: isolate; border-radius: 18px !important; overflow: visible !important;
+  background: linear-gradient(160deg, #1A5C7E 0%, #163D57 45%, #0B1C2A 100%) !important;
+  border: 1px solid rgba(80, 205, 253, .4) !important; box-shadow: 0 16px 30px -14px rgba(26, 92, 126, .7) !important;
+}
+#bp-top .b-cover-menu::after {
+  content: ''; position: absolute; left: 14%; right: 14%; bottom: -14px; height: 26px; z-index: -1;
+  background: radial-gradient(closest-side, rgba(80, 205, 253, .36), transparent); filter: blur(8px); pointer-events: none;
+}
+#bp-top .b-cover-menu summary, #bp-top .b-cover-menu summary * , #bp-top .b-cover-menu .b-cover-menu__tag, #bp-top .b-cbody-cover, #bp-top .b-cbody-cover * { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+#bp-top .b-cover-menu summary .sum-arr, #bp-top .b-cover-menu summary::after { color: #50CDFD !important; }
+#bp-top .b-cover-menu details[open] { background: transparent !important; }
+#bp-top .b-cbody-cover { border-top: 1px solid rgba(80, 205, 253, .3) !important; }
