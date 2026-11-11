@@ -8,14 +8,15 @@ Status: **proposal for owner review**. Nothing in this plan is deployed, and not
 |---|---|---|
 | Mobile configurator (Graphite, `docs/mobile/premium/preview/graphite.html`) | Approved look for Size, Firmness, Depth, Cover and the description; 62 automated checks pass | E1 (stand-in page) and E2 (real Ecwid DOM, read-only, local) |
 | Description, direction H (light ground, turquoise graphite video card and bands, blue-teal) | Owner's lead version | E1 |
-| Product TV engine (`engine/`, `schema/`) | Built and tested (earlier phases); the desktop and iPad "TV screen" has not yet been restyled to the approved palette | E1/E2 |
+| Product TV engine (`engine/`, `schema/`) | Built and tested (earlier phases); the large-screen "TV screen" has not yet been restyled to the approved palette, and some comments and tests still describe iPad | E1/E2 |
 | Gallery integration, Visual Asset Registry, model descriptor | Built and tested with a second placeholder model | E1 |
 | Media (video, poster frames) | Size and format not yet measured, because the media host refused requests from the build sandbox | Not measured |
 | Ecwid test product (E3), real devices (E4) | Not done; both need owner approval or access | Not done |
 
 ## 1. What "TV screen" and "large platform" mean here
 
-- **TV screen**: the Product TV monitor of the engine, the moving-image panel on desktop and iPad. It is the same visual language as the mobile configurator, but with its own layout and its own player controls.
+- **TV screen**: the Product TV monitor of the engine, the moving-image panel on every large screen: desktop and laptop monitors, and tablets of any maker (Apple, Samsung, Huawei, Lenovo, Xiaomi, Microsoft Surface and others), in touch and mouse use, portrait and landscape. It is the same visual language as the mobile configurator, but with its own layout and its own player controls.
+- **Device-neutral rule**: the layout is decided by the space and the input the browser reports, never by the brand or model. No user-agent sniffing and no "iPad" branch. iPad is one device among many.
 - **Large platform**: everything shared across the product pages. That is the design tokens (colour, radius, shadow, halo, type scale), the button system, the Ecwid connector, the media pipeline, the loader and the deployment procedure.
 - **Other models**: any new mattress that uses the same engine. The engine stays unchanged; each model supplies its configuration, assets and, where needed, its accent colour.
 
@@ -42,13 +43,24 @@ Two open points in this table: whether the back-to-top button should appear only
 
 ## 3. Stage plan
 
-### Stage T: TV screen (desktop and iPad)
+### Stage T: the TV screen on every large device
 
-- **T1. One token file.** Replace the stacked override layers (`description-light`, `description-turquoise`, `description-hybrid`, earlier `description-dark`) with one `design-tokens.css` and one component layer. Most of the `!important` declarations exist only because of the layering. Gate: the mobile preview looks the same (screenshot comparison, same tolerance as the existing checks).
-- **T2. Apply the tokens to the TV monitor.** Check every colour in `engine/ddtv-*.css` against the palette; remove any remaining green; apply the button roles from section 2. Gate: no visible difference on the mobile preview; desktop and iPad screenshots reviewed by the owner.
-- **T3. Layout on desktop and iPad.** Portrait and landscape at 768, 834, 1024 and 1280 px; touch and mouse. The existing iPad tests in `tests/` are the starting point. Gate: no horizontal scroll; the monitor and the text never overlap.
-- **T4. Accessibility.** Contrast for every text pair (the mobile check is the template); a visible focus ring in turquoise on every button; keyboard order; labels for the play, close and disclosure controls. Gate: keyboard run and an automated audit with no serious findings.
-- **T5. Evidence.** Re-run the engine tests, the 62 preview checks and the new TV checks. Record the results in `docs/TEST-MATRIX.md`.
+The layout depends on capabilities, not on device names. The browser reports the space, the pointer, the touch points and the orientation; the engine responds to those.
+
+- **T0. Device classes.** Define the classes the engine uses, in `docs/DEVICE-CLASSES.md`: width and height of the monitor container (not of the window), orientation, pointer (fine or coarse), hover, touch points, zoom and reduced motion. Gate: the owner approves the classes.
+- **T1. Container-based layout.** Move the monitor's breakpoints to CSS container queries, so the monitor adapts to its own width wherever it is embedded. Today the engine uses viewport media queries and `pointer: coarse` for tap sizes. Rewrite the comments that name iPad in capability terms. Gate: the same screens appear at the same container widths, whatever the device.
+- **T2. One token file and the button roles** (sections 2 and 3, stage T1 above), applied to the monitor.
+- **T3. Test matrix, device class by engine.**
+  - Engines: Blink (Chrome, Edge, Samsung Internet, Huawei Browser), WebKit (Safari on iPadOS and macOS), Gecko (Firefox).
+  - Classes: 7 to 8 inch tablet, 10 to 11 inch, 12 to 13 inch, 14 to 16 inch laptop, 21 to 24 inch monitor, 27 inch and wider or ultrawide.
+  - Portrait and landscape; touch, mouse and hybrid (touch laptops and convertibles).
+  - Zoom at 100, 125 and 150 per cent; reduced motion switched on.
+  - Gate: no horizontal scroll, no overlapping, and tap targets of at least 44 px on coarse pointers, in every cell of the matrix.
+- **T4. Video on every engine.** Check codec support and fallback, the autoplay policy, and the fullscreen differences between engines. Do not assume iOS behaviour for other systems. Gate: the proof videos play in each engine class in the matrix.
+- **T5. Accessibility**, as before: contrast of every text pair, a visible turquoise focus ring on every button, keyboard order, and labels for play, close and disclosure controls. Gate: keyboard run and an automated audit with no serious findings.
+- **T6. Evidence.** Each cell of the matrix is recorded in `docs/TEST-MATRIX.md` with its evidence level.
+
+**What emulation cannot prove.** Playwright device profiles cover layout and the engines, which is evidence at level E2. They do not cover vendor behaviour in Samsung Internet, the Huawei Browser or the video decoders of a particular tablet. Those cells stay open until they are tested on real devices (E4). We have no vendor devices in this environment, so the owner should say which ones are available, or whether a device lab can be used.
 
 ### Stage P: large platform
 
@@ -68,7 +80,8 @@ Two open points in this table: whether the back-to-top button should appear only
 
 ## 4. Gates that need the owner
 
-1. Approve the T1 consolidation (one token file), which changes the code but not the look.
+1. Approve the device classes (T0) and the matrix in T3, and tell us which tablets and laptops you can provide for the real-device tests (E4), including any Samsung and Huawei devices.
+8. Approve the T1 consolidation (one token file), which changes the code but not the look.
 2. Confirm the naming: the label says "Orthopaedic Coconut **Core**", the verified product page says "Orthopaedic Coconut **Coirs**". The label and the page must match before go-live.
 3. Confirm the video card question: the card should sit only at the side of each video, or around the whole block with its title.
 4. Run `tools/media-probe.mjs` on a machine that reaches the media host and send the numbers.
@@ -83,6 +96,7 @@ The project is finished when each of these is true, with the evidence recorded:
 - The TV screen and the mobile configurator use one token file and one button library, with no green and no hard-coded colours outside the token file.
 - Every button has a role and orientation from section 2, and the keyboard and screen-reader checks pass.
 - The media sizes are measured and approved; the phone layer is lighter than the TV bundle on a throttled profile, measured with real requests.
+- The TV screen passes the device-class matrix on every engine class, and each cell records its evidence level.
 - The Ecwid connector has run on the test product (E3) with the owner's approval, and the real devices (E4) have been tested.
 - A second model has gone through the onboarding procedure without any change to the engine.
 
@@ -92,9 +106,10 @@ The project is finished when each of these is true, with the evidence recorded:
 - **Ecwid's option structure** may differ between products; the connector is proven on one product and must be re-checked for each new model.
 - **Stacked overrides** make the styles fragile; stage T1 removes most of the risk.
 - **Brand decisions** (naming, the Extra Firm route, the store options) belong to the owner and must not be made in code.
+- **Vendor browsers** (Samsung Internet, Huawei Browser) and tablet-specific video decoders cannot be fully proven by emulation; those cells need real devices.
 
 ## 7. What we do next
 
 1. The owner reads this plan and answers the seven questions in section 4.
-2. Stage T1 starts once the owner agrees to the consolidation.
+2. Stage T0 starts once the owner approves the device classes; the token consolidation follows.
 3. The owner runs the media probe in parallel, because it does not depend on the code.
