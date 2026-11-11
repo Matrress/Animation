@@ -198,3 +198,11 @@ The four cover options (Organic Cotton, Double-Sided Cotton / Wool, Aloe Vera Bl
 A colour audit of the visible description found no green, apart from the dock leaf in the configurator, which stays green by the owner's instruction. Hidden elements still carry the older grey-green `#364849`; they are not visible and do not appear on the page.
 
 Tests: 62 of 62.
+
+## Softer ambient light and buttons in the palette (owner, preview only)
+
+- The ambient glow under the cards (videos, cover options, cover video) is reduced to a faint turquoise glow (opacity about .16, 16 px high, 7 px blur) so it no longer brightens the white ground.
+- Card edges are a thin turquoise line (about 22 %), not a bright Sky outline.
+- Buttons: turquoise gradient fill with white text, a soft turquoise shadow, and a white outline for the secondary button; the closing call to action uses the same fill.
+
+The owner's button mock-up was not received with this message (only the cover-card image came through). Tests: 62 of 62.

@@ -5206,6 +5206,23 @@ body { margin: 0; background: #F7F7F7; }
 #bp-top .b-cover-menu summary .sum-arr, #bp-top .b-cover-menu summary::after { color: #50CDFD !important; }
 #bp-top .b-cover-menu details[open] { background: transparent !important; }
 #bp-top .b-cbody-cover { border-top: 1px solid rgba(80, 205, 253, .3) !important; }
+/* ambient light, toned down everywhere: a faint glow, not a bright band on the white ground */
+#bp-top .b-cover-menu::after, #bp-top .p-row .b-mtv::after, #bp-top .b-cover-micro-wrap::after {
+  left: 18% !important; right: 18% !important; bottom: -8px !important; height: 16px !important;
+  background: radial-gradient(closest-side, rgba(80, 205, 253, .16), transparent) !important; filter: blur(7px) !important;
+}
+#bp-top .b-cover-menu { border: 1px solid rgba(80, 205, 253, .22) !important; box-shadow: 0 8px 18px -12px rgba(26, 92, 126, .45) !important; }
+#bp-top .p-row .b-mtv { box-shadow: 0 8px 18px -12px rgba(26, 92, 126, .45) !important; border: 1px solid rgba(80, 205, 253, .22) !important; }
+#bp-top .b-cover-micro-wrap { box-shadow: 0 8px 18px -12px rgba(26, 92, 126, .45) !important; border: 1px solid rgba(80, 205, 253, .22) !important; }
+/* buttons in the same palette: turquoise fill, white text, a soft turquoise shadow instead of a hard edge */
+#bp-top .b-btn-p, #bp-top .b-btn-hero-p, #bp-top .b-main-video-actions .b-btn-p, #bp-top .b-cta .b-btn-p {
+  background: linear-gradient(135deg, #1A5C7E, #163D57) !important; color: #FFFFFF !important; border: 1px solid rgba(80, 205, 253, .55) !important;
+  box-shadow: 0 6px 14px -8px rgba(26, 92, 126, .8) !important;
+}
+#bp-top .b-btn-p:hover, #bp-top .b-main-video-actions .b-btn-p:hover, #bp-top .b-cta .b-btn-p:hover {
+  background: linear-gradient(135deg, #1F6A8F, #1A5C7E) !important; color: #FFFFFF !important;
+}
+#bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o, #bp-top .b-cta .b-btn-o { background: transparent !important; border: 1px solid rgba(255, 255, 255, .5) !important; color: #FFFFFF !important; }
 </style>
 <script>
 (function(){var g=document.getElementById('gallery');var im=window.DDDATA.images;g.innerHTML='<div class="sg-main"><img src="'+im[0]+'" alt="Botanic Original 100% Organic Latex Mattress" fetchpriority="high"></div><div class="sg-dots">'+im.map(function(){return '<i></i>';}).join('')+'</div><div class="sg-bar"><img src="'+im[0]+'" alt=""><span>Gallery · '+im.length+' photos</span><button id="gal-btn" type="button">Show gallery</button></div>';
