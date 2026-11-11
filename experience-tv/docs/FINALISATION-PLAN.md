@@ -13,6 +13,19 @@ Status: **proposal for owner review**. Nothing in this plan is deployed, and not
 | Media (video, poster frames) | Size and format not yet measured, because the media host refused requests from the build sandbox | Not measured |
 | Ecwid test product (E3), real devices (E4) | Not done; both need owner approval or access | Not done |
 
+## 0b. Owner decisions recorded (11 November 2026)
+
+These are decided and are preserved by every later stage.
+
+- **Naming (question 2).** The label is "Orthopaedic Coconut Core". The owner aligns the specialist product page to the same name ("Core"). We do not change the live store; until the page is renamed, the link still works, and the mismatch with "Coirs" is only in the page title.
+- **TV in the TV (question 3).** The small video card is not a card around the video. It is a second, smaller television inside the main television. The presentation video stays the large one at the start of the main menu. Each other video (for example ventilation) appears as the small television beside its chapter with a short caption, and an arrow enlarges it without losing the television or its options.
+- **Extra Firm in Ecwid (question 6).** The native Extra Firm option is removed at go-live, because Extra Firm sends the customer to the specialist model. Not before go-live; the live store is not changed now.
+- **Custom Sizes (question 7).** The link opens a contact form. The form carries the model (filled in automatically), the size the customer wants, and an email address for the reply. Open: where the submissions are sent (the owner's mailbox or a form service).
+- **T1 token consolidation.** Approved as a technical refactoring only. The look, colours, typography, layout, interactions and functions must not change. Regression checks and a before-and-after comparison are required. The engine and the Ecwid integrations stay intact.
+- **Media probe.** Run from this environment; see `docs/mobile/MEDIA-DIAGNOSTICS.md`.
+- **Ecwid test product.** 876405767 is authorised as the test product. The procedure is prepared (`docs/mobile/premium/E3-MOBILE-PROCEDURE.md`); **no change is authorised yet**. The owner's explicit approval is required before any Ecwid change. The live store stays untouched.
+- **Device classes (question 1) are still open:** the list in stage T0 and the real devices the owner can provide.
+
 ## 1. What "TV screen" and "large platform" mean here
 
 - **TV screen**: the Product TV monitor of the engine, the moving-image panel on every large screen: desktop and laptop monitors, and tablets of any maker (Apple, Samsung, Huawei, Lenovo, Xiaomi, Microsoft Surface and others), in touch and mouse use, portrait and landscape. It is the same visual language as the mobile configurator, but with its own layout and its own player controls.
@@ -82,8 +95,8 @@ The layout depends on capabilities, not on device names. The browser reports the
 
 1. Approve the device classes (T0) and the matrix in T3, and tell us which tablets and laptops you can provide for the real-device tests (E4), including any Samsung and Huawei devices.
 8. Approve the T1 consolidation (one token file), which changes the code but not the look.
-2. Confirm the naming: the label says "Orthopaedic Coconut **Core**", the verified product page says "Orthopaedic Coconut **Coirs**". The label and the page must match before go-live.
-3. Confirm the video card question: the card should sit only at the side of each video, or around the whole block with its title.
+2. (Decided, see 0b) Naming: the label says "Orthopaedic Coconut **Core**", the verified product page says "Orthopaedic Coconut **Coirs**". The label and the page must match before go-live.
+3. (Decided, see 0b) The video card is a small television inside the main television.
 4. Run `tools/media-probe.mjs` on a machine that reaches the media host and send the numbers.
 5. Approve the E3 test product run (P4), in writing, with the product number.
 6. Approve or refuse the removal of the native Extra Firm option (P5), at go-live only.
