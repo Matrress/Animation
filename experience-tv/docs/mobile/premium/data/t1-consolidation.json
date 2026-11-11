@@ -1,0 +1,20 @@
+{
+ "layerBytes": 18828,
+ "layerImportant": 126,
+ "rulesBefore": 130,
+ "declarationsBefore": 502,
+ "colourLiteralsBefore": 245,
+ "droppedExactDuplicates": 154,
+ "lockedHover": 11,
+ "lockedUnmatched": 34,
+ "removedByMeasurement": 122,
+ "testedByMeasurement": "reused from an earlier measured run",
+ "rulesAfter": 77,
+ "declarationsAfter": 226,
+ "cssBytes": 10457,
+ "importantAfter": 70,
+ "colourLiteralsAfter": 0,
+ "colourTokens": 28,
+ "rgbTokens": 6,
+ "wholeValueTokens": 10
+}

@@ -1,6 +1,6 @@
 /* GRAPHITE BLUE configurator (PREVIEW, not deployed). Palette sampled from the owner's reference screenshot.
    One full-height phone screen per step; four side pillars; a bottom selection panel. No blur, no backdrop-filter. */
-.gx { --bg: #151C26; --panel: #242D3C; --chip: #293649; --chip-line: #3F4E64; --sel: #556A89; --sel-line: #C3D5ED; --dock: #1A2332; --dock-line: #3A4659; --ink: #F2F6FB; --mut: #9FB0C6; --head: #A6B3C4; --dis: #414141;
+.gx { 
   position: fixed; inset: 0; z-index: 70; max-width: 430px; margin: 0 auto; background: var(--bg); color: var(--ink); font-family: var(--f); display: grid; grid-template-columns: 34px 1fr; height: 100vh; height: 100dvh; overflow: hidden; }
 .gx * { box-sizing: border-box; }
 .gx button { font: inherit; color: inherit; cursor: pointer; }
