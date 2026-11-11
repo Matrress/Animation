@@ -174,3 +174,7 @@ Tests: `tools/graphite-full-test.mjs`, 62 of 62. No horizontal overflow at 360, 
 - **Extra Firm** links to the Orthopaedic Coconut product page (`orthopaedic-coconut-coirs-100-organic-latex`), labelled "Specialist Model: Orthopaedic Coconut Core". The link is followed only when the customer taps it. The sliders never navigate and the panel writes nothing to Ecwid. Open point for the owner: the label says "Core", the verified product page says "Coirs"; confirm the wording before the new design goes live.
 - **The live store is not changed at this stage.** The native Ecwid Firmness menu still lists Extra Firm (+£88). Its removal or change is a later step, prepared and approved step by step when the new design is ready to replace the live page.
 - **Colours in the configurator:** the dock leaf is green (as the owner asked). The Firmness brand line "Dunlop Firmness Regulations" stays in Sky blue. The description leaves are turquoise (direction H).
+
+## Turquoise shifted toward blue-teal (owner request, preview only)
+
+The turquoise family moves from blue-green to blue-teal: hue about 191° to about 200°, with the green channel lowered and the blue raised (for example `#1B6676 → #1A5C7E`, `#173842 → #173A52`, `#12303A → #10293F`). The same shift applies to the video card, the three bands and the leaf (`#9FE8FA → #9ADCF8`, `#3FB8D6 → #3FA3D9`). The configurator and the Firmness steps are unchanged, and tests stay at 62 of 62.
