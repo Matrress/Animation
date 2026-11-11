@@ -24,7 +24,12 @@ These are decided and are preserved by every later stage.
 - **T1 token consolidation.** Approved as a technical refactoring only. The look, colours, typography, layout, interactions and functions must not change. Regression checks and a before-and-after comparison are required. The engine and the Ecwid integrations stay intact.
 - **Media probe.** Run from this environment; see `docs/mobile/MEDIA-DIAGNOSTICS.md`.
 - **Ecwid test product.** 876405767 is authorised as the test product. The procedure is prepared (`docs/mobile/premium/E3-MOBILE-PROCEDURE.md`); **no change is authorised yet**. The owner's explicit approval is required before any Ecwid change. The live store stays untouched.
-- **Device classes (question 1) are still open:** the list in stage T0 and the real devices the owner can provide.
+- **Large screens (question 1, answered).** Everything above a phone is a large screen: monitors, laptops and tablets of every make. The rule is in `docs/DEVICE-CLASSES.md` and is adopted. The owner's real test device is an **iPad Pro 12.9 inch, 3rd generation**; Samsung, Huawei and other makes are covered by capability-based code and by simulated tests until a device of each kind is tested.
+- **Custom sizes requests go to the owner's mailbox.** The address was given by the owner in the conversation and is **not** written into the repository or into client-side code; it belongs in the configuration of whatever sends the message. Open (technical, mine to propose): how the form sends the email without exposing the address.
+- **Videos.** The small videos (about 7 to 10 seconds, looping) stay as they are; they are not enlarged. Each model has a full presentation video that can be watched in full. No larger rendition is needed for the small videos.
+- **The television is the selection tool; the phone is the short version.** The television's main job is to guide the selection step by step, interactively and easily, on the rules built so far. The phone version is much shorter. The television comes first; the phone layer's production build waits.
+- **The owner specifies every button of the large monitor** (what it shows, label, where it leads), on the sections already agreed, with modifications to optimise. The template, pre-filled from today's television, is `docs/TV-BUTTON-SPEC.md`.
+- **Standing rule: indexing and speed.** After every change the code must stay precise, load well and index well; smooth for the customer and for Google. `docs/SEO-AND-PERFORMANCE-GUARDRAILS.md` and `tests/guardrails.mjs` enforce it: a change that gets a ratchet worse is not merged.
 
 ## 1. What "TV screen" and "large platform" mean here
 
@@ -62,7 +67,8 @@ The layout depends on capabilities, not on device names. The browser reports the
 
 - **T0. Device classes.** Define the classes the engine uses, in `docs/DEVICE-CLASSES.md`: width and height of the monitor container (not of the window), orientation, pointer (fine or coarse), hover, touch points, zoom and reduced motion. Gate: the owner approves the classes.
 - **T1. Container-based layout.** Move the monitor's breakpoints to CSS container queries, so the monitor adapts to its own width wherever it is embedded. Today the engine uses viewport media queries and `pointer: coarse` for tap sizes. Rewrite the comments that name iPad in capability terms. Gate: the same screens appear at the same container widths, whatever the device.
-- **T2. One token file and the button roles** (sections 2 and 3, stage T1 above), applied to the monitor.
+- **T2. One token file and the button roles** (sections 2 and 3, stage T1 above), applied to the monitor. The token file for the phone preview exists and is verified (T1 of the preview; `docs/mobile/premium/T1-TOKEN-CONSOLIDATION.md`); the television's own styles are next.
+- **T2b. The two open targets from the guardrails** (`docs/SEO-AND-PERFORMANCE-GUARDRAILS.md`, section 3): videos are requested at load (only the opening loop is needed; the full presentation video should wait to be opened), and the product block jumps by 927 pixels on a portrait tablet when the television is inserted (layout shift 0.53 to 0.60, target below 0.1). Both need the owner's button specification first.
 - **T3. Test matrix, device class by engine.**
   - Engines: Blink (Chrome, Edge, Samsung Internet, Huawei Browser), WebKit (Safari on iPadOS and macOS), Gecko (Firefox).
   - Classes: 7 to 8 inch tablet, 10 to 11 inch, 12 to 13 inch, 14 to 16 inch laptop, 21 to 24 inch monitor, 27 inch and wider or ultrawide.
@@ -123,6 +129,6 @@ The project is finished when each of these is true, with the evidence recorded:
 
 ## 7. What we do next
 
-1. The owner reads this plan and answers the seven questions in section 4.
-2. Stage T0 starts once the owner approves the device classes; the token consolidation follows.
-3. The owner runs the media probe in parallel, because it does not depend on the code.
+1. The owner fills in `docs/TV-BUTTON-SPEC.md`, part by part (chapters first, then the selection steps).
+2. From that specification, stage T builds the television's selection experience; the two open targets (T2b) are fixed in the same pass.
+3. The phone layer's production build, the Ecwid test (E3, needs the owner's explicit approval) and the real-device tests follow.
