@@ -19,9 +19,12 @@ const PROPS = ['display', 'position', 'top', 'right', 'bottom', 'left', 'z-index
   'border-top-left-radius', 'border-top-right-radius', 'border-bottom-right-radius', 'border-bottom-left-radius',
   'box-shadow', 'opacity', 'filter', 'transform', 'isolation', 'font-family', 'font-size', 'font-weight', 'font-style', 'line-height', 'letter-spacing', 'text-transform',
   'text-decoration-line', 'text-decoration-color', 'text-align', 'white-space', 'fill', 'stroke', 'stroke-width', 'gap', 'grid-template-columns', 'flex-direction',
-  'align-items', 'justify-content', 'visibility', 'cursor', 'outline-color', 'outline-style', 'outline-width', 'text-shadow', 'vertical-align'];
+  'align-items', 'justify-content', 'visibility', 'cursor', 'outline-color', 'outline-style', 'outline-width', 'text-shadow', 'vertical-align',
+  // added after the first pixel comparison found a changed transform-origin that the first list did not read
+  'transform-origin', 'clip-path', 'mix-blend-mode', 'backdrop-filter', 'pointer-events', 'aspect-ratio', 'object-fit', 'object-position', 'text-overflow', 'word-break', 'overflow-wrap', 'text-indent', 'list-style-position', 'background-repeat', 'background-origin', 'background-clip', 'border-image-source', 'outline-offset', 'flex-grow', 'flex-shrink', 'flex-basis', 'grid-column-start', 'grid-row-start', 'order', 'align-self', 'justify-self', 'row-gap', 'column-gap', 'text-underline-offset', 'text-decoration-thickness', 'text-decoration-style', 'font-variant-numeric', 'font-stretch', '-webkit-line-clamp', 'mask-image', 'will-change', 'scroll-margin-top', 'hyphens', 'user-select', 'content-visibility', 'contain', 'perspective', 'transform-style', 'backface-visibility', 'stroke-linecap', 'stroke-linejoin', 'stroke-dasharray', 'fill-opacity', 'stroke-opacity', 'paint-order', 'shape-rendering', 'transition-property', 'animation-name'];
 const PSEUDO = ['content', 'display', 'position', 'width', 'height', 'background-color', 'background-image', 'border-top-left-radius', 'box-shadow', 'transform', 'opacity',
-  'filter', 'left', 'right', 'top', 'bottom', 'color', 'z-index', 'margin-top', 'margin-bottom'];
+  'filter', 'left', 'right', 'top', 'bottom', 'color', 'z-index', 'margin-top', 'margin-bottom',
+  'transform-origin', 'border-top-right-radius', 'border-bottom-right-radius', 'border-bottom-left-radius', 'border-top-width', 'border-top-style', 'border-top-color', 'background-size', 'background-position', 'background-repeat', 'mix-blend-mode', 'mask-image', 'clip-path', 'pointer-events', 'font-size', 'line-height', 'letter-spacing', 'text-transform', 'font-weight', 'text-align', 'padding-top', 'padding-left', 'margin-left', 'margin-right', 'border-left-width', 'border-left-style', 'border-left-color', 'will-change', 'backdrop-filter'];
 
 // Source of the in-page function. detail=true returns one readable string per element, false returns one hash string.
 export const SIG_SRC = `(function(){

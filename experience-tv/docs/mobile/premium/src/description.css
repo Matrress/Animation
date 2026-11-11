@@ -50,6 +50,7 @@
 #bp-top .p-proof > p { color: var(--dd-c-c3d5ed); }
 /* accordions: hairlines, petrol markers */
 #bp-top .p-note { border-top: 1px solid var(--dd-line); }
+#bp-top .p-note > summary { color: var(--dd-ink); }
 #bp-top .b-cta__s { color: var(--dd-c-c3d5ed); }
 #bp-top .p-video .p-cap { opacity: 1; }
 /* text inside the dark bands is light, including the opened accordion in the seven zones */
@@ -160,11 +161,12 @@
   border: 1px solid rgba(var(--dd-rgb-sky), .55) !important;
   box-shadow: var(--dd-shadow-3) !important;
 }
-#bp-top .b-btn-hero-o, #bp-top .b-main-video-actions .b-btn-o, #bp-top .b-cta .b-btn-o {
+#bp-top .b-btn-hero-o {
+  background: transparent !important;
   border: 1px solid rgba(var(--dd-rgb-white), .55) !important;
   box-shadow: var(--dd-shadow-4) !important;
 }
-#bp-top .btn--o {
+#bp-top .btn--o, #bp-top .b-main-video-actions .b-btn-o, #bp-top .b-cta .b-btn-o {
   background: transparent !important;
   color: var(--dd-white) !important;
   border: 1px solid rgba(var(--dd-rgb-white), .55) !important;

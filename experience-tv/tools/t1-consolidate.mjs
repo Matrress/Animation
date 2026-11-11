@@ -100,11 +100,15 @@ async function main() {
   E.forEach(e => { e.locked = STATE.test(e.sel) || !isMatched.get(e.sel); });
   stats.lockedHover = E.filter(e => e.alive && STATE.test(e.sel)).length; stats.lockedUnmatched = E.filter(e => e.alive && !STATE.test(e.sel) && !isMatched.get(e.sel)).length;
   let removed = 0, tested = 0;
-  const cacheFile = process.env.T1_CACHE, reuse = process.argv.includes('--reuse');
+  const cacheFile = process.env.T1_CACHE, reuse = process.argv.includes('--reuse'), revalidate = process.argv.includes('--revalidate');
   if (reuse && cacheFile) { const c = JSON.parse(readFileSync(cacheFile, 'utf8')); E.forEach((e, i) => { if (e.alive && !e.locked) e.alive = c[i]; }); console.log('reused measured result from', cacheFile); }
   else if (!noOracle) {
-    for (const e of E) {
+    // --revalidate: after the list of measured properties was widened, only the declarations an earlier run removed are tested again
+    // (a declaration kept by a weaker measurement is still needed under a stronger one)
+    const prior = revalidate && cacheFile ? JSON.parse(readFileSync(cacheFile, 'utf8')) : null;
+    for (const [i, e] of E.entries()) {
       if (!e.alive || e.locked) continue;
+      if (prior && prior[i]) continue;
       e.alive = false; tested++;
       const same = await setCss(emit(rules, E));
       if (same) { removed++; } else e.alive = true;
