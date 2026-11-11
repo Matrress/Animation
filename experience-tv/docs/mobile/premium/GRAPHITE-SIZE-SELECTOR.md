@@ -178,3 +178,15 @@ Tests: `tools/graphite-full-test.mjs`, 62 of 62. No horizontal overflow at 360, 
 ## Turquoise shifted toward blue-teal (owner request, preview only)
 
 The turquoise family moves from blue-green to blue-teal: hue about 191° to about 200°, with the green channel lowered and the blue raised (for example `#1B6676 → #1A5C7E`, `#173842 → #173A52`, `#12303A → #10293F`). The same shift applies to the video card, the three bands and the leaf (`#9FE8FA → #9ADCF8`, `#3FB8D6 → #3FA3D9`). The configurator and the Firmness steps are unchanged, and tests stay at 62 of 62.
+
+## Lead version and video cards (owner, preview only)
+
+The lead version is H with the blue-teal turquoise, saved as `preview/graphite.html`. The main video card is unchanged.
+
+- Each video in the "See the material at work" row sits on its own turquoise card, with an ambient light beneath it (a soft blurred glow under the card).
+- The cover video gets the same card and ambient light.
+- The cover labels ("100 % Organic Cotton" and similar) are white; before, they were dark on dark and hard to read.
+
+Open point for the owner: "the cards around the TVs should only be at the sides". Not implemented yet: it is not clear whether the card should sit only at the side of the frame or around the whole block with its title.
+
+Tests: `tools/graphite-full-test.mjs`, 62 of 62.

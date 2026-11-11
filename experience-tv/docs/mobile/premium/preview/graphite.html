@@ -5167,6 +5167,31 @@ body { margin: 0; background: #F7F7F7; }
 #bp-top .b-main-video-card .b-btn-o { background: transparent !important; border: 1px solid rgba(255, 255, 255, .6) !important; color: #FFFFFF !important; }
 #bp-top .b-main-video-card .b-btn-o span, #bp-top .b-main-video-card .b-btn-p span { color: #FFFFFF !important; }
 #bp-top .b-main-video-card .p-cap { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+/* other videos (the "See the material at work" row): each one sits on its own turquoise card, with an ambient light beneath */
+#bp-top .p-row .b-mtv {
+  position: relative; isolation: isolate;
+  background: linear-gradient(160deg, #1A5C7E 0%, #163D57 45%, #0B1C2A 100%) !important;
+  border: 1px solid rgba(80, 205, 253, .4) !important; border-radius: 18px !important;
+  padding: 12px !important;
+  box-shadow: 0 16px 34px -14px rgba(26, 92, 126, .75) !important;
+}
+#bp-top .p-row .b-mtv::after {
+  content: ''; position: absolute; left: 12%; right: 12%; bottom: -18px; height: 34px; z-index: -1;
+  background: radial-gradient(closest-side, rgba(80, 205, 253, .42), transparent); filter: blur(9px); pointer-events: none;
+}
+#bp-top .p-row .b-mtv .p-video, #bp-top .p-row .b-mtv .b-mtv__frame { background: linear-gradient(135deg, #0E2A3E, #0B1C2A) !important; border: 1px solid rgba(80, 205, 253, .3) !important; }
+#bp-top .p-row .b-mtv__title, #bp-top .p-row .b-mtv__desc, #bp-top .p-row .b-mtv .p-cap { color: #FFFFFF !important; }
+/* the cover video (its own turquoise card with ambient light) and its readable labels */
+#bp-top .b-cover-micro-wrap {
+  position: relative; isolation: isolate; border-radius: 20px !important; padding: 12px !important;
+  background: linear-gradient(160deg, #1A5C7E 0%, #163D57 45%, #0B1C2A 100%) !important;
+  border: 1px solid rgba(80, 205, 253, .4) !important; box-shadow: 0 16px 34px -14px rgba(26, 92, 126, .75) !important;
+}
+#bp-top .b-cover-micro-wrap::after {
+  content: ''; position: absolute; left: 12%; right: 12%; bottom: -18px; height: 34px; z-index: -1;
+  background: radial-gradient(closest-side, rgba(80, 205, 253, .42), transparent); filter: blur(9px); pointer-events: none;
+}
+#bp-top .b-cover-micro-wrap, #bp-top .b-cover-micro-wrap * { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
 </style>
 <script>
 (function(){var g=document.getElementById('gallery');var im=window.DDDATA.images;g.innerHTML='<div class="sg-main"><img src="'+im[0]+'" alt="Botanic Original 100% Organic Latex Mattress" fetchpriority="high"></div><div class="sg-dots">'+im.map(function(){return '<i></i>';}).join('')+'</div><div class="sg-bar"><img src="'+im[0]+'" alt=""><span>Gallery · '+im.length+' photos</span><button id="gal-btn" type="button">Show gallery</button></div>';
