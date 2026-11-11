@@ -29,6 +29,7 @@ These are decided and are preserved by every later stage.
 - **Videos.** The small videos (about 7 to 10 seconds, looping) stay as they are; they are not enlarged. Each model has a full presentation video that can be watched in full. No larger rendition is needed for the small videos.
 - **The television is the selection tool; the phone is the short version.** The television's main job is to guide the selection step by step, interactively and easily, on the rules built so far. The phone version is much shorter. The television comes first; the phone layer's production build waits.
 - **The owner specifies every button of the large monitor** (what it shows, label, where it leads), on the sections already agreed, with modifications to optimise. The template, pre-filled from today's television, is `docs/TV-BUTTON-SPEC.md`.
+- **Standing rule: Ecwid is the executor.** Ecwid owns the product, its options, the price, the cart, the checkout and the orders; our code only presents, guides and drives the store's own controls, and steps aside if anything does not fit. The contract, the state of the real store on 11 November 2026 and the canary are in `docs/ECWID-COMPATIBILITY.md` and `tests/live/canary.sh`.
 - **Standing rule: indexing and speed.** After every change the code must stay precise, load well and index well; smooth for the customer and for Google. `docs/SEO-AND-PERFORMANCE-GUARDRAILS.md` and `tests/guardrails.mjs` enforce it: a change that gets a ratchet worse is not merged.
 
 ## 1. What "TV screen" and "large platform" mean here
