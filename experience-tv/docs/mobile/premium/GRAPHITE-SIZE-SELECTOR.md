@@ -212,3 +212,11 @@ The owner's button mock-up was not received with this message (only the cover-ca
 - Each cover option has a 1.5 px sky-blue edge (`#50CDFD`), as the owner specified.
 - The plus marker is sky blue. It was white before because a stroke rule overrode its colour; the lines now take the blue explicitly.
 - The plus markers on the light ground are deep turquoise (`#1A5C7E`), so they read as a blue sign on white.
+
+## Round 3: graphite panel, softer halo, one button style (owner, preview only)
+
+- **Cover options:** the four cards sit on a grey-graphite panel (`#2E363C → #232B31`, 22 px radius, 14 px inner margin). The page margins on both sides stay white.
+- **Ambient light:** reduced again to a very faint halo (about 8 % opacity), so it no longer brightens the surface around the cards.
+- **Buttons:** every primary button of the description (`b-btn-p`, `b-btn-hero-p`, `btn--p`, the closing call to action) has the turquoise gradient, white text, a thin sky-blue edge and a faint 4 px halo. Every secondary button has a white edge and the same halo in white.
+
+Tests: 62 of 62.

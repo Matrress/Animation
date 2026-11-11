@@ -84,3 +84,23 @@
 /* the same plus marker on the light ground: deep turquoise, so it reads as a blue sign */
 #bp-top .sum-arr { color: #1A5C7E; }
 #bp-top .sum-arr line { stroke: currentColor !important; }
+/* round 3 (owner): the ambient light is now a very faint halo; the cover options sit on a grey-graphite panel with white margins; the button style applies to every button of the same role */
+#bp-top .b-cover-menu::after, #bp-top .p-row .b-mtv::after, #bp-top .b-cover-micro-wrap::after {
+  opacity: .5 !important; height: 12px !important; bottom: -6px !important;
+  background: radial-gradient(closest-side, rgba(80, 205, 253, .12), transparent) !important;
+}
+#bp-top .b-cover-menus {
+  background: linear-gradient(180deg, #2E363C 0%, #232B31 100%) !important;
+  border-radius: 22px !important; padding: 14px !important;
+  box-shadow: 0 10px 24px -16px rgba(20, 28, 34, .6);
+}
+#bp-top .b-cover-menus .b-cover-menu { margin: 0 !important; }
+#bp-top .b-btn-p, #bp-top .b-btn-hero-p, #bp-top .btn--p, #bp-top .b-cta .b-btn-p, #bp-top .b-main-video-actions .b-btn-p {
+  background: linear-gradient(135deg, #1A5C7E, #163D57) !important; color: #FFFFFF !important;
+  border: 1px solid rgba(80, 205, 253, .55) !important;
+  box-shadow: 0 0 0 4px rgba(80, 205, 253, .14), 0 6px 14px -8px rgba(26, 92, 126, .8) !important;
+}
+#bp-top .b-btn-o, #bp-top .b-btn-hero-o, #bp-top .btn--o, #bp-top .b-main-video-actions .b-btn-o, #bp-top .b-cta .b-btn-o {
+  background: transparent !important; color: #FFFFFF !important; border: 1px solid rgba(255, 255, 255, .55) !important;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, .06) !important;
+}
