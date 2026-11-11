@@ -168,3 +168,9 @@ Not yet decided, and not changed: the configurator steps (Size, Firmness, Depth,
 **Extra Firm, open.** The Extra Firm card is a plain link to the verified specialist product page (Orthopaedic Coconut Core). The sliders never navigate, and the panel writes nothing to Ecwid. The preview cannot change the live store, so the **native Ecwid Firmness menu still lists Extra Firm (+£88)**. Removing or hiding that option is an edit to the live store and needs the owner's explicit approval; it has not been done.
 
 Tests: `tools/graphite-full-test.mjs`, 62 of 62. No horizontal overflow at 360, 390 or 430 px.
+
+## Working logic for this stage (owner, preview only)
+
+- **Extra Firm** links to the Orthopaedic Coconut product page (`orthopaedic-coconut-coirs-100-organic-latex`), labelled "Specialist Model: Orthopaedic Coconut Core". The link is followed only when the customer taps it. The sliders never navigate and the panel writes nothing to Ecwid. Open point for the owner: the label says "Core", the verified product page says "Coirs"; confirm the wording before the new design goes live.
+- **The live store is not changed at this stage.** The native Ecwid Firmness menu still lists Extra Firm (+£88). Its removal or change is a later step, prepared and approved step by step when the new design is ready to replace the live page.
+- **Colours in the configurator:** the dock leaf is green (as the owner asked). The Firmness brand line "Dunlop Firmness Regulations" stays in Sky blue. The description leaves are turquoise (direction H).
