@@ -11,7 +11,14 @@
 #bp-top .b-sh__s, #bp-top p { color: var(--dd-ink-2); }
 #bp-top b { color: var(--dd-ink); }
 /* heading mark: the header leaf, the only green in the description */
-#bp-top .b-sh__t::before { width: 20px; height: 13px; border-radius: 100% 0; transform: rotate(-28deg); margin: 4px 0 14px 2px; }
+#bp-top .b-sh__t::before {
+  width: 20px;
+  height: 13px;
+  border-radius: 100% 0;
+  transform: rotate(-28deg);
+  transform-origin: 30% 70%;
+  margin: 4px 0 14px 2px;
+}
 /* hero: no dark block; the video sits in a clean white card, the frame itself stays dark (it is media) */
 #bp-top .b-hero { background: none; }
 #bp-top .b-main-video-card .b-mtv__head { color: var(--dd-ink-2); }
@@ -33,6 +40,7 @@
   height: 80px;
   border-radius: 100% 0;
   transform: rotate(-28deg);
+  pointer-events: none;
 }
 #bp-top .p-feature h2 { color: var(--dd-c-f2f7fb); }
 #bp-top .p-feature .b-zone-pill__name { color: var(--dd-c-f2f7fb); }
@@ -97,7 +105,7 @@
 #bp-top .b-main-video-card .p-video { background: var(--dd-grad-3) !important; border: 1px solid rgba(var(--dd-rgb-sky), .35) !important; }
 /* other videos (the "See the material at work" row): each one sits on its own turquoise card, with an ambient light beneath */
 #bp-top .p-row .b-mtv { position: relative; isolation: isolate; background: var(--dd-grad-2) !important; padding: 12px !important; }
-#bp-top .p-row .b-mtv::after { content: ''; position: absolute; z-index: -1; }
+#bp-top .p-row .b-mtv::after { content: ''; position: absolute; z-index: -1; pointer-events: none; }
 #bp-top .p-row .b-mtv .p-video, #bp-top .p-row .b-mtv .b-mtv__frame {
   background: var(--dd-grad-3) !important;
   border: 1px solid rgba(var(--dd-rgb-sky), .3) !important;
@@ -105,7 +113,7 @@
 #bp-top .p-row .b-mtv__desc { color: var(--dd-white) !important; }
 /* the cover video (its own turquoise card with ambient light) and its readable labels */
 #bp-top .b-cover-micro-wrap { position: relative; isolation: isolate; border-radius: 20px !important; background: var(--dd-grad-2) !important; }
-#bp-top .b-cover-micro-wrap::after { content: ''; position: absolute; z-index: -1; }
+#bp-top .b-cover-micro-wrap::after { content: ''; position: absolute; z-index: -1; pointer-events: none; }
 #bp-top .b-cover-micro-wrap, #bp-top .b-cover-micro-wrap * { color: var(--dd-white) !important; }
 /* the cover options module (Organic Cotton, Double-Sided, Aloe Vera, Cashmere): the same turquoise card and ambient light as the videos */
 #bp-top .b-cover-menu {
@@ -115,7 +123,7 @@
   overflow: visible !important;
   background: var(--dd-grad-2) !important;
 }
-#bp-top .b-cover-menu::after { content: ''; position: absolute; z-index: -1; }
+#bp-top .b-cover-menu::after { content: ''; position: absolute; z-index: -1; pointer-events: none; }
 #bp-top .b-cover-menu summary, #bp-top .b-cbody-cover { color: var(--dd-white) !important; }
 #bp-top .b-cover-menu summary *, #bp-top .b-cbody-cover * { color: var(--dd-white) !important; -webkit-text-fill-color: var(--dd-white) !important; }
 #bp-top .b-cover-menu details[open] { background: transparent !important; }
