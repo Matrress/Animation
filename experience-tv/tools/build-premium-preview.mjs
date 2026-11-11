@@ -165,6 +165,8 @@ const cssTag = '<style id="content-css">' + S('content.css') + '</style>';
 writeFileSync(join(P, 'preview', 'graphite.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-dark">' + S('description-dark.css') + '</style>'));
 // direction C (clean light, earned dark): the same page with only the description colour layer swapped
 writeFileSync(join(P, 'preview', 'graphite-light.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-light">' + S('description-light.css') + '</style>'));
+// direction D (turquoise graphite): direction C plus a turquoise layer that replaces the green petrol and leaf
+writeFileSync(join(P, 'preview', 'graphite-turquoise.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-light">' + S('description-light.css') + '</style><style id="description-turquoise">' + S('description-turquoise.css') + '</style>'));
 mkdirSync(join(P, 'preview'), { recursive: true });
 writeFileSync(join(P, 'preview', 'index.html'), final);
 const sizes = { total: Buffer.byteLength(final), gzip: gzipSync(final).length, firmnessCoreBytes: coreSrc.length, syncBytes: S('sync.js').length, configuratorBytes: S('configurator.js').length, premiumCssBytes: S('premium.css').length, contentCssBytes: S('content.css').length };

@@ -1,0 +1,44 @@
+/* Turquoise graphite (graphite-turquoise preview ONLY). A layer over description-light.css: same structure and content.
+   The green petrol #2F565A is replaced by turquoise graphite (hue about 190 degrees, blue-cyan, not green). Dark bands are a
+   turquoise graphite base with one restrained glint: a hairline on top, one soft cyan light, no sparkle. Sky #50CDFD is the
+   glint on dark and never text on light. The leaf is turquoise, not green. */
+#bp-top {
+  --petrol: #1B6676; --depth: #173842; --turq: #1B6676; --turq-deep: #12303A; --glint: #50CDFD; --glint-soft: #9FE8FA;
+  --accm: #1B6676; --acc: #1B6676;
+}
+#bp-top a, #bp-top p a, #bp-top .b-sh__s a, #bp-top .p-body a { color: #1B6676; text-decoration-color: rgba(27, 102, 118, .45); }
+/* heading mark: the leaf in turquoise */
+#bp-top .b-sh__t::before, #bp-top .p-feature .b-sh__t::before { background: linear-gradient(135deg, #9FE8FA, #3FB8D6); }
+/* primary button: turquoise graphite with white text (6.5:1); outline in the same hue */
+#bp-top .b-btn-p, #bp-top .b-btn-hero-p, #bp-top .b-main-video-actions .b-btn-p { background: #1B6676 !important; color: #FFFFFF !important; }
+#bp-top .b-btn-p:hover, #bp-top .b-main-video-actions .b-btn-p:hover { background: #173842 !important; color: #FFFFFF !important; }
+#bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o { border-color: #1B6676 !important; color: #1B6676 !important; }
+#bp-top .b-btn-o:hover { background: rgba(27, 102, 118, .08) !important; color: #173842 !important; }
+/* the three dark bands: turquoise graphite, one hairline glint on top, one soft cyan light */
+#bp-top .p-feature, #bp-top .p-proof, #bp-top .b-cta {
+  background:
+    radial-gradient(80% 55% at 100% 0%, rgba(80, 205, 253, .16), transparent 62%),
+    linear-gradient(175deg, #173842 0%, #12303A 100%);
+  box-shadow: inset 0 1px 0 rgba(80, 205, 253, .38);
+}
+#bp-top .p-feature::after { background: linear-gradient(135deg, rgba(80, 205, 253, .18), rgba(80, 205, 253, .02)); }
+#bp-top .p-feature .b-zone-pill { background: #1B3A44; border: 1px solid #245565; }
+#bp-top .p-zs { background: #0F2228; border: 1.5px solid #245565; }
+#bp-top .p-zlegend { color: #C3D5ED; }
+#bp-top .p-feature .b-zone-pill__num { color: #50CDFD; }
+/* the closing button and its hover stay the glint */
+#bp-top .b-cta .b-btn-p { background: #50CDFD !important; color: #0F1A22 !important; }
+#bp-top .b-cta .b-btn-p:hover { background: #9FE8FA !important; color: #0F1A22 !important; }
+/* small marks and accents on light: turquoise, not green */
+#bp-top .b-fdecision__mark { background: #1B6676; color: #FFFFFF; }
+#bp-top .b-fconf__notice { border-left-color: #1B6676; }
+#bp-top .b-sum--who { border-color: #1B6676; }
+#bp-top .b-sum--who .sum-arr, #bp-top .p-note > summary::after, #bp-top .p-note summary .sum-arr, #bp-top summary .sum-arr { color: #1B6676 !important; }
+#bp-top .p-glance svg { stroke: #1B6676; }
+#bp-top .b-hcol strong { color: #1B6676; }
+#bp-top .b-floating-top, .b-floating-top { background: #173842; color: #FFFFFF; border: 1px solid rgba(80, 205, 253, .45); }
+/* the header-style leaf in the decision cards and dark bands stays turquoise too */
+#bp-top .p-glance .b-hero-bar__item { border-color: #D3E0E5; }
+#bp-top .p-video { background: linear-gradient(135deg, #173842, #0F2228) !important; }
+#bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o { color: #1B6676 !important; }
+#bp-top .b-btn-o span, #bp-top .b-main-video-actions .b-btn-o span { color: #1B6676 !important; }

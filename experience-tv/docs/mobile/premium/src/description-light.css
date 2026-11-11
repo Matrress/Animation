@@ -84,3 +84,13 @@
 #bp-top .b-cover-micro-wrap { background: #FFFFFF; border: 1px solid #D3E0E5; }
 /* floating back-to-top */
 #bp-top .b-floating-top, .b-floating-top { background: #2F565A; color: #FFFFFF; border: 0; }
+/* button labels inherit the button colour (the content layer wrote an inline white on each label) */
+#bp-top .b-btn span { color: inherit !important; }
+/* video cover: a dark media frame with a legible caption */
+#bp-top .p-video { background: linear-gradient(135deg, #1E3036, #14262C) !important; border-radius: 14px; }
+#bp-top .p-video .p-cap { color: #E6F3F8 !important; opacity: 1; }
+/* text inside the dark bands is light, including the opened accordion in the seven zones */
+#bp-top .p-feature strong, #bp-top .p-feature b, #bp-top .p-feature h3, #bp-top .p-feature h4, #bp-top .p-feature summary, #bp-top .p-feature .p-n-title, #bp-top .p-feature .p-n-sub { color: #F2F7FB !important; }
+#bp-top .p-feature p, #bp-top .p-feature .p-body, #bp-top .p-feature .p-body p, #bp-top .p-feature li { color: #C9D3DB !important; }
+#bp-top .p-feature summary > *, #bp-top .p-feature .p-note > summary::after, #bp-top .p-feature summary .sum-arr { color: #50CDFD !important; }
+#bp-top .p-proof strong, #bp-top .p-proof b, #bp-top .b-cta strong, #bp-top .b-cta b { color: #FFFFFF !important; }

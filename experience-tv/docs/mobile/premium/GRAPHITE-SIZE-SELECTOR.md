@@ -93,3 +93,23 @@ Contrast (`data/description-light-contrast.json`): every text pair used on the p
 Layout: no horizontal overflow at 360, 390 or 430 px. `tools/graphite-full-test.mjs` still passes 62 of 62.
 
 Evidence: `shots/description-colours/compare-three.jpg` (original light, dark B, clean light C, side by side), `light/` (C slices), `before/`, `after/`.
+
+## Direction D prototype: turquoise graphite instead of green (preview only)
+
+`preview/graphite-turquoise.html` = direction C plus `src/description-turquoise.css`. Built from the same page; the configurator and tests are unchanged.
+
+- **Why:** the green petrol `#2F565A` and the green leaf read as military and slightly dull. Turquoise graphite keeps the dark, premium weight of the bands but sits in the blue-cyan family (hue about 190°, not 186° green-teal).
+- **Dark bands:** turquoise graphite gradient `#173842 → #12303A`, one hairline glint on top (`rgba(80,205,253,.38)`), one soft cyan light in the corner. No sparkle, no shine animation.
+- **Primary button and links:** `#1B6676` (white text, 6.5:1). Outline buttons use the same hue.
+- **Leaf:** turquoise gradient `#9FE8FA → #3FB8D6`. It is no longer green anywhere in the description.
+- **Sky `#50CDFD`:** the glint on dark only (zone numbers, closing button, accordion markers); never text on light.
+
+**Decision for the owner:** the owner's four colours are kept as base and ink (`#272D32`, `#3E474D`, `#1E3036`). The petrol `#2F565A` is the one colour replaced in D, because it is the green-leaning one. Keep it if the green-teal is wanted after all.
+
+**Fixes made while checking the shots (both C and D):** the button labels had an inline white colour that made the outline button look empty; the video caption was too faint on the dark frame; the text inside the seven-zone band (headings and the opened "How each zone works" accordion) was dark on dark.
+
+Contrast (`data/description-turquoise-contrast.json`): every text pair used on the page passes AA, the lowest at 5.45:1 (captions on the mist ground). The rejected pair (Sky as text on light) stays at 1.69:1 and is recorded.
+
+Layout: no horizontal overflow at 360, 390 or 430 px for either C or D. `tools/graphite-full-test.mjs`: 62 of 62.
+
+Evidence: `shots/description-colours/compare-c-d.jpg` (C and D side by side), `hero-c-d.jpg`, `turquoise/`, `light/`.
