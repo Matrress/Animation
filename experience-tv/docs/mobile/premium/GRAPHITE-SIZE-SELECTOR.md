@@ -150,3 +150,9 @@ Contrast: white on the card and the bands is above 6.5:1 at every stop (the ligh
 Layout: no horizontal overflow at 360, 390 or 430 px. `tools/graphite-full-test.mjs`: 62 of 62.
 
 Evidence: `shots/description-colours/compare-c-hybrid.jpg` (C and H side by side), `hybrid/` (H slices).
+
+## Decision: description direction H (owner approved, preview only)
+
+The owner chose H: the clean light ground for the facts (the white tiles, dark text), the video card in turquoise graphite with white text, and the three turquoise graphite bands (seven zones, proof, closing call to action). The owner also confirmed that legibility and contrast are the priority.
+
+Not yet decided, and not changed: the configurator steps (Size, Firmness, Depth, Cover) still use the Graphite Blue panel; whether they move to the turquoise family, whether H is merged into `graphite.html`, and the open wording questions in the earlier sections. None of these is deployed; the live store is untouched.
