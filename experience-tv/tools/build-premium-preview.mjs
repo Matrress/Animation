@@ -167,6 +167,8 @@ writeFileSync(join(P, 'preview', 'graphite.html'), graphite.replace(body, () => 
 writeFileSync(join(P, 'preview', 'graphite-light.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-light">' + S('description-light.css') + '</style>'));
 // direction D (turquoise graphite): direction C plus a turquoise layer that replaces the green petrol and leaf
 writeFileSync(join(P, 'preview', 'graphite-turquoise.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-light">' + S('description-light.css') + '</style><style id="description-turquoise">' + S('description-turquoise.css') + '</style>'));
+// direction E (turquoise graphite gradient, white text): the turquoise layer plus the gradient layer, on the same page
+writeFileSync(join(P, 'preview', 'graphite-gradient.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-light">' + S('description-light.css') + '</style><style id="description-turquoise">' + S('description-turquoise.css') + '</style><style id="description-gradient">' + S('description-gradient.css') + '</style>'));
 mkdirSync(join(P, 'preview'), { recursive: true });
 writeFileSync(join(P, 'preview', 'index.html'), final);
 const sizes = { total: Buffer.byteLength(final), gzip: gzipSync(final).length, firmnessCoreBytes: coreSrc.length, syncBytes: S('sync.js').length, configuratorBytes: S('configurator.js').length, premiumCssBytes: S('premium.css').length, contentCssBytes: S('content.css').length };

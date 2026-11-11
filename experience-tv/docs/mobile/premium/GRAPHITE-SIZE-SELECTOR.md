@@ -113,3 +113,24 @@ Contrast (`data/description-turquoise-contrast.json`): every text pair used on t
 Layout: no horizontal overflow at 360, 390 or 430 px for either C or D. `tools/graphite-full-test.mjs`: 62 of 62.
 
 Evidence: `shots/description-colours/compare-c-d.jpg` (C and D side by side), `hero-c-d.jpg`, `turquoise/`, `light/`.
+
+## Direction E: turquoise graphite gradient, white text (preview only)
+
+`preview/graphite-gradient.html` = the turquoise layer (D) plus `src/description-gradient.css`. This is the working direction now.
+
+- **Text:** pure `#FFFFFF` everywhere in the description, no grey shades. Verified in Chromium: 464 of 464 text elements compute to `rgb(255, 255, 255)`.
+- **Ground:** one long gradient from turquoise graphite `#1A5F6E` (top) through `#163F4B` and `#0F2A33` to deep graphite `#0A1E24` (bottom). Text sits on a dark ground in every section.
+- **Seven zones:** the gradient the owner singled out, `#173842 → #12303A` with a corner turquoise glint, kept as is.
+- **Proof row and closing band:** the deepest graphite, to hold the white text firmly.
+- **Lines and accents:** turquoise `#50CDFD` as hairlines, edges, glints and the marker glyphs only; never as text.
+- **Leaf:** turquoise, the only ornament. No green anywhere.
+- **Hero:** no card around the video; the frame keeps a turquoise edge.
+- **Buttons:** turquoise graphite fill `#1B6676 → #163F4B` with white text (6.5:1 at the lightest point); outline in white.
+
+Contrast (`data/description-gradient-contrast.json`): white on every background stop is at least 6.54:1; most stops are above 11:1.
+
+Trade-off: white text needs a dark ground, so the light sections of C and D are retired in this version. C and D stay in the record for comparison.
+
+Layout: no horizontal overflow at 360, 390 or 430 px. `tools/graphite-full-test.mjs`: 62 of 62.
+
+Evidence: `shots/description-colours/compare-d-e.jpg` (D and E side by side), `gradient/` (E slices).
