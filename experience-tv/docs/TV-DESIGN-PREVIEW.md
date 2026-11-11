@@ -33,9 +33,9 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 - **Depth is a mattress in profile**: long, both ends visible, a graphite cover around a latex core, the thickness varies (20, 24, 26 cm) with the 26 cm outline dashed behind. It is drawn about 1.5 times thicker than life so the difference can be seen. (This replaces the earlier use of the traced front edge of the core drawing, which read as a thin slanted strip.)
 - **Covers:** the four photographs and the information board have the same height and align.
 
-## Side panels dark again (owner, later the same day)
+## Side panels stay white (owner's final word)
 
-The order rail (left) and "Your selection" (right) are graphite blue again, with white text; only the middle (the stage) is light, with white cards. On the rail the current step is a lighter panel with a light-blue edge, done steps show a tick, the rest are outlined. In the selection panel the chosen choices are lighter panels with a light-blue edge, empty ones are dashed; the price stays a white card and Add to Bag the bright blue button. This replaces the earlier instruction that the side panels stay white.
+The order rail and "Your selection" are white cards; only the buttons and chips inside them are dark graphite (the current step, the chosen choices, Add to Bag). The owner tried the dark panels and rejected them.
 
 ## "Select here": telling the customer where to choose
 
