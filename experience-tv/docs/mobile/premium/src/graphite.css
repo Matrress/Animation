@@ -44,7 +44,7 @@
 /* firmness */
 .gx-fg { margin: 0 0 6px; } .gx-fg .r { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; color: var(--mut); } .gx-fg .r b { font-size: 22px; color: var(--ink); font-weight: 600; }
 .gx input[type=range] { width: 100%; height: 30px; accent-color: #C3D5ED; background: transparent; margin: 0; }
-.gx-scale { width: 100%; height: 44px; display: block; margin: 0 0 2px; } .gx-scale text { font: 600 11px var(--f); fill: var(--mut); text-anchor: middle; }
+.gx-scale { width: 100%; height: 44px; display: block; margin: 0 0 2px; } .gx-scale text { font: 700 15px var(--f); fill: var(--ink); text-anchor: middle; }
 .gx-guide { margin: 2px 0 8px; font-size: 15px; line-height: 1.35; } .gx-guide b { color: #fff; }
 .gx-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .gx-card { position: relative; min-height: 50px; border-radius: 12px; border: 1.5px solid var(--chip-line); background: var(--chip); font-size: 17px; font-weight: 600; text-align: left; padding: 8px 12px; }
@@ -84,10 +84,10 @@
 .gx h2.fw { font-weight: 300; } .gx h2.fw b { font-weight: 700; }
 .gx-fg .r label { font-size: 19px; font-weight: 700; color: var(--ink); }
 .gx-fg .r b { font-weight: 700; }
-.gx-2 .gx-card { font-weight: 700; font-size: 18px; }
+.gx-2 .gx-card { font-weight: 700; font-size: 20px; }
 .gx-sel .lf { width: 22px; height: 16px; vertical-align: -1px; margin-right: 6px; }
-@media (max-height: 780px) { .gx-fg .r label { font-size: 17px; } .gx-2 .gx-card { font-size: 16.5px; } .gx-top b.fr { font-size: 16px; } }
-@media (max-height: 690px) { .gx-fg .r label { font-size: 15.5px; } .gx-2 .gx-card { font-size: 15px; } .gx-top b.fr { font-size: 14.5px; } .gx-sel .lf { width: 18px; height: 13px; } }
+@media (max-height: 780px) { .gx-fg .r label { font-size: 17px; } .gx-2 .gx-card { font-size: 18px; } .gx-top b.fr { font-size: 16px; } }
+@media (max-height: 690px) { .gx-fg .r label { font-size: 15.5px; } .gx-2 .gx-card { font-size: 16.5px; } .gx-top b.fr { font-size: 14.5px; } .gx-sel .lf { width: 18px; height: 13px; } }
 
 /* turquoise accent, kept small: a hairline on the dock edge (the steps stay as approved) */
 .gx-dock--firm { box-shadow: inset 0 1px 0 rgba(80, 205, 253, .45); }
