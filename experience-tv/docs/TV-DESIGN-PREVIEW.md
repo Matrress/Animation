@@ -28,8 +28,8 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 
 - **One top line.** The three columns (order rail, stage, selection) share one top line: a heading row of the same height, and below it the first box of each column starts at the same height (the question band, the first chip, the first step), on every step. On a portrait tablet the rail runs along the top.
 - **The leaf sits beside the question**, not above it.
-- **A darker stage.** The middle area is deep graphite blue, so the white cards stand out; the two side panels stay white. A chosen or recommended card has a Sky-blue ring. The buttons on the dark stage are white (Continue) and outlined (Back).
-- **Add to Bag / Go to Checkout is the only bright blue button** on the screen, the blue of the top of the question band, with a bag or an arrow icon; never the same as the other buttons. No green button.
+- **A grey graphite stage** (third review: the first dark version was far too black). The middle area is a soft grey-graphite gradient with a faint cool light at the top right, so the white cards stand out and the blue stays an accent; the two side panels stay white. A chosen or recommended card has a Sky-blue ring. The buttons on the dark stage are white (Continue) and outlined (Back).
+- **Add to Bag / Go to Checkout is the only bright blue button** on the screen, the blue of the lit parts of the question band (sampled from it), with a bag or an arrow icon; never the same as the other buttons. No green button.
 - **Depth is a mattress in profile**: long, both ends visible, a graphite cover around a latex core, the thickness varies (20, 24, 26 cm) with the 26 cm outline dashed behind. It is drawn about 1.5 times thicker than life so the difference can be seen. (This replaces the earlier use of the traced front edge of the core drawing, which read as a thin slanted strip.)
 - **Covers:** the four photographs and the information board have the same height and align.
 
