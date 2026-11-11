@@ -117,7 +117,7 @@
     return '<nav class="gx-rail" aria-label="Steps">' + STEPS.map(function (s, i) { var dn = chosen(s), cur = S.step === s; return '<button class="pil' + (cur ? ' cur' : '') + (dn ? ' done' : '') + '" data-act="go" data-step="' + s + '" aria-current="' + (cur ? 'step' : 'false') + '" aria-label="' + NAMES[s] + (dn ? ', chosen' : '') + '"><i>' + (dn ? '✓' : '0' + (i + 1)) + '</i><span>' + NAMES[s] + '</span></button>'; }).join('') + '</nav>';
   }
   /* the header's leaf (divine-hero .ddh__leaf: fresh green, two opposite round corners, one pale vein), as a small static mark */
-  var LEAF = '<svg class="lf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BD26B"/><stop offset="1" stop-color="#63B963"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1" stroke-linecap="round"/></g></svg>';
+  var LEAF = '<svg class="lf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9FE8FA"/><stop offset="1" stop-color="#3FB8D6"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1" stroke-linecap="round"/></g></svg>';
   function dock() {
     var n = S.native, st = S.step, rv = st === 'review', cur = rv ? null : chosen(st), size = chosen('size'), only = startingOnly();
     var others = STEPS.filter(function (r) { return r !== st && chosen(r); }).map(label).join(' · ');
@@ -128,7 +128,7 @@
     var cap = only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid';
     var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: 'Review Your <b>Order</b>', review: done() === 4 ? 'Go to <b>Add to Bag</b>' : 'See <b>Ecwid’s options</b>' }[st];
     var dis = !rv && !cur;
-    return '<section class="gx-dock" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small><b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
+    return '<section class="gx-dock' + (st === 'firmness' ? ' gx-dock--firm' : '') + '" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small><b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
   }
 
   function render() {

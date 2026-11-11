@@ -90,6 +90,9 @@
 @media (max-height: 780px) { .gx-fg .r label { font-size: 17px; } .gx-2 .gx-card { font-size: 16.5px; } .gx-top b.fr { font-size: 16px; } }
 @media (max-height: 690px) { .gx-fg .r label { font-size: 15.5px; } .gx-2 .gx-card { font-size: 15px; } .gx-top b.fr { font-size: 14.5px; } .gx-sel .lf { width: 18px; height: 13px; } }
 
+/* turquoise accent, kept small: a hairline on the dock edge (the steps stay as approved) */
+.gx-dock--firm { box-shadow: inset 0 1px 0 rgba(80, 205, 253, .45); }
+
 /* PREVIEW styles, not deployed. Tokens are the description's own (palette, radii, Chillax). No backdrop-filter, no blur,
    no animation library; transitions are transform/opacity/max-height only and stop under prefers-reduced-motion. */
 :root { --bg: #DDEBF1; --lift: #EDF5F7; --card: #F6FAFB; --deep: #C7D5D9; --ink: #364849; --mid: #4F6365; --soft: #797572; --acc: #759397; --accm: #5E7A7D; --pale: #BFD0D5; --r: 12px; --rl: 18px; --f: 'Chillax', 'Helvetica Neue', Arial, sans-serif; }
@@ -5001,80 +5004,169 @@ body { margin: 0; background: #F7F7F7; }
 #bp-top .p-zonewrap--sketch .b-zone-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
 #bp-top .p-zonewrap--sketch .b-zone-pill { border-left: 4px solid var(--tone, #7F98BD); }
 #bp-top .p-zonewrap--sketch .b-zone-pill[data-tone=s] { --tone: #B7C9E3; } #bp-top .p-zonewrap--sketch .b-zone-pill[data-tone=c] { --tone: #7C97C0; } #bp-top .p-zonewrap--sketch .b-zone-pill[data-tone=r] { --tone: #46628F; }
-</style><style id="description-dark">/* Description colour system for the Graphite preview ONLY (cosmetic; no content, structure or behaviour change).
-   Owner palette: #272D32 base, #3E474D second level, #1E3036 depth, #2F565A petrol accent.
-   Accents are blue-led: Sky #50CDFD (key words, numbers, links, small marks), Mist #C3D5ED (sub-heads), Steel #8CA2C2 (quiet lines).
-   Green appears only on the leaf ornaments (the same leaf as the header of the configurator), never as a surface or a text colour. */
+</style><style id="description-light">/* Direction C, "clean light, earned dark" (graphite-light preview ONLY; cosmetic, no content or behaviour change).
+   The description starts light and clean (cool mist, not pure white). The owner's four colours do the work of ink and
+   structure: #272D32 headings, #3E474D body, #2F565A petrol for links, marks and the primary button, #1E3036 for the
+   three dark bands that have to be earned (seven zones, proof, closing call to action). Sky #50CDFD is never text on
+   light; on light it is only a hairline or a dot. Green appears only as the leaf ornament. */
 #bp-top {
-  --bg: #272D32; --bg-lift: #2C343A; --bg-card: #3E474D; --bg-deep: #4B5860; --bg-mist: #1E3036;
-  --ink: #F2F7FB; --ink-mid: #C9D3DB; --ink-soft: #9AA8B4;
-  --accent: #2F565A; --accent-mid: #50CDFD; --accent-pale: #3C6E74; --accent-mist: #1E3036;
-  --lift: #2C343A; --card: #3E474D; --deep: #4B5860; --mid: #C9D3DB; --soft: #9AA8B4; --acc: #50CDFD; --accm: #50CDFD; --pale: #3C6E74;
-  --shadow-sm: 0 2px 10px rgba(0, 0, 0, .25); --shadow-md: 0 8px 26px rgba(0, 0, 0, .3); --shadow-lg: 0 18px 46px rgba(0, 0, 0, .35);
-  --sky: #50CDFD; --mist: #C3D5ED; --steel: #8CA2C2;
-  color: var(--ink-mid);
+  --ink: #272D32; --ink-mid: #3E474D; --ink-soft: #5B666E;
+  --bg: #F2F7F9; --lift: #F2F7F9; --card: #FFFFFF; --deep: #D3E0E5; --pale: #C9DCE2;
+  --mid: #3E474D; --soft: #5B666E; --acc: #2F565A; --accm: #2F565A;
+  --petrol: #2F565A; --depth: #1E3036; --sky: #50CDFD; --steel: #8CA2C2;
+  --shadow-sm: 0 1px 2px rgba(39, 45, 50, .05); --shadow-md: 0 6px 18px rgba(39, 45, 50, .07);
+  color: var(--ink-mid); background: #F2F7F9;
 }
-#productDescription, #bp-top, #bp-top .b-sec, #bp-top .b-sec--lift { background: #272D32; }
-#bp-top .b-sh__t, #bp-top h2, #bp-top h3, #bp-top h4 { color: var(--ink); }
-#bp-top .b-sh__s, #bp-top p { color: var(--ink-mid); }
-#bp-top strong, #bp-top b { color: #FFFFFF; }
-#bp-top p a, #bp-top .b-sh__s a, #bp-top .p-body a { color: var(--sky); text-decoration-color: rgba(80, 205, 253, .5); }
-/* heading mark: the header leaf (same shape and gradient as the configurator header) */
+#productDescription, #desc-slot, #desc-slot .product-details__product-description, #bp-top, #bp-top .b-sec, #bp-top .b-sec--lift { background: #F2F7F9; }
+#bp-top .b-sh__t, #bp-top h2, #bp-top h3, #bp-top h4 { color: #272D32; }
+#bp-top .b-sh__s, #bp-top p { color: #3E474D; }
+#bp-top strong, #bp-top b { color: #272D32; }
+#bp-top p a, #bp-top .b-sh__s a, #bp-top .p-body a { color: #2F565A; text-decoration-color: rgba(47, 86, 90, .45); }
+/* heading mark: the header leaf, the only green in the description */
 #bp-top .b-sh__t::before {
   width: 20px; height: 13px; border-radius: 100% 0; background: linear-gradient(135deg, #9bd26b, #63b963);
   transform: rotate(-28deg); transform-origin: 30% 70%; margin: 4px 0 14px 2px;
 }
-/* buttons: Sky primary, quiet outline secondary */
-#bp-top .b-btn-p, #bp-top .b-btn-hero-p, #bp-top .b-main-video-actions .b-btn-p, #bp-top .b-cta .b-btn-p { background: var(--sky) !important; color: #0F1A22 !important; }
-#bp-top .b-btn-p:hover, #bp-top .b-main-video-actions .b-btn-p:hover, #bp-top .b-cta .b-btn-p:hover { background: #C3D5ED !important; color: #0F1A22 !important; }
-#bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o { border-color: rgba(195, 213, 237, .5) !important; color: #E8F1FA !important; background: transparent; }
-#bp-top .b-btn-o:hover { background: rgba(80, 205, 253, .12) !important; border-color: var(--sky) !important; color: #FFFFFF !important; }
-/* hero media card: depth colour with a petrol glow */
-#bp-top .b-hero { background: radial-gradient(120% 90% at 85% 0%, rgba(47, 86, 90, .75), transparent 58%), linear-gradient(165deg, #1E3036 0%, #1A2A30 100%); border-bottom: 1px solid #2F565A; }
-#bp-top .b-main-video-card .b-mtv__head, #bp-top .b-main-video-card > :not(.b-main-video-frame) { color: #C3D5ED; }
-/* six key facts: second-level tiles, Sky icons, petrol edge */
-#bp-top .p-glance { background: #272D32; }
-#bp-top .p-glance .b-hero-bar__item { background: linear-gradient(180deg, #424B52, #3A434A); border: 1.5px solid #2F565A; }
-#bp-top .p-glance .b-hero-bar__item, #bp-top .p-glance .b-hero-bar__item * { color: #F2F7FB !important; -webkit-text-fill-color: #F2F7FB !important; }
-#bp-top .p-glance svg { stroke: var(--sky); }
-/* seven zones: depth panel, Sky numbers, Mist labels */
-#bp-top .p-feature { position: relative; overflow: hidden; background: radial-gradient(90% 60% at 100% 0%, rgba(47, 86, 90, .7), transparent 62%), linear-gradient(180deg, #1E3036, #1B2A2F); border-top: 1px solid #2F565A; border-bottom: 1px solid #2F565A; }
-#bp-top .p-feature::after { content: ''; position: absolute; right: -26px; top: 18px; width: 120px; height: 80px; border-radius: 100% 0; background: linear-gradient(135deg, rgba(80, 205, 253, .16), rgba(80, 205, 253, .03)); transform: rotate(-28deg); pointer-events: none; }
-#bp-top .p-feature .b-zone-pill { background: #3E474D; border: 1px solid #4B5860; }
-#bp-top .p-feature .b-zone-pill__num { color: var(--sky); }
+/* buttons: petrol primary (white text, 8:1), petrol outline secondary */
+#bp-top .b-btn-p, #bp-top .b-btn-hero-p, #bp-top .b-main-video-actions .b-btn-p { background: #2F565A !important; color: #FFFFFF !important; }
+#bp-top .b-btn-p:hover, #bp-top .b-main-video-actions .b-btn-p:hover { background: #1E3036 !important; color: #FFFFFF !important; }
+#bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o { border-color: #2F565A !important; color: #2F565A !important; background: transparent; }
+#bp-top .b-btn-o:hover { background: rgba(47, 86, 90, .08) !important; color: #1E3036 !important; }
+/* hero: no dark block; the video sits in a clean white card, the frame itself stays dark (it is media) */
+#bp-top .b-hero { background: none; border-bottom: 0; }
+#bp-top .b-main-video-card { background: #FFFFFF; border: 1px solid #D3E0E5; border-radius: 18px; padding: 14px; box-shadow: var(--shadow-sm); }
+#bp-top .b-main-video-card .b-mtv__head, #bp-top .b-main-video-card > :not(.b-main-video-frame) { color: #3E474D; }
+#bp-top .b-main-video-card .b-main-video-frame { border-radius: 14px; }
+/* six key facts: white tiles, petrol icons, no coloured dots */
+#bp-top .p-glance { background: #F2F7F9; }
+#bp-top .p-glance .b-hero-bar__item { background: #FFFFFF; border: 1px solid #D3E0E5; box-shadow: var(--shadow-sm); }
+#bp-top .p-glance .b-hero-bar__item, #bp-top .p-glance .b-hero-bar__item * { color: #272D32 !important; -webkit-text-fill-color: #272D32 !important; }
+#bp-top .p-glance svg { stroke: #2F565A; }
+/* seven zones: the first earned dark band */
+#bp-top .p-feature { position: relative; overflow: hidden; margin: 26px -20px 0; padding: 26px 20px 22px; background: radial-gradient(90% 60% at 100% 0%, rgba(47, 86, 90, .7), transparent 62%), linear-gradient(180deg, #1E3036, #1B2A2F); border: 0; }
+#bp-top .p-feature::after { content: ''; position: absolute; right: -26px; top: 18px; width: 120px; height: 80px; border-radius: 100% 0; background: linear-gradient(135deg, rgba(80, 205, 253, .14), rgba(80, 205, 253, .03)); transform: rotate(-28deg); pointer-events: none; }
+#bp-top .p-feature h2, #bp-top .p-feature h3, #bp-top .p-feature .b-sh__t, #bp-top .p-feature .b-sh__s, #bp-top .p-feature p { color: #F2F7FB; }
+#bp-top .p-feature .b-sh__t::before { background: linear-gradient(135deg, #9bd26b, #63b963); }
+#bp-top .p-feature .b-zone-pill { background: #26393F; border: 1px solid #2F565A; }
+#bp-top .p-feature .b-zone-pill__num { color: #50CDFD; }
 #bp-top .p-feature .b-zone-pill__name { color: #F2F7FB; }
 #bp-top .p-feature .b-zone-pill__note { color: #AEBBC6; }
 #bp-top .p-zs { background: #172229; border: 1.5px solid #2F565A; }
 #bp-top .p-zlegend { color: #C3D5ED; }
-/* decision cards, notices, zone/height/cover cards */
-#bp-top .b-fc, #bp-top .b-hcol, #bp-top .b-fdecision__item, #bp-top .b-wc { background: #3E474D; border: 1.5px solid #4B5860; box-shadow: none; }
-#bp-top .b-fc__name, #bp-top .b-hcol__n { color: #FFFFFF; }
-#bp-top .b-hcol__n, #bp-top .b-hcol strong { color: var(--sky); }
-#bp-top .b-fconf__notice { background: #1E3036; color: #E8F1FA; border-left: 4px solid var(--sky); }
-#bp-top .b-fdecision__mark { background: #2F565A; color: var(--sky); border: 1px solid rgba(80, 205, 253, .45); }
-#bp-top .b-sum--who, #bp-top .b-sum--who:hover { background: #2F565A; color: #FFFFFF !important; }
-#bp-top .b-wc--gift { background: linear-gradient(160deg, #1E3036, #2F565A); }
-/* proof row and CTA: depth colour */
-#bp-top .p-proof { background: radial-gradient(100% 80% at 0% 0%, rgba(47, 86, 90, .8), transparent 62%), linear-gradient(170deg, #1E3036, #1A2A30); }
-#bp-top .p-row .b-mtv { background: rgba(62, 71, 77, .55); border: 1px solid #2F565A; }
-#bp-top .b-cta { background: linear-gradient(135deg, #1E3036 0%, #2F565A 120%); border: 1px solid #2F565A; }
+/* decision cards and notices: white, hairline, petrol detail */
+#bp-top .b-fc, #bp-top .b-hcol, #bp-top .b-fdecision__item, #bp-top .b-wc { background: #FFFFFF; border: 1px solid #D3E0E5; box-shadow: var(--shadow-sm); }
+#bp-top .b-fc__name, #bp-top .b-hcol__n { color: #272D32; }
+#bp-top .b-hcol strong { color: #2F565A; }
+#bp-top .b-fconf__notice { background: #E4EEF1; color: #272D32; border-left: 4px solid #2F565A; }
+#bp-top .b-fdecision__mark { background: #2F565A; color: #FFFFFF; border: 0; }
+/* the "who is this for" summary: white with a petrol edge, not a dark block */
+#bp-top .b-sum--who, #bp-top .b-sum--who:hover { background: #FFFFFF; color: #272D32 !important; border: 1px solid #2F565A; }
+#bp-top .b-sum--who .sum-arr { color: #2F565A !important; }
+/* gift card: light petrol tint instead of the dark gradient */
+#bp-top .b-wc--gift { background: #E4EEF1; border: 1px solid #C9DCE2; }
+#bp-top .b-wc--gift * { color: #272D32; }
+#bp-top .b-wc--gift .b-wb { color: #3E474D; }
+/* proof row: the second earned dark band */
+#bp-top .p-proof { margin: 30px -20px 0; padding: 28px 20px 24px; background: radial-gradient(100% 80% at 0% 0%, rgba(47, 86, 90, .8), transparent 62%), linear-gradient(170deg, #1E3036, #1A2A30); }
+#bp-top .p-proof h3 { color: #FFFFFF; } #bp-top .p-proof > p { color: #C3D5ED; }
+#bp-top .p-row .b-mtv { background: rgba(255, 255, 255, .06); border: 1px solid #2F565A; border-radius: var(--rl); padding: 10px; }
+#bp-top .p-row .b-mtv__title { color: #FFFFFF; font-weight: 700; }
+#bp-top .p-row .b-mtv__desc { color: #C3D5ED; }
+/* accordions: hairlines, petrol markers */
+#bp-top .p-note { border-top: 1px solid #D3E0E5; }
+#bp-top .p-note > summary, #bp-top .p-note .p-n-title { color: #272D32; }
+#bp-top .p-note .p-n-sub, #bp-top .p-n-sub { color: #5B666E; }
+#bp-top .p-note > summary::after, #bp-top .p-note summary .sum-arr, #bp-top summary .sum-arr { color: #2F565A; }
+#bp-top .p-note .p-body, #bp-top .p-note .p-body p { color: #3E474D; }
+#bp-top .p-cap { color: #5B666E; }
+/* closing call to action: the third earned dark band */
+#bp-top .b-cta { background: linear-gradient(135deg, #1E3036 0%, #2F565A 120%); border: 0; }
+#bp-top .b-cta__t { color: #FFFFFF; }
 #bp-top .b-cta__s { color: #C3D5ED; }
-/* accordions: quiet lines, Sky markers */
-#bp-top .p-note { border-top: 1.5px solid #3E474D; }
-#bp-top .p-note > summary, #bp-top .p-note .p-n-title { color: #F2F7FB; }
-#bp-top .p-note .p-n-sub, #bp-top .p-n-sub { color: #9AA8B4; }
-#bp-top .p-note > summary::after, #bp-top .p-note summary .sum-arr, #bp-top summary .sum-arr { color: var(--sky); }
-#bp-top .p-note .p-body, #bp-top .p-note .p-body p { color: #C9D3DB; }
-#bp-top .p-cap { color: #9AA8B4; }
+#bp-top .b-cta .b-btn-p { background: #50CDFD !important; color: #0F1A22 !important; }
+#bp-top .b-cta .b-btn-p:hover { background: #C3D5ED !important; color: #0F1A22 !important; }
+#bp-top .b-cta .b-btn-o { border-color: rgba(195, 213, 237, .55) !important; color: #FFFFFF !important; }
+/* cover micro-slider frame: light card */
+#bp-top .b-cover-micro-wrap { background: #FFFFFF; border: 1px solid #D3E0E5; }
 /* floating back-to-top */
-#bp-top .b-floating-top, .b-floating-top { background: #2F565A; color: #FFFFFF; border: 1px solid rgba(80, 205, 253, .5); }
-/* no white showing through the full-bleed blocks (negative side margins) */
-#desc-slot, #desc-slot .product-details__product-description { background: #272D32; }
-/* cover micro-slider frame: depth colour instead of the light translucent card */
-#bp-top .b-cover-micro-wrap { background: #1E3036; border: 1.5px solid #2F565A; }
-/* contrast: quieter text on second-level cards and Sky marks on petrol are lifted to reach 4.5:1 */
-#bp-top .b-fc, #bp-top .b-hcol, #bp-top .b-fdecision__item, #bp-top .b-wc, #bp-top .p-row .b-mtv { --ink-soft: #B8C4CE; --soft: #B8C4CE; color: #C9D3DB; }
-#bp-top .b-fdecision__mark, #bp-top .b-sum--who .sum-arr { color: #8BE0FF !important; }
+#bp-top .b-floating-top, .b-floating-top { background: #2F565A; color: #FFFFFF; border: 0; }
+/* button labels inherit the button colour (the content layer wrote an inline white on each label) */
+#bp-top .b-btn span { color: inherit !important; }
+/* video cover: a dark media frame with a legible caption */
+#bp-top .p-video { background: linear-gradient(135deg, #1E3036, #14262C) !important; border-radius: 14px; }
+#bp-top .p-video .p-cap { color: #E6F3F8 !important; opacity: 1; }
+/* text inside the dark bands is light, including the opened accordion in the seven zones */
+#bp-top .p-feature strong, #bp-top .p-feature b, #bp-top .p-feature h3, #bp-top .p-feature h4, #bp-top .p-feature summary, #bp-top .p-feature .p-n-title, #bp-top .p-feature .p-n-sub { color: #F2F7FB !important; }
+#bp-top .p-feature p, #bp-top .p-feature .p-body, #bp-top .p-feature .p-body p, #bp-top .p-feature li { color: #C9D3DB !important; }
+#bp-top .p-feature summary > *, #bp-top .p-feature .p-note > summary::after, #bp-top .p-feature summary .sum-arr { color: #50CDFD !important; }
+#bp-top .p-proof strong, #bp-top .p-proof b, #bp-top .b-cta strong, #bp-top .b-cta b { color: #FFFFFF !important; }
+</style><style id="description-turquoise">/* Turquoise graphite (graphite-turquoise preview ONLY). A layer over description-light.css: same structure and content.
+   The green petrol #2F565A is replaced by turquoise graphite (hue about 190 degrees, blue-cyan, not green). Dark bands are a
+   turquoise graphite base with one restrained glint: a hairline on top, one soft cyan light, no sparkle. Sky #50CDFD is the
+   glint on dark and never text on light. The leaf is turquoise, not green. */
+#bp-top {
+  --petrol: #1B6676; --depth: #173842; --turq: #1B6676; --turq-deep: #12303A; --glint: #50CDFD; --glint-soft: #9FE8FA;
+  --accm: #1B6676; --acc: #1B6676;
+}
+#bp-top a, #bp-top p a, #bp-top .b-sh__s a, #bp-top .p-body a { color: #1B6676; text-decoration-color: rgba(27, 102, 118, .45); }
+/* heading mark: the leaf in turquoise */
+#bp-top .b-sh__t::before, #bp-top .p-feature .b-sh__t::before { background: linear-gradient(135deg, #9FE8FA, #3FB8D6); }
+/* primary button: turquoise graphite with white text (6.5:1); outline in the same hue */
+#bp-top .b-btn-p, #bp-top .b-btn-hero-p, #bp-top .b-main-video-actions .b-btn-p { background: #1B6676 !important; color: #FFFFFF !important; }
+#bp-top .b-btn-p:hover, #bp-top .b-main-video-actions .b-btn-p:hover { background: #173842 !important; color: #FFFFFF !important; }
+#bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o { border-color: #1B6676 !important; color: #1B6676 !important; }
+#bp-top .b-btn-o:hover { background: rgba(27, 102, 118, .08) !important; color: #173842 !important; }
+/* the three dark bands: turquoise graphite, one hairline glint on top, one soft cyan light */
+#bp-top .p-feature, #bp-top .p-proof, #bp-top .b-cta {
+  background:
+    radial-gradient(80% 55% at 100% 0%, rgba(80, 205, 253, .16), transparent 62%),
+    linear-gradient(175deg, #173842 0%, #12303A 100%);
+  box-shadow: inset 0 1px 0 rgba(80, 205, 253, .38);
+}
+#bp-top .p-feature::after { background: linear-gradient(135deg, rgba(80, 205, 253, .18), rgba(80, 205, 253, .02)); }
+#bp-top .p-feature .b-zone-pill { background: #1B3A44; border: 1px solid #245565; }
+#bp-top .p-zs { background: #0F2228; border: 1.5px solid #245565; }
+#bp-top .p-zlegend { color: #C3D5ED; }
+#bp-top .p-feature .b-zone-pill__num { color: #50CDFD; }
+/* the closing button and its hover stay the glint */
+#bp-top .b-cta .b-btn-p { background: #50CDFD !important; color: #0F1A22 !important; }
+#bp-top .b-cta .b-btn-p:hover { background: #9FE8FA !important; color: #0F1A22 !important; }
+/* small marks and accents on light: turquoise, not green */
+#bp-top .b-fdecision__mark { background: #1B6676; color: #FFFFFF; }
+#bp-top .b-fconf__notice { border-left-color: #1B6676; }
+#bp-top .b-sum--who { border-color: #1B6676; }
+#bp-top .b-sum--who .sum-arr, #bp-top .p-note > summary::after, #bp-top .p-note summary .sum-arr, #bp-top summary .sum-arr { color: #1B6676 !important; }
+#bp-top .p-glance svg { stroke: #1B6676; }
+#bp-top .b-hcol strong { color: #1B6676; }
+#bp-top .b-floating-top, .b-floating-top { background: #173842; color: #FFFFFF; border: 1px solid rgba(80, 205, 253, .45); }
+/* the header-style leaf in the decision cards and dark bands stays turquoise too */
+#bp-top .p-glance .b-hero-bar__item { border-color: #D3E0E5; }
+#bp-top .p-video { background: linear-gradient(135deg, #173842, #0F2228) !important; }
+#bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o { color: #1B6676 !important; }
+#bp-top .b-btn-o span, #bp-top .b-main-video-actions .b-btn-o span { color: #1B6676 !important; }
+</style><style id="description-hybrid">/* Hybrid (graphite-hybrid preview ONLY): light ground where the facts are (the white tiles stay white),
+   and the video card itself in turquoise graphite with white text. Layer over description-light.css and description-turquoise.css.
+   Rule: white text only on dark surfaces; on the light ground text stays dark (white on mist would not read). */
+#bp-top .b-main-video-card {
+  background: linear-gradient(160deg, #1B6676 0%, #163F4B 45%, #0A1E24 100%) !important;
+  border: 1px solid rgba(80, 205, 253, .4) !important;
+  border-radius: 18px !important;
+  padding: 16px !important;
+  box-shadow: 0 14px 34px rgba(18, 48, 58, .28) !important;
+}
+#bp-top .b-main-video-card, #bp-top .b-main-video-card * { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+#bp-top .b-main-video-card a { text-decoration-color: #50CDFD; }
+/* video frame inside the card: a slightly deeper inset with a turquoise hairline */
+#bp-top .b-main-video-card .b-main-video-frame, #bp-top .b-main-video-card .p-video {
+  background: linear-gradient(135deg, #0F2A33, #0A1E24) !important;
+  border: 1px solid rgba(80, 205, 253, .35) !important;
+  border-radius: 14px !important;
+}
+/* buttons inside the card: turquoise fill with white text, white outline */
+#bp-top .b-main-video-card .b-btn-p { background: #1B6676 !important; border: 1px solid #50CDFD !important; color: #FFFFFF !important; }
+#bp-top .b-main-video-card .b-btn-o { background: transparent !important; border: 1px solid rgba(255, 255, 255, .6) !important; color: #FFFFFF !important; }
+#bp-top .b-main-video-card .b-btn-o span, #bp-top .b-main-video-card .b-btn-p span { color: #FFFFFF !important; }
+#bp-top .b-main-video-card .p-cap { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
 </style>
 <script>
 (function(){var g=document.getElementById('gallery');var im=window.DDDATA.images;g.innerHTML='<div class="sg-main"><img src="'+im[0]+'" alt="Botanic Original 100% Organic Latex Mattress" fetchpriority="high"></div><div class="sg-dots">'+im.map(function(){return '<i></i>';}).join('')+'</div><div class="sg-bar"><img src="'+im[0]+'" alt=""><span>Gallery · '+im.length+' photos</span><button id="gal-btn" type="button">Show gallery</button></div>';
@@ -5197,7 +5289,7 @@ var m=document.getElementById('desc-slot'),dsc=document.getElementById('productD
     return '<nav class="gx-rail" aria-label="Steps">' + STEPS.map(function (s, i) { var dn = chosen(s), cur = S.step === s; return '<button class="pil' + (cur ? ' cur' : '') + (dn ? ' done' : '') + '" data-act="go" data-step="' + s + '" aria-current="' + (cur ? 'step' : 'false') + '" aria-label="' + NAMES[s] + (dn ? ', chosen' : '') + '"><i>' + (dn ? '✓' : '0' + (i + 1)) + '</i><span>' + NAMES[s] + '</span></button>'; }).join('') + '</nav>';
   }
   /* the header's leaf (divine-hero .ddh__leaf: fresh green, two opposite round corners, one pale vein), as a small static mark */
-  var LEAF = '<svg class="lf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BD26B"/><stop offset="1" stop-color="#63B963"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1" stroke-linecap="round"/></g></svg>';
+  var LEAF = '<svg class="lf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9FE8FA"/><stop offset="1" stop-color="#3FB8D6"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1" stroke-linecap="round"/></g></svg>';
   function dock() {
     var n = S.native, st = S.step, rv = st === 'review', cur = rv ? null : chosen(st), size = chosen('size'), only = startingOnly();
     var others = STEPS.filter(function (r) { return r !== st && chosen(r); }).map(label).join(' · ');
@@ -5208,7 +5300,7 @@ var m=document.getElementById('desc-slot'),dsc=document.getElementById('productD
     var cap = only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid';
     var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: 'Review Your <b>Order</b>', review: done() === 4 ? 'Go to <b>Add to Bag</b>' : 'See <b>Ecwid’s options</b>' }[st];
     var dis = !rv && !cur;
-    return '<section class="gx-dock" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small><b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
+    return '<section class="gx-dock' + (st === 'firmness' ? ' gx-dock--firm' : '') + '" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small><b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
   }
 
   function render() {

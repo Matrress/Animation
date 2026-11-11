@@ -156,3 +156,15 @@ Evidence: `shots/description-colours/compare-c-hybrid.jpg` (C and H side by side
 The owner chose H: the clean light ground for the facts (the white tiles, dark text), the video card in turquoise graphite with white text, and the three turquoise graphite bands (seven zones, proof, closing call to action). The owner also confirmed that legibility and contrast are the priority.
 
 Not yet decided, and not changed: the configurator steps (Size, Firmness, Depth, Cover) still use the Graphite Blue panel; whether they move to the turquoise family, whether H is merged into `graphite.html`, and the open wording questions in the earlier sections. None of these is deployed; the live store is untouched.
+
+## Merge: graphite.html is now direction H (owner decision)
+
+`preview/graphite.html` is the approved description direction H: the light ground for the facts, the turquoise graphite video card and the three turquoise graphite bands, all with the colour rules from `src/description-light.css`, `description-turquoise.css` and `description-hybrid.css`. The earlier single-direction files (C, D, E) stay as records; `graphite-hybrid.html` is the same page as `graphite.html`.
+
+**Configurator, small turquoise accents only.** The owner asked for a little more of the turquoise in the steps, but kept the steps as they are ("the Firmness step is ideal"). So:
+- the leaf in the dock is turquoise instead of green (two gradient stops);
+- the Firmness dock has one turquoise hairline on its top edge (`gx-dock--firm`). The Size and Depth screens are unchanged and still byte-identical to the approved preview.
+
+**Extra Firm, open.** The Extra Firm card is a plain link to the verified specialist product page (Orthopaedic Coconut Core). The sliders never navigate, and the panel writes nothing to Ecwid. The preview cannot change the live store, so the **native Ecwid Firmness menu still lists Extra Firm (+£88)**. Removing or hiding that option is an edit to the live store and needs the owner's explicit approval; it has not been done.
+
+Tests: `tools/graphite-full-test.mjs`, 62 of 62. No horizontal overflow at 360, 390 or 430 px.

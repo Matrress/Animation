@@ -162,7 +162,8 @@ const final = html;
 const graphite = html.replace('<style id="premium-css">', '<style id="premium-css">' + S('graphite.css') + '\n').replace(/<script id="configurator">[\s\S]*?<\/script>/, () => '<script id="configurator">' + S('graphite.js') + '</script>').replace('<b>Design preview · not deployed · Ecwid block is a stand-in</b><button data-c="sheet">1 Sheet</button><button data-c="stage">2 Stage</button><button data-c="journey">3 Journey</button>', '<b>Design preview · not deployed · Ecwid block is a stand-in</b><button class="on">Graphite Blue</button>');
 // description colours: graphite preview only, loaded AFTER content.css so it wins on equal specificity
 const cssTag = '<style id="content-css">' + S('content.css') + '</style>';
-writeFileSync(join(P, 'preview', 'graphite.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-dark">' + S('description-dark.css') + '</style>'));
+// graphite.html = approved direction H (owner decision): light ground, turquoise graphite video card and bands
+writeFileSync(join(P, 'preview', 'graphite.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-light">' + S('description-light.css') + '</style><style id="description-turquoise">' + S('description-turquoise.css') + '</style><style id="description-hybrid">' + S('description-hybrid.css') + '</style>'));
 // direction C (clean light, earned dark): the same page with only the description colour layer swapped
 writeFileSync(join(P, 'preview', 'graphite-light.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-light">' + S('description-light.css') + '</style>'));
 // direction D (turquoise graphite): direction C plus a turquoise layer that replaces the green petrol and leaf
