@@ -206,3 +206,9 @@ Tests: 62 of 62.
 - Buttons: turquoise gradient fill with white text, a soft turquoise shadow, and a white outline for the secondary button; the closing call to action uses the same fill.
 
 The owner's button mock-up was not received with this message (only the cover-card image came through). Tests: 62 of 62.
+
+## Cover options: sky-blue edge and sky-blue plus (owner, preview only)
+
+- Each cover option has a 1.5 px sky-blue edge (`#50CDFD`), as the owner specified.
+- The plus marker is sky blue. It was white before because a stroke rule overrode its colour; the lines now take the blue explicitly.
+- The plus markers on the light ground are deep turquoise (`#1A5C7E`), so they read as a blue sign on white.

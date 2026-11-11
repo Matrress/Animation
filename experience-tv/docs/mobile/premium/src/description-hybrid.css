@@ -77,3 +77,10 @@
   background: linear-gradient(135deg, #1F6A8F, #1A5C7E) !important; color: #FFFFFF !important;
 }
 #bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o, #bp-top .b-cta .b-btn-o { background: transparent !important; border: 1px solid rgba(255, 255, 255, .5) !important; color: #FFFFFF !important; }
+/* owner's design: the cover options have a clear sky-blue edge and a sky-blue plus */
+#bp-top .b-cover-menu { border: 1.5px solid #50CDFD !important; }
+#bp-top .b-cover-menu .sum-arr { color: #50CDFD !important; }
+#bp-top .b-cover-menu .sum-arr line { stroke: #50CDFD !important; }
+/* the same plus marker on the light ground: deep turquoise, so it reads as a blue sign */
+#bp-top .sum-arr { color: #1A5C7E; }
+#bp-top .sum-arr line { stroke: currentColor !important; }
