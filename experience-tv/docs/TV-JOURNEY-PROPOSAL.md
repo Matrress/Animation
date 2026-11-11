@@ -4,6 +4,8 @@ Status: **proposal for the owner**, built on the preview of what the television 
 
 The screen's job is not to hold a picture. It is to help the customer decide, and to give each piece of information in the form that explains it best: a number, a comparison, a drawing, a short loop, plain words, or a mix. **A picture is used only when it answers better than words.** Every button has one reason to exist: it answers one question the customer has at that moment.
 
+**Superseded in part (11 November 2026):** the owner asked for all fourteen topic buttons to stay on top of the large screen; the four phases below were not adopted. See `docs/TV-DESIGN-PREVIEW.md`.
+
 ## 1. The journey in four phases
 
 Today the television has 14 chapter buttons in two rows, with "Size" hidden inside the chapter "Height". The proposal groups them by what the customer is asking.

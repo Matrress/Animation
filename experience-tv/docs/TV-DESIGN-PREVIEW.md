@@ -16,6 +16,18 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 | The shop's own (manual) controls stay | **No "Choose by hand" screen inside the television** (owner, 11 November 2026: it is outside the concept). The shop's own four options and Add to Bag stay on the page under the television, always, never hidden, and move together with the television in both directions. The Standard Product View and the model "Standard" are untouched |
 | Each button will be specified later by the owner | The preview is a design carrier; every label here is replaceable through `docs/TV-BUTTON-SPEC.md` |
 
+## The topic buttons and the information (owner, 11 November 2026)
+
+The top of the television carries **all fourteen topic buttons of the Botanic configuration** (two rows of seven, as on today's television): Discover, Firmness, Comfort, Height, Covers, Benefits, Support, Adaptation, 7-Zone, Ventilation, Hygiene, Certifications, Warranty, Delivery. The four "phases" of the earlier proposal are dropped (they were not the owner's). The television's purpose is to show **all** the information of the Botanic description, so every topic opens its panels as buttons in the left menu ("In <topic>"), and the order stages ("Your order") stay under them. The right panel (selection, price, Add to Bag) is always there, on every topic; the choices survive moving between topics.
+
+How the text is broken into buttons (the text itself is read from `source/botanic-original-description.html` by `tools/build-tv-design-preview.mjs`, never retyped; the preview shows 14 topics and 31 panels, and a click-through test opens every panel and every text button):
+
+- **Reader panels** (the long explanations, for example "How It Works", "Latex Behaviour", "Where It Is Made"): each heading of the text becomes a numbered button on the left of the content, and the chosen part is shown on the right. Where the text has no headings it is split by paragraph; one short text is shown as it is.
+- **Points** (Origin, Bearing Force, Elasticity, Airflow, Cleaner Sleep): a card for each point, with the topic's short loop in a small "television in the television" card beside them (a stand-in here; the loops stay small, as decided).
+- **Certifications:** a card for each body. **Warranty:** the large numerals (15 years, 2 pillows) with their text. **7-Zone:** the seven zones head to feet, in order. **Discover:** the introduction with the presentation video (plays in full on demand) and the six key points; "At a Glance" with the configuration facts.
+- **Choosing panels** (Firmness "Choose", Height "Choose size" and "Choose depth", Covers "Choose cover", Delivery "Your Botanic") are the order steps already designed; the topic bar and the order rail reach the same screens.
+- Differences from today's television, to be confirmed: "Materials" (covers) is merged into "Choose cover", because the cover board is already the comparison. The "Height" topic is called "Height" as in the configuration; since it holds the size and the depth, the owner may prefer "Size & Depth".
+
 ## Design rules from the owner's review (11 November 2026)
 
 - **Rounded corners only; no pills.** Every button is a rounded rectangle (12 px); the step markers and badges are rounded squares; the slider handle is a rounded square.

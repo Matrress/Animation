@@ -32,6 +32,11 @@ a { color: inherit; }
 .ph { height: 52px; padding: 0 20px; border-radius: var(--r); border: 1.5px solid var(--line2); background: var(--white); font-weight: 600; font-size: 16px; }
 .ph[aria-current=true] { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.5); }
 .ph small { display: block; font-size: 11px; font-weight: 500; opacity: .75; line-height: 1; margin-top: -1px; }
+/* the chapter bar: all fourteen topics, always on the television */
+.chbar { grid-column: 1 / -1; background: var(--white); border-bottom: 1px solid var(--line); padding: 12px 16px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.ch { height: 46px; border-radius: 10px; border: 1.5px solid var(--line2); background: var(--white); font-weight: 600; font-size: 14.5px; color: var(--ink); padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ch:hover { border-color: var(--band-top); }
+.ch[aria-current=true] { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.5); }
 /* the invitation: tells the customer that the selection is made here */
 .invite { display: flex; align-items: center; gap: 16px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 14px 20px; margin: 0 0 12px; }
 .invite .leaf { flex: none; width: 34px; height: 24px; }
@@ -48,6 +53,10 @@ a { color: inherit; }
 @media (min-width: 1100px) { .rail h2 { display: block; } }
 .st { display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 8px 12px; border-radius: var(--r); border: 1.5px solid transparent; background: transparent; text-align: left; flex: 1 0 auto; }
 @media (min-width: 1100px) { .st { flex: 0 0 auto; } }
+.rail h2.h2b { margin-top: 12px; }
+.pn { display: flex; align-items: center; min-height: 46px; padding: 8px 14px; border-radius: var(--r); border: 1.5px solid var(--line); background: var(--white); text-align: left; font-size: 15px; font-weight: 600; flex: 1 0 auto; }
+@media (min-width: 1100px) { .pn { flex: 0 0 auto; } .st { min-height: 50px; } }
+.pn:hover { border-color: var(--band-top); } .pn[aria-current=true] { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.45); }
 .st .n { width: 34px; height: 34px; border-radius: 9px; border: 2px solid var(--line2); display: grid; place-items: center; font-weight: 700; font-size: 15px; color: var(--ink3); background: var(--white); flex: none; }
 .st .t { display: flex; flex-direction: column; min-width: 0; } .st .t b { font-size: 16px; font-weight: 600; } .st .t span { font-size: 13px; color: var(--ink3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
 .st.done .n { background: var(--band-top); border-color: var(--band-top); color: #fff; } .st.done .t span { color: var(--teal); font-weight: 600; }
@@ -75,6 +84,44 @@ a { color: inherit; }
 .card, .fcard, .dcard, .tile, .info, .sl, .form, .ri, .price { color: var(--ink); }
 .stage .ri .btn.s { background: #fff; color: var(--ink); border-color: var(--line2); }
 .form .btn.p { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.55); box-shadow: none; }
+/* reader: the text broken into buttons; the chosen part is shown beside them */
+.rd { display: grid; gap: 18px; grid-template-columns: minmax(190px, .8fr) minmax(0, 1.7fr); align-items: start; }
+@media (max-width: 760px) { .rd { grid-template-columns: 1fr; } }
+.rl { display: grid; gap: 8px; align-content: start; }
+.ri2 { display: flex; align-items: center; gap: 12px; text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 12px 14px; min-height: 54px; font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--ink); }
+.ri2 i { font-style: normal; flex: none; width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--line2); display: grid; place-items: center; font-size: 13px; font-weight: 700; color: var(--ink3); }
+.ri2:hover { border-color: var(--band-top); }
+.ri2[aria-pressed=true] { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.45); } .ri2[aria-pressed=true] i { background: #fff; border-color: #fff; color: var(--band-top); }
+.rc { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 24px 28px; color: var(--ink); }
+.rc h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: -.01em; line-height: 1.25; }
+.rc p { margin: 0 0 14px; font-size: 16.5px; line-height: 1.62; color: var(--ink2); } .rc p:last-child { margin-bottom: 0; }
+.rc ul { margin: 0 0 14px; padding: 0; list-style: none; display: grid; gap: 10px; } .rc li { position: relative; padding-left: 24px; font-size: 16px; line-height: 1.55; color: var(--ink2); }
+.rc li::before { content: ''; position: absolute; left: 0; top: 8px; width: 12px; height: 8px; border-radius: 100% 0; background: linear-gradient(135deg, #9BD26B, #63B963); transform: rotate(-28deg); }
+.rc .row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; } .rc .row b { font-weight: 600; } .rc .row span { color: var(--ink2); text-align: right; }
+/* cards of points, certifications, zones, numerals */
+.pw { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr) 250px; align-items: start; } .pw.nomedia { grid-template-columns: 1fr; }
+@media (max-width: 900px) { .pw { grid-template-columns: 1fr; } }
+.pts { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); } .pw:not(.nomedia) .pts { grid-template-columns: repeat(2, minmax(0, 1fr)); } @media (max-width: 760px) { .pw:not(.nomedia) .pts { grid-template-columns: 1fr; } }
+.pt { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 18px 20px; color: var(--ink); }
+.pt h3 { margin: 0 0 6px; font-size: 18px; line-height: 1.25; } .pt .sb { color: var(--teal); font-weight: 600; font-size: 14px; margin: 0 0 8px; } .pt p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink2); }
+.pt .lf { display: block; width: 22px; height: 14px; margin-bottom: 10px; }
+.zl { display: grid; gap: 10px; }
+.zi { display: flex; align-items: center; gap: 16px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 12px 18px; color: var(--ink); }
+.zi i { font-style: normal; flex: none; width: 36px; height: 36px; border-radius: 10px; background: var(--grad-band); color: #fff; display: grid; place-items: center; font-weight: 700; } .zi b { font-size: 17px; flex: 1; } .zi span { color: var(--ink2); font-size: 15px; }
+.nums { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.nm2 { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 22px 24px; color: var(--ink); }
+.nm2 small { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 700; margin-bottom: 4px; } .nm2 strong { display: block; font-size: 64px; line-height: 1; letter-spacing: -.02em; color: var(--band-top); } .nm2 em { display: block; font-style: normal; font-size: 17px; font-weight: 600; margin: 6px 0 10px; } .nm2 p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink2); }
+.mini { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 10px 10px 12px; color: var(--ink); }
+.mini .vid { aspect-ratio: 16 / 9; border-radius: 10px; background: var(--grad-card); display: grid; place-items: center; position: relative; overflow: hidden; }
+.mini .vid::after { content: ''; position: absolute; right: -30px; top: -40px; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(80,205,253,.3), rgba(80,205,253,0) 68%); }
+.vid .pl { width: 52px; height: 52px; border-radius: 12px; background: #fff; display: grid; place-items: center; position: relative; z-index: 1; }
+.mini .cap { display: block; font-size: 13.5px; font-weight: 600; padding: 10px 6px 0; line-height: 1.35; } .mini .tv { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); padding: 8px 6px 0; font-weight: 700; }
+.hero { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; } @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+.fts { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; margin-top: 14px; } .fts span { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 12px 14px; font-size: 15px; font-weight: 600; color: var(--ink); display: flex; gap: 10px; align-items: center; }
+.fts span::before { content: ''; flex: none; width: 12px; height: 8px; border-radius: 100% 0; background: linear-gradient(135deg, #9BD26B, #63B963); transform: rotate(-28deg); }
+.fx { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; } @media (max-width: 760px) { .fx { grid-template-columns: 1fr; } }
+.fx div { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 18px; color: var(--ink); } .fx small { display: block; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 700; margin-bottom: 4px; } .fx b { font-size: 17px; font-weight: 600; } .fx em { display: block; font-style: normal; font-size: 13.5px; color: var(--ink2); margin-top: 4px; }
+.fnote { margin: 14px 0 0; font-size: 14px; color: var(--ink3); line-height: 1.5; }
 /* size */
 .grp h3 { margin: 22px 0 10px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 700; } .grp:first-child h3 { margin-top: 0; }
 .cards { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
@@ -158,16 +205,11 @@ a { color: inherit; }
   <p class="pv">Design preview for the owner. Not deployed and not the engine. The recommendation is the published firmness rule, the four ranges are that module's own, the texts are the approved description, and the price and the bag are <b>stand-ins</b>: in the shop they are Ecwid's own.</p>
   <header class="top">
     <div class="brand"><b>BOTANIC</b> / Experience</div>
-    <nav class="phases" aria-label="The four phases">
-      <button class="ph" data-ph="1">1. See it<small>What is it?</small></button>
-      <button class="ph" data-ph="2" aria-current="true">2. Choose yours<small>Which one do I need?</small></button>
-      <button class="ph" data-ph="3">3. Why it feels this way<small>What makes it comfortable?</small></button>
-      <button class="ph" data-ph="4">4. Trust it<small>Can I rely on it?</small></button>
-    </nav>
   </header>
   <div class="invite" role="note"><svg class="leaf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BD26B"/><stop offset="1" stop-color="#63B963"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfi)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1.2" stroke-linecap="round"/></g></svg><div><b>Select your Botanic here</b><span>Four choices, step by step: size, firmness, depth and cover. Then add it to your bag.</span></div><div class="dn" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div></div>
   <main class="monitor"><div class="screen">
-    <nav class="rail" id="rail" aria-label="Your order, step by step"></nav>
+    <nav class="chbar" id="chbar" aria-label="The fourteen topics"></nav>
+    <nav class="rail" id="rail" aria-label="This topic and your order"></nav>
     <section class="stage"><div class="colh" id="stageh"></div><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
     <aside class="mine" aria-label="Your selection"><h2>Your selection</h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="bag" id="bag"></div></aside>
   </div></main>
@@ -179,7 +221,7 @@ a { color: inherit; }
 var D = /*__DATA__*/;
 (function () {
   var $ = function (s) { return document.querySelector(s); }, esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-  var S = { step: 0, size: null, firmness: null, depth: null, cover: null, weight: null, height: null, bagged: null };
+  var S = { ch: 'height', pn: 'sizes', rd: {}, step: 0, size: null, firmness: null, depth: null, cover: null, weight: null, height: null, bagged: null };
   var LEAF = '<svg class="leaf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BD26B"/><stop offset="1" stop-color="#63B963"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1.2" stroke-linecap="round"/></g></svg>';
   var SHORT = ['Organic Cotton', 'Cotton / Wool', 'Aloe Vera Blend', 'Cashmere + Silver'];
   var STEPS = [
@@ -189,6 +231,29 @@ var D = /*__DATA__*/;
     { id: 'cover', label: 'Cover', q: 'Which cover do you prefer?', sub: 'Tap a cover to see what it does for you.', next: 'Review' },
     { id: 'review', label: 'Review', q: 'Review your order', sub: 'Check your four choices, then add the mattress to your bag.', next: null }
   ];
+  var CH = D.chapters, STEPMAP = { size: ['height', 'sizes'], firmness: ['firmness', 'choose'], depth: ['height', 'heights'], cover: ['covers', 'choose'], review: ['delivery', 'yours'] };
+  var FLAT = []; CH.forEach(function (c) { c.panels.forEach(function (p) { FLAT.push([c.id, p.id]); }); });
+  function chap(id) { return CH.filter(function (c) { return c.id === id; })[0]; }
+  function panel() { var c = chap(S.ch); return c.panels.filter(function (p) { return p.id === S.pn; })[0] || c.panels[0]; }
+  function goPanel(c, p) { S.ch = c; S.pn = p; var pp = panel(); if (pp.kind === 'step') S.step = STEPS.map(function (x) { return x.id; }).indexOf(pp.step); }
+  function goStep(i) { var m = STEPMAP[STEPS[i].id]; goPanel(m[0], m[1]); }
+  function flatIndex() { for (var i = 0; i < FLAT.length; i++) if (FLAT[i][0] === S.ch && FLAT[i][1] === S.pn) return i; return 0; }
+  function snippet(t) { var m = t.match(/^[^.!?]*[.!?]/), s = (m ? m[0] : t); if (s.length > 52) s = s.slice(0, 50).replace(/\s+\S*$/, '') + '…'; return s; }
+  function itemsOf(p) {
+    var g = p.groups || [];
+    if (g.length >= 2) return g.map(function (x, i) { return { label: x.h || (i === 0 ? 'Overview' : snippet(x.blocks[0].t || '')), blocks: x.blocks, h: x.h }; });
+    var b = g[0] ? g[0].blocks : [];
+    if (b.length >= 2) return b.map(function (x) { return { label: snippet(x.t || x.a || ''), blocks: [x], h: null }; });
+    return [{ label: p.title, blocks: b, h: g[0] ? g[0].h : null }];
+  }
+  function blocksHtml(bl) {
+    var out = '', ul = '';
+    bl.forEach(function (b) {
+      if (b.k === 'li') ul += '<li>' + esc(b.t) + '</li>';
+      else { if (ul) { out += '<ul>' + ul + '</ul>'; ul = ''; } out += b.k === 'row' ? '<div class="row"><b>' + esc(b.a) + '</b><span>' + esc(b.b) + '</span></div>' : '<p>' + esc(b.t) + '</p>'; }
+    });
+    return out + (ul ? '<ul>' + ul + '</ul>' : '');
+  }
   function toast(t) { var e = $('#toast'); e.textContent = t; e.className = 'toast on'; clearTimeout(toast.t); toast.t = setTimeout(function () { e.className = 'toast'; }, 4200); }
   function chosen(id) { return S[id] != null; }
   function complete() { return !!(S.size && S.firmness && S.depth && S.cover); }
@@ -207,10 +272,15 @@ var D = /*__DATA__*/;
     return 0.9 * mod;
   }
   var gbp = function (n) { return '£' + n.toFixed(2).replace(/\B(?=(\d{3})+\.)/g, ' '); };
+  var LEAFS = '<svg class="lf" viewBox="0 0 28 20" aria-hidden="true"><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="#7FC25F"/></g></svg>';
   var CHECK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  function drawBar() {
+    $('#chbar').innerHTML = CH.map(function (c) { return '<button class="ch" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch) + '">' + esc(c.label) + '</button>'; }).join('');
+  }
   function drawRail() {
-    var h = '<h2>Your order</h2>';
-    STEPS.forEach(function (st, i) { var done = i < STEPS.length - 1 && chosen(st.id), cur = i === S.step, v = valueOf(st.id);
+    var cur = chap(S.ch), onStep = panel().kind === 'step';
+    var h = '<h2>In ' + esc(cur.label) + '</h2>' + cur.panels.map(function (p) { return '<button class="pn" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '<h2 class="h2b">Your order</h2>';
+    STEPS.forEach(function (st, i) { var done = i < STEPS.length - 1 && chosen(st.id), cur = onStep && i === S.step, v = valueOf(st.id);
       h += '<button class="st' + (done ? ' done' : '') + (cur ? ' cur' : '') + '" data-go="' + i + '" aria-label="Step ' + (i + 1) + ': ' + st.label + (v ? ', chosen ' + esc(v) : '') + '"><span class="n">' + (done && !cur ? CHECK : (i + 1)) + '</span><span class="t"><b>' + st.label + '</b><span>' + (v ? esc(v) : (cur ? 'Choose now' : 'To do')) + '</span></span></button>'; });
     $('#rail').innerHTML = h;
   }
@@ -283,7 +353,50 @@ var D = /*__DATA__*/;
     h += '<p class="facts">' + D.reviewFacts.map(function (f) { return '<span>✓ ' + esc(f) + '</span>'; }).join('') + '</p>';
     return h;
   }
+  var PLAY = '<svg width="22" height="22" viewBox="0 0 24 24" fill="#173A52" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>';
+  function miniCard(c) { return c.media ? '<aside class="mini" aria-label="Short loop"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">' + esc(c.media) + '</span><span class="tv">Short loop · stand-in</span></aside>' : ''; }
+  function readerView(p) {
+    var it = itemsOf(p), k = S.ch + '/' + S.pn, i = Math.min(S.rd[k] || 0, it.length - 1), cur = it[i];
+    var card = '<div class="rc" aria-live="polite">' + ((cur.h || (it.length > 1 && cur.label)) ? '<h2>' + esc(cur.h || cur.label) + '</h2>' : '') + blocksHtml(cur.blocks) + '</div>';
+    if (it.length < 2) return card;
+    return '<div class="rd"><div class="rl">' + it.map(function (x, j) { return '<button class="ri2" data-rd="' + j + '" aria-pressed="' + (j === i) + '"><i>' + (j + 1) + '</i><span>' + esc(x.label) + '</span></button>'; }).join('') + '</div>' + card + '</div>';
+  }
+  function pointsView(p, c) {
+    var cards = '<div class="pts">' + p.items.map(function (x) { return '<div class="pt">' + LEAFS + '<h3>' + esc(x.t) + '</h3><p>' + esc(x.d) + '</p></div>'; }).join('') + '</div>';
+    return '<div class="pw' + (c.media ? '' : ' nomedia') + '">' + cards + miniCard(c) + '</div>';
+  }
+  function certsView(p, c) {
+    var cards = '<div class="pts">' + p.items.map(function (x) { return '<div class="pt">' + LEAFS + '<h3>' + esc(x.m) + '</h3><div class="sb">' + esc(x.s) + '</div><p>' + esc(x.d) + '</p></div>'; }).join('') + '</div>';
+    return '<div class="pw' + (c.media ? '' : ' nomedia') + '">' + cards + miniCard(c) + '</div>';
+  }
+  function zonesView(p, c) {
+    var list = '<div class="zl">' + p.items.map(function (x, i) { return '<div class="zi"><i>' + (i + 1) + '</i><b>' + esc(x.n) + '</b><span>' + esc(x.note) + '</span></div>'; }).join('') + '</div>';
+    return '<div class="pw' + (c.media ? '' : ' nomedia') + '">' + list + miniCard(c) + '</div>';
+  }
+  function numeralsView(p) { return '<div class="nums">' + p.items.map(function (x) { return '<div class="nm2">' + (x.k ? '<small>' + esc(x.k) + '</small>' : '<small>&nbsp;</small>') + '<strong>' + esc(x.v) + '</strong><em>' + esc(x.u) + '</em><p>' + esc(x.b) + '</p></div>'; }).join('') + '</div>'; }
+  function heroView() {
+    var H = D.hero;
+    return '<div class="hero"><div><div class="rc"><h2>' + esc(H.headline) + '</h2><p>' + esc(H.intro) + '</p><p>' + esc(H.note) + '</p></div><div class="fts">' + D.features.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '</div></div>' +
+      '<aside class="mini" aria-label="Presentation video"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">Presentation video: watch the whole Botanic in full</span><span class="tv">Plays in full on demand · stand-in</span></aside></div>';
+  }
+  function factsView() {
+    return '<div class="fx">' + D.facts.map(function (f) { return '<div><small>' + esc(f.l) + '</small><b>' + esc(f.v) + '</b>' + (f.pills.length ? '<em>' + esc(f.pills.join(' · ')) + '</em>' : '') + '</div>'; }).join('') + '</div><p class="fnote">' + esc(D.factsNote) + '</p>';
+  }
+  function infoDraw(p, c) {
+    var title = p.kind === 'facts' ? D.factsTitle : (p.title || (c.head && c.head.title) || p.label), sub = null;
+    if (p.kind === 'points' || p.kind === 'zones' || p.kind === 'certs' || p.kind === 'numerals' || p.kind === 'article' || (c.id === 'delivery' && p.id === 'made')) sub = c.head && c.head.sub;
+    if (p.kind === 'hero') { title = 'Know your Botanic'; sub = 'Everything about this mattress is here, one topic at a time. Use the buttons above and on the left.'; }
+    if (p.kind === 'numerals') title = 'Warranty and durability';
+    $('#q').innerHTML = '<h1>' + LEAF + '<span>' + esc(title) + '</span></h1>' + (sub ? '<p>' + esc(sub) + '</p>' : '');
+    var v = { hero: heroView, facts: factsView, read: function () { return readerView(p); }, article: function () { return readerView(p); }, points: function () { return pointsView(p, c); }, certs: function () { return certsView(p, c); }, zones: function () { return zonesView(p, c); }, numerals: function () { return numeralsView(p); } }[p.kind];
+    $('#answer').innerHTML = v();
+    var i = flatIndex(), prev = FLAT[i - 1], next = FLAT[i + 1], np = next && chap(next[0]).panels.filter(function (x) { return x.id === next[1]; })[0];
+    $('#act').innerHTML = (prev ? '<button class="btn s" data-flat="' + (i - 1) + '">Back</button>' : '') + '<button class="btn s" data-go="0">Select your Botanic</button>' + (next ? '<button class="btn p" data-flat="' + (i + 1) + '">Next: <b>' + esc(np.label) + '</b></button>' : '');
+    $('#stageh').textContent = c.label + '  ·  ' + p.label;
+  }
   function draw() {
+    var pp = panel(), cc = chap(S.ch); drawBar();
+    if (pp.kind !== 'step') { infoDraw(pp, cc); drawRail(); drawMine(); return; }
     var st = STEPS[S.step]; $('#q').innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p>' + esc(st.sub) + '</p>';
     $('#answer').innerHTML = { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
     var ok = chosen(st.id), last = S.step === STEPS.length - 1;
@@ -292,20 +405,23 @@ var D = /*__DATA__*/;
     drawRail(); drawMine();
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ph]'); if (!t) return;
+    var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat]'); if (!t) return;
     var d = t.dataset;
-    if (d.go != null) S.step = +d.go;
+    if (d.ch != null) { var cc0 = chap(d.ch); goPanel(cc0.id, cc0.panels[0].id); }
+    else if (d.pn != null) goPanel(S.ch, d.pn);
+    else if (d.rd != null) { S.rd[S.ch + '/' + S.pn] = +d.rd; }
+    else if (d.flat != null) { var f = FLAT[+d.flat]; goPanel(f[0], f[1]); }
+    else if (d.go != null) goStep(+d.go);
     else if (d.size != null) S.size = D.sizes[+d.size];
     else if (d.firm != null) S.firmness = d.firm;
     else if (d.depth != null) S.depth = Object.assign({ i: +d.depth }, D.depths[+d.depth]);
     else if (d.cover != null) S.cover = Object.assign({ i: +d.cover }, D.covers[+d.cover]);
-    else if (d.next != null) S.step = Math.min(STEPS.length - 1, S.step + 1);
-    else if (d.back != null) S.step = Math.max(0, S.step - 1);
+    else if (d.next != null) goStep(Math.min(STEPS.length - 1, S.step + 1));
+    else if (d.back != null) goStep(Math.max(0, S.step - 1));
     else if (d.more != null) { $('#form').classList.toggle('on'); return; }
     else if (d.send != null) { toast('Preview only: nothing was sent. In the shop this goes to Divine Dunlop support.'); return; }
     else if (d.bag != null) { S.bagged = sig(); toast('Stand-in: in the shop this presses Ecwid\'s own Add to Bag, and the button turns into Go to Checkout when Ecwid\'s cart reports the change.'); }
     else if (d.checkout != null) { toast('Stand-in: in the shop this opens Ecwid\'s own checkout.'); return; }
-    else if (d.ph != null) { if (d.ph !== '2') toast('This preview shows phase 2, Choose yours, only.'); return; }
     draw(); if (d.bag == null) window.scrollTo({ top: 0 });
   });
   document.addEventListener('input', function (e) {
@@ -317,7 +433,7 @@ var D = /*__DATA__*/;
     $('#guide').innerHTML = rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';
     document.querySelectorAll('.fcard').forEach(function (c) { var nm = c.querySelector('.nm').textContent, isRec = rec && fk(rec.display) === nm; c.classList.toggle('rec', !!isRec); c.classList.toggle('dim', !!(rec && !isRec)); var tag = c.querySelector('.tag'); if (isRec && !tag) c.insertAdjacentHTML('afterbegin', '<span class="tag">For you</span>'); if (!isRec && tag) tag.remove(); });
   });
-  (function url() { var q = location.search.match(/step=(\d)/); if (q) S.step = Math.min(4, +q[1]); var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); if (/bag=1/.test(location.search)) S.bagged = sig(); } })();
+  (function url() { var q = location.search.match(/step=(\d)/); if (q) goStep(Math.min(4, +q[1])); var cq = location.search.match(/ch=([a-z0-9]+)/), pq = location.search.match(/pn=([a-z0-9]+)/); if (cq && chap(cq[1])) goPanel(cq[1], pq ? pq[1] : chap(cq[1]).panels[0].id); var rq = location.search.match(/rd=(\d+)/); if (rq) S.rd[S.ch + '/' + S.pn] = +rq[1]; var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); if (/bag=1/.test(location.search)) S.bagged = sig(); } })();
   draw();
 })();
 </script>
