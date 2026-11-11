@@ -76,3 +76,20 @@ Real phones; the redirect on a real device; the test product; the real cover tex
 Contrast (WCAG 2.x, `data/description-contrast.json`): all 15 text/background pairs reach AA (lowest 4.84:1). Two pairs were lifted after the first check (quiet text on cards `#9AA8B4 → #B8C4CE`, Sky marks on petrol `#50CDFD → #8BE0FF`).
 
 Evidence: `shots/description-colours/before-after.jpg`, `before/`, `after/`, `palette.png`; `preview/description-palette.html`; `tools/description-shots.mjs`. `tools/graphite-full-test.mjs`: 62 of 62 checks pass. Nothing is deployed; this is E1/E2-level preview evidence only (a stand-in page, no live device).
+
+## Direction C prototype: clean light, earned dark (preview only)
+
+`preview/graphite-light.html` is the same page with only the description colour layer swapped (`src/description-light.css`). The configurator, the firmness step and all tests are identical to `graphite.html`.
+
+- **Ground:** cool mist `#F2F7F9` (not pure white), white cards with `#D3E0E5` hairlines.
+- **Ink:** `#272D32` headings, `#3E474D` body, `#5B666E` captions.
+- **Petrol `#2F565A`:** links, marks, the primary button (white text) and the outline button.
+- **Depth `#1E3036`:** three earned dark bands only: the seven zones, the proof row and the closing call to action.
+- **Sky `#50CDFD`:** never text on light (about 1.7:1). On light it is only a hairline; on the dark bands it marks the zone numbers and the closing button.
+- **Leaf:** the only green in the description.
+
+Contrast (`data/description-light-contrast.json`): every text pair used on the page reaches AA, the lowest at 5.45:1. The rejected pair, Sky as text on light, is recorded at 1.69:1 so the rule is visible.
+
+Layout: no horizontal overflow at 360, 390 or 430 px. `tools/graphite-full-test.mjs` still passes 62 of 62.
+
+Evidence: `shots/description-colours/compare-three.jpg` (original light, dark B, clean light C, side by side), `light/` (C slices), `before/`, `after/`.

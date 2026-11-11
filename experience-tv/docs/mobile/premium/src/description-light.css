@@ -1,0 +1,86 @@
+/* Direction C, "clean light, earned dark" (graphite-light preview ONLY; cosmetic, no content or behaviour change).
+   The description starts light and clean (cool mist, not pure white). The owner's four colours do the work of ink and
+   structure: #272D32 headings, #3E474D body, #2F565A petrol for links, marks and the primary button, #1E3036 for the
+   three dark bands that have to be earned (seven zones, proof, closing call to action). Sky #50CDFD is never text on
+   light; on light it is only a hairline or a dot. Green appears only as the leaf ornament. */
+#bp-top {
+  --ink: #272D32; --ink-mid: #3E474D; --ink-soft: #5B666E;
+  --bg: #F2F7F9; --lift: #F2F7F9; --card: #FFFFFF; --deep: #D3E0E5; --pale: #C9DCE2;
+  --mid: #3E474D; --soft: #5B666E; --acc: #2F565A; --accm: #2F565A;
+  --petrol: #2F565A; --depth: #1E3036; --sky: #50CDFD; --steel: #8CA2C2;
+  --shadow-sm: 0 1px 2px rgba(39, 45, 50, .05); --shadow-md: 0 6px 18px rgba(39, 45, 50, .07);
+  color: var(--ink-mid); background: #F2F7F9;
+}
+#productDescription, #desc-slot, #desc-slot .product-details__product-description, #bp-top, #bp-top .b-sec, #bp-top .b-sec--lift { background: #F2F7F9; }
+#bp-top .b-sh__t, #bp-top h2, #bp-top h3, #bp-top h4 { color: #272D32; }
+#bp-top .b-sh__s, #bp-top p { color: #3E474D; }
+#bp-top strong, #bp-top b { color: #272D32; }
+#bp-top p a, #bp-top .b-sh__s a, #bp-top .p-body a { color: #2F565A; text-decoration-color: rgba(47, 86, 90, .45); }
+/* heading mark: the header leaf, the only green in the description */
+#bp-top .b-sh__t::before {
+  width: 20px; height: 13px; border-radius: 100% 0; background: linear-gradient(135deg, #9bd26b, #63b963);
+  transform: rotate(-28deg); transform-origin: 30% 70%; margin: 4px 0 14px 2px;
+}
+/* buttons: petrol primary (white text, 8:1), petrol outline secondary */
+#bp-top .b-btn-p, #bp-top .b-btn-hero-p, #bp-top .b-main-video-actions .b-btn-p { background: #2F565A !important; color: #FFFFFF !important; }
+#bp-top .b-btn-p:hover, #bp-top .b-main-video-actions .b-btn-p:hover { background: #1E3036 !important; color: #FFFFFF !important; }
+#bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o { border-color: #2F565A !important; color: #2F565A !important; background: transparent; }
+#bp-top .b-btn-o:hover { background: rgba(47, 86, 90, .08) !important; color: #1E3036 !important; }
+/* hero: no dark block; the video sits in a clean white card, the frame itself stays dark (it is media) */
+#bp-top .b-hero { background: none; border-bottom: 0; }
+#bp-top .b-main-video-card { background: #FFFFFF; border: 1px solid #D3E0E5; border-radius: 18px; padding: 14px; box-shadow: var(--shadow-sm); }
+#bp-top .b-main-video-card .b-mtv__head, #bp-top .b-main-video-card > :not(.b-main-video-frame) { color: #3E474D; }
+#bp-top .b-main-video-card .b-main-video-frame { border-radius: 14px; }
+/* six key facts: white tiles, petrol icons, no coloured dots */
+#bp-top .p-glance { background: #F2F7F9; }
+#bp-top .p-glance .b-hero-bar__item { background: #FFFFFF; border: 1px solid #D3E0E5; box-shadow: var(--shadow-sm); }
+#bp-top .p-glance .b-hero-bar__item, #bp-top .p-glance .b-hero-bar__item * { color: #272D32 !important; -webkit-text-fill-color: #272D32 !important; }
+#bp-top .p-glance svg { stroke: #2F565A; }
+/* seven zones: the first earned dark band */
+#bp-top .p-feature { position: relative; overflow: hidden; margin: 26px -20px 0; padding: 26px 20px 22px; background: radial-gradient(90% 60% at 100% 0%, rgba(47, 86, 90, .7), transparent 62%), linear-gradient(180deg, #1E3036, #1B2A2F); border: 0; }
+#bp-top .p-feature::after { content: ''; position: absolute; right: -26px; top: 18px; width: 120px; height: 80px; border-radius: 100% 0; background: linear-gradient(135deg, rgba(80, 205, 253, .14), rgba(80, 205, 253, .03)); transform: rotate(-28deg); pointer-events: none; }
+#bp-top .p-feature h2, #bp-top .p-feature h3, #bp-top .p-feature .b-sh__t, #bp-top .p-feature .b-sh__s, #bp-top .p-feature p { color: #F2F7FB; }
+#bp-top .p-feature .b-sh__t::before { background: linear-gradient(135deg, #9bd26b, #63b963); }
+#bp-top .p-feature .b-zone-pill { background: #26393F; border: 1px solid #2F565A; }
+#bp-top .p-feature .b-zone-pill__num { color: #50CDFD; }
+#bp-top .p-feature .b-zone-pill__name { color: #F2F7FB; }
+#bp-top .p-feature .b-zone-pill__note { color: #AEBBC6; }
+#bp-top .p-zs { background: #172229; border: 1.5px solid #2F565A; }
+#bp-top .p-zlegend { color: #C3D5ED; }
+/* decision cards and notices: white, hairline, petrol detail */
+#bp-top .b-fc, #bp-top .b-hcol, #bp-top .b-fdecision__item, #bp-top .b-wc { background: #FFFFFF; border: 1px solid #D3E0E5; box-shadow: var(--shadow-sm); }
+#bp-top .b-fc__name, #bp-top .b-hcol__n { color: #272D32; }
+#bp-top .b-hcol strong { color: #2F565A; }
+#bp-top .b-fconf__notice { background: #E4EEF1; color: #272D32; border-left: 4px solid #2F565A; }
+#bp-top .b-fdecision__mark { background: #2F565A; color: #FFFFFF; border: 0; }
+/* the "who is this for" summary: white with a petrol edge, not a dark block */
+#bp-top .b-sum--who, #bp-top .b-sum--who:hover { background: #FFFFFF; color: #272D32 !important; border: 1px solid #2F565A; }
+#bp-top .b-sum--who .sum-arr { color: #2F565A !important; }
+/* gift card: light petrol tint instead of the dark gradient */
+#bp-top .b-wc--gift { background: #E4EEF1; border: 1px solid #C9DCE2; }
+#bp-top .b-wc--gift * { color: #272D32; }
+#bp-top .b-wc--gift .b-wb { color: #3E474D; }
+/* proof row: the second earned dark band */
+#bp-top .p-proof { margin: 30px -20px 0; padding: 28px 20px 24px; background: radial-gradient(100% 80% at 0% 0%, rgba(47, 86, 90, .8), transparent 62%), linear-gradient(170deg, #1E3036, #1A2A30); }
+#bp-top .p-proof h3 { color: #FFFFFF; } #bp-top .p-proof > p { color: #C3D5ED; }
+#bp-top .p-row .b-mtv { background: rgba(255, 255, 255, .06); border: 1px solid #2F565A; border-radius: var(--rl); padding: 10px; }
+#bp-top .p-row .b-mtv__title { color: #FFFFFF; font-weight: 700; }
+#bp-top .p-row .b-mtv__desc { color: #C3D5ED; }
+/* accordions: hairlines, petrol markers */
+#bp-top .p-note { border-top: 1px solid #D3E0E5; }
+#bp-top .p-note > summary, #bp-top .p-note .p-n-title { color: #272D32; }
+#bp-top .p-note .p-n-sub, #bp-top .p-n-sub { color: #5B666E; }
+#bp-top .p-note > summary::after, #bp-top .p-note summary .sum-arr, #bp-top summary .sum-arr { color: #2F565A; }
+#bp-top .p-note .p-body, #bp-top .p-note .p-body p { color: #3E474D; }
+#bp-top .p-cap { color: #5B666E; }
+/* closing call to action: the third earned dark band */
+#bp-top .b-cta { background: linear-gradient(135deg, #1E3036 0%, #2F565A 120%); border: 0; }
+#bp-top .b-cta__t { color: #FFFFFF; }
+#bp-top .b-cta__s { color: #C3D5ED; }
+#bp-top .b-cta .b-btn-p { background: #50CDFD !important; color: #0F1A22 !important; }
+#bp-top .b-cta .b-btn-p:hover { background: #C3D5ED !important; color: #0F1A22 !important; }
+#bp-top .b-cta .b-btn-o { border-color: rgba(195, 213, 237, .55) !important; color: #FFFFFF !important; }
+/* cover micro-slider frame: light card */
+#bp-top .b-cover-micro-wrap { background: #FFFFFF; border: 1px solid #D3E0E5; }
+/* floating back-to-top */
+#bp-top .b-floating-top, .b-floating-top { background: #2F565A; color: #FFFFFF; border: 0; }

@@ -163,6 +163,8 @@ const graphite = html.replace('<style id="premium-css">', '<style id="premium-cs
 // description colours: graphite preview only, loaded AFTER content.css so it wins on equal specificity
 const cssTag = '<style id="content-css">' + S('content.css') + '</style>';
 writeFileSync(join(P, 'preview', 'graphite.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-dark">' + S('description-dark.css') + '</style>'));
+// direction C (clean light, earned dark): the same page with only the description colour layer swapped
+writeFileSync(join(P, 'preview', 'graphite-light.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-light">' + S('description-light.css') + '</style>'));
 mkdirSync(join(P, 'preview'), { recursive: true });
 writeFileSync(join(P, 'preview', 'index.html'), final);
 const sizes = { total: Buffer.byteLength(final), gzip: gzipSync(final).length, firmnessCoreBytes: coreSrc.length, syncBytes: S('sync.js').length, configuratorBytes: S('configurator.js').length, premiumCssBytes: S('premium.css').length, contentCssBytes: S('content.css').length };
