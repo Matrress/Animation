@@ -13,19 +13,34 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 | The large screen must also have the order-filling stages | A visible rail of five steps (Size, Firmness, Depth, Cover, Review): done steps show a tick and the choice, the current step is marked, every step can be tapped. On a portrait tablet the rail runs along the top. A "Your selection" panel with chips and the price stays on the right (below on a portrait tablet) |
 | Extra Firm is not removed | The fourth firmness card is Extra Firm, 115 kg and over, with "Specialist Model: Orthopaedic Coconut Core". It is a plain link that opens only when tapped; the sliders never navigate |
 | Custom sizes | "Need another size?" opens a small form (model filled in, size wanted, reply email). Preview only: nothing is sent. In the shop it goes to support@divinedunlop.com |
-| The shop's own (manual) controls must also be on the large screen, like a manual gearbox beside the automatic one | A **Guided / Manual** switch at the top of the stage. Manual shows the shop's own four options (Size, Select Mattress Depth, Firmness by body weight, Covers) on one screen, with the shop's own labels. A change in Manual shows on the guided screens and on the order rail; a change on a guided screen shows in Manual. Under the television the shop's own options and Add to Bag stay on the page, never hidden. The Standard Product View (the page without our television) stays as the full fallback |
+| The shop's own (manual) controls stay | **No "Choose by hand" screen inside the television** (owner, 11 November 2026: it is outside the concept). The shop's own four options and Add to Bag stay on the page under the television, always, never hidden, and move together with the television in both directions. The Standard Product View and the model "Standard" are untouched |
 | Each button will be specified later by the owner | The preview is a design carrier; every label here is replaceable through `docs/TV-BUTTON-SPEC.md` |
 
-## Guided and Manual: two modes, one selection
+## Design rules from the owner's review (11 November 2026)
 
-The television never replaces the shop's controls. It is an automatic mode over the same four options: the customer may use it, switch to Manual at any moment, or ignore the television altogether (Standard Product View, and the model "Standard" without our television). The rule is the standing two-way rule of `docs/FINALISATION-PLAN.md` section 0b: Ecwid is the executor, both modes read and write Ecwid's own controls, and Add to Bag stays Ecwid's own button adding exactly what both show. In Manual the firmness labels are the shop's own labels as they are today; they follow the owner's edits in Ecwid Admin (see the numbers table below). Checked in the preview: Manual to Guided and Guided to Manual, for all four options; picking Extra Firm in Manual shows the notice and changes nothing (the owner to confirm this proposal).
+- **Rounded corners only; no pills.** Every button is a rounded rectangle (12 px); the step markers and badges are rounded squares; the slider handle is a rounded square.
+- **No mint.** Anything current or chosen is graphite blue with white text: the current step on the rail, the chips of "Your selection", the guidance bar. The choice cards (body weight, height, Soft, Medium, Firm, Extra Firm, sizes, depths, covers) and the two side panels stay white; a chosen card has a dark graphite border.
+- **The frame of the television is thin** (5 px instead of 14 px).
+- **The leaf is green** (the header leaf of the site, not blue).
+- **The question band stays dark** (the owner likes it).
+
+## Add to Bag and Go to Checkout (one button, two faces)
+
+Add to Bag sits in "Your selection", under the price, on every step, and again on the Review step. It is disabled until size, firmness, depth and cover are all chosen. Once the mattress is in the bag the same button, in the same place, becomes **Go to Checkout** (green), and says "Added to your bag". If the customer then changes any of the four choices, it becomes Add to Bag again, because the new configuration is not in the bag. The shop's own button under the television is the same button: both always show the same face.
+
+In the shop: the television's button presses **Ecwid's own** Add to Bag (so Ecwid validates and executes, as always), and it turns into Go to Checkout only when Ecwid's own cart event reports the change (never on our assumption). If the customer uses Ecwid's own Add to Bag, the television's button turns into Go to Checkout the same way. Go to Checkout opens Ecwid's own checkout. This replaces the earlier idea that "Go to Add to Bag" only scrolls to the shop's button. *Open point for the owner:* in Ecwid today no option is required and Add to Bag is enabled with nothing chosen (price £0); the television's button waits for all four choices, Ecwid's own does not. Mark the four options as required in Ecwid Admin so both behave the same.
+
+## Depth and covers
+
+- **Depth** is drawn from the owner's own core drawing: its front edge, levelled (the drawing is in perspective) and stretched only in thickness for 20, 24 and 26 cm, with the 26 cm outline dashed behind the shorter ones so the difference is visible.
+- **Covers** are four photographs in a square (2 by 2), each with one short caption (Organic Cotton, Cotton / Wool, Aloe Vera Blend, Cashmere + Silver). A white information board beside them shows what the chosen cover gives: the four main points from the approved text, the height it adds, and the extra price Ecwid shows. The photographs have nothing written on them.
 
 ## What the preview is not
 
 - **Not connected to Ecwid.** The price in "Your selection" is a stand-in, computed here only so the layout can be judged (90 per cent of the label modifiers, as Ecwid showed on 11 November 2026). In the shop the price is Ecwid's own and the screen never computes one.
-- **Go to Add to Bag** never adds anything. In the shop it scrolls to Ecwid's own button.
+- The bag is a stand-in here: nothing is added anywhere. (In the shop see the section on Add to Bag and Go to Checkout.)
 - The two-way sync (screen to Ecwid and Ecwid to screen) is proved separately, on the current television, by `tests/sync-contract.mjs` (simulated store) and `tests/live/tv-sync-e2.cjs` (real Ecwid page, read-only). The new screens must pass the same two tests before they replace the old ones.
-- Fonts and cover photographs load from the web; the pictures in this folder were taken offline, so the cover cards show a dark placeholder.
+- Fonts load from the web; the pictures in this folder were taken without the web font, so the letters differ slightly from the final ones. The cover photographs are the real ones from the media host.
 
 ## Firmness numbers: one source
 

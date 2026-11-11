@@ -42,11 +42,11 @@ const browser = await chromium.launch();
 const errs = [];
 for (const [id, vp, touch] of PROFILES) {
   const ctx = await browser.newContext({ viewport: vp, screen: vp, hasTouch: touch, deviceScaleFactor: 1 });
-  await ctx.route(/^https?:\/\//, (r) => r.abort());   // offline: fonts and cover photographs fall back
+  await ctx.route(/^https?:\/\//, (r) => (/^https:\/\/media\.divinedunlop\.com\//.test(r.request().url()) ? r.continue() : r.abort()));   // only the cover photographs are loaded; fonts fall back
   const page = await ctx.newPage(); page.on('pageerror', (e) => errs.push(id + ': ' + e.message));
   const url = pathToFileURL(file).href;
-  for (const [name, q] of [['1-size', '?step=0&demo=1'], ['2-firmness', '?step=1&demo=1'], ['3-depth', '?step=2&demo=1'], ['4-cover', '?step=3&demo=1'], ['5-review', '?step=4&demo=1'], ['6-manual', '?mode=manual&demo=1']]) {
-    await page.goto(url + q); await page.waitForTimeout(250);
+  for (const [name, q] of [['1-size', '?step=0&demo=1'], ['2-firmness', '?step=1&demo=1'], ['3-depth', '?step=2&demo=1'], ['4-cover', '?step=3&demo=1'], ['5-review', '?step=4&demo=1'], ['6-bagged', '?step=4&demo=1&bag=1'], ['7-cover-none', '?step=3']]) {
+    await page.goto(url + q); await page.waitForTimeout(name === '4-cover' || name === '7-cover-none' ? 1500 : 250);
     await page.screenshot({ path: join(out, `design-${id}-${name}.png`), fullPage: true });
   }
   // the first-time state: nothing chosen yet, step 1
