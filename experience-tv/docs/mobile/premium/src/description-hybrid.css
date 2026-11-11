@@ -1,0 +1,23 @@
+/* Hybrid (graphite-hybrid preview ONLY): light ground where the facts are (the white tiles stay white),
+   and the video card itself in turquoise graphite with white text. Layer over description-light.css and description-turquoise.css.
+   Rule: white text only on dark surfaces; on the light ground text stays dark (white on mist would not read). */
+#bp-top .b-main-video-card {
+  background: linear-gradient(160deg, #1B6676 0%, #163F4B 45%, #0A1E24 100%) !important;
+  border: 1px solid rgba(80, 205, 253, .4) !important;
+  border-radius: 18px !important;
+  padding: 16px !important;
+  box-shadow: 0 14px 34px rgba(18, 48, 58, .28) !important;
+}
+#bp-top .b-main-video-card, #bp-top .b-main-video-card * { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+#bp-top .b-main-video-card a { text-decoration-color: #50CDFD; }
+/* video frame inside the card: a slightly deeper inset with a turquoise hairline */
+#bp-top .b-main-video-card .b-main-video-frame, #bp-top .b-main-video-card .p-video {
+  background: linear-gradient(135deg, #0F2A33, #0A1E24) !important;
+  border: 1px solid rgba(80, 205, 253, .35) !important;
+  border-radius: 14px !important;
+}
+/* buttons inside the card: turquoise fill with white text, white outline */
+#bp-top .b-main-video-card .b-btn-p { background: #1B6676 !important; border: 1px solid #50CDFD !important; color: #FFFFFF !important; }
+#bp-top .b-main-video-card .b-btn-o { background: transparent !important; border: 1px solid rgba(255, 255, 255, .6) !important; color: #FFFFFF !important; }
+#bp-top .b-main-video-card .b-btn-o span, #bp-top .b-main-video-card .b-btn-p span { color: #FFFFFF !important; }
+#bp-top .b-main-video-card .p-cap { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }

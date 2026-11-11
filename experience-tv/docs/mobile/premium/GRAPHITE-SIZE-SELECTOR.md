@@ -134,3 +134,19 @@ Trade-off: white text needs a dark ground, so the light sections of C and D are 
 Layout: no horizontal overflow at 360, 390 or 430 px. `tools/graphite-full-test.mjs`: 62 of 62.
 
 Evidence: `shots/description-colours/compare-d-e.jpg` (D and E side by side), `gradient/` (E slices).
+
+## Direction H (hybrid): light ground, turquoise video card (preview only)
+
+`preview/graphite-hybrid.html` = the clean light ground (C) plus the turquoise layer (D) plus `src/description-hybrid.css`. This follows the owner's latest choice: the first, white-ground concept for the facts (the tiles "100 % Organic Dunlop Latex", "Custom Made to Order" and the rest stay white), and the video card itself in turquoise graphite.
+
+- **Video card:** gradient `#1B6676 → #163F4B → #0A1E24`, a turquoise hairline edge and a soft shadow. The frame inside is a deeper inset. Text on the card is pure white; the buttons are a turquoise fill with white text and a white outline.
+- **Facts on the light ground:** unchanged from C, dark text (`#272D32`, `#3E474D`) on white tiles. White text is used only on dark surfaces.
+- **Dark bands:** the seven zones, the proof row and the closing call to action keep their turquoise graphite gradients from D.
+
+**Interpretation to confirm.** The earlier request was white text in both colour versions. A white ground cannot carry white text, so on the light sections the text stays dark, and white is used on every dark surface (the video card, the zone band, the proof row, the closing band). If you want white text everywhere, the light ground has to go, which is direction E.
+
+Contrast: white on the card and the bands is above 6.5:1 at every stop (the lightest is the card's `#1B6676` top at 6.54:1, measured in `data/description-gradient-contrast.json`). Dark text on the white tiles is above 12:1.
+
+Layout: no horizontal overflow at 360, 390 or 430 px. `tools/graphite-full-test.mjs`: 62 of 62.
+
+Evidence: `shots/description-colours/compare-c-hybrid.jpg` (C and H side by side), `hybrid/` (H slices).
