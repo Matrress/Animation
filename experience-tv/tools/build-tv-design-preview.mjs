@@ -45,7 +45,7 @@ for (const [id, vp, touch] of PROFILES) {
   await ctx.route(/^https?:\/\//, (r) => r.abort());   // offline: fonts and cover photographs fall back
   const page = await ctx.newPage(); page.on('pageerror', (e) => errs.push(id + ': ' + e.message));
   const url = pathToFileURL(file).href;
-  for (const [name, q] of [['1-size', '?step=0&demo=1'], ['2-firmness', '?step=1&demo=1'], ['3-depth', '?step=2&demo=1'], ['4-cover', '?step=3&demo=1'], ['5-review', '?step=4&demo=1']]) {
+  for (const [name, q] of [['1-size', '?step=0&demo=1'], ['2-firmness', '?step=1&demo=1'], ['3-depth', '?step=2&demo=1'], ['4-cover', '?step=3&demo=1'], ['5-review', '?step=4&demo=1'], ['6-manual', '?mode=manual&demo=1']]) {
     await page.goto(url + q); await page.waitForTimeout(250);
     await page.screenshot({ path: join(out, `design-${id}-${name}.png`), fullPage: true });
   }

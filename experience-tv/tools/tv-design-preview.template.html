@@ -58,6 +58,17 @@ a { color: inherit; }
 .btn.p { background: linear-gradient(135deg, var(--teal), var(--teal-deep)); color: #fff; border-color: rgba(80,205,253,.55); box-shadow: 0 0 0 4px rgba(80,205,253,.14), 0 6px 14px -8px rgba(26,92,126,.8); }
 .btn.p b { font-weight: 700; } .btn.p:disabled { background: #D7E1E5; color: #7B878E; border-color: transparent; box-shadow: none; cursor: not-allowed; }
 .btn.s { background: var(--white); border-color: var(--line2); color: var(--ink); }
+/* guided / manual switch: the automatic and the manual gearbox */
+.mode { display: inline-flex; background: var(--white); border: 1.5px solid var(--line2); border-radius: 999px; padding: 4px; gap: 4px; margin: 0 0 16px; align-self: flex-start; }
+.mode button { height: 44px; padding: 0 22px; border-radius: 999px; border: 0; background: transparent; font-weight: 600; font-size: 16px; color: var(--ink2); }
+.mode button[aria-pressed=true] { background: var(--grad-card); color: #fff; box-shadow: 0 4px 10px -6px rgba(26,92,126,.8); }
+.man { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.man .f { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 16px 16px; }
+.man label { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 700; margin-bottom: 8px; }
+.man select { width: 100%; height: 56px; border: 1.5px solid var(--line2); border-radius: 12px; padding: 0 14px; font: inherit; font-size: 16px; background: #fff; color: var(--ink); }
+.man .f.on { border-color: var(--teal); box-shadow: 0 0 0 4px rgba(26,92,126,.1); }
+.man-note { margin: 16px 0 0; font-size: 14px; color: var(--ink3); line-height: 1.5; }
+.shopstrip { margin-top: 14px; font-size: 13px; color: var(--ink3); text-align: center; }
 /* size */
 .grp h3 { margin: 22px 0 10px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 700; } .grp:first-child h3 { margin-top: 0; }
 .cards { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
@@ -137,9 +148,10 @@ a { color: inherit; }
   </header>
   <main class="monitor"><div class="screen">
     <nav class="rail" id="rail" aria-label="Your order, step by step"></nav>
-    <section class="stage"><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
+    <section class="stage"><div id="modebar"></div><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
     <aside class="mine" aria-label="Your selection"><h2>Your selection</h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div></aside>
   </div></main>
+  <p class="shopstrip">Under the television the shop's own options and Add to Bag stay on the page, always. The screen and the shop's controls move together, in both directions.</p>
 </div>
 <div class="toast" id="toast" role="status"></div>
 <script>/*__CORE__*/</script>
@@ -147,7 +159,7 @@ a { color: inherit; }
 var D = /*__DATA__*/;
 (function () {
   var $ = function (s) { return document.querySelector(s); }, esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-  var S = { step: 0, size: null, firmness: null, depth: null, cover: null, weight: null, height: null };
+  var S = { mode: 'guided', step: 0, size: null, firmness: null, depth: null, cover: null, weight: null, height: null };
   var STEPS = [
     { id: 'size', label: 'Size', q: 'How big is your bed?', sub: 'Choose your size. Every size is shown in centimetres and in inches.', next: 'Firmness' },
     { id: 'firmness', label: 'Firmness', q: 'How firm should it be for your body?', sub: D.firmness.sub, next: 'Depth' },
@@ -156,6 +168,20 @@ var D = /*__DATA__*/;
     { id: 'review', label: 'Review', q: 'Review your order', sub: 'Check the four choices and the price. Add to Bag is the shop\'s own button.', next: null }
   ];
   function toast(t) { var e = $('#toast'); e.textContent = t; e.className = 'toast on'; clearTimeout(toast.t); toast.t = setTimeout(function () { e.className = 'toast'; }, 4200); }
+  var NAT = {
+    depth: ['H- 20 cm (8”) Balanced Comfort', 'H -24 cm (9.5”) Deep Comfort (+£156)', 'H- 26 cm (10.25”) Premium Deep Comfort (+£190)'],
+    firmness: [['Soft', 'Up to 47 kg / up to 7.4 st body weight – SOFT'], ['Medium', '48–85 kg / 7.6–13.4 st body weight – MEDIUM'], ['Firm', '85–110 kg / 13.4–17.3 st body weight – FIRM'], ['Extra Firm', 'Over 120 kg / over 18.9 st body weight – EXTRA FIRM (+£88)']]
+  };
+  function manualView() {
+    var o = function (sel, v, t) { return '<option value="' + v + '"' + (sel ? ' selected' : '') + '>' + esc(t) + '</option>'; };
+    var sz = '<option value="">Please choose</option>' + D.sizes.map(function (x, i) { return o(S.size && S.size.label === x.label, i, x.label); }).join('');
+    var dp = '<option value="">Please choose</option>' + NAT.depth.map(function (t, i) { return o(S.depth && S.depth.i === i, i, t); }).join('');
+    var fm = '<option value="">Please choose</option>' + NAT.firmness.map(function (f) { return o(S.firmness === f[0], f[0], f[1]); }).join('');
+    var cv = '<option value="">Please choose</option>' + D.covers.map(function (c, i) { return o(S.cover && S.cover.i === i, i, c.name + (c.mod ? ' (+£' + c.mod + ')' : '')); }).join('');
+    var f = function (k, lab, opts, on) { return '<div class="f' + (on ? ' on' : '') + '"><label for="m-' + k + '">' + lab + '</label><select id="m-' + k + '" data-man="' + k + '">' + opts + '</select></div>'; };
+    return '<div class="man">' + f('size', 'Size', sz, S.size) + f('depth', 'Select Mattress Depth', dp, S.depth) + f('firmness', 'Firmness by body weight', fm, S.firmness) + f('cover', 'Covers', cv, S.cover) + '</div>' +
+      '<p class="man-note">These are the shop\'s own four options, the way the shop has always shown them. Whatever you choose here is shown on the guided screens, and whatever you choose on the guided screens is shown here. Extra Firm is a specialist model: choosing it here shows its notice and link and changes nothing in the shop.</p>';
+  }
   function chosen(id) { return S[id] != null; }
   function valueOf(id) {
     if (id === 'size') return S.size ? S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' : null;
@@ -214,16 +240,20 @@ var D = /*__DATA__*/;
     return h;
   }
   function draw() {
-    var st = STEPS[S.step]; $('#q').innerHTML = '<h1>' + esc(st.q) + '</h1><p>' + esc(st.sub) + '</p>';
-    $('#answer').innerHTML = { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
+    var st = STEPS[S.step], man = S.mode === 'manual';
+    var sw = '<div class="mode" role="group" aria-label="How do you want to choose?"><button data-mode="guided" aria-pressed="' + !man + '">Guided</button><button data-mode="manual" aria-pressed="' + man + '">Manual</button></div>';
+    $('#modebar').innerHTML = sw; $('#q').innerHTML = (man ? '<h1>Choose it by hand</h1><p>The shop\'s own options, all four on one screen. Switch back to Guided at any time: nothing is lost.</p>' : '<h1>' + esc(st.q) + '</h1><p>' + esc(st.sub) + '</p>');
+    $('#answer').innerHTML = man ? manualView() : { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
     var ok = chosen(st.id), last = S.step === STEPS.length - 1;
+    if (man) { $('#act').innerHTML = '<button class="btn s" data-mode="guided">Back to Guided</button><button class="btn p" data-bag="1">Go to <b>Add to Bag</b></button>'; drawRail(); drawMine(); return; }
     $('#act').innerHTML = (S.step ? '<button class="btn s" data-back="1">Back</button>' : '') + (last ? '<button class="btn p" data-bag="1">Go to <b>Add to Bag</b></button>' : '<button class="btn p" data-next="1"' + (ok ? '' : ' disabled') + '>Continue to <b>' + st.next + '</b></button>');
     drawRail(); drawMine();
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-ph]'); if (!t) return;
+    var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-ph],[data-mode]'); if (!t) return;
     var d = t.dataset;
-    if (d.go != null) S.step = +d.go;
+    if (d.mode != null) S.mode = d.mode;
+    else if (d.go != null) { S.step = +d.go; S.mode = 'guided'; }
     else if (d.size != null) S.size = D.sizes[+d.size];
     else if (d.firm != null) S.firmness = d.firm;
     else if (d.depth != null) S.depth = Object.assign({ i: +d.depth }, D.depths[+d.depth]);
@@ -236,6 +266,14 @@ var D = /*__DATA__*/;
     else if (d.ph != null) { if (d.ph !== '2') toast('This preview shows phase 2, Choose yours, only.'); return; }
     draw(); window.scrollTo({ top: 0 });
   });
+  document.addEventListener('change', function (e) {
+    var k = e.target.dataset && e.target.dataset.man; if (!k) return; var v = e.target.value;
+    if (k === 'size') S.size = v === '' ? null : D.sizes[+v];
+    else if (k === 'depth') S.depth = v === '' ? null : Object.assign({ i: +v }, D.depths[+v]);
+    else if (k === 'cover') S.cover = v === '' ? null : Object.assign({ i: +v }, D.covers[+v]);
+    else if (k === 'firmness') { if (v === 'Extra Firm') { toast('Extra Firm is a specialist model: Orthopaedic Coconut Core. Nothing was changed in the shop.'); } else S.firmness = v === '' ? null : v; }
+    draw();
+  });
   document.addEventListener('input', function (e) {
     if (e.target.id === 'gw') S.weight = +e.target.value; else if (e.target.id === 'gh') S.height = +e.target.value; else return;
     var B = DDFirmnessCore, rec = (S.weight != null && S.height != null) ? B.recommend(S.weight, S.height) : null;
@@ -245,7 +283,7 @@ var D = /*__DATA__*/;
     $('#guide').innerHTML = rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';
     document.querySelectorAll('.fcard').forEach(function (c) { var nm = c.querySelector('.nm').textContent, isRec = rec && fk(rec.display) === nm; c.classList.toggle('rec', !!isRec); c.classList.toggle('dim', !!(rec && !isRec)); var tag = c.querySelector('.tag'); if (isRec && !tag) c.insertAdjacentHTML('afterbegin', '<span class="tag">For you</span>'); if (!isRec && tag) tag.remove(); });
   });
-  (function url() { var q = location.search.match(/step=(\d)/); if (q) S.step = Math.min(4, +q[1]); var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); } })();
+  (function url() { var q = location.search.match(/step=(\d)/); if (q) S.step = Math.min(4, +q[1]); var mm = location.search.match(/mode=manual/); if (mm) S.mode = 'manual'; var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); } })();
   draw();
 })();
 </script>

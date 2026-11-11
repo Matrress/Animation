@@ -13,7 +13,12 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 | The large screen must also have the order-filling stages | A visible rail of five steps (Size, Firmness, Depth, Cover, Review): done steps show a tick and the choice, the current step is marked, every step can be tapped. On a portrait tablet the rail runs along the top. A "Your selection" panel with chips and the price stays on the right (below on a portrait tablet) |
 | Extra Firm is not removed | The fourth firmness card is Extra Firm, 115 kg and over, with "Specialist Model: Orthopaedic Coconut Core". It is a plain link that opens only when tapped; the sliders never navigate |
 | Custom sizes | "Need another size?" opens a small form (model filled in, size wanted, reply email). Preview only: nothing is sent. In the shop it goes to support@divinedunlop.com |
+| The shop's own (manual) controls must also be on the large screen, like a manual gearbox beside the automatic one | A **Guided / Manual** switch at the top of the stage. Manual shows the shop's own four options (Size, Select Mattress Depth, Firmness by body weight, Covers) on one screen, with the shop's own labels. A change in Manual shows on the guided screens and on the order rail; a change on a guided screen shows in Manual. Under the television the shop's own options and Add to Bag stay on the page, never hidden. The Standard Product View (the page without our television) stays as the full fallback |
 | Each button will be specified later by the owner | The preview is a design carrier; every label here is replaceable through `docs/TV-BUTTON-SPEC.md` |
+
+## Guided and Manual: two modes, one selection
+
+The television never replaces the shop's controls. It is an automatic mode over the same four options: the customer may use it, switch to Manual at any moment, or ignore the television altogether (Standard Product View, and the model "Standard" without our television). The rule is the standing two-way rule of `docs/FINALISATION-PLAN.md` section 0b: Ecwid is the executor, both modes read and write Ecwid's own controls, and Add to Bag stays Ecwid's own button adding exactly what both show. In Manual the firmness labels are the shop's own labels as they are today; they follow the owner's edits in Ecwid Admin (see the numbers table below). Checked in the preview: Manual to Guided and Guided to Manual, for all four options; picking Extra Firm in Manual shows the notice and changes nothing (the owner to confirm this proposal).
 
 ## What the preview is not
 
