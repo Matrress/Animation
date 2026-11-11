@@ -165,14 +165,14 @@ Not yet decided, and not changed: the configurator steps (Size, Firmness, Depth,
 - the leaf in the dock is turquoise instead of green (two gradient stops);
 - the Firmness dock has one turquoise hairline on its top edge (`gx-dock--firm`). The Size and Depth screens are unchanged and still byte-identical to the approved preview.
 
-**Extra Firm, open.** The Extra Firm card is a plain link to the verified specialist product page (Orthopaedic Coconut Core). The sliders never navigate, and the panel writes nothing to Ecwid. The preview cannot change the live store, so the **native Ecwid Firmness menu still lists Extra Firm (+£88)**. Removing or hiding that option is an edit to the live store and needs the owner's explicit approval; it has not been done.
+**Extra Firm, open.** The Extra Firm card is a plain link to the verified specialist product page (Orthopaedic Coconut Core). The sliders never navigate, and the panel writes nothing to Ecwid. The native Ecwid Firmness menu keeps Extra Firm (+£88); the owner decided it is **not removed**, only redirected in our screens (11 November 2026).
 
 Tests: `tools/graphite-full-test.mjs`, 62 of 62. No horizontal overflow at 360, 390 or 430 px.
 
 ## Working logic for this stage (owner, preview only)
 
 - **Extra Firm** links to the Orthopaedic Coconut product page (`orthopaedic-coconut-coirs-100-organic-latex`), labelled "Specialist Model: Orthopaedic Coconut Core". The link is followed only when the customer taps it. The sliders never navigate and the panel writes nothing to Ecwid. Open point for the owner: the label says "Core", the verified product page says "Coirs"; confirm the wording before the new design goes live.
-- **The live store is not changed at this stage.** The native Ecwid Firmness menu still lists Extra Firm (+£88). Its removal or change is a later step, prepared and approved step by step when the new design is ready to replace the live page.
+- **The live store is not changed.** The native Ecwid Firmness menu keeps Extra Firm (+£88): the owner decided on 11 November 2026 that Extra Firm is **not removed**, only redirected to the specialist model in our screens.
 - **Colours in the configurator:** the dock leaf is green (as the owner asked). The Firmness brand line "Dunlop Firmness Regulations" stays in Sky blue. The description leaves are turquoise (direction H).
 
 ## Turquoise shifted toward blue-teal (owner request, preview only)

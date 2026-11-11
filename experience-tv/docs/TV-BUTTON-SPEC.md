@@ -81,9 +81,9 @@ Each line is a decision for the owner. Today's behaviour is on the left; the mob
 | Order of the steps | Firmness, Height, Size, Covers | Size, Firmness, Depth, Cover, Review | |
 | Size | A choose screen with the sizes drawn to scale | 22 sizes in 4 groups, price from Ecwid, "starting price" while only the size is chosen | |
 | Firmness guidance | Choose the range that holds your body weight (approved values only) | Body weight and height guide the choice; the other firmnesses fade; Extra Firm is a link to the specialist model | |
-| Extra Firm | A choice in the same list | A plain link to the Orthopaedic Coconut Core page, followed only when tapped | |
+| Extra Firm | A choice in the same list | A plain link to the Orthopaedic Coconut Core page, followed only when tapped; **not removed** from Ecwid (owner's decision) | decided |
 | Review | The "Your selection" panel | A "Review Your Order" step with the four choices and the price | |
-| Custom sizes | – | A contact form: the model (filled in), the size wanted, an email for the reply; requests go to the owner's mailbox | |
+| Custom sizes | – | A contact form: the model (filled in), the size wanted, an email for the reply; requests go to support@divinedunlop.com | decided |
 | Price | Read from Ecwid | Read from Ecwid, never calculated by us | keep |
 
 ## D. Rules every button must follow
