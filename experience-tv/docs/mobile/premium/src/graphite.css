@@ -77,3 +77,14 @@
 @media (max-height: 730px) { .gx-cap { display: none; } .gx-chip { height: 30px; } .gx-scale { height: 36px; } }
 @media (max-height: 690px) { .gx-sub { display: none; } .gx-chip { height: 28px; font-size: 14px; } .gx-cov { height: 56px; } .gx-mat { max-height: 60px; } .gx-card { min-height: 38px; font-size: 15px; }  .gx-scale { height: 30px; } .gx-card { padding: 6px 10px; } .gx-card .sp-l { font-size: 9.5px; margin-top: 2px; } .gx-guide { margin: 0 0 4px; font-size: 13px; } }
 @media (prefers-reduced-motion: reduce) { .gx * { transition: none !important; } }
+
+/* firmness module: the bolding scenario from the owner's mock-up (this step only) */
+.gx-top b.fr { text-transform: none; letter-spacing: 0; font-size: 17px; font-weight: 300; color: var(--ink); white-space: nowrap; }
+.gx-top b.fr strong { font-weight: 700; color: #50CDFD; }
+.gx h2.fw { font-weight: 300; } .gx h2.fw b { font-weight: 700; }
+.gx-fg .r label { font-size: 19px; font-weight: 700; color: var(--ink); }
+.gx-fg .r b { font-weight: 700; }
+.gx-2 .gx-card { font-weight: 700; font-size: 18px; }
+.gx-sel .lf { width: 22px; height: 16px; vertical-align: -1px; margin-right: 6px; }
+@media (max-height: 780px) { .gx-fg .r label { font-size: 17px; } .gx-2 .gx-card { font-size: 16.5px; } .gx-top b.fr { font-size: 16px; } }
+@media (max-height: 690px) { .gx-fg .r label { font-size: 15.5px; } .gx-2 .gx-card { font-size: 15px; } .gx-top b.fr { font-size: 14.5px; } .gx-sel .lf { width: 18px; height: 13px; } }

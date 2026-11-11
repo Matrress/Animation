@@ -73,7 +73,7 @@
   }
   function bodyFirm() {
     var w0 = S.weight == null ? 70 : S.weight, h0 = S.height == null ? 170 : S.height;
-    return '<div class="gx-fg"><div class="r"><label for="gw">Body weight</label><b id="gwv">' + (S.weight == null ? '—' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + core.limits.weight[0] + '" max="' + core.limits.weight[1] + '" value="' + w0 + '" data-k="weight" aria-label="Body weight in kilograms">' +
+    return '<div class="gx-fg"><div class="r"><label for="gw">Body Weight</label><b id="gwv">' + (S.weight == null ? '—' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + core.limits.weight[0] + '" max="' + core.limits.weight[1] + '" value="' + w0 + '" data-k="weight" aria-label="Body weight in kilograms">' +
       '<div class="r"><label for="gh">Height</label><b id="ghv">' + (S.height == null ? '—' : S.height + ' cm') + '</b></div><input id="gh" type="range" min="' + core.limits.height[0] + '" max="' + core.limits.height[1] + '" value="' + h0 + '" data-k="height" aria-label="Height in centimetres"></div><div id="gdyn">' + firmDyn() + '</div>';
   }
   function bodyDepth() {
@@ -103,7 +103,7 @@
     return h;
   }
   var BODY = { size: bodySize, firmness: bodyFirm, depth: bodyDepth, cover: bodyCover, review: bodyReview };
-  var TITLE = { size: 'Choose Your Size', firmness: 'Choose Your Firmness', depth: 'Choose Your Depth', cover: 'Choose Your Cover', review: 'Review Your <b>Order</b>' };
+  var TITLE = { size: 'Choose Your Size', firmness: 'Choose <b>Your Firmness</b>', depth: 'Choose Your Depth', cover: 'Choose Your Cover', review: 'Review Your <b>Order</b>' };
   function sub() {
     if (S.step === 'size') return (S.sizeCount || 22) + ' dimensions · Custom made to order';
     if (S.step === 'firmness') return first(D.firmness.sub);
@@ -116,6 +116,8 @@
   function rail() {
     return '<nav class="gx-rail" aria-label="Steps">' + STEPS.map(function (s, i) { var dn = chosen(s), cur = S.step === s; return '<button class="pil' + (cur ? ' cur' : '') + (dn ? ' done' : '') + '" data-act="go" data-step="' + s + '" aria-current="' + (cur ? 'step' : 'false') + '" aria-label="' + NAMES[s] + (dn ? ', chosen' : '') + '"><i>' + (dn ? '✓' : '0' + (i + 1)) + '</i><span>' + NAMES[s] + '</span></button>'; }).join('') + '</nav>';
   }
+  /* the header's leaf (divine-hero .ddh__leaf: fresh green, two opposite round corners, one pale vein), as a small static mark */
+  var LEAF = '<svg class="lf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BD26B"/><stop offset="1" stop-color="#63B963"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1" stroke-linecap="round"/></g></svg>';
   function dock() {
     var n = S.native, st = S.step, rv = st === 'review', cur = rv ? null : chosen(st), size = chosen('size'), only = startingOnly();
     var others = STEPS.filter(function (r) { return r !== st && chosen(r); }).map(label).join(' · ');
@@ -126,7 +128,7 @@
     var cap = only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid';
     var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: 'Review Your <b>Order</b>', review: done() === 4 ? 'Go to <b>Add to Bag</b>' : 'See <b>Ecwid’s options</b>' }[st];
     var dis = !rv && !cur;
-    return '<section class="gx-dock" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small><b>' + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
+    return '<section class="gx-dock" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small><b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
   }
 
   function render() {
@@ -137,7 +139,7 @@
     if (!S.open) { root.innerHTML = ''; root.className = 'cfg'; return; }
     var idx = STEPS.indexOf(S.step), body = d.querySelector('.gx-body'), st = body ? body.scrollTop : 0;
     root.className = 'cfg cfg--gx open';
-    root.innerHTML = '<div class="gx" role="dialog" aria-modal="true" aria-label="Configure your mattress">' + rail() + '<div class="gx-main"><div class="gx-top"><b>Divine DunlopDreams</b><span>' + (S.step === 'review' ? 'Review' : '0' + (idx + 1) + ' / 04') + '<button class="gx-x" data-act="close" aria-label="Close configuration">×</button></span></div><div><h2 tabindex="-1"' + (S.step === 'review' ? ' class="rv"' : '') + '>' + TITLE[S.step] + '</h2><p class="gx-sub">' + esc(sub()) + '</p></div><div class="gx-body">' + BODY[S.step]() + '</div>' + dock() + '</div></div>';
+    root.innerHTML = '<div class="gx" role="dialog" aria-modal="true" aria-label="Configure your mattress">' + rail() + '<div class="gx-main"><div class="gx-top">' + (S.step === 'firmness' ? '<b class="fr">Dunlop <strong>Firmness Regulations</strong></b>' : '<b>Divine DunlopDreams</b>') + '<span>' + (S.step === 'review' ? 'Review' : '0' + (idx + 1) + ' / 04') + '<button class="gx-x" data-act="close" aria-label="Close configuration">×</button></span></div><div><h2 tabindex="-1"' + (S.step === 'review' ? ' class="rv"' : S.step === 'firmness' ? ' class="fw"' : '') + '>' + TITLE[S.step] + '</h2><p class="gx-sub">' + esc(sub()) + '</p></div><div class="gx-body">' + BODY[S.step]() + '</div>' + dock() + '</div></div>';
     var nb = d.querySelector('.gx-body'); if (nb) nb.scrollTop = st;
   }
 
