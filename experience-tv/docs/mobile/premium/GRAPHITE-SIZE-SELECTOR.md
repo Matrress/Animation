@@ -66,3 +66,13 @@ The seven-zone illustration is the one already reused by the television (`produc
 
 ## Not verified
 Real phones; the redirect on a real device; the test product; the real cover textures. The cover-tile redesign (`graphite-cover-proposal.html`) is still a separate proposal, not merged.
+
+## Third round: firmness typography and description colours (preview only)
+
+**Firmness step (typography only, nothing functional changed).** Top line `Dunlop **Firmness Regulations**` (light, with the bold part in Sky `#50CDFD`, not uppercase); title `Choose **Your Firmness**`; bold `Body Weight` and `Height` with their values; bold card names; the header leaf beside the price on this step only; button `Continue to **Depth**`. Every step still fits one screen at 390×844, 390×700 and 360×640 (the brand line is kept on one row at every height).
+
+**Description colours (`src/description-dark.css`, injected only into `graphite.html`, after `content.css`).** The owner's four colours are used exactly: `#272D32` base, `#3E474D` second level (cards, tiles, accordions), `#1E3036` depth (hero media, seven-zone block, proof row, notices, call to action), `#2F565A` petrol accent (edges, the "Who is this mattress for" pill, mark fills). The description is not painted 100 % in those four: accents are blue-led — Sky `#50CDFD` (key words, zone numbers, kickers, links, "+" markers, the primary button), Mist `#C3D5ED` (legends, hover) and Steel `#8CA2C2` (quiet lines). Green is not a surface or a text colour; it appears only on the leaf ornament (the header leaf: `border-radius:100% 0`, gradient `#9bd26b → #63b963`, rotated −28°) in front of each section heading, plus a faint blue leaf watermark in the seven-zone block. Content, structure, the configurator cards and the other previews (`index.html`) are unchanged.
+
+Contrast (WCAG 2.x, `data/description-contrast.json`): all 15 text/background pairs reach AA (lowest 4.84:1). Two pairs were lifted after the first check (quiet text on cards `#9AA8B4 → #B8C4CE`, Sky marks on petrol `#50CDFD → #8BE0FF`).
+
+Evidence: `shots/description-colours/before-after.jpg`, `before/`, `after/`, `palette.png`; `preview/description-palette.html`; `tools/description-shots.mjs`. `tools/graphite-full-test.mjs`: 62 of 62 checks pass. Nothing is deployed; this is E1/E2-level preview evidence only (a stand-in page, no live device).

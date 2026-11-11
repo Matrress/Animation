@@ -5001,6 +5001,80 @@ body { margin: 0; background: #F7F7F7; }
 #bp-top .p-zonewrap--sketch .b-zone-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
 #bp-top .p-zonewrap--sketch .b-zone-pill { border-left: 4px solid var(--tone, #7F98BD); }
 #bp-top .p-zonewrap--sketch .b-zone-pill[data-tone=s] { --tone: #B7C9E3; } #bp-top .p-zonewrap--sketch .b-zone-pill[data-tone=c] { --tone: #7C97C0; } #bp-top .p-zonewrap--sketch .b-zone-pill[data-tone=r] { --tone: #46628F; }
+</style><style id="description-dark">/* Description colour system for the Graphite preview ONLY (cosmetic; no content, structure or behaviour change).
+   Owner palette: #272D32 base, #3E474D second level, #1E3036 depth, #2F565A petrol accent.
+   Accents are blue-led: Sky #50CDFD (key words, numbers, links, small marks), Mist #C3D5ED (sub-heads), Steel #8CA2C2 (quiet lines).
+   Green appears only on the leaf ornaments (the same leaf as the header of the configurator), never as a surface or a text colour. */
+#bp-top {
+  --bg: #272D32; --bg-lift: #2C343A; --bg-card: #3E474D; --bg-deep: #4B5860; --bg-mist: #1E3036;
+  --ink: #F2F7FB; --ink-mid: #C9D3DB; --ink-soft: #9AA8B4;
+  --accent: #2F565A; --accent-mid: #50CDFD; --accent-pale: #3C6E74; --accent-mist: #1E3036;
+  --lift: #2C343A; --card: #3E474D; --deep: #4B5860; --mid: #C9D3DB; --soft: #9AA8B4; --acc: #50CDFD; --accm: #50CDFD; --pale: #3C6E74;
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, .25); --shadow-md: 0 8px 26px rgba(0, 0, 0, .3); --shadow-lg: 0 18px 46px rgba(0, 0, 0, .35);
+  --sky: #50CDFD; --mist: #C3D5ED; --steel: #8CA2C2;
+  color: var(--ink-mid);
+}
+#productDescription, #bp-top, #bp-top .b-sec, #bp-top .b-sec--lift { background: #272D32; }
+#bp-top .b-sh__t, #bp-top h2, #bp-top h3, #bp-top h4 { color: var(--ink); }
+#bp-top .b-sh__s, #bp-top p { color: var(--ink-mid); }
+#bp-top strong, #bp-top b { color: #FFFFFF; }
+#bp-top p a, #bp-top .b-sh__s a, #bp-top .p-body a { color: var(--sky); text-decoration-color: rgba(80, 205, 253, .5); }
+/* heading mark: the header leaf (same shape and gradient as the configurator header) */
+#bp-top .b-sh__t::before {
+  width: 20px; height: 13px; border-radius: 100% 0; background: linear-gradient(135deg, #9bd26b, #63b963);
+  transform: rotate(-28deg); transform-origin: 30% 70%; margin: 4px 0 14px 2px;
+}
+/* buttons: Sky primary, quiet outline secondary */
+#bp-top .b-btn-p, #bp-top .b-btn-hero-p, #bp-top .b-main-video-actions .b-btn-p, #bp-top .b-cta .b-btn-p { background: var(--sky) !important; color: #0F1A22 !important; }
+#bp-top .b-btn-p:hover, #bp-top .b-main-video-actions .b-btn-p:hover, #bp-top .b-cta .b-btn-p:hover { background: #C3D5ED !important; color: #0F1A22 !important; }
+#bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o { border-color: rgba(195, 213, 237, .5) !important; color: #E8F1FA !important; background: transparent; }
+#bp-top .b-btn-o:hover { background: rgba(80, 205, 253, .12) !important; border-color: var(--sky) !important; color: #FFFFFF !important; }
+/* hero media card: depth colour with a petrol glow */
+#bp-top .b-hero { background: radial-gradient(120% 90% at 85% 0%, rgba(47, 86, 90, .75), transparent 58%), linear-gradient(165deg, #1E3036 0%, #1A2A30 100%); border-bottom: 1px solid #2F565A; }
+#bp-top .b-main-video-card .b-mtv__head, #bp-top .b-main-video-card > :not(.b-main-video-frame) { color: #C3D5ED; }
+/* six key facts: second-level tiles, Sky icons, petrol edge */
+#bp-top .p-glance { background: #272D32; }
+#bp-top .p-glance .b-hero-bar__item { background: linear-gradient(180deg, #424B52, #3A434A); border: 1.5px solid #2F565A; }
+#bp-top .p-glance .b-hero-bar__item, #bp-top .p-glance .b-hero-bar__item * { color: #F2F7FB !important; -webkit-text-fill-color: #F2F7FB !important; }
+#bp-top .p-glance svg { stroke: var(--sky); }
+/* seven zones: depth panel, Sky numbers, Mist labels */
+#bp-top .p-feature { position: relative; overflow: hidden; background: radial-gradient(90% 60% at 100% 0%, rgba(47, 86, 90, .7), transparent 62%), linear-gradient(180deg, #1E3036, #1B2A2F); border-top: 1px solid #2F565A; border-bottom: 1px solid #2F565A; }
+#bp-top .p-feature::after { content: ''; position: absolute; right: -26px; top: 18px; width: 120px; height: 80px; border-radius: 100% 0; background: linear-gradient(135deg, rgba(80, 205, 253, .16), rgba(80, 205, 253, .03)); transform: rotate(-28deg); pointer-events: none; }
+#bp-top .p-feature .b-zone-pill { background: #3E474D; border: 1px solid #4B5860; }
+#bp-top .p-feature .b-zone-pill__num { color: var(--sky); }
+#bp-top .p-feature .b-zone-pill__name { color: #F2F7FB; }
+#bp-top .p-feature .b-zone-pill__note { color: #AEBBC6; }
+#bp-top .p-zs { background: #172229; border: 1.5px solid #2F565A; }
+#bp-top .p-zlegend { color: #C3D5ED; }
+/* decision cards, notices, zone/height/cover cards */
+#bp-top .b-fc, #bp-top .b-hcol, #bp-top .b-fdecision__item, #bp-top .b-wc { background: #3E474D; border: 1.5px solid #4B5860; box-shadow: none; }
+#bp-top .b-fc__name, #bp-top .b-hcol__n { color: #FFFFFF; }
+#bp-top .b-hcol__n, #bp-top .b-hcol strong { color: var(--sky); }
+#bp-top .b-fconf__notice { background: #1E3036; color: #E8F1FA; border-left: 4px solid var(--sky); }
+#bp-top .b-fdecision__mark { background: #2F565A; color: var(--sky); border: 1px solid rgba(80, 205, 253, .45); }
+#bp-top .b-sum--who, #bp-top .b-sum--who:hover { background: #2F565A; color: #FFFFFF !important; }
+#bp-top .b-wc--gift { background: linear-gradient(160deg, #1E3036, #2F565A); }
+/* proof row and CTA: depth colour */
+#bp-top .p-proof { background: radial-gradient(100% 80% at 0% 0%, rgba(47, 86, 90, .8), transparent 62%), linear-gradient(170deg, #1E3036, #1A2A30); }
+#bp-top .p-row .b-mtv { background: rgba(62, 71, 77, .55); border: 1px solid #2F565A; }
+#bp-top .b-cta { background: linear-gradient(135deg, #1E3036 0%, #2F565A 120%); border: 1px solid #2F565A; }
+#bp-top .b-cta__s { color: #C3D5ED; }
+/* accordions: quiet lines, Sky markers */
+#bp-top .p-note { border-top: 1.5px solid #3E474D; }
+#bp-top .p-note > summary, #bp-top .p-note .p-n-title { color: #F2F7FB; }
+#bp-top .p-note .p-n-sub, #bp-top .p-n-sub { color: #9AA8B4; }
+#bp-top .p-note > summary::after, #bp-top .p-note summary .sum-arr, #bp-top summary .sum-arr { color: var(--sky); }
+#bp-top .p-note .p-body, #bp-top .p-note .p-body p { color: #C9D3DB; }
+#bp-top .p-cap { color: #9AA8B4; }
+/* floating back-to-top */
+#bp-top .b-floating-top, .b-floating-top { background: #2F565A; color: #FFFFFF; border: 1px solid rgba(80, 205, 253, .5); }
+/* no white showing through the full-bleed blocks (negative side margins) */
+#desc-slot, #desc-slot .product-details__product-description { background: #272D32; }
+/* cover micro-slider frame: depth colour instead of the light translucent card */
+#bp-top .b-cover-micro-wrap { background: #1E3036; border: 1.5px solid #2F565A; }
+/* contrast: quieter text on second-level cards and Sky marks on petrol are lifted to reach 4.5:1 */
+#bp-top .b-fc, #bp-top .b-hcol, #bp-top .b-fdecision__item, #bp-top .b-wc, #bp-top .p-row .b-mtv { --ink-soft: #B8C4CE; --soft: #B8C4CE; color: #C9D3DB; }
+#bp-top .b-fdecision__mark, #bp-top .b-sum--who .sum-arr { color: #8BE0FF !important; }
 </style>
 <script>
 (function(){var g=document.getElementById('gallery');var im=window.DDDATA.images;g.innerHTML='<div class="sg-main"><img src="'+im[0]+'" alt="Botanic Original 100% Organic Latex Mattress" fetchpriority="high"></div><div class="sg-dots">'+im.map(function(){return '<i></i>';}).join('')+'</div><div class="sg-bar"><img src="'+im[0]+'" alt=""><span>Gallery · '+im.length+' photos</span><button id="gal-btn" type="button">Show gallery</button></div>';

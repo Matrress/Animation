@@ -160,7 +160,9 @@ const html = `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><met
 // the stand-in builds #cfg and #desc-slot: patch its template
 const final = html;
 const graphite = html.replace('<style id="premium-css">', '<style id="premium-css">' + S('graphite.css') + '\n').replace(/<script id="configurator">[\s\S]*?<\/script>/, () => '<script id="configurator">' + S('graphite.js') + '</script>').replace('<b>Design preview · not deployed · Ecwid block is a stand-in</b><button data-c="sheet">1 Sheet</button><button data-c="stage">2 Stage</button><button data-c="journey">3 Journey</button>', '<b>Design preview · not deployed · Ecwid block is a stand-in</b><button class="on">Graphite Blue</button>');
-writeFileSync(join(P, 'preview', 'graphite.html'), graphite.replace(body, () => bodySketch));
+// description colours: graphite preview only, loaded AFTER content.css so it wins on equal specificity
+const cssTag = '<style id="content-css">' + S('content.css') + '</style>';
+writeFileSync(join(P, 'preview', 'graphite.html'), graphite.replace(body, () => bodySketch).replace(cssTag, () => cssTag + '<style id="description-dark">' + S('description-dark.css') + '</style>'));
 mkdirSync(join(P, 'preview'), { recursive: true });
 writeFileSync(join(P, 'preview', 'index.html'), final);
 const sizes = { total: Buffer.byteLength(final), gzip: gzipSync(final).length, firmnessCoreBytes: coreSrc.length, syncBytes: S('sync.js').length, configuratorBytes: S('configurator.js').length, premiumCssBytes: S('premium.css').length, contentCssBytes: S('content.css').length };
