@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Large-screen television: design preview (not deployed)</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap">
+<style>
+/* DESIGN PREVIEW of the large-screen television. Not deployed, not the engine. The recommendation is the published firmness rule;
+   the four ranges come from that module; the texts are the approved description; the price is a STAND-IN for Ecwid's own. */
+:root {
+  --ground: #F2F7F9; --white: #FFFFFF; --line: #D3E0E5; --line2: #C2D3DA; --ink: #272D32; --ink2: #3E474D; --ink3: #5B666E; --notice: #E4EEF1;
+  --teal: #1A5C7E; --teal-deep: #163D57; --abyss: #0B1C2A; --band-top: #173A52; --band-end: #10293F; --sky: #50CDFD; --leaf1: #9ADCF8; --leaf2: #3FA3D9;
+  --grad-card: linear-gradient(160deg, var(--teal) 0%, var(--teal-deep) 45%, var(--abyss) 100%);
+  --grad-band: linear-gradient(175deg, var(--band-top) 0%, var(--band-end) 100%);
+  --r: 14px; --rl: 22px; --f: 'Chillax', 'Helvetica Neue', Arial, system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--f); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+.app { max-width: 1440px; margin: 0 auto; padding: 18px 20px 28px; }
+.pv { font-size: 12px; color: var(--ink3); margin: 0 0 12px; }
+/* top bar: brand and the four phases */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.brand { font-size: 18px; letter-spacing: .02em; } .brand b { font-weight: 700; }
+.phases { display: flex; gap: 10px; flex-wrap: wrap; }
+.ph { height: 48px; padding: 0 20px; border-radius: 999px; border: 1.5px solid var(--line2); background: var(--white); font-weight: 600; font-size: 16px; }
+.ph[aria-current=true] { background: var(--grad-card); color: #fff; border-color: rgba(80,205,253,.5); box-shadow: 0 6px 16px -10px rgba(26,92,126,.8); }
+.ph small { display: block; font-size: 11px; font-weight: 500; opacity: .75; line-height: 1; margin-top: -2px; }
+/* the monitor: a turquoise graphite bezel around a light screen */
+.monitor { background: var(--grad-band); border-radius: 30px; padding: 14px; box-shadow: inset 0 1px 0 rgba(80,205,253,.38), 0 22px 40px -26px rgba(11,28,42,.7); }
+.screen { background: var(--ground); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr; min-height: 640px; }
+@media (min-width: 1100px) { .screen { grid-template-columns: 230px minmax(0, 1fr) 300px; } }
+/* order stages: the rail */
+.rail { background: var(--white); border-bottom: 1px solid var(--line); padding: 14px 16px; display: flex; gap: 8px; overflow-x: auto; }
+@media (min-width: 1100px) { .rail { flex-direction: column; border-bottom: 0; border-right: 1px solid var(--line); padding: 26px 18px; gap: 0; overflow: visible; } }
+.rail h2 { display: none; margin: 0 0 14px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 600; }
+@media (min-width: 1100px) { .rail h2 { display: block; } }
+.st { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 12px; border-radius: 14px; border: 1.5px solid transparent; background: transparent; text-align: left; flex: 1 0 auto; position: relative; }
+@media (min-width: 1100px) { .st { flex: 0 0 auto; } .st:not(:last-child)::after { content: ''; position: absolute; left: 31px; top: 100%; width: 2px; height: 8px; background: var(--line2); } }
+.st .n { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--line2); display: grid; place-items: center; font-weight: 700; font-size: 15px; color: var(--ink3); background: var(--white); flex: none; }
+.st .t { display: flex; flex-direction: column; min-width: 0; } .st .t b { font-size: 16px; font-weight: 600; } .st .t span { font-size: 13px; color: var(--ink3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
+.st.done .n { background: var(--teal); border-color: var(--teal); color: #fff; } .st.done .t span { color: var(--teal); font-weight: 600; }
+.st.cur { background: var(--notice); border-color: var(--teal); } .st.cur .n { border-color: var(--teal); color: var(--teal); box-shadow: 0 0 0 4px rgba(26,92,126,.14); }
+/* the stage: question, answer, action */
+.stage { padding: 28px 30px 22px; display: flex; flex-direction: column; min-width: 0; }
+.q { background: var(--grad-card); color: #fff; border-radius: var(--rl); padding: 24px 28px 22px; margin-bottom: 22px; position: relative; overflow: hidden; border: 1px solid rgba(80,205,253,.35); box-shadow: inset 0 1px 0 rgba(80,205,253,.45), 0 14px 24px -20px rgba(11,28,42,.8); }
+.q::after { content: ''; position: absolute; right: -60px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(80,205,253,.28), rgba(80,205,253,0) 68%); pointer-events: none; }
+.q h1 { margin: 0 0 8px; font-size: 34px; line-height: 1.1; letter-spacing: -.012em; font-weight: 700; position: relative; }
+.q h1::before { content: ''; display: block; width: 22px; height: 14px; border-radius: 100% 0; background: linear-gradient(135deg, var(--leaf1), var(--leaf2)); transform: rotate(-28deg); transform-origin: 30% 70%; margin: 0 0 14px 2px; }
+.q p { margin: 0; color: rgba(255,255,255,.88); font-size: 17px; line-height: 1.5; max-width: 62ch; position: relative; }
+.answer { flex: 1; }
+.act { display: flex; gap: 14px; align-items: center; justify-content: flex-end; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.btn { height: 56px; padding: 0 28px; border-radius: 999px; font-size: 17px; font-weight: 600; border: 1px solid transparent; }
+.btn.p { background: linear-gradient(135deg, var(--teal), var(--teal-deep)); color: #fff; border-color: rgba(80,205,253,.55); box-shadow: 0 0 0 4px rgba(80,205,253,.14), 0 6px 14px -8px rgba(26,92,126,.8); }
+.btn.p b { font-weight: 700; } .btn.p:disabled { background: #D7E1E5; color: #7B878E; border-color: transparent; box-shadow: none; cursor: not-allowed; }
+.btn.s { background: var(--white); border-color: var(--line2); color: var(--ink); }
+/* size */
+.grp h3 { margin: 22px 0 10px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 700; } .grp:first-child h3 { margin-top: 0; }
+.cards { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+.card { text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 16px; min-height: 92px; position: relative; transition: border-color .15s, box-shadow .15s; }
+.card:hover { border-color: var(--teal); }
+.card[aria-pressed=true] { border: 2px solid var(--teal); background: linear-gradient(180deg, #fff, var(--notice)); box-shadow: 0 0 0 4px rgba(26,92,126,.12); }
+.card[aria-pressed=true]::after { content: ''; position: absolute; right: 12px; top: 12px; width: 22px; height: 22px; border-radius: 50%; background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/14px no-repeat; }
+.card .nm { font-size: 13px; color: var(--ink3); font-weight: 500; display: block; margin-bottom: 4px; padding-right: 26px; }
+.card .dm { font-size: 23px; font-weight: 700; letter-spacing: -.01em; display: block; } .card .dm i { font-style: normal; font-size: 14px; font-weight: 600; color: var(--ink3); margin-left: 2px; }
+.card .in { font-size: 14px; color: var(--ink2); display: block; margin-top: 2px; }
+.more { margin-top: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; color: var(--ink2); }
+.more .btn { height: 46px; font-size: 15px; }
+.form { margin-top: 14px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px; display: none; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.form.on { display: grid; } .form label { display: block; font-size: 13px; color: var(--ink3); font-weight: 600; margin-bottom: 4px; }
+.form input { width: 100%; height: 48px; border: 1.5px solid var(--line2); border-radius: 12px; padding: 0 14px; font: inherit; font-size: 16px; background: #fff; }
+.form .note { grid-column: 1 / -1; font-size: 13px; color: var(--ink3); margin: 0; }
+/* firmness */
+.fw { display: grid; gap: 18px; grid-template-columns: 1fr; margin-bottom: 18px; }
+@media (min-width: 760px) { .fw { grid-template-columns: 1fr 1fr; } }
+.sl { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px 18px 14px; }
+.sl .r { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; } .sl .r label { font-size: 17px; font-weight: 700; } .sl .r b { font-size: 28px; font-weight: 700; color: var(--teal); letter-spacing: -.01em; }
+.sl input[type=range] { width: 100%; height: 40px; -webkit-appearance: none; appearance: none; background: transparent; }
+.sl input[type=range]::-webkit-slider-runnable-track { height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--leaf1), var(--teal)); }
+.sl input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 32px; height: 32px; margin-top: -12px; border-radius: 50%; background: #fff; border: 3px solid var(--teal); box-shadow: 0 2px 8px rgba(11,28,42,.3); }
+.sl input[type=range]::-moz-range-track { height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--leaf1), var(--teal)); }
+.sl input[type=range]::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 3px solid var(--teal); }
+.sl .rng { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink3); }
+.guide { background: var(--notice); border-left: 4px solid var(--teal); border-radius: 0 var(--r) var(--r) 0; padding: 14px 18px; margin: 0 0 18px; font-size: 17px; line-height: 1.5; } .guide b { font-weight: 700; }
+.fc { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.fcard { text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px 18px; min-height: 190px; display: flex; flex-direction: column; gap: 6px; position: relative; transition: opacity .25s, border-color .15s; }
+.fcard .nm { font-size: 20px; font-weight: 700; } .fcard .rg { font-size: 15px; font-weight: 600; color: var(--teal); } .fcard .ds { font-size: 14px; color: var(--ink2); line-height: 1.45; }
+.fcard.dim { opacity: .42; } .fcard.rec { border: 2px solid var(--teal); box-shadow: 0 0 0 4px rgba(26,92,126,.12); }
+.fcard .tag { position: absolute; right: 12px; top: 12px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: #fff; background: var(--teal); border-radius: 999px; padding: 4px 10px; }
+.fcard[aria-pressed=true] { background: linear-gradient(180deg, #fff, var(--notice)); border: 2px solid var(--teal); }
+.fcard .sp { font-size: 12px; color: var(--ink3); margin-top: auto; } a.fcard { text-decoration: none; color: inherit; }
+.base { margin: 12px 0 0; font-size: 13px; color: var(--ink3); }
+/* depth */
+.dc { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.dcard { text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; position: relative; }
+.dcard[aria-pressed=true] { border: 2px solid var(--teal); background: linear-gradient(180deg, #fff, var(--notice)); box-shadow: 0 0 0 4px rgba(26,92,126,.12); }
+.slab { height: 70px; display: flex; align-items: flex-end; margin-bottom: 8px; } .slab i { display: block; width: 100%; border-radius: 8px; background: var(--grad-card); }
+.dcard .cm { font-size: 30px; font-weight: 700; } .dcard .cm i { font-style: normal; font-size: 15px; font-weight: 600; color: var(--ink3); margin-left: 4px; } .dcard .nm { font-size: 17px; font-weight: 600; } .dcard .ds { font-size: 14px; color: var(--ink2); line-height: 1.45; }
+/* cover */
+.cc { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.ccard { text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); overflow: hidden; position: relative; display: flex; flex-direction: column; }
+.ccard[aria-pressed=true] { border: 2px solid var(--teal); box-shadow: 0 0 0 4px rgba(26,92,126,.12); }
+.ccard .im { height: 120px; background: var(--abyss) center/cover no-repeat; } .ccard .bd { padding: 14px 16px 16px; } .ccard .nm { font-size: 18px; font-weight: 700; display: block; } .ccard .tg { font-size: 14px; color: var(--teal); font-weight: 600; display: block; margin: 2px 0 6px; } .ccard .ds { font-size: 13.5px; color: var(--ink2); line-height: 1.45; }
+/* review */
+.rv { display: grid; gap: 12px; margin-bottom: 18px; }
+.ri { display: flex; align-items: center; gap: 16px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 18px; min-height: 68px; }
+.ri .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 700; width: 96px; flex: none; } .ri .v { flex: 1; font-size: 18px; font-weight: 600; } .ri .v i { display: block; font-style: normal; font-size: 14px; font-weight: 500; color: var(--ink3); }
+.ri .btn { height: 44px; font-size: 15px; padding: 0 20px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--ink2); font-size: 15px; margin: 6px 0 0; }
+/* your selection and the price */
+.mine { background: var(--white); border-top: 1px solid var(--line); padding: 20px 20px; display: flex; flex-direction: column; gap: 14px; }
+@media (min-width: 1100px) { .mine { border-top: 0; border-left: 1px solid var(--line); padding: 26px 20px; } }
+.mine h2 { margin: 0; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 600; }
+.chips { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); } @media (min-width: 1100px) { .chips { grid-template-columns: 1fr; } }
+.chip { text-align: left; border: 1.5px solid var(--line); background: var(--ground); border-radius: 12px; padding: 10px 14px; min-height: 58px; } .chip small { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); font-weight: 700; } .chip b { font-size: 16px; font-weight: 600; display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chip.on { border-color: var(--teal); background: var(--notice); }
+.price { background: var(--grad-card); color: #fff; border-radius: var(--r); padding: 16px 18px; border: 1px solid rgba(80,205,253,.4); }
+.price small { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; opacity: .85; font-weight: 600; } .price b { display: block; font-size: 32px; font-weight: 700; letter-spacing: -.01em; margin: 2px 0; } .price span { display: block; font-size: 12px; opacity: .8; }
+.toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); background: var(--abyss); color: #fff; border-radius: 12px; padding: 12px 18px; font-size: 14px; display: none; z-index: 10; max-width: 90vw; } .toast.on { display: block; }
+</style>
+</head>
+<body>
+<div class="app">
+  <p class="pv">Design preview for the owner. Not deployed and not the engine. The recommendation is the published firmness rule, the four ranges are that module's own, the texts are the approved description, and the price is a <b>stand-in</b>: in the shop it is Ecwid's own.</p>
+  <header class="top">
+    <div class="brand"><b>BOTANIC</b> / Experience</div>
+    <nav class="phases" aria-label="The four phases">
+      <button class="ph" data-ph="1">1. See it<small>What is it?</small></button>
+      <button class="ph" data-ph="2" aria-current="true">2. Choose yours<small>Which one do I need?</small></button>
+      <button class="ph" data-ph="3">3. Why it feels this way<small>What makes it comfortable?</small></button>
+      <button class="ph" data-ph="4">4. Trust it<small>Can I rely on it?</small></button>
+    </nav>
+  </header>
+  <main class="monitor"><div class="screen">
+    <nav class="rail" id="rail" aria-label="Your order, step by step"></nav>
+    <section class="stage"><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
+    <aside class="mine" aria-label="Your selection"><h2>Your selection</h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div></aside>
+  </div></main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>/*__CORE__*/</script>
+<script>
+var D = /*__DATA__*/;
+(function () {
+  var $ = function (s) { return document.querySelector(s); }, esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var S = { step: 0, size: null, firmness: null, depth: null, cover: null, weight: null, height: null };
+  var STEPS = [
+    { id: 'size', label: 'Size', q: 'How big is your bed?', sub: 'Choose your size. Every size is shown in centimetres and in inches.', next: 'Firmness' },
+    { id: 'firmness', label: 'Firmness', q: 'How firm should it be for your body?', sub: D.firmness.sub, next: 'Depth' },
+    { id: 'depth', label: 'Depth', q: 'How thick should it be?', sub: D.depthSub, next: 'Cover' },
+    { id: 'cover', label: 'Cover', q: 'Which cover do you prefer?', sub: D.coverSub, next: 'Review' },
+    { id: 'review', label: 'Review', q: 'Review your order', sub: 'Check the four choices and the price. Add to Bag is the shop\'s own button.', next: null }
+  ];
+  function toast(t) { var e = $('#toast'); e.textContent = t; e.className = 'toast on'; clearTimeout(toast.t); toast.t = setTimeout(function () { e.className = 'toast'; }, 4200); }
+  function chosen(id) { return S[id] != null; }
+  function valueOf(id) {
+    if (id === 'size') return S.size ? S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' : null;
+    if (id === 'firmness') return S.firmness || null;
+    if (id === 'depth') return S.depth ? S.depth.cm + ' cm' : null;
+    if (id === 'cover') return S.cover ? S.cover.name : null;
+    return null;
+  }
+  function inch(cm) { return (cm / 2.54).toFixed(1); }
+  function price() {   // STAND-IN for Ecwid's own price: 90 % of the sum of the label modifiers, as Ecwid showed on 11 November 2026
+    if (!S.size) return null; var mod = S.size.mod + (S.depth ? S.depth.mod : 0) + (S.firmness === 'Extra Firm' ? 88 : 0) + (S.cover ? S.cover.mod : 0);
+    return 0.9 * mod;
+  }
+  var gbp = function (n) { return '£' + n.toFixed(2).replace(/\B(?=(\d{3})+\.)/g, ' '); };
+  function drawRail() {
+    var h = '<h2>Your order</h2>';
+    STEPS.forEach(function (st, i) { var done = i < STEPS.length - 1 && chosen(st.id), cur = i === S.step, v = valueOf(st.id);
+      h += '<button class="st' + (done ? ' done' : '') + (cur ? ' cur' : '') + '" data-go="' + i + '" aria-label="Step ' + (i + 1) + ': ' + st.label + (v ? ', chosen ' + esc(v) : '') + '"><span class="n">' + (done ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : (i + 1)) + '</span><span class="t"><b>' + st.label + '</b><span>' + (v ? esc(v) : (cur ? 'Choose now' : 'To do')) + '</span></span></button>'; });
+    $('#rail').innerHTML = h;
+  }
+  function drawMine() {
+    var h = ''; ['size', 'firmness', 'depth', 'cover'].forEach(function (id, i) { var v = valueOf(id); h += '<button class="chip' + (v ? ' on' : '') + '" data-go="' + (id === 'size' ? 0 : id === 'firmness' ? 1 : id === 'depth' ? 2 : 3) + '"><small>' + id + '</small><b>' + (v ? esc(v) : '—') + '</b></button>'; });
+    $('#chips').innerHTML = h;
+    var p = price(), full = S.size && S.depth && S.firmness && S.cover;
+    $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small><b>' + (p == null ? '—' : gbp(p)) + '</b><span>' + (p == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the price is Ecwid\'s own.') + '</span>';
+  }
+  function sizeView() {
+    var gs = [['SINGLE', 100], ['DOUBLE', 140], ['KING', 160], ['SUPERKING · EMPEROR', 9999]], h = '';
+    gs.forEach(function (g, gi) { var lo = gi ? gs[gi - 1][1] : 0, list = D.sizes.filter(function (s) { return s.dims[0] > lo && s.dims[0] <= g[1]; }); if (!list.length) return;
+      h += '<div class="grp"><h3>' + g[0] + '</h3><div class="cards">' + list.map(function (s) { var on = S.size && S.size.label === s.label;
+        return '<button class="card" data-size="' + D.sizes.indexOf(s) + '" aria-pressed="' + on + '"><span class="nm">' + esc(s.name) + '</span><span class="dm">' + s.dims[0] + ' × ' + s.dims[1] + '<i>cm</i></span><span class="in">' + inch(s.dims[0]) + ' × ' + inch(s.dims[1]) + ' in</span></button>'; }).join('') + '</div></div>'; });
+    h += '<div class="more"><span>Need another size?</span><button class="btn s" data-more="1">Tell us what you need</button></div>' +
+      '<div class="form" id="form"><div><label>Model</label><input value="Botanic Original" readonly></div><div><label for="sz">The size you want</label><input id="sz" placeholder="for example 170 × 205 cm"></div><div><label for="em">Your email, for our reply</label><input id="em" type="email" placeholder="name@example.com"></div><p class="note">In the shop this form sends the model, the size and your email to Divine Dunlop support. This preview does not send anything.</p><div><button class="btn p" data-send="1">Send my request</button></div></div>';
+    return h;
+  }
+  function firmnessView() {
+    var B = DDFirmnessCore.bands, lim = DDFirmnessCore.limits, rec = null;
+    if (S.weight != null && S.height != null) rec = DDFirmnessCore.recommend(S.weight, S.height);
+    var cards = [['Soft', 'Up to ' + B.softMax + ' kg', 'soft'], ['Medium', (B.softMax + 1) + ' – ' + B.mediumMax + ' kg', 'medium'], ['Firm', (B.mediumMax + 1) + ' – ' + B.firmMax + ' kg', 'firm'], ['Extra Firm', B.extraFirmMin + ' kg and over', 'xfirm']];
+    var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
+    var h = '<div class="fw"><div class="sl"><div class="r"><label for="gw">Body weight</label><b id="gwv">' + (S.weight == null ? '—' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + lim.weight[0] + '" max="' + lim.weight[1] + '" value="' + (S.weight == null ? 70 : S.weight) + '"><div class="rng"><span>' + lim.weight[0] + ' kg</span><span>' + lim.weight[1] + ' kg</span></div></div>' +
+      '<div class="sl"><div class="r"><label for="gh">Height</label><b id="ghv">' + (S.height == null ? '—' : S.height + ' cm') + '</b></div><input id="gh" type="range" min="' + lim.height[0] + '" max="' + lim.height[1] + '" value="' + (S.height == null ? 170 : S.height) + '"><div class="rng"><span>' + lim.height[0] + ' cm</span><span>' + lim.height[1] + ' cm</span></div></div></div>';
+    h += '<p class="guide" id="guide">' + (rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.') + '</p><div class="fc">';
+    cards.forEach(function (c) { var d = D.firmness.cards.filter(function (x) { return x.key === c[2]; })[0], isRec = rec && fk(rec.display) === c[0], dim = rec && !isRec, on = S.firmness === c[0];
+      if (c[2] === 'xfirm') h += '<a class="fcard' + (isRec ? ' rec' : '') + (dim ? ' dim' : '') + '" href="' + esc(D.specialist.url) + '" target="_blank" rel="noopener" aria-label="Extra Firm, specialist model Orthopaedic Coconut Core, opens its product page">' + (isRec ? '<span class="tag">For you</span>' : '') + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="ds">' + esc(d.desc) + '</span><span class="sp">Specialist Model: Orthopaedic Coconut Core ↗</span></a>';
+      else h += '<button class="fcard' + (isRec ? ' rec' : '') + (dim ? ' dim' : '') + '" data-firm="' + c[0] + '" aria-pressed="' + on + '">' + (isRec ? '<span class="tag">For you</span>' : '') + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; });
+    h += '</div><p class="base">The four ranges are the base. Your height can move the guidance to a neighbouring level.</p>';
+    return h;
+  }
+  function depthView() { return '<div class="dc">' + D.depths.map(function (d, i) { var on = S.depth && S.depth.i === i, hh = 30 + i * 18; return '<button class="dcard" data-depth="' + i + '" aria-pressed="' + on + '"><div class="slab"><i style="height:' + hh + 'px"></i></div><span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; }).join('') + '</div>'; }
+  function coverView() { return '<div class="cc">' + D.covers.map(function (c, i) { var on = S.cover && S.cover.i === i; return '<button class="ccard" data-cover="' + i + '" aria-pressed="' + on + '"><div class="im" style="background-image:url(' + esc(c.img) + ')"></div><div class="bd"><span class="nm">' + esc(c.name) + '</span><span class="tg">' + esc(c.tag) + '</span><span class="ds">' + esc(c.body.length > 120 ? c.body.slice(0, 117).replace(/\s+\S*$/, '') + '…' : c.body) + '</span></div></button>'; }).join('') + '</div>'; }
+  function reviewView() {
+    var rows = [['Size', S.size ? S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' : null, S.size ? inch(S.size.dims[0]) + ' × ' + inch(S.size.dims[1]) + ' in · ' + S.size.name : '', 0], ['Firmness', S.firmness, '', 1], ['Depth', S.depth ? S.depth.cm + ' cm' : null, S.depth ? S.depth.inch.replace(/^cm · /, '') + ' · ' + S.depth.name : '', 2], ['Cover', S.cover ? S.cover.name : null, S.cover ? S.cover.tag : '', 3]];
+    var h = '<div class="rv">' + rows.map(function (r) { return '<div class="ri"><span class="k">' + r[0] + '</span><span class="v">' + (r[1] ? esc(r[1]) + (r[2] ? '<i>' + esc(r[2]) + '</i>' : '') : '<i>Not chosen yet</i>') + '</span><button class="btn s" data-go="' + r[3] + '">' + (r[1] ? 'Change' : 'Choose') + '</button></div>'; }).join('') + '</div>';
+    h += '<p class="facts">' + D.reviewFacts.map(function (f) { return '<span>✓ ' + esc(f) + '</span>'; }).join('') + '</p>';
+    return h;
+  }
+  function draw() {
+    var st = STEPS[S.step]; $('#q').innerHTML = '<h1>' + esc(st.q) + '</h1><p>' + esc(st.sub) + '</p>';
+    $('#answer').innerHTML = { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
+    var ok = chosen(st.id), last = S.step === STEPS.length - 1;
+    $('#act').innerHTML = (S.step ? '<button class="btn s" data-back="1">Back</button>' : '') + (last ? '<button class="btn p" data-bag="1">Go to <b>Add to Bag</b></button>' : '<button class="btn p" data-next="1"' + (ok ? '' : ' disabled') + '>Continue to <b>' + st.next + '</b></button>');
+    drawRail(); drawMine();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-ph]'); if (!t) return;
+    var d = t.dataset;
+    if (d.go != null) S.step = +d.go;
+    else if (d.size != null) S.size = D.sizes[+d.size];
+    else if (d.firm != null) S.firmness = d.firm;
+    else if (d.depth != null) S.depth = Object.assign({ i: +d.depth }, D.depths[+d.depth]);
+    else if (d.cover != null) S.cover = Object.assign({ i: +d.cover }, D.covers[+d.cover]);
+    else if (d.next != null) S.step = Math.min(STEPS.length - 1, S.step + 1);
+    else if (d.back != null) S.step = Math.max(0, S.step - 1);
+    else if (d.more != null) { $('#form').classList.toggle('on'); return; }
+    else if (d.send != null) { toast('Preview only: nothing was sent. In the shop this goes to Divine Dunlop support.'); return; }
+    else if (d.bag != null) { toast('In the shop this scrolls to Ecwid\'s own Add to Bag button. It never adds anything by itself.'); return; }
+    else if (d.ph != null) { if (d.ph !== '2') toast('This preview shows phase 2, Choose yours, only.'); return; }
+    draw(); window.scrollTo({ top: 0 });
+  });
+  document.addEventListener('input', function (e) {
+    if (e.target.id === 'gw') S.weight = +e.target.value; else if (e.target.id === 'gh') S.height = +e.target.value; else return;
+    var B = DDFirmnessCore, rec = (S.weight != null && S.height != null) ? B.recommend(S.weight, S.height) : null;
+    $('#gwv').textContent = S.weight == null ? '—' : S.weight + ' kg'; $('#ghv').textContent = S.height == null ? '—' : S.height + ' cm';
+    // update in place (the slider must not be re-created while it is being dragged)
+    var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
+    $('#guide').innerHTML = rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';
+    document.querySelectorAll('.fcard').forEach(function (c) { var nm = c.querySelector('.nm').textContent, isRec = rec && fk(rec.display) === nm; c.classList.toggle('rec', !!isRec); c.classList.toggle('dim', !!(rec && !isRec)); var tag = c.querySelector('.tag'); if (isRec && !tag) c.insertAdjacentHTML('afterbegin', '<span class="tag">For you</span>'); if (!isRec && tag) tag.remove(); });
+  });
+  (function url() { var q = location.search.match(/step=(\d)/); if (q) S.step = Math.min(4, +q[1]); var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); } })();
+  draw();
+})();
+</script>
+</body>
+</html>

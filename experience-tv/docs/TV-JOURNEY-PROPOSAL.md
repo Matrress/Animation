@@ -54,7 +54,7 @@ The screen drives Ecwid's own controls, and Ecwid's own controls drive the scree
 ## 5. Decisions the proposal needs from the owner
 
 1. **The order of the steps on the large screen** (proposed: Size, Firmness, Depth, Cover, Review, as on the phone and in the store).
-2. **The firmness ranges.** The screen: Soft 0 to 48 kg, Medium 49 to 83, Firm 83 to 114, Extra Firm 115 and over. Ecwid's labels: up to 47, 48 to 85, 85 to 110, over 120 (nothing for 110 to 120 kg). Which is the truth? (An Ecwid label can only be changed by the owner in Ecwid Admin.)
+2. **The firmness ranges (decided 11 November 2026: the Firmness module's four ranges, 48 / 49 to 87 / 88 to 114 / 115 and over; see `docs/TV-DESIGN-PREVIEW.md`).** Earlier question: The screen: Soft 0 to 48 kg, Medium 49 to 83, Firm 83 to 114, Extra Firm 115 and over. Ecwid's labels: up to 47, 48 to 85, 85 to 110, over 120 (nothing for 110 to 120 kg). Which is the truth? (An Ecwid label can only be changed by the owner in Ecwid Admin.)
 3. **Extra Firm picked in Ecwid's own menu**, as above.
 4. **The four phases and their names** (the proposal names are questions; the owner may prefer plain words).
 5. **Pictures and diagrams** the owner wants for each step, and which screens need none.
