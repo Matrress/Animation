@@ -24,9 +24,18 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 - **The leaf is green** (the header leaf of the site, not blue).
 - **The question band stays dark** (the owner likes it).
 
+## Second review (11 November 2026): alignment, a darker stage, the one distinctive button
+
+- **One top line.** The three columns (order rail, stage, selection) share one top line: a heading row of the same height, and below it the first box of each column starts at the same height (the question band, the first chip, the first step), on every step. On a portrait tablet the rail runs along the top.
+- **The leaf sits beside the question**, not above it.
+- **A darker stage.** The middle area is deep graphite blue, so the white cards stand out; the two side panels stay white. A chosen or recommended card has a Sky-blue ring. The buttons on the dark stage are white (Continue) and outlined (Back).
+- **Add to Bag / Go to Checkout is the only bright blue button** on the screen, the blue of the top of the question band, with a bag or an arrow icon; never the same as the other buttons. No green button.
+- **Depth is a mattress in profile**: long, both ends visible, a graphite cover around a latex core, the thickness varies (20, 24, 26 cm) with the 26 cm outline dashed behind. It is drawn about 1.5 times thicker than life so the difference can be seen. (This replaces the earlier use of the traced front edge of the core drawing, which read as a thin slanted strip.)
+- **Covers:** the four photographs and the information board have the same height and align.
+
 ## Add to Bag and Go to Checkout (one button, two faces)
 
-Add to Bag sits in "Your selection", under the price, on every step, and again on the Review step. It is disabled until size, firmness, depth and cover are all chosen. Once the mattress is in the bag the same button, in the same place, becomes **Go to Checkout** (green), and says "Added to your bag". If the customer then changes any of the four choices, it becomes Add to Bag again, because the new configuration is not in the bag. The shop's own button under the television is the same button: both always show the same face.
+Add to Bag sits in "Your selection", under the price, on every step, and again on the Review step. It is disabled until size, firmness, depth and cover are all chosen. Once the mattress is in the bag the same button, in the same place, becomes **Go to Checkout** (the same bright blue, with an arrow instead of the bag), and says "Added to your bag". If the customer then changes any of the four choices, it becomes Add to Bag again, because the new configuration is not in the bag. The shop's own button under the television is the same button: both always show the same face.
 
 In the shop: the television's button presses **Ecwid's own** Add to Bag (so Ecwid validates and executes, as always), and it turns into Go to Checkout only when Ecwid's own cart event reports the change (never on our assumption). If the customer uses Ecwid's own Add to Bag, the television's button turns into Go to Checkout the same way. Go to Checkout opens Ecwid's own checkout. This replaces the earlier idea that "Go to Add to Bag" only scrolls to the shop's button. *Open point for the owner:* in Ecwid today no option is required and Add to Bag is enabled with nothing chosen (price £0); the television's button waits for all four choices, Ecwid's own does not. Mark the four options as required in Ecwid Admin so both behave the same.
 
