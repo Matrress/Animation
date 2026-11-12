@@ -1,0 +1,12 @@
+{
+ "sizes": {
+  "total": 218674,
+  "gzip": 51369,
+  "firmnessCoreBytes": 4530,
+  "syncBytes": 8977,
+  "configuratorBytes": 21333,
+  "premiumCssBytes": 14389,
+  "contentCssBytes": 6599
+ },
+ "note": "source characters, not minified; the stand-in and preview chrome are not part of a production layer"
+}

@@ -1,0 +1,80 @@
+{
+ "engineRef": "origin/claude/divine-firmness-visual",
+ "engineBase": [
+  48,
+  87,
+  114,
+  115
+ ],
+ "heights": [
+  150,
+  160,
+  170,
+  180,
+  190,
+  200
+ ],
+ "edgesByHeight": {
+  "150": [
+   "40 kg -> SOFT",
+   "49 kg -> MEDIUM",
+   "80 kg -> FIRM",
+   "100 kg -> EXTRA FIRM"
+  ],
+  "160": [
+   "40 kg -> SOFT",
+   "49 kg -> MEDIUM",
+   "80 kg -> FIRM",
+   "100 kg -> EXTRA FIRM"
+  ],
+  "170": [
+   "40 kg -> SOFT",
+   "49 kg -> MEDIUM",
+   "72 kg -> FIRM",
+   "100 kg -> EXTRA FIRM"
+  ],
+  "180": [
+   "40 kg -> SOFT",
+   "49 kg -> MEDIUM",
+   "80 kg -> FIRM",
+   "100 kg -> EXTRA FIRM"
+  ],
+  "190": [
+   "40 kg -> SOFT",
+   "49 kg -> MEDIUM",
+   "80 kg -> FIRM",
+   "100 kg -> EXTRA FIRM"
+  ],
+  "200": [
+   "40 kg -> SOFT",
+   "49 kg -> MEDIUM",
+   "80 kg -> FIRM",
+   "100 kg -> EXTRA FIRM"
+  ]
+ },
+ "sources": {
+  "module": {
+   "base": {
+    "Soft": "up to 48 kg",
+    "Medium": "49–87 kg",
+    "Firm": "88–114 kg",
+    "Extra Firm": "115+ kg"
+   },
+   "where": "origin/claude/divine-firmness-visual:divine-firmness (engine base bands; height windows refine them)"
+  },
+  "description": {
+   "Soft": "0–48 kg",
+   "Medium": "49–83 kg",
+   "Firm": "83–114 kg",
+   "Extra Firm": "115+ kg",
+   "where": "source/botanic-original-description.html (.b-fc__kg)"
+  },
+  "ecwid": {
+   "Soft": "Up to 47 kg",
+   "Medium": "48–85 kg",
+   "Firm": "85–110 kg",
+   "Extra Firm": "Over 120 kg",
+   "where": "native Ecwid FIRMNESS BY BODY WEIGHT option labels, public page 831592302, read by tests/live/options-probe.cjs"
+  }
+ }
+}

@@ -1,0 +1,251 @@
+{
+ "date": "2026-11-11T20:10:28.225Z",
+ "simulated": true,
+ "note": "simulated Ecwid, Chromium only",
+ "results": [
+  {
+   "ok": true,
+   "msg": "G7 ?ddtv=off: no television at all",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "reference description read from the store page",
+   "detail": "31314 characters, 29 links"
+  },
+  {
+   "ok": true,
+   "msg": "the television starts (desktop 1440x900, mouse)",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G1 description text identical to the store page, nothing removed or changed",
+   "detail": "31314 of 31314 characters"
+  },
+  {
+   "ok": true,
+   "msg": "G2 the description links keep their addresses",
+   "detail": "29 links"
+  },
+  {
+   "ok": true,
+   "msg": "G2 every link has a real address",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G3 structured data untouched",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G4 video requests at load do not exceed today's eight (ratchet)",
+   "detail": "8 requested; preload=auto on 2 of 7 video elements"
+  },
+  {
+   "ok": true,
+   "msg": "G4 videos that preload fully do not exceed today's two (ratchet)",
+   "detail": "2 with preload=auto"
+  },
+  {
+   "ok": true,
+   "msg": "G5 layout shift on load below 0.1",
+   "detail": "CLS 0.0000"
+  },
+  {
+   "ok": true,
+   "msg": "G6 no page errors",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G6 no failed request to our own files",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "the television starts (iPad Pro 12.9 (3rd gen) portrait 1024x1366, touch)",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G1 description text identical to the store page, nothing removed or changed",
+   "detail": "31314 of 31314 characters"
+  },
+  {
+   "ok": true,
+   "msg": "G2 the description links keep their addresses",
+   "detail": "29 links"
+  },
+  {
+   "ok": true,
+   "msg": "G2 every link has a real address",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G3 structured data untouched",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G4 video requests at load do not exceed today's eight (ratchet)",
+   "detail": "8 requested; preload=auto on 2 of 7 video elements"
+  },
+  {
+   "ok": true,
+   "msg": "G4 videos that preload fully do not exceed today's two (ratchet)",
+   "detail": "2 with preload=auto"
+  },
+  {
+   "ok": true,
+   "msg": "G5 layout shift on load does not exceed today's level (ratchet)",
+   "detail": "CLS 0.6022"
+  },
+  {
+   "ok": true,
+   "msg": "G6 no page errors",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G6 no failed request to our own files",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "the television starts (iPad Pro 12.9 (3rd gen) landscape 1366x1024, touch)",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G1 description text identical to the store page, nothing removed or changed",
+   "detail": "31314 of 31314 characters"
+  },
+  {
+   "ok": true,
+   "msg": "G2 the description links keep their addresses",
+   "detail": "29 links"
+  },
+  {
+   "ok": true,
+   "msg": "G2 every link has a real address",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G3 structured data untouched",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G4 video requests at load do not exceed today's eight (ratchet)",
+   "detail": "8 requested; preload=auto on 2 of 7 video elements"
+  },
+  {
+   "ok": true,
+   "msg": "G4 videos that preload fully do not exceed today's two (ratchet)",
+   "detail": "2 with preload=auto"
+  },
+  {
+   "ok": true,
+   "msg": "G5 layout shift on load below 0.1",
+   "detail": "CLS 0.0000"
+  },
+  {
+   "ok": true,
+   "msg": "G6 no page errors",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G6 no failed request to our own files",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "the television starts (Android tablet 800x1280, touch)",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G1 description text identical to the store page, nothing removed or changed",
+   "detail": "31314 of 31314 characters"
+  },
+  {
+   "ok": true,
+   "msg": "G2 the description links keep their addresses",
+   "detail": "29 links"
+  },
+  {
+   "ok": true,
+   "msg": "G2 every link has a real address",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G3 structured data untouched",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G4 video requests at load do not exceed today's eight (ratchet)",
+   "detail": "8 requested; preload=auto on 2 of 7 video elements"
+  },
+  {
+   "ok": true,
+   "msg": "G4 videos that preload fully do not exceed today's two (ratchet)",
+   "detail": "2 with preload=auto"
+  },
+  {
+   "ok": true,
+   "msg": "G5 layout shift on load does not exceed today's level (ratchet)",
+   "detail": "CLS 0.5279"
+  },
+  {
+   "ok": true,
+   "msg": "G6 no page errors",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G6 no failed request to our own files",
+   "detail": ""
+  },
+  {
+   "ok": true,
+   "msg": "G8 iPad Safari: identical to the iPad Safari result",
+   "detail": "host [30,92,964,927], phone=false"
+  },
+  {
+   "ok": true,
+   "msg": "G8 Samsung Internet on a Galaxy tab: identical to the iPad Safari result",
+   "detail": "host [30,92,964,927], phone=false"
+  },
+  {
+   "ok": true,
+   "msg": "G8 Huawei Browser on a MatePad: identical to the iPad Safari result",
+   "detail": "host [30,92,964,927], phone=false"
+  },
+  {
+   "ok": true,
+   "msg": "G8 Edge on a Windows touch laptop: identical to the iPad Safari result",
+   "detail": "host [30,92,964,927], phone=false"
+  }
+ ],
+ "openItems": [
+  "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on desktop 1440x900, mouse",
+  "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on iPad Pro 12.9 (3rd gen) portrait 1024x1366, touch",
+  "G5 target: layout shift below 0.1 on iPad Pro 12.9 (3rd gen) portrait 1024x1366, touch (now 0.602: the product block moves down when the television is inserted)",
+  "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on iPad Pro 12.9 (3rd gen) landscape 1366x1024, touch",
+  "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on Android tablet 800x1280, touch",
+  "G5 target: layout shift below 0.1 on Android tablet 800x1280, touch (now 0.528: the product block moves down when the television is inserted)"
+ ],
+ "mediaRequestsAtLoad": {
+  "desktop 1440x900, mouse": 8,
+  "iPad Pro 12.9 (3rd gen) portrait 1024x1366, touch": 8,
+  "iPad Pro 12.9 (3rd gen) landscape 1366x1024, touch": 8,
+  "Android tablet 800x1280, touch": 8
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "mode": "fast",
+ "date": "2026-11-10T16:29:35.489Z",
+ "checks": [
+  {
+   "ok": true,
+   "m": "adapter finds the four native options (cover,depth,firmness,size) {\"size\":23,\"depth\":3,\"firmness\":4,\"cover\":4}; instances=1"
+  },
+  {
+   "ok": true,
+   "m": "panel -> Ecwid: size set (UK King 150x200 cm. / ), Ecwid's price £1 199.70, verified in 1507 ms"
+  },
+  {
+   "ok": true,
+   "m": "Ecwid -> panel: a native change is reported (events: native:firmness), adapter reads \"48–85 kg / 7.6–13.4 st body we\""
+  },
+  {
+   "ok": true,
+   "m": "rapid sequence of four sets: all reflected natively; Ecwid's price £1 888.20"
+  },
+  {
+   "ok": true,
+   "m": "an unavailable choice is refused (choice-unavailable), nothing changes"
+  },
+  {
+   "ok": true,
+   "m": "all four cleared again: price back to £0 (Ecwid's initial state is untouched by the adapter)"
+  },
+  {
+   "ok": true,
+   "m": "no cart, checkout or order request: 3 POSTs in total, 3 of them Ecwid's own catalog reads (it re-reads the product when an option changes), 0 to cart/checkout; Add to Bag never clicked"
+  }
+ ],
+ "events": [
+  {
+   "src": "panel",
+   "role": "size",
+   "price": "£0",
+   "t": 8470
+  },
+  {
+   "src": "dom",
+   "role": null,
+   "price": "£1 199.70",
+   "t": 8993
+  },
+  {
+   "src": "native",
+   "role": "firmness",
+   "price": "£1 199.70",
+   "t": 9994
+  },
+  {
+   "src": "panel",
+   "role": "depth",
+   "price": "£1 199.70",
+   "t": 11503
+  },
+  {
+   "src": "panel",
+   "role": "cover",
+   "price": "£1 199.70",
+   "t": 11503
+  },
+  {
+   "src": "panel",
+   "role": "firmness",
+   "price": "£1 199.70",
+   "t": 11503
+  },
+  {
+   "src": "panel",
+   "role": "size",
+   "price": "£1 199.70",
+   "t": 11504
+  },
+  {
+   "src": "dom",
+   "role": null,
+   "price": "£1 888.20",
+   "t": 11831
+  },
+  {
+   "src": "panel",
+   "role": "size",
+   "price": "£1 888.20",
+   "t": 13513
+  },
+  {
+   "src": "panel",
+   "role": "depth",
+   "price": "£1 888.20",
+   "t": 13513
+  },
+  {
+   "src": "panel",
+   "role": "cover",
+   "price": "£1 888.20",
+   "t": 13513
+  },
+  {
+   "src": "panel",
+   "role": "firmness",
+   "price": "£1 888.20",
+   "t": 13514
+  },
+  {
+   "src": "ecwid-event",
+   "role": null,
+   "price": "£0",
+   "t": 13640
+  }
+ ],
+ "note": "local selections only; nothing saved"
+}

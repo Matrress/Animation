@@ -1,0 +1,122 @@
+[
+ {
+  "pair": "White on turquoise button",
+  "fg": "#FFFFFF",
+  "bg": "#1B6676",
+  "ratio": 6.54,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Turquoise link on ground",
+  "fg": "#1B6676",
+  "bg": "#F2F7F9",
+  "ratio": 6.06,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Turquoise text on notice",
+  "fg": "#1B6676",
+  "bg": "#E4EEF1",
+  "ratio": 5.55,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Headings on ground",
+  "fg": "#272D32",
+  "bg": "#F2F7F9",
+  "ratio": 12.9,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Body on ground",
+  "fg": "#3E474D",
+  "bg": "#F2F7F9",
+  "ratio": 8.79,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Captions on ground",
+  "fg": "#5B666E",
+  "bg": "#F2F7F9",
+  "ratio": 5.45,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Button label on outline",
+  "fg": "#1B6676",
+  "bg": "#F2F7F9",
+  "ratio": 6.06,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Title on turquoise band",
+  "fg": "#F2F7FB",
+  "bg": "#173842",
+  "ratio": 11.59,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Body on turquoise band",
+  "fg": "#C9D3DB",
+  "bg": "#12303A",
+  "ratio": 9.16,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Mist legend on band",
+  "fg": "#C3D5ED",
+  "bg": "#173842",
+  "ratio": 8.37,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Zone note on zone card",
+  "fg": "#AEBBC6",
+  "bg": "#1B3A44",
+  "ratio": 6.18,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Sky numbers on band",
+  "fg": "#50CDFD",
+  "bg": "#173842",
+  "ratio": 6.84,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Dark label on Sky button",
+  "fg": "#0F1A22",
+  "bg": "#50CDFD",
+  "ratio": 9.65,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Caption on video frame",
+  "fg": "#E6F3F8",
+  "bg": "#173842",
+  "ratio": 11.03,
+  "AA_text": true,
+  "rejected": false
+ },
+ {
+  "pair": "Sky as text on ground (rejected)",
+  "fg": "#50CDFD",
+  "bg": "#F2F7F9",
+  "ratio": 1.69,
+  "AA_text": false,
+  "rejected": true
+ }
+]

@@ -1,0 +1,2910 @@
+{
+ "generated": "2026-11-11",
+ "note": "simulated store page, the real engine; not a live store",
+ "shots": [
+  {
+   "profile": "ipad-pro-portrait",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), portrait, 1024 x 1366, touch",
+   "chapter": "discover",
+   "panel": "intro",
+   "title": "Opening: the introduction",
+   "file": "ipad-pro-portrait-discover-intro.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 2,
+     "labels": [
+      "Introduction",
+      "At a Glance"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "E",
+     "kind": "sc-btn",
+     "colour": "#C2255C",
+     "count": 2,
+     "labels": [
+      "Choose Your Firmness",
+      "Why Organic Latex"
+     ],
+     "name": "Action on a screen",
+     "role": "Primary or secondary action",
+     "orient": "forward (→)"
+    },
+    {
+     "letter": "F",
+     "kind": "sc-play",
+     "colour": "#0C8599",
+     "count": 1,
+     "labels": [
+      "Watch Full Video"
+     ],
+     "name": "Play the full video",
+     "role": "Media",
+     "orient": "play (▶)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous",
+      "Next: At a Glance"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-portrait",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), portrait, 1024 x 1366, touch",
+   "chapter": "height",
+   "panel": "sizes",
+   "title": "Choose size",
+   "file": "ipad-pro-portrait-height-sizes.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 4,
+     "labels": [
+      "Choose height",
+      "Your height",
+      "Choose size",
+      "Why Height Matters"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Your height",
+      "Next: Why Height Matters"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "K",
+     "kind": "sc-size",
+     "colour": "#364FC7",
+     "count": 22,
+     "labels": [
+      "Small Single 75 × 190 cm",
+      "Long Small Single 75 × 200 cm",
+      "EU Small Single 80 × 200 cm",
+      "Single 90 × 190 cm",
+      "Euro Single 90 × 200 cm",
+      "Large Single 100 × 200 cm"
+     ],
+     "name": "Size choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-portrait",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), portrait, 1024 x 1366, touch",
+   "chapter": "firmness",
+   "panel": "choose",
+   "title": "Choose firmness",
+   "file": "ipad-pro-portrait-firmness-choose.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 5,
+     "labels": [
+      "Choose",
+      "Your firmness",
+      "Correct vs Softer",
+      "How It Works",
+      "Who It Is For"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Discover · At a Glance",
+      "Next: Your firmness"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "I",
+     "kind": "sc-seg",
+     "colour": "#087F5B",
+     "count": 4,
+     "labels": [
+      "Soft 0 – 48 kg up to 7.5 st",
+      "Medium 49 – 83 kg",
+      "Firm 83 – 114 kg",
+      "Extra Firm 115+ kg 18+ st"
+     ],
+     "name": "Firmness choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-portrait",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), portrait, 1024 x 1366, touch",
+   "chapter": "height",
+   "panel": "heights",
+   "title": "Choose depth",
+   "file": "ipad-pro-portrait-height-heights.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 4,
+     "labels": [
+      "Choose height",
+      "Your height",
+      "Choose size",
+      "Why Height Matters"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Comfort · Latex Behaviour",
+      "Next: Your height"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "J",
+     "kind": "sc-slabcard",
+     "colour": "#A61E4D",
+     "count": 3,
+     "labels": [
+      "20 cm · 8 inches Balanced Comfort Full s",
+      "24 cm · 9.5 inches Deep Comfort More lat",
+      "26 cm · 10.25 inches Premium Depth Maxim"
+     ],
+     "name": "Depth choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-portrait",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), portrait, 1024 x 1366, touch",
+   "chapter": "covers",
+   "panel": "choose",
+   "title": "Choose cover",
+   "file": "ipad-pro-portrait-covers-choose.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 4,
+     "labels": [
+      "Choose cover",
+      "Your cover",
+      "Materials",
+      "Cover System"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Height · Why Height Matters",
+      "Next: Your cover"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "L",
+     "kind": "sc-swatch",
+     "colour": "#B35C00",
+     "count": 4,
+     "labels": [
+      "Organic Cotton Best natural ventilation.",
+      "Cotton & Wool Double-sided cover · Best ",
+      "Aloe Vera + Cotton More elasticity.",
+      "Cashmere + Silver Elasticity + softness."
+     ],
+     "name": "Cover choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-portrait",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), portrait, 1024 x 1366, touch",
+   "chapter": "ventilation",
+   "panel": "airflow",
+   "title": "A \"points\" screen (ventilation)",
+   "file": "ipad-pro-portrait-ventilation-airflow.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 2,
+     "labels": [
+      "Airflow",
+      "Why It Matters"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: 7-Zone · Zone By Zone",
+      "Next: Why It Matters"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "M",
+     "kind": "sc-point__h",
+     "colour": "#495057",
+     "count": 4,
+     "labels": [
+      "Warm in winter — cool in summer",
+      "No heat retention",
+      "No moisture or mould",
+      "4–5× better than memory foam"
+     ],
+     "name": "Point heading (expands)",
+     "role": "Disclosure",
+     "orient": "open (+) / close (×)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-portrait",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), portrait, 1024 x 1366, touch",
+   "chapter": "firmness",
+   "panel": "principle",
+   "title": "A reading screen (firmness principle)",
+   "file": "ipad-pro-portrait-firmness-principle.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 5,
+     "labels": [
+      "Choose",
+      "Your firmness",
+      "Correct vs Softer",
+      "How It Works",
+      "Who It Is For"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Your firmness",
+      "Next: How It Works"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-portrait",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), portrait, 1024 x 1366, touch",
+   "chapter": "delivery",
+   "panel": "yours",
+   "title": "Closing: your Botanic",
+   "file": "ipad-pro-portrait-delivery-yours.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 2,
+     "labels": [
+      "Made To Order",
+      "Your Botanic"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "E",
+     "kind": "sc-btn",
+     "colour": "#C2255C",
+     "count": 4,
+     "labels": [
+      "Choose",
+      "Choose",
+      "Choose",
+      "Choose"
+     ],
+     "name": "Action on a screen",
+     "role": "Primary or secondary action",
+     "orient": "forward (→)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Made To Order",
+      "Next"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-landscape",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), landscape, 1366 x 1024, touch",
+   "chapter": "discover",
+   "panel": "intro",
+   "title": "Opening: the introduction",
+   "file": "ipad-pro-landscape-discover-intro.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 2,
+     "labels": [
+      "Introduction",
+      "At a Glance"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "E",
+     "kind": "sc-btn",
+     "colour": "#C2255C",
+     "count": 2,
+     "labels": [
+      "Choose Your Firmness",
+      "Why Organic Latex"
+     ],
+     "name": "Action on a screen",
+     "role": "Primary or secondary action",
+     "orient": "forward (→)"
+    },
+    {
+     "letter": "F",
+     "kind": "sc-play",
+     "colour": "#0C8599",
+     "count": 1,
+     "labels": [
+      "Watch Full Video"
+     ],
+     "name": "Play the full video",
+     "role": "Media",
+     "orient": "play (▶)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous",
+      "Next: At a Glance"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-landscape",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), landscape, 1366 x 1024, touch",
+   "chapter": "height",
+   "panel": "sizes",
+   "title": "Choose size",
+   "file": "ipad-pro-landscape-height-sizes.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 4,
+     "labels": [
+      "Choose height",
+      "Your height",
+      "Choose size",
+      "Why Height Matters"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Your height",
+      "Next: Why Height Matters"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "K",
+     "kind": "sc-size",
+     "colour": "#364FC7",
+     "count": 22,
+     "labels": [
+      "Small Single 75 × 190 cm",
+      "Long Small Single 75 × 200 cm",
+      "EU Small Single 80 × 200 cm",
+      "Single 90 × 190 cm",
+      "Euro Single 90 × 200 cm",
+      "Large Single 100 × 200 cm"
+     ],
+     "name": "Size choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-landscape",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), landscape, 1366 x 1024, touch",
+   "chapter": "firmness",
+   "panel": "choose",
+   "title": "Choose firmness",
+   "file": "ipad-pro-landscape-firmness-choose.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 5,
+     "labels": [
+      "Choose",
+      "Your firmness",
+      "Correct vs Softer",
+      "How It Works",
+      "Who It Is For"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Discover · At a Glance",
+      "Next: Your firmness"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "I",
+     "kind": "sc-seg",
+     "colour": "#087F5B",
+     "count": 4,
+     "labels": [
+      "Soft 0 – 48 kg up to 7.5 st",
+      "Medium 49 – 83 kg",
+      "Firm 83 – 114 kg",
+      "Extra Firm 115+ kg 18+ st"
+     ],
+     "name": "Firmness choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-landscape",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), landscape, 1366 x 1024, touch",
+   "chapter": "height",
+   "panel": "heights",
+   "title": "Choose depth",
+   "file": "ipad-pro-landscape-height-heights.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 4,
+     "labels": [
+      "Choose height",
+      "Your height",
+      "Choose size",
+      "Why Height Matters"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Comfort · Latex Behaviour",
+      "Next: Your height"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "J",
+     "kind": "sc-slabcard",
+     "colour": "#A61E4D",
+     "count": 3,
+     "labels": [
+      "20 cm · 8 inches Balanced Comfort Full s",
+      "24 cm · 9.5 inches Deep Comfort More lat",
+      "26 cm · 10.25 inches Premium Depth Maxim"
+     ],
+     "name": "Depth choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-landscape",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), landscape, 1366 x 1024, touch",
+   "chapter": "covers",
+   "panel": "choose",
+   "title": "Choose cover",
+   "file": "ipad-pro-landscape-covers-choose.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 4,
+     "labels": [
+      "Choose cover",
+      "Your cover",
+      "Materials",
+      "Cover System"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Height · Why Height Matters",
+      "Next: Your cover"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "L",
+     "kind": "sc-swatch",
+     "colour": "#B35C00",
+     "count": 4,
+     "labels": [
+      "Organic Cotton Best natural ventilation.",
+      "Cotton & Wool Double-sided cover · Best ",
+      "Aloe Vera + Cotton More elasticity.",
+      "Cashmere + Silver Elasticity + softness."
+     ],
+     "name": "Cover choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-landscape",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), landscape, 1366 x 1024, touch",
+   "chapter": "ventilation",
+   "panel": "airflow",
+   "title": "A \"points\" screen (ventilation)",
+   "file": "ipad-pro-landscape-ventilation-airflow.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 2,
+     "labels": [
+      "Airflow",
+      "Why It Matters"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: 7-Zone · Zone By Zone",
+      "Next: Why It Matters"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "M",
+     "kind": "sc-point__h",
+     "colour": "#495057",
+     "count": 4,
+     "labels": [
+      "Warm in winter — cool in summer",
+      "No heat retention",
+      "No moisture or mould",
+      "4–5× better than memory foam"
+     ],
+     "name": "Point heading (expands)",
+     "role": "Disclosure",
+     "orient": "open (+) / close (×)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-landscape",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), landscape, 1366 x 1024, touch",
+   "chapter": "firmness",
+   "panel": "principle",
+   "title": "A reading screen (firmness principle)",
+   "file": "ipad-pro-landscape-firmness-principle.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 5,
+     "labels": [
+      "Choose",
+      "Your firmness",
+      "Correct vs Softer",
+      "How It Works",
+      "Who It Is For"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Your firmness",
+      "Next: How It Works"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "ipad-pro-landscape",
+   "profileLabel": "iPad Pro 12.9 (3rd gen), landscape, 1366 x 1024, touch",
+   "chapter": "delivery",
+   "panel": "yours",
+   "title": "Closing: your Botanic",
+   "file": "ipad-pro-landscape-delivery-yours.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 2,
+     "labels": [
+      "Made To Order",
+      "Your Botanic"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "E",
+     "kind": "sc-btn",
+     "colour": "#C2255C",
+     "count": 4,
+     "labels": [
+      "Choose",
+      "Choose",
+      "Choose",
+      "Choose"
+     ],
+     "name": "Action on a screen",
+     "role": "Primary or secondary action",
+     "orient": "forward (→)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Made To Order",
+      "Next"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "desktop",
+   "profileLabel": "Desktop monitor, 1440 x 900, mouse",
+   "chapter": "discover",
+   "panel": "intro",
+   "title": "Opening: the introduction",
+   "file": "desktop-discover-intro.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 2,
+     "labels": [
+      "Introduction",
+      "At a Glance"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "E",
+     "kind": "sc-btn",
+     "colour": "#C2255C",
+     "count": 2,
+     "labels": [
+      "Choose Your Firmness",
+      "Why Organic Latex"
+     ],
+     "name": "Action on a screen",
+     "role": "Primary or secondary action",
+     "orient": "forward (→)"
+    },
+    {
+     "letter": "F",
+     "kind": "sc-play",
+     "colour": "#0C8599",
+     "count": 1,
+     "labels": [
+      "Watch Full Video"
+     ],
+     "name": "Play the full video",
+     "role": "Media",
+     "orient": "play (▶)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous",
+      "Next: At a Glance"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "desktop",
+   "profileLabel": "Desktop monitor, 1440 x 900, mouse",
+   "chapter": "height",
+   "panel": "sizes",
+   "title": "Choose size",
+   "file": "desktop-height-sizes.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 4,
+     "labels": [
+      "Choose height",
+      "Your height",
+      "Choose size",
+      "Why Height Matters"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Your height",
+      "Next: Why Height Matters"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "K",
+     "kind": "sc-size",
+     "colour": "#364FC7",
+     "count": 22,
+     "labels": [
+      "Small Single 75 × 190 cm",
+      "Long Small Single 75 × 200 cm",
+      "EU Small Single 80 × 200 cm",
+      "Single 90 × 190 cm",
+      "Euro Single 90 × 200 cm",
+      "Large Single 100 × 200 cm"
+     ],
+     "name": "Size choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "desktop",
+   "profileLabel": "Desktop monitor, 1440 x 900, mouse",
+   "chapter": "firmness",
+   "panel": "choose",
+   "title": "Choose firmness",
+   "file": "desktop-firmness-choose.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 5,
+     "labels": [
+      "Choose",
+      "Your firmness",
+      "Correct vs Softer",
+      "How It Works",
+      "Who It Is For"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Discover · At a Glance",
+      "Next: Your firmness"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "I",
+     "kind": "sc-seg",
+     "colour": "#087F5B",
+     "count": 4,
+     "labels": [
+      "Soft 0 – 48 kg up to 7.5 st",
+      "Medium 49 – 83 kg",
+      "Firm 83 – 114 kg",
+      "Extra Firm 115+ kg 18+ st"
+     ],
+     "name": "Firmness choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "desktop",
+   "profileLabel": "Desktop monitor, 1440 x 900, mouse",
+   "chapter": "height",
+   "panel": "heights",
+   "title": "Choose depth",
+   "file": "desktop-height-heights.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 4,
+     "labels": [
+      "Choose height",
+      "Your height",
+      "Choose size",
+      "Why Height Matters"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Comfort · Latex Behaviour",
+      "Next: Your height"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "J",
+     "kind": "sc-slabcard",
+     "colour": "#A61E4D",
+     "count": 3,
+     "labels": [
+      "20 cm · 8 inches Balanced Comfort Full s",
+      "24 cm · 9.5 inches Deep Comfort More lat",
+      "26 cm · 10.25 inches Premium Depth Maxim"
+     ],
+     "name": "Depth choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "desktop",
+   "profileLabel": "Desktop monitor, 1440 x 900, mouse",
+   "chapter": "covers",
+   "panel": "choose",
+   "title": "Choose cover",
+   "file": "desktop-covers-choose.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 4,
+     "labels": [
+      "Choose cover",
+      "Your cover",
+      "Materials",
+      "Cover System"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Height · Why Height Matters",
+      "Next: Your cover"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "L",
+     "kind": "sc-swatch",
+     "colour": "#B35C00",
+     "count": 4,
+     "labels": [
+      "Organic Cotton Best natural ventilation.",
+      "Cotton & Wool Double-sided cover · Best ",
+      "Aloe Vera + Cotton More elasticity.",
+      "Cashmere + Silver Elasticity + softness."
+     ],
+     "name": "Cover choice",
+     "role": "Selection: sets the store's own control",
+     "orient": "none (a choice)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "desktop",
+   "profileLabel": "Desktop monitor, 1440 x 900, mouse",
+   "chapter": "ventilation",
+   "panel": "airflow",
+   "title": "A \"points\" screen (ventilation)",
+   "file": "desktop-ventilation-airflow.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 2,
+     "labels": [
+      "Airflow",
+      "Why It Matters"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: 7-Zone · Zone By Zone",
+      "Next: Why It Matters"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "M",
+     "kind": "sc-point__h",
+     "colour": "#495057",
+     "count": 4,
+     "labels": [
+      "Warm in winter — cool in summer",
+      "No heat retention",
+      "No moisture or mould",
+      "4–5× better than memory foam"
+     ],
+     "name": "Point heading (expands)",
+     "role": "Disclosure",
+     "orient": "open (+) / close (×)"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "desktop",
+   "profileLabel": "Desktop monitor, 1440 x 900, mouse",
+   "chapter": "firmness",
+   "panel": "principle",
+   "title": "A reading screen (firmness principle)",
+   "file": "desktop-firmness-principle.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 5,
+     "labels": [
+      "Choose",
+      "Your firmness",
+      "Correct vs Softer",
+      "How It Works",
+      "Who It Is For"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Your firmness",
+      "Next: How It Works"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  },
+  {
+   "profile": "desktop",
+   "profileLabel": "Desktop monitor, 1440 x 900, mouse",
+   "chapter": "delivery",
+   "panel": "yours",
+   "title": "Closing: your Botanic",
+   "file": "desktop-delivery-yours.png",
+   "groups": [
+    {
+     "letter": "A",
+     "kind": "ddtv__btn",
+     "colour": "#E8590C",
+     "count": 14,
+     "labels": [
+      "Discover",
+      "Firmness",
+      "Comfort",
+      "Height",
+      "Covers",
+      "Benefits"
+     ],
+     "name": "Chapter button",
+     "role": "Navigation",
+     "orient": "to a chapter (→)"
+    },
+    {
+     "letter": "B",
+     "kind": "ddtv__tab",
+     "colour": "#1971C2",
+     "count": 2,
+     "labels": [
+      "Made To Order",
+      "Your Botanic"
+     ],
+     "name": "Panel tab",
+     "role": "Navigation inside the chapter",
+     "orient": "sideways"
+    },
+    {
+     "letter": "C",
+     "kind": "ddtv__chip",
+     "colour": "#2F9E44",
+     "count": 4,
+     "labels": [
+      "SIZE —",
+      "DEPTH —",
+      "FIRMNESS —",
+      "COVER —"
+     ],
+     "name": "Selection chip (Size, Depth, Firmness, Cover)",
+     "role": "Summary and shortcut",
+     "orient": "to the screen where that choice is made (→)"
+    },
+    {
+     "letter": "D",
+     "kind": "ddtv__galbtn",
+     "colour": "#9C36B5",
+     "count": 1,
+     "labels": [
+      "View Model Gallery, 14 photos"
+     ],
+     "name": "View Model Gallery",
+     "role": "Media: the product photographs inside the monitor",
+     "orient": "open (↗ in the monitor)"
+    },
+    {
+     "letter": "E",
+     "kind": "sc-btn",
+     "colour": "#C2255C",
+     "count": 4,
+     "labels": [
+      "Choose",
+      "Choose",
+      "Choose",
+      "Choose"
+     ],
+     "name": "Action on a screen",
+     "role": "Primary or secondary action",
+     "orient": "forward (→)"
+    },
+    {
+     "letter": "G",
+     "kind": "ddtv__nav",
+     "colour": "#F08C00",
+     "count": 2,
+     "labels": [
+      "Previous: Made To Order",
+      "Next"
+     ],
+     "name": "Previous / Next",
+     "role": "Navigation",
+     "orient": "back (←) / forward (→)"
+    },
+    {
+     "letter": "H",
+     "kind": "ddtv__play",
+     "colour": "#5F3DC4",
+     "count": 1,
+     "labels": [
+      "Play presentation"
+     ],
+     "name": "Play or pause the presentation",
+     "role": "Media: the automatic tour",
+     "orient": "play (▶) / pause"
+    },
+    {
+     "letter": "N",
+     "kind": "ddtv__switch",
+     "colour": "#D9480F",
+     "count": 2,
+     "labels": [
+      "Optimised Preview",
+      "Standard Product View"
+     ],
+     "name": "Optimised Preview / Standard Product View",
+     "role": "View switch",
+     "orient": "to the store's own page and back"
+    }
+   ]
+  }
+ ]
+}

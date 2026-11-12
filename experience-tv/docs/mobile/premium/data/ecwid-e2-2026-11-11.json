@@ -1,0 +1,96 @@
+{
+ "date": "2026-11-11",
+ "product": "public Botanic product 831592302 (read-only, local browser, nothing saved, Add to Bag never clicked)",
+ "options": [
+  {
+   "title": "SIZE",
+   "control": "select",
+   "choices": 24,
+   "labels": [
+    "Please choose",
+    "Small Single 75x190 cm./ 29.5” x 74.8” (+£788)",
+    "Small Special Single 75x200 cm. (+£793)",
+    "Euro Special Single 80x200 cm. (+£794)",
+    "Single 90x190 cm / 35.4” x 74.8” (+£797)",
+    "Special Single 90x200 cm. (+£800)",
+    "Large Single 100x200 cm. (+£988)",
+    "Small Double 120x190 cm. / 47.2” x 74.8” (+£1 000)",
+    "Special Small Double 120x200 cm. (+£1 100)",
+    "UK Double 135x190 cm. /53.1” x 74.8” (+£1 111)",
+    "Compact Double – 140×190 cm (+£1 230)",
+    "Euro Double 140x200 cm. (+£1 237)",
+    "UK King 150x200 cm. / 59.1” x 78.7” (+£1 333)",
+    "King Long – 150×210 cm (+£1 340)",
+    "Euro King 160x200 cm. / 63.0” x 78.7” (+£1 444)",
+    "Euro King Long – 160×210 cm (+£1 488)",
+    "Euro King XL – 160×220 cm (+£1 544)",
+    "Super King 180x200 cm. / 70.9” x 78.7” (+£1 555)",
+    "Super King Long – 180×210 cm (+£1 639)",
+    "Super King XL – 180×220 cm (+£1 699)",
+    "Emperor 200x200 cm. / 78.7” x 78.7” (+£1 777)",
+    "Emperor Long – 200×210 cm (+£1 818)",
+    "Emperor XL – 200×220 cm (+£1 888)",
+    "For More Options CONTACT US"
+   ]
+  },
+  {
+   "title": "Select Mattress Depth",
+   "control": "select",
+   "choices": 4,
+   "labels": [
+    "Please choose",
+    "H- 20 cm (8”) Balanced Comfort",
+    "H -24 cm (9.5”) Deep Comfort (+£156)",
+    "H- 26 cm (10.25”) Premium Deep Comfort (+£190)"
+   ]
+  },
+  {
+   "title": "FIRMNESS BY BODY WEIGHT",
+   "control": "select",
+   "choices": 5,
+   "labels": [
+    "Please choose",
+    "Up to 47 kg / up to 7.4 st body weight – SOFT",
+    "48–85 kg / 7.6–13.4 st body weight – MEDIUM",
+    "85–110 kg / 13.4–17.3 st body weight – FIRM",
+    "Over 120 kg / over 18.9 st body weight – EXTRA FIRM (+£88)"
+   ]
+  },
+  {
+   "title": "COVERS",
+   "control": "select",
+   "choices": 5,
+   "labels": [
+    "Please choose",
+    "100% Natural Cotton",
+    "100% Natural Cotton Other Side 100% Natural Wool",
+    "Combination Aloe Vera &Cotton & Viscose",
+    "Cashmere with Silver Ions (+£77)"
+   ]
+  }
+ ],
+ "initialPrice": "£0",
+ "addToBagInitially": {
+  "text": "Add to Bag",
+  "disabled": false
+ },
+ "priceFollowsChangeAfterMs": 1155,
+ "results": [
+  "options-probe exit=0 last: wrote /tmp/claude-0/-home-user-Animation/07e0f9c1-a5b9-5d94-82d3-67196afd6d6d/scratchpad/e2/options.json",
+  "sync-fast exit=0 last: all checks passed",
+  "sync-slow exit=0 last: all checks passed",
+  "size-prices exit=0 last: price = 90% of the label modifier: 22 of 22 (informational)",
+  "specialist exit=0 last: VERIFIED: a live, indexable Ecwid product page at exactly this address",
+  "events exit=0 last: page errors            [\"Uncaught (in promise) #<Object>\"]",
+  "errors-addtobag exit=0 last: WITH embed    {\"errors\":[\"Uncaught (in promise) #<Object>\"],\"addToBag\":{\"reachable\":true,\"topTag\":\"[object SVGAnimatedString]\",\"hostCount\":1",
+  "gallery exit=0 last: All checks passed (real Ecwid DOM of the public product; the test product and real devices are not covered)",
+  "restore exit=0 last: All checks passed (real Ecwid DOM of the public product; synthetic media; the test product and real devices are not covered)",
+  "structured exit=0 last: }"
+ ],
+ "notes": [
+  "The page error \"Uncaught (in promise)\" appears with no injection at all: it is the store's own.",
+  "Structured data price stays \"0.0\" before and after a choice; the visible price follows.",
+  "The size menu holds 22 sizes plus \"For More Options CONTACT US\" (not a size).",
+  "The probe detects \"required\" from an asterisk or aria-required and found none; the store may still validate on click, which is not tested because Add to Bag is never clicked."
+ ]
+}

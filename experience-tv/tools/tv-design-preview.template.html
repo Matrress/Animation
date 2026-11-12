@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Large-screen television: design preview (not deployed)</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap">
+<style>
+/* DESIGN PREVIEW of the large-screen television. Not deployed, not the engine. The recommendation is the published firmness rule;
+   the four ranges come from that module; the texts are the approved description; the price and the bag are STAND-INS for Ecwid's own.
+   Rules from the owner: rounded corners only (no pills, no circles on buttons); the side panels and the choice cards stay white;
+   graphite blue with white text where something is current or chosen; the leaf is green. */
+:root {
+  --ground: #F3F4F5; --white: #FFFFFF; --line: #DADFE3; --line2: #C6CDD3; --stage-a: #F2F6F9; --stage-b: #EAF0F4; --bright: #297CA2; --bright-deep: #1A5C7E; --ink: #272D32; --ink2: #3E474D; --ink3: #5B666E;
+  --teal: #1A5C7E; --teal-deep: #163D57; --abyss: #0B1C2A; --band-top: #173A52; --band-end: #10293F; --sky: #50CDFD;
+  --grad-card: linear-gradient(160deg, var(--teal) 0%, var(--teal-deep) 45%, var(--abyss) 100%);
+  --grad-band: linear-gradient(175deg, var(--band-top) 0%, var(--band-end) 100%);
+  --r: 12px; --rl: 16px; --f: 'Chillax', 'Helvetica Neue', Arial, system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--f); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+.app { max-width: 1440px; margin: 0 auto; padding: 18px 20px 28px; }
+.pv { font-size: 12px; color: var(--ink3); margin: 0 0 12px; }
+/* top bar: brand and the four phases */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.brand { font-size: 18px; letter-spacing: .02em; } .brand b { font-weight: 700; }
+.phases { display: flex; gap: 10px; flex-wrap: wrap; }
+.ph { height: 52px; padding: 0 20px; border-radius: var(--r); border: 1.5px solid var(--line2); background: var(--white); font-weight: 600; font-size: 16px; }
+.ph[aria-current=true] { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.5); }
+.ph small { display: block; font-size: 11px; font-weight: 500; opacity: .75; line-height: 1; margin-top: -1px; }
+/* tools: the gallery and the switch between the two views */
+.tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.tbtn { height: 48px; padding: 0 18px; border-radius: 10px; border: 1px solid #1A5C7E; background: linear-gradient(180deg, #2E86AF 0%, #297CA2 50%, #1F6B93 100%); font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 10px; color: #fff; box-shadow: 0 1px 2px rgba(11,28,42,.3); }
+.tbtn[aria-pressed=true] { box-shadow: 0 0 0 3px rgba(80,205,253,.45); }
+.seg { display: inline-flex; gap: 8px; background: var(--white); border: 2px solid #297CA2; border-radius: 12px; padding: 4px; }
+.seg button { height: 38px; padding: 0 16px; border-radius: 8px; border: 1.5px solid #297CA2; background: var(--white); font-weight: 600; font-size: 14.5px; color: #1A5C7E; }
+.seg button[aria-pressed=true] { background: #E6F2F9; color: #173A52; outline: 2px solid #297CA2; outline-offset: 2px; }
+/* the chapter bar: all fourteen topics, always on the television */
+.chbar { grid-column: 1 / -1; background: var(--white); border-bottom: 1px solid var(--line); padding: 12px 16px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.ch { height: 46px; border-radius: 10px; border: 1.5px solid var(--line2); background: var(--white); font-weight: 600; font-size: 14.5px; color: var(--ink); padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ch:hover { border-color: var(--band-top); }
+.ch[aria-current=true] { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.5); }
+/* the invitation: tells the customer that the selection is made here */
+.invite { display: flex; align-items: center; gap: 16px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 14px 20px; margin: 0 0 12px; }
+.invite .leaf { flex: none; width: 34px; height: 24px; }
+.invite b { display: block; font-size: 22px; letter-spacing: -.01em; } .invite span { display: block; font-size: 15px; color: var(--ink2); margin-top: 2px; }
+.invite .dn { margin-left: auto; flex: none; width: 40px; height: 40px; border-radius: 10px; background: var(--grad-band); display: grid; place-items: center; }
+/* the monitor: a thin graphite frame around the screen */
+.monitor { background: var(--grad-band); border-radius: 14px; padding: 5px; box-shadow: 0 16px 30px -24px rgba(11,28,42,.7); }
+.screen { background: var(--stage-a); border-radius: 10px; overflow: hidden; display: grid; grid-template-columns: 1fr; min-height: 640px; }
+@media (min-width: 1100px) { .screen { grid-template-columns: 230px minmax(0, 1fr) 300px; } }
+/* order stages: the rail (white) */
+.rail { background: var(--white); border-bottom: 1px solid var(--line); padding: 14px 16px; display: flex; gap: 8px; overflow-x: auto; }
+@media (min-width: 1100px) { .rail { flex-direction: column; border-bottom: 0; border-right: 1px solid var(--line); padding: 24px 18px; gap: 6px; overflow: visible; } }
+.rail h2 { display: none; margin: 0 0 8px; height: 28px; line-height: 28px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 600; }
+@media (min-width: 1100px) { .rail h2 { display: block; } }
+.st { display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 8px 12px; border-radius: var(--r); border: 1.5px solid transparent; background: transparent; text-align: left; flex: 1 0 auto; }
+@media (min-width: 1100px) { .st { flex: 0 0 auto; } }
+.rail h2.h2b { margin-top: 12px; }
+.pn { display: flex; align-items: center; min-height: 46px; padding: 8px 14px; border-radius: var(--r); border: 1.5px solid var(--line); background: var(--white); text-align: left; font-size: 15px; font-weight: 600; flex: 1 0 auto; }
+@media (min-width: 1100px) { .pn { flex: 0 0 auto; } .st { min-height: 50px; } }
+.pn:hover { border-color: var(--band-top); } .pn[aria-current=true] { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.45); }
+.st .n { width: 34px; height: 34px; border-radius: 9px; border: 2px solid var(--line2); display: grid; place-items: center; font-weight: 700; font-size: 15px; color: var(--ink3); background: var(--white); flex: none; }
+.st .t { display: flex; flex-direction: column; min-width: 0; } .st .t b { font-size: 16px; font-weight: 600; } .st .t span { font-size: 13px; color: var(--ink3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
+.st.done .n { background: var(--band-top); border-color: var(--band-top); color: #fff; } .st.done .t span { color: var(--teal); font-weight: 600; }
+.st.cur { background: var(--grad-band); border-color: rgba(80,205,253,.45); color: #fff; } .st.cur .t span { color: rgba(255,255,255,.8); } .st.cur .n { background: #fff; border-color: #fff; color: var(--band-top); }
+.st.cur.done .n { background: #fff; color: var(--band-top); } .st.cur.done .t span { color: rgba(255,255,255,.9); }
+/* the stage: question, answer, action */
+.stage { padding: 24px 28px 22px; display: flex; flex-direction: column; min-width: 0; background: linear-gradient(180deg, var(--stage-a), var(--stage-b)); color: var(--ink); }
+.colh { height: 28px; line-height: 28px; margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+.stage .colh { color: var(--ink3); }
+.q { background: var(--grad-card); color: #fff; border-radius: var(--rl); padding: 24px 28px 22px; margin-bottom: 22px; position: relative; overflow: hidden; border: 1px solid rgba(80,205,253,.35); box-shadow: inset 0 1px 0 rgba(80,205,253,.45), 0 14px 24px -20px rgba(11,28,42,.8); }
+.q::after { content: ''; position: absolute; right: -60px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(80,205,253,.28), rgba(80,205,253,0) 68%); pointer-events: none; }
+.q h1 { margin: 0 0 8px; font-size: 34px; line-height: 1.1; letter-spacing: -.012em; font-weight: 700; position: relative; display: flex; align-items: center; gap: 14px; }
+.q .leaf { flex: none; width: 34px; height: 24px; position: relative; }
+.q p { margin: 0; color: rgba(255,255,255,.88); font-size: 17px; line-height: 1.5; max-width: 62ch; position: relative; }
+.answer { flex: 1; }
+.act { display: flex; gap: 14px; align-items: center; justify-content: flex-end; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.btn { height: 56px; padding: 0 28px; border-radius: var(--r); font-size: 17px; font-weight: 600; border: 1px solid transparent; }
+.btn.p { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.5); box-shadow: 0 1px 2px rgba(11,28,42,.25); }
+.btn.p b { font-weight: 700; } .btn.p:disabled { background: #D7E1E5; color: #7B878E; border-color: transparent; box-shadow: none; cursor: not-allowed; }
+.btn.s { background: var(--white); border-color: var(--line2); color: var(--ink); }
+.btn.bagbtn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(180deg, #2E86AF 0%, #297CA2 50%, #1F6B93 100%); color: #fff; border: 1px solid #1A5C7E; box-shadow: 0 1px 2px rgba(11,28,42,.3); letter-spacing: .01em; }
+.btn.bagbtn:disabled { background: #E4E8EB; color: #8A949B; border-color: #D3D9DD; box-shadow: none; }
+.btn.bagbtn svg { flex: none; }
+/* ready: the four selections are covered, so the button is larger and lit with a crisp ring (no fog, no blur) */
+.btn.bagbtn.ready { height: 68px; font-size: 20px; border-color: #7FD3FB; box-shadow: 0 0 0 4px rgba(80,205,253,.45); }
+.btn.bagbtn.ready::after { content: ''; }
+/* the white cards keep dark ink on the dark stage */
+.card, .fcard, .dcard, .tile, .info, .sl, .form, .ri, .price { color: var(--ink); }
+.stage .ri .btn.s { background: #fff; color: var(--ink); border-color: var(--line2); }
+.form .btn.p { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.55); box-shadow: none; }
+/* reader: the text broken into buttons; the chosen part is shown beside them */
+.rd { display: grid; gap: 18px; grid-template-columns: minmax(190px, .8fr) minmax(0, 1.7fr); align-items: start; }
+@media (max-width: 760px) { .rd { grid-template-columns: 1fr; } }
+.rl { display: grid; gap: 8px; align-content: start; }
+.ri2 { display: flex; align-items: center; gap: 12px; text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 12px 14px; min-height: 54px; font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--ink); }
+.ri2 i { font-style: normal; flex: none; width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--line2); display: grid; place-items: center; font-size: 13px; font-weight: 700; color: var(--ink3); }
+.ri2:hover { border-color: var(--band-top); }
+.ri2[aria-pressed=true] { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.45); } .ri2[aria-pressed=true] i { background: #fff; border-color: #fff; color: var(--band-top); }
+.rc { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 24px 28px; color: var(--ink); }
+.rc h2 { margin: 0 0 12px; font-size: 22px; letter-spacing: -.01em; line-height: 1.25; }
+.rc p { margin: 0 0 14px; font-size: 16.5px; line-height: 1.62; color: var(--ink2); } .rc p:last-child { margin-bottom: 0; }
+.rc ul { margin: 0 0 14px; padding: 0; list-style: none; display: grid; gap: 10px; } .rc li { position: relative; padding-left: 24px; font-size: 16px; line-height: 1.55; color: var(--ink2); }
+.rc li::before { content: ''; position: absolute; left: 0; top: 8px; width: 12px; height: 8px; border-radius: 100% 0; background: linear-gradient(135deg, #9BD26B, #63B963); transform: rotate(-28deg); }
+.rc .row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; } .rc .row b { font-weight: 600; } .rc .row span { color: var(--ink2); text-align: right; }
+/* cards of points, certifications, zones, numerals */
+.pw { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr) 250px; align-items: start; } .pw.nomedia { grid-template-columns: 1fr; }
+@media (max-width: 900px) { .pw { grid-template-columns: 1fr; } }
+.pts { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); } .pw:not(.nomedia) .pts { grid-template-columns: repeat(2, minmax(0, 1fr)); } @media (max-width: 760px) { .pw:not(.nomedia) .pts { grid-template-columns: 1fr; } }
+.pt { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 18px 20px; color: var(--ink); }
+.pt h3 { margin: 0 0 6px; font-size: 18px; line-height: 1.25; } .pt .sb { color: var(--teal); font-weight: 600; font-size: 14px; margin: 0 0 8px; } .pt p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink2); }
+.pt .lf { display: block; width: 22px; height: 14px; margin-bottom: 10px; }
+.zl { display: grid; gap: 10px; }
+.zi { display: flex; align-items: center; gap: 16px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 12px 18px; color: var(--ink); }
+.zi i { font-style: normal; flex: none; width: 36px; height: 36px; border-radius: 10px; background: var(--grad-band); color: #fff; display: grid; place-items: center; font-weight: 700; } .zi b { font-size: 17px; flex: 1; } .zi span { color: var(--ink2); font-size: 15px; }
+.nums { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.nm2 { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 22px 24px; color: var(--ink); }
+.nm2 small { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 700; margin-bottom: 4px; } .nm2 strong { display: block; font-size: 64px; line-height: 1; letter-spacing: -.02em; color: var(--band-top); } .nm2 em { display: block; font-style: normal; font-size: 17px; font-weight: 600; margin: 6px 0 10px; } .nm2 p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink2); }
+.mini { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 10px 10px 12px; color: var(--ink); }
+.mini .vid { aspect-ratio: 16 / 9; border-radius: 10px; background: var(--grad-card); display: grid; place-items: center; position: relative; overflow: hidden; }
+.mini .vid::after { content: ''; position: absolute; right: -30px; top: -40px; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(80,205,253,.3), rgba(80,205,253,0) 68%); }
+.vid .pl { width: 52px; height: 52px; border-radius: 12px; background: #fff; display: grid; place-items: center; position: relative; z-index: 1; }
+.mini .cap { display: block; font-size: 13.5px; font-weight: 600; padding: 10px 6px 0; line-height: 1.35; } .mini .tv { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); padding: 8px 6px 0; font-weight: 700; }
+.hero { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; } @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+.fts { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; margin-top: 14px; } .fts span { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 12px 14px; font-size: 15px; font-weight: 600; color: var(--ink); display: flex; gap: 10px; align-items: center; }
+.fts span::before { content: ''; flex: none; width: 12px; height: 8px; border-radius: 100% 0; background: linear-gradient(135deg, #9BD26B, #63B963); transform: rotate(-28deg); }
+.fx { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; } @media (max-width: 760px) { .fx { grid-template-columns: 1fr; } }
+.fx div { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 18px; color: var(--ink); } .fx small { display: block; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 700; margin-bottom: 4px; } .fx b { font-size: 17px; font-weight: 600; } .fx em { display: block; font-style: normal; font-size: 13.5px; color: var(--ink2); margin-top: 4px; }
+.fnote { margin: 14px 0 0; font-size: 14px; color: var(--ink3); line-height: 1.5; }
+/* gallery inside the television */
+.gal { display: grid; gap: 14px; }
+.gmain { position: relative; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 12px; display: grid; place-items: center; min-height: 420px; }
+.gmain img { max-width: 100%; max-height: 470px; object-fit: contain; border-radius: 8px; display: block; }
+.garr { position: absolute; top: 50%; margin-top: -23px; width: 46px; height: 46px; border-radius: 10px; border: 1.5px solid var(--line2); background: var(--white); display: grid; place-items: center; color: var(--ink); }
+.garr.l { left: 14px; } .garr.r { right: 14px; }
+.gcount { position: absolute; right: 16px; bottom: 14px; background: var(--grad-band); color: #fff; font-size: 13px; font-weight: 600; border-radius: 8px; padding: 4px 10px; }
+.gth { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.gth button { padding: 0; border: 1.5px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--white); aspect-ratio: 4 / 3; }
+.gth img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gth button[aria-pressed=true] { border: 2.5px solid var(--band-top); }
+/* the seven zones: the same sketch and legend as the mobile concept */
+.zsk { background: transparent; padding: 0; } .zsk svg { width: 100%; height: auto; display: block; }
+.zlg { display: flex; gap: 18px; flex-wrap: wrap; margin: 12px 2px; font-size: 13.5px; color: var(--ink2); } .zlg i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 7px; vertical-align: -1px; }
+.pw.zwide { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 900px) { .pw.zwide { grid-template-columns: 1fr; } }
+.pw.zwide .mini .vid { aspect-ratio: 16 / 11; }
+.pw.zwide .mini { padding: 12px 12px 14px; }
+.zgrid { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; }
+.zp { background: var(--white); border: 1.5px solid var(--line); border-left: 5px solid var(--tone); border-radius: 10px; padding: 10px 14px; color: var(--ink); } .zp b { display: block; font-size: 15.5px; } .zp span { font-size: 13.5px; color: var(--ink2); }
+/* Standard Product View: the shop's own page (stand-in) */
+.stdv { display: none; gap: 18px; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; }
+.std .stdv { display: grid; } .std .invite, .std .monitor, .std .shopstrip { display: none; }
+@media (max-width: 900px) { .stdv { grid-template-columns: 1fr; } }
+.stdv .box { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 18px 20px; color: var(--ink); }
+.stdv h2 { margin: 0 0 6px; font-size: 24px; letter-spacing: -.01em; } .stdv .tag2 { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); font-weight: 700; margin-bottom: 8px; }
+.stdv label { display: block; font-size: 13px; font-weight: 700; color: var(--ink2); margin: 14px 0 6px; } .stdv select { width: 100%; height: 52px; border: 1.5px solid var(--line2); border-radius: 10px; padding: 0 12px; font: inherit; font-size: 15.5px; background: #fff; color: var(--ink); }
+.stdv .pr { font-size: 30px; font-weight: 700; margin: 8px 0 2px; } .stdv .nt { font-size: 12.5px; color: var(--ink3); line-height: 1.45; margin: 12px 0 0; }
+.stdv .bagrow { margin-top: 16px; } .stdv .bagrow .btn { width: 100%; height: 60px; font-size: 18px; }
+/* the mattress icon that lights up */
+.mine h2 { display: flex; align-items: center; justify-content: space-between; }
+.mi svg { height: 30px; width: auto; display: block; }
+/* promotion: the old price struck through, the price with the discount, the discount note: all three are Ecwid's own text */
+.pold { text-decoration: line-through; color: var(--ink3); font-size: 18px; font-weight: 500; }
+.prow { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.price .prow b { display: inline-block; margin: 2px 0; font-size: 28px; }
+.price .prow .sv { display: inline-block; color: #fff; font-size: 12.5px; }
+.price .prow .pold { display: inline; font-size: 17px; color: var(--ink3); }
+.sv { display: inline-block; background: var(--grad-band); color: #fff; border-radius: 8px; padding: 3px 9px; font-size: 12.5px; font-weight: 700; letter-spacing: .02em; }
+.price .inc { display: block; font-size: 12px; color: var(--ink3); margin-top: 4px; }
+.prbox { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 18px; color: var(--ink); }
+.prbox .prow b { font-size: 30px; letter-spacing: -.01em; }
+/* size */
+.grp h3 { margin: 22px 0 10px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 700; } .grp:first-child h3 { margin-top: 0; }
+.cards { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+.card { text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 16px; min-height: 92px; position: relative; transition: border-color .15s; }
+.card:hover { border-color: var(--band-top); }
+.card[aria-pressed=true], .fcard[aria-pressed=true], .dcard[aria-pressed=true], .tile[aria-pressed=true] { border: 2.5px solid var(--band-top); box-shadow: 0 0 0 4px rgba(23,58,82,.10); }
+.card[aria-pressed=true]::after { content: ''; position: absolute; right: 10px; top: 10px; width: 22px; height: 22px; border-radius: 6px; background: var(--band-top) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/14px no-repeat; }
+.card .nm { font-size: 13px; color: var(--ink3); font-weight: 500; display: block; margin-bottom: 4px; padding-right: 26px; }
+.card .dm { font-size: 23px; font-weight: 700; letter-spacing: -.01em; display: block; } .card .dm i { font-style: normal; font-size: 14px; font-weight: 600; color: var(--ink3); margin-left: 2px; }
+.card .in { font-size: 14px; color: var(--ink2); display: block; margin-top: 2px; }
+.more { margin-top: 22px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; color: var(--ink2); }
+.more .btn { height: 46px; font-size: 15px; }
+.form { margin-top: 14px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px; display: none; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.form.on { display: grid; } .form label { display: block; font-size: 13px; color: var(--ink3); font-weight: 600; margin-bottom: 4px; }
+.form input { width: 100%; height: 48px; border: 1.5px solid var(--line2); border-radius: 10px; padding: 0 14px; font: inherit; font-size: 16px; background: #fff; }
+.form .note { grid-column: 1 / -1; font-size: 13px; color: var(--ink3); margin: 0; }
+/* firmness */
+.fw { display: grid; gap: 18px; grid-template-columns: 1fr; margin-bottom: 18px; }
+@media (min-width: 760px) { .fw { grid-template-columns: 1fr 1fr; } }
+.sl { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px 18px 14px; }
+.sl .r { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; } .sl .r label { font-size: 17px; font-weight: 700; } .sl .r b { font-size: 28px; font-weight: 700; color: var(--band-top); letter-spacing: -.01em; }
+.sl input[type=range] { width: 100%; height: 40px; -webkit-appearance: none; appearance: none; background: transparent; }
+.sl input[type=range]::-webkit-slider-runnable-track { height: 8px; border-radius: 4px; background: linear-gradient(90deg, #C3D5ED, var(--band-top)); }
+.sl input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; margin-top: -11px; border-radius: 8px; background: #fff; border: 3px solid var(--band-top); box-shadow: 0 2px 8px rgba(11,28,42,.3); }
+.sl input[type=range]::-moz-range-track { height: 8px; border-radius: 4px; background: linear-gradient(90deg, #C3D5ED, var(--band-top)); }
+.sl input[type=range]::-moz-range-thumb { width: 24px; height: 24px; border-radius: 8px; background: #fff; border: 3px solid var(--band-top); }
+.sl .rng { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink3); }
+.guide { background: var(--grad-card); color: #fff; border-left: 4px solid var(--sky); border-radius: 4px var(--r) var(--r) 4px; padding: 14px 18px; margin: 0 0 18px; font-size: 17px; line-height: 1.5; } .guide b { font-weight: 700; }
+.fc { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.fcard { text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px 18px; min-height: 190px; display: flex; flex-direction: column; gap: 6px; position: relative; transition: opacity .25s, border-color .15s; }
+.fcard .nm { font-size: 20px; font-weight: 700; } .fcard .rg { font-size: 15px; font-weight: 600; color: var(--teal); } .fcard .ds { font-size: 14px; color: var(--ink2); line-height: 1.45; }
+.fcard.dim { opacity: .5; } .fcard.rec { border: 2.5px solid var(--band-top); box-shadow: 0 0 0 4px rgba(23,58,82,.10); }
+.fcard .tag { position: absolute; right: 10px; top: 10px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: #fff; background: var(--band-top); border-radius: 6px; padding: 4px 8px; }
+.fcard .sp { font-size: 12px; color: var(--ink3); margin-top: auto; } a.fcard { text-decoration: none; color: var(--ink); }
+.base { margin: 12px 0 0; font-size: 13px; color: var(--ink3); }
+/* depth: the front edge of the owner's core drawing, drawn at the real proportions */
+.dc { display: grid; gap: 14px; grid-template-columns: 1fr; }
+.dcard { text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px 22px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 4px 28px; align-items: center; position: relative; }
+.dcard svg { grid-row: 1 / span 3; width: 100%; height: auto; display: block; }
+.dcard .cm { font-size: 30px; font-weight: 700; } .dcard .cm i { font-style: normal; font-size: 15px; font-weight: 600; color: var(--ink3); margin-left: 4px; } .dcard .nm { font-size: 17px; font-weight: 600; } .dcard .ds { font-size: 14px; color: var(--ink2); line-height: 1.45; }
+/* cover: four photographs in a square, one short caption each; the information board beside them */
+.cv { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: stretch; }
+@media (max-width: 760px) { .cv { grid-template-columns: 1fr; } }
+.tiles { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; }
+.tile { text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 8px 8px 10px; display: flex; flex-direction: column; gap: 8px; }
+.tile .pic { display: block; width: 100%; flex: 1; min-height: 150px; border-radius: 8px; background: var(--abyss) center/cover no-repeat; }
+.tile .cap { font-size: 15px; font-weight: 600; padding: 0 4px; }
+.info { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 22px 24px; display: flex; flex-direction: column; gap: 10px; }
+.info .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 700; }
+.info h2 { margin: 0; font-size: 26px; letter-spacing: -.01em; } .info .tg { color: var(--teal); font-weight: 600; font-size: 16px; }
+.info ul { margin: 4px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; } .info li { position: relative; padding-left: 22px; font-size: 15.5px; line-height: 1.5; color: var(--ink2); }
+.info li::before { content: ''; position: absolute; left: 0; top: 7px; width: 12px; height: 8px; border-radius: 100% 0; background: linear-gradient(135deg, #9BD26B, #63B963); transform: rotate(-28deg); }
+.info .fact { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink3); }
+.info p { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--ink2); }
+/* review */
+.rv { display: grid; gap: 12px; margin-bottom: 18px; }
+.ri { display: flex; align-items: center; gap: 16px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 18px; min-height: 68px; }
+.ri .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 700; width: 96px; flex: none; } .ri .v { flex: 1; font-size: 18px; font-weight: 600; } .ri .v i { display: block; font-style: normal; font-size: 14px; font-weight: 500; color: var(--ink3); }
+.ri .btn { height: 44px; font-size: 15px; padding: 0 20px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--ink2); font-size: 15px; margin: 6px 0 0; }
+.added { display: flex; align-items: center; gap: 10px; background: var(--grad-card); color: #fff; border-radius: var(--r); padding: 14px 18px; font-size: 17px; margin-bottom: 18px; border-left: 4px solid #9BD26B; }
+/* your selection and the price (white panel, graphite chips) */
+.mine { background: var(--white); border-top: 1px solid var(--line); padding: 20px 20px; display: flex; flex-direction: column; gap: 14px; }
+@media (min-width: 1100px) { .mine { border-top: 0; border-left: 1px solid var(--line); padding: 24px 20px; } }
+.mine h2 { margin: 0; height: 28px; line-height: 28px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 600; }
+.chips { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); } @media (min-width: 1100px) { .chips { grid-template-columns: 1fr; } }
+.chip { text-align: left; border: 1.5px dashed var(--line2); background: var(--white); border-radius: var(--r); padding: 10px 14px; min-height: 58px; color: var(--ink3); } .chip small { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; } .chip b { font-size: 16px; font-weight: 600; display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chip.on { border: 1.5px solid rgba(80,205,253,.4); background: var(--grad-band); color: #fff; } .chip.on small { color: rgba(255,255,255,.72); }
+.price { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 16px; }
+.price small { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); font-weight: 600; } .price b { display: block; font-size: 32px; font-weight: 700; letter-spacing: -.01em; margin: 2px 0; color: var(--ink); } .price span { display: block; font-size: 12px; color: var(--ink3); }
+.selhint { grid-column: 1 / -1; margin: 2px 0 0; font-size: 13px; color: var(--ink3); line-height: 1.4; }
+.bag { display: grid; gap: 8px; } .bag .btn { width: 100%; height: 64px; font-size: 19px; } .bag .hint { font-size: 12.5px; color: var(--ink3); text-align: center; }
+.shopstrip { margin-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 10px 14px; font-size: 13px; color: var(--ink3); }
+.shopstrip > span:first-child { flex: 1 1 0; min-width: 260px; } .shopstrip > span:last-child { flex: none; }
+.shopstrip .btn { height: 48px; font-size: 15px; padding: 0 22px; }
+.toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); background: var(--abyss); color: #fff; border-radius: 10px; padding: 12px 18px; font-size: 14px; display: none; z-index: 10; max-width: 90vw; } .toast.on { display: block; }
+</style>
+</head>
+<body>
+<div class="app">
+  <p class="pv">Design preview for the owner. Not deployed and not the engine. The recommendation is the published firmness rule, the four ranges are that module's own, the texts are the approved description, and the price and the bag are <b>stand-ins</b>: in the shop they are Ecwid's own.</p>
+  <header class="top">
+    <div class="brand"><b>BOTANIC</b> / Experience</div>
+    <div class="tools">
+      <button class="tbtn" id="galbtn" data-gal="1" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg>View Model Gallery</button>
+      <div class="seg" role="group" aria-label="View"><button data-view="tv" id="vtv" aria-pressed="true">Optimised Preview</button><button data-view="std" id="vstd" aria-pressed="false">Standard Product View</button></div>
+    </div>
+  </header>
+  <div class="invite" role="note"><svg class="leaf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BD26B"/><stop offset="1" stop-color="#63B963"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfi)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1.2" stroke-linecap="round"/></g></svg><div><b>Select your Botanic here</b><span>Four choices, step by step: size, firmness, depth and cover. Then add it to your bag.</span></div><div class="dn" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div></div>
+  <main class="monitor"><div class="screen">
+    <nav class="chbar" id="chbar" aria-label="The fourteen topics"></nav>
+    <nav class="rail" id="rail" aria-label="This topic and your order"></nav>
+    <section class="stage"><div class="colh" id="stageh"></div><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
+    <aside class="mine" aria-label="Your selection"><h2><span>Your selection</span><span class="mi" id="mi"></span></h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="bag" id="bag"></div></aside>
+  </div></main>
+  <section id="std" class="stdv" aria-label="Standard Product View (stand-in)"></section>
+  <div class="shopstrip"><span>Under the television the shop's own options and Add to Bag stay on the page, always. Right: the shop's own button (stand-in). It and the television's button are one and the same.</span><span id="native"></span></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>/*__CORE__*/</script>
+<script>/*__RULES__*/</script>
+<script>
+var D = /*__DATA__*/;
+(function () {
+  var $ = function (s) { return document.querySelector(s); }, esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var S = { promo: 10, view: 'tv', gal: false, gi: 0, ch: 'height', pn: 'sizes', rd: {}, step: 0, size: null, firmness: null, depth: null, cover: null, weight: null, height: null, bagged: null };
+  var LEAF = '<svg class="leaf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BD26B"/><stop offset="1" stop-color="#63B963"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1.2" stroke-linecap="round"/></g></svg>';
+  var SHORT = ['Organic Cotton', 'Cotton / Wool', 'Aloe Vera Blend', 'Cashmere + Silver'];
+  var STEPS = [
+    { id: 'size', label: 'Size', q: 'How big is your bed?', sub: 'Choose your size. Every size is shown in centimetres and in inches.', next: 'Firmness' },
+    { id: 'firmness', label: 'Firmness', q: 'How firm should it be for your body?', sub: D.firmness.sub, next: 'Depth' },
+    { id: 'depth', label: 'Depth', q: 'How thick should it be?', sub: D.depthSub, next: 'Cover' },
+    { id: 'cover', label: 'Cover', q: 'Which cover do you prefer?', sub: 'Tap a cover to see what it does for you.', next: 'Review' },
+    { id: 'review', label: 'Review', q: 'Review your order', sub: 'Check your four choices, then add the mattress to your bag.', next: null }
+  ];
+  var CH = D.chapters, STEPMAP = { size: ['height', 'sizes'], firmness: ['firmness', 'choose'], depth: ['height', 'heights'], cover: ['covers', 'choose'], review: ['delivery', 'yours'] };
+  var FLAT = []; CH.forEach(function (c) { c.panels.forEach(function (p) { FLAT.push([c.id, p.id]); }); });
+  function chap(id) { return CH.filter(function (c) { return c.id === id; })[0]; }
+  function panel() { var c = chap(S.ch); return c.panels.filter(function (p) { return p.id === S.pn; })[0] || c.panels[0]; }
+  function goPanel(c, p) { S.ch = c; S.pn = p; var pp = panel(); if (pp.kind === 'step') S.step = STEPS.map(function (x) { return x.id; }).indexOf(pp.step); }
+  function goStep(i) { var m = STEPMAP[STEPS[i].id]; goPanel(m[0], m[1]); }
+  function flatIndex() { for (var i = 0; i < FLAT.length; i++) if (FLAT[i][0] === S.ch && FLAT[i][1] === S.pn) return i; return 0; }
+  function snippet(t) { var m = t.match(/^[^.!?]*[.!?]/), s = (m ? m[0] : t); if (s.length > 52) s = s.slice(0, 50).replace(/\s+\S*$/, '') + '…'; return s; }
+  function itemsOf(p) {
+    var g = p.groups || [];
+    if (g.length >= 2) return g.map(function (x, i) { return { label: x.h || (i === 0 ? 'Overview' : snippet(x.blocks[0].t || '')), blocks: x.blocks, h: x.h }; });
+    var b = g[0] ? g[0].blocks : [];
+    if (b.length >= 2) return b.map(function (x) { return { label: snippet(x.t || x.a || ''), blocks: [x], h: null }; });
+    return [{ label: p.title, blocks: b, h: g[0] ? g[0].h : null }];
+  }
+  function blocksHtml(bl) {
+    var out = '', ul = '';
+    bl.forEach(function (b) {
+      if (b.k === 'li') ul += '<li>' + esc(b.t) + '</li>';
+      else { if (ul) { out += '<ul>' + ul + '</ul>'; ul = ''; } out += b.k === 'row' ? '<div class="row"><b>' + esc(b.a) + '</b><span>' + esc(b.b) + '</span></div>' : '<p>' + esc(b.t) + '</p>'; }
+    });
+    return out + (ul ? '<ul>' + ul + '</ul>' : '');
+  }
+  function toast(t) { var e = $('#toast'); e.textContent = t; e.className = 'toast on'; clearTimeout(toast.t); toast.t = setTimeout(function () { e.className = 'toast'; }, 4200); }
+  function chosen(id) { return S[id] != null; }
+  function selOf() { return { size: S.size ? { key: S.size.label, label: S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' } : null, firmness: S.firmness ? { key: S.firmness, label: S.firmness } : null, depth: S.depth ? { key: S.depth.i, label: S.depth.cm + ' cm' } : null, cover: S.cover ? { key: S.cover.i, label: SHORT[S.cover.i] } : null }; }
+  function complete() { return DDRules.complete(selOf()); }   // the four choices are covered (the laws: engine/selection-rules.js)
+  function sig() { return DDRules.signature(selOf()); }
+  function inBag() { return !!S.bagged && S.bagged === sig(); }   // the same four choices are already in the bag
+  function valueOf(id) {
+    if (id === 'size') return S.size ? S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' : null;
+    if (id === 'firmness') return S.firmness || null;
+    if (id === 'depth') return S.depth ? S.depth.cm + ' cm' : null;
+    if (id === 'cover') return S.cover ? SHORT[S.cover.i] : null;
+    return null;
+  }
+  function inch(cm) { return (cm / 2.54).toFixed(1); }
+  function price() {   // STAND-IN for Ecwid's own price: 90 % of the sum of the label modifiers, as Ecwid showed on 11 November 2026
+    if (!S.size) return null; var mod = S.size.mod + (S.depth ? S.depth.mod : 0) + (S.cover ? S.cover.mod : 0);
+    return 0.9 * mod;
+  }
+  function shop() {   // STAND-IN for what Ecwid renders: the price before the discount (struck), the price with the discount, the discount note. The real module only mirrors these texts.
+    if (!S.size) return null; var list = S.size.mod + (S.firmness === 'Extra Firm' ? 88 : 0) + (S.depth ? S.depth.mod : 0) + (S.cover ? S.cover.mod : 0), cur = list * (100 - S.promo) / 100;   // the five factors: size, firmness (Extra Firm +£88), depth, cover, and the promotion
+    return { old: S.promo ? gbp(list) : '', cur: gbp(cur), badge: S.promo ? 'Save ' + S.promo + '%' : '' };
+  }
+  function priceParts(sh, big) { return sh ? '<div class="prow">' + (sh.old ? '<s class="pold">' + esc(sh.old) + '</s>' : '') + '<b>' + esc(sh.cur) + '</b>' + (sh.badge ? '<span class="sv">' + esc(sh.badge) + '</span>' : '') + '</div>' + (sh.old ? '<span class="inc">Discount included: this is the price you pay.</span>' : '') : '<b>—</b>'; }
+  var gbp = function (n) { return '£' + n.toFixed(2).replace(/\B(?=(\d{3})+\.)/g, ' '); };
+  var LEAFS = '<svg class="lf" viewBox="0 0 28 20" aria-hidden="true"><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="#7FC25F"/></g></svg>';
+  var CHECK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  /* the owner's two mattress drawings (SVG files in docs/mobile/premium/assets): parsed here, never redrawn by hand */
+  function parsePath(d) { var out = [], re = /([MCZ])([^MCZ]*)/g, m; while ((m = re.exec(d))) { var n = m[2].trim().split(/[\s,]+/).filter(Boolean).map(Number), pts = []; for (var i = 0; i < n.length; i += 2) pts.push([n[i], n[i + 1]]); out.push({ c: m[1], p: pts }); } return out; }
+  function toA(cmds, t) { return cmds.map(function (c) { return { c: c.c, p: c.p.map(function (q) { return [q[0] * t[0] + t[2], q[1] * t[1] + t[3]]; }) }; }); }
+  function dStr(cmds) { return cmds.map(function (c) { return c.c + c.p.map(function (q) { return q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join(' '); }).join(''); }
+  function poly(cmds) { var pl = [], cur = null; cmds.forEach(function (c) { if (c.c === 'M') { cur = c.p[0]; pl.push(cur); } else if (c.c === 'C') for (var i = 0; i < c.p.length; i += 3) { var a = cur, b = c.p[i], cc = c.p[i + 1], dd = c.p[i + 2]; for (var k = 1; k <= 16; k++) { var t = k / 16, u = 1 - t; pl.push([u * u * u * a[0] + 3 * u * u * t * b[0] + 3 * u * t * t * cc[0] + t * t * t * dd[0], u * u * u * a[1] + 3 * u * u * t * b[1] + 3 * u * t * t * cc[1] + t * t * t * dd[1]]); } cur = dd; } }); return pl; }
+  function yTop(pl, x) { if (x <= pl[0][0]) return pl[0][1]; for (var i = 1; i < pl.length; i++) if (x <= pl[i][0]) { var a = pl[i - 1], b = pl[i], f = (x - a[0]) / ((b[0] - a[0]) || 1); return a[1] + (b[1] - a[1]) * f; } return pl[pl.length - 1][1]; }
+  function mat(parts) { var out = toA(parsePath(parts.out), parts.ta), inn = toA(parsePath(parts.inn), parts.tb); return { out: out, inn: inn, pl: poly(inn), M: parts.outer }; }
+  function thick(G, k) { return G.out.map(function (c) { return { c: c.c, p: c.p.map(function (q) { var yt = yTop(G.pl, q[0]); return q[1] > yt + 0.5 ? [q[0], yt + (q[1] - yt) * k] : q; }) }; }); }
+  function box(G) { var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, M = G.M; G.out.concat(G.inn).forEach(function (c) { c.p.forEach(function (q) { var x = M[0] * q[0] + M[2] * q[1] + M[4], y = M[1] * q[0] + M[3] * q[1] + M[5]; x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }); }); var mx = (x1 - x0) * .04, my = (y1 - y0) * .06; return [x0 - mx, y0 - my, x1 - x0 + 2 * mx, y1 - y0 + 2 * my]; }
+  var GD, GI;
+  function depthSvg(cm, i) {   // the three depths: the owner's drawing, only the thickness of the front edge changes (differences exaggerated so they can be seen); the 26 cm outline dashed behind
+    GD = GD || mat(D.mattress.depth); var G = GD, kk = 1 + (cm - 26) / 26 * 1.8, shape = thick(G, kk), bb = box(G), M = G.M, pl = G.pl;
+    var xs = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[0]; })); }, []), ys = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[1]; })); }, []);
+    var x0 = Math.min.apply(null, xs) - 100, x1 = Math.max.apply(null, xs) + 100, y0 = Math.min.apply(null, ys) - 100;
+    var region = 'M' + x0 + ' ' + y0 + 'H' + x1 + 'V' + pl[pl.length - 1][1] + pl.slice().reverse().map(function (q) { return 'L' + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('') + 'L' + x0 + ' ' + pl[0][1] + 'Z';
+    var d = dStr(shape), st = 'vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"';
+    return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" aria-label="Mattress, ' + cm + ' cm high"><defs><linearGradient id="fg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F6585"/><stop offset="1" stop-color="#10293F"/></linearGradient><linearGradient id="tg' + i + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4F8FA"/><stop offset="1" stop-color="#CBDAE5"/></linearGradient><clipPath id="cp' + i + '"><path d="' + region + '"/></clipPath></defs>' +
+      '<g transform="matrix(' + M.join(',') + ')"><path d="' + dStr(G.out) + '" fill="none" stroke="#9AAAB4" stroke-width="2" stroke-dasharray="7 6" ' + st + '/>' +
+      '<path d="' + d + '" fill="url(#fg' + i + ')"/><path d="' + d + '" fill="url(#tg' + i + ')" clip-path="url(#cp' + i + ')"/><path d="' + d + '" fill="none" stroke="#0B1C2A" stroke-width="2.4" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="#0B1C2A" stroke-width="2.4" ' + st + '/></g></svg>';
+  }
+  function iconSvg(n) {   // the owner's mattress drawing as a small icon: it lights up when all four choices are made
+    GI = GI || mat(D.mattress.icon); var G = GI, bb = box(G), M = G.M, ok = n >= 4, st = 'vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"';
+    var stroke = n === 0 ? '#B4BEC6' : (ok ? '#0B1C2A' : '#173A52'), d = dStr(G.out), pl = G.pl, xs = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[0]; })); }, []), ys = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[1]; })); }, []);
+    var x0 = Math.min.apply(null, xs) - 100, x1 = Math.max.apply(null, xs) + 100, y0 = Math.min.apply(null, ys) - 100;
+    var region = 'M' + x0 + ' ' + y0 + 'H' + x1 + 'V' + pl[pl.length - 1][1] + pl.slice().reverse().map(function (q) { return 'L' + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('') + 'L' + x0 + ' ' + pl[0][1] + 'Z';
+    var front = ok ? 'url(#ifg)' : (n >= 3 ? '#8FA9BC' : 'none'), top = ok ? 'url(#itg)' : (n >= 1 ? '#D6E3EC' : 'none');
+    return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" aria-label="' + (ok ? 'All four choices made: ready to order' : n + ' of 4 choices made') + '" style="' + (ok ? 'filter:drop-shadow(0 0 4px rgba(80,205,253,.85))' : '') + '"><defs><linearGradient id="ifg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F6585"/><stop offset="1" stop-color="#10293F"/></linearGradient><linearGradient id="itg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A9BC9"/><stop offset="1" stop-color="#1F6B93"/></linearGradient><clipPath id="icp"><path d="' + region + '"/></clipPath></defs><g transform="matrix(' + M.join(',') + ')"><path d="' + d + '" fill="' + front + '"/><path d="' + d + '" fill="' + top + '" clip-path="url(#icp)"/><path d="' + d + '" fill="none" stroke="' + stroke + '" stroke-width="2.2" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="' + stroke + '" stroke-width="2.2" ' + st + '/></g></svg>';
+  }
+  function drawBar() {
+    $('#chbar').innerHTML = CH.map(function (c) { return '<button class="ch" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch) + '">' + esc(c.label) + '</button>'; }).join('');
+  }
+  function drawRail() {
+    var cur = chap(S.ch), onStep = panel().kind === 'step';
+    var h = '<h2>In ' + esc(cur.label) + '</h2>' + cur.panels.map(function (p) { return '<button class="pn" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '<h2 class="h2b">Your order</h2>';
+    STEPS.forEach(function (st, i) { var done = i < STEPS.length - 1 && chosen(st.id), cur = onStep && i === S.step, v = valueOf(st.id);
+      h += '<button class="st' + (done ? ' done' : '') + (cur ? ' cur' : '') + '" data-go="' + i + '" aria-label="Step ' + (i + 1) + ': ' + st.label + (v ? ', chosen ' + esc(v) : '') + '"><span class="n">' + (done && !cur ? CHECK : (i + 1)) + '</span><span class="t"><b>' + st.label + '</b><span>' + (v ? esc(v) : (cur ? 'Choose now' : 'To do')) + '</span></span></button>'; });
+    $('#rail').innerHTML = h;
+  }
+  function bagButton(cls) {   // ONE button, two faces (laws in engine/selection-rules.js): Add to Bag, READY, then Go to Checkout
+    var bagI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>', arrI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    var f = DDRules.bagFace(selOf(), S.bagged || '');
+    if (f.face === 'checkout') return '<button class="btn bagbtn ' + (cls || '') + '" data-checkout="1"><span>Go to <b>Checkout</b></span>' + arrI + '</button>';
+    return '<button class="btn bagbtn ' + (cls || '') + (f.ready ? ' ready' : '') + '" data-bag="1"' + (f.enabled ? '' : ' disabled') + ' aria-describedby="ready-note"><span>' + bagI + 'Add to <b>Bag</b></span></button>';
+  }
+  function drawMine() {
+    var h = ''; ['size', 'firmness', 'depth', 'cover'].forEach(function (id, i) { var v = valueOf(id); h += '<button class="chip' + (v ? ' on' : '') + '" data-go="' + i + '"><small>' + id + '</small><b>' + (v ? esc(v) : '—') + '</b></button>'; });
+    $('#chips').innerHTML = h;
+    $('#mi').innerHTML = iconSvg(['size', 'firmness', 'depth', 'cover'].filter(chosen).length);
+    var p = price(), full = complete();
+    var sh = shop(); $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small>' + priceParts(sh) + '<span>' + (sh == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the prices and the discount are Ecwid\'s own.') + '</span>';
+    $('#chips').insertAdjacentHTML('beforeend', complete() || S.size || S.firmness || S.depth || S.cover ? '' : '<p class="selhint">Select here: your choices appear in this panel as you make them.</p>');
+    var fb = DDRules.bagFace(selOf(), S.bagged || '');
+    $('#bag').innerHTML = bagButton() + (inBag() ? '<div class="hint">Added to your bag. Go to Checkout when you are ready.</div>' : '<div class="hint" id="ready-note">' + (fb.ready ? '<b>Ready to order.</b> All four choices are made. You can still change any of them.' : '<b>' + esc(fb.guide) + '</b>') + '</div>');
+    $('#native').innerHTML = bagButton('');
+  }
+  function sizeView() {
+    var gs = [['SINGLE', 100], ['DOUBLE', 140], ['KING', 160], ['SUPERKING · EMPEROR', 9999]], h = '';
+    gs.forEach(function (g, gi) { var lo = gi ? gs[gi - 1][1] : 0, list = D.sizes.filter(function (s) { return s.dims[0] > lo && s.dims[0] <= g[1]; }); if (!list.length) return;
+      h += '<div class="grp"><h3>' + g[0] + '</h3><div class="cards">' + list.map(function (s) { var on = S.size && S.size.label === s.label;
+        return '<button class="card" data-size="' + D.sizes.indexOf(s) + '" aria-pressed="' + on + '"><span class="nm">' + esc(s.name) + '</span><span class="dm">' + s.dims[0] + ' × ' + s.dims[1] + '<i>cm</i></span><span class="in">' + inch(s.dims[0]) + ' × ' + inch(s.dims[1]) + ' in</span></button>'; }).join('') + '</div></div>'; });
+    h += '<div class="more"><span>Need another size?</span><button class="btn s" data-more="1">Tell us what you need</button></div>' +
+      '<div class="form" id="form"><div><label>Model</label><input value="Botanic Original" readonly></div><div><label for="sz">The size you want</label><input id="sz" placeholder="for example 170 × 205 cm"></div><div><label for="em">Your email, for our reply</label><input id="em" type="email" placeholder="name@example.com"></div><p class="note">In the shop this form sends the model, the size and your email to Divine Dunlop support. This preview does not send anything.</p><div><button class="btn p" data-send="1">Send my request</button></div></div>';
+    return h;
+  }
+  function firmnessView() {
+    var B = DDFirmnessCore.bands, lim = DDFirmnessCore.limits, rec = null;
+    if (S.weight != null && S.height != null) rec = DDFirmnessCore.recommend(S.weight, S.height);
+    var cards = [['Soft', 'Up to ' + B.softMax + ' kg', 'soft'], ['Medium', (B.softMax + 1) + ' – ' + B.mediumMax + ' kg', 'medium'], ['Firm', (B.mediumMax + 1) + ' – ' + B.firmMax + ' kg', 'firm'], ['Extra Firm', B.extraFirmMin + ' kg and over', 'xfirm']];
+    var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
+    var h = '<div class="fw"><div class="sl"><div class="r"><label for="gw">Body weight</label><b id="gwv">' + (S.weight == null ? '—' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + lim.weight[0] + '" max="' + lim.weight[1] + '" value="' + (S.weight == null ? 70 : S.weight) + '"><div class="rng"><span>' + lim.weight[0] + ' kg</span><span>' + lim.weight[1] + ' kg</span></div></div>' +
+      '<div class="sl"><div class="r"><label for="gh">Height</label><b id="ghv">' + (S.height == null ? '—' : S.height + ' cm') + '</b></div><input id="gh" type="range" min="' + lim.height[0] + '" max="' + lim.height[1] + '" value="' + (S.height == null ? 170 : S.height) + '"><div class="rng"><span>' + lim.height[0] + ' cm</span><span>' + lim.height[1] + ' cm</span></div></div></div>';
+    h += '<p class="guide" id="guide">' + (rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.') + '</p><div class="fc">';
+    cards.forEach(function (c) { var d = D.firmness.cards.filter(function (x) { return x.key === c[2]; })[0], isRec = rec && fk(rec.display) === c[0], dim = rec && !isRec, on = S.firmness === c[0];
+      if (c[2] === 'xfirm') h += '<a class="fcard' + (isRec ? ' rec' : '') + (dim ? ' dim' : '') + '" href="' + esc(D.specialist.url) + '" target="_blank" rel="noopener" aria-label="Extra Firm, specialist model Orthopaedic Coconut Core, opens its product page">' + (isRec ? '<span class="tag">For you</span>' : '') + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="ds">' + esc(d.desc) + '</span><span class="sp">Specialist Model: Orthopaedic Coconut Core ↗</span></a>';
+      else h += '<button class="fcard' + (isRec ? ' rec' : '') + (dim ? ' dim' : '') + '" data-firm="' + c[0] + '" aria-pressed="' + on + '">' + (isRec ? '<span class="tag">For you</span>' : '') + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; });
+    h += '</div><p class="base">The four ranges are the base. Your height can move the guidance to a neighbouring level.</p>';
+    return h;
+  }
+  function depthView() { return '<div class="dc">' + D.depths.map(function (d, i) { var on = S.depth && S.depth.i === i; return '<button class="dcard" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; }).join('') + '</div>'; }
+  function coverView() {
+    var c = S.cover, info;
+    if (c) {
+      var bullets = c.body.split(/(?<=\.)\s+/).filter(Boolean).slice(0, 4).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
+      info = '<div class="info" aria-live="polite"><span class="k">Your cover</span><h2>' + esc(c.name) + '</h2><span class="tg">' + esc(c.tag) + '</span><ul>' + bullets + '</ul><span class="fact">' + esc(D.coverFacts.height) + (c.mod ? ' · +£' + c.mod + ' in the shop' : '') + '</span></div>';
+    } else info = '<div class="info"><span class="k">Covers</span><h2>Four covers, one choice</h2><p>' + esc(D.coverSub) + '</p><p>Tap a photograph to see what that cover gives you.</p></div>';
+    return '<div class="cv"><div class="tiles">' + D.covers.map(function (x, i) { var on = c && c.i === i;
+      return '<button class="tile" data-cover="' + i + '" aria-pressed="' + on + '" aria-label="' + esc(x.name) + '"><span class="pic" style="background-image:url(' + esc(x.img) + ')"></span><span class="cap">' + esc(SHORT[i]) + '</span></button>'; }).join('') + '</div>' + info + '</div>';
+  }
+  function reviewView() {
+    var rows = [['Size', S.size ? S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' : null, S.size ? inch(S.size.dims[0]) + ' × ' + inch(S.size.dims[1]) + ' in · ' + S.size.name : '', 0], ['Firmness', S.firmness, '', 1], ['Depth', S.depth ? S.depth.cm + ' cm' : null, S.depth ? S.depth.inch.replace(/^cm · /, '') + ' · ' + S.depth.name : '', 2], ['Cover', S.cover ? S.cover.name : null, S.cover ? S.cover.tag : '', 3]];
+    var h = (inBag() ? '<div class="added">' + LEAF.replace('class="leaf"', 'class="leaf" style="margin:0;width:24px;height:17px"') + '<span><b>Added to your bag.</b> Go to Checkout when you are ready.</span></div>' : '');
+    h += '<div class="rv">' + rows.map(function (r) { return '<div class="ri"><span class="k">' + r[0] + '</span><span class="v">' + (r[1] ? esc(r[1]) + (r[2] ? '<i>' + esc(r[2]) + '</i>' : '') : '<i>Not chosen yet</i>') + '</span><button class="btn s" data-go="' + r[3] + '">' + (r[1] ? 'Change' : 'Choose') + '</button></div>'; }).join('') + '</div>';
+    var sh = shop(); if (sh) h += '<div class="prbox"><span class="tag2" style="display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:4px">Your price</span>' + priceParts(sh) + '</div>';
+    h += '<p class="facts">' + D.reviewFacts.map(function (f) { return '<span>✓ ' + esc(f) + '</span>'; }).join('') + '</p>';
+    return h;
+  }
+  var PLAY = '<svg width="22" height="22" viewBox="0 0 24 24" fill="#173A52" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>';
+  function miniCard(c) { return c.media ? '<aside class="mini" aria-label="Short loop"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">' + esc(c.media) + '</span><span class="tv">Short loop · stand-in</span></aside>' : ''; }
+  function readerView(p) {
+    var it = itemsOf(p), k = S.ch + '/' + S.pn, i = Math.min(S.rd[k] || 0, it.length - 1), cur = it[i];
+    var card = '<div class="rc" aria-live="polite">' + ((cur.h || (it.length > 1 && cur.label)) ? '<h2>' + esc(cur.h || cur.label) + '</h2>' : '') + blocksHtml(cur.blocks) + '</div>';
+    if (it.length < 2) return card;
+    return '<div class="rd"><div class="rl">' + it.map(function (x, j) { return '<button class="ri2" data-rd="' + j + '" aria-pressed="' + (j === i) + '"><i>' + (j + 1) + '</i><span>' + esc(x.label) + '</span></button>'; }).join('') + '</div>' + card + '</div>';
+  }
+  function pointsView(p, c) {
+    var cards = '<div class="pts">' + p.items.map(function (x) { return '<div class="pt">' + LEAFS + '<h3>' + esc(x.t) + '</h3><p>' + esc(x.d) + '</p></div>'; }).join('') + '</div>';
+    return '<div class="pw' + (c.media ? '' : ' nomedia') + '">' + cards + miniCard(c) + '</div>';
+  }
+  function certsView(p, c) {
+    var cards = '<div class="pts">' + p.items.map(function (x) { return '<div class="pt">' + LEAFS + '<h3>' + esc(x.m) + '</h3><div class="sb">' + esc(x.s) + '</div><p>' + esc(x.d) + '</p></div>'; }).join('') + '</div>';
+    return '<div class="pw' + (c.media ? '' : ' nomedia') + '">' + cards + miniCard(c) + '</div>';
+  }
+  function zonesView(p, c) {
+    var T = D.zoneTier, tone = { s: '#B7C9E3', c: '#7C97C0', r: '#46628F' };
+    var left = '<div><div class="zsk" aria-label="Seven support zones, head to feet">' + D.zoneSketch + '</div><p class="zlg"><span><i style="background:#B7C9E3"></i>Softer response</span><span><i style="background:#7C97C0"></i>Calibrated</span><span><i style="background:#46628F"></i>Reinforced</span></p><div class="zgrid">' +
+      p.items.map(function (x, i) { return '<div class="zp" style="--tone:' + tone[T[i + 1]] + '"><b>' + esc(x.n) + '</b><span>' + esc(x.note) + '</span></div>'; }).join('') + '</div></div>';
+    return '<div class="pw zwide' + (c.media ? '' : ' nomedia') + '">' + left + miniCard(c) + '</div>';
+  }
+  function numeralsView(p) { return '<div class="nums">' + p.items.map(function (x) { return '<div class="nm2">' + (x.k ? '<small>' + esc(x.k) + '</small>' : '<small>&nbsp;</small>') + '<strong>' + esc(x.v) + '</strong><em>' + esc(x.u) + '</em><p>' + esc(x.b) + '</p></div>'; }).join('') + '</div>'; }
+  function heroView() {
+    var H = D.hero;
+    return '<div class="hero"><div><div class="rc"><h2>' + esc(H.headline) + '</h2><p>' + esc(H.intro) + '</p><p>' + esc(H.note) + '</p></div><div class="fts">' + D.features.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '</div></div>' +
+      '<aside class="mini" aria-label="Presentation video"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">Presentation video: watch the whole Botanic in full</span><span class="tv">Plays in full on demand · stand-in</span></aside></div>';
+  }
+  function factsView() {
+    return '<div class="fx">' + D.facts.map(function (f) { return '<div><small>' + esc(f.l) + '</small><b>' + esc(f.v) + '</b>' + (f.pills.length ? '<em>' + esc(f.pills.join(' · ')) + '</em>' : '') + '</div>'; }).join('') + '</div><p class="fnote">' + esc(D.factsNote) + '</p>';
+  }
+  function galDraw() {
+    var im = D.images, i = S.gi;
+    $('#q').innerHTML = '<h1>' + LEAF + '<span>Model Gallery</span></h1><p>The product photographs, as the shop holds them.</p>';
+    $('#answer').innerHTML = '<div class="gal"><div class="gmain"><button class="garr l" data-gimg="' + (i - 1) + '" aria-label="Previous photograph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><img src="' + esc(im[i]) + '" alt="Botanic, photograph ' + (i + 1) + '"><button class="garr r" data-gimg="' + (i + 1) + '" aria-label="Next photograph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button><span class="gcount">' + (i + 1) + ' / ' + im.length + '</span></div><div class="gth">' + im.map(function (u, j) { return '<button data-gimg="' + j + '" aria-pressed="' + (j === i) + '" aria-label="Photograph ' + (j + 1) + '"><img src="' + esc(u) + '" alt=""></button>'; }).join('') + '</div></div>';
+    $('#act').innerHTML = '<button class="btn p" data-gal="1">Close gallery</button>';
+    $('#stageh').textContent = 'Model Gallery';
+  }
+  var NAT = { depth: ['H- 20 cm (8”) Balanced Comfort', 'H -24 cm (9.5”) Deep Comfort (+£156)', 'H- 26 cm (10.25”) Premium Deep Comfort (+£190)'], firmness: [['Soft', 'Up to 47 kg / up to 7.4 st body weight – SOFT'], ['Medium', '48–85 kg / 7.6–13.4 st body weight – MEDIUM'], ['Firm', '85–110 kg / 13.4–17.3 st body weight – FIRM'], ['Extra Firm', 'Over 120 kg / over 18.9 st body weight – EXTRA FIRM (+£88)']] };
+  function drawStd() {   // Standard Product View: the shop's own page (stand-in); the same selection, the same bag
+    var o = function (sel, v, t) { return '<option value="' + v + '"' + (sel ? ' selected' : '') + '>' + esc(t) + '</option>'; }, im = D.images, i = S.gi;
+    var sz = '<option value="">Please choose</option>' + D.sizes.map(function (x, j) { return o(S.size && S.size.label === x.label, j, x.label); }).join('');
+    var dp = '<option value="">Please choose</option>' + NAT.depth.map(function (t, j) { return o(S.depth && S.depth.i === j, j, t); }).join('');
+    var fm = '<option value="">Please choose</option>' + NAT.firmness.map(function (f) { return o(S.firmness === f[0], f[0], f[1]); }).join('');
+    var cv = '<option value="">Please choose</option>' + D.covers.map(function (c, j) { return o(S.cover && S.cover.i === j, j, c.name + (c.mod ? ' (+£' + c.mod + ')' : '')); }).join('');
+    var p = price();
+    $('#std').innerHTML = '<div class="box"><span class="tag2">The shop\'s own gallery (stand-in)</span><div class="gal"><div class="gmain"><img src="' + esc(im[i]) + '" alt="Botanic"><span class="gcount">' + (i + 1) + ' / ' + im.length + '</span></div><div class="gth">' + im.map(function (u, j) { return '<button data-gimg="' + j + '" aria-pressed="' + (j === i) + '" aria-label="Photograph ' + (j + 1) + '"><img src="' + esc(u) + '" alt=""></button>'; }).join('') + '</div></div></div>' +
+      '<div class="box"><span class="tag2">The shop\'s own options (stand-in)</span><h2>' + esc(D.product.name) + '</h2><div class="pr">' + (shop() ? priceParts(shop()) : '£0') + '</div>' +
+      '<label for="m-size">Size</label><select id="m-size" data-man="size">' + sz + '</select><label for="m-depth">Select Mattress Depth</label><select id="m-depth" data-man="depth">' + dp + '</select><label for="m-firmness">Firmness by body weight</label><select id="m-firmness" data-man="firmness">' + fm + '</select><label for="m-cover">Covers</label><select id="m-cover" data-man="cover">' + cv + '</select>' +
+      '<div class="bagrow">' + bagButton() + '</div><p class="nt">This is the page without the television: the same four options, the same price, the same Add to Bag. What is chosen here is shown in the television, and what is chosen in the television is shown here. Stand-in for Ecwid\'s own controls.</p></div>';
+  }
+  function infoDraw(p, c) {
+    var title = p.kind === 'facts' ? D.factsTitle : (p.title || (c.head && c.head.title) || p.label), sub = null;
+    if (p.kind === 'points' || p.kind === 'zones' || p.kind === 'certs' || p.kind === 'numerals' || p.kind === 'article' || (c.id === 'delivery' && p.id === 'made')) sub = c.head && c.head.sub;
+    if (p.kind === 'hero') { title = 'Know your Botanic'; sub = 'Everything about this mattress is here, one topic at a time. Use the buttons above and on the left.'; }
+    if (p.kind === 'numerals') title = 'Warranty and durability';
+    $('#q').innerHTML = '<h1>' + LEAF + '<span>' + esc(title) + '</span></h1>' + (sub ? '<p>' + esc(sub) + '</p>' : '');
+    var v = { hero: heroView, facts: factsView, read: function () { return readerView(p); }, article: function () { return readerView(p); }, points: function () { return pointsView(p, c); }, certs: function () { return certsView(p, c); }, zones: function () { return zonesView(p, c); }, numerals: function () { return numeralsView(p); } }[p.kind];
+    $('#answer').innerHTML = v();
+    var i = flatIndex(), prev = FLAT[i - 1], next = FLAT[i + 1], np = next && chap(next[0]).panels.filter(function (x) { return x.id === next[1]; })[0];
+    $('#act').innerHTML = (prev ? '<button class="btn s" data-flat="' + (i - 1) + '">Back</button>' : '') + '<button class="btn s" data-go="0">Select your Botanic</button>' + (next ? '<button class="btn p" data-flat="' + (i + 1) + '">Next: <b>' + esc(np.label) + '</b></button>' : '');
+    $('#stageh').textContent = c.label + '  ·  ' + p.label;
+  }
+  function draw() {
+    document.body.classList.toggle('std', S.view === 'std');  $('#galbtn').setAttribute('aria-pressed', String(S.gal)); $('#vtv').setAttribute('aria-pressed', String(S.view === 'tv')); $('#vstd').setAttribute('aria-pressed', String(S.view === 'std'));
+    if (S.view === 'std') { drawStd(); return; }
+    var pp = panel(), cc = chap(S.ch); drawBar();
+    if (S.gal) { galDraw(); drawRail(); drawMine(); return; }
+    if (pp.kind !== 'step') { infoDraw(pp, cc); drawRail(); drawMine(); return; }
+    var st = STEPS[S.step]; $('#q').innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p>' + esc(st.sub) + '</p>';
+    $('#answer').innerHTML = { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
+    var ok = chosen(st.id), last = S.step === STEPS.length - 1;
+    $('#act').innerHTML = (S.step ? '<button class="btn s" data-back="1">Back</button>' : '') + (last ? bagButton() : '<button class="btn p" data-next="1"' + (ok ? '' : ' disabled') + '>Continue to <b>' + st.next + '</b></button>');
+    $('#stageh').textContent = 'Select here  ·  Step ' + (S.step + 1) + ' of ' + STEPS.length + '  ·  ' + st.label;
+    drawRail(); drawMine();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
+    var d = t.dataset;
+    if (d.view != null) { S.view = d.view; draw(); return; }
+    if (d.gal != null) { S.gal = !S.gal; draw(); return; }
+    if (d.gimg != null) { S.gi = (+d.gimg + D.images.length) % D.images.length; draw(); return; }
+    S.gal = false;   // any other button leaves the gallery
+    if (d.ch != null) { var cc0 = chap(d.ch); goPanel(cc0.id, cc0.panels[0].id); }
+    else if (d.pn != null) goPanel(S.ch, d.pn);
+    else if (d.rd != null) { S.rd[S.ch + '/' + S.pn] = +d.rd; }
+    else if (d.flat != null) { var f = FLAT[+d.flat]; goPanel(f[0], f[1]); }
+    else if (d.go != null) goStep(+d.go);
+    else if (d.size != null) S.size = D.sizes[+d.size];
+    else if (d.firm != null) S.firmness = d.firm;
+    else if (d.depth != null) S.depth = Object.assign({ i: +d.depth }, D.depths[+d.depth]);
+    else if (d.cover != null) S.cover = Object.assign({ i: +d.cover }, D.covers[+d.cover]);
+    else if (d.next != null) goStep(Math.min(STEPS.length - 1, S.step + 1));
+    else if (d.back != null) goStep(Math.max(0, S.step - 1));
+    else if (d.more != null) { $('#form').classList.toggle('on'); return; }
+    else if (d.send != null) { toast('Preview only: nothing was sent. In the shop this goes to Divine Dunlop support.'); return; }
+    else if (d.bag != null) { S.bagged = sig(); toast('Stand-in: in the shop this presses Ecwid\'s own Add to Bag, and the button turns into Go to Checkout when Ecwid\'s cart reports the change.'); }
+    else if (d.checkout != null) { toast('Go to Checkout opens the shopping cart: the order there is built from your four choices and the promotion. The e-mail is entered in the cart. (Not opened in this preview.)'); return; }
+    draw(); if (d.bag == null) window.scrollTo({ top: 0 });
+  });
+  document.addEventListener('change', function (e) {
+    var k = e.target.dataset && e.target.dataset.man; if (!k) return; var v = e.target.value;
+    if (k === 'size') S.size = v === '' ? null : D.sizes[+v];
+    else if (k === 'depth') S.depth = v === '' ? null : Object.assign({ i: +v }, D.depths[+v]);
+    else if (k === 'cover') S.cover = v === '' ? null : Object.assign({ i: +v }, D.covers[+v]);
+    else if (k === 'firmness') { if (v === 'Extra Firm') toast('Extra Firm is a specialist model: Orthopaedic Coconut Core. Nothing was changed in the shop.'); else S.firmness = v === '' ? null : v; }
+    draw();
+  });
+  document.addEventListener('input', function (e) {
+    if (e.target.id === 'gw') S.weight = +e.target.value; else if (e.target.id === 'gh') S.height = +e.target.value; else return;
+    var B = DDFirmnessCore, rec = (S.weight != null && S.height != null) ? B.recommend(S.weight, S.height) : null;
+    $('#gwv').textContent = S.weight == null ? '—' : S.weight + ' kg'; $('#ghv').textContent = S.height == null ? '—' : S.height + ' cm';
+    // update in place (the slider must not be re-created while it is being dragged)
+    var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
+    $('#guide').innerHTML = rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';
+    document.querySelectorAll('.fcard').forEach(function (c) { var nm = c.querySelector('.nm').textContent, isRec = rec && fk(rec.display) === nm; c.classList.toggle('rec', !!isRec); c.classList.toggle('dim', !!(rec && !isRec)); var tag = c.querySelector('.tag'); if (isRec && !tag) c.insertAdjacentHTML('afterbegin', '<span class="tag">For you</span>'); if (!isRec && tag) tag.remove(); });
+  });
+  (function url() { var q = location.search.match(/step=(\d)/); if (q) goStep(Math.min(4, +q[1])); var cq = location.search.match(/ch=([a-z0-9]+)/), pq = location.search.match(/pn=([a-z0-9]+)/); if (cq && chap(cq[1])) goPanel(cq[1], pq ? pq[1] : chap(cq[1]).panels[0].id); var pm = location.search.match(/promo=(\d+)/); if (pm) S.promo = +pm[1]; if (/gal=1/.test(location.search)) S.gal = true; if (/view=std/.test(location.search)) S.view = 'std'; var rq = location.search.match(/rd=(\d+)/); if (rq) S.rd[S.ch + '/' + S.pn] = +rq[1]; var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); if (/bag=1/.test(location.search)) S.bagged = sig(); } })();
+  draw();
+})();
+</script>
+</body>
+</html>
