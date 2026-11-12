@@ -34,11 +34,11 @@ a { color: inherit; }
 .ph small { display: block; font-size: 11px; font-weight: 500; opacity: .75; line-height: 1; margin-top: -1px; }
 /* tools: the gallery and the switch between the two views */
 .tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-.tbtn { height: 48px; padding: 0 18px; border-radius: 10px; border: 1.5px solid var(--line2); background: var(--white); font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 10px; color: var(--ink); }
-.tbtn[aria-pressed=true] { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.5); }
-.seg { display: inline-flex; gap: 6px; background: var(--white); border: 1.5px solid var(--line2); border-radius: 12px; padding: 4px; }
-.seg button { height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: transparent; font-weight: 600; font-size: 14.5px; color: var(--ink); }
-.seg button[aria-pressed=true] { background: var(--grad-band); color: #fff; }
+.tbtn { height: 48px; padding: 0 18px; border-radius: 10px; border: 1px solid #1A5C7E; background: linear-gradient(180deg, #2E86AF 0%, #297CA2 50%, #1F6B93 100%); font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 10px; color: #fff; box-shadow: 0 1px 2px rgba(11,28,42,.3); }
+.tbtn[aria-pressed=true] { box-shadow: 0 0 0 3px rgba(80,205,253,.45); }
+.seg { display: inline-flex; gap: 8px; background: var(--white); border: 2px solid #297CA2; border-radius: 12px; padding: 4px; }
+.seg button { height: 38px; padding: 0 16px; border-radius: 8px; border: 1.5px solid #297CA2; background: var(--white); font-weight: 600; font-size: 14.5px; color: #1A5C7E; }
+.seg button[aria-pressed=true] { background: #E6F2F9; color: #173A52; outline: 2px solid #297CA2; outline-offset: 2px; }
 /* the chapter bar: all fourteen topics, always on the television */
 .chbar { grid-column: 1 / -1; background: var(--white); border-bottom: 1px solid var(--line); padding: 12px 16px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
 .ch { height: 46px; border-radius: 10px; border: 1.5px solid var(--line2); background: var(--white); font-weight: 600; font-size: 14.5px; color: var(--ink); padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -141,8 +141,12 @@ a { color: inherit; }
 .gth img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .gth button[aria-pressed=true] { border: 2.5px solid var(--band-top); }
 /* the seven zones: the same sketch and legend as the mobile concept */
-.zsk { background: var(--grad-card); border-radius: var(--rl); padding: 14px 16px; border: 1px solid rgba(80,205,253,.35); } .zsk svg { width: 100%; height: auto; display: block; }
+.zsk { background: transparent; padding: 0; } .zsk svg { width: 100%; height: auto; display: block; }
 .zlg { display: flex; gap: 18px; flex-wrap: wrap; margin: 12px 2px; font-size: 13.5px; color: var(--ink2); } .zlg i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 7px; vertical-align: -1px; }
+.pw.zwide { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 900px) { .pw.zwide { grid-template-columns: 1fr; } }
+.pw.zwide .mini .vid { aspect-ratio: 16 / 11; }
+.pw.zwide .mini { padding: 12px 12px 14px; }
 .zgrid { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; }
 .zp { background: var(--white); border: 1.5px solid var(--line); border-left: 5px solid var(--tone); border-radius: 10px; padding: 10px 14px; color: var(--ink); } .zp b { display: block; font-size: 15.5px; } .zp span { font-size: 13.5px; color: var(--ink2); }
 /* Standard Product View: the shop's own page (stand-in) */
@@ -427,7 +431,7 @@ var D = /*__DATA__*/;
     var T = D.zoneTier, tone = { s: '#B7C9E3', c: '#7C97C0', r: '#46628F' };
     var left = '<div><div class="zsk" aria-label="Seven support zones, head to feet">' + D.zoneSketch + '</div><p class="zlg"><span><i style="background:#B7C9E3"></i>Softer response</span><span><i style="background:#7C97C0"></i>Calibrated</span><span><i style="background:#46628F"></i>Reinforced</span></p><div class="zgrid">' +
       p.items.map(function (x, i) { return '<div class="zp" style="--tone:' + tone[T[i + 1]] + '"><b>' + esc(x.n) + '</b><span>' + esc(x.note) + '</span></div>'; }).join('') + '</div></div>';
-    return '<div class="pw' + (c.media ? '' : ' nomedia') + '">' + left + miniCard(c) + '</div>';
+    return '<div class="pw zwide' + (c.media ? '' : ' nomedia') + '">' + left + miniCard(c) + '</div>';
   }
   function numeralsView(p) { return '<div class="nums">' + p.items.map(function (x) { return '<div class="nm2">' + (x.k ? '<small>' + esc(x.k) + '</small>' : '<small>&nbsp;</small>') + '<strong>' + esc(x.v) + '</strong><em>' + esc(x.u) + '</em><p>' + esc(x.b) + '</p></div>'; }).join('') + '</div>'; }
   function heroView() {

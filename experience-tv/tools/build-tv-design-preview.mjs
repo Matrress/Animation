@@ -136,7 +136,9 @@ D.mattress = { depth: mattressParts('owner-mattress-depth.svg'), icon: mattressP
   const cx = [367, 870, 1260, 1610, 1975, 2285, 2532];
   const labels = '<g aria-hidden="true">' + cx.map((x, i) => '<text x="' + x + '" y="655" text-anchor="middle" font-size="84" font-weight="700" fill="' + (tier[i + 1] === 's' ? '#151C26' : '#F2F6FB') + '" font-family="Chillax,Arial,sans-serif">Z' + (i + 1) + '</text>').join('') + '</g>';
   const at = o.indexOf('<use href="#dz7-bd" fill="rgba('); if (at < 0) throw new Error('body outline not found');
-  D.zoneSketch = o.slice(0, at) + labels + o.slice(at); D.zoneTier = tier;
+  // the composition: the mattress, the body and the zones only; no sky and no background (the original viewBox already fits the drawing: y 27 to 750)
+  let full = o.slice(0, at) + labels + o.slice(at);
+  D.zoneSketch = full; D.zoneTier = tier;
 }
 const tpl = readFileSync(join(root, 'tools', 'tv-design-preview.template.html'), 'utf8');
 const html = tpl.replace('/*__CORE__*/', () => core).replace('/*__DATA__*/', () => JSON.stringify(D));

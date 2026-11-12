@@ -1,7 +1,7 @@
 {
  "date": "2026-11-12",
  "failures": 0,
- "checks": 94,
+ "checks": 97,
  "rows": [
   {
    "pass": true,
@@ -21,42 +21,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
@@ -70,8 +70,8 @@
   },
   {
    "pass": true,
-   "rule": "R7 Add to Bag is the one bright-blue button; flat, no glow or fog",
-   "detail": "shadow blur 0px, 2 instances"
+   "rule": "R7 bright blue: Add to Bag, Go to Checkout and View Model Gallery; the two view buttons are blue-outlined; flat, no glow",
+   "detail": "shadow blur 2px, 4 solid, view buttons outlined true"
   },
   {
    "pass": true,
@@ -167,6 +167,11 @@
    "pass": true,
    "rule": "R26 every panel of every topic shows its content",
    "detail": "31 panels"
+  },
+  {
+   "pass": true,
+   "rule": "R27 7-Zone: no dark sky behind the sketch; the video card is at least as wide as the sketch (the model is the smaller)",
+   "detail": "{\"bg\":\"none\",\"zw\":356,\"vw\":330,\"mw\":356}"
   },
   {
    "pass": true,
@@ -200,8 +205,8 @@
   },
   {
    "pass": true,
-   "rule": "R7 Add to Bag is the one bright-blue button; flat, no glow or fog",
-   "detail": "shadow blur 0px, 2 instances"
+   "rule": "R7 bright blue: Add to Bag, Go to Checkout and View Model Gallery; the two view buttons are blue-outlined; flat, no glow",
+   "detail": "shadow blur 2px, 4 solid, view buttons outlined true"
   },
   {
    "pass": true,
@@ -297,6 +302,11 @@
    "pass": true,
    "rule": "R26 every panel of every topic shows its content",
    "detail": "31 panels"
+  },
+  {
+   "pass": true,
+   "rule": "R27 7-Zone: no dark sky behind the sketch; the video card is at least as wide as the sketch (the model is the smaller)",
+   "detail": "{\"bg\":\"none\",\"zw\":450,\"vw\":424,\"mw\":450}"
   },
   {
    "pass": true,
@@ -321,42 +331,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "407.0 / 407.0 / 407.0"
+   "detail": "409.0 / 409.0 / 409.0"
   },
   {
    "pass": true,
@@ -370,8 +380,8 @@
   },
   {
    "pass": true,
-   "rule": "R7 Add to Bag is the one bright-blue button; flat, no glow or fog",
-   "detail": "shadow blur 0px, 2 instances"
+   "rule": "R7 bright blue: Add to Bag, Go to Checkout and View Model Gallery; the two view buttons are blue-outlined; flat, no glow",
+   "detail": "shadow blur 2px, 4 solid, view buttons outlined true"
   },
   {
    "pass": true,
@@ -467,6 +477,11 @@
    "pass": true,
    "rule": "R26 every panel of every topic shows its content",
    "detail": "31 panels"
+  },
+  {
+   "pass": true,
+   "rule": "R27 7-Zone: no dark sky behind the sketch; the video card is at least as wide as the sketch (the model is the smaller)",
+   "detail": "{\"bg\":\"none\",\"zw\":393,\"vw\":367,\"mw\":393}"
   },
   {
    "pass": true,

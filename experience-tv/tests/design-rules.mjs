@@ -41,9 +41,10 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   ok(chs.join('|') === 'Discover|Firmness|Comfort|Height|Covers|Benefits|Support|Adaptation|7-Zone|Ventilation|Hygiene|Certifications|Warranty|Delivery', 'R5 the fourteen topic buttons are on top', chs.length + ' buttons');
   // R6 the invitation
   ok((await p.textContent('.invite')).includes('Select your Botanic here') && (await p.textContent('#stageh')).includes('Select here'), 'R6 "Select your Botanic here" is shown and the stage says "Select here"');
-  // R7 the one distinctive blue button, flat and crisp
-  const bag = await p.evaluate(() => { const bb = [...document.querySelectorAll('.bagbtn')], others = [...document.querySelectorAll('.btn:not(.bagbtn)')]; const blur = (e) => { const m = getComputedStyle(e).boxShadow.match(/(-?[\d.]+)px (-?[\d.]+)px ([\d.]+)px/g) || []; return Math.max(0, ...m.map((s) => parseFloat(s.split(' ')[2]))); }; return { n: bb.length, bg: getComputedStyle(bb[0]).backgroundImage.slice(0, 60), blur: Math.max(...bb.map(blur)), otherBlue: others.filter((e) => /41, 124, 162/.test(getComputedStyle(e).backgroundImage)).length }; });
-  ok(bag.n >= 2 && bag.blur <= 4 && bag.otherBlue === 0, 'R7 Add to Bag is the one bright-blue button; flat, no glow or fog', 'shadow blur ' + bag.blur + 'px, ' + bag.n + ' instances');
+  // R7 the bright blue set: Add to Bag, Go to Checkout and View Model Gallery are the same blue; the two view buttons are blue-outlined, never filled blue; flat and crisp
+  await p.goto(file + '?step=4&demo=1'); await p.waitForTimeout(100);
+  const bag = await p.evaluate(() => { const blue = (e) => /41, 124, 162|46, 134, 175|31, 107, 147/.test(getComputedStyle(e).backgroundImage) || /rgb\(41, 124, 162\)/.test(getComputedStyle(e).backgroundColor); const blur = (e) => { const m = getComputedStyle(e).boxShadow.match(/(-?[\d.]+)px (-?[\d.]+)px ([\d.]+)px/g) || []; return Math.max(0, ...m.map((x) => parseFloat(x.split(' ')[2]))); }; const solid = [...document.querySelectorAll('.bagbtn:not(:disabled), #galbtn')]; const seg = [...document.querySelectorAll('.seg button')]; const otherSolid = [...document.querySelectorAll('.btn:not(.bagbtn), .tbtn:not(#galbtn), .seg button')].filter((e) => blue(e) && !e.classList.contains('bagbtn')); return { n: solid.length, all: solid.every(blue), blur: Math.max(...solid.map(blur)), segOutlined: seg.every((e) => getComputedStyle(e).borderTopColor === 'rgb(41, 124, 162)' && !blue(e)), otherSolid: otherSolid.length }; });
+  ok(bag.n >= 3 && bag.all && bag.blur <= 4 && bag.otherSolid === 0 && bag.segOutlined, 'R7 bright blue: Add to Bag, Go to Checkout and View Model Gallery; the two view buttons are blue-outlined; flat, no glow', 'shadow blur ' + bag.blur + 'px, ' + bag.n + ' solid, view buttons outlined ' + bag.segOutlined);
   // R8 thin frame
   const pad = await p.$eval('.monitor', (e) => parseFloat(getComputedStyle(e).paddingTop)); ok(pad <= 6, 'R8 the frame of the television is thin', pad + 'px');
   // R9 the leaf is green, never blue
@@ -77,6 +78,8 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file); let empty = [], n = 0;
   for (const c of chs.map((t, i) => (['discover', 'firmness', 'comfort', 'height', 'covers', 'benefits', 'support', 'adaptation', 'zones', 'ventilation', 'hygiene', 'certs', 'warranty', 'delivery'][i]))) { await p.click('#chbar [data-ch="' + c + '"]'); for (const pn of await p.$$eval('#rail .pn', (x) => x.map((e) => e.dataset.pn))) { await p.click('#rail [data-pn="' + pn + '"]'); n++; if ((await p.$eval('#answer', (a) => a.textContent.trim().length)) < 40) empty.push(c + '/' + pn); } }
   ok(n >= 31 && !empty.length, 'R26 every panel of every topic shows its content', n + ' panels' + (empty.length ? ' EMPTY: ' + empty : ''));
+  await p.goto(file + '?ch=zones&pn=map'); const zs = await p.evaluate(() => { const z = document.querySelector('.zsk'), v = document.querySelector('.pw .mini .vid'), bgz = getComputedStyle(z).backgroundImage; return { bg: bgz, zw: z.getBoundingClientRect().width, vw: v.getBoundingClientRect().width, mw: document.querySelector('.pw .mini').getBoundingClientRect().width }; });
+  ok(zs.bg === 'none' && zs.mw >= zs.zw, 'R27 7-Zone: no dark sky behind the sketch; the video card is at least as wide as the sketch (the model is the smaller)', JSON.stringify(zs));
   ok(errs.length === 0, 'no page errors', errs.join(' | '));
   await ctx.close();
 }

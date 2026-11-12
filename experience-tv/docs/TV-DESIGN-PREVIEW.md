@@ -16,6 +16,12 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 | The shop's own (manual) controls stay | **No "Choose by hand" screen inside the television** (owner, 11 November 2026: it is outside the concept). The shop's own four options and Add to Bag stay on the page under the television, always, never hidden, and move together with the television in both directions. The Standard Product View and the model "Standard" are untouched |
 | Each button will be specified later by the owner | The preview is a design carrier; every label here is replaceable through `docs/TV-BUTTON-SPEC.md` |
 
+## Blue buttons and the 7-Zone panel (owner, 12 November 2026)
+
+- **View Model Gallery** is the same bright blue as Add to Bag and Go to Checkout.
+- **Optimised Preview / Standard Product View** are outlined in blue (a blue edge with an outline), not filled; the one that is open is marked with a pale fill and a ring.
+- **7-Zone:** the sketch sits on white with no dark sky; the video card is larger than the sketch (the model is the smaller), with the seven zones and their notes beneath. The sketch is the original illustration, unchanged, with its own viewBox (the drawing already fits: y 27 to 750).
+
 ## Gallery, the two views, depths, the icon and the seven zones (owner, 12 November 2026)
 
 - **View Model Gallery** (top right): opens the product photographs inside the television (large photograph, arrows, a row of thumbnails, "Close gallery"). The photographs are the shop's own images.
