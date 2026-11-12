@@ -11,6 +11,8 @@ These are decided. They are not asked again and not undone by a later change. Wh
 - Everything above a phone is a large screen (shortest screen side 600 CSS px or more), device-neutral code, the owner's real device is an iPad Pro 12.9 (3rd generation). The phone version is the shorter one and waits.
 - The owner specifies every button (`docs/TV-BUTTON-SPEC.md`); until then labels are proposals.
 
+- The owner decides every button: `docs/TV-BUTTON-CATALOGUE.md` lists every button of every screen of the large design (39 screens, picture and table each) with a column for the decision (keep, remove, change, add).
+
 ## Content decisions
 - Firmness numbers are the Firmness module's four ranges: Soft up to 48 kg, Medium 49 to 87, Firm 88 to 114, Extra Firm 115 and over. The module is the guide for any discrepancy. The sliders (body weight and height) are on the large screen too.
 - Extra Firm is not removed: it is redirected to the specialist model "Orthopaedic Coconut Core" (a plain link, followed only on a tap). Open: what happens if it is picked in Ecwid's own menu (proposal: same notice and link, nothing changed in Ecwid).

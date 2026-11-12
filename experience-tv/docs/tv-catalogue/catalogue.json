@@ -1,0 +1,2885 @@
+{
+ "generated": "2026-11-12",
+ "note": "design preview, simulated store; not deployed",
+ "screens": [
+  {
+   "id": "start",
+   "title": "Start: nothing chosen yet (Size)",
+   "file": "start.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Small Single75 × 190cm29.5 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Small Special Single75 × 200cm29.5 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Euro Special Single80 × 200cm31.5 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Single90 × 190cm35.4 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Special Single90 × 200cm35.4 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Large Single100 × 200cm39.4 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Small Double120 × 190cm47.2 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 8,
+     "label": "Special Small Double120 × 200cm47.2 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 9,
+     "label": "UK Double135 × 190cm53.1 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 10,
+     "label": "Compact Double140 × 190cm55.1 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 11,
+     "label": "Euro Double140 × 200cm55.1 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 12,
+     "label": "UK King150 × 200cm59.1 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 13,
+     "label": "King Long150 × 210cm59.1 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 14,
+     "label": "Euro King160 × 200cm63.0 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 15,
+     "label": "Euro King Long160 × 210cm63.0 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 16,
+     "label": "Euro King XL160 × 220cm63.0 × 86.6 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 17,
+     "label": "Super King180 × 200cm70.9 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 18,
+     "label": "Super King Long180 × 210cm70.9 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 19,
+     "label": "Super King XL180 × 220cm70.9 × 86.6 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 20,
+     "label": "Emperor200 × 200cm78.7 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 21,
+     "label": "Emperor Long200 × 210cm78.7 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 22,
+     "label": "Emperor XL200 × 220cm78.7 × 86.6 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 23,
+     "label": "Tell us what you need",
+     "kind": "Custom size",
+     "does": "Opens the contact form for another size",
+     "leads": "the form on this screen",
+     "disabled": false
+    },
+    {
+     "n": 24,
+     "label": "Continue to Firmness",
+     "kind": "Continue",
+     "does": "Goes to the next step of the order (disabled until this step is chosen)",
+     "leads": "the next step",
+     "disabled": true
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "size-form",
+   "title": "Size: the custom-size form open",
+   "file": "size-form.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Small Single75 × 190cm29.5 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Small Special Single75 × 200cm29.5 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Euro Special Single80 × 200cm31.5 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Single90 × 190cm35.4 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Special Single90 × 200cm35.4 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Large Single100 × 200cm39.4 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Small Double120 × 190cm47.2 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 8,
+     "label": "Special Small Double120 × 200cm47.2 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 9,
+     "label": "UK Double135 × 190cm53.1 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 10,
+     "label": "Compact Double140 × 190cm55.1 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 11,
+     "label": "Euro Double140 × 200cm55.1 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 12,
+     "label": "UK King150 × 200cm59.1 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 13,
+     "label": "King Long150 × 210cm59.1 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 14,
+     "label": "Euro King160 × 200cm63.0 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 15,
+     "label": "Euro King Long160 × 210cm63.0 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 16,
+     "label": "Euro King XL160 × 220cm63.0 × 86.6 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 17,
+     "label": "Super King180 × 200cm70.9 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 18,
+     "label": "Super King Long180 × 210cm70.9 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 19,
+     "label": "Super King XL180 × 220cm70.9 × 86.6 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 20,
+     "label": "Emperor200 × 200cm78.7 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 21,
+     "label": "Emperor Long200 × 210cm78.7 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 22,
+     "label": "Emperor XL200 × 220cm78.7 × 86.6 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 23,
+     "label": "Tell us what you need",
+     "kind": "Custom size",
+     "does": "Opens the contact form for another size",
+     "leads": "the form on this screen",
+     "disabled": false
+    },
+    {
+     "n": 24,
+     "label": "Send my request",
+     "kind": "Send",
+     "does": "Sends the model, the size wanted and the email to Divine Dunlop support (the preview sends nothing)",
+     "leads": "a confirmation",
+     "disabled": false
+    },
+    {
+     "n": 25,
+     "label": "Continue to Firmness",
+     "kind": "Continue",
+     "does": "Goes to the next step of the order (disabled until this step is chosen)",
+     "leads": "the next step",
+     "disabled": true
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "size-chosen",
+   "title": "Size: chosen",
+   "file": "size-chosen.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Small Single75 × 190cm29.5 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Small Special Single75 × 200cm29.5 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Euro Special Single80 × 200cm31.5 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Single90 × 190cm35.4 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Special Single90 × 200cm35.4 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Large Single100 × 200cm39.4 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Small Double120 × 190cm47.2 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 8,
+     "label": "Special Small Double120 × 200cm47.2 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 9,
+     "label": "UK Double135 × 190cm53.1 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 10,
+     "label": "Compact Double140 × 190cm55.1 × 74.8 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 11,
+     "label": "Euro Double140 × 200cm55.1 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 12,
+     "label": "UK King150 × 200cm59.1 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 13,
+     "label": "King Long150 × 210cm59.1 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 14,
+     "label": "Euro King160 × 200cm63.0 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 15,
+     "label": "Euro King Long160 × 210cm63.0 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 16,
+     "label": "Euro King XL160 × 220cm63.0 × 86.6 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 17,
+     "label": "Super King180 × 200cm70.9 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 18,
+     "label": "Super King Long180 × 210cm70.9 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 19,
+     "label": "Super King XL180 × 220cm70.9 × 86.6 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 20,
+     "label": "Emperor200 × 200cm78.7 × 78.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 21,
+     "label": "Emperor Long200 × 210cm78.7 × 82.7 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 22,
+     "label": "Emperor XL200 × 220cm78.7 × 86.6 in",
+     "kind": "Size choice",
+     "does": "Chooses this size: sets Ecwid's own Size control",
+     "leads": "the same screen, size chosen",
+     "disabled": false
+    },
+    {
+     "n": 23,
+     "label": "Tell us what you need",
+     "kind": "Custom size",
+     "does": "Opens the contact form for another size",
+     "leads": "the form on this screen",
+     "disabled": false
+    },
+    {
+     "n": 24,
+     "label": "Continue to Firmness",
+     "kind": "Continue",
+     "does": "Goes to the next step of the order (disabled until this step is chosen)",
+     "leads": "the next step",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "firmness-empty",
+   "title": "Firmness: nothing chosen, no weight or height",
+   "file": "firmness-empty.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "70",
+     "kind": "Slider",
+     "does": "Sets body weight; the guidance follows; it never navigates",
+     "leads": "the guidance on this screen",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "170",
+     "kind": "Slider",
+     "does": "Sets height; the guidance follows; it never navigates",
+     "leads": "the guidance on this screen",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "SoftUp to 48 kgMaximum adaptation for lighter bodies. The fo",
+     "kind": "Firmness choice",
+     "does": "Chooses this firmness: sets Ecwid's own Firmness control",
+     "leads": "the same screen, firmness chosen",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Medium49 – 87 kgBalanced support and adaptation for the wide",
+     "kind": "Firmness choice",
+     "does": "Chooses this firmness: sets Ecwid's own Firmness control",
+     "leads": "the same screen, firmness chosen",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Firm88 – 114 kgStable support for higher body weight. Higher",
+     "kind": "Firmness choice",
+     "does": "Chooses this firmness: sets Ecwid's own Firmness control",
+     "leads": "the same screen, firmness chosen",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Extra Firm, specialist model Orthopaedic Coconut Core, opens",
+     "kind": "Link",
+     "does": "Opens the specialist model (Orthopaedic Coconut Core) in its own product page, only when tapped",
+     "leads": "the specialist product page",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous step of the order",
+     "leads": "the previous step",
+     "disabled": false
+    },
+    {
+     "n": 8,
+     "label": "Continue to Depth",
+     "kind": "Continue",
+     "does": "Goes to the next step of the order (disabled until this step is chosen)",
+     "leads": "the next step",
+     "disabled": true
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "firmness",
+   "title": "Firmness: weight and height set, guidance shown",
+   "file": "firmness.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "82",
+     "kind": "Slider",
+     "does": "Sets body weight; the guidance follows; it never navigates",
+     "leads": "the guidance on this screen",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "178",
+     "kind": "Slider",
+     "does": "Sets height; the guidance follows; it never navigates",
+     "leads": "the guidance on this screen",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "SoftUp to 48 kgMaximum adaptation for lighter bodies. The fo",
+     "kind": "Firmness choice",
+     "does": "Chooses this firmness: sets Ecwid's own Firmness control",
+     "leads": "the same screen, firmness chosen",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Medium49 – 87 kgBalanced support and adaptation for the wide",
+     "kind": "Firmness choice",
+     "does": "Chooses this firmness: sets Ecwid's own Firmness control",
+     "leads": "the same screen, firmness chosen",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "For youFirm88 – 114 kgStable support for higher body weight.",
+     "kind": "Firmness choice",
+     "does": "Chooses this firmness: sets Ecwid's own Firmness control",
+     "leads": "the same screen, firmness chosen",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Extra Firm, specialist model Orthopaedic Coconut Core, opens",
+     "kind": "Link",
+     "does": "Opens the specialist model (Orthopaedic Coconut Core) in its own product page, only when tapped",
+     "leads": "the specialist product page",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous step of the order",
+     "leads": "the previous step",
+     "disabled": false
+    },
+    {
+     "n": 8,
+     "label": "Continue to Depth",
+     "kind": "Continue",
+     "does": "Goes to the next step of the order (disabled until this step is chosen)",
+     "leads": "the next step",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "depth",
+   "title": "Depth",
+   "file": "depth.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "20cm · 8 inchesBalanced ComfortFull support and adaptation i",
+     "kind": "Depth choice",
+     "does": "Chooses this depth: sets Ecwid's own Depth control",
+     "leads": "the same screen, depth chosen",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "24cm · 9.5 inchesDeep ComfortMore latex material, deeper ada",
+     "kind": "Depth choice",
+     "does": "Chooses this depth: sets Ecwid's own Depth control",
+     "leads": "the same screen, depth chosen",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "26cm · 10.25 inchesPremium DepthMaximum latex depth. The ful",
+     "kind": "Depth choice",
+     "does": "Chooses this depth: sets Ecwid's own Depth control",
+     "leads": "the same screen, depth chosen",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous step of the order",
+     "leads": "the previous step",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Continue to Cover",
+     "kind": "Continue",
+     "does": "Goes to the next step of the order (disabled until this step is chosen)",
+     "leads": "the next step",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "cover-none",
+   "title": "Cover: nothing chosen",
+   "file": "cover-none.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Organic Cotton",
+     "kind": "Cover choice",
+     "does": "Chooses this cover: sets Ecwid's own Covers control and shows its information",
+     "leads": "the same screen, cover chosen",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Double-Sided Cotton / Wool",
+     "kind": "Cover choice",
+     "does": "Chooses this cover: sets Ecwid's own Covers control and shows its information",
+     "leads": "the same screen, cover chosen",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Aloe Vera Blend",
+     "kind": "Cover choice",
+     "does": "Chooses this cover: sets Ecwid's own Covers control and shows its information",
+     "leads": "the same screen, cover chosen",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Cashmere + Silver Ions",
+     "kind": "Cover choice",
+     "does": "Chooses this cover: sets Ecwid's own Covers control and shows its information",
+     "leads": "the same screen, cover chosen",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous step of the order",
+     "leads": "the previous step",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Continue to Review",
+     "kind": "Continue",
+     "does": "Goes to the next step of the order (disabled until this step is chosen)",
+     "leads": "the next step",
+     "disabled": true
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "cover",
+   "title": "Cover: one chosen",
+   "file": "cover.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Organic Cotton",
+     "kind": "Cover choice",
+     "does": "Chooses this cover: sets Ecwid's own Covers control and shows its information",
+     "leads": "the same screen, cover chosen",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Double-Sided Cotton / Wool",
+     "kind": "Cover choice",
+     "does": "Chooses this cover: sets Ecwid's own Covers control and shows its information",
+     "leads": "the same screen, cover chosen",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Aloe Vera Blend",
+     "kind": "Cover choice",
+     "does": "Chooses this cover: sets Ecwid's own Covers control and shows its information",
+     "leads": "the same screen, cover chosen",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Cashmere + Silver Ions",
+     "kind": "Cover choice",
+     "does": "Chooses this cover: sets Ecwid's own Covers control and shows its information",
+     "leads": "the same screen, cover chosen",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous step of the order",
+     "leads": "the previous step",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Continue to Review",
+     "kind": "Continue",
+     "does": "Goes to the next step of the order (disabled until this step is chosen)",
+     "leads": "the next step",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "review",
+   "title": "Review: all four chosen",
+   "file": "review.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Change",
+     "kind": "Change",
+     "does": "Goes back to that step to change the choice",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Change",
+     "kind": "Change",
+     "does": "Goes back to that step to change the choice",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Change",
+     "kind": "Change",
+     "does": "Goes back to that step to change the choice",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Change",
+     "kind": "Change",
+     "does": "Goes back to that step to change the choice",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous step of the order",
+     "leads": "the previous step",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Add to Bag",
+     "kind": "Add to Bag",
+     "does": "Presses Ecwid's own Add to Bag (disabled until size, firmness, depth and cover are chosen)",
+     "leads": "the same button turns into Go to Checkout",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "review-bagged",
+   "title": "Review: after Add to Bag (Go to Checkout)",
+   "file": "review-bagged.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Change",
+     "kind": "Change",
+     "does": "Goes back to that step to change the choice",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Change",
+     "kind": "Change",
+     "does": "Goes back to that step to change the choice",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Change",
+     "kind": "Change",
+     "does": "Goes back to that step to change the choice",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Change",
+     "kind": "Change",
+     "does": "Goes back to that step to change the choice",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous step of the order",
+     "leads": "the previous step",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Go to Checkout",
+     "kind": "Go to Checkout",
+     "does": "Opens the shop's own checkout at once",
+     "leads": "the shop's checkout",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "checkout",
+   "title": "Checkout (the shop's own, stand-in)",
+   "file": "checkout.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Back to your Botanic",
+     "kind": "Back to the product",
+     "does": "Returns from the checkout to the television",
+     "leads": "the television",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  {
+   "id": "standard",
+   "title": "Standard Product View (the shop's own page, stand-in)",
+   "file": "standard.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Photograph 1",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Photograph 2",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Photograph 3",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Photograph 4",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Photograph 5",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Photograph 6",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Photograph 7",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 8,
+     "label": "Photograph 8",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 9,
+     "label": "Please chooseSmall Single 75x190 cm./ 29.5” x 74.8” (+£788)S",
+     "kind": "Option menu",
+     "does": "The shop's own option menu (stand-in): changes the same selection as the television",
+     "leads": "the television shows the same choice",
+     "disabled": false
+    },
+    {
+     "n": 10,
+     "label": "Please chooseH- 20 cm (8”) Balanced ComfortH -24 cm (9.5”) D",
+     "kind": "Option menu",
+     "does": "The shop's own option menu (stand-in): changes the same selection as the television",
+     "leads": "the television shows the same choice",
+     "disabled": false
+    },
+    {
+     "n": 11,
+     "label": "Please chooseUp to 47 kg / up to 7.4 st body weight – SOFT48",
+     "kind": "Option menu",
+     "does": "The shop's own option menu (stand-in): changes the same selection as the television",
+     "leads": "the television shows the same choice",
+     "disabled": false
+    },
+    {
+     "n": 12,
+     "label": "Please chooseOrganic CottonDouble-Sided Cotton / WoolAloe Ve",
+     "kind": "Option menu",
+     "does": "The shop's own option menu (stand-in): changes the same selection as the television",
+     "leads": "the television shows the same choice",
+     "disabled": false
+    },
+    {
+     "n": 13,
+     "label": "Add to Bag",
+     "kind": "Add to Bag",
+     "does": "Presses Ecwid's own Add to Bag (disabled until size, firmness, depth and cover are chosen)",
+     "leads": "the same button turns into Go to Checkout",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  {
+   "id": "gallery",
+   "title": "View Model Gallery",
+   "file": "gallery.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Previous photograph",
+     "kind": "Arrow",
+     "does": "Shows the previous or next photograph",
+     "leads": "another photograph",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Next photograph",
+     "kind": "Arrow",
+     "does": "Shows the previous or next photograph",
+     "leads": "another photograph",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Photograph 1",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Photograph 2",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Photograph 3",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Photograph 4",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Photograph 5",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 8,
+     "label": "Photograph 6",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 9,
+     "label": "Photograph 7",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 10,
+     "label": "Photograph 8",
+     "kind": "Photograph",
+     "does": "Shows this photograph large",
+     "leads": "the large photograph",
+     "disabled": false
+    },
+    {
+     "n": 11,
+     "label": "Close gallery",
+     "kind": "Gallery",
+     "does": "Closes the gallery and returns to where the customer was",
+     "leads": "the gallery / back",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "discover-intro",
+   "title": "Discover · Introduction",
+   "file": "discover-intro.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Next: At a Glance",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "discover-glance",
+   "title": "Discover · At a Glance",
+   "file": "discover-glance.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Next: Choose",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "firmness-principle",
+   "title": "Firmness · Correct vs Softer",
+   "file": "firmness-principle.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Firmness in a natural Dunlop latex mattress is a…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2Softer is not automatically more comfortable.",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "3Firmness works like clothing size.",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "4Medium, Firm or Extra Firm can still feel…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "5Use the firmness cards below.",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 8,
+     "label": "Next: How It Works",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "firmness-regulation",
+   "title": "Firmness · How It Works",
+   "file": "firmness-regulation.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Overview",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2Use Your Individual Body Weight Only",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "3Why Body Weight — Not Personal Preference?",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Next: Who It Is For",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "firmness-who",
+   "title": "Firmness · Who It Is For",
+   "file": "firmness-who.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Overview",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2Who Is It Not For?",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Next: What To Expect",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "comfort-expect",
+   "title": "Comfort · What To Expect",
+   "file": "comfort-expect.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1It is important to know this: this mattress and…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2That is why we keep repeating these words:…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "3At the same time, you still feel lightness,…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Next: Latex Behaviour",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "comfort-behaviour",
+   "title": "Comfort · Latex Behaviour",
+   "file": "comfort-behaviour.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1The Balance Between Support And Adaptation",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2Individual Weight — Always",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "3The Magic Of Density",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "4The Magic Of Elasticity",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "5Instant Adaptation",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "6A Gift From Nature, Processed With Dunlop Technology",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 8,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 9,
+     "label": "Next: Choose size",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "height-why",
+   "title": "Height · Why Height Matters",
+   "file": "height-why.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Height directly affects how much latex material…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2All three heights use the same Dunlop latex core…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Next: Choose cover",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "covers-system",
+   "title": "Covers · Cover System",
+   "file": "covers-system.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Fire Safety Without Chemicals",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2Zip-Off Design",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "3Cover Customisation",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Next: Origin",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "benefits-origin",
+   "title": "Benefits · Origin",
+   "file": "benefits-origin.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Next: Why Latex",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "benefits-why",
+   "title": "Benefits · Why Latex",
+   "file": "benefits-why.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Petroleum Foams Explained",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2Latex Is Bio-Based",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "3Breathability Advantage",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "4Why Latex Costs More",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Next: Bearing Force",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "support-bearing",
+   "title": "Support · Bearing Force",
+   "file": "support-bearing.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Next: Support + Adaptation",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "support-together",
+   "title": "Support · Support + Adaptation",
+   "file": "support-together.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Most mattress materials force a compromise:…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2The high density provides the structural bearing…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "3These two properties amplify each other.",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Next: Elasticity",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "adaptation-elasticity",
+   "title": "Adaptation · Elasticity",
+   "file": "adaptation-elasticity.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Next: How It Feels",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "adaptation-feel",
+   "title": "Adaptation · How It Feels",
+   "file": "adaptation-feel.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1At first glance, a natural latex mattress may…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2Your body does not sink.",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "3The shoulders compress only as far as needed.",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "4Movement during sleep is absorbed in real time.",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Next: Zone Map",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "zones-map",
+   "title": "7-Zone · Zone Map",
+   "file": "zones-map.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Next: Zone By Zone",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "zones-detail",
+   "title": "7-Zone · Zone By Zone",
+   "file": "zones-detail.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Overview",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2Zone by Zone",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "3Additional Effects",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Next: Airflow",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "ventilation-airflow",
+   "title": "Ventilation · Airflow",
+   "file": "ventilation-airflow.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Next: Why It Matters",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "ventilation-sleep",
+   "title": "Ventilation · Why It Matters",
+   "file": "ventilation-sleep.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Overview",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2A Note On Claims",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Next: Cleaner Sleep",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "hygiene-clean",
+   "title": "Hygiene · Cleaner Sleep",
+   "file": "hygiene-clean.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Next: Realistic Picture",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "hygiene-picture",
+   "title": "Hygiene · Realistic Picture",
+   "file": "hygiene-picture.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1A Realistic Picture",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2The Logic",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Next: Certifications",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "certs-bodies",
+   "title": "Certifications · Certifications",
+   "file": "certs-bodies.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Next: Where It Is Made",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "certs-made",
+   "title": "Certifications · Where It Is Made",
+   "file": "certs-made.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Why OEKO-TEX® Matters More Than Decorative Eco Claims",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2German Standards and Process Oversight",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "3Raw Material Origin",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "4A Factual Note on Latex Foam Production",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 6,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 7,
+     "label": "Next: Warranty + Gift",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "warranty-cover",
+   "title": "Warranty · Warranty + Gift",
+   "file": "warranty-cover.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Next: Conditions",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "warranty-conditions",
+   "title": "Warranty · Conditions",
+   "file": "warranty-conditions.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1The warranty covers structural indentations…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2Rotate the mattress three times in the first six…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Next: Made To Order",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  },
+  {
+   "id": "delivery-made",
+   "title": "Delivery · Made To Order",
+   "file": "delivery-made.jpg",
+   "buttons": [
+    {
+     "n": 1,
+     "label": "1Because each mattress is built individually to…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 2,
+     "label": "2We will confirm the expected production and…",
+     "kind": "Text part",
+     "does": "Shows this part of the text on the right",
+     "leads": "that part of the text",
+     "disabled": false
+    },
+    {
+     "n": 3,
+     "label": "Back",
+     "kind": "Back",
+     "does": "Goes to the previous panel of the whole presentation",
+     "leads": "the previous panel",
+     "disabled": false
+    },
+    {
+     "n": 4,
+     "label": "Select your Botanic",
+     "kind": "Select your Botanic",
+     "does": "Goes to step 1 of the order (Size)",
+     "leads": "that step",
+     "disabled": false
+    },
+    {
+     "n": 5,
+     "label": "Next: Your Botanic",
+     "kind": "Next",
+     "does": "Goes to the next panel of the whole presentation",
+     "leads": "the next panel",
+     "disabled": false
+    }
+   ],
+   "groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  }
+ ],
+ "always": {
+  "A": [
+   {
+    "label": "View Model Gallery",
+    "does": "Opens or closes the product photographs inside the television"
+   },
+   {
+    "label": "Optimised Preview",
+    "does": "Shows the television (Optimised Preview)"
+   },
+   {
+    "label": "Standard Product View",
+    "does": "Shows the shop's own page without the television (Standard Product View)"
+   }
+  ],
+  "B": [
+   {
+    "label": "Discover",
+    "does": "Opens the topic \"Discover\" at its first panel"
+   },
+   {
+    "label": "Firmness",
+    "does": "Opens the topic \"Firmness\" at its first panel"
+   },
+   {
+    "label": "Comfort",
+    "does": "Opens the topic \"Comfort\" at its first panel"
+   },
+   {
+    "label": "Height",
+    "does": "Opens the topic \"Height\" at its first panel"
+   },
+   {
+    "label": "Covers",
+    "does": "Opens the topic \"Covers\" at its first panel"
+   },
+   {
+    "label": "Benefits",
+    "does": "Opens the topic \"Benefits\" at its first panel"
+   },
+   {
+    "label": "Support",
+    "does": "Opens the topic \"Support\" at its first panel"
+   },
+   {
+    "label": "Adaptation",
+    "does": "Opens the topic \"Adaptation\" at its first panel"
+   },
+   {
+    "label": "7-Zone",
+    "does": "Opens the topic \"7-Zone\" at its first panel"
+   },
+   {
+    "label": "Ventilation",
+    "does": "Opens the topic \"Ventilation\" at its first panel"
+   },
+   {
+    "label": "Hygiene",
+    "does": "Opens the topic \"Hygiene\" at its first panel"
+   },
+   {
+    "label": "Certifications",
+    "does": "Opens the topic \"Certifications\" at its first panel"
+   },
+   {
+    "label": "Warranty",
+    "does": "Opens the topic \"Warranty\" at its first panel"
+   },
+   {
+    "label": "Delivery",
+    "does": "Opens the topic \"Delivery\" at its first panel"
+   }
+  ],
+  "C_panels": {
+   "discover": [
+    "Introduction",
+    "At a Glance"
+   ],
+   "firmness": [
+    "Choose",
+    "Correct vs Softer",
+    "How It Works",
+    "Who It Is For"
+   ],
+   "comfort": [
+    "What To Expect",
+    "Latex Behaviour"
+   ],
+   "height": [
+    "Choose size",
+    "Choose depth",
+    "Why Height Matters"
+   ],
+   "covers": [
+    "Choose cover",
+    "Cover System"
+   ],
+   "benefits": [
+    "Origin",
+    "Why Latex"
+   ],
+   "support": [
+    "Bearing Force",
+    "Support + Adaptation"
+   ],
+   "adaptation": [
+    "Elasticity",
+    "How It Feels"
+   ],
+   "zones": [
+    "Zone Map",
+    "Zone By Zone"
+   ],
+   "ventilation": [
+    "Airflow",
+    "Why It Matters"
+   ],
+   "hygiene": [
+    "Cleaner Sleep",
+    "Realistic Picture"
+   ],
+   "certs": [
+    "Certifications",
+    "Where It Is Made"
+   ],
+   "warranty": [
+    "Warranty + Gift",
+    "Conditions"
+   ],
+   "delivery": [
+    "Made To Order",
+    "Your Botanic"
+   ]
+  },
+  "C_steps": [
+   {
+    "label": "Size, chosen 150 × 210 cm",
+    "does": "Goes to the order step \"Size\""
+   },
+   {
+    "label": "Firmness, chosen Firm",
+    "does": "Goes to the order step \"Firmness\""
+   },
+   {
+    "label": "Depth, chosen 24 cm",
+    "does": "Goes to the order step \"Depth\""
+   },
+   {
+    "label": "Cover, chosen Cotton / Wool",
+    "does": "Goes to the order step \"Cover\""
+   },
+   {
+    "label": "Review",
+    "does": "Goes to the order step \"Review\""
+   }
+  ],
+  "D": [
+   {
+    "label": "size150 × 210 cm",
+    "does": "Goes to the step where this is chosen"
+   },
+   {
+    "label": "firmnessFirm",
+    "does": "Goes to the step where this is chosen"
+   },
+   {
+    "label": "depth24 cm",
+    "does": "Goes to the step where this is chosen"
+   },
+   {
+    "label": "coverCotton / Wool",
+    "does": "Goes to the step where this is chosen"
+   }
+  ],
+  "E": [
+   {
+    "label": "Add to Bag / Go to Checkout (in \"Your selection\", and again below the television as the shop's own button)",
+    "does": "One button with two faces: Add to Bag presses Ecwid's own button once all four choices are made; then it becomes Go to Checkout, which opens the shop's checkout; a changed choice turns it back into Add to Bag"
+   }
+  ]
+ }
+}
