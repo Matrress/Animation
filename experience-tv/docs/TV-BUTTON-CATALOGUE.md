@@ -130,30 +130,30 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Small Single75 × 190cm29.5 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 2 | Small Special Single75 × 200cm29.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 3 | Euro Special Single80 × 200cm31.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 4 | Single90 × 190cm35.4 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 5 | Special Single90 × 200cm35.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 6 | Large Single100 × 200cm39.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 7 | Small Double120 × 190cm47.2 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 8 | Special Small Double120 × 200cm47.2 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 9 | UK Double135 × 190cm53.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 10 | Compact Double140 × 190cm55.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 11 | Euro Double140 × 200cm55.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 12 | UK King150 × 200cm59.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 13 | King Long150 × 210cm59.1 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 14 | Euro King160 × 200cm63.0 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 15 | Euro King Long160 × 210cm63.0 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 16 | Euro King XL160 × 220cm63.0 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 17 | Super King180 × 200cm70.9 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 18 | Super King Long180 × 210cm70.9 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 19 | Super King XL180 × 220cm70.9 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 20 | Emperor200 × 200cm78.7 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 21 | Emperor Long200 × 210cm78.7 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 22 | Emperor XL200 × 220cm78.7 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 23 | Tell us what you need | Custom size | Opens the contact form for another size | the form on this screen | |
-| 24 | Continue to Firmness (off until its condition is met) | Continue | Goes to the next step of the order (disabled until this step is chosen) | the next step | |
+| 1 | Small Single75 × 190cm29.5 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 2 | Small Special Single75 × 200cm29.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 3 | Euro Special Single80 × 200cm31.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 4 | Single90 × 190cm35.4 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 5 | Special Single90 × 200cm35.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 6 | Large Single100 × 200cm39.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 7 | Small Double120 × 190cm47.2 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 8 | Special Small Double120 × 200cm47.2 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 9 | UK Double135 × 190cm53.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 10 | Compact Double140 × 190cm55.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 11 | Euro Double140 × 200cm55.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 12 | UK King150 × 200cm59.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 13 | King Long150 × 210cm59.1 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 14 | Euro King160 × 200cm63.0 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 15 | Euro King Long160 × 210cm63.0 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 16 | Euro King XL160 × 220cm63.0 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 17 | Super King180 × 200cm70.9 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 18 | Super King Long180 × 210cm70.9 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 19 | Super King XL180 × 220cm70.9 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 20 | Emperor200 × 200cm78.7 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 21 | Emperor Long200 × 210cm78.7 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 22 | Emperor XL200 × 220cm78.7 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 23 | Tell us what you need | Custom size | Opens the contact form for another size | stays here (a choice is made) | |
+| 24 | Continue to Firmness (off until its condition is met) | Continue | Goes to the next step of the order (disabled until this step is chosen) | off until its condition is met | |
 
 ### size-form
 
@@ -163,31 +163,31 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Small Single75 × 190cm29.5 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 2 | Small Special Single75 × 200cm29.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 3 | Euro Special Single80 × 200cm31.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 4 | Single90 × 190cm35.4 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 5 | Special Single90 × 200cm35.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 6 | Large Single100 × 200cm39.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 7 | Small Double120 × 190cm47.2 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 8 | Special Small Double120 × 200cm47.2 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 9 | UK Double135 × 190cm53.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 10 | Compact Double140 × 190cm55.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 11 | Euro Double140 × 200cm55.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 12 | UK King150 × 200cm59.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 13 | King Long150 × 210cm59.1 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 14 | Euro King160 × 200cm63.0 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 15 | Euro King Long160 × 210cm63.0 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 16 | Euro King XL160 × 220cm63.0 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 17 | Super King180 × 200cm70.9 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 18 | Super King Long180 × 210cm70.9 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 19 | Super King XL180 × 220cm70.9 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 20 | Emperor200 × 200cm78.7 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 21 | Emperor Long200 × 210cm78.7 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 22 | Emperor XL200 × 220cm78.7 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 23 | Tell us what you need | Custom size | Opens the contact form for another size | the form on this screen | |
-| 24 | Send my request | Send | Sends the model, the size wanted and the email to Divine Dunlop support (the preview sends nothing) | a confirmation | |
-| 25 | Continue to Firmness (off until its condition is met) | Continue | Goes to the next step of the order (disabled until this step is chosen) | the next step | |
+| 1 | Small Single75 × 190cm29.5 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 2 | Small Special Single75 × 200cm29.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 3 | Euro Special Single80 × 200cm31.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 4 | Single90 × 190cm35.4 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 5 | Special Single90 × 200cm35.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 6 | Large Single100 × 200cm39.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 7 | Small Double120 × 190cm47.2 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 8 | Special Small Double120 × 200cm47.2 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 9 | UK Double135 × 190cm53.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 10 | Compact Double140 × 190cm55.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 11 | Euro Double140 × 200cm55.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 12 | UK King150 × 200cm59.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 13 | King Long150 × 210cm59.1 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 14 | Euro King160 × 200cm63.0 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 15 | Euro King Long160 × 210cm63.0 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 16 | Euro King XL160 × 220cm63.0 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 17 | Super King180 × 200cm70.9 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 18 | Super King Long180 × 210cm70.9 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 19 | Super King XL180 × 220cm70.9 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 20 | Emperor200 × 200cm78.7 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 21 | Emperor Long200 × 210cm78.7 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 22 | Emperor XL200 × 220cm78.7 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 23 | Tell us what you need | Custom size | Opens the contact form for another size | stays here (a choice is made) | |
+| 24 | Send my request | Send | Sends the model, the size wanted and the email to Divine Dunlop support (the preview sends nothing) | stays here (a choice is made) | |
+| 25 | Continue to Firmness (off until its condition is met) | Continue | Goes to the next step of the order (disabled until this step is chosen) | off until its condition is met | |
 
 ### size-chosen
 
@@ -197,30 +197,30 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Small Single75 × 190cm29.5 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 2 | Small Special Single75 × 200cm29.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 3 | Euro Special Single80 × 200cm31.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 4 | Single90 × 190cm35.4 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 5 | Special Single90 × 200cm35.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 6 | Large Single100 × 200cm39.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 7 | Small Double120 × 190cm47.2 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 8 | Special Small Double120 × 200cm47.2 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 9 | UK Double135 × 190cm53.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 10 | Compact Double140 × 190cm55.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 11 | Euro Double140 × 200cm55.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 12 | UK King150 × 200cm59.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 13 | King Long150 × 210cm59.1 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 14 | Euro King160 × 200cm63.0 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 15 | Euro King Long160 × 210cm63.0 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 16 | Euro King XL160 × 220cm63.0 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 17 | Super King180 × 200cm70.9 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 18 | Super King Long180 × 210cm70.9 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 19 | Super King XL180 × 220cm70.9 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 20 | Emperor200 × 200cm78.7 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 21 | Emperor Long200 × 210cm78.7 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 22 | Emperor XL200 × 220cm78.7 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | the same screen, size chosen | |
-| 23 | Tell us what you need | Custom size | Opens the contact form for another size | the form on this screen | |
-| 24 | Continue to Firmness | Continue | Goes to the next step of the order (disabled until this step is chosen) | the next step | |
+| 1 | Small Single75 × 190cm29.5 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 2 | Small Special Single75 × 200cm29.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 3 | Euro Special Single80 × 200cm31.5 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 4 | Single90 × 190cm35.4 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 5 | Special Single90 × 200cm35.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 6 | Large Single100 × 200cm39.4 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 7 | Small Double120 × 190cm47.2 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 8 | Special Small Double120 × 200cm47.2 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 9 | UK Double135 × 190cm53.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 10 | Compact Double140 × 190cm55.1 × 74.8 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 11 | Euro Double140 × 200cm55.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 12 | UK King150 × 200cm59.1 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 13 | King Long150 × 210cm59.1 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 14 | Euro King160 × 200cm63.0 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 15 | Euro King Long160 × 210cm63.0 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 16 | Euro King XL160 × 220cm63.0 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 17 | Super King180 × 200cm70.9 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 18 | Super King Long180 × 210cm70.9 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 19 | Super King XL180 × 220cm70.9 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 20 | Emperor200 × 200cm78.7 × 78.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 21 | Emperor Long200 × 210cm78.7 × 82.7 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 22 | Emperor XL200 × 220cm78.7 × 86.6 in | Size choice | Chooses this size: sets Ecwid's own Size control | stays here (a choice is made) | |
+| 23 | Tell us what you need | Custom size | Opens the contact form for another size | stays here (a choice is made) | |
+| 24 | Continue to Firmness | Continue | Goes to the next step of the order (disabled until this step is chosen) | → Firmness · Choose (picture: [firmness-empty](#firmness-empty)) | |
 
 ### firmness-empty
 
@@ -230,14 +230,14 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 70 | Slider | Sets body weight; the guidance follows; it never navigates | the guidance on this screen | |
-| 2 | 170 | Slider | Sets height; the guidance follows; it never navigates | the guidance on this screen | |
-| 3 | SoftUp to 48 kgMaximum adaptation for lighter bodies. The fo | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | the same screen, firmness chosen | |
-| 4 | Medium49 – 87 kgBalanced support and adaptation for the wide | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | the same screen, firmness chosen | |
-| 5 | Firm88 – 114 kgStable support for higher body weight. Higher | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | the same screen, firmness chosen | |
-| 6 | Extra Firm, specialist model Orthopaedic Coconut Core, opens | Link | Opens the specialist model (Orthopaedic Coconut Core) in its own product page, only when tapped | the specialist product page | |
-| 7 | Back | Back | Goes to the previous step of the order | the previous step | |
-| 8 | Continue to Depth (off until its condition is met) | Continue | Goes to the next step of the order (disabled until this step is chosen) | the next step | |
+| 1 | 70 | Slider | Sets body weight; the guidance follows; it never navigates | stays here (a choice is made) | |
+| 2 | 170 | Slider | Sets height; the guidance follows; it never navigates | stays here (a choice is made) | |
+| 3 | SoftUp to 48 kgMaximum adaptation for lighter bodies. The fo | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | stays here (a choice is made) | |
+| 4 | Medium49 – 87 kgBalanced support and adaptation for the wide | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | stays here (a choice is made) | |
+| 5 | Firm88 – 114 kgStable support for higher body weight. Higher | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | stays here (a choice is made) | |
+| 6 | Extra Firm, specialist model Orthopaedic Coconut Core, opens | Link | Opens the specialist model (Orthopaedic Coconut Core) in its own product page, only when tapped | stays here (a choice is made) | |
+| 7 | Back | Back | Goes to the previous step of the order | → Height · Choose size (picture: [start](#start)) | |
+| 8 | Continue to Depth (off until its condition is met) | Continue | Goes to the next step of the order (disabled until this step is chosen) | off until its condition is met | |
 
 ### firmness
 
@@ -247,14 +247,14 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 82 | Slider | Sets body weight; the guidance follows; it never navigates | the guidance on this screen | |
-| 2 | 178 | Slider | Sets height; the guidance follows; it never navigates | the guidance on this screen | |
-| 3 | SoftUp to 48 kgMaximum adaptation for lighter bodies. The fo | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | the same screen, firmness chosen | |
-| 4 | Medium49 – 87 kgBalanced support and adaptation for the wide | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | the same screen, firmness chosen | |
-| 5 | For youFirm88 – 114 kgStable support for higher body weight. | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | the same screen, firmness chosen | |
-| 6 | Extra Firm, specialist model Orthopaedic Coconut Core, opens | Link | Opens the specialist model (Orthopaedic Coconut Core) in its own product page, only when tapped | the specialist product page | |
-| 7 | Back | Back | Goes to the previous step of the order | the previous step | |
-| 8 | Continue to Depth | Continue | Goes to the next step of the order (disabled until this step is chosen) | the next step | |
+| 1 | 82 | Slider | Sets body weight; the guidance follows; it never navigates | stays here (a choice is made) | |
+| 2 | 178 | Slider | Sets height; the guidance follows; it never navigates | stays here (a choice is made) | |
+| 3 | SoftUp to 48 kgMaximum adaptation for lighter bodies. The fo | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | stays here (a choice is made) | |
+| 4 | Medium49 – 87 kgBalanced support and adaptation for the wide | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | stays here (a choice is made) | |
+| 5 | For youFirm88 – 114 kgStable support for higher body weight. | Firmness choice | Chooses this firmness: sets Ecwid's own Firmness control | stays here (a choice is made) | |
+| 6 | Extra Firm, specialist model Orthopaedic Coconut Core, opens | Link | Opens the specialist model (Orthopaedic Coconut Core) in its own product page, only when tapped | stays here (a choice is made) | |
+| 7 | Back | Back | Goes to the previous step of the order | → Height · Choose size (picture: [start](#start)) | |
+| 8 | Continue to Depth | Continue | Goes to the next step of the order (disabled until this step is chosen) | → Height · Choose depth (picture: [depth](#depth)) | |
 
 ### depth
 
@@ -264,11 +264,11 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 20cm · 8 inchesBalanced ComfortFull support and adaptation i | Depth choice | Chooses this depth: sets Ecwid's own Depth control | the same screen, depth chosen | |
-| 2 | 24cm · 9.5 inchesDeep ComfortMore latex material, deeper ada | Depth choice | Chooses this depth: sets Ecwid's own Depth control | the same screen, depth chosen | |
-| 3 | 26cm · 10.25 inchesPremium DepthMaximum latex depth. The ful | Depth choice | Chooses this depth: sets Ecwid's own Depth control | the same screen, depth chosen | |
-| 4 | Back | Back | Goes to the previous step of the order | the previous step | |
-| 5 | Continue to Cover | Continue | Goes to the next step of the order (disabled until this step is chosen) | the next step | |
+| 1 | 20cm · 8 inchesBalanced ComfortFull support and adaptation i | Depth choice | Chooses this depth: sets Ecwid's own Depth control | stays here (a choice is made) | |
+| 2 | 24cm · 9.5 inchesDeep ComfortMore latex material, deeper ada | Depth choice | Chooses this depth: sets Ecwid's own Depth control | stays here (a choice is made) | |
+| 3 | 26cm · 10.25 inchesPremium DepthMaximum latex depth. The ful | Depth choice | Chooses this depth: sets Ecwid's own Depth control | stays here (a choice is made) | |
+| 4 | Back | Back | Goes to the previous step of the order | → Firmness · Choose (picture: [firmness-empty](#firmness-empty)) | |
+| 5 | Continue to Cover | Continue | Goes to the next step of the order (disabled until this step is chosen) | → Covers · Choose cover (picture: [cover-none](#cover-none)) | |
 
 ### cover-none
 
@@ -278,12 +278,12 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Organic Cotton | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | the same screen, cover chosen | |
-| 2 | Double-Sided Cotton / Wool | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | the same screen, cover chosen | |
-| 3 | Aloe Vera Blend | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | the same screen, cover chosen | |
-| 4 | Cashmere + Silver Ions | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | the same screen, cover chosen | |
-| 5 | Back | Back | Goes to the previous step of the order | the previous step | |
-| 6 | Continue to Review (off until its condition is met) | Continue | Goes to the next step of the order (disabled until this step is chosen) | the next step | |
+| 1 | Organic Cotton | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | stays here (a choice is made) | |
+| 2 | Double-Sided Cotton / Wool | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | stays here (a choice is made) | |
+| 3 | Aloe Vera Blend | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | stays here (a choice is made) | |
+| 4 | Cashmere + Silver Ions | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | stays here (a choice is made) | |
+| 5 | Back | Back | Goes to the previous step of the order | → Height · Choose depth (picture: [depth](#depth)) | |
+| 6 | Continue to Review (off until its condition is met) | Continue | Goes to the next step of the order (disabled until this step is chosen) | off until its condition is met | |
 
 ### cover
 
@@ -293,12 +293,12 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Organic Cotton | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | the same screen, cover chosen | |
-| 2 | Double-Sided Cotton / Wool | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | the same screen, cover chosen | |
-| 3 | Aloe Vera Blend | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | the same screen, cover chosen | |
-| 4 | Cashmere + Silver Ions | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | the same screen, cover chosen | |
-| 5 | Back | Back | Goes to the previous step of the order | the previous step | |
-| 6 | Continue to Review | Continue | Goes to the next step of the order (disabled until this step is chosen) | the next step | |
+| 1 | Organic Cotton | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | stays here (a choice is made) | |
+| 2 | Double-Sided Cotton / Wool | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | stays here (a choice is made) | |
+| 3 | Aloe Vera Blend | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | stays here (a choice is made) | |
+| 4 | Cashmere + Silver Ions | Cover choice | Chooses this cover: sets Ecwid's own Covers control and shows its information | stays here (a choice is made) | |
+| 5 | Back | Back | Goes to the previous step of the order | → Height · Choose depth (picture: [depth](#depth)) | |
+| 6 | Continue to Review | Continue | Goes to the next step of the order (disabled until this step is chosen) | → Delivery · Your Botanic (picture: [review](#review)) | |
 
 ### review
 
@@ -308,12 +308,12 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Change | Change | Goes back to that step to change the choice | that step | |
-| 2 | Change | Change | Goes back to that step to change the choice | that step | |
-| 3 | Change | Change | Goes back to that step to change the choice | that step | |
-| 4 | Change | Change | Goes back to that step to change the choice | that step | |
-| 5 | Back | Back | Goes to the previous step of the order | the previous step | |
-| 6 | Add to Bag | Add to Bag | Presses Ecwid's own Add to Bag (disabled until size, firmness, depth and cover are chosen) | the same button turns into Go to Checkout | |
+| 1 | Change | Change | Goes back to that step to change the choice | → Height · Choose size (picture: [start](#start)) | |
+| 2 | Change | Change | Goes back to that step to change the choice | → Firmness · Choose (picture: [firmness-empty](#firmness-empty)) | |
+| 3 | Change | Change | Goes back to that step to change the choice | → Height · Choose depth (picture: [depth](#depth)) | |
+| 4 | Change | Change | Goes back to that step to change the choice | → Covers · Choose cover (picture: [cover-none](#cover-none)) | |
+| 5 | Back | Back | Goes to the previous step of the order | → Covers · Choose cover (picture: [cover-none](#cover-none)) | |
+| 6 | Add to Bag | Add to Bag | Presses Ecwid's own Add to Bag (disabled until size, firmness, depth and cover are chosen) | stays here (a choice is made) | |
 
 ### review-bagged
 
@@ -323,12 +323,12 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Change | Change | Goes back to that step to change the choice | that step | |
-| 2 | Change | Change | Goes back to that step to change the choice | that step | |
-| 3 | Change | Change | Goes back to that step to change the choice | that step | |
-| 4 | Change | Change | Goes back to that step to change the choice | that step | |
-| 5 | Back | Back | Goes to the previous step of the order | the previous step | |
-| 6 | Go to Checkout | Go to Checkout | Opens the shopping cart, built from the four choices and the promotion; the e-mail is entered there, then checkout | the shopping cart | |
+| 1 | Change | Change | Goes back to that step to change the choice | → Height · Choose size (picture: [start](#start)) | |
+| 2 | Change | Change | Goes back to that step to change the choice | → Firmness · Choose (picture: [firmness-empty](#firmness-empty)) | |
+| 3 | Change | Change | Goes back to that step to change the choice | → Height · Choose depth (picture: [depth](#depth)) | |
+| 4 | Change | Change | Goes back to that step to change the choice | → Covers · Choose cover (picture: [cover-none](#cover-none)) | |
+| 5 | Back | Back | Goes to the previous step of the order | → Covers · Choose cover (picture: [cover-none](#cover-none)) | |
+| 6 | Go to Checkout | Go to Checkout | Opens the shopping cart, built from the four choices and the promotion; the e-mail is entered there, then checkout | stays here (a choice is made) | |
 
 ### standard
 
@@ -338,19 +338,19 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Photograph 1 | Photograph | Shows this photograph large | the large photograph | |
-| 2 | Photograph 2 | Photograph | Shows this photograph large | the large photograph | |
-| 3 | Photograph 3 | Photograph | Shows this photograph large | the large photograph | |
-| 4 | Photograph 4 | Photograph | Shows this photograph large | the large photograph | |
-| 5 | Photograph 5 | Photograph | Shows this photograph large | the large photograph | |
-| 6 | Photograph 6 | Photograph | Shows this photograph large | the large photograph | |
-| 7 | Photograph 7 | Photograph | Shows this photograph large | the large photograph | |
-| 8 | Photograph 8 | Photograph | Shows this photograph large | the large photograph | |
-| 9 | Please chooseSmall Single 75x190 cm./ 29.5” x 74.8” (+£788)S | Option menu | The shop's own option menu (stand-in): changes the same selection as the television | the television shows the same choice | |
-| 10 | Please chooseH- 20 cm (8”) Balanced ComfortH -24 cm (9.5”) D | Option menu | The shop's own option menu (stand-in): changes the same selection as the television | the television shows the same choice | |
-| 11 | Please chooseUp to 47 kg / up to 7.4 st body weight – SOFT48 | Option menu | The shop's own option menu (stand-in): changes the same selection as the television | the television shows the same choice | |
-| 12 | Please chooseOrganic CottonDouble-Sided Cotton / WoolAloe Ve | Option menu | The shop's own option menu (stand-in): changes the same selection as the television | the television shows the same choice | |
-| 13 | Add to Bag | Add to Bag | Presses Ecwid's own Add to Bag (disabled until size, firmness, depth and cover are chosen) | the same button turns into Go to Checkout | |
+| 1 | Photograph 1 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 2 | Photograph 2 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 3 | Photograph 3 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 4 | Photograph 4 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 5 | Photograph 5 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 6 | Photograph 6 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 7 | Photograph 7 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 8 | Photograph 8 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 9 | Please chooseSmall Single 75x190 cm./ 29.5” x 74.8” (+£788)S | Option menu | The shop's own option menu (stand-in): changes the same selection as the television | stays here (a choice is made) | |
+| 10 | Please chooseH- 20 cm (8”) Balanced ComfortH -24 cm (9.5”) D | Option menu | The shop's own option menu (stand-in): changes the same selection as the television | stays here (a choice is made) | |
+| 11 | Please chooseUp to 47 kg / up to 7.4 st body weight – SOFT48 | Option menu | The shop's own option menu (stand-in): changes the same selection as the television | stays here (a choice is made) | |
+| 12 | Please chooseOrganic CottonDouble-Sided Cotton / WoolAloe Ve | Option menu | The shop's own option menu (stand-in): changes the same selection as the television | stays here (a choice is made) | |
+| 13 | Add to Bag | Add to Bag | Presses Ecwid's own Add to Bag (disabled until size, firmness, depth and cover are chosen) | stays here (a choice is made) | |
 
 ### gallery
 
@@ -360,17 +360,17 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Previous photograph | Arrow | Shows the previous or next photograph | another photograph | |
-| 2 | Next photograph | Arrow | Shows the previous or next photograph | another photograph | |
-| 3 | Photograph 1 | Photograph | Shows this photograph large | the large photograph | |
-| 4 | Photograph 2 | Photograph | Shows this photograph large | the large photograph | |
-| 5 | Photograph 3 | Photograph | Shows this photograph large | the large photograph | |
-| 6 | Photograph 4 | Photograph | Shows this photograph large | the large photograph | |
-| 7 | Photograph 5 | Photograph | Shows this photograph large | the large photograph | |
-| 8 | Photograph 6 | Photograph | Shows this photograph large | the large photograph | |
-| 9 | Photograph 7 | Photograph | Shows this photograph large | the large photograph | |
-| 10 | Photograph 8 | Photograph | Shows this photograph large | the large photograph | |
-| 11 | Close gallery | Gallery | Closes the gallery and returns to where the customer was | the gallery / back | |
+| 1 | Previous photograph | Arrow | Shows the previous or next photograph | stays here (a choice is made) | |
+| 2 | Next photograph | Arrow | Shows the previous or next photograph | stays here (a choice is made) | |
+| 3 | Photograph 1 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 4 | Photograph 2 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 5 | Photograph 3 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 6 | Photograph 4 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 7 | Photograph 5 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 8 | Photograph 6 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 9 | Photograph 7 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 10 | Photograph 8 | Photograph | Shows this photograph large | stays here (a choice is made) | |
+| 11 | Close gallery | Gallery | Closes the gallery and returns to where the customer was | → Height · Choose size (picture: [start](#start)) | |
 
 ### discover-intro
 
@@ -380,8 +380,8 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 2 | Next: At a Glance | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 2 | Next: At a Glance | Next | Goes to the next panel of the whole presentation | → Discover · At a Glance (picture: [discover-glance](#discover-glance)) | |
 
 ### discover-glance
 
@@ -391,9 +391,9 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 3 | Next: Choose | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | Back | Back | Goes to the previous panel of the whole presentation | → Discover · Introduction (picture: [discover-intro](#discover-intro)) | |
+| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 3 | Next: Choose | Next | Goes to the next panel of the whole presentation | → Firmness · Choose (picture: [firmness-empty](#firmness-empty)) | |
 
 ### firmness-principle
 
@@ -403,14 +403,14 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Firmness in a natural Dunlop latex mattress is a… | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2Softer is not automatically more comfortable. | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | 3Firmness works like clothing size. | Text part | Shows this part of the text on the right | that part of the text | |
-| 4 | 4Medium, Firm or Extra Firm can still feel… | Text part | Shows this part of the text on the right | that part of the text | |
-| 5 | 5Use the firmness cards below. | Text part | Shows this part of the text on the right | that part of the text | |
-| 6 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 7 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 8 | Next: How It Works | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Firmness in a natural Dunlop latex mattress is a… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2Softer is not automatically more comfortable. | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | 3Firmness works like clothing size. | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 4 | 4Medium, Firm or Extra Firm can still feel… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 5 | 5Use the firmness cards below. | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 6 | Back | Back | Goes to the previous panel of the whole presentation | → Firmness · Choose (picture: [firmness-empty](#firmness-empty)) | |
+| 7 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 8 | Next: How It Works | Next | Goes to the next panel of the whole presentation | → Firmness · How It Works (picture: [firmness-regulation](#firmness-regulation)) | |
 
 ### firmness-regulation
 
@@ -420,12 +420,12 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Overview | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2Use Your Individual Body Weight Only | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | 3Why Body Weight — Not Personal Preference? | Text part | Shows this part of the text on the right | that part of the text | |
-| 4 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 5 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 6 | Next: Who It Is For | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Overview | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2Use Your Individual Body Weight Only | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | 3Why Body Weight — Not Personal Preference? | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 4 | Back | Back | Goes to the previous panel of the whole presentation | → Firmness · Correct vs Softer (picture: [firmness-principle](#firmness-principle)) | |
+| 5 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 6 | Next: Who It Is For | Next | Goes to the next panel of the whole presentation | → Firmness · Who It Is For (picture: [firmness-who](#firmness-who)) | |
 
 ### firmness-who
 
@@ -435,11 +435,11 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Overview | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2Who Is It Not For? | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 5 | Next: What To Expect | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Overview | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2Who Is It Not For? | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | Back | Back | Goes to the previous panel of the whole presentation | → Firmness · How It Works (picture: [firmness-regulation](#firmness-regulation)) | |
+| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 5 | Next: What To Expect | Next | Goes to the next panel of the whole presentation | → Comfort · What To Expect (picture: [comfort-expect](#comfort-expect)) | |
 
 ### comfort-expect
 
@@ -449,12 +449,12 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1It is important to know this: this mattress and… | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2That is why we keep repeating these words:… | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | 3At the same time, you still feel lightness,… | Text part | Shows this part of the text on the right | that part of the text | |
-| 4 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 5 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 6 | Next: Latex Behaviour | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1It is important to know this: this mattress and… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2That is why we keep repeating these words:… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | 3At the same time, you still feel lightness,… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 4 | Back | Back | Goes to the previous panel of the whole presentation | → Firmness · Who It Is For (picture: [firmness-who](#firmness-who)) | |
+| 5 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 6 | Next: Latex Behaviour | Next | Goes to the next panel of the whole presentation | → Comfort · Latex Behaviour (picture: [comfort-behaviour](#comfort-behaviour)) | |
 
 ### comfort-behaviour
 
@@ -464,15 +464,15 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1The Balance Between Support And Adaptation | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2Individual Weight — Always | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | 3The Magic Of Density | Text part | Shows this part of the text on the right | that part of the text | |
-| 4 | 4The Magic Of Elasticity | Text part | Shows this part of the text on the right | that part of the text | |
-| 5 | 5Instant Adaptation | Text part | Shows this part of the text on the right | that part of the text | |
-| 6 | 6A Gift From Nature, Processed With Dunlop Technology | Text part | Shows this part of the text on the right | that part of the text | |
-| 7 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 8 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 9 | Next: Choose size | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1The Balance Between Support And Adaptation | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2Individual Weight — Always | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | 3The Magic Of Density | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 4 | 4The Magic Of Elasticity | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 5 | 5Instant Adaptation | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 6 | 6A Gift From Nature, Processed With Dunlop Technology | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 7 | Back | Back | Goes to the previous panel of the whole presentation | → Comfort · What To Expect (picture: [comfort-expect](#comfort-expect)) | |
+| 8 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 9 | Next: Choose size | Next | Goes to the next panel of the whole presentation | → Height · Choose size (picture: [start](#start)) | |
 
 ### height-why
 
@@ -482,11 +482,11 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Height directly affects how much latex material… | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2All three heights use the same Dunlop latex core… | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 5 | Next: Choose cover | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Height directly affects how much latex material… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2All three heights use the same Dunlop latex core… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | Back | Back | Goes to the previous panel of the whole presentation | → Height · Choose depth (picture: [depth](#depth)) | |
+| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 5 | Next: Choose cover | Next | Goes to the next panel of the whole presentation | → Covers · Choose cover (picture: [cover-none](#cover-none)) | |
 
 ### covers-system
 
@@ -496,12 +496,12 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Fire Safety Without Chemicals | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2Zip-Off Design | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | 3Cover Customisation | Text part | Shows this part of the text on the right | that part of the text | |
-| 4 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 5 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 6 | Next: Origin | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Fire Safety Without Chemicals | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2Zip-Off Design | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | 3Cover Customisation | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 4 | Back | Back | Goes to the previous panel of the whole presentation | → Covers · Choose cover (picture: [cover-none](#cover-none)) | |
+| 5 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 6 | Next: Origin | Next | Goes to the next panel of the whole presentation | → Benefits · Origin (picture: [benefits-origin](#benefits-origin)) | |
 
 ### benefits-origin
 
@@ -511,9 +511,9 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 3 | Next: Why Latex | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | Back | Back | Goes to the previous panel of the whole presentation | → Covers · Cover System (picture: [covers-system](#covers-system)) | |
+| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 3 | Next: Why Latex | Next | Goes to the next panel of the whole presentation | → Benefits · Why Latex (picture: [benefits-why](#benefits-why)) | |
 
 ### benefits-why
 
@@ -523,13 +523,13 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Petroleum Foams Explained | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2Latex Is Bio-Based | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | 3Breathability Advantage | Text part | Shows this part of the text on the right | that part of the text | |
-| 4 | 4Why Latex Costs More | Text part | Shows this part of the text on the right | that part of the text | |
-| 5 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 6 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 7 | Next: Bearing Force | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Petroleum Foams Explained | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2Latex Is Bio-Based | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | 3Breathability Advantage | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 4 | 4Why Latex Costs More | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 5 | Back | Back | Goes to the previous panel of the whole presentation | → Benefits · Origin (picture: [benefits-origin](#benefits-origin)) | |
+| 6 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 7 | Next: Bearing Force | Next | Goes to the next panel of the whole presentation | → Support · Bearing Force (picture: [support-bearing](#support-bearing)) | |
 
 ### support-bearing
 
@@ -539,9 +539,9 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 3 | Next: Support + Adaptation | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | Back | Back | Goes to the previous panel of the whole presentation | → Benefits · Why Latex (picture: [benefits-why](#benefits-why)) | |
+| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 3 | Next: Support + Adaptation | Next | Goes to the next panel of the whole presentation | → Support · Support + Adaptation (picture: [support-together](#support-together)) | |
 
 ### support-together
 
@@ -551,12 +551,12 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Most mattress materials force a compromise:… | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2The high density provides the structural bearing… | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | 3These two properties amplify each other. | Text part | Shows this part of the text on the right | that part of the text | |
-| 4 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 5 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 6 | Next: Elasticity | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Most mattress materials force a compromise:… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2The high density provides the structural bearing… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | 3These two properties amplify each other. | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 4 | Back | Back | Goes to the previous panel of the whole presentation | → Support · Bearing Force (picture: [support-bearing](#support-bearing)) | |
+| 5 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 6 | Next: Elasticity | Next | Goes to the next panel of the whole presentation | → Adaptation · Elasticity (picture: [adaptation-elasticity](#adaptation-elasticity)) | |
 
 ### adaptation-elasticity
 
@@ -566,9 +566,9 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 3 | Next: How It Feels | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | Back | Back | Goes to the previous panel of the whole presentation | → Support · Support + Adaptation (picture: [support-together](#support-together)) | |
+| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 3 | Next: How It Feels | Next | Goes to the next panel of the whole presentation | → Adaptation · How It Feels (picture: [adaptation-feel](#adaptation-feel)) | |
 
 ### adaptation-feel
 
@@ -578,13 +578,13 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1At first glance, a natural latex mattress may… | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2Your body does not sink. | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | 3The shoulders compress only as far as needed. | Text part | Shows this part of the text on the right | that part of the text | |
-| 4 | 4Movement during sleep is absorbed in real time. | Text part | Shows this part of the text on the right | that part of the text | |
-| 5 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 6 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 7 | Next: Zone Map | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1At first glance, a natural latex mattress may… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2Your body does not sink. | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | 3The shoulders compress only as far as needed. | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 4 | 4Movement during sleep is absorbed in real time. | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 5 | Back | Back | Goes to the previous panel of the whole presentation | → Adaptation · Elasticity (picture: [adaptation-elasticity](#adaptation-elasticity)) | |
+| 6 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 7 | Next: Zone Map | Next | Goes to the next panel of the whole presentation | → 7-Zone · Zone Map (picture: [zones-map](#zones-map)) | |
 
 ### zones-map
 
@@ -594,9 +594,9 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 3 | Next: Zone By Zone | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | Back | Back | Goes to the previous panel of the whole presentation | → Adaptation · How It Feels (picture: [adaptation-feel](#adaptation-feel)) | |
+| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 3 | Next: Zone By Zone | Next | Goes to the next panel of the whole presentation | → 7-Zone · Zone By Zone (picture: [zones-detail](#zones-detail)) | |
 
 ### zones-detail
 
@@ -606,12 +606,12 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Overview | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2Zone by Zone | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | 3Additional Effects | Text part | Shows this part of the text on the right | that part of the text | |
-| 4 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 5 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 6 | Next: Airflow | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Overview | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2Zone by Zone | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | 3Additional Effects | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 4 | Back | Back | Goes to the previous panel of the whole presentation | → 7-Zone · Zone Map (picture: [zones-map](#zones-map)) | |
+| 5 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 6 | Next: Airflow | Next | Goes to the next panel of the whole presentation | → Ventilation · Airflow (picture: [ventilation-airflow](#ventilation-airflow)) | |
 
 ### ventilation-airflow
 
@@ -621,9 +621,9 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 3 | Next: Why It Matters | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | Back | Back | Goes to the previous panel of the whole presentation | → 7-Zone · Zone By Zone (picture: [zones-detail](#zones-detail)) | |
+| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 3 | Next: Why It Matters | Next | Goes to the next panel of the whole presentation | → Ventilation · Why It Matters (picture: [ventilation-sleep](#ventilation-sleep)) | |
 
 ### ventilation-sleep
 
@@ -633,11 +633,11 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Overview | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2A Note On Claims | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 5 | Next: Cleaner Sleep | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Overview | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2A Note On Claims | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | Back | Back | Goes to the previous panel of the whole presentation | → Ventilation · Airflow (picture: [ventilation-airflow](#ventilation-airflow)) | |
+| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 5 | Next: Cleaner Sleep | Next | Goes to the next panel of the whole presentation | → Hygiene · Cleaner Sleep (picture: [hygiene-clean](#hygiene-clean)) | |
 
 ### hygiene-clean
 
@@ -647,9 +647,9 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 3 | Next: Realistic Picture | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | Back | Back | Goes to the previous panel of the whole presentation | → Ventilation · Why It Matters (picture: [ventilation-sleep](#ventilation-sleep)) | |
+| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 3 | Next: Realistic Picture | Next | Goes to the next panel of the whole presentation | → Hygiene · Realistic Picture (picture: [hygiene-picture](#hygiene-picture)) | |
 
 ### hygiene-picture
 
@@ -659,11 +659,11 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1A Realistic Picture | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2The Logic | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 5 | Next: Certifications | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1A Realistic Picture | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2The Logic | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | Back | Back | Goes to the previous panel of the whole presentation | → Hygiene · Cleaner Sleep (picture: [hygiene-clean](#hygiene-clean)) | |
+| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 5 | Next: Certifications | Next | Goes to the next panel of the whole presentation | → Certifications · Certifications (picture: [certs-bodies](#certs-bodies)) | |
 
 ### certs-bodies
 
@@ -673,9 +673,9 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 3 | Next: Where It Is Made | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | Back | Back | Goes to the previous panel of the whole presentation | → Hygiene · Realistic Picture (picture: [hygiene-picture](#hygiene-picture)) | |
+| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 3 | Next: Where It Is Made | Next | Goes to the next panel of the whole presentation | → Certifications · Where It Is Made (picture: [certs-made](#certs-made)) | |
 
 ### certs-made
 
@@ -685,13 +685,13 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Why OEKO-TEX® Matters More Than Decorative Eco Claims | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2German Standards and Process Oversight | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | 3Raw Material Origin | Text part | Shows this part of the text on the right | that part of the text | |
-| 4 | 4A Factual Note on Latex Foam Production | Text part | Shows this part of the text on the right | that part of the text | |
-| 5 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 6 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 7 | Next: Warranty + Gift | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Why OEKO-TEX® Matters More Than Decorative Eco Claims | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2German Standards and Process Oversight | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | 3Raw Material Origin | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 4 | 4A Factual Note on Latex Foam Production | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 5 | Back | Back | Goes to the previous panel of the whole presentation | → Certifications · Certifications (picture: [certs-bodies](#certs-bodies)) | |
+| 6 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 7 | Next: Warranty + Gift | Next | Goes to the next panel of the whole presentation | → Warranty · Warranty + Gift (picture: [warranty-cover](#warranty-cover)) | |
 
 ### warranty-cover
 
@@ -701,9 +701,9 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 3 | Next: Conditions | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | Back | Back | Goes to the previous panel of the whole presentation | → Certifications · Where It Is Made (picture: [certs-made](#certs-made)) | |
+| 2 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 3 | Next: Conditions | Next | Goes to the next panel of the whole presentation | → Warranty · Conditions (picture: [warranty-conditions](#warranty-conditions)) | |
 
 ### warranty-conditions
 
@@ -713,11 +713,11 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1The warranty covers structural indentations… | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2Rotate the mattress three times in the first six… | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 5 | Next: Made To Order | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1The warranty covers structural indentations… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2Rotate the mattress three times in the first six… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | Back | Back | Goes to the previous panel of the whole presentation | → Warranty · Warranty + Gift (picture: [warranty-cover](#warranty-cover)) | |
+| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 5 | Next: Made To Order | Next | Goes to the next panel of the whole presentation | → Delivery · Made To Order (picture: [delivery-made](#delivery-made)) | |
 
 ### delivery-made
 
@@ -727,11 +727,11 @@ Below the panels, always the same five order steps:
 
 | No. | Button | Kind | What it does today | Leads to | Your decision |
 |---|---|---|---|---|---|
-| 1 | 1Because each mattress is built individually to… | Text part | Shows this part of the text on the right | that part of the text | |
-| 2 | 2We will confirm the expected production and… | Text part | Shows this part of the text on the right | that part of the text | |
-| 3 | Back | Back | Goes to the previous panel of the whole presentation | the previous panel | |
-| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | that step | |
-| 5 | Next: Your Botanic | Next | Goes to the next panel of the whole presentation | the next panel | |
+| 1 | 1Because each mattress is built individually to… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 2 | 2We will confirm the expected production and… | Text part | Shows this part of the text on the right | stays here (a choice is made) | |
+| 3 | Back | Back | Goes to the previous panel of the whole presentation | → Warranty · Conditions (picture: [warranty-conditions](#warranty-conditions)) | |
+| 4 | Select your Botanic | Select your Botanic | Goes to step 1 of the order (Size) | → Height · Choose size (picture: [start](#start)) | |
+| 5 | Next: Your Botanic | Next | Goes to the next panel of the whole presentation | → Delivery · Your Botanic (picture: [review](#review)) | |
 
 ---
 269 numbered buttons over 38 screens, plus the always-present groups. Regenerate after any change: `node tools/build-tv-design-preview.mjs && NODE_PATH=$(npm root -g) node tools/tv-button-catalogue.mjs`. The buttons of today's live television (before this design) are in `docs/TV-BUTTON-MAP.md`.

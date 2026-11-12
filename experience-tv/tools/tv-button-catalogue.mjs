@@ -76,6 +76,20 @@ const MARK = `(rows) => {
   });
 }`;
 
+
+// the state of the design, as a key: which topic and panel are open, or the gallery / the standard view
+const PRESS = `(i) => {
+  const els = [...document.querySelectorAll('button, a[href], input[type=range], select')].filter((e) => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return r.width > 4 && r.height > 4 && cs.visibility !== 'hidden' && cs.display !== 'none'; });
+  const e = els[i]; if (!e) return false; e.click(); return true;
+}`;
+const STATE = `(() => {
+  if (document.body.classList.contains('std')) return 'standard';
+  const g = document.querySelector('#galbtn'); if (g && g.getAttribute('aria-pressed') === 'true') return 'gallery';
+  const ch = document.querySelector('#chbar .ch[aria-current=true]'), pn = document.querySelector('#rail .pn[aria-current=true]');
+  if (!ch) return 'other';
+  return ch.dataset.ch + '/' + (pn ? pn.dataset.pn : '');
+})()`;
+
 const cat = { generated: new Date().toISOString().slice(0, 10), note: 'design preview, simulated store; not deployed', screens: [] };
 let master = null;
 for (const [id, title0, q, act] of SCREENS) {
@@ -86,7 +100,8 @@ for (const [id, title0, q, act] of SCREENS) {
   if (!master) master = rows;
   await page.evaluate(`(${MARK})(${JSON.stringify(rows)})`);
   await page.screenshot({ path: join(out, id + '.jpg'), type: 'jpeg', quality: 72, fullPage: true });
-  cat.screens.push({ id, title, file: id + '.jpg', buttons: rows.filter((r) => !r.g).map((r) => ({ n: r.n, label: r.label, kind: r.kind, does: r.does, leads: r.leads, disabled: r.disabled })), groups: [...new Set(rows.filter((r) => r.g).map((r) => r.g))] });
+  const key = await page.evaluate(STATE);
+  cat.screens.push({ id, key, title, file: id + '.jpg', buttons: rows.filter((r) => !r.g).map((r) => ({ n: r.n, el: r.el, label: r.label, kind: r.kind, does: r.does, leads: r.leads, disabled: r.disabled, tag: r.tag })), groups: [...new Set(rows.filter((r) => r.g).map((r) => r.g))] });
   console.log(id + ': ' + rows.filter((r) => !r.g).length + ' own buttons, groups ' + [...new Set(rows.filter((r) => r.g).map((r) => r.g))].join(''));
 }
 // the buttons that are on every screen
@@ -96,6 +111,30 @@ const railByChapter = {};
 for (const c of ['discover', 'firmness', 'comfort', 'height', 'covers', 'benefits', 'support', 'adaptation', 'zones', 'ventilation', 'hygiene', 'certs', 'warranty', 'delivery']) { await page.goto(FILE + '?ch=' + c); railByChapter[c] = (await page.evaluate(DESCRIBE)).filter((r) => r.g === 'C' && r.kind === 'Panel').map((r) => r.label); }
 const steps = all0.filter((r) => r.g === 'C' && r.kind === 'Order step'), chips = all0.filter((r) => r.g === 'D' && r.kind === 'Selection chip'), bagRows = all0.filter((r) => r.g === 'D' && r.kind === 'Add to Bag' || r.g === 'E');
 cat.always = { A: tools.map((r) => ({ label: r.label, does: r.does })), B: topics.map((r) => ({ label: r.label, does: r.does })), C_panels: railByChapter, C_steps: steps.map((r) => ({ label: r.label.replace(/^Step \d: /, ''), does: r.does })), D: chips.map((r) => ({ label: r.label, does: r.does })), E: [{ label: 'Add to Bag / Go to Checkout (in "Your selection", and again below the television as the shop\'s own button)', does: 'One button with two faces: Add to Bag presses Ecwid\'s own button once all four choices are made; then it becomes Go to Checkout, which opens the shop\'s checkout; a changed choice turns it back into Add to Bag' }] };
+
+// WHERE EACH BUTTON LEADS: every enabled button of every screen is pressed once, on a fresh copy of that screen; the state after the
+// press is matched with the screen pictures above. A press that leaves the state unchanged is a choice: the customer stays there.
+const dp = await browser.newContext({ viewport: vp, screen: vp }); await dp.route(/^https?:\/\//, (r) => (/media\.divinedunlop\.com|d2j6dbq0eux0bg\.cloudfront\.net/.test(r.request().url()) ? r.continue() : r.abort()));
+const dpg = await dp.newPage();
+const KEYS = {}; for (const sc of cat.screens) if (sc.key && !KEYS[sc.key]) KEYS[sc.key] = sc.id;
+const titleOf = (id) => (cat.screens.find((x) => x.id === id) || {}).title;
+for (const sc of cat.screens) {
+  const q = SCREENS.find((x) => x[0] === sc.id)[2];
+  for (const btn of sc.buttons) {
+    if (btn.disabled || btn.el == null || /^(a|select|input)$/i.test(btn.tag || '')) { btn.dest = { key: null, screen: null, text: btn.disabled ? 'off until its condition is met' : 'not pressed (link or field)' }; continue; }
+    await dpg.goto(FILE + q); await dpg.waitForTimeout(/gallery|standard/.test(sc.id) ? 900 : 250);
+    if (sc.id === 'size-form') await dpg.click('[data-more]').catch(() => {});
+    const before = await dpg.evaluate(STATE);
+    const pressed = await dpg.evaluate(([src, i]) => (new Function('return (' + src + ')')())(i), [PRESS, btn.el]).catch(() => false);
+    await dpg.waitForTimeout(260);
+    const after = await dpg.evaluate(STATE);
+    const where = await dpg.evaluate(() => { const c = document.querySelector('#chbar .ch[aria-current=true]'), p = document.querySelector('#rail .pn[aria-current=true]'); return ((c ? c.textContent.trim() : '') + (p ? ' · ' + p.textContent.trim() : '')).trim(); });
+    if (!pressed) { btn.dest = { key: null, screen: null, text: 'not pressed' }; continue; }
+    if (after === before) btn.dest = { key: after, screen: sc.id, where, text: 'stays here (a choice is made)' };
+    else btn.dest = { key: after, screen: KEYS[after] || null, where, text: where || after };
+  }
+}
+await dp.close();
 writeFileSync(join(out, 'catalogue.json'), JSON.stringify(cat, null, 1));
 await browser.close();
 
@@ -125,7 +164,7 @@ for (const s of cat.screens) {
   L.push(`\n### ${s.id}\n\n**${s.title}**\n\n![${s.title}](tv-catalogue/${s.file})\n`);
   if (!s.buttons.length) { L.push('No buttons of its own: only the groups A to E.\n'); continue; }
   L.push('| No. | Button | Kind | What it does today | Leads to | Your decision |\n|---|---|---|---|---|---|');
-  s.buttons.forEach((b) => L.push(`| ${b.n} | ${b.label.replace(/\|/g, '/')}${b.disabled ? ' (off until its condition is met)' : ''} | ${b.kind} | ${b.does} | ${b.leads} | |`));
+  s.buttons.forEach((b) => L.push(`| ${b.n} | ${b.label.replace(/\|/g, '/')}${b.disabled ? ' (off until its condition is met)' : ''} | ${b.kind} | ${b.does} | ${b.dest && b.dest.text ? (b.dest.where && !/^stays/.test(b.dest.text) ? '→ ' + b.dest.where + (b.dest.screen ? ' (picture: [' + b.dest.screen + '](#' + b.dest.screen + '))' : '') : b.dest.text) : b.leads} | |`));
 }
 L.push(`\n---\n${total} numbered buttons over ${cat.screens.length} screens, plus the always-present groups. Regenerate after any change: \`node tools/build-tv-design-preview.mjs && NODE_PATH=$(npm root -g) node tools/tv-button-catalogue.mjs\`. The buttons of today's live television (before this design) are in \`docs/TV-BUTTON-MAP.md\`.\n`);
 writeFileSync(join(root, 'docs', 'TV-BUTTON-CATALOGUE.md'), L.join('\n'));
