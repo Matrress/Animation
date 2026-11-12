@@ -323,7 +323,58 @@ button { font: inherit; color: inherit; }
   function L(bJ,aD){const m=c.windows.filter(function(bK){return c.extraWindowsEnabled||!bK.extra;}).sort(function(i,o){return o.priority-i.priority;});for(let aG=0;aG<m.length;aG++){if(Q(bJ,m[aG].w[0],m[aG].w[1])&&Q(aD,m[aG].h[0],m[aG].h[1]))return m[aG];}return null;}
   function ai(bJ,aD){const bI=Y(bJ),aC=Y(aD);if(bI>=100&&bI<=114)return{first:'X',second:'XF',display:'EXTRA FIRM',source:'v5_xf_coir_dual_100_114',locked:true};if(aC>=150&&aC<=210&&bI>=80&&bI<=87)return{first:'F',second:'FM',display:'FIRM',source:'v4_firm_80_87',locked:true};if(bI>=72&&bI<=79&&aC>=170&&aC<=175)return{first:'F',second:'FM',display:'FIRM',source:'v4_firm_72_79_170_175',locked:true};if(bI>=75&&bI<=79&&aC>=165&&aC<=169)return{first:'F',second:'FM',display:'FIRM',source:'v4_firm_75_79_165_169',locked:true};if(aC>=150&&aC<=210&&bI>=115)return{first:'X',second:null,display:'EXTRA FIRM',source:'v4_xf_from_115',locked:true};let bt;const aE=L(bI,aC);if(aE)bt={first:aE.first,second:aE.second,display:aE.display,source:aE.id};else{const p=D(bI);bt={first:e[p],second:null,display:p,source:'base'};}if(bI>=67&&bI<=78&&aC>=150&&aC<=175&&bt.first!=='FM'&&bt.second!=='FM')bt.second='FM';return bt;}
   w.DDFirmnessCore = { limits: c.limits, bands: { softMax: c.base.softMax, mediumMax: c.base.mediumMax, firmMax: c.base.firmMax, extraFirmMin: c.base.extraFirmMin }, recommend: function (weight, height) { var r = ai(weight, height); return { display: r.display, first: r.first, second: r.second, source: r.source }; } };
-}(window));</script><script id="sync">/* Ecwid synchronisation adapter (PROPOSAL, NOT DEPLOYED).  window.DDSync
+}(window));</script><script id="selection-rules">/* SELECTION RULES of the Botanic configuration: one place for the laws the owner set (12 November 2026), shared by the large
+   television and the mobile configuration. Pure functions, no page, no store: they decide what the single Add to Bag button
+   shows and what the checkout is made of. Formatting of money is left to the screen; nothing here calculates a store price.
+
+   The four choices, in the order the customer makes them: size, firmness, depth, cover.
+   The five factors of a price: size, firmness, depth, cover and the promotion Ecwid applies (never its name).
+
+   LAWS
+   1. The button is READY only when all four choices are covered. READY lights it (larger, crisp ring); clicking it adds the mattress.
+   2. Once the four are covered, changing any one of them keeps the button active: it is READY again for the new configuration.
+   3. When the bag holds exactly the four choices, the same button is Go to Checkout (a second click opens the checkout).
+   4. Whatever is missing is named, so the customer always knows where they are: "Still to choose: Size · Cover".
+   5. The checkout is made of the five factors, and the promotion's discount is shown as the store gives it. A coupon or an
+      e-mail code is entered in the checkout, never here.
+
+   Each choice is an object with a key that identifies the choice (a value, an index or a label); a missing choice is null/undefined. */
+(function (g) {
+  'use strict';
+  var ORDER = [['size', 'Size'], ['firmness', 'Firmness'], ['depth', 'Depth'], ['cover', 'Cover']];
+
+  /* the names of the choices that are still missing, in the customer's order */
+  function missing(sel) {
+    return ORDER.filter(function (o) { return !(sel && sel[o[0]] && sel[o[0]].key != null && sel[o[0]].key !== ''); }).map(function (o) { return o[1]; });
+  }
+  function complete(sel) { return missing(sel).length === 0; }
+
+  /* identifies one whole configuration; '' while anything is missing */
+  function signature(sel) {
+    if (!complete(sel)) return '';
+    return ORDER.map(function (o) { return o[0] + '=' + sel[o[0]].key; }).join('|');
+  }
+
+  /* the face of the one bag button.
+     bagSig: the signature Ecwid confirmed as being in the bag (or '' when nothing is in the bag). */
+  function bagFace(sel, bagSig) {
+    if (!complete(sel)) return { face: 'add', enabled: false, ready: false, text: 'Add to Bag', guide: 'Still to choose: ' + missing(sel).join(' · ') };
+    if (bagSig && bagSig === signature(sel)) return { face: 'checkout', enabled: true, ready: false, text: 'Go to Checkout', guide: 'Added to your bag' };
+    return { face: 'add', enabled: true, ready: true, text: 'Add to Bag', guide: bagSig ? 'Your new choice is not in the bag yet: Add to Bag again' : 'Ready to order: all four choices are made' };
+  }
+
+  /* the checkout's lines: the five factors, in order, and the promotion as the store shows it */
+  function checkoutLines(sel, promoPct) {
+    var lines = ORDER.map(function (o) { return { factor: o[1], value: sel && sel[o[0]] ? sel[o[0]].label : null }; });
+    lines.push({ factor: 'Promotion', value: promoPct ? 'Save ' + promoPct + '%' : null });
+    return lines;
+  }
+
+  var api = { ORDER: ORDER, missing: missing, complete: complete, signature: signature, bagFace: bagFace, checkoutLines: checkoutLines };
+  g.DDRules = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+}(typeof window !== 'undefined' ? window : globalThis));
+</script><script id="sync">/* Ecwid synchronisation adapter (PROPOSAL, NOT DEPLOYED).  window.DDSync
  *
  * The guided panel is only a presentation layer. The native Ecwid <select>s stay the single source of truth:
  *   panel -> Ecwid : set(role, which) chooses the native choice and fires `input` and `change` exactly as a person would
@@ -5415,7 +5466,8 @@ var m=document.getElementById('desc-slot'),dsc=document.getElementById('productD
     var price = n.price, cmp = n.compare, dsc = n.discount, contact = size && !dims(size.label);
     var pv = contact ? 'Contact us' : (!size && !done() ? '—' : price);
     var pl = rv || !only ? 'Your price' : 'Starting price';
-    var cap = cmp && !contact ? (only ? '20 cm base depth · Discount included' : 'Discount included · Price from Ecwid') : (only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid');
+    var miss = DDRules.missing(selNow());
+    var cap = miss.length ? 'Still to choose: ' + miss.join(' · ') : cmp && !contact ? (only ? '20 cm base depth · Discount included' : 'Discount included · Price from Ecwid') : (only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid');
     var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: 'Review Your <b>Order</b>', review: done() === 4 ? (bagged() ? 'Go to <b>Checkout</b>' : 'Add to <b>Bag</b>') : 'See <b>Ecwid’s options</b>' }[st];
     var dis = !rv && !cur;
     return '<section class="gx-dock' + (st === 'firmness' ? ' gx-dock--firm' : '') + '" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small>' + ((dsc || cmp) && !contact ? '<span class="gx-promo">' + (dsc ? '<span class="gx-sv">' + esc(dsc) + '</span>' : '') + (cmp ? '<s class="gx-old">' + esc(cmp) + '</s>' : '') + '</span>' : '') + '<b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn' + (rv && done() === 4 ? ' gx-btn--bag' + (bagged() ? '' : ' gx-btn--ready') : '') + '" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
@@ -5451,8 +5503,10 @@ var m=document.getElementById('desc-slot'),dsc=document.getElementById('productD
     else if (a === 'native') toNative();
   });
   /* Add to Bag presses Ecwid's own button (Ecwid validates and adds); the button turns into Go to Checkout only when Ecwid's own cart event reports the product in the cart */
-  function sigNow() { var o = S.native && S.native.options || {}; return JSON.stringify(['size', 'depth', 'firmness', 'cover'].map(function (k) { return o[k] && o[k].label; })); }
-  function bagged() { return S.cart && S.bagSig === sigNow(); }
+  /* the four choices as the rules see them (laws: engine/selection-rules.js) */
+  function selNow() { var o = S.native && S.native.options || {}, out = {}; ['size', 'firmness', 'depth', 'cover'].forEach(function (k) { out[k] = o[k] && o[k].chosen ? { key: o[k].value, label: o[k].label } : null; }); return out; }
+  function sigNow() { return DDRules.signature(selNow()); }
+  function bagged() { return !!S.cart && !!S.bagSig && S.bagSig === sigNow(); }
   function nativeBag() { var all = d.querySelectorAll('button'); for (var i = 0; i < all.length; i++) { var b = all[i]; if (!root.contains(b) && /^\s*add to (bag|cart)\s*$/i.test(b.textContent)) return b; } return null; }
   function addToBag() { var b = nativeBag(); if (!b) return toNative(); S.bagSig = sigNow(); b.click(); }
   function gotoCheckout() { if (w.Ecwid && w.Ecwid.Cart && w.Ecwid.Cart.gotoCheckout) w.Ecwid.Cart.gotoCheckout(); else if (w.Ecwid && w.Ecwid.openPage) w.Ecwid.openPage('cart'); }

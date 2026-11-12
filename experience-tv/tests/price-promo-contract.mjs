@@ -70,6 +70,30 @@ for (const vp of [{ width: 1366, height: 1024 }, { width: 1024, height: 1366 }])
     ok(errs.length === 0, `${vp.width}x${vp.height} promo ${promo}%: no page errors`, errs.join(' | ')); await ctx.close();
   }
 }
+
+// LAWS (owner, 12 November 2026): sticky READY, the guidance names what is missing, the checkout is the five factors (Extra Firm adds its +£88)
+{
+  const ctx = await b.newContext({ viewport: { width: 1366, height: 1024 }, screen: { width: 1366, height: 1024 } }); await ctx.route(/^https?:/, (r) => r.abort());
+  const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.goto(TV + '?step=0'); await p.waitForTimeout(120);
+  const g0 = await p.textContent('#bag .hint');
+  ok(/Still to choose: Size · Firmness · Depth · Cover/.test(g0), 'the guidance names every choice still to make, in order', g0.trim());
+  await p.goto(TV + '?step=4&demo=1&promo=10'); await p.waitForTimeout(120);
+  await p.click('.st[data-go="0"]'); await p.waitForTimeout(60); await p.click('.card[data-size="3"]'); await p.waitForTimeout(80);
+  ok(await p.$eval('#bag .bagbtn', (x) => !x.disabled && x.classList.contains('ready')), 'LAW 2: after changing the size with the other three covered, the button stays READY and active');
+  await p.click('#bag [data-bag]'); await p.waitForTimeout(80);
+  ok((await p.textContent('#bag .bagbtn')).includes('Go to') , 'the bag: the same button is now Go to Checkout');
+  await p.click('.st[data-go="3"]'); await p.waitForTimeout(60); await p.click('.tile[data-cover="0"]'); await p.waitForTimeout(80);
+  ok((await p.textContent('#bag .bagbtn')).includes('Add to') && await p.$eval('#bag .bagbtn', (x) => !x.disabled), 'LAW 2: a changed cover after the bag: Add to Bag again, active, READY');
+  await p.goto(TV + '?view=co&demo=1&promo=10&bag=1'); await p.waitForTimeout(120);
+  const lines = await p.$$eval('#co .box:first-child .ln b', (x) => x.map((e) => e.textContent));
+  ok(lines.join('|') === 'Size|Firmness|Depth|Cover|Promotion', 'LAW 5: the checkout shows the five factors', lines.join(' · '));
+  await p.goto(TV + '?view=co&demo=1&promo=10&bag=1'); await p.waitForTimeout(120);
+  const px = await p.evaluate(() => { const v = document.querySelector('#co .prow b'); return v ? v.textContent : ''; });
+  ok(/£/.test(px), 'the checkout price is the sum of the five factors with the discount applied', px);
+  ok(errs.length === 0, 'laws: no page errors', errs.join(' | ')); await ctx.close();
+}
+
 await b.close();
 console.log(fails ? `\n${fails} price/checkout check(s) FAILED` : '\nPrice, promotion and checkout contract holds (simulated Ecwid; the real store is not covered)');
 process.exit(fails ? 1 : 0);

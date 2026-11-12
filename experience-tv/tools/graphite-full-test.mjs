@@ -134,8 +134,10 @@ for (const vp of [{ width: 390, height: 844 }, { width: 390, height: 700 }, { wi
     for (const [tag, url] of [['prev', 'file:///tmp/graphite-prev.html?chrome=0&promonote=0'], ['now', FILE + (FILE.includes('?') ? '&' : '?') + 'promonote=0']]) {
       const ctx = await b.newContext({ ...devices['iPhone 13'], viewport: { width: 390, height: 844 }, screen: { width: 390, height: 844 }, deviceScaleFactor: 2 }); const p = await ctx.newPage();
       await p.route('**/*', r => { const u = r.request().url(); (u.startsWith('file:') || /cloudfront\.net/.test(u)) ? r.continue() : r.abort(); });
-      await p.goto(url, { waitUntil: 'load' }); await p.waitForTimeout(800); await start(p); shots[tag] = { size: await p.screenshot() };
-      await toFirmness(p); await p.locator('button.gx-card', { hasText: /^Firm/ }).first().click(); await p.waitForTimeout(1400); await p.locator('.gx-btn').click(); await p.waitForTimeout(400); shots[tag].depth = await p.screenshot(); await ctx.close();
+      await p.goto(url, { waitUntil: 'load' }); await p.waitForTimeout(800); await start(p);
+      /* the dock's caption line is masked here on purpose: since 12 November 2026 it names what is still to choose (owner's law); everything else must stay identical */
+      const mask = () => p.evaluate(() => document.querySelectorAll('.gx-cap').forEach(e => { e.style.display = 'none'; })); await mask(); shots[tag] = { size: await p.screenshot() };
+      await toFirmness(p); await p.locator('button.gx-card', { hasText: /^Firm/ }).first().click(); await p.waitForTimeout(1400); await p.locator('.gx-btn').click(); await p.waitForTimeout(400); await mask(); shots[tag].depth = await p.screenshot(); await ctx.close();
     }
     ok(Buffer.compare(shots.prev.size, shots.now.size) === 0, 'Size screen: identical to the approved preview, byte for byte');
     ok(Buffer.compare(shots.prev.depth, shots.now.depth) === 0, 'Depth screen: identical to the approved preview, byte for byte');

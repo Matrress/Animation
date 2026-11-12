@@ -141,7 +141,8 @@ D.mattress = { depth: mattressParts('owner-mattress-depth.svg'), icon: mattressP
   D.zoneSketch = full; D.zoneTier = tier;
 }
 const tpl = readFileSync(join(root, 'tools', 'tv-design-preview.template.html'), 'utf8');
-const html = tpl.replace('/*__CORE__*/', () => core).replace('/*__DATA__*/', () => JSON.stringify(D));
+const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
+const html = tpl.replace('/*__CORE__*/', () => core).replace('/*__RULES__*/', () => rules).replace('/*__DATA__*/', () => JSON.stringify(D));
 const file = join(out, 'large-screen-design.html');
 writeFileSync(file, html);
 console.log('wrote', file, html.length, 'bytes; sizes', D.sizes.length);

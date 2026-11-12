@@ -13,6 +13,14 @@ These are decided. They are not asked again and not undone by a later change. Wh
 
 - The owner decides every button: `docs/TV-BUTTON-CATALOGUE.md` lists every button of every screen of the large design (39 screens, picture and table each) with a column for the decision (keep, remove, change, add).
 
+## Selection laws (owner, 12 November 2026; one source: `engine/selection-rules.js`, tests: `tests/selection-rules.mjs`)
+- The four choices, in the customer's order: size, firmness, depth, cover. The five factors of the price and of the checkout: size, firmness, depth, cover and the promotion Ecwid applies (its percentage, never its name).
+- **READY** (the Add to Bag button lit, larger, crisp ring) only when all four are covered. Clicking it adds the mattress through Ecwid's own button; the same button then becomes **Go to Checkout**, and a second click opens the checkout page.
+- **Once the four are covered, changing any one of them keeps the button active**: it is READY for the new configuration (Add to Bag again). Removing a choice takes it back to the guidance.
+- **Whatever is missing is named** ("Still to choose: Size · Cover"), so the customer always knows where they are. Mobile and large screen alike.
+- The coupon and the e-mail code are entered in the shop's checkout, never in the configuration. "Redeem your discount" in the checkout is not ours.
+- Equid/Ecwid is the platform. The promotion's name is not shown; the discount is shown as the store gives it.
+
 ## Content decisions
 - Firmness numbers are the Firmness module's four ranges: Soft up to 48 kg, Medium 49 to 87, Firm 88 to 114, Extra Firm 115 and over. The module is the guide for any discrepancy. The sliders (body weight and height) are on the large screen too.
 - Extra Firm is not removed: it is redirected to the specialist model "Orthopaedic Coconut Core" (a plain link, followed only on a tap). Open: what happens if it is picked in Ecwid's own menu (proposal: same notice and link, nothing changed in Ecwid).

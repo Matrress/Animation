@@ -286,6 +286,7 @@ a { color: inherit; }
 </div>
 <div class="toast" id="toast" role="status"></div>
 <script>/*__CORE__*/</script>
+<script>/*__RULES__*/</script>
 <script>
 var D = /*__DATA__*/;
 (function () {
@@ -325,8 +326,9 @@ var D = /*__DATA__*/;
   }
   function toast(t) { var e = $('#toast'); e.textContent = t; e.className = 'toast on'; clearTimeout(toast.t); toast.t = setTimeout(function () { e.className = 'toast'; }, 4200); }
   function chosen(id) { return S[id] != null; }
-  function complete() { return !!(S.size && S.firmness && S.depth && S.cover); }
-  function sig() { return complete() ? [S.size.label, S.firmness, S.depth.i, S.cover.i].join('|') : ''; }
+  function selOf() { return { size: S.size ? { key: S.size.label, label: S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' } : null, firmness: S.firmness ? { key: S.firmness, label: S.firmness } : null, depth: S.depth ? { key: S.depth.i, label: S.depth.cm + ' cm' } : null, cover: S.cover ? { key: S.cover.i, label: SHORT[S.cover.i] } : null }; }
+  function complete() { return DDRules.complete(selOf()); }   // the four choices are covered (the laws: engine/selection-rules.js)
+  function sig() { return DDRules.signature(selOf()); }
   function inBag() { return !!S.bagged && S.bagged === sig(); }   // the same four choices are already in the bag
   function valueOf(id) {
     if (id === 'size') return S.size ? S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' : null;
@@ -341,7 +343,7 @@ var D = /*__DATA__*/;
     return 0.9 * mod;
   }
   function shop() {   // STAND-IN for what Ecwid renders: the price before the discount (struck), the price with the discount, the discount note. The real module only mirrors these texts.
-    if (!S.size) return null; var list = S.size.mod + (S.depth ? S.depth.mod : 0) + (S.cover ? S.cover.mod : 0), cur = list * (100 - S.promo) / 100;
+    if (!S.size) return null; var list = S.size.mod + (S.firmness === 'Extra Firm' ? 88 : 0) + (S.depth ? S.depth.mod : 0) + (S.cover ? S.cover.mod : 0), cur = list * (100 - S.promo) / 100;   // the five factors: size, firmness (Extra Firm +£88), depth, cover, and the promotion
     return { old: S.promo ? gbp(list) : '', cur: gbp(cur), badge: S.promo ? 'Save ' + S.promo + '%' : '' };
   }
   function priceParts(sh, big) { return sh ? '<div class="prow">' + (sh.old ? '<s class="pold">' + esc(sh.old) + '</s>' : '') + '<b>' + esc(sh.cur) + '</b>' + (sh.badge ? '<span class="sv">' + esc(sh.badge) + '</span>' : '') + '</div>' + (sh.old ? '<span class="inc">Discount included: this is the price you pay.</span>' : '') : '<b>—</b>'; }
@@ -386,10 +388,11 @@ var D = /*__DATA__*/;
       h += '<button class="st' + (done ? ' done' : '') + (cur ? ' cur' : '') + '" data-go="' + i + '" aria-label="Step ' + (i + 1) + ': ' + st.label + (v ? ', chosen ' + esc(v) : '') + '"><span class="n">' + (done && !cur ? CHECK : (i + 1)) + '</span><span class="t"><b>' + st.label + '</b><span>' + (v ? esc(v) : (cur ? 'Choose now' : 'To do')) + '</span></span></button>'; });
     $('#rail').innerHTML = h;
   }
-  function bagButton(cls) {   // ONE button, two faces: Add to Bag becomes Go to Checkout (in the shop: driven by Ecwid's own cart event)
+  function bagButton(cls) {   // ONE button, two faces (laws in engine/selection-rules.js): Add to Bag, READY, then Go to Checkout
     var bagI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>', arrI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-    if (inBag()) return '<button class="btn bagbtn ' + (cls || '') + '" data-checkout="1"><span>Go to <b>Checkout</b></span>' + arrI + '</button>';
-    return '<button class="btn bagbtn ' + (cls || '') + (complete() ? ' ready' : '') + '" data-bag="1"' + (complete() ? '' : ' disabled') + ' aria-describedby="ready-note"><span>Add to <b>Bag</b></span></button>';
+    var f = DDRules.bagFace(selOf(), S.bagged || '');
+    if (f.face === 'checkout') return '<button class="btn bagbtn ' + (cls || '') + '" data-checkout="1"><span>Go to <b>Checkout</b></span>' + arrI + '</button>';
+    return '<button class="btn bagbtn ' + (cls || '') + (f.ready ? ' ready' : '') + '" data-bag="1"' + (f.enabled ? '' : ' disabled') + ' aria-describedby="ready-note"><span>' + bagI + 'Add to <b>Bag</b></span></button>';
   }
   function drawMine() {
     var h = ''; ['size', 'firmness', 'depth', 'cover'].forEach(function (id, i) { var v = valueOf(id); h += '<button class="chip' + (v ? ' on' : '') + '" data-go="' + i + '"><small>' + id + '</small><b>' + (v ? esc(v) : '—') + '</b></button>'; });
@@ -398,7 +401,8 @@ var D = /*__DATA__*/;
     var p = price(), full = complete();
     var sh = shop(); $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small>' + priceParts(sh) + '<span>' + (sh == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the prices and the discount are Ecwid\'s own.') + '</span>';
     $('#chips').insertAdjacentHTML('beforeend', complete() || S.size || S.firmness || S.depth || S.cover ? '' : '<p class="selhint">Select here: your choices appear in this panel as you make them.</p>');
-    $('#bag').innerHTML = bagButton() + (inBag() ? '<div class="hint">Added to your bag. Go to Checkout when you are ready.</div>' : (full ? '<div class="hint" id="ready-note"><b>Ready to order.</b> All four choices are made.</div>' : '<div class="hint">Choose size, firmness, depth and cover first. ' + (4 - ['size','firmness','depth','cover'].filter(chosen).length) + ' to go.</div>'));
+    var fb = DDRules.bagFace(selOf(), S.bagged || '');
+    $('#bag').innerHTML = bagButton() + (inBag() ? '<div class="hint">Added to your bag. Go to Checkout when you are ready.</div>' : '<div class="hint" id="ready-note">' + (fb.ready ? '<b>Ready to order.</b> All four choices are made. You can still change any of them.' : '<b>' + esc(fb.guide) + '</b>') + '</div>');
     $('#native').innerHTML = bagButton('');
   }
   function sizeView() {
@@ -481,10 +485,10 @@ var D = /*__DATA__*/;
     $('#stageh').textContent = 'Model Gallery';
   }
   var NAT = { depth: ['H- 20 cm (8”) Balanced Comfort', 'H -24 cm (9.5”) Deep Comfort (+£156)', 'H- 26 cm (10.25”) Premium Deep Comfort (+£190)'], firmness: [['Soft', 'Up to 47 kg / up to 7.4 st body weight – SOFT'], ['Medium', '48–85 kg / 7.6–13.4 st body weight – MEDIUM'], ['Firm', '85–110 kg / 13.4–17.3 st body weight – FIRM'], ['Extra Firm', 'Over 120 kg / over 18.9 st body weight – EXTRA FIRM (+£88)']] };
-  function drawCo() {   // Go to Checkout: the shop's own checkout opens at once (stand-in screen)
-    var sh = shop(), rows = [['Size', valueOf('size')], ['Firmness', valueOf('firmness')], ['Depth', valueOf('depth')], ['Cover', S.cover ? S.cover.name : null]];
-    $('#co').innerHTML = '<div class="box"><span class="tag2">Your order</span><h2>' + esc(D.product.name) + '</h2>' + rows.map(function (r) { return '<div class="ln"><b>' + r[0] + '</b><span>' + esc(r[1] || '—') + '</span></div>'; }).join('') + '<div style="margin-top:12px">' + priceParts(sh) + '</div></div>' +
-      '<div class="box"><span class="tag2">The shop\'s own checkout (stand-in)</span><h2>Checkout</h2><ol><li class="cur"><i>1</i>Cart: your email and any coupon</li><li><i>2</i>Address</li><li><i>3</i>Shipping</li><li><i>4</i>Payment</li></ol><p class="nt">Go to Checkout opens the shop\'s own checkout straight away: the module calls the shop\'s own checkout, and the shop takes over. Nothing is paid or ordered in this preview.</p><div class="row2"><button class="btn s" data-backprod="1">Back to your Botanic</button></div></div>';
+  function drawCo() {   // Go to Checkout: the order is made of the five factors, the promotion as the store gives it; the coupon is entered in the checkout
+    var sh = shop(), lines = DDRules.checkoutLines(selOf(), S.promo);
+    $('#co').innerHTML = '<div class="box"><span class="tag2">Your order: the five factors</span><h2>' + esc(D.product.name) + '</h2>' + lines.map(function (r) { return '<div class="ln"><b>' + esc(r.factor) + '</b><span>' + esc(r.value || '—') + '</span></div>'; }).join('') + '<div style="margin-top:12px">' + priceParts(sh) + '</div></div>' +
+      '<div class="box"><span class="tag2">The shop\'s own checkout (stand-in)</span><h2>Checkout</h2><ol><li class="cur"><i>1</i>Cart: your e-mail, and a coupon if you have one</li><li><i>2</i>Address</li><li><i>3</i>Shipping</li><li><i>4</i>Payment</li></ol><p class="nt">The coupon and the e-mail code are entered in the shop\'s checkout, never here. Go to Checkout opens the shop\'s own checkout at once. Nothing is paid or ordered in this preview.</p><div class="row2"><button class="btn s" data-backprod="1">Back to your Botanic</button></div></div>';
   }
   function drawStd() {   // Standard Product View: the shop's own page (stand-in); the same selection, the same bag
     var o = function (sel, v, t) { return '<option value="' + v + '"' + (sel ? ' selected' : '') + '>' + esc(t) + '</option>'; }, im = D.images, i = S.gi;

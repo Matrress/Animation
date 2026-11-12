@@ -21,6 +21,13 @@ What this means for the build: the module reads the price, the struck-through pr
 - Where the store shows the active promotion's name and state. The product page shows the discount; the name of the active rule is visible in Equity. We need only the text the store shows; if the name is wanted on the page, it has to come from a value kept next to the model's config, not from calculation.
 - I could not find documentation for "Equity" as a product in the public sources I searched. I treat it as the owner's name for the store's price and promotion system. If Equity is a separate system, its documentation is needed before any integration is built.
 
+## Addendum (12 November 2026): the five factors, READY and the coupon
+
+- The checkout is made of the **five factors**: size, firmness, depth, cover, and the promotion. The promotion's discount is shown as the store gives it (the price without it and the price with it); its **name is not shown** (it stays in the store's promotions).
+- The configuration gives the bag the four choices; the **READY** rule and the stay-active rule are in `engine/selection-rules.js` and in `docs/DECISIONS.md` ("Selection laws").
+- The **coupon and e-mail code** are entered in the checkout. They are not part of the configuration.
+- Equid (the owner's name) is read as Ecwid, the platform in use.
+
 ## What Ecwid does (researched)
 
 - Ecwid's **automatic discounts (promotions)** are rules in the store admin; they are applied to the order automatically at checkout once their conditions are met ([Ecwid docs: automatic discounts](https://docs.ecwid.com/discounts-and-tips/add-discounts-to-the-store/automatic-discounts-promotions)). Ecwid's help says a promotion is not by itself shown on the product page.

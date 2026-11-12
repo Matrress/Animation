@@ -125,7 +125,8 @@
     var price = n.price, cmp = n.compare, dsc = n.discount, contact = size && !dims(size.label);
     var pv = contact ? 'Contact us' : (!size && !done() ? '—' : price);
     var pl = rv || !only ? 'Your price' : 'Starting price';
-    var cap = cmp && !contact ? (only ? '20 cm base depth · Discount included' : 'Discount included · Price from Ecwid') : (only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid');
+    var miss = DDRules.missing(selNow());
+    var cap = miss.length ? 'Still to choose: ' + miss.join(' · ') : cmp && !contact ? (only ? '20 cm base depth · Discount included' : 'Discount included · Price from Ecwid') : (only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid');
     var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: 'Review Your <b>Order</b>', review: done() === 4 ? (bagged() ? 'Go to <b>Checkout</b>' : 'Add to <b>Bag</b>') : 'See <b>Ecwid’s options</b>' }[st];
     var dis = !rv && !cur;
     return '<section class="gx-dock' + (st === 'firmness' ? ' gx-dock--firm' : '') + '" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small>' + ((dsc || cmp) && !contact ? '<span class="gx-promo">' + (dsc ? '<span class="gx-sv">' + esc(dsc) + '</span>' : '') + (cmp ? '<s class="gx-old">' + esc(cmp) + '</s>' : '') + '</span>' : '') + '<b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn' + (rv && done() === 4 ? ' gx-btn--bag' + (bagged() ? '' : ' gx-btn--ready') : '') + '" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
@@ -161,8 +162,10 @@
     else if (a === 'native') toNative();
   });
   /* Add to Bag presses Ecwid's own button (Ecwid validates and adds); the button turns into Go to Checkout only when Ecwid's own cart event reports the product in the cart */
-  function sigNow() { var o = S.native && S.native.options || {}; return JSON.stringify(['size', 'depth', 'firmness', 'cover'].map(function (k) { return o[k] && o[k].label; })); }
-  function bagged() { return S.cart && S.bagSig === sigNow(); }
+  /* the four choices as the rules see them (laws: engine/selection-rules.js) */
+  function selNow() { var o = S.native && S.native.options || {}, out = {}; ['size', 'firmness', 'depth', 'cover'].forEach(function (k) { out[k] = o[k] && o[k].chosen ? { key: o[k].value, label: o[k].label } : null; }); return out; }
+  function sigNow() { return DDRules.signature(selNow()); }
+  function bagged() { return !!S.cart && !!S.bagSig && S.bagSig === sigNow(); }
   function nativeBag() { var all = d.querySelectorAll('button'); for (var i = 0; i < all.length; i++) { var b = all[i]; if (!root.contains(b) && /^\s*add to (bag|cart)\s*$/i.test(b.textContent)) return b; } return null; }
   function addToBag() { var b = nativeBag(); if (!b) return toNative(); S.bagSig = sigNow(); b.click(); }
   function gotoCheckout() { if (w.Ecwid && w.Ecwid.Cart && w.Ecwid.Cart.gotoCheckout) w.Ecwid.Cart.gotoCheckout(); else if (w.Ecwid && w.Ecwid.openPage) w.Ecwid.openPage('cart'); }

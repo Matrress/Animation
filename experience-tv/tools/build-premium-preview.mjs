@@ -154,7 +154,7 @@ document.querySelector('.pv-bar').addEventListener('click',function(e){var b=e.t
 const html = `<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>BOTANIC premium phone preview (design preview, not deployed)</title><link rel="preconnect" href="https://api.fontshare.com"><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap">
 <style id="premium-css">${S('premium.css')}</style></head><body>${chrome}${covers}<div id="store"></div><div id="toast" role="status"></div>
 <script>window.DDDATA=${JSON.stringify(DATA)};</script>
-<script id="firmness-core">${coreSrc}</script><script id="sync">${S('sync.js')}</script><script id="standin">${S('standin.js')}</script>
+<script id="firmness-core">${coreSrc}</script><script id="selection-rules">${readFileSync(join(root, "engine", "selection-rules.js"), "utf8")}</script><script id="sync">${S('sync.js')}</script><script id="standin">${S('standin.js')}</script>
 <div id="productDescription" class="product-details__product-description">${body}</div><style id="content-css">${S('content.css')}</style>
 <script>${gallery}</script><script id="configurator">${S('configurator.js')}</script><script>${chromeJs}</script></body></html>`;
 // the stand-in builds #cfg and #desc-slot: patch its template
