@@ -174,17 +174,6 @@ a { color: inherit; }
 .price .inc { display: block; font-size: 12px; color: var(--ink3); margin-top: 4px; }
 .prbox { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 18px; color: var(--ink); }
 .prbox .prow b { font-size: 30px; letter-spacing: -.01em; }
-/* checkout (stand-in for the shop's own checkout) */
-.cov { display: none; gap: 18px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: start; }
-.co .cov { display: grid; } .co .invite, .co .monitor, .co .shopstrip, .co .stdv { display: none; }
-@media (max-width: 900px) { .cov { grid-template-columns: 1fr; } }
-.cov .box { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 18px 20px; color: var(--ink); }
-.cov h2 { margin: 0 0 10px; font-size: 22px; } .cov .tag2 { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); font-weight: 700; margin-bottom: 8px; }
-.cov ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; } .cov li { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: var(--r); font-weight: 600; }
-.cov li i { font-style: normal; flex: none; width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--line2); display: grid; place-items: center; font-size: 13px; color: var(--ink3); }
-.cov li.cur { background: var(--grad-band); color: #fff; } .cov li.cur i { background: #fff; border-color: #fff; color: var(--band-top); }
-.cov .ln { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; } .cov .ln b { font-weight: 600; } .cov .ln span { color: var(--ink2); text-align: right; }
-.cov .nt { font-size: 12.5px; color: var(--ink3); line-height: 1.5; margin: 12px 0 0; } .cov .row2 { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
 /* size */
 .grp h3 { margin: 22px 0 10px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 700; } .grp:first-child h3 { margin-top: 0; }
 .cards { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
@@ -280,7 +269,6 @@ a { color: inherit; }
     <section class="stage"><div class="colh" id="stageh"></div><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
     <aside class="mine" aria-label="Your selection"><h2><span>Your selection</span><span class="mi" id="mi"></span></h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="bag" id="bag"></div></aside>
   </div></main>
-  <section id="co" class="cov" aria-label="Checkout (stand-in)"></section>
   <section id="std" class="stdv" aria-label="Standard Product View (stand-in)"></section>
   <div class="shopstrip"><span>Under the television the shop's own options and Add to Bag stay on the page, always. Right: the shop's own button (stand-in). It and the television's button are one and the same.</span><span id="native"></span></div>
 </div>
@@ -547,11 +535,6 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     $('#stageh').textContent = 'Model Gallery';
   }
   var NAT = { depth: ['H- 20 cm (8”) Balanced Comfort', 'H -24 cm (9.5”) Deep Comfort (+£156)', 'H- 26 cm (10.25”) Premium Deep Comfort (+£190)'], firmness: [['Soft', 'Up to 47 kg / up to 7.4 st body weight – SOFT'], ['Medium', '48–85 kg / 7.6–13.4 st body weight – MEDIUM'], ['Firm', '85–110 kg / 13.4–17.3 st body weight – FIRM'], ['Extra Firm', 'Over 120 kg / over 18.9 st body weight – EXTRA FIRM (+£88)']] };
-  function drawCo() {   // Go to Checkout: the order is made of the five factors, the promotion as the store gives it; the coupon is entered in the checkout
-    var sh = shop(), lines = DDRules.checkoutLines(selOf(), S.promo);
-    $('#co').innerHTML = '<div class="box"><span class="tag2">Your order: the five factors</span><h2>' + esc(D.product.name) + '</h2>' + lines.map(function (r) { return '<div class="ln"><b>' + esc(r.factor) + '</b><span>' + esc(r.value || '—') + '</span></div>'; }).join('') + '<div style="margin-top:12px">' + priceParts(sh) + '</div></div>' +
-      '<div class="box"><span class="tag2">The shop\'s own checkout (stand-in)</span><h2>Checkout</h2><ol><li class="cur"><i>1</i>Cart: your e-mail, and a coupon if you have one</li><li><i>2</i>Address</li><li><i>3</i>Shipping</li><li><i>4</i>Payment</li></ol><p class="nt">The coupon and the e-mail code are entered in the shop\'s checkout, never here. Go to Checkout opens the shop\'s own checkout at once. Nothing is paid or ordered in this preview.</p><div class="row2"><button class="btn s" data-backprod="1">Back to your Botanic</button></div></div>';
-  }
   function drawStd() {   // Standard Product View: the shop's own page (stand-in); the same selection, the same bag
     var o = function (sel, v, t) { return '<option value="' + v + '"' + (sel ? ' selected' : '') + '>' + esc(t) + '</option>'; }, im = D.images, i = S.gi;
     var sz = '<option value="">Please choose</option>' + D.sizes.map(function (x, j) { return o(S.size && S.size.label === x.label, j, x.label); }).join('');
@@ -577,8 +560,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     $('#stageh').textContent = c.label + '  ·  ' + p.label;
   }
   function draw() {
-    document.body.classList.toggle('std', S.view === 'std'); document.body.classList.toggle('co', S.view === 'co'); $('#galbtn').setAttribute('aria-pressed', String(S.gal)); $('#vtv').setAttribute('aria-pressed', String(S.view === 'tv')); $('#vstd').setAttribute('aria-pressed', String(S.view === 'std'));
-    if (S.view === 'co') { drawCo(); return; }
+    document.body.classList.toggle('std', S.view === 'std');  $('#galbtn').setAttribute('aria-pressed', String(S.gal)); $('#vtv').setAttribute('aria-pressed', String(S.view === 'tv')); $('#vstd').setAttribute('aria-pressed', String(S.view === 'std'));
     if (S.view === 'std') { drawStd(); return; }
     var pp = panel(), cc = chap(S.ch); drawBar();
     if (S.gal) { galDraw(); drawRail(); drawMine(); return; }
@@ -591,9 +573,8 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     drawRail(); drawMine();
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view],[data-backprod]'); if (!t) return;
+    var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
     var d = t.dataset;
-    if (d.backprod != null) { S.view = 'tv'; draw(); return; }
     if (d.view != null) { S.view = d.view; draw(); return; }
     if (d.gal != null) { S.gal = !S.gal; draw(); return; }
     if (d.gimg != null) { S.gi = (+d.gimg + D.images.length) % D.images.length; draw(); return; }
@@ -612,7 +593,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     else if (d.more != null) { $('#form').classList.toggle('on'); return; }
     else if (d.send != null) { toast('Preview only: nothing was sent. In the shop this goes to Divine Dunlop support.'); return; }
     else if (d.bag != null) { S.bagged = sig(); toast('Stand-in: in the shop this presses Ecwid\'s own Add to Bag, and the button turns into Go to Checkout when Ecwid\'s cart reports the change.'); }
-    else if (d.checkout != null) { S.view = 'co'; draw(); window.scrollTo({ top: 0 }); return; }
+    else if (d.checkout != null) { toast('Go to Checkout goes straight to the shop\'s own checkout, with your four choices, the discount and the price already in it. (Not opened in this preview.)'); return; }
     draw(); if (d.bag == null) window.scrollTo({ top: 0 });
   });
   document.addEventListener('change', function (e) {
@@ -632,7 +613,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     $('#guide').innerHTML = rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';
     document.querySelectorAll('.fcard').forEach(function (c) { var nm = c.querySelector('.nm').textContent, isRec = rec && fk(rec.display) === nm; c.classList.toggle('rec', !!isRec); c.classList.toggle('dim', !!(rec && !isRec)); var tag = c.querySelector('.tag'); if (isRec && !tag) c.insertAdjacentHTML('afterbegin', '<span class="tag">For you</span>'); if (!isRec && tag) tag.remove(); });
   });
-  (function url() { var q = location.search.match(/step=(\d)/); if (q) goStep(Math.min(4, +q[1])); var cq = location.search.match(/ch=([a-z0-9]+)/), pq = location.search.match(/pn=([a-z0-9]+)/); if (cq && chap(cq[1])) goPanel(cq[1], pq ? pq[1] : chap(cq[1]).panels[0].id); var pm = location.search.match(/promo=(\d+)/); if (pm) S.promo = +pm[1]; if (/view=co/.test(location.search)) S.view = 'co'; if (/gal=1/.test(location.search)) S.gal = true; if (/view=std/.test(location.search)) S.view = 'std'; var rq = location.search.match(/rd=(\d+)/); if (rq) S.rd[S.ch + '/' + S.pn] = +rq[1]; var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); if (/bag=1/.test(location.search)) S.bagged = sig(); } })();
+  (function url() { var q = location.search.match(/step=(\d)/); if (q) goStep(Math.min(4, +q[1])); var cq = location.search.match(/ch=([a-z0-9]+)/), pq = location.search.match(/pn=([a-z0-9]+)/); if (cq && chap(cq[1])) goPanel(cq[1], pq ? pq[1] : chap(cq[1]).panels[0].id); var pm = location.search.match(/promo=(\d+)/); if (pm) S.promo = +pm[1]; if (/gal=1/.test(location.search)) S.gal = true; if (/view=std/.test(location.search)) S.view = 'std'; var rq = location.search.match(/rd=(\d+)/); if (rq) S.rd[S.ch + '/' + S.pn] = +rq[1]; var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); if (/bag=1/.test(location.search)) S.bagged = sig(); } })();
   draw();
 })();
 </script>

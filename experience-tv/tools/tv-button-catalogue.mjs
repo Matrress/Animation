@@ -20,7 +20,7 @@ const SCREENS = [
   ['size-chosen', 'Size: chosen', '?step=0&demo=1'], ['firmness-empty', 'Firmness: nothing chosen, no weight or height', '?step=1'], ['firmness', 'Firmness: weight and height set, guidance shown', '?step=1&demo=1'],
   ['depth', 'Depth', '?step=2&demo=1'], ['cover-none', 'Cover: nothing chosen', '?step=3'], ['cover', 'Cover: one chosen', '?step=3&demo=1'],
   ['review', 'Review: all four chosen', '?step=4&demo=1'], ['review-bagged', 'Review: after Add to Bag (Go to Checkout)', '?step=4&demo=1&bag=1'],
-  ['checkout', 'Checkout (the shop\'s own, stand-in)', '?view=co&demo=1&bag=1'], ['standard', 'Standard Product View (the shop\'s own page, stand-in)', '?view=std&demo=1'], ['gallery', 'View Model Gallery', '?gal=1&demo=1']
+['standard', 'Standard Product View (the shop\'s own page, stand-in)', '?view=std&demo=1'], ['gallery', 'View Model Gallery', '?gal=1&demo=1']
 ];
 const PANELS = [['discover', 'intro'], ['discover', 'glance'], ['firmness', 'principle'], ['firmness', 'regulation'], ['firmness', 'who'], ['comfort', 'expect'], ['comfort', 'behaviour'], ['height', 'why'], ['covers', 'system'], ['benefits', 'origin'], ['benefits', 'why'], ['support', 'bearing'], ['support', 'together'], ['adaptation', 'elasticity'], ['adaptation', 'feel'], ['zones', 'map'], ['zones', 'detail'], ['ventilation', 'airflow'], ['ventilation', 'sleep'], ['hygiene', 'clean'], ['hygiene', 'picture'], ['certs', 'bodies'], ['certs', 'made'], ['warranty', 'cover'], ['warranty', 'conditions'], ['delivery', 'made']];
 for (const [c, p] of PANELS) SCREENS.push([c + '-' + p, null, '?ch=' + c + '&pn=' + p]);
@@ -51,8 +51,7 @@ const DESCRIBE = `(() => {
     if (d.next != null) return ['Continue', 'Goes to the next step of the order (disabled until this step is chosen)', 'the next step'];
     if (d.back != null) return ['Back', 'Goes to the previous step of the order', 'the previous step'];
     if (d.bag != null) return ['Add to Bag', 'Presses Ecwid\\'s own Add to Bag (disabled until size, firmness, depth and cover are chosen)', 'the same button turns into Go to Checkout'];
-    if (d.checkout != null) return ['Go to Checkout', 'Opens the shop\\'s own checkout at once', 'the shop\\'s checkout'];
-    if (d.backprod != null) return ['Back to the product', 'Returns from the checkout to the television', 'the television'];
+    if (d.checkout != null) return ['Go to Checkout', 'Goes straight to the shop\\'s own checkout, with the four choices, the discount and the price already in it', 'the shop\\'s checkout page'];
     if (d.more != null) return ['Custom size', 'Opens the contact form for another size', 'the form on this screen'];
     if (d.send != null) return ['Send', 'Sends the model, the size wanted and the email to Divine Dunlop support (the preview sends nothing)', 'a confirmation'];
     if (d.go != null) { const g = e.closest('#rail') ? 'Order step' : e.closest('.mine') ? 'Selection chip' : e.closest('.ri') ? 'Change' : 'Select your Botanic'; return [g, g === 'Order step' ? 'Goes to the order step "' + l.replace(/^Step \\d: /, '').split(',')[0] + '"' : g === 'Selection chip' ? 'Goes to the step where this is chosen' : g === 'Change' ? 'Goes back to that step to change the choice' : 'Goes to step 1 of the order (Size)', 'that step']; }

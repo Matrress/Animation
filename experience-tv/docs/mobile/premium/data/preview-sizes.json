@@ -1,7 +1,7 @@
 {
  "sizes": {
-  "total": 218347,
-  "gzip": 51229,
+  "total": 218370,
+  "gzip": 51242,
   "firmnessCoreBytes": 4530,
   "syncBytes": 8977,
   "configuratorBytes": 21333,

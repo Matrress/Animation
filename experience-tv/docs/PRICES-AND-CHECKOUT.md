@@ -9,7 +9,7 @@ These are the rules every model follows. They replace the earlier assumptions in
 1. **Prices are entered in Equity.** Each size's price and its final price are entered in Equity, and the store's price comes from there.
 2. **The promotion is an automatic rule in Equity's Promotions.** The rule shows, in Equity, which promotion is active now and what it gives. Our promotions are always running: 10, 15, 17 per cent or another percentage, and it changes.
 3. **The discount is taken from the Promotions rule, not from us.** Once the rule is active, the store shows the discount: the price without the discount (struck through) and the price with it. The module shows exactly those two prices and the discount note. It does not calculate them.
-4. **The panel must show them, on every screen where a price is shown.** The large selection panel, the Review step, the checkout screen, and the mobile selection dock.
+4. **The panel must show them, on every screen where a price is shown.** The large selection panel, the Review step, and the mobile selection dock. The checkout is the shop's own page.
 5. **"Redeem your discount" in the checkout is not ours.** It is the shop's own checkout field and the module does not touch it.
 6. **Add to Bag becomes READY only when the four processes are complete**: size, depth, firmness and cover are all chosen. A READY button is larger and lit with a crisp ring (no blur). Before that it is off.
 7. **Clicking READY adds the mattress to the bag** (Ecwid's own button does it). When Ecwid confirms it is in the bag, the same button becomes **Go to Checkout**, and a second click opens the checkout page.
@@ -20,6 +20,13 @@ What this means for the build: the module reads the price, the struck-through pr
 **Open, to verify on the test product before go-live (owner's approval needed):**
 - Where the store shows the active promotion's name and state. The product page shows the discount; the name of the active rule is visible in Equity. We need only the text the store shows; if the name is wanted on the page, it has to come from a value kept next to the model's config, not from calculation.
 - I could not find documentation for "Equity" as a product in the public sources I searched. I treat it as the owner's name for the store's price and promotion system. If Equity is a separate system, its documentation is needed before any integration is built.
+
+## Go to Checkout: a direct hand-off (owner, 12 November 2026)
+
+- When the customer presses **Go to Checkout**, the customer goes **directly to the shop's own checkout page**. We do not build, show or imitate any checkout step of our own.
+- At that moment the cart already holds the four choices (size, firmness, depth, cover) as the store's own options, so the checkout carries the five factors (the promotion's discount included) and the price that matches the configuration. Nothing of that is re-entered or recalculated by us.
+- The coupon and the e-mail code are entered in the shop's checkout. Nothing about them is in the configuration.
+- The mobile module calls `Ecwid.Cart.gotoCheckout()` (fallback `Ecwid.openPage('cart')`). The large design's Go to Checkout does the same in the real store; in the preview it only says so (nothing is opened).
 
 ## Addendum (12 November 2026): the five factors, READY and the coupon
 
@@ -38,7 +45,7 @@ What this means for the build: the module reads the price, the struck-through pr
 ## The contract
 
 1. **The module computes no price and no percentage.** It reads three texts that Ecwid renders, and shows them: the earlier price (struck through), the price with the discount, the discount note ("Save 15%"). Any percentage works, because the text is Ecwid's own. When Ecwid shows no promotion, the module shows the price alone.
-2. **Where the customer sees it:** the selection panel (large) and the selection dock (mobile) on every step, the Review step, and the checkout screen. The note "Discount included: this is the price you pay" appears whenever an earlier price is shown, so it is clear that the discount is already in the price.
+2. **Where the customer sees it:** the selection panel (large) and the selection dock (mobile) on every step, and the Review step. The checkout itself is the shop's own page, not ours. The note "Discount included: this is the price you pay" appears whenever an earlier price is shown, so it is clear that the discount is already in the price.
 3. **Add to Bag** presses **Ecwid's own** Add to Bag button (Ecwid validates and adds), and the button turns into **Go to Checkout** only when Ecwid's own cart event reports the product in the cart. If the customer changes any of the four choices after that, the bag no longer matches and the button is Add to Bag again.
 4. **Go to Checkout** calls `Ecwid.Cart.gotoCheckout()` (or `Ecwid.openPage('cart')` if that is not available) at once. If neither exists the module does nothing on its own and leaves the customer with Ecwid's own controls: it never invents a checkout.
 5. Everything is read from the page, so it is the same for every model: the selectors are in the model's config (`price.current`, `price.compare`, `price.discount`) and in the store profile (`products/profiles/divine-store.profile.js`).
@@ -50,7 +57,7 @@ What this means for the build: the module reads the price, the struck-through pr
 | `docs/mobile/premium/src/sync.js` | reads the earlier price and the discount note (read-only) |
 | `docs/mobile/premium/src/graphite.js`, `graphite.css` | the dock shows the earlier price, the price and the note; the review button is Add to Bag, then Go to Checkout |
 | `docs/mobile/premium/src/standin.js` | the stand-in store: promotion nodes with any percentage (`?promo=15`), the cart API stand-in |
-| `tools/tv-design-preview.template.html` | the large design: price with the promotion, Add to Bag / Go to Checkout, the checkout screen (stand-in) |
+| `tools/tv-design-preview.template.html` | the large design: price with the promotion, Add to Bag / READY / Go to Checkout. There is no checkout screen of ours: Go to Checkout hands over to the shop's checkout |
 | `tests/price-promo-contract.mjs` | 34 checks: promotions 0, 10, 15 and 17 per cent on mobile and large; Add to Bag, Go to Checkout, return to Add to Bag when a choice changes |
 | `docs/mobile/premium/shots/promo/`, `docs/tv-preview/design-*-19-promo15.png`, `-20-promo17-std.png`, `-21-checkout.png` | pictures |
 

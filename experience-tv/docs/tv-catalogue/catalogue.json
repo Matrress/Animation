@@ -1073,8 +1073,8 @@
      "n": 6,
      "label": "Go to Checkout",
      "kind": "Go to Checkout",
-     "does": "Opens the shop's own checkout at once",
-     "leads": "the shop's checkout",
+     "does": "Goes straight to the shop's own checkout, with the four choices, the discount and the price already in it",
+     "leads": "the shop's checkout page",
      "disabled": false
     }
    ],
@@ -1084,24 +1084,6 @@
     "C",
     "D",
     "E"
-   ]
-  },
-  {
-   "id": "checkout",
-   "title": "Checkout (the shop's own, stand-in)",
-   "file": "checkout.jpg",
-   "buttons": [
-    {
-     "n": 1,
-     "label": "Back to your Botanic",
-     "kind": "Back to the product",
-     "does": "Returns from the checkout to the television",
-     "leads": "the television",
-     "disabled": false
-    }
-   ],
-   "groups": [
-    "A"
    ]
   },
   {

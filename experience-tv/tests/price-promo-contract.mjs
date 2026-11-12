@@ -1,7 +1,7 @@
 // PRICES AND CHECKOUT CONTRACT (owner, 12 November 2026): the module shows the price Ecwid shows, with the promotion Ecwid shows
 // (the earlier price struck through, the price with the discount, the discount note), whatever the percentage (10, 15, 17, none);
 // it computes nothing; Add to Bag presses Ecwid's own button and turns into Go to Checkout only when Ecwid's cart event says the
-// product is in the cart; Go to Checkout opens the shop's own checkout at once.
+// product is in the cart; Go to Checkout goes straight to the shop's own checkout, with the configuration in it.
 //
 //   node tools/build-premium-preview.mjs && node tools/build-tv-design-preview.mjs && NODE_PATH=$(npm root -g) node tests/price-promo-contract.mjs
 //
@@ -62,16 +62,16 @@ for (const vp of [{ width: 1366, height: 1024 }, { width: 1024, height: 1366 }])
     const t = await p.evaluate(() => ({ old: (document.querySelector('#price .pold') || {}).textContent || '', cur: (document.querySelector('#price .prow b') || {}).textContent || '', save: (document.querySelector('#price .sv') || {}).textContent || '', inc: !!document.querySelector('#price .inc'), rev: !!document.querySelector('.prbox .pold') }));
     ok(promo === 0 ? (!t.old && !t.save && t.cur) : (t.old && t.cur && t.save === 'Save ' + promo + '%' && t.inc && t.rev), `${vp.width}x${vp.height} promo ${promo}%: the old price struck, the price with the discount, "Save ${promo}%" and "Discount included" are shown (also on Review)`, JSON.stringify(t));
     if (promo === 10 && vp.width > 1100) {
-      await p.click('#bag [data-bag]'); await p.click('#bag [data-checkout]'); await p.waitForTimeout(100);
-      const c = await p.evaluate(() => ({ shown: getComputedStyle(document.querySelector('#co')).display !== 'none', tvHidden: getComputedStyle(document.querySelector('.monitor')).display === 'none', price: document.querySelector('#co .prow b').textContent, hasOld: !!document.querySelector('#co .pold') }));
-      ok(c.shown && c.tvHidden && c.hasOld, 'Go to Checkout opens the checkout at once, with the discounted price', JSON.stringify(c));
-      await p.click('#co [data-backprod]'); ok(await p.evaluate(() => getComputedStyle(document.querySelector('.monitor')).display !== 'none'), 'and the customer can return to the product');
-    }
+    // Go to Checkout goes straight to the shop's checkout: no checkout screen of ours is shown
+    await p.click('#bag [data-bag]'); await p.click('#bag [data-checkout]'); await p.waitForTimeout(120);
+    const c = await p.evaluate(() => ({ noScreenOfOurs: !document.querySelector('#co') && getComputedStyle(document.querySelector('.monitor')).display !== 'none', toast: document.getElementById('toast').textContent }));
+    ok(c.noScreenOfOurs && /straight to the shop/.test(c.toast), 'Go to Checkout goes straight to the shop\'s checkout: no checkout screen of ours is shown', JSON.stringify(c));
+  }
     ok(errs.length === 0, `${vp.width}x${vp.height} promo ${promo}%: no page errors`, errs.join(' | ')); await ctx.close();
   }
 }
 
-// LAWS (owner, 12 November 2026): sticky READY, the guidance names what is missing, the checkout is the five factors (Extra Firm adds its +£88)
+// LAWS (owner, 12 November 2026): sticky READY, the guidance names what is missing; the checkout itself is the shop's (five factors, discount)
 {
   const ctx = await b.newContext({ viewport: { width: 1366, height: 1024 }, screen: { width: 1366, height: 1024 } }); await ctx.route(/^https?:/, (r) => r.abort());
   const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
@@ -85,12 +85,8 @@ for (const vp of [{ width: 1366, height: 1024 }, { width: 1024, height: 1366 }])
   ok((await p.textContent('#bag .bagbtn')).includes('Go to') , 'the bag: the same button is now Go to Checkout');
   await p.click('.st[data-go="3"]'); await p.waitForTimeout(60); await p.click('.tile[data-cover="0"]'); await p.waitForTimeout(80);
   ok((await p.textContent('#bag .bagbtn')).includes('Add to') && await p.$eval('#bag .bagbtn', (x) => !x.disabled), 'LAW 2: a changed cover after the bag: Add to Bag again, active, READY');
-  await p.goto(TV + '?view=co&demo=1&promo=10&bag=1'); await p.waitForTimeout(120);
-  const lines = await p.$$eval('#co .box:first-child .ln b', (x) => x.map((e) => e.textContent));
-  ok(lines.join('|') === 'Size|Firmness|Depth|Cover|Promotion', 'LAW 5: the checkout shows the five factors', lines.join(' · '));
-  await p.goto(TV + '?view=co&demo=1&promo=10&bag=1'); await p.waitForTimeout(120);
-  const px = await p.evaluate(() => { const v = document.querySelector('#co .prow b'); return v ? v.textContent : ''; });
-  ok(/£/.test(px), 'the checkout price is the sum of the five factors with the discount applied', px);
+  await p.goto(TV + '?step=4&demo=1&promo=10&bag=1'); await p.waitForTimeout(120);
+  ok(await p.$eval('#bag .bagbtn', (x) => x.textContent.includes('Go to') && !x.disabled), 'LAW: in the bag, the one button is Go to Checkout (its click hands over to the shop, see above)');
   ok(errs.length === 0, 'laws: no page errors', errs.join(' | ')); await ctx.close();
 }
 

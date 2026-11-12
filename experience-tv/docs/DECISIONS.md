@@ -18,7 +18,7 @@ These are decided. They are not asked again and not undone by a later change. Wh
 - **READY** (the Add to Bag button lit, larger, crisp ring) only when all four are covered. Clicking it adds the mattress through Ecwid's own button; the same button then becomes **Go to Checkout**, and a second click opens the checkout page.
 - **Once the four are covered, changing any one of them keeps the button active**: it is READY for the new configuration (Add to Bag again). Removing a choice takes it back to the guidance.
 - **Whatever is missing is named** ("Still to choose: Size · Cover"), so the customer always knows where they are. Mobile and large screen alike.
-- The coupon and the e-mail code are entered in the shop's checkout, never in the configuration. "Redeem your discount" in the checkout is not ours.
+- **Go to Checkout is a direct hand-off to the shop's own checkout page.** No checkout screen of ours (removed from the design on 12 November 2026: it had been built as a stand-in and was not wanted). The coupon and the e-mail code are entered in the shop's checkout, never in the configuration. "Redeem your discount" in the checkout is not ours.
 - Equid/Ecwid is the platform. The promotion's name is not shown; the discount is shown as the store gives it.
 
 ## Content decisions

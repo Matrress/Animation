@@ -1,6 +1,6 @@
 # Catalogue of the buttons of the large-screen television (design preview)
 
-Generated 2026-11-12 from the design preview (`docs/tv-preview/large-screen-design.html`, simulated store, not deployed). **39 screens**, each with its picture and the buttons numbered on it. For every button the last column is yours: **Keep, Remove, Change** (say how) or **Add** (what is missing). Reply with the screen name and the number, for example "firmness #3: change the label to ...".
+Generated 2026-11-12 from the design preview (`docs/tv-preview/large-screen-design.html`, simulated store, not deployed). **38 screens**, each with its picture and the buttons numbered on it. For every button the last column is yours: **Keep, Remove, Change** (say how) or **Add** (what is missing). Reply with the screen name and the number, for example "firmness #3: change the label to ...".
 
 How to read the pictures: an **orange** frame with a number is a button of that screen; a **purple dashed** frame with a letter (A to E) is a button group that is on every screen and is listed once, in the next section. Everything is rounded, the blue buttons are the bright-blue family.
 
@@ -93,35 +93,34 @@ Below the panels, always the same five order steps:
 | 8 | [Cover: one chosen](#cover) | 6 |
 | 9 | [Review: all four chosen](#review) | 6 |
 | 10 | [Review: after Add to Bag (Go to Checkout)](#review-bagged) | 6 |
-| 11 | [Checkout (the shop's own, stand-in)](#checkout) | 1 |
-| 12 | [Standard Product View (the shop's own page, stand-in)](#standard) | 13 |
-| 13 | [View Model Gallery](#gallery) | 11 |
-| 14 | [Discover · Introduction](#discover-intro) | 2 |
-| 15 | [Discover · At a Glance](#discover-glance) | 3 |
-| 16 | [Firmness · Correct vs Softer](#firmness-principle) | 8 |
-| 17 | [Firmness · How It Works](#firmness-regulation) | 6 |
-| 18 | [Firmness · Who It Is For](#firmness-who) | 5 |
-| 19 | [Comfort · What To Expect](#comfort-expect) | 6 |
-| 20 | [Comfort · Latex Behaviour](#comfort-behaviour) | 9 |
-| 21 | [Height · Why Height Matters](#height-why) | 5 |
-| 22 | [Covers · Cover System](#covers-system) | 6 |
-| 23 | [Benefits · Origin](#benefits-origin) | 3 |
-| 24 | [Benefits · Why Latex](#benefits-why) | 7 |
-| 25 | [Support · Bearing Force](#support-bearing) | 3 |
-| 26 | [Support · Support + Adaptation](#support-together) | 6 |
-| 27 | [Adaptation · Elasticity](#adaptation-elasticity) | 3 |
-| 28 | [Adaptation · How It Feels](#adaptation-feel) | 7 |
-| 29 | [7-Zone · Zone Map](#zones-map) | 3 |
-| 30 | [7-Zone · Zone By Zone](#zones-detail) | 6 |
-| 31 | [Ventilation · Airflow](#ventilation-airflow) | 3 |
-| 32 | [Ventilation · Why It Matters](#ventilation-sleep) | 5 |
-| 33 | [Hygiene · Cleaner Sleep](#hygiene-clean) | 3 |
-| 34 | [Hygiene · Realistic Picture](#hygiene-picture) | 5 |
-| 35 | [Certifications · Certifications](#certs-bodies) | 3 |
-| 36 | [Certifications · Where It Is Made](#certs-made) | 7 |
-| 37 | [Warranty · Warranty + Gift](#warranty-cover) | 3 |
-| 38 | [Warranty · Conditions](#warranty-conditions) | 5 |
-| 39 | [Delivery · Made To Order](#delivery-made) | 5 |
+| 11 | [Standard Product View (the shop's own page, stand-in)](#standard) | 13 |
+| 12 | [View Model Gallery](#gallery) | 11 |
+| 13 | [Discover · Introduction](#discover-intro) | 2 |
+| 14 | [Discover · At a Glance](#discover-glance) | 3 |
+| 15 | [Firmness · Correct vs Softer](#firmness-principle) | 8 |
+| 16 | [Firmness · How It Works](#firmness-regulation) | 6 |
+| 17 | [Firmness · Who It Is For](#firmness-who) | 5 |
+| 18 | [Comfort · What To Expect](#comfort-expect) | 6 |
+| 19 | [Comfort · Latex Behaviour](#comfort-behaviour) | 9 |
+| 20 | [Height · Why Height Matters](#height-why) | 5 |
+| 21 | [Covers · Cover System](#covers-system) | 6 |
+| 22 | [Benefits · Origin](#benefits-origin) | 3 |
+| 23 | [Benefits · Why Latex](#benefits-why) | 7 |
+| 24 | [Support · Bearing Force](#support-bearing) | 3 |
+| 25 | [Support · Support + Adaptation](#support-together) | 6 |
+| 26 | [Adaptation · Elasticity](#adaptation-elasticity) | 3 |
+| 27 | [Adaptation · How It Feels](#adaptation-feel) | 7 |
+| 28 | [7-Zone · Zone Map](#zones-map) | 3 |
+| 29 | [7-Zone · Zone By Zone](#zones-detail) | 6 |
+| 30 | [Ventilation · Airflow](#ventilation-airflow) | 3 |
+| 31 | [Ventilation · Why It Matters](#ventilation-sleep) | 5 |
+| 32 | [Hygiene · Cleaner Sleep](#hygiene-clean) | 3 |
+| 33 | [Hygiene · Realistic Picture](#hygiene-picture) | 5 |
+| 34 | [Certifications · Certifications](#certs-bodies) | 3 |
+| 35 | [Certifications · Where It Is Made](#certs-made) | 7 |
+| 36 | [Warranty · Warranty + Gift](#warranty-cover) | 3 |
+| 37 | [Warranty · Conditions](#warranty-conditions) | 5 |
+| 38 | [Delivery · Made To Order](#delivery-made) | 5 |
 
 ### start
 
@@ -329,17 +328,7 @@ Below the panels, always the same five order steps:
 | 3 | Change | Change | Goes back to that step to change the choice | that step | |
 | 4 | Change | Change | Goes back to that step to change the choice | that step | |
 | 5 | Back | Back | Goes to the previous step of the order | the previous step | |
-| 6 | Go to Checkout | Go to Checkout | Opens the shop's own checkout at once | the shop's checkout | |
-
-### checkout
-
-**Checkout (the shop's own, stand-in)**
-
-![Checkout (the shop's own, stand-in)](tv-catalogue/checkout.jpg)
-
-| No. | Button | Kind | What it does today | Leads to | Your decision |
-|---|---|---|---|---|---|
-| 1 | Back to your Botanic | Back to the product | Returns from the checkout to the television | the television | |
+| 6 | Go to Checkout | Go to Checkout | Goes straight to the shop's own checkout, with the four choices, the discount and the price already in it | the shop's checkout page | |
 
 ### standard
 
@@ -745,4 +734,4 @@ Below the panels, always the same five order steps:
 | 5 | Next: Your Botanic | Next | Goes to the next panel of the whole presentation | the next panel | |
 
 ---
-270 numbered buttons over 39 screens, plus the always-present groups. Regenerate after any change: `node tools/build-tv-design-preview.mjs && NODE_PATH=$(npm root -g) node tools/tv-button-catalogue.mjs`. The buttons of today's live television (before this design) are in `docs/TV-BUTTON-MAP.md`.
+269 numbered buttons over 38 screens, plus the always-present groups. Regenerate after any change: `node tools/build-tv-design-preview.mjs && NODE_PATH=$(npm root -g) node tools/tv-button-catalogue.mjs`. The buttons of today's live television (before this design) are in `docs/TV-BUTTON-MAP.md`.
