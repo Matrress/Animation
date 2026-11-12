@@ -34,7 +34,9 @@ for (const promo of [0, 10, 15, 17]) {
   ok(promo === 0 ? (!st.dock.cmp && !st.dock.save) : (st.dock.cmp && /^Save \d+%$/.test(st.dock.save) && st.dock.save === 'Save ' + promo + '%'), `promo ${promo}%: ` + (promo ? 'the old price and "Save ' + promo + '%" are visible' : 'no promotion shown when the shop shows none'));
   if (promo === 10) {
     ok(/^Add to Bag$/.test(st.btn), 'review: the button says Add to Bag once the four choices are made', st.btn);
+    ok(await p.$eval('.gx-btn', (b) => b.classList.contains('gx-btn--ready')), 'mobile: with the four choices covered the Add to Bag button is READY (lit, larger)');
     await p.click('.gx-btn'); await p.waitForTimeout(300);
+    ok(await p.$eval('.gx-btn', (b) => !b.classList.contains('gx-btn--ready')), 'mobile: once in the bag the ready state is off (it is Go to Checkout)');
     ok((await p.textContent('.gx-btn')).trim() === 'Go to Checkout', 'after Ecwid reports the product in the cart, the button turns into Go to Checkout');
     await p.click('.gx-btn'); await p.waitForTimeout(200);
     ok(await p.evaluate(() => window.__checkoutOpened === 1), 'Go to Checkout calls the shop\'s own checkout (Ecwid.Cart.gotoCheckout) at once');
@@ -50,6 +52,13 @@ for (const vp of [{ width: 1366, height: 1024 }, { width: 1024, height: 1366 }])
     const ctx = await b.newContext({ viewport: vp, screen: vp }); await ctx.route(/^https?:/, (r) => r.abort());
     const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
     await p.goto(TV + '?step=4&demo=1&promo=' + promo); await p.waitForTimeout(150);
+    if (promo === 0) {
+      const rd = await p.evaluate(() => document.querySelector('#bag .bagbtn').classList.contains('ready'));
+      await p.goto(TV + '?step=4'); await p.waitForTimeout(120);
+      const rn = await p.evaluate(() => document.querySelector('#bag .bagbtn').classList.contains('ready'));
+      ok(rd && !rn, 'large: READY only when the four choices are covered (not with nothing chosen)', 'ready with four: ' + rd + ', with none: ' + rn);
+      await p.goto(TV + '?step=4&demo=1&promo=0'); await p.waitForTimeout(120);
+    }
     const t = await p.evaluate(() => ({ old: (document.querySelector('#price .pold') || {}).textContent || '', cur: (document.querySelector('#price .prow b') || {}).textContent || '', save: (document.querySelector('#price .sv') || {}).textContent || '', inc: !!document.querySelector('#price .inc'), rev: !!document.querySelector('.prbox .pold') }));
     ok(promo === 0 ? (!t.old && !t.save && t.cur) : (t.old && t.cur && t.save === 'Save ' + promo + '%' && t.inc && t.rev), `${vp.width}x${vp.height} promo ${promo}%: the old price struck, the price with the discount, "Save ${promo}%" and "Discount included" are shown (also on Review)`, JSON.stringify(t));
     if (promo === 10 && vp.width > 1100) {

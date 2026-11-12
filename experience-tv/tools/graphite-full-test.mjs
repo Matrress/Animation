@@ -131,7 +131,7 @@ for (const vp of [{ width: 390, height: 844 }, { width: 390, height: 700 }, { wi
   if (prev) {
     writeFileSync('/tmp/graphite-prev.html', prev);
     const shots = {};
-    for (const [tag, url] of [['prev', 'file:///tmp/graphite-prev.html?chrome=0'], ['now', FILE + (FILE.includes('?') ? '&' : '?') + 'promonote=0']]) {
+    for (const [tag, url] of [['prev', 'file:///tmp/graphite-prev.html?chrome=0&promonote=0'], ['now', FILE + (FILE.includes('?') ? '&' : '?') + 'promonote=0']]) {
       const ctx = await b.newContext({ ...devices['iPhone 13'], viewport: { width: 390, height: 844 }, screen: { width: 390, height: 844 }, deviceScaleFactor: 2 }); const p = await ctx.newPage();
       await p.route('**/*', r => { const u = r.request().url(); (u.startsWith('file:') || /cloudfront\.net/.test(u)) ? r.continue() : r.abort(); });
       await p.goto(url, { waitUntil: 'load' }); await p.waitForTimeout(800); await start(p); shots[tag] = { size: await p.screenshot() };

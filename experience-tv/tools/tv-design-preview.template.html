@@ -87,6 +87,9 @@ a { color: inherit; }
 .btn.bagbtn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(180deg, #2E86AF 0%, #297CA2 50%, #1F6B93 100%); color: #fff; border: 1px solid #1A5C7E; box-shadow: 0 1px 2px rgba(11,28,42,.3); letter-spacing: .01em; }
 .btn.bagbtn:disabled { background: #E4E8EB; color: #8A949B; border-color: #D3D9DD; box-shadow: none; }
 .btn.bagbtn svg { flex: none; }
+/* ready: the four selections are covered, so the button is larger and lit with a crisp ring (no fog, no blur) */
+.btn.bagbtn.ready { height: 68px; font-size: 20px; border-color: #7FD3FB; box-shadow: 0 0 0 4px rgba(80,205,253,.45); }
+.btn.bagbtn.ready::after { content: ''; }
 /* the white cards keep dark ink on the dark stage */
 .card, .fcard, .dcard, .tile, .info, .sl, .form, .ri, .price { color: var(--ink); }
 .stage .ri .btn.s { background: #fff; color: var(--ink); border-color: var(--line2); }
@@ -386,7 +389,7 @@ var D = /*__DATA__*/;
   function bagButton(cls) {   // ONE button, two faces: Add to Bag becomes Go to Checkout (in the shop: driven by Ecwid's own cart event)
     var bagI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>', arrI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
     if (inBag()) return '<button class="btn bagbtn ' + (cls || '') + '" data-checkout="1"><span>Go to <b>Checkout</b></span>' + arrI + '</button>';
-    return '<button class="btn bagbtn ' + (cls || '') + '" data-bag="1"' + (complete() ? '' : ' disabled') + '><span>Add to <b>Bag</b></span></button>';
+    return '<button class="btn bagbtn ' + (cls || '') + (complete() ? ' ready' : '') + '" data-bag="1"' + (complete() ? '' : ' disabled') + ' aria-describedby="ready-note"><span>Add to <b>Bag</b></span></button>';
   }
   function drawMine() {
     var h = ''; ['size', 'firmness', 'depth', 'cover'].forEach(function (id, i) { var v = valueOf(id); h += '<button class="chip' + (v ? ' on' : '') + '" data-go="' + i + '"><small>' + id + '</small><b>' + (v ? esc(v) : '—') + '</b></button>'; });
@@ -395,7 +398,7 @@ var D = /*__DATA__*/;
     var p = price(), full = complete();
     var sh = shop(); $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small>' + priceParts(sh) + '<span>' + (sh == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the prices and the discount are Ecwid\'s own.') + '</span>';
     $('#chips').insertAdjacentHTML('beforeend', complete() || S.size || S.firmness || S.depth || S.cover ? '' : '<p class="selhint">Select here: your choices appear in this panel as you make them.</p>');
-    $('#bag').innerHTML = bagButton() + (inBag() ? '<div class="hint">Added to your bag</div>' : (full ? '<div class="hint"><b>Ready to order.</b> Add it to your bag.</div>' : '<div class="hint">Choose size, firmness, depth and cover first.</div>'));
+    $('#bag').innerHTML = bagButton() + (inBag() ? '<div class="hint">Added to your bag. Go to Checkout when you are ready.</div>' : (full ? '<div class="hint" id="ready-note"><b>Ready to order.</b> All four choices are made.</div>' : '<div class="hint">Choose size, firmness, depth and cover first. ' + (4 - ['size','firmness','depth','cover'].filter(chosen).length) + ' to go.</div>'));
     $('#native').innerHTML = bagButton('');
   }
   function sizeView() {

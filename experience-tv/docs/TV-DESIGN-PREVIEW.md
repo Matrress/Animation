@@ -16,6 +16,10 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 | The shop's own (manual) controls stay | **No "Choose by hand" screen inside the television** (owner, 11 November 2026: it is outside the concept). The shop's own four options and Add to Bag stay on the page under the television, always, never hidden, and move together with the television in both directions. The Standard Product View and the model "Standard" are untouched |
 | Each button will be specified later by the owner | The preview is a design carrier; every label here is replaceable through `docs/TV-BUTTON-SPEC.md` |
 
+## Add to Bag: READY (owner, 12 November 2026)
+
+When size, depth, firmness and cover are all chosen, the Add to Bag button is READY: taller (68 px), larger type and a crisp light ring. It is still flat, with no blur, so the earlier rule about fog and glow stands. Clicking it adds the mattress; the same button then becomes Go to Checkout; a second click opens the checkout. A changed choice returns it to Add to Bag. The mobile review button does the same.
+
 ## Blue buttons and the 7-Zone panel (owner, 12 November 2026)
 
 - **View Model Gallery** is the same bright blue as Add to Bag and Go to Checkout.
