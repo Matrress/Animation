@@ -8,10 +8,11 @@
    LAWS
    1. The button is READY only when all four choices are covered. READY lights it (larger, crisp ring); clicking it adds the mattress.
    2. Once the four are covered, changing any one of them keeps the button active: it is READY again for the new configuration.
-   3. When the bag holds exactly the four choices, the same button is Go to Checkout (a second click opens the checkout).
+   3. When the bag holds exactly the four choices, the same button is Go to Checkout (a second click opens the shopping cart).
    4. Whatever is missing is named, so the customer always knows where they are: "Still to choose: Size · Cover".
-   5. The checkout is made of the five factors, and the promotion's discount is shown as the store gives it. A coupon or an
-      e-mail code is entered in the checkout, never here.
+   5. Go to Checkout opens the SHOPPING CART (Ecwid's own protocol). The order there is built by Ecwid and Equity from the four
+      choices and the promotion; the five factors are its lines. The customer enters the e-mail in the cart, then continues to
+      checkout. A coupon or an e-mail code is entered there, never here.
 
    Each choice is an object with a key that identifies the choice (a value, an index or a label); a missing choice is null/undefined. */
 (function (g) {
@@ -38,7 +39,7 @@
     return { face: 'add', enabled: true, ready: true, text: 'Add to Bag', guide: bagSig ? 'Your new choice is not in the bag yet: Add to Bag again' : 'Ready to order: all four choices are made' };
   }
 
-  /* the checkout's lines: the five factors, in order, and the promotion as the store shows it */
+  /* the lines the shopping cart is built from: the five factors, in order, and the promotion as the store shows it */
   function checkoutLines(sel, promoPct) {
     var lines = ORDER.map(function (o) { return { factor: o[1], value: sel && sel[o[0]] ? sel[o[0]].label : null }; });
     lines.push({ factor: 'Promotion', value: promoPct ? 'Save ' + promoPct + '%' : null });

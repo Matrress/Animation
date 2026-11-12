@@ -328,7 +328,7 @@ Below the panels, always the same five order steps:
 | 3 | Change | Change | Goes back to that step to change the choice | that step | |
 | 4 | Change | Change | Goes back to that step to change the choice | that step | |
 | 5 | Back | Back | Goes to the previous step of the order | the previous step | |
-| 6 | Go to Checkout | Go to Checkout | Goes straight to the shop's own checkout, with the four choices, the discount and the price already in it | the shop's checkout page | |
+| 6 | Go to Checkout | Go to Checkout | Opens the shopping cart, built from the four choices and the promotion; the e-mail is entered there, then checkout | the shopping cart | |
 
 ### standard
 

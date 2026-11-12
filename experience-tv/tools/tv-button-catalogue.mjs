@@ -51,7 +51,7 @@ const DESCRIBE = `(() => {
     if (d.next != null) return ['Continue', 'Goes to the next step of the order (disabled until this step is chosen)', 'the next step'];
     if (d.back != null) return ['Back', 'Goes to the previous step of the order', 'the previous step'];
     if (d.bag != null) return ['Add to Bag', 'Presses Ecwid\\'s own Add to Bag (disabled until size, firmness, depth and cover are chosen)', 'the same button turns into Go to Checkout'];
-    if (d.checkout != null) return ['Go to Checkout', 'Goes straight to the shop\\'s own checkout, with the four choices, the discount and the price already in it', 'the shop\\'s checkout page'];
+    if (d.checkout != null) return ['Go to Checkout', 'Opens the shopping cart, built from the four choices and the promotion; the e-mail is entered there, then checkout', 'the shopping cart'];
     if (d.more != null) return ['Custom size', 'Opens the contact form for another size', 'the form on this screen'];
     if (d.send != null) return ['Send', 'Sends the model, the size wanted and the email to Divine Dunlop support (the preview sends nothing)', 'a confirmation'];
     if (d.go != null) { const g = e.closest('#rail') ? 'Order step' : e.closest('.mine') ? 'Selection chip' : e.closest('.ri') ? 'Change' : 'Select your Botanic'; return [g, g === 'Order step' ? 'Goes to the order step "' + l.replace(/^Step \\d: /, '').split(',')[0] + '"' : g === 'Selection chip' ? 'Goes to the step where this is chosen' : g === 'Change' ? 'Goes back to that step to change the choice' : 'Goes to step 1 of the order (Size)', 'that step']; }

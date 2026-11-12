@@ -21,12 +21,13 @@ What this means for the build: the module reads the price, the struck-through pr
 - Where the store shows the active promotion's name and state. The product page shows the discount; the name of the active rule is visible in Equity. We need only the text the store shows; if the name is wanted on the page, it has to come from a value kept next to the model's config, not from calculation.
 - I could not find documentation for "Equity" as a product in the public sources I searched. I treat it as the owner's name for the store's price and promotion system. If Equity is a separate system, its documentation is needed before any integration is built.
 
-## Go to Checkout: a direct hand-off (owner, 12 November 2026)
+## Go to Checkout opens the shopping cart (owner, 12 November 2026, corrected)
 
-- When the customer presses **Go to Checkout**, the customer goes **directly to the shop's own checkout page**. We do not build, show or imitate any checkout step of our own.
-- At that moment the cart already holds the four choices (size, firmness, depth, cover) as the store's own options, so the checkout carries the five factors (the promotion's discount included) and the price that matches the configuration. Nothing of that is re-entered or recalculated by us.
-- The coupon and the e-mail code are entered in the shop's checkout. Nothing about them is in the configuration.
-- The mobile module calls `Ecwid.Cart.gotoCheckout()` (fallback `Ecwid.openPage('cart')`). The large design's Go to Checkout does the same in the real store; in the preview it only says so (nothing is opened).
+- **Go to Checkout takes the customer to the shopping cart** (Ecwid's cart page), not to the checkout. The cart shows the order's structure, built directly from our selections: size, firmness, depth, cover, and the promotion.
+- The building of that order and the promotion are **Equity's** work, through Ecwid's own protocol. Our part is to hand over the whole selection to the cart, correctly, in one step.
+- In the cart the customer enters the **e-mail**, then continues to the checkout. The coupon and the e-mail code are entered there, never in the configuration.
+- The mobile module calls `Ecwid.openPage('cart')` (the cart page). It does not call `Ecwid.Cart.gotoCheckout()`, which would skip the cart. The large design shows the same behaviour in its preview (nothing is opened).
+- Research note: Ecwid's documentation lists `'cart'` among its open-page options, and the cart page's first step is the e-mail and coupon entry (checkout step 1). This is consistent with the protocol above and is to be confirmed on the test product.
 
 ## Addendum (12 November 2026): the five factors, READY and the coupon
 

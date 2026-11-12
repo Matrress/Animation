@@ -333,10 +333,11 @@ button { font: inherit; color: inherit; }
    LAWS
    1. The button is READY only when all four choices are covered. READY lights it (larger, crisp ring); clicking it adds the mattress.
    2. Once the four are covered, changing any one of them keeps the button active: it is READY again for the new configuration.
-   3. When the bag holds exactly the four choices, the same button is Go to Checkout (a second click opens the checkout).
+   3. When the bag holds exactly the four choices, the same button is Go to Checkout (a second click opens the shopping cart).
    4. Whatever is missing is named, so the customer always knows where they are: "Still to choose: Size · Cover".
-   5. The checkout is made of the five factors, and the promotion's discount is shown as the store gives it. A coupon or an
-      e-mail code is entered in the checkout, never here.
+   5. Go to Checkout opens the SHOPPING CART (Ecwid's own protocol). The order there is built by Ecwid and Equity from the four
+      choices and the promotion; the five factors are its lines. The customer enters the e-mail in the cart, then continues to
+      checkout. A coupon or an e-mail code is entered there, never here.
 
    Each choice is an object with a key that identifies the choice (a value, an index or a label); a missing choice is null/undefined. */
 (function (g) {
@@ -363,7 +364,7 @@ button { font: inherit; color: inherit; }
     return { face: 'add', enabled: true, ready: true, text: 'Add to Bag', guide: bagSig ? 'Your new choice is not in the bag yet: Add to Bag again' : 'Ready to order: all four choices are made' };
   }
 
-  /* the checkout's lines: the five factors, in order, and the promotion as the store shows it */
+  /* the lines the shopping cart is built from: the five factors, in order, and the promotion as the store shows it */
   function checkoutLines(sel, promoPct) {
     var lines = ORDER.map(function (o) { return { factor: o[1], value: sel && sel[o[0]] ? sel[o[0]].label : null }; });
     lines.push({ factor: 'Promotion', value: promoPct ? 'Save ' + promoPct + '%' : null });
@@ -547,7 +548,9 @@ button { font: inherit; color: inherit; }
   d.addEventListener('change', function (e) { if (e.target.closest && e.target.closest('.so-native')) { clearTimeout(timer); timer = setTimeout(recompute, 600); } }, true);
   /* STAND-IN for Ecwid's cart API: Add to Bag with the four options chosen puts the product in the cart and tells the listeners; gotoCheckout opens the checkout (a stand-in screen) */
   var listeners = [], cart = { productsQuantity: 0 };
-  w.Ecwid = { OnCartChanged: { add: function (f) { listeners.push(f); } }, Cart: { get: function (cb) { cb(cart); }, gotoCheckout: function () { w.__checkoutOpened = (w.__checkoutOpened || 0) + 1; var t = d.getElementById('toast'); t.textContent = 'Goes straight to the shop\'s own checkout (stand-in: not opened in the preview)'; t.classList.add('on'); setTimeout(function () { t.classList.remove('on'); }, 2600); } }, openPage: function () {} };
+  /* open the shopping cart (Ecwid's own protocol) and count the calls; the stand-in does not open anything */
+  function openPage(page) { if (page !== 'cart') return; w.__cartOpened = (w.__cartOpened || 0) + 1; var t = d.getElementById('toast'); t.textContent = 'Opens the shopping cart, built from your choices (stand-in: not opened in the preview)'; t.classList.add('on'); setTimeout(function () { t.classList.remove('on'); }, 2600); }
+  w.Ecwid = { OnCartChanged: { add: function (f) { listeners.push(f); } }, Cart: { get: function (cb) { cb(cart); } }, openPage: openPage };
   d.getElementById('so-atb').addEventListener('click', function () {
     var n = 0; d.querySelectorAll('.so-native select').forEach(function (s) { if (s.selectedIndex > 0) n++; });
     var t = d.getElementById('toast');
@@ -5423,7 +5426,8 @@ var m=document.getElementById('desc-slot'),dsc=document.getElementById('productD
   function bagged() { return !!S.cart && !!S.bagSig && S.bagSig === sigNow(); }
   function nativeBag() { var all = d.querySelectorAll('button'); for (var i = 0; i < all.length; i++) { var b = all[i]; if (!root.contains(b) && /^\s*add to (bag|cart)\s*$/i.test(b.textContent)) return b; } return null; }
   function addToBag() { var b = nativeBag(); if (!b) return toNative(); S.bagSig = sigNow(); b.click(); }
-  function gotoCheckout() { if (w.Ecwid && w.Ecwid.Cart && w.Ecwid.Cart.gotoCheckout) w.Ecwid.Cart.gotoCheckout(); else if (w.Ecwid && w.Ecwid.openPage) w.Ecwid.openPage('cart'); }
+  /* Go to Checkout opens the shopping cart: the order there is built by Ecwid (and Equity) from the four choices and the promotion; the customer enters the e-mail in the cart and continues to checkout, per Ecwid's protocol */
+  function gotoCheckout() { if (w.Ecwid && w.Ecwid.openPage) w.Ecwid.openPage('cart'); }
   if (w.Ecwid && w.Ecwid.OnCartChanged) w.Ecwid.OnCartChanged.add(function (c) { S.cart = !!(c && c.productsQuantity > 0); render(); });
   function toNative() {
     var role = S.step === 'review' ? 'size' : S.step; S.open = false; render();

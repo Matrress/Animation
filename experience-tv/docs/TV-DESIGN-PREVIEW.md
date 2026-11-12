@@ -18,7 +18,7 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 
 ## Add to Bag: READY (owner, 12 November 2026)
 
-When size, depth, firmness and cover are all chosen, the Add to Bag button is READY: taller (68 px), larger type and a crisp light ring. It is still flat, with no blur, so the earlier rule about fog and glow stands. Clicking it adds the mattress; the same button then becomes Go to Checkout; a second click goes straight to the shop's own checkout (no checkout screen of ours). A changed choice returns it to Add to Bag. The mobile review button does the same.
+When size, depth, firmness and cover are all chosen, the Add to Bag button is READY: taller (68 px), larger type and a crisp light ring. It is still flat, with no blur, so the earlier rule about fog and glow stands. Clicking it adds the mattress; the same button then becomes Go to Checkout; a second click opens the shopping cart, built from the selections (no checkout screen of ours). A changed choice returns it to Add to Bag. The mobile review button does the same.
 
 ## Blue buttons and the 7-Zone panel (owner, 12 November 2026)
 

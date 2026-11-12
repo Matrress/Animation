@@ -1,7 +1,7 @@
 // PRICES AND CHECKOUT CONTRACT (owner, 12 November 2026): the module shows the price Ecwid shows, with the promotion Ecwid shows
 // (the earlier price struck through, the price with the discount, the discount note), whatever the percentage (10, 15, 17, none);
 // it computes nothing; Add to Bag presses Ecwid's own button and turns into Go to Checkout only when Ecwid's cart event says the
-// product is in the cart; Go to Checkout goes straight to the shop's own checkout, with the configuration in it.
+// product is in the cart; Go to Checkout opens the shopping cart, built from the configuration.
 //
 //   node tools/build-premium-preview.mjs && node tools/build-tv-design-preview.mjs && NODE_PATH=$(npm root -g) node tests/price-promo-contract.mjs
 //
@@ -39,7 +39,7 @@ for (const promo of [0, 10, 15, 17]) {
     ok(await p.$eval('.gx-btn', (b) => !b.classList.contains('gx-btn--ready')), 'mobile: once in the bag the ready state is off (it is Go to Checkout)');
     ok((await p.textContent('.gx-btn')).trim() === 'Go to Checkout', 'after Ecwid reports the product in the cart, the button turns into Go to Checkout');
     await p.click('.gx-btn'); await p.waitForTimeout(200);
-    ok(await p.evaluate(() => window.__checkoutOpened === 1), 'Go to Checkout calls the shop\'s own checkout (Ecwid.Cart.gotoCheckout) at once');
+    ok(await p.evaluate(() => window.__cartOpened === 1), 'Go to Checkout opens the shopping cart (Ecwid.openPage("cart")) at once');
     await p.evaluate(() => { const s = document.querySelector('.details-product-option--COVERS select'); s.selectedIndex = 1; s.dispatchEvent(new Event('change', { bubbles: true })); }); await p.waitForTimeout(900);
     ok((await p.textContent('.gx-btn')).trim() === 'Add to Bag', 'a changed choice means the bag no longer matches: the button returns to Add to Bag');
   }
@@ -62,10 +62,10 @@ for (const vp of [{ width: 1366, height: 1024 }, { width: 1024, height: 1366 }])
     const t = await p.evaluate(() => ({ old: (document.querySelector('#price .pold') || {}).textContent || '', cur: (document.querySelector('#price .prow b') || {}).textContent || '', save: (document.querySelector('#price .sv') || {}).textContent || '', inc: !!document.querySelector('#price .inc'), rev: !!document.querySelector('.prbox .pold') }));
     ok(promo === 0 ? (!t.old && !t.save && t.cur) : (t.old && t.cur && t.save === 'Save ' + promo + '%' && t.inc && t.rev), `${vp.width}x${vp.height} promo ${promo}%: the old price struck, the price with the discount, "Save ${promo}%" and "Discount included" are shown (also on Review)`, JSON.stringify(t));
     if (promo === 10 && vp.width > 1100) {
-    // Go to Checkout goes straight to the shop's checkout: no checkout screen of ours is shown
+    // Go to Checkout opens the shopping cart: no screen of ours is shown
     await p.click('#bag [data-bag]'); await p.click('#bag [data-checkout]'); await p.waitForTimeout(120);
     const c = await p.evaluate(() => ({ noScreenOfOurs: !document.querySelector('#co') && getComputedStyle(document.querySelector('.monitor')).display !== 'none', toast: document.getElementById('toast').textContent }));
-    ok(c.noScreenOfOurs && /straight to the shop/.test(c.toast), 'Go to Checkout goes straight to the shop\'s checkout: no checkout screen of ours is shown', JSON.stringify(c));
+    ok(c.noScreenOfOurs && /shopping cart/.test(c.toast), 'Go to Checkout opens the shopping cart: no screen of ours is shown', JSON.stringify(c));
   }
     ok(errs.length === 0, `${vp.width}x${vp.height} promo ${promo}%: no page errors`, errs.join(' | ')); await ctx.close();
   }

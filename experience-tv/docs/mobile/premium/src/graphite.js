@@ -168,7 +168,8 @@
   function bagged() { return !!S.cart && !!S.bagSig && S.bagSig === sigNow(); }
   function nativeBag() { var all = d.querySelectorAll('button'); for (var i = 0; i < all.length; i++) { var b = all[i]; if (!root.contains(b) && /^\s*add to (bag|cart)\s*$/i.test(b.textContent)) return b; } return null; }
   function addToBag() { var b = nativeBag(); if (!b) return toNative(); S.bagSig = sigNow(); b.click(); }
-  function gotoCheckout() { if (w.Ecwid && w.Ecwid.Cart && w.Ecwid.Cart.gotoCheckout) w.Ecwid.Cart.gotoCheckout(); else if (w.Ecwid && w.Ecwid.openPage) w.Ecwid.openPage('cart'); }
+  /* Go to Checkout opens the shopping cart: the order there is built by Ecwid (and Equity) from the four choices and the promotion; the customer enters the e-mail in the cart and continues to checkout, per Ecwid's protocol */
+  function gotoCheckout() { if (w.Ecwid && w.Ecwid.openPage) w.Ecwid.openPage('cart'); }
   if (w.Ecwid && w.Ecwid.OnCartChanged) w.Ecwid.OnCartChanged.add(function (c) { S.cart = !!(c && c.productsQuantity > 0); render(); });
   function toNative() {
     var role = S.step === 'review' ? 'size' : S.step; S.open = false; render();

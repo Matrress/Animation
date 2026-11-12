@@ -531,7 +531,7 @@ var D = /*__DATA__*/;
     else if (d.more != null) { $('#form').classList.toggle('on'); return; }
     else if (d.send != null) { toast('Preview only: nothing was sent. In the shop this goes to Divine Dunlop support.'); return; }
     else if (d.bag != null) { S.bagged = sig(); toast('Stand-in: in the shop this presses Ecwid\'s own Add to Bag, and the button turns into Go to Checkout when Ecwid\'s cart reports the change.'); }
-    else if (d.checkout != null) { toast('Go to Checkout goes straight to the shop\'s own checkout, with your four choices, the discount and the price already in it. (Not opened in this preview.)'); return; }
+    else if (d.checkout != null) { toast('Go to Checkout opens the shopping cart: the order there is built from your four choices and the promotion. The e-mail is entered in the cart. (Not opened in this preview.)'); return; }
     draw(); if (d.bag == null) window.scrollTo({ top: 0 });
   });
   document.addEventListener('change', function (e) {

@@ -1073,8 +1073,8 @@
      "n": 6,
      "label": "Go to Checkout",
      "kind": "Go to Checkout",
-     "does": "Goes straight to the shop's own checkout, with the four choices, the discount and the price already in it",
-     "leads": "the shop's checkout page",
+     "does": "Opens the shopping cart, built from the four choices and the promotion; the e-mail is entered there, then checkout",
+     "leads": "the shopping cart",
      "disabled": false
     }
    ],

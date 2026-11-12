@@ -31,7 +31,9 @@
   d.addEventListener('change', function (e) { if (e.target.closest && e.target.closest('.so-native')) { clearTimeout(timer); timer = setTimeout(recompute, 600); } }, true);
   /* STAND-IN for Ecwid's cart API: Add to Bag with the four options chosen puts the product in the cart and tells the listeners; gotoCheckout opens the checkout (a stand-in screen) */
   var listeners = [], cart = { productsQuantity: 0 };
-  w.Ecwid = { OnCartChanged: { add: function (f) { listeners.push(f); } }, Cart: { get: function (cb) { cb(cart); }, gotoCheckout: function () { w.__checkoutOpened = (w.__checkoutOpened || 0) + 1; var t = d.getElementById('toast'); t.textContent = 'Goes straight to the shop\'s own checkout (stand-in: not opened in the preview)'; t.classList.add('on'); setTimeout(function () { t.classList.remove('on'); }, 2600); } }, openPage: function () {} };
+  /* open the shopping cart (Ecwid's own protocol) and count the calls; the stand-in does not open anything */
+  function openPage(page) { if (page !== 'cart') return; w.__cartOpened = (w.__cartOpened || 0) + 1; var t = d.getElementById('toast'); t.textContent = 'Opens the shopping cart, built from your choices (stand-in: not opened in the preview)'; t.classList.add('on'); setTimeout(function () { t.classList.remove('on'); }, 2600); }
+  w.Ecwid = { OnCartChanged: { add: function (f) { listeners.push(f); } }, Cart: { get: function (cb) { cb(cart); } }, openPage: openPage };
   d.getElementById('so-atb').addEventListener('click', function () {
     var n = 0; d.querySelectorAll('.so-native select').forEach(function (s) { if (s.selectedIndex > 0) n++; });
     var t = d.getElementById('toast');
