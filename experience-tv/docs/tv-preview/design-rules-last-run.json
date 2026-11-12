@@ -1,0 +1,477 @@
+{
+ "date": "2026-11-12",
+ "failures": 0,
+ "checks": 94,
+ "rows": [
+  {
+   "pass": true,
+   "rule": "R1 rounded corners only: no pill or round button",
+   "detail": "largest radius 12px over 56 buttons"
+  },
+  {
+   "pass": true,
+   "rule": "R2 the order rail and \"Your selection\" are white cards",
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F2F6F9\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R3 the middle stage is the light one (not dark, not grey)",
+   "detail": "#F2F6F9"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?step=0",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?step=1",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?step=2",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?step=3",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?step=4",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R5 the fourteen topic buttons are on top",
+   "detail": "14 buttons"
+  },
+  {
+   "pass": true,
+   "rule": "R6 \"Select your Botanic here\" is shown and the stage says \"Select here\"",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R7 Add to Bag is the one bright-blue button; flat, no glow or fog",
+   "detail": "shadow blur 0px, 2 instances"
+  },
+  {
+   "pass": true,
+   "rule": "R8 the frame of the television is thin",
+   "detail": "5px"
+  },
+  {
+   "pass": true,
+   "rule": "R9 the leaf is green",
+   "detail": "#9BD26B,#63B963"
+  },
+  {
+   "pass": true,
+   "rule": "R10 no \"Choose by hand\" / manual mode inside the television",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R11 firmness numbers are the module's: 48 / 49-87 / 88-114 / 115+",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R12 weight and height sliders are on the large screen",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R13 Extra Firm is kept and redirected to the specialist model (a plain link)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R14 sizes are shown in centimetres and in inches",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R15 three depths drawn from the owner's mattress drawing",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R16 the mattress icon is dim with nothing chosen",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R17 the mattress icon lights up when all four choices are made",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R18 7-Zone uses the mobile concept: the sketch, the legend and the seven zones",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R19 covers: four photographs and the information board beside them",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R20 View Model Gallery and the Optimised Preview / Standard Product View switch are on top",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R21 the gallery opens inside the television with the photographs",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R22 Standard Product View shows the shop's own four options",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R23 a choice made in the standard view is shown in the television",
+   "detail": "90 × 200 cm"
+  },
+  {
+   "pass": true,
+   "rule": "R24 a choice made in the television is shown in the standard view",
+   "detail": "Single 90x190 cm / 35.4” x 74.8” (+£797)"
+  },
+  {
+   "pass": true,
+   "rule": "R25 Add to Bag waits for the four choices, becomes Go to Checkout (both buttons), and returns if a choice changes",
+   "detail": "Add to Bag [off] > Add to Bag > Go to Checkout > Add to Bag"
+  },
+  {
+   "pass": true,
+   "rule": "R26 every panel of every topic shows its content",
+   "detail": "31 panels"
+  },
+  {
+   "pass": true,
+   "rule": "no page errors",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R1 rounded corners only: no pill or round button",
+   "detail": "largest radius 12px over 56 buttons"
+  },
+  {
+   "pass": true,
+   "rule": "R2 the order rail and \"Your selection\" are white cards",
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F2F6F9\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R3 the middle stage is the light one (not dark, not grey)",
+   "detail": "#F2F6F9"
+  },
+  {
+   "pass": true,
+   "rule": "R5 the fourteen topic buttons are on top",
+   "detail": "14 buttons"
+  },
+  {
+   "pass": true,
+   "rule": "R6 \"Select your Botanic here\" is shown and the stage says \"Select here\"",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R7 Add to Bag is the one bright-blue button; flat, no glow or fog",
+   "detail": "shadow blur 0px, 2 instances"
+  },
+  {
+   "pass": true,
+   "rule": "R8 the frame of the television is thin",
+   "detail": "5px"
+  },
+  {
+   "pass": true,
+   "rule": "R9 the leaf is green",
+   "detail": "#9BD26B,#63B963"
+  },
+  {
+   "pass": true,
+   "rule": "R10 no \"Choose by hand\" / manual mode inside the television",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R11 firmness numbers are the module's: 48 / 49-87 / 88-114 / 115+",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R12 weight and height sliders are on the large screen",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R13 Extra Firm is kept and redirected to the specialist model (a plain link)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R14 sizes are shown in centimetres and in inches",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R15 three depths drawn from the owner's mattress drawing",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R16 the mattress icon is dim with nothing chosen",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R17 the mattress icon lights up when all four choices are made",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R18 7-Zone uses the mobile concept: the sketch, the legend and the seven zones",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R19 covers: four photographs and the information board beside them",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R20 View Model Gallery and the Optimised Preview / Standard Product View switch are on top",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R21 the gallery opens inside the television with the photographs",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R22 Standard Product View shows the shop's own four options",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R23 a choice made in the standard view is shown in the television",
+   "detail": "90 × 200 cm"
+  },
+  {
+   "pass": true,
+   "rule": "R24 a choice made in the television is shown in the standard view",
+   "detail": "Single 90x190 cm / 35.4” x 74.8” (+£797)"
+  },
+  {
+   "pass": true,
+   "rule": "R25 Add to Bag waits for the four choices, becomes Go to Checkout (both buttons), and returns if a choice changes",
+   "detail": "Add to Bag [off] > Add to Bag > Go to Checkout > Add to Bag"
+  },
+  {
+   "pass": true,
+   "rule": "R26 every panel of every topic shows its content",
+   "detail": "31 panels"
+  },
+  {
+   "pass": true,
+   "rule": "no page errors",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R1 rounded corners only: no pill or round button",
+   "detail": "largest radius 12px over 56 buttons"
+  },
+  {
+   "pass": true,
+   "rule": "R2 the order rail and \"Your selection\" are white cards",
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F2F6F9\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R3 the middle stage is the light one (not dark, not grey)",
+   "detail": "#F2F6F9"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?step=0",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?step=1",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?step=2",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?step=3",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?step=4",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
+   "detail": "407.0 / 407.0 / 407.0"
+  },
+  {
+   "pass": true,
+   "rule": "R5 the fourteen topic buttons are on top",
+   "detail": "14 buttons"
+  },
+  {
+   "pass": true,
+   "rule": "R6 \"Select your Botanic here\" is shown and the stage says \"Select here\"",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R7 Add to Bag is the one bright-blue button; flat, no glow or fog",
+   "detail": "shadow blur 0px, 2 instances"
+  },
+  {
+   "pass": true,
+   "rule": "R8 the frame of the television is thin",
+   "detail": "5px"
+  },
+  {
+   "pass": true,
+   "rule": "R9 the leaf is green",
+   "detail": "#9BD26B,#63B963"
+  },
+  {
+   "pass": true,
+   "rule": "R10 no \"Choose by hand\" / manual mode inside the television",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R11 firmness numbers are the module's: 48 / 49-87 / 88-114 / 115+",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R12 weight and height sliders are on the large screen",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R13 Extra Firm is kept and redirected to the specialist model (a plain link)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R14 sizes are shown in centimetres and in inches",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R15 three depths drawn from the owner's mattress drawing",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R16 the mattress icon is dim with nothing chosen",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R17 the mattress icon lights up when all four choices are made",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R18 7-Zone uses the mobile concept: the sketch, the legend and the seven zones",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R19 covers: four photographs and the information board beside them",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R20 View Model Gallery and the Optimised Preview / Standard Product View switch are on top",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R21 the gallery opens inside the television with the photographs",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R22 Standard Product View shows the shop's own four options",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R23 a choice made in the standard view is shown in the television",
+   "detail": "90 × 200 cm"
+  },
+  {
+   "pass": true,
+   "rule": "R24 a choice made in the television is shown in the standard view",
+   "detail": "Single 90x190 cm / 35.4” x 74.8” (+£797)"
+  },
+  {
+   "pass": true,
+   "rule": "R25 Add to Bag waits for the four choices, becomes Go to Checkout (both buttons), and returns if a choice changes",
+   "detail": "Add to Bag [off] > Add to Bag > Go to Checkout > Add to Bag"
+  },
+  {
+   "pass": true,
+   "rule": "R26 every panel of every topic shows its content",
+   "detail": "31 panels"
+  },
+  {
+   "pass": true,
+   "rule": "no page errors",
+   "detail": ""
+  }
+ ]
+}

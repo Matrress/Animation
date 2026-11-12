@@ -112,6 +112,32 @@ const MEDIA_CAP = { benefits: 'Milk to foam: where latex begins', adaptation: 'E
   const cnt = D.chapters.reduce((n, c) => n + c.panels.length, 0);
   console.log('information chapters:', D.chapters.length, 'chapters,', cnt, 'panels; groups per reader:', D.chapters.flatMap((c) => c.panels.filter((p) => p.groups).map((p) => c.id + '/' + p.id + ':' + p.groups.length)).join(' '));
 }
+
+// ---- the owner's two mattress drawings (supplied as SVG): one for the three depths, one for the "ready to order" icon ----
+function mattressParts(file) {
+  const svg = readFileSync(join(P, 'assets', file), 'utf8');
+  const ms = [...svg.matchAll(/transform="matrix\(([^)]*)\)"/g)].map((m) => m[1].split(',').map(Number));
+  const ds = [...svg.matchAll(/<path d="([^"]*)"/g)].map((m) => m[1]);
+  if (ms.length !== 3 || ds.length !== 2) throw new Error(file + ': unexpected structure');
+  return { outer: ms[0], ta: [ms[1][0], ms[1][3], ms[1][4], ms[1][5]], tb: [ms[2][0], ms[2][3], ms[2][4], ms[2][5]], out: ds[0], inn: ds[1] };
+}
+D.mattress = { depth: mattressParts('owner-mattress-depth.svg'), icon: mattressParts('owner-mattress-icon.svg') };
+
+// ---- the seven-zone sketch: the same recoloured illustration as the mobile preview (original geometry) ----
+{
+  const z = readFileSync(join(root, 'products', 'botanic.zones.js'), 'utf8'); const zs = JSON.parse(z.match(/zonesSvg = ("(?:[^"\\]|\\.)*")/s)[1]);
+  const map = { '#1B5568': '#2A3950', '#0B2A38': '#151C26', '#D9EEF0': '#E4EBF5', '#9ACFD5': '#B4C4DB', '#66B3BA': '#8CA2C2', '#E9FFFD': '#E4EBF5', '#8CEBE4': '#B4C4DB', '#4FD3CB': '#8CA2C2', '#7FE8E0': '#A9BDD9' };
+  let o = zs.replace(/#[0-9A-Fa-f]{6}/g, (m) => map[m.toUpperCase()] || m).replace('rgba(79,211,203,.18)', 'rgba(140,162,194,.18)').replace('rgba(79,211,203,.20)', 'rgba(140,162,194,.20)');
+  const tier = { 1: 'c', 2: 's', 3: 'c', 4: 'r', 5: 'c', 6: 's', 7: 's' }; let n = 0;
+  o = o.replace(/(<g data-z="(\d)"[^>]*>)(<g clip-path="url\(#dz7-z\d\)"><g><use href="#dz7-mp" fill=")url\(#dz7-gz\)/g, (m, a, zz, c) => { n++; return a.replace('<g data-z="' + zz + '"', '<g data-z="' + zz + '" data-tone="' + tier[zz] + '"') + c + 'url(#zt-' + tier[zz] + ')'; });
+  if (n !== 7) throw new Error('expected 7 zone fills, found ' + n);
+  const grad = (id, c, a, b2, c2) => '<linearGradient id="zt-' + id + '" gradientUnits="userSpaceOnUse" x1="0" y1="250" x2="0" y2="760"><stop offset="0" stop-color="' + c + '" stop-opacity="' + a + '"/><stop offset=".4" stop-color="' + c + '" stop-opacity="' + b2 + '"/><stop offset="1" stop-color="' + c + '" stop-opacity="' + c2 + '"/></linearGradient>';
+  o = o.replace('</defs>', grad('s', '#B7C9E3', .82, .58, .34) + grad('c', '#7C97C0', .84, .60, .36) + grad('r', '#46628F', .96, .78, .55) + '</defs>');
+  const cx = [367, 870, 1260, 1610, 1975, 2285, 2532];
+  const labels = '<g aria-hidden="true">' + cx.map((x, i) => '<text x="' + x + '" y="655" text-anchor="middle" font-size="84" font-weight="700" fill="' + (tier[i + 1] === 's' ? '#151C26' : '#F2F6FB') + '" font-family="Chillax,Arial,sans-serif">Z' + (i + 1) + '</text>').join('') + '</g>';
+  const at = o.indexOf('<use href="#dz7-bd" fill="rgba('); if (at < 0) throw new Error('body outline not found');
+  D.zoneSketch = o.slice(0, at) + labels + o.slice(at); D.zoneTier = tier;
+}
 const tpl = readFileSync(join(root, 'tools', 'tv-design-preview.template.html'), 'utf8');
 const html = tpl.replace('/*__CORE__*/', () => core).replace('/*__DATA__*/', () => JSON.stringify(D));
 const file = join(out, 'large-screen-design.html');
@@ -127,11 +153,11 @@ const browser = await chromium.launch();
 const errs = [];
 for (const [id, vp, touch] of PROFILES) {
   const ctx = await browser.newContext({ viewport: vp, screen: vp, hasTouch: touch, deviceScaleFactor: 1 });
-  await ctx.route(/^https?:\/\//, (r) => (/^https:\/\/media\.divinedunlop\.com\//.test(r.request().url()) ? r.continue() : r.abort()));   // only the cover photographs are loaded; fonts fall back
+  await ctx.route(/^https?:\/\//, (r) => (/^https:\/\/(media\.divinedunlop\.com|d2j6dbq0eux0bg\.cloudfront\.net)\//.test(r.request().url()) ? r.continue() : r.abort()));   // only the cover photographs are loaded; fonts fall back
   const page = await ctx.newPage(); page.on('pageerror', (e) => errs.push(id + ': ' + e.message));
   const url = pathToFileURL(file).href;
-  for (const [name, q] of [['1-size', '?step=0&demo=1'], ['2-firmness', '?step=1&demo=1'], ['3-depth', '?step=2&demo=1'], ['4-cover', '?step=3&demo=1'], ['5-review', '?step=4&demo=1'], ['6-bagged', '?step=4&demo=1&bag=1'], ['7-cover-none', '?step=3'], ['8-discover', '?ch=discover&pn=intro&demo=1'], ['9-glance', '?ch=discover&pn=glance'], ['10-firmness-read', '?ch=firmness&pn=regulation'], ['11-comfort-read', '?ch=comfort&pn=behaviour&rd=2'], ['12-zones', '?ch=zones&pn=map'], ['13-certs', '?ch=certs&pn=bodies'], ['14-warranty', '?ch=warranty&pn=cover'], ['15-benefits', '?ch=benefits&pn=origin']]) {
-    await page.goto(url + q); await page.waitForTimeout(name === '4-cover' || name === '7-cover-none' ? 1500 : 250);
+  for (const [name, q] of [['1-size', '?step=0&demo=1'], ['2-firmness', '?step=1&demo=1'], ['3-depth', '?step=2&demo=1'], ['4-cover', '?step=3&demo=1'], ['5-review', '?step=4&demo=1'], ['6-bagged', '?step=4&demo=1&bag=1'], ['7-cover-none', '?step=3'], ['8-discover', '?ch=discover&pn=intro&demo=1'], ['9-glance', '?ch=discover&pn=glance'], ['10-firmness-read', '?ch=firmness&pn=regulation'], ['11-comfort-read', '?ch=comfort&pn=behaviour&rd=2'], ['12-zones', '?ch=zones&pn=map'], ['13-certs', '?ch=certs&pn=bodies'], ['14-warranty', '?ch=warranty&pn=cover'], ['15-benefits', '?ch=benefits&pn=origin'], ['16-gallery', '?gal=1&demo=1'], ['17-standard', '?view=std&demo=1'], ['18-zones-detail', '?ch=zones&pn=detail']]) {
+    await page.goto(url + q); await page.waitForTimeout(/cover|gallery|standard/.test(name) ? 1800 : 250);
     await page.screenshot({ path: join(out, `design-${id}-${name}.png`), fullPage: true });
   }
   // the first-time state: nothing chosen yet, step 1

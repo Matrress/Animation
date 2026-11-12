@@ -16,6 +16,15 @@ Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/
 | The shop's own (manual) controls stay | **No "Choose by hand" screen inside the television** (owner, 11 November 2026: it is outside the concept). The shop's own four options and Add to Bag stay on the page under the television, always, never hidden, and move together with the television in both directions. The Standard Product View and the model "Standard" are untouched |
 | Each button will be specified later by the owner | The preview is a design carrier; every label here is replaceable through `docs/TV-BUTTON-SPEC.md` |
 
+## Gallery, the two views, depths, the icon and the seven zones (owner, 12 November 2026)
+
+- **View Model Gallery** (top right): opens the product photographs inside the television (large photograph, arrows, a row of thumbnails, "Close gallery"). The photographs are the shop's own images.
+- **Optimised Preview | Standard Product View** (top right): the switch between the television and the shop's own page. In the preview the standard view is a stand-in: the shop's own gallery and the four options, the same price and the same Add to Bag; what is chosen in one view is shown in the other (tested, both directions).
+- **Depths** are now drawn from the owner's mattress drawing (`docs/mobile/premium/assets/owner-mattress-depth.svg`): the same drawing three times, only the thickness of the front edge changes (differences exaggerated so that they can be seen), the 26 cm outline dashed behind the shorter ones. The file read is the owner's own; the program parses its paths, it does not redraw them.
+- **The mattress icon** (owner's second drawing, `owner-mattress-icon.svg`) sits in the heading of "Your selection": grey outline with nothing chosen, graphite as choices are made, and lit blue with a glow when all four are chosen ("Ready to order. Add it to your bag." appears under Add to Bag).
+- **7-Zone** uses the same scheme as the mobile concept: the seven-zone sketch, the legend (Softer response, Calibrated, Reinforced) and the seven zones with their notes, plus the short loop beside it.
+- Which file is which was taken from the file names: "for_depth" for the heights, "mattress" for the icon. If it is the other way round, it is a one-line swap in `tools/build-tv-design-preview.mjs`.
+
 ## The topic buttons and the information (owner, 11 November 2026)
 
 The top of the television carries **all fourteen topic buttons of the Botanic configuration** (two rows of seven, as on today's television): Discover, Firmness, Comfort, Height, Covers, Benefits, Support, Adaptation, 7-Zone, Ventilation, Hygiene, Certifications, Warranty, Delivery. The four "phases" of the earlier proposal are dropped (they were not the owner's). The television's purpose is to show **all** the information of the Botanic description, so every topic opens its panels as buttons in the left menu ("In <topic>"), and the order stages ("Your order") stay under them. The right panel (selection, price, Add to Bag) is always there, on every topic; the choices survive moving between topics.
