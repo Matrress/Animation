@@ -41,7 +41,7 @@ await p.locator('.gx-bar', { hasText: 'Deep Comfort' }).click(); await p.waitFor
 const c = await p.evaluate(() => document.querySelector('.gx-btn').innerHTML); ok(c === 'Review Your <b>Order</b>', `cover step button: "${c}"`);
 await p.locator('[data-role=cover]', { hasText: 'Aloe' }).click(); await p.waitForTimeout(1500); await p.locator('.gx-btn').click(); await p.waitForTimeout(500); await snap('8-review');
 const r = await p.evaluate(() => ({ btn: document.querySelector('.gx-btn').innerHTML, chosen: Object.values(__cfg.sync.read().options).filter(o => o.chosen).length }));
-ok(r.btn === 'Go to <b>Add to Bag</b>' && r.chosen === 4, `review button: "${r.btn}", ${r.chosen} native selections`);
+ok(r.btn === 'Add to <b>Bag</b>' && r.chosen === 4, `review button: "${r.btn}", ${r.chosen} native selections`);
 ok(errs.length === 0, 'no page errors');
 // montage
 const names = ['1-firmness-start', '3-both-set', '4-light', '5-heavy', '6-other-chosen', '7-guided-chosen'];

@@ -91,3 +91,8 @@
 
 /* turquoise accent, kept small: a hairline on the dock edge (the steps stay as approved) */
 .gx-dock--firm { box-shadow: inset 0 1px 0 rgba(80, 205, 253, .45); }
+
+/* promotion as the store shows it: the earlier price struck through, the discount note; and the bag / checkout button */
+.gx-sel .gx-r .gx-old { display: inline; font-size: 13px; line-height: 1.3; color: #9AA7B2; text-decoration: line-through; margin: 0; }
+.gx-dock .gx-r .gx-promo { display: flex; justify-content: flex-end; align-items: center; gap: 8px; height: 17px; margin: 1px 0 0; } .gx-dock .gx-sv { display: inline-block; font-size: 10.5px; letter-spacing: .04em; font-weight: 700; color: #fff; background: #2A5E7E; border-radius: 6px; padding: 1px 6px; margin: 0; line-height: 1.3; text-transform: uppercase; }
+.gx-btn.gx-btn--bag:not([aria-disabled=true]) { background: linear-gradient(180deg, #2E86AF 0%, #297CA2 50%, #1F6B93 100%); border-color: #1A5C7E; }

@@ -65,10 +65,13 @@
   };
 
   Sync.prototype.priceNode = function () { return this.root().querySelector('.details-product-price__value'); };
+  /* Ecwid's own earlier price (struck through) and discount note: present only while the store shows a promotion. Read as text, never calculated. */
+  Sync.prototype.compareNode = function () { return this.root().querySelector('.details-product-price-compare__container s'); };
+  Sync.prototype.discountNode = function () { return this.root().querySelector('.product-details__product-price-discount'); };
 
   /* A plain snapshot: what each native option says now, which choices it offers, the price text. */
   Sync.prototype.read = function () {
-    var bl = this.blocks(), s = { options: {}, price: text(this.priceNode()), instances: this.instances(), found: false };
+    var bl = this.blocks(), s = { options: {}, price: text(this.priceNode()), compare: text(this.compareNode()), discount: text(this.discountNode()), instances: this.instances(), found: false };
     for (var role in bl) {
       var sel = bl[role].select, o = sel.options[sel.selectedIndex];
       var chosen = !!(o && sel.selectedIndex > 0 && !/^(please choose|select)/i.test(o.text));
@@ -122,7 +125,7 @@
   Sync.prototype._schedule = function (why) { var self = this; if (this.timer) return; this.timer = setTimeout(function () { self.timer = null; self._emit(why, null, true); }, 120); };
   Sync.prototype._emit = function (source, role, onlyIfDifferent) {
     if (this.dead) return;
-    var s = this.read(), key = JSON.stringify([s.price, s.instances, Object.keys(s.options).map(function (k) { return s.options[k].value; })]);
+    var s = this.read(), key = JSON.stringify([s.price, s.compare, s.discount, s.instances, Object.keys(s.options).map(function (k) { return s.options[k].value; })]);
     if (onlyIfDifferent && key === this.last) return;
     this.last = key;
     for (var i = 0; i < this.subs.length; i++) { try { this.subs[i](s, { source: source, role: role }); } catch (e) { /* a subscriber must not break the others */ } }

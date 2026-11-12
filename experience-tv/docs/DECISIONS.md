@@ -14,6 +14,7 @@ These are decided. They are not asked again and not undone by a later change. Wh
 ## Content decisions
 - Firmness numbers are the Firmness module's four ranges: Soft up to 48 kg, Medium 49 to 87, Firm 88 to 114, Extra Firm 115 and over. The module is the guide for any discrepancy. The sliders (body weight and height) are on the large screen too.
 - Extra Firm is not removed: it is redirected to the specialist model "Orthopaedic Coconut Core" (a plain link, followed only on a tap). Open: what happens if it is picked in Ecwid's own menu (proposal: same notice and link, nothing changed in Ecwid).
+- **Prices and promotions (owner, 12 November 2026), mobile and large, every model:** the customer always sees the real price and the price with the discount (the earlier price struck through, the price with the discount, the discount note), whatever the percentage (10, 15, 17 or other); the promotion is run in Ecwid; the module only mirrors Ecwid's texts and computes nothing; it says "Discount included". **Go to Checkout takes the customer to the checkout at once** (Ecwid's own checkout). Contract and verification plan: `docs/PRICES-AND-CHECKOUT.md`; test: `tests/price-promo-contract.mjs`.
 - Sizes are shown in centimetres and in inches (cm divided by 2.54, one decimal).
 - Custom size: a contact form (model filled in, size wanted, reply email) to support@divinedunlop.com.
 - The small videos (7 to 10 seconds) stay small; each model has a full presentation video playable in full; the video card is a small "television in the television".

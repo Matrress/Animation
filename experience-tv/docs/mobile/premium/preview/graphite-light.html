@@ -172,6 +172,11 @@
 /* turquoise accent, kept small: a hairline on the dock edge (the steps stay as approved) */
 .gx-dock--firm { box-shadow: inset 0 1px 0 rgba(80, 205, 253, .45); }
 
+/* promotion as the store shows it: the earlier price struck through, the discount note; and the bag / checkout button */
+.gx-sel .gx-r .gx-old { display: inline; font-size: 13px; line-height: 1.3; color: #9AA7B2; text-decoration: line-through; margin: 0; }
+.gx-dock .gx-r .gx-promo { display: flex; justify-content: flex-end; align-items: center; gap: 8px; height: 17px; margin: 1px 0 0; } .gx-dock .gx-sv { display: inline-block; font-size: 10.5px; letter-spacing: .04em; font-weight: 700; color: #fff; background: #2A5E7E; border-radius: 6px; padding: 1px 6px; margin: 0; line-height: 1.3; text-transform: uppercase; }
+.gx-btn.gx-btn--bag:not([aria-disabled=true]) { background: linear-gradient(180deg, #2E86AF 0%, #297CA2 50%, #1F6B93 100%); border-color: #1A5C7E; }
+
 /* PREVIEW styles, not deployed. Tokens are the description's own (palette, radii, Chillax). No backdrop-filter, no blur,
    no animation library; transitions are transform/opacity/max-height only and stop under prefers-reduced-motion. */
 :root { --bg: #DDEBF1; --lift: #EDF5F7; --card: #F6FAFB; --deep: #C7D5D9; --ink: #364849; --mid: #4F6365; --soft: #797572; --acc: #759397; --accm: #5E7A7D; --pale: #BFD0D5; --r: 12px; --rl: 18px; --f: 'Chillax', 'Helvetica Neue', Arial, sans-serif; }
@@ -382,10 +387,13 @@ button { font: inherit; color: inherit; }
   };
 
   Sync.prototype.priceNode = function () { return this.root().querySelector('.details-product-price__value'); };
+  /* Ecwid's own earlier price (struck through) and discount note: present only while the store shows a promotion. Read as text, never calculated. */
+  Sync.prototype.compareNode = function () { return this.root().querySelector('.details-product-price-compare__container s'); };
+  Sync.prototype.discountNode = function () { return this.root().querySelector('.product-details__product-price-discount'); };
 
   /* A plain snapshot: what each native option says now, which choices it offers, the price text. */
   Sync.prototype.read = function () {
-    var bl = this.blocks(), s = { options: {}, price: text(this.priceNode()), instances: this.instances(), found: false };
+    var bl = this.blocks(), s = { options: {}, price: text(this.priceNode()), compare: text(this.compareNode()), discount: text(this.discountNode()), instances: this.instances(), found: false };
     for (var role in bl) {
       var sel = bl[role].select, o = sel.options[sel.selectedIndex];
       var chosen = !!(o && sel.selectedIndex > 0 && !/^(please choose|select)/i.test(o.text));
@@ -439,7 +447,7 @@ button { font: inherit; color: inherit; }
   Sync.prototype._schedule = function (why) { var self = this; if (this.timer) return; this.timer = setTimeout(function () { self.timer = null; self._emit(why, null, true); }, 120); };
   Sync.prototype._emit = function (source, role, onlyIfDifferent) {
     if (this.dead) return;
-    var s = this.read(), key = JSON.stringify([s.price, s.instances, Object.keys(s.options).map(function (k) { return s.options[k].value; })]);
+    var s = this.read(), key = JSON.stringify([s.price, s.compare, s.discount, s.instances, Object.keys(s.options).map(function (k) { return s.options[k].value; })]);
     if (onlyIfDifferent && key === this.last) return;
     this.last = key;
     for (var i = 0; i < this.subs.length; i++) { try { this.subs[i](s, { source: source, role: role }); } catch (e) { /* a subscriber must not break the others */ } }
@@ -462,7 +470,7 @@ button { font: inherit; color: inherit; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   var roleClass = { size: 'SIZE', depth: 'Select-Mattress-Depth', firmness: 'FIRMNESS-BY-BODY-WEIGHT', cover: 'COVERS' };
   var html = '<div class="ec-store ec-store__product-page"><div class="so-gallery" id="gallery"></div><div class="so-head"><h1 class="so-title">' + esc(D.product.name) + '</h1>' +
-    '<div class="so-price"><span class="details-product-price__value" id="so-price">£0</span></div>' +
+    '<div class="so-price"><span class="details-product-price__value" id="so-price">£0</span> <span class="details-product-price-compare__container"><s id="so-compare"></s></span> <span class="product-details__product-price-discount" id="so-save"></span></div>' +
     '<p class="so-intro">' + esc(D.product.intro) + '</p><div id="cfg-cta"></div></div><div id="cfg"></div>' +
     '<div class="so-native" id="native"><div class="so-native__tag">Ecwid’s own options · always available</div>';
   S.options.forEach(function (o) {
@@ -471,7 +479,7 @@ button { font: inherit; color: inherit; }
   });
   html += '<button class="so-atb" id="so-atb" type="button">Add to Bag</button><p class="so-atb-note">Native Ecwid button. Never clicked in any test.</p></div><div id="desc-slot"></div></div>';
   d.getElementById('store').innerHTML = html;
-  var timer = null;
+  var NOTE = !/promonote=0/.test(w.location.search), timer = null, PROMO = (/promo=(\d+)/.exec(w.location.search) || [0, 10])[1] * 1;   /* the store's promotion, as the store would show it: 10, 15, 17 or any other percentage; 0 = none */
   function fmt(n) { return '£' + n.toFixed(2).replace(/\.00$/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ' ').replace(/(\.\d)$/, '$10'); }
   function recompute() {
     var sum = 0, any = false;
@@ -479,10 +487,19 @@ button { font: inherit; color: inherit; }
       var o = s.options[s.selectedIndex]; if (!o || s.selectedIndex < 1) return;
       var m = /\(\+£([\d\s]+)\)/.exec(o.text); if (m) { sum += parseInt(m[1].replace(/\s/g, ''), 10); any = true; }
     });
-    var el = d.getElementById('so-price'); el.textContent = any ? fmt(sum * 0.9) : '£0';
+    var el = d.getElementById('so-price'), pc = PROMO; el.textContent = any ? fmt(sum * (100 - pc) / 100) : '£0';
+    d.getElementById('so-compare').textContent = any && pc && NOTE ? fmt(sum) : ''; d.getElementById('so-save').textContent = any && pc && NOTE ? 'Save ' + pc + '%' : '';
   }
   d.addEventListener('change', function (e) { if (e.target.closest && e.target.closest('.so-native')) { clearTimeout(timer); timer = setTimeout(recompute, 600); } }, true);
-  d.getElementById('so-atb').addEventListener('click', function () { var t = d.getElementById('toast'); t.textContent = 'Preview: the real Add to Bag is Ecwid’s own button'; t.classList.add('on'); setTimeout(function () { t.classList.remove('on'); }, 2200); });
+  /* STAND-IN for Ecwid's cart API: Add to Bag with the four options chosen puts the product in the cart and tells the listeners; gotoCheckout opens the checkout (a stand-in screen) */
+  var listeners = [], cart = { productsQuantity: 0 };
+  w.Ecwid = { OnCartChanged: { add: function (f) { listeners.push(f); } }, Cart: { get: function (cb) { cb(cart); }, gotoCheckout: function () { w.__checkoutOpened = (w.__checkoutOpened || 0) + 1; var t = d.getElementById('toast'); t.textContent = 'Checkout: the shop\'s own checkout opens here (stand-in)'; t.classList.add('on'); setTimeout(function () { t.classList.remove('on'); }, 2600); } }, openPage: function () {} };
+  d.getElementById('so-atb').addEventListener('click', function () {
+    var n = 0; d.querySelectorAll('.so-native select').forEach(function (s) { if (s.selectedIndex > 0) n++; });
+    var t = d.getElementById('toast');
+    if (n < 4) { t.textContent = 'Please choose all options first (the shop refuses)'; t.classList.add('on'); setTimeout(function () { t.classList.remove('on'); }, 2200); return; }
+    cart = { productsQuantity: 1 }; listeners.forEach(function (f) { f(cart); });
+  });
 }(window, document));
 </script>
 <div id="productDescription" class="product-details__product-description"><style>body{margin:0;background:#F7F7F7}.pv-wrap{max-width:390px;margin:0 auto;background:#fff;padding:0 20px 40px}.pv-tag{font:600 11px/1.4 system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;background:#364849;color:#fff;padding:8px 20px;margin:0 -20px}</style><style>
@@ -5189,7 +5206,7 @@ var m=document.getElementById('desc-slot'),dsc=document.getElementById('productD
   'use strict';
   var D = w.DDDATA, core = w.DDFirmnessCore, sync = w.DDSync.create();
   var STEPS = ['size', 'firmness', 'depth', 'cover'], NAMES = { size: 'Size', firmness: 'Firmness', depth: 'Depth', cover: 'Cover' };
-  var S = { open: false, step: 'size', native: null, ready: false, weight: null, height: null, upd: false, before: '', timer: null, mode: 'gx' };
+  var S = { open: false, step: 'size', native: null, ready: false, weight: null, height: null, upd: false, before: '', timer: null, mode: 'gx', cart: false, bagSig: '' };
   var root = d.getElementById('cfg');
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function first(s) { var m = /^(.*?[.!?])(\s|$)/.exec(s || ''); return m ? m[1] : s; }
@@ -5306,13 +5323,13 @@ var m=document.getElementById('desc-slot'),dsc=document.getElementById('productD
     var n = S.native, st = S.step, rv = st === 'review', cur = rv ? null : chosen(st), size = chosen('size'), only = startingOnly();
     var others = STEPS.filter(function (r) { return r !== st && chosen(r); }).map(label).join(' · ');
     var left = rv ? done() + ' of 4 chosen' : (cur ? label(st) : '—');
-    var price = n.price, contact = size && !dims(size.label);
+    var price = n.price, cmp = n.compare, dsc = n.discount, contact = size && !dims(size.label);
     var pv = contact ? 'Contact us' : (!size && !done() ? '—' : price);
     var pl = rv || !only ? 'Your price' : 'Starting price';
-    var cap = only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid';
-    var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: 'Review Your <b>Order</b>', review: done() === 4 ? 'Go to <b>Add to Bag</b>' : 'See <b>Ecwid’s options</b>' }[st];
+    var cap = cmp && !contact ? (only ? '20 cm base depth · Discount included' : 'Discount included · Price from Ecwid') : (only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid');
+    var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: 'Review Your <b>Order</b>', review: done() === 4 ? (bagged() ? 'Go to <b>Checkout</b>' : 'Add to <b>Bag</b>') : 'See <b>Ecwid’s options</b>' }[st];
     var dis = !rv && !cur;
-    return '<section class="gx-dock' + (st === 'firmness' ? ' gx-dock--firm' : '') + '" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small><b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
+    return '<section class="gx-dock' + (st === 'firmness' ? ' gx-dock--firm' : '') + '" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small>' + ((dsc || cmp) && !contact ? '<span class="gx-promo">' + (dsc ? '<span class="gx-sv">' + esc(dsc) + '</span>' : '') + (cmp ? '<s class="gx-old">' + esc(cmp) + '</s>' : '') + '</span>' : '') + '<b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn' + (rv && done() === 4 ? ' gx-btn--bag' : '') + '" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
   }
 
   function render() {
@@ -5339,11 +5356,18 @@ var m=document.getElementById('desc-slot'),dsc=document.getElementById('productD
     } else if (a === 'go') go(t.getAttribute('data-step'));
     else if (a === 'next') {
       if (t.getAttribute('aria-disabled') === 'true') return;
-      if (S.step === 'review') return toNative();
+      if (S.step === 'review') return done() === 4 ? (bagged() ? gotoCheckout() : addToBag()) : toNative();
       var i = STEPS.indexOf(S.step); go(i < 3 ? STEPS[i + 1] : 'review');
     } else if (a === 'close') { S.open = false; render(); }
     else if (a === 'native') toNative();
   });
+  /* Add to Bag presses Ecwid's own button (Ecwid validates and adds); the button turns into Go to Checkout only when Ecwid's own cart event reports the product in the cart */
+  function sigNow() { var o = S.native && S.native.options || {}; return JSON.stringify(['size', 'depth', 'firmness', 'cover'].map(function (k) { return o[k] && o[k].label; })); }
+  function bagged() { return S.cart && S.bagSig === sigNow(); }
+  function nativeBag() { var all = d.querySelectorAll('button'); for (var i = 0; i < all.length; i++) { var b = all[i]; if (!root.contains(b) && /^\s*add to (bag|cart)\s*$/i.test(b.textContent)) return b; } return null; }
+  function addToBag() { var b = nativeBag(); if (!b) return toNative(); S.bagSig = sigNow(); b.click(); }
+  function gotoCheckout() { if (w.Ecwid && w.Ecwid.Cart && w.Ecwid.Cart.gotoCheckout) w.Ecwid.Cart.gotoCheckout(); else if (w.Ecwid && w.Ecwid.openPage) w.Ecwid.openPage('cart'); }
+  if (w.Ecwid && w.Ecwid.OnCartChanged) w.Ecwid.OnCartChanged.add(function (c) { S.cart = !!(c && c.productsQuantity > 0); render(); });
   function toNative() {
     var role = S.step === 'review' ? 'size' : S.step; S.open = false; render();
     var b = sync.blocks()[role]; var tgt = b ? b.block : d.getElementById('native');

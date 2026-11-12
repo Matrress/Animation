@@ -5,7 +5,7 @@
   'use strict';
   var D = w.DDDATA, core = w.DDFirmnessCore, sync = w.DDSync.create();
   var STEPS = ['size', 'firmness', 'depth', 'cover'], NAMES = { size: 'Size', firmness: 'Firmness', depth: 'Depth', cover: 'Cover' };
-  var S = { open: false, step: 'size', native: null, ready: false, weight: null, height: null, upd: false, before: '', timer: null, mode: 'gx' };
+  var S = { open: false, step: 'size', native: null, ready: false, weight: null, height: null, upd: false, before: '', timer: null, mode: 'gx', cart: false, bagSig: '' };
   var root = d.getElementById('cfg');
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function first(s) { var m = /^(.*?[.!?])(\s|$)/.exec(s || ''); return m ? m[1] : s; }
@@ -122,13 +122,13 @@
     var n = S.native, st = S.step, rv = st === 'review', cur = rv ? null : chosen(st), size = chosen('size'), only = startingOnly();
     var others = STEPS.filter(function (r) { return r !== st && chosen(r); }).map(label).join(' · ');
     var left = rv ? done() + ' of 4 chosen' : (cur ? label(st) : '—');
-    var price = n.price, contact = size && !dims(size.label);
+    var price = n.price, cmp = n.compare, dsc = n.discount, contact = size && !dims(size.label);
     var pv = contact ? 'Contact us' : (!size && !done() ? '—' : price);
     var pl = rv || !only ? 'Your price' : 'Starting price';
-    var cap = only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid';
-    var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: 'Review Your <b>Order</b>', review: done() === 4 ? 'Go to <b>Add to Bag</b>' : 'See <b>Ecwid’s options</b>' }[st];
+    var cap = cmp && !contact ? (only ? '20 cm base depth · Discount included' : 'Discount included · Price from Ecwid') : (only ? '20 cm base depth · Price loaded from Ecwid' : 'Price loaded from Ecwid');
+    var nxt = { size: 'Continue to <b>Firmness</b>', firmness: 'Continue to <b>Depth</b>', depth: 'Continue to <b>Cover</b>', cover: 'Review Your <b>Order</b>', review: done() === 4 ? (bagged() ? 'Go to <b>Checkout</b>' : 'Add to <b>Bag</b>') : 'See <b>Ecwid’s options</b>' }[st];
     var dis = !rv && !cur;
-    return '<section class="gx-dock' + (st === 'firmness' ? ' gx-dock--firm' : '') + '" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small><b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
+    return '<section class="gx-dock' + (st === 'firmness' ? ' gx-dock--firm' : '') + '" aria-label="Your selection"><div class="gx-sel"><div><small>' + (rv ? 'Your configuration' : 'Your selection') + '</small><b>' + esc(left) + '</b>' + (others ? '<em>' + esc(others) + '</em>' : '') + '</div><div class="gx-r' + (S.upd ? ' upd' : '') + '"><small>' + pl + '</small>' + ((dsc || cmp) && !contact ? '<span class="gx-promo">' + (dsc ? '<span class="gx-sv">' + esc(dsc) + '</span>' : '') + (cmp ? '<s class="gx-old">' + esc(cmp) + '</s>' : '') + '</span>' : '') + '<b>' + (st === 'firmness' ? LEAF : '') + esc(pv) + '</b></div></div><p class="gx-cap">' + esc(cap) + '</p><button class="gx-btn' + (rv && done() === 4 ? ' gx-btn--bag' : '') + '" data-act="next" aria-disabled="' + dis + '">' + nxt + '</button><button class="gx-alt" data-act="native">Use Ecwid’s own menus instead</button></section>';
   }
 
   function render() {
@@ -155,11 +155,18 @@
     } else if (a === 'go') go(t.getAttribute('data-step'));
     else if (a === 'next') {
       if (t.getAttribute('aria-disabled') === 'true') return;
-      if (S.step === 'review') return toNative();
+      if (S.step === 'review') return done() === 4 ? (bagged() ? gotoCheckout() : addToBag()) : toNative();
       var i = STEPS.indexOf(S.step); go(i < 3 ? STEPS[i + 1] : 'review');
     } else if (a === 'close') { S.open = false; render(); }
     else if (a === 'native') toNative();
   });
+  /* Add to Bag presses Ecwid's own button (Ecwid validates and adds); the button turns into Go to Checkout only when Ecwid's own cart event reports the product in the cart */
+  function sigNow() { var o = S.native && S.native.options || {}; return JSON.stringify(['size', 'depth', 'firmness', 'cover'].map(function (k) { return o[k] && o[k].label; })); }
+  function bagged() { return S.cart && S.bagSig === sigNow(); }
+  function nativeBag() { var all = d.querySelectorAll('button'); for (var i = 0; i < all.length; i++) { var b = all[i]; if (!root.contains(b) && /^\s*add to (bag|cart)\s*$/i.test(b.textContent)) return b; } return null; }
+  function addToBag() { var b = nativeBag(); if (!b) return toNative(); S.bagSig = sigNow(); b.click(); }
+  function gotoCheckout() { if (w.Ecwid && w.Ecwid.Cart && w.Ecwid.Cart.gotoCheckout) w.Ecwid.Cart.gotoCheckout(); else if (w.Ecwid && w.Ecwid.openPage) w.Ecwid.openPage('cart'); }
+  if (w.Ecwid && w.Ecwid.OnCartChanged) w.Ecwid.OnCartChanged.add(function (c) { S.cart = !!(c && c.productsQuantity > 0); render(); });
   function toNative() {
     var role = S.step === 'review' ? 'size' : S.step; S.open = false; render();
     var b = sync.blocks()[role]; var tgt = b ? b.block : d.getElementById('native');
