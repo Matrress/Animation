@@ -54,3 +54,11 @@ These are decided. They are not asked again and not undone by a later change. Wh
 - Ignition: each time the television is switched on (page start and every press of Optimised Preview) it wakes like a car's instrument panel: dark glass, one hairline of light, the leaf and BOTANIC, then two readouts, then the glass lights into the stage (about 3.4 s). The two facts are mandatory: **100% Natural Latex** and **Dunlop Technology** (the description's own hero bar). Skip, a tap or a key ends it; reduced motion gives a quiet fade; no blur. Name and facts are per model (`D.ignition`). Test R29.
 - Depth: the three heights are drawn from the owner's 26 cm drawing in TRUE proportion 20 : 24 : 26 (front edge scaled cm/26), never exaggerated; the chosen depth carries a "Chosen" mark. Replaces the earlier ×1.8 exaggeration. Test R28.
 - Not changed without the owner: texts on the legal list (warranty "2 cm = more than 12%", hygiene, OEKO-TEX scope, cover claims), firmness boundaries, leaf colour (green in the TV, graphite #364849 in the live description), the 20 days unit.
+
+## Reference round (owner, 15 November 2026: the three PDFs, all 37 pictures)
+- Every screen follows its PRIMARY screenshot; ALTERNATE only checks copy; the legal list is not published as fact. Audit and status per screen: `docs/BOTANIC-REFERENCE-AUDIT.md`; side by side: `docs/tv-reference/index.html`.
+- Pictures are only the owner's own, taken from modules already on the site (`assets/botanic/PROVENANCE.md`): the engineering view (vector body + mattress) for Firmness, Support (Stretching Effect) and the 7-Zone map; the Bio Dunlop SVG; the moon (shown silver, small); the perforated core.
+- 7-Zone map: the engineering view full width, never squeezed or redrawn (test R27 checks the proportion 2550:760 and the width).
+- Warranty: three full-width rows; the pillows come with the mattress either way; 12% examples only for 20/24/26 cm.
+- Ignition v2: luminous lettering (one pass of light, letters stay solid) and a soft ambient pad made in the browser, only after a tap, with Sound on/off remembered; test R29.
+- Invitation to explore: "N of 31 explored", small green dots on opened topics and buttons.

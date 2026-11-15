@@ -83,7 +83,7 @@ const MEDIA_CAP = { benefits: 'Milk to foam: where latex begins', adaptation: 'E
     res.comfortParas = q(document, '#bp-comfort .b-comfort-card p').map(T);
     const top = document.querySelector('#bp-top');
     res.hero = { eyebrow: T(top.querySelector('.b-eyebrow')), headline: T(top.querySelector('.b-h1')), intro: T(top.querySelector('.b-intro')), note: T(top.querySelector('.b-hero-rule')) };
-    res.facts = q(top, '.b-ocard__item').map((e) => ({ l: T(e.querySelector('.b-ocard__lbl')), v: T(e.querySelector('.b-ocard__val')), pills: q(e, '.b-pill').map(T) }));
+    res.facts = q(top, '.b-ocard__item').map((e) => ({ l: T(e.querySelector('.b-ocard__lbl')), v: T(e.querySelector('.b-ocard__val')), pills: q(e, '.b-pill, .b-ocard__pills > span').map(T) }));
     res.factsTitle = T(top.querySelector('.b-ocard__title'));
     res.features = q(top, ':scope > div.b-hero-bar .b-hero-bar__item').map(T).filter((t, i, a) => t && a.indexOf(t) === i);
     res.factsNote = T(top.querySelector('.b-ocard__note'));
@@ -142,6 +142,65 @@ D.mattress = { depth: mattressParts('owner-mattress-depth.svg'), icon: mattressP
 }
 const tpl = readFileSync(join(root, 'tools', 'tv-design-preview.template.html'), 'utf8');
 const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
+/* ---- REFERENCE ROUND (owner, 13–15 November 2026): the PRIMARY screenshots of the three PDFs ----
+   ASSETS: the owner's own pictures, byte for byte from modules already on the site (see assets/botanic/PROVENANCE.md).
+   CURATED: the copy the owner approved in the PRIMARY screenshots where it differs from the description; every entry names its
+   screenshot. Claims on the legal list are carried as approved but marked for verification in docs/BOTANIC-REFERENCE-AUDIT.md. */
+{
+  const A = join(root, 'assets', 'botanic'), b64 = (f) => 'data:image/webp;base64,' + readFileSync(join(A, f)).toString('base64');
+  D.eng = JSON.parse(readFileSync(join(A, 'engineering-view.json'), 'utf8'));
+  const bio = readFileSync(join(A, 'bio-dunlop.svg'), 'utf8'), bp = [...bio.matchAll(/<path[^>]*d="([^"]+)"/g)].map((m) => m[1]);
+  D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12) };          // the wordmark "Bio Dunlop" (paths 12-23), drawn in one ink
+  D.bioMark = { vb: '2400 -1372 360 376', d: [bp[21], bp[20]] };      // the D with the spiral (paths 20-21)
+  D.moon = b64('moon.webp'); D.core = b64('latex-core-perforated.webp');
+}
+D.curated = {
+  // 01 D25324CF: hero, selective bold in the introduction
+  'discover/intro': { title: 'Know your {Botanic}', bold: ['100% Organic Original Dunlop latex', 'precise balance', 'anatomical adaptation', 'orthopaedic support'] },
+  // 03 5748F204: the firmness question band
+  'firmness/choose': { kicker: 'Dunlop firmness regulations according to body proportions', kicker2: 'Based on engineering research', title: 'What [Support] and [Adaptation] does your body need?', sub: 'We regulate the mattress to your body, not by feel. With the proven Dunlop engineering method, we provide a reliable and precise selection.',
+    support: 'Keeps your body at the surface, without the deep sinking sensation of memory foam.', adapt: 'Distributes body weight in the most adaptive way, optimising pressure relief and muscle relaxation.' },
+  // 04 DCCDF5C4 (05 alternate for the bold words)
+  'firmness/principle': { title: 'Firmness Is Body Regulation', sub: 'Not simply Soft or Firm. We match the response of Dunlop latex to body weight and proportions for Support and Adaptation.',
+    labels: ['Firmness is body regulation', 'Softer is not automatically more comfortable', 'Firmness works like clothing size', 'Every level can feel adaptive', 'Use the firmness cards'],
+    first: { h: 'Firmness is regulated for your body.', html: ['Not a choice between <b>Soft</b> and <b>Firm</b>. We regulate <b>natural Dunlop latex</b> for your <b>body weight</b> and <b>proportions</b>.', 'Latex is an <b>engineering tool</b>: it follows your contours, distributes pressure and balances <b>Support</b> with <b>Adaptation</b>.', 'Like clothing size, <b>the right fit matters.</b>'] } },
+  // 06 BOTANIC_How_It_Works_full_size
+  'firmness/regulation': { title: 'How body-regulated firmness works', sub: 'Body weight sets the starting range. Proportions refine the fit. Dunlop latex provides the balance of Support and Adaptation.',
+    labels: ['Overview', 'Start with body weight', 'Why body weight, not preference'],
+    first: { h: 'Overview', html: ['Body weight establishes the initial firmness range. Height and body proportions refine how that load is distributed across the mattress.', 'Natural Dunlop latex responds to the body, combining stable surface Support with precise Adaptation and more balanced pressure relief.', 'The goal is the right fit, not simply a softer feel.'] } },
+  // 07 BD75A829
+  'firmness/who': { title: 'Who Is This Mattress For?', labels: ['Overview', 'Who Is It Not For?'],
+    first: { h: 'Overview', html: ['Botanic is for people looking for the precise balance of <b>support</b> and <b>adaptation</b> in a classic, <b>single-core</b> natural Dunlop latex mattress.', 'Its <b>7-zone</b> structure responds to body contours. We select the firmness using <b>body weight</b> and <b>proportions</b>, rather than asking you to guess between Soft, Medium or Firm.', 'If you prefer the feel of two different comfort levels, explore <b>Botanic Dual Plush</b> as an alternative.'] } },
+  // 08 48FE0C04
+  'comfort/expect': { labels: ['Keep you on the surface', 'Why we repeat these words', 'When sitting, adaptation is deeper'],
+    first: { h: 'It is important to know this', html: ['When you lie on the mattress, the latex comfort system is designed to <b>keep you on the surface</b> rather than let you sink deeply.', 'This creates the correct balance between support and adaptation.', 'When you sit and concentrate your body weight in one smaller area, you get much deeper adaptation and compression than when lying down.', 'Latex can still feel light and adaptive while keeping the body supported.'] } },
+  // 09 5EBD2CD0 (layout) + 10 alternate (the six topics and their copy); the dark box of 09 becomes a plain line inside the card
+  'comfort/behaviour': { title: 'Support Is the {Foundation} for Real Adaptation',
+    first: { h: 'The Balance Between Support And Adaptation', html: ['A high-quality mattress works through a <b>sequence</b>: first it provides <b>support</b>, and on this stable base the body can achieve <b>proper adaptation</b>.', '<b>Without support, there is no good adaptation.</b> Support keeps the body in the right position, prevents excessive sinking and gives the latex the controlled condition it needs to adjust precisely to your shape.', 'Support is <b>more than just firmness.</b> It is the structural stability of the mattress: the way it carries, guides and balances your body for a wide range of comfort benefits.'],
+      foot: '<b>Support is the foundation of stability:</b> it maintains body positioning, enables precise adaptation and helps preserve natural skeletal alignment.' } },
+  // 13 BOTANIC_Height_Why_It_Matters_balanced
+  'height/why': { labels: ['How much latex is present', 'One core, one calibration'],
+    first: { h: 'Height shapes the latex response', html: ['All three Botanic heights use the same 7-zone Dunlop latex technology, designed for support and adaptation.', 'A greater core depth provides more natural latex to respond to body load, allowing its engineered, orthopaedic and anatomical qualities to be expressed with additional adaptation depth.', '20, 24 and 26 cm all offer these benefits. Choose the comfort depth that suits you.'] } },
+  // 16 BOTANIC_Covers_Zip_40C_corrected (the alternate, because the PRIMARY 15 headline is on the legal list)
+  'covers/system': { title: 'The Cover Is Part of the Sleep System', sub: 'More than an accessory.' },
+  // 20 00000FF9
+  'support/together': { labels: ['The usual compromise', 'Density carries the body', 'They amplify each other'], quote: 'Support and adaptation are both part of our system. This is what distinguishes latex mattresses from others, because one cannot exist without the other.' },
+  // 22 BOTANIC_Adaptation_How_It_Feels_Text_Only: the agreed sentence, inside the white card
+  'adaptation/feel': { labels: ['At first glance', 'Your body does not sink', 'The shoulders compress only as far as needed', 'Movement is absorbed in real time'],
+    foot: 'Natural Dunlop latex follows your body’s contours without enveloping you like memory foam or creating a sinking sensation. It responds instantly, with no adjustment delay.' },
+  // 26 BOTANIC_Ventilation_Airflow_minimal_technical: the process row under the video, and the closing sentence
+  'ventilation/airflow': { flow: ['Open-cell latex', 'Ventilation channels', 'Continuous airflow', 'Drier microclimate', 'Temperature comfort'], close: 'Temperature comfort is one of the key factors for healthy, full and restorative sleep.' },
+  // 27 IMG_5827: a separate card that is not a button
+  'ventilation/sleep': { labels: ['Overview', 'A Note On Claims'], note: { k: 'Temperature comfort', t: 'Temperature comfort is one of the key factors for deep, restorative sleep.' } },
+  // 32 BOTANIC_Warranty_Three_Horizontal_Rows: the third row rewritten so the pillows are never conditional (master prompt)
+  'warranty/cover': { third: { k: 'The complete sleep system', v: 'Complete your set', b: 'A compatible bed base or a Botanic topper completes the support, comfort and durability the mattress is designed for. The two pillows come with the mattress either way.' } },
+  // 33 FB9568A4: 12% of the selected height (Botanic heights only)
+  'warranty/conditions': { labels: ['Structural indentations (12%)', 'Rotate three times in the first six months'] },
+  // 34 3D3269B4
+  'delivery/made': { title: 'Production and delivery note', sub: 'Every Botanic mattress is prepared to order on the basis of your confirmed configuration.', made: 'Individually made to your specification', custom: 'Your Botanic mattress is custom made to your confirmed configuration, including size, height, firmness level and cover material.' },
+  // 35 7EDDE74B
+  'delivery/yours': { flow: ['Add to your bag', 'Go to Checkout', 'Place your Order'] }
+};
 /* IGNITION: the start-up of the television, shown each time it is switched on (page start and every press of Optimised
    Preview). Minimal, like a car's instrument panel waking up. The two facts are mandatory and are the description's own
    (hero bar: "100% Organic · Dunlop Technology"); a later model sets its own name and facts here. */

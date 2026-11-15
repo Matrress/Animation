@@ -61,6 +61,13 @@ a { color: inherit; }
 .ign .mark { display: flex; align-items: center; gap: 14px; opacity: 0; transform: translateY(6px); }
 .ign .mark svg { width: 30px; height: 22px; }
 .ign .mark b { font-size: 26px; font-weight: 500; letter-spacing: .42em; margin-right: -.42em; }
+/* luminous lettering: one band of light passes through the words once; the letters stay solid white and readable */
+.ign .lum { background-image: linear-gradient(100deg, rgba(255,255,255,0) 40%, #8FDDFC 46%, #E9F8FF 50%, #50CDFD 54%, rgba(255,255,255,0) 60%), linear-gradient(#fff, #fff); background-size: 300% 100%, 100% 100%; background-position: 120% 0, 0 0; background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 10px rgba(80,205,253,.30)); }
+.ign.run .mark .lum { animation: lumPass 1.6s ease-in-out 1.0s forwards; }
+.ign.run .fact:first-child .lum { animation: lumPass 1.4s ease-in-out 1.7s forwards; } .ign.run .fact:last-child .lum { animation: lumPass 1.4s ease-in-out 2.05s forwards; }
+@keyframes lumPass { from { background-position: 120% 0, 0 0; } to { background-position: -20% 0, 0 0; } }
+.ign .snd { position: absolute; right: 84px; top: 12px; height: 32px; padding: 0 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,.28); background: transparent; color: rgba(255,255,255,.82); font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
+.ign .snd svg { width: 16px; height: 16px; }
 .ign .line { width: 100%; height: 1px; background: linear-gradient(90deg, rgba(80,205,253,0), #50CDFD 30%, #BFEBFD 50%, #50CDFD 70%, rgba(80,205,253,0)); transform: scaleX(0); }
 .ign .read { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 28px; width: 100%; }
 .ign .read i { background: rgba(255,255,255,.18); opacity: 0; }
@@ -82,6 +89,7 @@ a { color: inherit; }
 @keyframes ignLit { to { transform: scale(1); } }
 @keyframes ignOut { to { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
+  .ign .lum { animation: none !important; }
   .ign.run .line, .ign.run .mark, .ign.run .fact, .ign.run .read i { animation: ignIn .01s linear 0s forwards; transform: none; }
   .ign.run .lit { animation: none; }
   .ign.run .core, .ign.run .skip, .ign.run { animation: ignOut .4s ease-in 1.4s forwards; }
@@ -286,6 +294,115 @@ a { color: inherit; }
 .shopstrip > span:first-child { flex: 1 1 0; min-width: 260px; } .shopstrip > span:last-child { flex: none; }
 .shopstrip .btn { height: 48px; font-size: 15px; padding: 0 22px; }
 .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); background: var(--abyss); color: #fff; border-radius: 10px; padding: 12px 18px; font-size: 14px; display: none; z-index: 10; max-width: 90vw; } .toast.on { display: block; }
+@media (max-width: 700px) { .chbar { grid-template-columns: repeat(4, minmax(0, 1fr)); } .ch { font-size: 13px; } .explore { display: none; } .q h1 { font-size: 26px; } .q .qmark { display: none; } .q.mn { padding-right: 28px; } .q.mn .moon { display: none; } }
+/* ===== REFERENCE ROUND (13–15 November 2026): the PRIMARY screenshots, screen by screen ===== */
+/* question band: an accent word in the lit sky blue; a bold/light title (Firmness · Choose); the Bio Dunlop D on the right */
+.q h1 .acc { color: #50CDFD; } .q h1.lt { font-weight: 400; } .q h1.lt b { font-weight: 700; }
+.q .qmark { position: absolute; right: 26px; top: 22px; width: 40px; height: 42px; color: #50CDFD; opacity: .95; } .q .qmark path { fill: currentColor; }
+.colh { white-space: nowrap; overflow: hidden; } .colh .k2 { margin-left: 14px; padding-left: 14px; border-left: 1px solid var(--line2); }
+.colh.kk { font-size: 11px; letter-spacing: .12em; } @media (max-width: 1250px) { .colh .k2 { display: none; } }
+/* explored marks: what the customer has already opened (invites the next tap) */
+.ch, .pn, .ri2 { position: relative; }
+.ch.seen::after, .pn.seen::after { content: ''; position: absolute; right: 7px; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: #63B963; }
+.ch[aria-current=true].seen::after, .pn[aria-current=true].seen::after { background: #9BD26B; }
+.ri2.seen:not([aria-pressed=true]) i { border-color: #63B963; color: #3E8F45; }
+.explore { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); font-weight: 600; margin-left: auto; }
+.colh { display: flex; align-items: center; }
+.pt, .ri2, .card, .tile, .dcard, .fcard, .zp, .row4, .crow, .wrow { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.pt:hover, .row4:hover, .crow:hover, .wrow:hover { transform: translateY(-2px); box-shadow: 0 10px 18px -16px rgba(11,28,42,.6); }
+/* reader: a line that belongs to the card, a quote panel, a card that is not a button */
+.rc .foot { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: 16px; line-height: 1.55; color: var(--ink); }
+.rc p b, .rc .foot b { color: var(--ink); font-weight: 700; }
+.rq { margin-top: 14px; background: #F4F7F9; border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px 20px; font-size: 17px; line-height: 1.5; font-weight: 600; color: var(--ink); }
+.nclk { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 16px; margin-top: 4px; }
+.nclk small { display: block; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); font-weight: 700; margin-bottom: 6px; } .nclk p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink2); }
+/* Discover · Introduction (01) */
+.hero .rc p { font-size: 16.5px; } .hero .rc b { font-weight: 700; color: var(--ink); }
+.fts span::before { content: none; } .fts span { border-left: 0; position: relative; padding-left: 26px; }
+.fts span::after { content: ''; position: absolute; left: 13px; top: 12px; bottom: 12px; width: 3px; border-radius: 2px; background: var(--band-top); }
+.bioword { display: block; width: min(240px, 80%); margin: 26px auto 0; color: #173A52; } .bioword path { fill: currentColor; }
+/* Firmness · Choose (03): four compact levels and the engineering figure */
+.fc.cmp { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.fc.cmp .fcard { min-height: 0; padding: 12px 12px 11px; align-items: center; text-align: center; gap: 3px; }
+.fc.cmp .fcard .rg { order: 1; font-size: 16.5px; font-weight: 700; color: var(--ink); } .fc.cmp .fcard .nm { order: 2; font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--ink3); }
+.fc.cmp .fcard .ds { display: none; } .fc.cmp .fcard .sp { order: 3; margin-top: 2px; font-size: 11px; }
+.fc.cmp .fcard[aria-pressed=true], .fc.cmp .fcard.rec { background: #E6F2F9; border: 2px solid #297CA2; }
+.fc.cmp .fcard .tick { position: absolute; right: -7px; top: -7px; width: 24px; height: 24px; border-radius: 50%; background: #173A52; display: grid; place-items: center; }
+.fc.cmp .fcard .tag { display: none; }
+.fnote { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; font-size: 14.5px; color: var(--ink2); } .fnote svg { flex: none; }
+.fdesc { margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: var(--ink2); min-height: 22px; } .fdesc b { color: var(--ink); }
+.eng { margin-top: 18px; position: relative; padding: 0 0 16px; } .eng::after { content: ''; position: absolute; left: 0; right: 0; bottom: 4px; height: 9px; border: 1.5px solid #8A97A0; border-top: 0; border-bottom-width: 0; background: linear-gradient(#8A97A0, #8A97A0) 0 50% / 100% 1.5px no-repeat; } .eng svg { display: block; width: 100%; height: auto; }
+.eng .sab { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 18px; background: var(--white); border: 2px solid #173A52; border-top-color: transparent; border-radius: 0 0 16px 16px; padding: 10px 22px 16px; margin: -3px .45% 0 .52%; position: relative; }
+.eng .sab b { display: block; font-size: 22px; } .eng .sab span { display: block; font-size: 13.5px; line-height: 1.4; color: var(--ink2); margin-top: 2px; }
+.eng .sab .bal { font-size: 24px; color: #297CA2; font-weight: 500; padding: 0 18px; border-left: 1px solid var(--line2); border-right: 1px solid var(--line2); }
+.eng .sab .bal i { display: block; height: 2px; background: #297CA2; border-radius: 1px; margin-top: 2px; }
+.eng .sab > div:last-child { text-align: left; }
+/* Height · Choose Size (11): three to a row */
+.cards.c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .cards.c3 .card { padding: 8px 14px; min-height: 0; }
+@media (max-width: 760px) { .cards.c3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Benefits · Origin (17): leaf cards and the one film */
+.og { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); } @media (max-width: 760px) { .og { grid-template-columns: 1fr; } }
+.og .mini { align-self: stretch; }
+/* Support · Bearing Force (19): four full-width rows and the Stretching Effect */
+.rows4 { display: grid; gap: 8px; }
+.row4 { display: grid; grid-template-columns: 26px minmax(170px, .75fr) minmax(0, 1.6fr); gap: 16px; align-items: center; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 12px 18px; }
+.row4 .lf { width: 22px; height: 14px; } .row4 h3 { margin: 0; font-size: 18px; line-height: 1.2; } .row4 p { margin: 0; padding-left: 16px; border-left: 1px solid var(--line2); font-size: 15px; line-height: 1.5; color: var(--ink2); }
+@media (max-width: 760px) { .row4 { grid-template-columns: 26px 1fr; } .row4 p { grid-column: 1 / -1; border: 0; padding: 0; } }
+.stretch { margin-top: 10px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 16px 22px; display: grid; grid-template-columns: minmax(0, 1.6fr) auto; gap: 22px; align-items: center; }
+.stretch svg { width: 100%; height: auto; display: block; }
+.stretch .lab { font-size: 14px; letter-spacing: .32em; font-weight: 600; color: #173A52; padding-left: 22px; border-left: 1px solid var(--line2); white-space: nowrap; }
+.stretch .arr { opacity: .25; animation: arrIn 2.4s ease-in-out infinite; } @keyframes arrIn { 0%, 100% { opacity: .18; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .stretch .arr { animation: none; opacity: .8; } }
+/* 7-Zone · Zone Map (24): the engineering view with the seven zones */
+.zsk.zfull { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 16px 22px 10px; margin-bottom: 8px; }
+.zsk .zn { fill: #8FA6C4; } .zsk text { font: 700 54px var(--f); fill: #fff; letter-spacing: .04em; }
+/* Ventilation · Airflow (26): the process row under the film */
+.flow { display: flex; align-items: flex-start; justify-content: space-between; gap: 4px; margin-top: 12px; padding: 14px 6px 0; border-top: 1px solid var(--line); }
+.flow .st2 { flex: 1 1 0; min-width: 0; display: grid; justify-items: center; gap: 5px; text-align: center; font-size: 10.5px; hyphens: auto; line-height: 1.25; font-weight: 600; color: #173A52; }
+.flow .st2 svg { width: 30px; height: 30px; } .flow .ar { flex: none; color: var(--ink3); font-size: 11px; margin-top: 8px; }
+.close { margin: 14px 4px 0; font-size: 14.5px; line-height: 1.5; font-weight: 700; color: #173A52; letter-spacing: .01em; }
+.pw.wide2 { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } @media (max-width: 900px) { .pw.wide2 { grid-template-columns: 1fr; } }
+/* Hygiene · Cleaner Sleep (28): two by two */
+.pts.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } @media (max-width: 760px) { .pts.g2 { grid-template-columns: 1fr; } }
+/* Certifications (30): full-width rows, the mark on the left */
+.crows { display: grid; gap: 8px; }
+.crow { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 0; align-items: center; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 12px 18px; }
+.crow .mk { font-size: 19px; font-weight: 700; letter-spacing: .01em; color: #10293F; padding-right: 18px; line-height: 1.15; } .crow .mk small { display: block; font-size: 10px; letter-spacing: .26em; font-weight: 600; margin-top: 3px; }
+.crow .tx { padding-left: 18px; border-left: 1px solid var(--line2); } .crow h3 { margin: 0 0 3px; font-size: 16.5px; display: flex; align-items: center; gap: 8px; } .crow h3 .lf { width: 18px; height: 12px; }
+.crow p { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink2); } .crow p b { color: #1A5C7E; font-weight: 600; }
+.crow.top { grid-template-columns: 190px minmax(0, 1fr) 230px; } .crow.top .mini { margin-left: 14px; padding: 6px 6px 8px; } .crow.top .mini .cap { font-size: 12.5px; padding-top: 6px; }
+@media (max-width: 900px) { .crow, .crow.top { grid-template-columns: 1fr; } .crow .tx { border: 0; padding: 8px 0 0; } .crow.top .mini { margin: 10px 0 0; } }
+/* Warranty + Gift (32): three full-width rows */
+.wrows { display: grid; gap: 10px; }
+.wrow { display: grid; grid-template-columns: 44px 170px minmax(0, 1fr); gap: 0 14px; align-items: center; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 20px; }
+.wrow svg { width: 32px; height: 32px; color: #173A52; } .wrow .k { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); font-weight: 600; }
+.wrow .v { display: flex; align-items: baseline; gap: 10px; } .wrow .v b { font-size: 34px; letter-spacing: -.02em; } .wrow .v em { font-style: normal; font-size: 14.5px; font-weight: 600; } .wrow .v.t b { font-size: 21px; }
+.wrow p { margin: 0; padding-left: 18px; border-left: 1px solid var(--line2); font-size: 15px; line-height: 1.5; color: var(--ink2); }
+@media (max-width: 760px) { .wrow { grid-template-columns: 44px 1fr; } .wrow p { grid-column: 1 / -1; border: 0; padding: 8px 0 0; } }
+/* Warranty · Conditions (33) */
+.cond { display: grid; gap: 14px; grid-template-columns: minmax(190px, .7fr) minmax(0, 1.8fr); align-items: start; }
+.cond .big { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 20px; align-items: center; }
+.cond .big svg { width: 110px; height: auto; color: #173A52; padding-right: 18px; border-right: 1px solid var(--line2); }
+.cond .big h2 { font-size: 26px; line-height: 1.22; margin: 0 0 10px; } .cond .big h2 mark { background: #173A52; color: #fff; border-radius: 8px; padding: 0 10px; } .cond .big h2 span { color: var(--ink3); }
+.exs { grid-column: 1 / -1; display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); align-items: center; background: #F2F6F9; border: 1.5px solid var(--line); border-radius: var(--r); padding: 14px 18px; }
+.exs > div { text-align: center; border-left: 1px solid var(--line2); } .exs > div:first-child { text-align: left; border: 0; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink2); font-weight: 600; }
+.exs b { display: block; font-size: 22px; } .exs span { display: inline-block; margin-top: 4px; border: 1px solid var(--line2); background: #fff; border-radius: 8px; padding: 2px 10px; font-weight: 600; font-size: 17px; }
+.exs .on { color: #173A52; } .exs .on span { background: #173A52; color: #fff; border-color: #173A52; }
+/* Delivery · Made To Order (34) */
+.dlv { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
+.dlv .ind { display: flex; align-items: center; gap: 16px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px 20px; font-size: 19px; font-weight: 600; line-height: 1.25; }
+.dlv .ind svg { flex: none; width: 52px; color: #1A5C7E; padding-right: 14px; border-right: 1px solid var(--line2); }
+.dlv .d20 { display: flex; align-items: center; gap: 18px; background: var(--grad-card); color: #fff; border-radius: var(--r); padding: 18px 22px; margin-top: 14px; }
+.dlv .d20 svg { flex: none; width: 58px; padding-right: 18px; border-right: 1px solid rgba(255,255,255,.4); } .dlv .d20 b { font-size: 27px; letter-spacing: .18em; line-height: 1.15; font-weight: 600; }
+.dlv .cst { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 20px 24px; }
+.dlv .cst h2 { margin: 0 0 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line2); font-size: 27px; } .dlv .cst h2 i { font-style: normal; letter-spacing: .32em; margin-right: 10px; }
+.dlv .cst p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--ink2); }
+.q.ph { padding-right: 38%; min-height: 200px; } .q.ph .pic { position: absolute; right: 0; top: 0; bottom: 0; width: 42%; background-size: cover; background-position: 30% 50%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%); mask-image: linear-gradient(90deg, transparent, #000 30%); }
+.q.ph h1 { font-size: 40px; letter-spacing: .01em; } .q.ph .rule { display: block; width: 56px; height: 3px; background: #fff; border-radius: 2px; margin: 0 0 14px; }
+@media (max-width: 760px) { .dlv { grid-template-columns: 1fr; } .q.ph { padding-right: 28px; } .q.ph .pic { opacity: .35; width: 100%; } }
+/* Delivery · Your Botanic (35): the small silver moon and the flow */
+.q.mn { padding-right: 140px; } .q.mn .moon { position: absolute; right: 26px; top: 50%; width: 86px; height: 86px; margin-top: -43px; border-radius: 50%; background-size: cover; filter: grayscale(1) brightness(1.08) contrast(1.05); }
+.q .flowl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 19px; color: rgba(255,255,255,.88); } .q .flowl b { color: #fff; font-weight: 700; } .q .flowl i { font-style: normal; opacity: .8; }
 </style>
 </head>
 <body>
@@ -334,7 +451,19 @@ var D = /*__DATA__*/;
   function goStep(i) { var m = STEPMAP[STEPS[i].id]; goPanel(m[0], m[1]); }
   function flatIndex() { for (var i = 0; i < FLAT.length; i++) if (FLAT[i][0] === S.ch && FLAT[i][1] === S.pn) return i; return 0; }
   function snippet(t) { var m = t.match(/^[^.!?]*[.!?]/), s = (m ? m[0] : t); if (s.length > 52) s = s.slice(0, 50).replace(/\s+\S*$/, '') + '…'; return s; }
-  function itemsOf(p) {
+  /* REFERENCE ROUND: the owner's PRIMARY copy for this panel (D.curated), the title markup ({word} = lit accent, [word] = bold in a light title) */
+  function CUR(k) { return (D.curated && D.curated[k || (S.ch + '/' + S.pn)]) || {}; }
+  function fmt(t) { return esc(t).replace(/\{([^}]+)\}/g, '<span class="acc">$1</span>').replace(/\[([^\]]+)\]/g, '<b>$1</b>'); }
+  var SEEN = {}; function seen(k) { SEEN[k] = 1; }
+  function explored() { var n = 0; FLAT.forEach(function (f) { if (SEEN[f[0] + '/' + f[1]]) n++; }); return n; }
+  function wordSvg(o, cls) { return '<svg class="' + cls + '" viewBox="' + o.vb + '" aria-hidden="true">' + o.d.map(function (d) { return '<path fill-rule="evenodd" d="' + d + '"/>'; }).join('') + '</svg>'; }
+  function itemsOf(p, key) {
+    var it = itemsOf0(p), C = CUR(key);
+    if (C.labels && C.labels.length === it.length) it.forEach(function (x, i) { x.label = C.labels[i]; });
+    if (C.first) { it[0].h = C.first.h; it[0].html = C.first.html; it[0].foot = C.first.foot; }
+    return it;
+  }
+  function itemsOf0(p) {
     var g = p.groups || [];
     if (g.length >= 2) return g.map(function (x, i) { return { label: x.h || (i === 0 ? 'Overview' : snippet(x.blocks[0].t || '')), blocks: x.blocks, h: x.h }; });
     var b = g[0] ? g[0].blocks : [];
@@ -404,11 +533,11 @@ var D = /*__DATA__*/;
     return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" aria-label="' + (ok ? 'All four choices made: ready to order' : n + ' of 4 choices made') + '" style="' + (ok ? 'filter:drop-shadow(0 0 4px rgba(80,205,253,.85))' : '') + '"><defs><linearGradient id="ifg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F6585"/><stop offset="1" stop-color="#10293F"/></linearGradient><linearGradient id="itg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A9BC9"/><stop offset="1" stop-color="#1F6B93"/></linearGradient><clipPath id="icp"><path d="' + region + '"/></clipPath></defs><g transform="matrix(' + M.join(',') + ')"><path d="' + d + '" fill="' + front + '"/><path d="' + d + '" fill="' + top + '" clip-path="url(#icp)"/><path d="' + d + '" fill="none" stroke="' + stroke + '" stroke-width="2.2" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="' + stroke + '" stroke-width="2.2" ' + st + '/></g></svg>';
   }
   function drawBar() {
-    $('#chbar').innerHTML = CH.map(function (c) { return '<button class="ch" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch) + '">' + esc(c.label) + '</button>'; }).join('');
+    $('#chbar').innerHTML = CH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch) + '">' + esc(c.label) + '</button>'; }).join('');
   }
   function drawRail() {
     var cur = chap(S.ch), onStep = panel().kind === 'step';
-    var h = '<h2>In ' + esc(cur.label) + '</h2>' + cur.panels.map(function (p) { return '<button class="pn" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '<h2 class="h2b">Your order</h2>';
+    var h = '<h2>In ' + esc(cur.label) + '</h2>' + cur.panels.map(function (p) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '<h2 class="h2b">Your order</h2>';
     STEPS.forEach(function (st, i) { var done = i < STEPS.length - 1 && chosen(st.id), cur = onStep && i === S.step, v = valueOf(st.id);
       h += '<button class="st' + (done ? ' done' : '') + (cur ? ' cur' : '') + '" data-go="' + i + '" aria-label="Step ' + (i + 1) + ': ' + st.label + (v ? ', chosen ' + esc(v) : '') + '"><span class="n">' + (done && !cur ? CHECK : (i + 1)) + '</span><span class="t"><b>' + st.label + '</b><span>' + (v ? esc(v) : (cur ? 'Choose now' : 'To do')) + '</span></span></button>'; });
     $('#rail').innerHTML = h;
@@ -433,7 +562,7 @@ var D = /*__DATA__*/;
   function sizeView() {
     var gs = [['SINGLE', 100], ['DOUBLE', 140], ['KING', 160], ['SUPERKING · EMPEROR', 9999]], h = '';
     gs.forEach(function (g, gi) { var lo = gi ? gs[gi - 1][1] : 0, list = D.sizes.filter(function (s) { return s.dims[0] > lo && s.dims[0] <= g[1]; }); if (!list.length) return;
-      h += '<div class="grp"><h3>' + g[0] + '</h3><div class="cards">' + list.map(function (s) { var on = S.size && S.size.label === s.label;
+      h += '<div class="grp"><h3>' + g[0] + '</h3><div class="cards c3">' + list.map(function (s) { var on = S.size && S.size.label === s.label;
         return '<button class="card" data-size="' + D.sizes.indexOf(s) + '" aria-pressed="' + on + '"><span class="nm">' + esc(s.name) + '</span><span class="dm">' + s.dims[0] + ' × ' + s.dims[1] + '<i>cm</i></span><span class="in">' + inch(s.dims[0]) + ' × ' + inch(s.dims[1]) + ' in</span></button>'; }).join('') + '</div></div>'; });
     h += '<div class="more"><span>Need another size?</span><button class="btn s" data-more="1">Tell us what you need</button></div>' +
       '<div class="form" id="form"><div><label>Model</label><input value="Botanic Original" readonly></div><div><label for="sz">The size you want</label><input id="sz" placeholder="for example 170 × 205 cm"></div><div><label for="em">Your email, for our reply</label><input id="em" type="email" placeholder="name@example.com"></div><p class="note">In the shop this form sends the model, the size and your email to Divine Dunlop support. This preview does not send anything.</p><div><button class="btn p" data-send="1">Send my request</button></div></div>';
@@ -446,11 +575,17 @@ var D = /*__DATA__*/;
     var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
     var h = '<div class="fw"><div class="sl"><div class="r"><label for="gw">Body weight</label><b id="gwv">' + (S.weight == null ? '—' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + lim.weight[0] + '" max="' + lim.weight[1] + '" value="' + (S.weight == null ? 70 : S.weight) + '"><div class="rng"><span>' + lim.weight[0] + ' kg</span><span>' + lim.weight[1] + ' kg</span></div></div>' +
       '<div class="sl"><div class="r"><label for="gh">Height</label><b id="ghv">' + (S.height == null ? '—' : S.height + ' cm') + '</b></div><input id="gh" type="range" min="' + lim.height[0] + '" max="' + lim.height[1] + '" value="' + (S.height == null ? 170 : S.height) + '"><div class="rng"><span>' + lim.height[0] + ' cm</span><span>' + lim.height[1] + ' cm</span></div></div></div>';
-    h += '<p class="guide" id="guide">' + (rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.') + '</p><div class="fc">';
-    cards.forEach(function (c) { var d = D.firmness.cards.filter(function (x) { return x.key === c[2]; })[0], isRec = rec && fk(rec.display) === c[0], dim = rec && !isRec, on = S.firmness === c[0];
-      if (c[2] === 'xfirm') h += '<a class="fcard' + (isRec ? ' rec' : '') + (dim ? ' dim' : '') + '" href="' + esc(D.specialist.url) + '" target="_blank" rel="noopener" aria-label="Extra Firm, specialist model Orthopaedic Coconut Core, opens its product page">' + (isRec ? '<span class="tag">For you</span>' : '') + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="ds">' + esc(d.desc) + '</span><span class="sp">Specialist Model: Orthopaedic Coconut Core ↗</span></a>';
-      else h += '<button class="fcard' + (isRec ? ' rec' : '') + (dim ? ' dim' : '') + '" data-firm="' + c[0] + '" aria-pressed="' + on + '">' + (isRec ? '<span class="tag">For you</span>' : '') + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; });
-    h += '</div><p class="base">The four ranges are the base. Your height can move the guidance to a neighbouring level.</p>';
+    var chosenC = cards.filter(function (c) { return c[0] === S.firmness; })[0] || (rec && cards.filter(function (c) { return c[0] === fk(rec.display); })[0]);
+    h += '<div class="fc cmp">';
+    cards.forEach(function (c) { var isRec = rec && fk(rec.display) === c[0], on = S.firmness === c[0], tick = (on || (isRec && !S.firmness)) ? '<span class="tick">' + CHECK.replace('width="18" height="18"', 'width="14" height="14"') + '</span>' : '';
+      if (c[2] === 'xfirm') h += '<a class="fcard' + (isRec ? ' rec' : '') + '" href="' + esc(D.specialist.url) + '" target="_blank" rel="noopener" aria-label="Extra Firm, specialist model Orthopaedic Coconut Core, opens its product page">' + tick + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="sp">Specialist Model: Orthopaedic Coconut Core ↗</span></a>';
+      else h += '<button class="fcard' + (isRec ? ' rec' : '') + '" data-firm="' + c[0] + '" aria-pressed="' + on + '">' + tick + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span></button>'; });
+    h += '</div><p class="fnote" id="guide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3E474D" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.5" stroke-linecap="round"/></svg><span>' + (rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : ' Body proportions refine the result near a boundary.') : 'Set your weight and height for guidance, or choose directly. Body proportions refine the result near a boundary.') + '</span></p>';
+    if (chosenC) { var dd = D.firmness.cards.filter(function (x) { return x.key === chosenC[2]; })[0]; h += '<p class="fdesc"><b>' + chosenC[0] + '.</b> ' + esc(dd.desc) + '</p>'; }
+    var e = engPaths(), FC = CUR('firmness/choose');
+    h += '<div class="eng"><svg viewBox="90 10 2550 470" role="img" aria-label="Engineering view: the body at the surface of the latex core"><path d="' + e.mp + '" fill="#fff" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#F4F8FA" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/></svg>' +
+      '<div class="sab"><div><b>Support</b><span>' + esc(FC.support) + '</span></div><div class="bal">Balance<i></i></div><div><b>Adaptation</b><span>' + esc(FC.adapt) + '</span></div></div></div>';
+    h += '<p class="base">The four ranges are the base. Your height can move the guidance to a neighbouring level.</p>';
     return h;
   }
   function depthView() { return '<div class="dc">' + D.depths.map(function (d, i) { var on = S.depth && S.depth.i === i; return '<button class="dcard" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + (on ? '<span class="chosen">' + CHECK + 'Chosen</span>' : '') + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; }).join('') + '</div>'; }
@@ -474,37 +609,95 @@ var D = /*__DATA__*/;
   var PLAY = '<svg width="22" height="22" viewBox="0 0 24 24" fill="#173A52" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>';
   function miniCard(c) { return c.media ? '<aside class="mini" aria-label="Short loop"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">' + esc(c.media) + '</span><span class="tv">Short loop · stand-in</span></aside>' : ''; }
   function readerView(p) {
-    var it = itemsOf(p), k = S.ch + '/' + S.pn, i = Math.min(S.rd[k] || 0, it.length - 1), cur = it[i];
-    var card = '<div class="rc" aria-live="polite">' + ((cur.h || (it.length > 1 && cur.label)) ? '<h2>' + esc(cur.h || cur.label) + '</h2>' : '') + blocksHtml(cur.blocks) + '</div>';
+    var k = S.ch + '/' + S.pn, C = CUR(), it = itemsOf(p, k), i = Math.min(S.rd[k] || 0, it.length - 1), cur = it[i]; seen(k + '/' + i);
+    var body = cur.html ? cur.html.map(function (t) { return '<p>' + t + '</p>'; }).join('') : blocksHtml(cur.blocks), foot = cur.foot || C.foot;
+    var card = '<div class="rc" aria-live="polite">' + ((cur.h || (it.length > 1 && cur.label)) ? '<h2>' + esc(cur.h || cur.label) + '</h2>' : '') + body + (foot ? '<p class="foot">' + (cur.foot ? foot : esc(foot)) + '</p>' : '') + '</div>' + (C.quote ? '<div class="rq">' + esc(C.quote) + '</div>' : '');
     if (it.length < 2) return card;
-    return '<div class="rd"><div class="rl">' + it.map(function (x, j) { return '<button class="ri2" data-rd="' + j + '" aria-pressed="' + (j === i) + '"><i>' + (j + 1) + '</i><span>' + esc(x.label) + '</span></button>'; }).join('') + '</div>' + card + '</div>';
+    var note = C.note ? '<div class="nclk" role="note"><small>' + esc(C.note.k) + '</small><p>' + esc(C.note.t) + '</p></div>' : '';
+    return '<div class="rd"><div class="rl">' + it.map(function (x, j) { return '<button class="ri2' + (SEEN[k + '/' + j] ? ' seen' : '') + '" data-rd="' + j + '" aria-pressed="' + (j === i) + '"><i>' + (j + 1) + '</i><span>' + esc(x.label) + '</span></button>'; }).join('') + note + '</div><div>' + card + '</div></div>';
   }
+  function ptCard(x) { return '<div class="pt">' + LEAFS + '<h3>' + esc(x.t) + '</h3><p>' + esc(x.d) + '</p></div>'; }
+  var TITLE_CASE = function (t) { return t.replace(/(^|[\s-])([a-z])/g, function (m, a, b) { return a + b.toUpperCase(); }).replace(/\b(The|Of|And|A|An)\b(?!$)/g, function (w, x, o) { return o ? w.toLowerCase() : w; }); };
+  function engPaths() { var E = D.eng; return { vb: E.viewBox.join(' '), mp: E.mattress, bd: E.body }; }
+  function stretchSvg() {   // the Stretching Effect: the owner's engineering outline (unchanged geometry) and the arrows of IMG_5822
+    var e = engPaths(), ar = '';
+    [0, 1, 2, 3, 4, 5, 6].forEach(function (i) { var x = 1250 + i * 190, sc = 1.1 + i * .16; ar += '<path class="arr" style="animation-delay:' + (i * .18) + 's" transform="translate(' + x + ' 190) scale(' + sc + ')" d="M-26 -22L26 0L-26 22L-14 0Z" fill="#50CDFD" stroke="#1A5C7E" stroke-width="2.5" stroke-linejoin="round"/>'; });
+    return '<svg viewBox="' + e.vb + '" role="img" aria-label="Stretching effect: the body is gently lengthened along the mattress"><path d="' + e.mp + '" fill="#F4F8FA" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/>' + ar + '</svg>';
+  }
+  var FLOWI = [
+    '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 15l8-5h22l-8 5z"/><path d="M5 15v13h22V15"/><path d="M27 28l8-5V10"/><circle cx="11" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/><circle cx="23" cy="20" r="1.3"/><circle cx="14" cy="24" r="1.3"/><circle cx="20" cy="24" r="1.3"/></svg>',
+    '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 35V17M17 35V17M25 35V17M33 35V17M9 17h24"/><path d="M13 11l0-6M21 11l0-6M29 11l0-6M11 7l2-2 2 2M19 7l2-2 2 2M27 7l2-2 2 2"/></svg>',
+    '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 13c6-4 10 4 16 0s10 4 16 0M4 21c6-4 10 4 16 0s10 4 16 0M4 29c6-4 10 4 16 0s10 4 16 0"/></svg>',
+    '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5c6 8 10 13 10 19a10 10 0 0 1-20 0c0-6 4-11 10-19z"/><path d="M14 26l12-8"/></svg>',
+    '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M17 24V8a3 3 0 0 1 6 0v16a6 6 0 1 1-6 0z"/><path d="M20 16v12"/><circle cx="20" cy="29" r="2.4"/></svg>'];
   function pointsView(p, c) {
-    var cards = '<div class="pts">' + p.items.map(function (x) { return '<div class="pt">' + LEAFS + '<h3>' + esc(x.t) + '</h3><p>' + esc(x.d) + '</p></div>'; }).join('') + '</div>';
-    return '<div class="pw' + (c.media ? '' : ' nomedia') + '">' + cards + miniCard(c) + '</div>';
+    var k = S.ch + '/' + S.pn, C = CUR();
+    if (k === 'benefits/origin') {   // 17: five leaf cards, the one original film beside the first (Instant Adaptation lives in Adaptation)
+      var it = p.items.filter(function (x) { return !/^Instant Adaptation$/i.test(x.t); });
+      return '<div class="og">' + ptCard(it[0]) + miniCard(c) + it.slice(1).map(ptCard).join('') + '</div>';
+    }
+    if (k === 'support/bearing') {   // 19: four full-width rows, the headings in the approved capitalisation, then the Stretching Effect
+      return '<div class="rows4">' + p.items.map(function (x) { return '<div class="row4">' + LEAFS + '<h3>' + esc(TITLE_CASE(x.t)) + '</h3><p>' + esc(x.d) + '</p></div>'; }).join('') + '</div>' +
+        '<div class="stretch">' + stretchSvg() + '<span class="lab">STRETCHING EFFECT</span></div>';
+    }
+    if (k === 'hygiene/clean') return '<div class="pts g2">' + p.items.map(ptCard).join('') + '</div>';
+    var side = miniCard(c);
+    if (C.flow) side = side.replace('</aside>', '<div class="flow" aria-label="How the airflow works">' + C.flow.map(function (t, i) { return (i ? '<span class="ar" aria-hidden="true">→</span>' : '') + '<span class="st2">' + FLOWI[i] + esc(t) + '</span>'; }).join('') + '</div><p class="close">' + esc(C.close) + '</p></aside>');
+    var cards = '<div class="pts">' + p.items.map(ptCard).join('') + '</div>';
+    return '<div class="pw' + (c.media ? '' : ' nomedia') + (C.flow ? ' wide2' : '') + '">' + cards + side + '</div>';
   }
   function certsView(p, c) {
-    var cards = '<div class="pts">' + p.items.map(function (x) { return '<div class="pt">' + LEAFS + '<h3>' + esc(x.m) + '</h3><div class="sb">' + esc(x.s) + '</div><p>' + esc(x.d) + '</p></div>'; }).join('') + '</div>';
-    return '<div class="pw' + (c.media ? '' : ' nomedia') + '">' + cards + miniCard(c) + '</div>';
+    var mk = function (m) { var x = m.replace(/®/g, ''); if (/^OEKO/.test(x)) return 'OEKO-TEX®<small>STANDARD 100</small>'; if (/^Siemens/.test(x)) return 'SIEMENS<small>MONITORING</small>'; if (/^ISO/.test(x)) return 'ISO<small>9001 · 14001 · OHSAS</small>'; return esc(x); };
+    return '<div class="crows">' + p.items.map(function (x, i) { return '<div class="crow' + (i === 0 && c.media ? ' top' : '') + '"><div class="mk">' + mk(x.m) + '</div><div class="tx"><h3>' + LEAFS + esc(x.m) + '</h3><p><b>' + esc(x.s) + '.</b> ' + esc(x.d) + '</p></div>' + (i === 0 ? miniCard(c) : '') + '</div>'; }).join('') + '</div>';
   }
-  function zonesView(p, c) {
+  function zoneSvg() {   // 24: the original engineering view (divine-zones), the body and the mattress unchanged; the seven zones are slices of the mattress
+    var e = engPaths(), Z = D.eng.zones, T = D.zoneTier, tone = { s: '#B7C9E3', c: '#7C97C0', r: '#46628F' }, g = '';
+    Z.forEach(function (z, i) { g += '<clipPath id="zc' + i + '"><rect x="' + z[0] + '" y="0" width="' + z[1] + '" height="800"/></clipPath>'; });
+    var body = Z.map(function (z, i) { return '<g data-z="' + (i + 1) + '" clip-path="url(#zc' + i + ')"><path d="' + e.mp + '" fill="' + tone[T[i + 1]] + '"/><text x="' + (z[0] + z[1] / 2) + '" y="712" text-anchor="middle">Z' + (i + 1) + '</text></g>'; }).join('');
+    var seams = Z.slice(1).map(function (z) { return '<path d="M' + (z[0] - 5) + ' 380V752" stroke="#fff" stroke-width="6" stroke-opacity=".75"/>'; }).join('');
+    return '<svg viewBox="' + e.vb + '" role="img" aria-label="The engineering view: a person lying on the Botanic core, with seven zones from head to feet"><defs>' + g + '</defs>' + body + seams + '<path d="' + e.mp + '" fill="none" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#F4F8FA" fill-opacity=".92" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/></svg>';
+  }
+  function zonesView(p, c) {   // 24: the engineering view full width (never squeezed), the legend, then the seven zones beside the one film
     var T = D.zoneTier, tone = { s: '#B7C9E3', c: '#7C97C0', r: '#46628F' };
-    var left = '<div><div class="zsk" aria-label="Seven support zones, head to feet">' + D.zoneSketch + '</div><p class="zlg"><span><i style="background:#B7C9E3"></i>Softer response</span><span><i style="background:#7C97C0"></i>Calibrated</span><span><i style="background:#46628F"></i>Reinforced</span></p><div class="zgrid">' +
-      p.items.map(function (x, i) { return '<div class="zp" style="--tone:' + tone[T[i + 1]] + '"><b>' + esc(x.n) + '</b><span>' + esc(x.note) + '</span></div>'; }).join('') + '</div></div>';
-    return '<div class="pw zwide' + (c.media ? '' : ' nomedia') + '">' + left + miniCard(c) + '</div>';
+    var fig = '<div class="zsk zfull" aria-label="Seven support zones, head to feet">' + zoneSvg() + '</div><p class="zlg"><span><i style="background:#B7C9E3"></i>Softer response</span><span><i style="background:#7C97C0"></i>Calibrated</span><span><i style="background:#46628F"></i>Reinforced</span></p>';
+    var grid = '<div class="zgrid">' + p.items.map(function (x, i) { return '<div class="zp" style="--tone:' + tone[T[i + 1]] + '"><b>Z' + (i + 1) + ' · ' + esc(x.n) + '</b><span>' + esc(x.note) + '</span></div>'; }).join('') + '</div>';
+    return fig + '<div class="pw zwide' + (c.media ? '' : ' nomedia') + '">' + grid + miniCard(c) + '</div>';
   }
-  function numeralsView(p) { return '<div class="nums">' + p.items.map(function (x) { return '<div class="nm2">' + (x.k ? '<small>' + esc(x.k) + '</small>' : '<small>&nbsp;</small>') + '<strong>' + esc(x.v) + '</strong><em>' + esc(x.u) + '</em><p>' + esc(x.b) + '</p></div>'; }).join('') + '</div>'; }
+
+  var WICO = ['<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M16 3l11 4v8c0 7-5 12-11 14C10 27 5 22 5 15V7z"/><path d="M11 16l3.5 3.5L21 12" stroke-linecap="round"/></svg>',
+    '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 11c4-2 20-2 24 0-1 4-1 8 0 11-4 2-20 2-24 0 1-3 1-7 0-11z"/><path d="M3 10l2 2M29 10l-2 2M3 23l2-2M29 23l-2-2" stroke-linecap="round"/></svg>',
+    '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="5" y="12" width="22" height="16" rx="2"/><path d="M3 8h26v5H3zM16 8v20"/><path d="M16 8c-2-4-7-5-7-2s5 2 7 2c2 0 7 1 7-2s-5-2-7 2z"/></svg>'];
+  function numeralsView(p) {
+    var rows = p.items.slice(0, 2).map(function (x, i) { return { k: x.k || (i ? '2 latex pillows' : ''), v: x.v, u: x.u, b: x.b }; }), t = CUR().third;
+    if (t) rows.push({ k: t.k, v: t.v, u: '', b: t.b, t: 1 });
+    return '<div class="wrows">' + rows.map(function (x, i) { return '<div class="wrow">' + WICO[i] + '<div><span class="k">' + esc(x.k) + '</span><span class="v' + (x.t ? ' t' : '') + '"><b>' + esc(x.v) + '</b>' + (x.u ? '<em>' + esc(x.u) + '</em>' : '') + '</span></div><p>' + esc(x.b) + '</p></div>'; }).join('') + '</div>';
+  }
+  function condView(p) {   // 33: 12% of the height the customer chose (Botanic heights only), and the rotation schedule
+    var it = itemsOf(p, 'warranty/conditions'), k = 'warranty/conditions', i = Math.min(S.rd[k] || 0, it.length - 1); seen(k + '/' + i);
+    var hs = D.depths.map(function (d) { return +d.cm; }), sel = S.depth ? +S.depth.cm : null;
+    var ICON = '<svg viewBox="0 0 110 80" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40h20c6 0 8 10 27 10s21-10 27-10h20v30H8z"/><path d="M35 6v22M28 21l7 7 7-7M55 6v26M48 25l7 7 7-7M75 6v22M68 21l7 7 7-7"/></svg>';
+    var right = i === 0 ? '<div class="rc big">' + ICON + '<div><h2>The warranty covers structural indentations of <mark>12% or more</mark> <span>of the total mattress height.</span></h2><p>' + esc((it[0].blocks[0] || {}).t || '').replace(/^.*?\.\s*/, '') + '</p></div></div>' : '<div class="rc"><h2>' + esc(it[i].label) + '</h2>' + blocksHtml(it[i].blocks) + '</div>';
+    var ex = '<div class="exs" aria-label="Examples of the 12% threshold"><div>Examples<br>(12% threshold)</div>' + hs.map(function (h) { return '<div class="' + (sel === h ? 'on' : '') + '"><b>' + h + ' cm</b><span>→ ' + (h * 0.12).toFixed(2) + ' cm</span></div>'; }).join('') + '</div>';
+    return '<div class="cond"><div class="rl">' + it.map(function (x, j) { return '<button class="ri2' + (SEEN[k + '/' + j] ? ' seen' : '') + '" data-rd="' + j + '" aria-pressed="' + (j === i) + '"><i>' + (j + 1) + '</i><span>' + esc(x.label) + '</span></button>'; }).join('') + '</div>' + right + ex + '</div>';
+  }
+  function madeView() {   // 34: individually made, 20 days, C U S T O M Made to Order
+    var C = CUR();
+    return '<div class="dlv"><div><div class="ind"><svg viewBox="0 0 40 30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M2 12l18-9 18 9-18 9z"/><path d="M2 18l18 9 18-9"/></svg><span>' + esc(C.made) + '</span></div>' +
+      '<div class="d20"><svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"><rect x="5" y="9" width="38" height="34" rx="5"/><path d="M5 18h38M15 5v8M33 5v8" stroke-linecap="round"/><text x="24" y="38" text-anchor="middle" fill="#fff" stroke="none" font-size="16" font-weight="700" font-family="Chillax, sans-serif">20</text></svg><b>20 DAYS<br>DELIVERY</b></div></div>' +
+      '<div class="cst"><h2><i>CUSTOM</i>Made to Order</h2><p>' + esc(C.custom) + '</p></div></div>';
+  }
   function heroView() {
-    var H = D.hero;
-    return '<div class="hero"><div><div class="rc"><h2>' + esc(H.headline) + '</h2><p>' + esc(H.intro) + '</p><p>' + esc(H.note) + '</p></div><div class="fts">' + D.features.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '</div></div>' +
-      '<aside class="mini" aria-label="Presentation video"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">Presentation video: watch the whole Botanic in full</span><span class="tv">Plays in full on demand · stand-in</span></aside></div>';
+    var H = D.hero, B = CUR('discover/intro').bold || [], bold = function (t) { var h = esc(t); B.forEach(function (w) { h = h.replace(esc(w), '<b>' + esc(w) + '</b>'); }); return h; };
+    return '<div class="hero"><div><div class="rc"><h2>' + esc(H.headline) + '</h2><p>' + bold(H.intro) + '</p><p>' + esc(H.note) + '</p></div></div>' +
+      '<div><aside class="mini" aria-label="Presentation video"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">Presentation video: watch the whole Botanic in full</span><span class="tv">Plays in full on demand · stand-in</span></aside>' + wordSvg(D.bioWord, 'bioword') + '</div></div>' +
+      '<div class="fts f3">' + D.features.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '</div>';
   }
   function factsView() {
     return '<div class="fx">' + D.facts.map(function (f) { return '<div><small>' + esc(f.l) + '</small><b>' + esc(f.v) + '</b>' + (f.pills.length ? '<em>' + esc(f.pills.join(' · ')) + '</em>' : '') + '</div>'; }).join('') + '</div><p class="fnote">' + esc(D.factsNote) + '</p>';
   }
   function galDraw() {
     var im = D.images, i = S.gi;
-    $('#q').innerHTML = '<h1>' + LEAF + '<span>Model Gallery</span></h1><p>The product photographs, as the shop holds them.</p>';
+    $('#q').className = 'q'; $('#q').innerHTML = '<h1>' + LEAF + '<span>Model Gallery</span></h1><p>The product photographs, as the shop holds them.</p>';
     $('#answer').innerHTML = '<div class="gal"><div class="gmain"><button class="garr l" data-gimg="' + (i - 1) + '" aria-label="Previous photograph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><img src="' + esc(im[i]) + '" alt="Botanic, photograph ' + (i + 1) + '"><button class="garr r" data-gimg="' + (i + 1) + '" aria-label="Next photograph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button><span class="gcount">' + (i + 1) + ' / ' + im.length + '</span></div><div class="gth">' + im.map(function (u, j) { return '<button data-gimg="' + j + '" aria-pressed="' + (j === i) + '" aria-label="Photograph ' + (j + 1) + '"><img src="' + esc(u) + '" alt=""></button>'; }).join('') + '</div></div>';
     $('#act').innerHTML = '<button class="btn p" data-gal="1">Close gallery</button>';
     $('#stageh').textContent = 'Model Gallery';
@@ -523,16 +716,20 @@ var D = /*__DATA__*/;
       '<div class="bagrow">' + bagButton() + '</div><p class="nt">This is the page without the television: the same four options, the same price, the same Add to Bag. What is chosen here is shown in the television, and what is chosen in the television is shown here. Stand-in for Ecwid\'s own controls.</p></div>';
   }
   function infoDraw(p, c) {
-    var title = p.kind === 'facts' ? D.factsTitle : (p.title || (c.head && c.head.title) || p.label), sub = null;
+    var C = CUR(), key = c.id + '/' + p.id, title = p.kind === 'facts' ? D.factsTitle : (p.title || (c.head && c.head.title) || p.label), sub = null; seen(key);
     if (p.kind === 'points' || p.kind === 'zones' || p.kind === 'certs' || p.kind === 'numerals' || p.kind === 'article' || (c.id === 'delivery' && p.id === 'made')) sub = c.head && c.head.sub;
     if (p.kind === 'hero') { title = 'Know your Botanic'; sub = 'Everything about this mattress is here, one topic at a time. Use the buttons above and on the left.'; }
     if (p.kind === 'numerals') title = 'Warranty and durability';
-    $('#q').innerHTML = '<h1>' + LEAF + '<span>' + esc(title) + '</span></h1>' + (sub ? '<p>' + esc(sub) + '</p>' : '');
+    if (p.kind === 'hero') title = C.title || title;
+    if (C.title && p.kind !== 'hero') title = C.title; if (C.sub) sub = C.sub; if (key === 'firmness/who') sub = null;
+    var q = $('#q'); q.className = 'q' + (key === 'delivery/made' ? ' ph' : '');
+    q.innerHTML = (key === 'delivery/made' ? '<span class="pic" style="background-image:url(' + D.core + ')" role="img" aria-label="The perforated Botanic latex core"></span><h1><span>' + esc(title) + '</span></h1><span class="rule"></span>' : '<h1>' + (key === 'firmness/who' ? '' : LEAF) + '<span>' + fmt(title) + '</span></h1>') + (sub ? '<p>' + esc(sub) + '</p>' : '') + (p.kind === 'hero' ? wordSvg(D.bioMark, 'qmark') : '');
+    if (key === 'warranty/conditions') { $('#answer').innerHTML = condView(p); } else if (key === 'delivery/made') { $('#answer').innerHTML = madeView(); } else {
     var v = { hero: heroView, facts: factsView, read: function () { return readerView(p); }, article: function () { return readerView(p); }, points: function () { return pointsView(p, c); }, certs: function () { return certsView(p, c); }, zones: function () { return zonesView(p, c); }, numerals: function () { return numeralsView(p); } }[p.kind];
-    $('#answer').innerHTML = v();
+    $('#answer').innerHTML = v(); }
     var i = flatIndex(), prev = FLAT[i - 1], next = FLAT[i + 1], np = next && chap(next[0]).panels.filter(function (x) { return x.id === next[1]; })[0];
     $('#act').innerHTML = (prev ? '<button class="btn s" data-flat="' + (i - 1) + '">Back</button>' : '') + '<button class="btn s" data-go="0">Select your Botanic</button>' + (next ? '<button class="btn p" data-flat="' + (i + 1) + '">Next: <b>' + esc(np.label) + '</b></button>' : '');
-    $('#stageh').textContent = c.label + '  ·  ' + p.label;
+    $('#stageh').className = 'colh'; $('#stageh').innerHTML = esc(c.label + '  ·  ' + p.label) + '<span class="explore">' + explored() + ' of ' + FLAT.length + ' explored</span>';
   }
   function draw() {
     document.body.classList.toggle('std', S.view === 'std');  $('#galbtn').setAttribute('aria-pressed', String(S.gal)); $('#vtv').setAttribute('aria-pressed', String(S.view === 'tv')); $('#vstd').setAttribute('aria-pressed', String(S.view === 'std'));
@@ -540,11 +737,14 @@ var D = /*__DATA__*/;
     var pp = panel(), cc = chap(S.ch); drawBar();
     if (S.gal) { galDraw(); drawRail(); drawMine(); return; }
     if (pp.kind !== 'step') { infoDraw(pp, cc); drawRail(); drawMine(); return; }
-    var st = STEPS[S.step]; $('#q').innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p>' + esc(st.sub) + '</p>';
+    var st = STEPS[S.step], q = $('#q'), FC = CUR('firmness/choose'), FL = CUR('delivery/yours'); q.className = 'q' + (st.id === 'review' ? ' mn' : ''); seen(STEPMAP[st.id].join('/'));
+    if (st.id === 'firmness') q.innerHTML = '<h1 class="lt">' + LEAF + '<span>' + fmt(FC.title) + '</span></h1><p>' + esc(FC.sub) + '</p>';
+    else if (st.id === 'review') q.innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p class="flowl">' + FL.flow.map(function (t, i) { return (i ? '<i aria-hidden="true">→</i>' : '') + (i === FL.flow.length - 1 ? '<b>' + esc(t) + '</b>' : '<span>' + esc(t) + '</span>'); }).join('') + '</p><span class="moon" role="img" aria-label="Moon" style="background-image:url(' + D.moon + ')"></span>';
+    else q.innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p>' + esc(st.sub) + '</p>';
     $('#answer').innerHTML = { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
     var ok = chosen(st.id), last = S.step === STEPS.length - 1;
     $('#act').innerHTML = (S.step ? '<button class="btn s" data-back="1">Back</button>' : '') + (last ? bagButton() : '<button class="btn p" data-next="1"' + (ok ? '' : ' disabled') + '>Continue to <b>' + st.next + '</b></button>');
-    $('#stageh').textContent = 'Select here  ·  Step ' + (S.step + 1) + ' of ' + STEPS.length + '  ·  ' + st.label;
+    $('#stageh').className = 'colh' + (st.id === 'firmness' ? ' kk' : ''); $('#stageh').innerHTML = st.id === 'firmness' ? esc(FC.kicker) + '<span class="k2">' + esc(FC.kicker2) + '</span>' : esc('Select here  ·  Step ' + (S.step + 1) + ' of ' + STEPS.length + '  ·  ' + st.label);
     drawRail(); drawMine();
   }
   document.addEventListener('click', function (e) {
@@ -590,18 +790,38 @@ var D = /*__DATA__*/;
   });
   /* IGNITION: each time the television is switched on (page start, every press of Optimised Preview). Skipped in automated
      browsers unless ?ignite=1, and never with ?ignite=0, so the screen tests see the television itself. */
+  /* AMBIENT: a soft pad made in the browser (Web Audio, no sound file): a low open fifth that swells and opens, a faint shimmer
+     with the two readouts, one quiet bell as the screen lights. Browsers allow sound only after the customer's own tap, so the
+     page start is silent and every press of Optimised Preview has the sound. Sound off is remembered on this device. */
+  var SND_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>', SND_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>';
+  var AC = null, BUS = null, GESTURE = false;
+  document.addEventListener('pointerdown', function () { GESTURE = true; }, true); document.addEventListener('keydown', function () { GESTURE = true; }, true);
+  function soundOn() { try { return localStorage.getItem('ddtvSound') !== 'off'; } catch (e) { return true; } }
+  function setSound(on) { try { localStorage.setItem('ddtvSound', on ? 'on' : 'off'); } catch (e) {} }
+  function hush() { if (!BUS || !AC) return; var t = AC.currentTime; BUS.gain.cancelScheduledValues(t); BUS.gain.setValueAtTime(BUS.gain.value, t); BUS.gain.linearRampToValueAtTime(0, t + .35); BUS = null; }
+  function ambient(reduce, now) {
+    if (!soundOn() || !(GESTURE || now)) return; var Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+    try { AC = AC || new Ctx(); if (AC.state === 'suspended') AC.resume(); } catch (e) { return; }
+    hush(); var t0 = AC.currentTime + .05, vol = reduce ? .05 : .085, end = t0 + (reduce ? 2.0 : 3.7);
+    var bus = AC.createGain(); bus.gain.setValueAtTime(0, t0); bus.gain.linearRampToValueAtTime(vol, t0 + 1.1); bus.gain.setValueAtTime(vol, end - 1.0); bus.gain.linearRampToValueAtTime(0, end); bus.connect(AC.destination); BUS = bus;
+    var lp = AC.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = .7; lp.frequency.setValueAtTime(260, t0); lp.frequency.exponentialRampToValueAtTime(1900, t0 + 2.6); lp.connect(bus);
+    [[110, 'sine', 1], [110.6, 'triangle', .45], [164.8, 'sine', .7], [220, 'sine', .35]].forEach(function (v) { var o = AC.createOscillator(), g = AC.createGain(); o.type = v[1]; o.frequency.value = v[0]; g.gain.value = v[2]; o.connect(g); g.connect(lp); o.start(t0); o.stop(end + .1); });
+    var bell = function (at, f, a) { var o = AC.createOscillator(), g = AC.createGain(); o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(0, at); g.gain.linearRampToValueAtTime(a, at + .02); g.gain.exponentialRampToValueAtTime(.0001, at + 1.6); o.connect(g); g.connect(bus); o.start(at); o.stop(at + 1.7); };
+    if (!reduce) { bell(t0 + 1.35, 659.3, .10); bell(t0 + 1.75, 880, .08); bell(t0 + 2.75, 1318.5, .06); }
+    window.__ambient = (window.__ambient || 0) + 1;
+  }
   var IGN = null;
   function ignite(force) {
     var el = $('#ign'), q = location.search;
     if (/ignite=0/.test(q) || (navigator.webdriver && !/ignite=1/.test(q) && !force)) return;
     clearTimeout(IGN); var g = D.ignition, reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    el.innerHTML = '<div class="lit"></div><div class="core"><div class="mark">' + LEAF + '<b>' + esc(g.name) + '</b></div><div class="line"></div><div class="read">' +
-      g.facts.map(function (f) { return '<div class="fact"><small>' + esc(f[0]) + '</small><span>' + esc(f[1]) + '</span></div>'; }).join('<i></i>') + '</div></div><button class="skip" type="button" data-skip="1">Skip</button>';
-    el.className = 'ign'; el.hidden = false; void el.offsetWidth; el.className = 'ign run';
+    el.innerHTML = '<div class="lit"></div><div class="core"><div class="mark">' + LEAF + '<b class="lum">' + esc(g.name) + '</b></div><div class="line"></div><div class="read">' +
+      g.facts.map(function (f) { return '<div class="fact"><small>' + esc(f[0]) + '</small><span class="lum">' + esc(f[1]) + '</span></div>'; }).join('<i></i>') + '</div></div><button class="snd" type="button" data-snd="1" aria-pressed="' + soundOn() + '">' + (soundOn() ? SND_ON + 'Sound on' : SND_OFF + 'Sound off') + '</button><button class="skip" type="button" data-skip="1">Skip</button>';
+    el.className = 'ign'; el.hidden = false; void el.offsetWidth; el.className = 'ign run'; ambient(reduce);
     IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, reduce ? 1850 : 3500);
   }
-  function igniteEnd() { var el = $('#ign'); if (el.hidden) return; clearTimeout(IGN); el.className = 'ign end'; IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, 300); }
-  $('#ign').addEventListener('click', igniteEnd);
+  function igniteEnd() { var el = $('#ign'); if (el.hidden) return; clearTimeout(IGN); hush(); el.className = 'ign end'; IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, 300); }
+  $('#ign').addEventListener('click', function (e) { var b = e.target.closest('[data-snd]'); if (b) { e.stopPropagation(); setSound(!soundOn()); b.setAttribute('aria-pressed', String(soundOn())); b.innerHTML = soundOn() ? SND_ON + 'Sound on' : SND_OFF + 'Sound off'; if (soundOn()) ambient(false, true); else hush(); return; } igniteEnd(); });
   document.addEventListener('keydown', function (e) { if (!$('#ign').hidden && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); igniteEnd(); } });
   window.__ignite = function () { ignite(true); };
   (function url() { var q = location.search.match(/step=(\d)/); if (q) goStep(Math.min(4, +q[1])); var cq = location.search.match(/ch=([a-z0-9]+)/), pq = location.search.match(/pn=([a-z0-9]+)/); if (cq && chap(cq[1])) goPanel(cq[1], pq ? pq[1] : chap(cq[1]).panels[0].id); var pm = location.search.match(/promo=(\d+)/); if (pm) S.promo = +pm[1]; if (/gal=1/.test(location.search)) S.gal = true; if (/view=std/.test(location.search)) S.view = 'std'; var rq = location.search.match(/rd=(\d+)/); if (rq) S.rd[S.ch + '/' + S.pn] = +rq[1]; var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); if (/bag=1/.test(location.search)) S.bagged = sig(); } })();
