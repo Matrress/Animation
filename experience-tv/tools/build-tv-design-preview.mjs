@@ -152,7 +152,8 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
   const bio = readFileSync(join(A, 'bio-dunlop.svg'), 'utf8'), bp = [...bio.matchAll(/<path[^>]*d="([^"]+)"/g)].map((m) => m[1]);
   D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12) };          // the wordmark "Bio Dunlop" (paths 12-23), drawn in one ink
   D.bioMark = { vb: '2400 -1372 360 376', d: [bp[21], bp[20]] };      // the D with the spiral (paths 20-21)
-  D.moon = b64('moon.webp'); D.core = b64('latex-core-perforated.webp');
+  D.moon = b64('q-dd-moon-88.webp'); D.core = b64('q-latex-closeup.webp'); D.bowl = b64('q-latex-milk-bowl-cut-700.webp');
+  D.logos = { oeko: b64('q-logo-oekotex-mono.webp'), hohenstein: b64('q-logo-hohenstein-mono.webp'), iso9001: b64('q-logo-iso9001-mono.webp'), iso14001: b64('q-logo-iso14001-mono.webp'), siemens: b64('q-logo-siemens-monitoring-mono.webp') };
 }
 D.curated = {
   // 01 D25324CF: hero, selective bold in the introduction
@@ -205,6 +206,16 @@ D.curated = {
    Preview). Minimal, like a car's instrument panel waking up. The two facts are mandatory and are the description's own
    (hero bar: "100% Organic · Dunlop Technology"); a later model sets its own name and facts here. */
 D.ignition = { name: 'BOTANIC', facts: [['Material', '100% Natural Latex'], ['Process', 'Dunlop Technology']] };
+/* HOUSE STYLE OF THE TEXT (owner, 15 November 2026), applied to every text the television shows:
+   - short dashes only: the long dash (—) becomes the short one (–);
+   - Support and Adaptation always begin with a capital S and A.
+   Ecwid's own labels (sizes, covers), addresses and pictures are never touched. */
+{
+  const SKIP = new Set(['id', 'key', 'step', 'kind', 'sizes', 'images', 'img', 'url', 'eng', 'bioWord', 'bioMark', 'moon', 'core', 'bowl', 'logos', 'zoneSketch', 'zoneTier', 'mattress', 'specialist', 'product']);
+  const fix = (t) => t.replace(/\s*—\s*/g, ' – ').replace(/\bsupport\b/g, 'Support').replace(/\badaptation\b/g, 'Adaptation');
+  const walk = (o) => { for (const k of Object.keys(o)) { if (SKIP.has(k)) continue; const v = o[k]; if (typeof v === 'string') o[k] = fix(v); else if (v && typeof v === 'object') walk(v); } };
+  walk(D);
+}
 const html = tpl.replace('/*__CORE__*/', () => core).replace('/*__RULES__*/', () => rules).replace('/*__DATA__*/', () => JSON.stringify(D));
 const file = join(out, 'large-screen-design.html');
 writeFileSync(file, html);

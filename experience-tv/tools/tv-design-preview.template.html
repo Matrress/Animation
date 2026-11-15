@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Large-screen television: design preview (not deployed)</title>
+<script>if (!/theme=classic/.test(location.search)) document.documentElement.classList.add('ivory');</script>
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap">
 <style>
@@ -403,6 +404,84 @@ a { color: inherit; }
 /* Delivery · Your Botanic (35): the small silver moon and the flow */
 .q.mn { padding-right: 140px; } .q.mn .moon { position: absolute; right: 26px; top: 50%; width: 86px; height: 86px; margin-top: -43px; border-radius: 50%; background-size: cover; filter: grayscale(1) brightness(1.08) contrast(1.05); }
 .q .flowl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 19px; color: rgba(255,255,255,.88); } .q .flowl b { color: #fff; font-weight: 700; } .q .flowl i { font-style: normal; opacity: .8; }
+/* ===== IVORY COCKPIT (owner, 15 November 2026): the television as the instrument panel and centre screen of a luxury car with
+   ivory seats. Ivory surfaces (the colour of the latex itself), graphite instruments, one lit blue for action. Comfort first:
+   soft light, hairlines instead of boxes, light type with the key words in bold. ?theme=classic shows the previous look. ===== */
+:root.ivory {
+  --ground: #F1ECE3; --line: #E6DED1; --line2: #D4CAB9; --stage-a: #FCFAF6; --stage-b: #F6F2EA;
+  --ink: #1E2327; --ink2: #474B4E; --ink3: #7B7870; --teal: #3A5466; --teal-deep: #232B31; --abyss: #12171B;
+  --band-top: #232B31; --band-end: #161B1F; --sky: #8FD0EC;
+  --grad-band: linear-gradient(175deg, #2D363D 0%, #1B2126 100%);
+  --grad-card: linear-gradient(160deg, #2F383F 0%, #222A30 48%, #171C20 100%);
+}
+.ivory body { background: radial-gradient(120% 70% at 50% 0%, #FAF7F1 0%, var(--ground) 70%); }
+.ivory .monitor { background: linear-gradient(180deg, #2B3339, #181D21); padding: 6px; border-radius: 18px; box-shadow: 0 30px 50px -36px rgba(40,30,15,.55), 0 0 0 1px rgba(255,255,255,.6); }
+.ivory .screen { border-radius: 13px; background: var(--stage-a); }
+.ivory .chbar { background: linear-gradient(180deg, #FFFFFF, #FBF8F2); border-bottom-color: var(--line); }
+.ivory .ch { border-color: var(--line); background: transparent; font-weight: 500; color: var(--ink2); }
+.ivory .ch:hover { border-color: var(--line2); background: #fff; }
+.ivory .ch[aria-current=true], .ivory .pn[aria-current=true], .ivory .ri2[aria-pressed=true], .ivory .st.cur { background: var(--grad-band); color: #F6F1E7; border-color: transparent; box-shadow: inset 0 -2px 0 var(--sky), 0 6px 14px -10px rgba(20,25,30,.7); }
+.ivory .pn { border-color: var(--line); font-weight: 500; }
+.ivory .stage { background: linear-gradient(180deg, var(--stage-a), var(--stage-b)); }
+/* the question band: instrument glass, light type, the anchor words in bold */
+.ivory .q { background: var(--grad-card); border: 0; box-shadow: inset 0 1px 0 rgba(255,255,255,.10), 0 18px 30px -24px rgba(20,22,25,.75); color: #F6F1E7; }
+.ivory .q::after { width: 420px; height: 420px; right: -160px; top: -240px; background: radial-gradient(circle, rgba(246,241,231,.10), rgba(246,241,231,0) 65%); }
+.ivory .q h1 { font-weight: 300; letter-spacing: -.005em; } .ivory .q h1 b, .ivory .q h1 .kw { font-weight: 700; } .ivory .q h1 .acc { color: #A9DCF2; font-weight: 600; }
+.ivory .q p { color: rgba(246,241,231,.82); font-weight: 400; }
+.ivory .q .flowl b { color: #fff; } .ivory .q .qmark { color: #A9DCF2; }
+/* cards: white porcelain on ivory, hairline and a soft warm shadow */
+.ivory .rc, .ivory .pt, .ivory .row4, .ivory .crow, .ivory .wrow, .ivory .zp, .ivory .mini, .ivory .sl, .ivory .card, .ivory .dcard, .ivory .fcard, .ivory .tile, .ivory .info, .ivory .ri, .ivory .prbox, .ivory .fx div, .ivory .fts span, .ivory .nclk, .ivory .stretch, .ivory .zsk.zfull, .ivory .dlv .ind, .ivory .dlv .cst, .ivory .rq {
+  border-color: var(--line); box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 12px 24px -22px rgba(70,55,30,.45); }
+.ivory .rc h2, .ivory .pt h3, .ivory .row4 h3 { font-weight: 600; }
+.ivory .rc p, .ivory .pt p, .ivory .row4 p { font-weight: 400; }
+.ivory .ri2 { border-color: var(--line); font-weight: 500; } .ivory .ri2[aria-pressed=true] i { color: var(--band-top); }
+.ivory .mini .vid { background: radial-gradient(120% 120% at 70% 20%, #3A454D 0%, #1C2227 70%); } .ivory .mini .vid::after { background: radial-gradient(circle, rgba(246,241,231,.16), rgba(246,241,231,0) 68%); }
+.ivory .btn.p { background: var(--grad-band); border-color: transparent; color: #F6F1E7; }
+.ivory .btn.s { background: #fff; border-color: var(--line2); }
+.ivory .rail, .ivory .mine { background: #FFFFFF; }
+.ivory .rail { border-right-color: var(--line); } .ivory .mine { border-left: 1px solid var(--line); }
+.ivory .st.done .n { background: var(--band-top); border-color: var(--band-top); }
+.ivory .st.done .t span { color: var(--teal); }
+.ivory .chip.on { background: var(--grad-band); border-color: transparent; color: #F6F1E7; box-shadow: inset 3px 0 0 var(--sky); }
+.ivory .guide { background: var(--grad-card); border-left-color: var(--sky); }
+.ivory .fc.cmp .fcard[aria-pressed=true], .ivory .fc.cmp .fcard.rec { background: #FBF8F2; border: 2px solid var(--band-top); }
+.ivory .fc.cmp .fcard .tick { background: var(--band-top); }
+.ivory .fc.cmp .fcard .rg { font-weight: 600; font-size: 18px; letter-spacing: -.005em; }
+.ivory .eng .sab { border-color: var(--band-top); } .ivory .eng .sab .bal, .ivory .eng .sab .bal i { color: var(--teal); } .ivory .eng .sab .bal i { background: var(--teal); }
+.ivory .eng .sab b { font-weight: 700; } .ivory .eng::after { border-color: #B9AF9F; background-image: linear-gradient(#B9AF9F, #B9AF9F); }
+/* instrument readouts: large light figures, small spaced labels */
+.ivory .wrow .v b { font-weight: 300; font-size: 44px; letter-spacing: -.03em; } .ivory .wrow .v.t b { font-weight: 500; font-size: 22px; }
+.ivory .wrow svg, .ivory .cond .big svg, .ivory .dlv .ind svg, .ivory .flow .st2 { color: var(--band-top); }
+.ivory .exs { background: #FBF8F2; } .ivory .exs b { font-weight: 300; font-size: 26px; } .ivory .exs .on, .ivory .exs .on b { color: var(--band-top); font-weight: 600; } .ivory .exs .on span { background: var(--band-top); border-color: var(--band-top); }
+.ivory .cond .big h2 { font-weight: 300; } .ivory .cond .big h2 b { font-weight: 700; } .ivory .cond .big h2 mark { background: var(--band-top); font-weight: 600; }
+.ivory .dlv .d20 { background: var(--grad-card); } .ivory .dlv .d20 b { font-weight: 300; letter-spacing: .22em; }
+.ivory .dlv .cst h2 { font-weight: 300; } .ivory .dlv .cst h2 i { font-weight: 600; }
+.ivory .crow .mk { display: flex; align-items: center; } .ivory .crow .mk { gap: 8px; } .ivory .crow .mk img { display: block; max-width: 150px; max-height: 66px; width: auto; height: auto; opacity: .92; }
+.ivory .crow p b { color: var(--teal); }
+.ivory .zp { border-left-color: var(--tone); }
+.ivory .close { color: var(--band-top); }
+.ivory .zsk .zn { fill: #A8B4BE; } .ivory .zsk text { fill: #2A3238; } .ivory .zsk path[stroke="#fff"] { stroke: #FFFFFF; }
+.ivory .chosen { background: var(--band-top); }
+.ivory .seg button[aria-pressed=true] { background: #EEF6FA; }
+.ivory .invite { background: #fff; border-color: var(--line); } .ivory .invite .dn { background: var(--grad-band); }
+.ivory .shopstrip { background: #fff; border-color: var(--line); }
+.ivory .tbtn, .ivory .btn.bagbtn { letter-spacing: .01em; }
+.ivory .added { background: var(--grad-card); }
+/* the selection gauge: four segments light up as the choices are made, like a car's charge indicator */
+.gauge { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 6px 0 2px; grid-column: 1 / -1; } .gauge i { height: 4px; border-radius: 2px; background: var(--line); transition: background .4s ease; } .gauge i.on { background: var(--band-top); } .gauge.full i { background: #297CA2; }
+.gauge + .gl { grid-column: 1 / -1; display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); margin: 0 0 4px; }
+/* Discover: the bowl and the brand */
+.brandbox { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: 14px; margin-top: 18px; }
+.brandbox img { width: 120px; height: auto; display: block; filter: drop-shadow(0 10px 12px rgba(60,50,30,.18)); }
+.brandbox .bioword { margin: 0; width: 100%; color: var(--band-top); } .brandbox small { display: block; margin-top: 6px; font-size: 10.5px; letter-spacing: .34em; color: var(--ink3); font-weight: 500; text-align: center; }
+
+.ivory .st.cur .n, .ivory .st.cur.done .n { background: #F6F1E7; border-color: #F6F1E7; color: var(--band-top); } .ivory .st.cur .t span { color: rgba(246,241,231,.8); }
+/* engineering drawings in the latex colour: ivory core, white body, graphite line */
+.ivory .eng svg path, .ivory .stretch svg path:not(.arr) { stroke: #2A3238; }
+.ivory .eng svg path:first-child, .ivory .stretch svg path:first-child { fill: #F4EEE2; }
+.ivory .eng svg path + path, .ivory .stretch svg path:nth-child(2) { fill: #FFFFFF; }
+.ivory .zsk svg > path:last-child { fill: #FFFFFF; fill-opacity: .94; stroke: #2A3238; } .ivory .zsk svg > path:nth-last-child(2) { stroke: #2A3238; }
+.ivory .stretch .arr { fill: #8FD0EC; stroke: #2A3238; }
 </style>
 </head>
 <body>
@@ -453,7 +532,7 @@ var D = /*__DATA__*/;
   function snippet(t) { var m = t.match(/^[^.!?]*[.!?]/), s = (m ? m[0] : t); if (s.length > 52) s = s.slice(0, 50).replace(/\s+\S*$/, '') + '…'; return s; }
   /* REFERENCE ROUND: the owner's PRIMARY copy for this panel (D.curated), the title markup ({word} = lit accent, [word] = bold in a light title) */
   function CUR(k) { return (D.curated && D.curated[k || (S.ch + '/' + S.pn)]) || {}; }
-  function fmt(t) { return esc(t).replace(/\{([^}]+)\}/g, '<span class="acc">$1</span>').replace(/\[([^\]]+)\]/g, '<b>$1</b>'); }
+  function fmt(t) { return esc(t).replace(/\{([^}]+)\}/g, '<span class="acc">$1</span>').replace(/\[([^\]]+)\]/g, '<b>$1</b>').replace(/(^|[^>\w])(Support|Adaptation)(?![\w<])/g, '$1<b class="kw">$2</b>'); }   // the anchor words in bold, the rest light
   var SEEN = {}; function seen(k) { SEEN[k] = 1; }
   function explored() { var n = 0; FLAT.forEach(function (f) { if (SEEN[f[0] + '/' + f[1]]) n++; }); return n; }
   function wordSvg(o, cls) { return '<svg class="' + cls + '" viewBox="' + o.vb + '" aria-hidden="true">' + o.d.map(function (d) { return '<path fill-rule="evenodd" d="' + d + '"/>'; }).join('') + '</svg>'; }
@@ -500,7 +579,7 @@ var D = /*__DATA__*/;
     if (!S.size) return null; var list = S.size.mod + (S.firmness === 'Extra Firm' ? 88 : 0) + (S.depth ? S.depth.mod : 0) + (S.cover ? S.cover.mod : 0), cur = list * (100 - S.promo) / 100;   // the five factors: size, firmness (Extra Firm +£88), depth, cover, and the promotion
     return { old: S.promo ? gbp(list) : '', cur: gbp(cur), badge: S.promo ? 'Save ' + S.promo + '%' : '' };
   }
-  function priceParts(sh, big) { return sh ? '<div class="prow">' + (sh.old ? '<s class="pold">' + esc(sh.old) + '</s>' : '') + '<b>' + esc(sh.cur) + '</b>' + (sh.badge ? '<span class="sv">' + esc(sh.badge) + '</span>' : '') + '</div>' + (sh.old ? '<span class="inc">Discount included: this is the price you pay.</span>' : '') : '<b>—</b>'; }
+  function priceParts(sh, big) { return sh ? '<div class="prow">' + (sh.old ? '<s class="pold">' + esc(sh.old) + '</s>' : '') + '<b>' + esc(sh.cur) + '</b>' + (sh.badge ? '<span class="sv">' + esc(sh.badge) + '</span>' : '') + '</div>' + (sh.old ? '<span class="inc">Discount included: this is the price you pay.</span>' : '') : '<b>–</b>'; }
   var gbp = function (n) { return '£' + n.toFixed(2).replace(/\B(?=(\d{3})+\.)/g, ' '); };
   var LEAFS = '<svg class="lf" viewBox="0 0 28 20" aria-hidden="true"><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="#7FC25F"/></g></svg>';
   var CHECK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
@@ -549,7 +628,8 @@ var D = /*__DATA__*/;
     return '<button class="btn bagbtn ' + (cls || '') + (f.ready ? ' ready' : '') + '" data-bag="1"' + (f.enabled ? '' : ' disabled') + ' aria-describedby="ready-note"><span>' + bagI + 'Add to <b>Bag</b></span></button>';
   }
   function drawMine() {
-    var h = ''; ['size', 'firmness', 'depth', 'cover'].forEach(function (id, i) { var v = valueOf(id); h += '<button class="chip' + (v ? ' on' : '') + '" data-go="' + i + '"><small>' + id + '</small><b>' + (v ? esc(v) : '—') + '</b></button>'; });
+    var h = ''; ['size', 'firmness', 'depth', 'cover'].forEach(function (id, i) { var v = valueOf(id); h += '<button class="chip' + (v ? ' on' : '') + '" data-go="' + i + '"><small>' + id + '</small><b>' + (v ? esc(v) : '–') + '</b></button>'; });
+    var nOn = ['size', 'firmness', 'depth', 'cover'].filter(chosen).length; h = h + '<div class="gauge' + (nOn === 4 ? ' full' : '') + '" role="img" aria-label="' + nOn + ' of 4 choices made">' + [0, 1, 2, 3].map(function (i) { return '<i class="' + (i < nOn ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="gl"><span>' + nOn + ' of 4</span><span>' + (nOn === 4 ? 'Ready' : 'Your choices') + '</span></div>';
     $('#chips').innerHTML = h;
     $('#mi').innerHTML = iconSvg(['size', 'firmness', 'depth', 'cover'].filter(chosen).length);
     var p = price(), full = complete();
@@ -573,8 +653,8 @@ var D = /*__DATA__*/;
     if (S.weight != null && S.height != null) rec = DDFirmnessCore.recommend(S.weight, S.height);
     var cards = [['Soft', 'Up to ' + B.softMax + ' kg', 'soft'], ['Medium', (B.softMax + 1) + ' – ' + B.mediumMax + ' kg', 'medium'], ['Firm', (B.mediumMax + 1) + ' – ' + B.firmMax + ' kg', 'firm'], ['Extra Firm', B.extraFirmMin + ' kg and over', 'xfirm']];
     var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
-    var h = '<div class="fw"><div class="sl"><div class="r"><label for="gw">Body weight</label><b id="gwv">' + (S.weight == null ? '—' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + lim.weight[0] + '" max="' + lim.weight[1] + '" value="' + (S.weight == null ? 70 : S.weight) + '"><div class="rng"><span>' + lim.weight[0] + ' kg</span><span>' + lim.weight[1] + ' kg</span></div></div>' +
-      '<div class="sl"><div class="r"><label for="gh">Height</label><b id="ghv">' + (S.height == null ? '—' : S.height + ' cm') + '</b></div><input id="gh" type="range" min="' + lim.height[0] + '" max="' + lim.height[1] + '" value="' + (S.height == null ? 170 : S.height) + '"><div class="rng"><span>' + lim.height[0] + ' cm</span><span>' + lim.height[1] + ' cm</span></div></div></div>';
+    var h = '<div class="fw"><div class="sl"><div class="r"><label for="gw">Body weight</label><b id="gwv">' + (S.weight == null ? '–' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + lim.weight[0] + '" max="' + lim.weight[1] + '" value="' + (S.weight == null ? 70 : S.weight) + '"><div class="rng"><span>' + lim.weight[0] + ' kg</span><span>' + lim.weight[1] + ' kg</span></div></div>' +
+      '<div class="sl"><div class="r"><label for="gh">Height</label><b id="ghv">' + (S.height == null ? '–' : S.height + ' cm') + '</b></div><input id="gh" type="range" min="' + lim.height[0] + '" max="' + lim.height[1] + '" value="' + (S.height == null ? 170 : S.height) + '"><div class="rng"><span>' + lim.height[0] + ' cm</span><span>' + lim.height[1] + ' cm</span></div></div></div>';
     var chosenC = cards.filter(function (c) { return c[0] === S.firmness; })[0] || (rec && cards.filter(function (c) { return c[0] === fk(rec.display); })[0]);
     h += '<div class="fc cmp">';
     cards.forEach(function (c) { var isRec = rec && fk(rec.display) === c[0], on = S.firmness === c[0], tick = (on || (isRec && !S.firmness)) ? '<span class="tick">' + CHECK.replace('width="18" height="18"', 'width="14" height="14"') + '</span>' : '';
@@ -647,19 +727,21 @@ var D = /*__DATA__*/;
     return '<div class="pw' + (c.media ? '' : ' nomedia') + (C.flow ? ' wide2' : '') + '">' + cards + side + '</div>';
   }
   function certsView(p, c) {
-    var mk = function (m) { var x = m.replace(/®/g, ''); if (/^OEKO/.test(x)) return 'OEKO-TEX®<small>STANDARD 100</small>'; if (/^Siemens/.test(x)) return 'SIEMENS<small>MONITORING</small>'; if (/^ISO/.test(x)) return 'ISO<small>9001 · 14001 · OHSAS</small>'; return esc(x); };
+    var L = D.logos || {}, img = function (src, alt) { return '<img src="' + src + '" alt="' + alt + '">'; };
+    var mk = function (m) { var x = m.replace(/®/g, ''); if (document.documentElement.classList.contains('ivory')) { if (/^OEKO/.test(x)) return img(L.oeko, 'OEKO-TEX Standard 100'); if (/^Hohenstein/.test(x)) return img(L.hohenstein, 'Hohenstein'); if (/^Siemens/.test(x)) return img(L.siemens, 'Siemens Monitoring'); if (/^ISO/.test(x)) return img(L.iso9001, 'ISO 9001') + img(L.iso14001, 'ISO 14001'); } if (/^OEKO/.test(x)) return 'OEKO-TEX®<small>STANDARD 100</small>'; if (/^Siemens/.test(x)) return 'SIEMENS<small>MONITORING</small>'; if (/^ISO/.test(x)) return 'ISO<small>9001 · 14001 · OHSAS</small>'; return esc(x); };
     return '<div class="crows">' + p.items.map(function (x, i) { return '<div class="crow' + (i === 0 && c.media ? ' top' : '') + '"><div class="mk">' + mk(x.m) + '</div><div class="tx"><h3>' + LEAFS + esc(x.m) + '</h3><p><b>' + esc(x.s) + '.</b> ' + esc(x.d) + '</p></div>' + (i === 0 ? miniCard(c) : '') + '</div>'; }).join('') + '</div>';
   }
+  function ZTONE() { return document.documentElement.classList.contains('ivory') ? { s: '#F1EADD', c: '#DCCFB9', r: '#B8A88C' } : { s: '#B7C9E3', c: '#7C97C0', r: '#46628F' }; }
   function zoneSvg() {   // 24: the original engineering view (divine-zones), the body and the mattress unchanged; the seven zones are slices of the mattress
-    var e = engPaths(), Z = D.eng.zones, T = D.zoneTier, tone = { s: '#B7C9E3', c: '#7C97C0', r: '#46628F' }, g = '';
+    var e = engPaths(), Z = D.eng.zones, T = D.zoneTier, tone = ZTONE(), g = '';
     Z.forEach(function (z, i) { g += '<clipPath id="zc' + i + '"><rect x="' + z[0] + '" y="0" width="' + z[1] + '" height="800"/></clipPath>'; });
     var body = Z.map(function (z, i) { return '<g data-z="' + (i + 1) + '" clip-path="url(#zc' + i + ')"><path d="' + e.mp + '" fill="' + tone[T[i + 1]] + '"/><text x="' + (z[0] + z[1] / 2) + '" y="712" text-anchor="middle">Z' + (i + 1) + '</text></g>'; }).join('');
     var seams = Z.slice(1).map(function (z) { return '<path d="M' + (z[0] - 5) + ' 380V752" stroke="#fff" stroke-width="6" stroke-opacity=".75"/>'; }).join('');
     return '<svg viewBox="' + e.vb + '" role="img" aria-label="The engineering view: a person lying on the Botanic core, with seven zones from head to feet"><defs>' + g + '</defs>' + body + seams + '<path d="' + e.mp + '" fill="none" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#F4F8FA" fill-opacity=".92" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/></svg>';
   }
   function zonesView(p, c) {   // 24: the engineering view full width (never squeezed), the legend, then the seven zones beside the one film
-    var T = D.zoneTier, tone = { s: '#B7C9E3', c: '#7C97C0', r: '#46628F' };
-    var fig = '<div class="zsk zfull" aria-label="Seven support zones, head to feet">' + zoneSvg() + '</div><p class="zlg"><span><i style="background:#B7C9E3"></i>Softer response</span><span><i style="background:#7C97C0"></i>Calibrated</span><span><i style="background:#46628F"></i>Reinforced</span></p>';
+    var T = D.zoneTier, tone = ZTONE();
+    var fig = '<div class="zsk zfull" aria-label="Seven support zones, head to feet">' + zoneSvg() + '</div><p class="zlg"><span><i style="background:' + tone.s + '"></i>Softer response</span><span><i style="background:' + tone.c + '"></i>Calibrated</span><span><i style="background:' + tone.r + '"></i>Reinforced</span></p>';
     var grid = '<div class="zgrid">' + p.items.map(function (x, i) { return '<div class="zp" style="--tone:' + tone[T[i + 1]] + '"><b>Z' + (i + 1) + ' · ' + esc(x.n) + '</b><span>' + esc(x.note) + '</span></div>'; }).join('') + '</div>';
     return fig + '<div class="pw zwide' + (c.media ? '' : ' nomedia') + '">' + grid + miniCard(c) + '</div>';
   }
@@ -689,7 +771,7 @@ var D = /*__DATA__*/;
   function heroView() {
     var H = D.hero, B = CUR('discover/intro').bold || [], bold = function (t) { var h = esc(t); B.forEach(function (w) { h = h.replace(esc(w), '<b>' + esc(w) + '</b>'); }); return h; };
     return '<div class="hero"><div><div class="rc"><h2>' + esc(H.headline) + '</h2><p>' + bold(H.intro) + '</p><p>' + esc(H.note) + '</p></div></div>' +
-      '<div><aside class="mini" aria-label="Presentation video"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">Presentation video: watch the whole Botanic in full</span><span class="tv">Plays in full on demand · stand-in</span></aside>' + wordSvg(D.bioWord, 'bioword') + '</div></div>' +
+      '<div><aside class="mini" aria-label="Presentation video"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">Presentation video: watch the whole Botanic in full</span><span class="tv">Plays in full on demand · stand-in</span></aside>' + '<div class="brandbox"><img src="' + D.bowl + '" alt="Natural latex milk in a tapping cup, with rubber tree leaves"><div>' + wordSvg(D.bioWord, 'bioword') + '<small>DIVINE DUNLOP DREAMS</small></div></div></div></div>' +
       '<div class="fts f3">' + D.features.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '</div>';
   }
   function factsView() {
@@ -740,7 +822,7 @@ var D = /*__DATA__*/;
     var st = STEPS[S.step], q = $('#q'), FC = CUR('firmness/choose'), FL = CUR('delivery/yours'); q.className = 'q' + (st.id === 'review' ? ' mn' : ''); seen(STEPMAP[st.id].join('/'));
     if (st.id === 'firmness') q.innerHTML = '<h1 class="lt">' + LEAF + '<span>' + fmt(FC.title) + '</span></h1><p>' + esc(FC.sub) + '</p>';
     else if (st.id === 'review') q.innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p class="flowl">' + FL.flow.map(function (t, i) { return (i ? '<i aria-hidden="true">→</i>' : '') + (i === FL.flow.length - 1 ? '<b>' + esc(t) + '</b>' : '<span>' + esc(t) + '</span>'); }).join('') + '</p><span class="moon" role="img" aria-label="Moon" style="background-image:url(' + D.moon + ')"></span>';
-    else q.innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p>' + esc(st.sub) + '</p>';
+    else q.innerHTML = '<h1>' + LEAF + '<span>' + fmt(st.q) + '</span></h1><p>' + esc(st.sub) + '</p>';
     $('#answer').innerHTML = { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
     var ok = chosen(st.id), last = S.step === STEPS.length - 1;
     $('#act').innerHTML = (S.step ? '<button class="btn s" data-back="1">Back</button>' : '') + (last ? bagButton() : '<button class="btn p" data-next="1"' + (ok ? '' : ' disabled') + '>Continue to <b>' + st.next + '</b></button>');
@@ -782,7 +864,7 @@ var D = /*__DATA__*/;
   document.addEventListener('input', function (e) {
     if (e.target.id === 'gw') S.weight = +e.target.value; else if (e.target.id === 'gh') S.height = +e.target.value; else return;
     var B = DDFirmnessCore, rec = (S.weight != null && S.height != null) ? B.recommend(S.weight, S.height) : null;
-    $('#gwv').textContent = S.weight == null ? '—' : S.weight + ' kg'; $('#ghv').textContent = S.height == null ? '—' : S.height + ' cm';
+    $('#gwv').textContent = S.weight == null ? '–' : S.weight + ' kg'; $('#ghv').textContent = S.height == null ? '–' : S.height + ' cm';
     // update in place (the slider must not be re-created while it is being dragged)
     var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
     $('#guide').innerHTML = rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';

@@ -62,3 +62,14 @@ These are decided. They are not asked again and not undone by a later change. Wh
 - Warranty: three full-width rows; the pillows come with the mattress either way; 12% examples only for 20/24/26 cm.
 - Ignition v2: luminous lettering (one pass of light, letters stay solid) and a soft ambient pad made in the browser, only after a tap, with Sound on/off remembered; test R29.
 - Invitation to explore: "N of 31 explored", small green dots on opened topics and buttons.
+
+## Owner's answers and the Ivory Cockpit (15 November 2026, evening)
+- Firmness boundaries: always from the main firmness module (`DDFirmnessCore`): up to 48 / 49–87 / 88–114 / 115+ kg. Confirmed.
+- The bowl comes from the Quality and Certificates page; so do the real core close-up (fine pins), the small moon and the official marks (shown in one graphite ink).
+- Leaf colour: the designer's choice per place (green on the instrument bands, graphite where it is a quiet marker).
+- "Divine Dunlop Dreams" in small spaced letters under the Bio Dunlop wordmark.
+- Warranty: 12% of the selected mattress height. That is the rule.
+- Delivery: "20 Days Delivery", without saying calendar or working days.
+- Text house style: short dashes only (the long dash is never shown); Support and Adaptation always begin with a capital S and A, and in the instrument-band titles they are the bold words while the rest of the title is light.
+- Look: Ivory Cockpit. Ivory surfaces (the colour of latex and of ivory car seats), graphite instrument glass for the bands and the current buttons, one lit blue for action (Add to Bag, Go to Checkout, the gallery), large light figures for readouts, hairlines instead of boxes, a four-segment selection gauge. The engineering drawings and the 7-Zone map are in the latex colours. `?theme=classic` shows the previous look.
+- The orange numbers and purple dashed frames in the reference screenshots are annotation overlays of the button map, never part of the television.

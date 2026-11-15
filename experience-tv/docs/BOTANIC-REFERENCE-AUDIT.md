@@ -6,9 +6,9 @@ Nothing on the live store was changed. No picture was generated: every picture i
 
 | # | Screen | PRIMARY reference | What the television now does | Open | Status |
 |---|---|---|---|---|---|
-| 01 | Discover · Introduction | `D25324CF-936E-4718-A59D-D755A2D31161.PNG` | "Know your Botanic" with the lit word; Bio Dunlop D on the band; selective bold (4 phrases); one video; Bio Dunlop wordmark (owner's SVG) under it; six facts with a graphite bar | Bowl with leaves and ORGANIC wordmark: files not supplied | Needs factual verification |
+| 01 | Discover · Introduction | `D25324CF-936E-4718-A59D-D755A2D31161.PNG` | "Know your Botanic" with the lit word; Bio Dunlop D on the band; selective bold (4 phrases); one video; Bio Dunlop wordmark (owner's SVG) under it; six facts with a graphite bar | Bowl added (Quality page); ORGANIC wordmark not supplied | Needs factual verification |
 | 02 | Discover · At a Glance | `(none, keep existing)` | Kept; the empty Firmness and Cover rows now show their values (extraction fixed) | A source screenshot | Pending review |
-| 03 | Firmness · Choose | `5748F204-8424-48C3-8641-C6B82C0AC6F5.PNG` | Kicker line; "What Support and Adaptation does your body need?"; two sliders; four compact levels with a tick; the engineering figure (owner's vector) with Support · Balance · Adaptation | Firmness boundaries: owner's decision (four sets differ) | Needs factual verification |
+| 03 | Firmness · Choose | `5748F204-8424-48C3-8641-C6B82C0AC6F5.PNG` | Kicker line; "What Support and Adaptation does your body need?"; two sliders; four compact levels with a tick; the engineering figure (owner's vector) with Support · Balance · Adaptation | Resolved: the firmness module's ranges (owner) | Needs factual verification |
 | 04 | Firmness · Correct vs Softer | `DCCDF5C4-D418-465B-8AE1-79955866BF36.PNG` | "Firmness Is Body Regulation"; whole button labels (no cut sentences); first card with the bold words of 05 | — | Pending review |
 | 06 | Firmness · How It Works | `BOTANIC_How_It_Works_full_size.png` | Title, subtitle and Overview copy of the screenshot | — | Pending review |
 | 07 | Firmness · Who It Is For | `BD75A829-9EEB-49F5-9CCD-B24370C8FB65.PNG` | No leaf on this band (as in the screenshot); the copy with single-core and 7-zone in bold | Leaf here: intended? | Pending review |
@@ -34,8 +34,8 @@ Nothing on the live store was changed. No picture was generated: every picture i
 | 30 | Certifications · Certifications | `BOTANIC_Certifications_Horizontal_Fullscreen.png` | Full-width rows; typeset monochrome mark left, text right; the film beside the first row; Siemens as Process Control | Marks are typeset, not official files; OHSAS -> ISO 45001; OEKO-TEX scope | Needs factual verification |
 | 31 | Certifications · Where It Is Made | `IMG_5789.JPG` | Unchanged | OEKO-TEX scope | Needs factual verification |
 | 32 | Warranty · Warranty + Gift | `BOTANIC_Warranty_Three_Horizontal_Rows.png` | Three full-width rows; the third row rewritten: the pillows come with the mattress either way | Lifespan 20-25 years | Needs factual verification |
-| 33 | Warranty · Conditions | `FB9568A4-DCEC-4309-8E3F-CFE64FEBB225.PNG` | "12% or more of the total mattress height"; examples for 20/24/26 cm only (no 28 cm); the chosen height lit | Live text "2 cm = more than 12%" is wrong; 12% with or without cover | Needs factual verification |
-| 34 | Delivery · Made To Order | `3D3269B4-EE82-427A-A692-75640B68C639.PNG` | Photo band with the perforated core (owner's picture); Individually made; 20 DAYS DELIVERY; C U S T O M Made to Order | Calendar or working days | Needs factual verification |
+| 33 | Warranty · Conditions | `FB9568A4-DCEC-4309-8E3F-CFE64FEBB225.PNG` | "12% or more of the total mattress height"; examples for 20/24/26 cm only (no 28 cm); the chosen height lit | Rule confirmed: 12% of the selected height; the live "2 cm" sentence still to be corrected on the shop | Needs factual verification |
+| 34 | Delivery · Made To Order | `3D3269B4-EE82-427A-A692-75640B68C639.PNG` | Photo band with the perforated core (owner's picture); Individually made; 20 DAYS DELIVERY; C U S T O M Made to Order | Resolved: "20 Days Delivery" without a unit (owner) | Pending review |
 | 35 | Delivery · Your Botanic | `7EDDE74B-8DD2-4A58-ACDE-997F467C1C98.PNG` | "Add to your bag -> Go to Checkout -> Place your Order"; the small moon in silver; Ecwid laws unchanged | — | Pending review |
 
 ## Added value (owner, 15 November)
@@ -45,8 +45,6 @@ Nothing on the live store was changed. No picture was generated: every picture i
 - **One source of pictures for every model.** `assets/botanic/` + `PROVENANCE.md`; the curated copy per screen is `D.curated` in the build, keyed by screen, so a second model fills the same structure.
 
 ## What the owner still has to give
-1. The firmness boundaries (four different sets exist; see the project audit).
-2. The latex bowl with leaves and the ORGANIC wordmark (screenshot 01), and the original `IMG_5822.WEBP`.
-3. The leaf colour (green in the TV, graphite in the live description) and the Bio Dunlop name on Divine Dunlop.
-4. The 12% base (with or without cover) and the live "2 cm = more than 12%" sentence.
-5. Calendar or working days for 20 days; certificates and test reports for the legal list.
+1. The ORGANIC wordmark of screenshot 01 and the original `IMG_5822.WEBP`.
+2. Certificates and test reports for the legal list (OEKO-TEX per cover, ECO-Institut, current ISO).
+3. Correction of the live warranty sentence ("2 cm = more than 12%") when the shop is updated.
