@@ -50,7 +50,42 @@ a { color: inherit; }
 .invite b { display: block; font-size: 22px; letter-spacing: -.01em; } .invite span { display: block; font-size: 15px; color: var(--ink2); margin-top: 2px; }
 .invite .dn { margin-left: auto; flex: none; width: 40px; height: 40px; border-radius: 10px; background: var(--grad-band); display: grid; place-items: center; }
 /* the monitor: a thin graphite frame around the screen */
-.monitor { background: var(--grad-band); border-radius: 14px; padding: 5px; box-shadow: 0 16px 30px -24px rgba(11,28,42,.7); }
+.monitor { position: relative; background: var(--grad-band); border-radius: 14px; padding: 5px; box-shadow: 0 16px 30px -24px rgba(11,28,42,.7); }
+/* IGNITION: the television switching on (about 3.4 s). Dark instrument glass, one hairline of light opens from the centre,
+   the leaf and the name appear, then two readouts, then the glass lights up into the stage and is gone. No blur, no glow
+   clouds: opacity and scale only. A tap, a key or Skip ends it at once; with reduced motion it is a quiet fade. */
+.ign { position: absolute; inset: 5px; border-radius: 10px; overflow: hidden; z-index: 6; background: linear-gradient(180deg, #10293F 0%, #0B1C2A 100%); display: grid; place-items: center; color: #fff; cursor: pointer; align-content: start; padding-top: clamp(150px, 26vh, 260px); }
+.ign[hidden] { display: none; }
+.ign .lit { position: absolute; left: 50%; top: calc(clamp(150px, 26vh, 260px) + 60px); width: 240vmax; height: 240vmax; margin: -120vmax 0 0 -120vmax; border-radius: 50%; background: radial-gradient(circle, var(--stage-a) 64%, rgba(242,246,249,0) 71%); transform: scale(0); }
+.ign .core { position: relative; display: grid; justify-items: center; gap: 18px; width: min(720px, 86%); }
+.ign .mark { display: flex; align-items: center; gap: 14px; opacity: 0; transform: translateY(6px); }
+.ign .mark svg { width: 30px; height: 22px; }
+.ign .mark b { font-size: 26px; font-weight: 500; letter-spacing: .42em; margin-right: -.42em; }
+.ign .line { width: 100%; height: 1px; background: linear-gradient(90deg, rgba(80,205,253,0), #50CDFD 30%, #BFEBFD 50%, #50CDFD 70%, rgba(80,205,253,0)); transform: scaleX(0); }
+.ign .read { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 28px; width: 100%; }
+.ign .read i { background: rgba(255,255,255,.18); opacity: 0; }
+.ign .fact { opacity: 0; transform: translateY(6px); text-align: center; }
+.ign .fact small { display: block; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #8FDDFC; font-weight: 600; }
+.ign .fact span { display: block; font-size: 23px; font-weight: 600; margin-top: 6px; letter-spacing: .01em; }
+.ign .skip { position: absolute; right: 14px; top: 12px; height: 32px; padding: 0 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,.28); background: transparent; color: rgba(255,255,255,.82); font-size: 13px; font-weight: 500; }
+.ign.run .line { animation: ignLine .75s cubic-bezier(.2,.7,.1,1) .15s forwards; }
+.ign.run .mark { animation: ignUp .6s ease-out .65s forwards; }
+.ign.run .fact:first-child { animation: ignUp .55s ease-out 1.35s forwards; }
+.ign.run .read i { animation: ignIn .4s ease-out 1.6s forwards; }
+.ign.run .fact:last-child { animation: ignUp .55s ease-out 1.75s forwards; }
+.ign.run .lit { animation: ignLit .7s cubic-bezier(.5,0,.2,1) 2.75s forwards; }
+.ign.run .core, .ign.run .skip { animation: ignOut .35s ease-in 2.75s forwards; }
+.ign.end { animation: ignOut .3s ease-in forwards; }
+@keyframes ignLine { to { transform: scaleX(1); } }
+@keyframes ignUp { to { opacity: 1; transform: none; } }
+@keyframes ignIn { to { opacity: 1; } }
+@keyframes ignLit { to { transform: scale(1); } }
+@keyframes ignOut { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .ign.run .line, .ign.run .mark, .ign.run .fact, .ign.run .read i { animation: ignIn .01s linear 0s forwards; transform: none; }
+  .ign.run .lit { animation: none; }
+  .ign.run .core, .ign.run .skip, .ign.run { animation: ignOut .4s ease-in 1.4s forwards; }
+}
 .screen { background: var(--stage-a); border-radius: 10px; overflow: hidden; display: grid; grid-template-columns: 1fr; min-height: 640px; }
 @media (min-width: 1100px) { .screen { grid-template-columns: 230px minmax(0, 1fr) 300px; } }
 /* order stages: the rail (white) */
@@ -213,6 +248,7 @@ a { color: inherit; }
 .dc { display: grid; gap: 14px; grid-template-columns: 1fr; }
 .dcard { text-align: left; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 16px 22px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 4px 28px; align-items: center; position: relative; }
 .dcard svg { grid-row: 1 / span 3; width: 100%; height: auto; display: block; }
+.dcard .chosen { position: absolute; right: 12px; top: 12px; height: 28px; padding: 0 10px 0 6px; border-radius: 8px; background: var(--band-top); color: #fff; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
 .dcard .cm { font-size: 30px; font-weight: 700; } .dcard .cm i { font-style: normal; font-size: 15px; font-weight: 600; color: var(--ink3); margin-left: 4px; } .dcard .nm { font-size: 17px; font-weight: 600; } .dcard .ds { font-size: 14px; color: var(--ink2); line-height: 1.45; }
 /* cover: four photographs in a square, one short caption each; the information board beside them */
 .cv { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: stretch; }
@@ -268,7 +304,8 @@ a { color: inherit; }
     <nav class="rail" id="rail" aria-label="This topic and your order"></nav>
     <section class="stage"><div class="colh" id="stageh"></div><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
     <aside class="mine" aria-label="Your selection"><h2><span>Your selection</span><span class="mi" id="mi"></span></h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="bag" id="bag"></div></aside>
-  </div></main>
+  </div>
+    <div class="ign" id="ign" hidden role="region" aria-label="The television is starting"></div></main>
   <section id="std" class="stdv" aria-label="Standard Product View (stand-in)"></section>
   <div class="shopstrip"><span>Under the television the shop's own options and Add to Bag stay on the page, always. Right: the shop's own button (stand-in). It and the television's button are one and the same.</span><span id="native"></span></div>
 </div>
@@ -348,13 +385,13 @@ var D = /*__DATA__*/;
   function thick(G, k) { return G.out.map(function (c) { return { c: c.c, p: c.p.map(function (q) { var yt = yTop(G.pl, q[0]); return q[1] > yt + 0.5 ? [q[0], yt + (q[1] - yt) * k] : q; }) }; }); }
   function box(G) { var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, M = G.M; G.out.concat(G.inn).forEach(function (c) { c.p.forEach(function (q) { var x = M[0] * q[0] + M[2] * q[1] + M[4], y = M[1] * q[0] + M[3] * q[1] + M[5]; x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }); }); var mx = (x1 - x0) * .04, my = (y1 - y0) * .06; return [x0 - mx, y0 - my, x1 - x0 + 2 * mx, y1 - y0 + 2 * my]; }
   var GD, GI;
-  function depthSvg(cm, i) {   // the three depths: the owner's drawing, only the thickness of the front edge changes (differences exaggerated so they can be seen); the 26 cm outline dashed behind
-    GD = GD || mat(D.mattress.depth); var G = GD, kk = 1 + (cm - 26) / 26 * 1.8, shape = thick(G, kk), bb = box(G), M = G.M, pl = G.pl;
+  function depthSvg(cm, i) {   // the three depths: the owner's drawing, only the thickness of the front edge changes, in TRUE proportion 20 : 24 : 26 (master prompt, 13.11: never exaggerated); the 26 cm outline dashed behind
+    GD = GD || mat(D.mattress.depth); var G = GD, kk = cm / 26, shape = thick(G, kk), bb = box(G), M = G.M, pl = G.pl;
     var xs = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[0]; })); }, []), ys = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[1]; })); }, []);
     var x0 = Math.min.apply(null, xs) - 100, x1 = Math.max.apply(null, xs) + 100, y0 = Math.min.apply(null, ys) - 100;
     var region = 'M' + x0 + ' ' + y0 + 'H' + x1 + 'V' + pl[pl.length - 1][1] + pl.slice().reverse().map(function (q) { return 'L' + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('') + 'L' + x0 + ' ' + pl[0][1] + 'Z';
     var d = dStr(shape), st = 'vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"';
-    return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" aria-label="Mattress, ' + cm + ' cm high"><defs><linearGradient id="fg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F6585"/><stop offset="1" stop-color="#10293F"/></linearGradient><linearGradient id="tg' + i + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4F8FA"/><stop offset="1" stop-color="#CBDAE5"/></linearGradient><clipPath id="cp' + i + '"><path d="' + region + '"/></clipPath></defs>' +
+    return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" data-k="' + kk.toFixed(4) + '" aria-label="Mattress, ' + cm + ' cm high"><defs><linearGradient id="fg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F6585"/><stop offset="1" stop-color="#10293F"/></linearGradient><linearGradient id="tg' + i + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4F8FA"/><stop offset="1" stop-color="#CBDAE5"/></linearGradient><clipPath id="cp' + i + '"><path d="' + region + '"/></clipPath></defs>' +
       '<g transform="matrix(' + M.join(',') + ')"><path d="' + dStr(G.out) + '" fill="none" stroke="#9AAAB4" stroke-width="2" stroke-dasharray="7 6" ' + st + '/>' +
       '<path d="' + d + '" fill="url(#fg' + i + ')"/><path d="' + d + '" fill="url(#tg' + i + ')" clip-path="url(#cp' + i + ')"/><path d="' + d + '" fill="none" stroke="#0B1C2A" stroke-width="2.4" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="#0B1C2A" stroke-width="2.4" ' + st + '/></g></svg>';
   }
@@ -416,7 +453,7 @@ var D = /*__DATA__*/;
     h += '</div><p class="base">The four ranges are the base. Your height can move the guidance to a neighbouring level.</p>';
     return h;
   }
-  function depthView() { return '<div class="dc">' + D.depths.map(function (d, i) { var on = S.depth && S.depth.i === i; return '<button class="dcard" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; }).join('') + '</div>'; }
+  function depthView() { return '<div class="dc">' + D.depths.map(function (d, i) { var on = S.depth && S.depth.i === i; return '<button class="dcard" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + (on ? '<span class="chosen">' + CHECK + 'Chosen</span>' : '') + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; }).join('') + '</div>'; }
   function coverView() {
     var c = S.cover, info;
     if (c) {
@@ -513,7 +550,7 @@ var D = /*__DATA__*/;
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
     var d = t.dataset;
-    if (d.view != null) { S.view = d.view; draw(); return; }
+    if (d.view != null) { S.view = d.view; draw(); if (d.view === 'tv') ignite(); return; }
     if (d.gal != null) { S.gal = !S.gal; draw(); return; }
     if (d.gimg != null) { S.gi = (+d.gimg + D.images.length) % D.images.length; draw(); return; }
     S.gal = false;   // any other button leaves the gallery
@@ -551,8 +588,25 @@ var D = /*__DATA__*/;
     $('#guide').innerHTML = rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';
     document.querySelectorAll('.fcard').forEach(function (c) { var nm = c.querySelector('.nm').textContent, isRec = rec && fk(rec.display) === nm; c.classList.toggle('rec', !!isRec); c.classList.toggle('dim', !!(rec && !isRec)); var tag = c.querySelector('.tag'); if (isRec && !tag) c.insertAdjacentHTML('afterbegin', '<span class="tag">For you</span>'); if (!isRec && tag) tag.remove(); });
   });
+  /* IGNITION: each time the television is switched on (page start, every press of Optimised Preview). Skipped in automated
+     browsers unless ?ignite=1, and never with ?ignite=0, so the screen tests see the television itself. */
+  var IGN = null;
+  function ignite(force) {
+    var el = $('#ign'), q = location.search;
+    if (/ignite=0/.test(q) || (navigator.webdriver && !/ignite=1/.test(q) && !force)) return;
+    clearTimeout(IGN); var g = D.ignition, reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.innerHTML = '<div class="lit"></div><div class="core"><div class="mark">' + LEAF + '<b>' + esc(g.name) + '</b></div><div class="line"></div><div class="read">' +
+      g.facts.map(function (f) { return '<div class="fact"><small>' + esc(f[0]) + '</small><span>' + esc(f[1]) + '</span></div>'; }).join('<i></i>') + '</div></div><button class="skip" type="button" data-skip="1">Skip</button>';
+    el.className = 'ign'; el.hidden = false; void el.offsetWidth; el.className = 'ign run';
+    IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, reduce ? 1850 : 3500);
+  }
+  function igniteEnd() { var el = $('#ign'); if (el.hidden) return; clearTimeout(IGN); el.className = 'ign end'; IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, 300); }
+  $('#ign').addEventListener('click', igniteEnd);
+  document.addEventListener('keydown', function (e) { if (!$('#ign').hidden && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); igniteEnd(); } });
+  window.__ignite = function () { ignite(true); };
   (function url() { var q = location.search.match(/step=(\d)/); if (q) goStep(Math.min(4, +q[1])); var cq = location.search.match(/ch=([a-z0-9]+)/), pq = location.search.match(/pn=([a-z0-9]+)/); if (cq && chap(cq[1])) goPanel(cq[1], pq ? pq[1] : chap(cq[1]).panels[0].id); var pm = location.search.match(/promo=(\d+)/); if (pm) S.promo = +pm[1]; if (/gal=1/.test(location.search)) S.gal = true; if (/view=std/.test(location.search)) S.view = 'std'; var rq = location.search.match(/rd=(\d+)/); if (rq) S.rd[S.ch + '/' + S.pn] = +rq[1]; var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); if (/bag=1/.test(location.search)) S.bagged = sig(); } })();
   draw();
+  if (S.view === 'tv') ignite();
 })();
 </script>
 </body>

@@ -142,6 +142,10 @@ D.mattress = { depth: mattressParts('owner-mattress-depth.svg'), icon: mattressP
 }
 const tpl = readFileSync(join(root, 'tools', 'tv-design-preview.template.html'), 'utf8');
 const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
+/* IGNITION: the start-up of the television, shown each time it is switched on (page start and every press of Optimised
+   Preview). Minimal, like a car's instrument panel waking up. The two facts are mandatory and are the description's own
+   (hero bar: "100% Organic · Dunlop Technology"); a later model sets its own name and facts here. */
+D.ignition = { name: 'BOTANIC', facts: [['Material', '100% Natural Latex'], ['Process', 'Dunlop Technology']] };
 const html = tpl.replace('/*__CORE__*/', () => core).replace('/*__RULES__*/', () => rules).replace('/*__DATA__*/', () => JSON.stringify(D));
 const file = join(out, 'large-screen-design.html');
 writeFileSync(file, html);

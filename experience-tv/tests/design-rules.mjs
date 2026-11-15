@@ -80,6 +80,15 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   ok(n >= 31 && !empty.length, 'R26 every panel of every topic shows its content', n + ' panels' + (empty.length ? ' EMPTY: ' + empty : ''));
   await p.goto(file + '?ch=zones&pn=map'); const zs = await p.evaluate(() => { const z = document.querySelector('.zsk'), v = document.querySelector('.pw .mini .vid'), bgz = getComputedStyle(z).backgroundImage; return { bg: bgz, zw: z.getBoundingClientRect().width, vw: v.getBoundingClientRect().width, mw: document.querySelector('.pw .mini').getBoundingClientRect().width }; });
   ok(zs.bg === 'none' && zs.mw >= zs.zw, 'R27 7-Zone: no dark sky behind the sketch; the video card is at least as wide as the sketch (the model is the smaller)', JSON.stringify(zs));
+  // R28 depths in TRUE proportion 20 : 24 : 26 (master prompt 13.11), and the chosen depth is marked
+  await p.goto(file + '?step=2&demo=1'); const th = await p.$$eval('.dcard svg[data-k]', (x) => x.map((e) => +e.dataset.k)); const r1 = th[0] / th[2], r2 = th[1] / th[2], unit = th[2] === 1, chosen = await p.$$eval('.dcard .chosen', (x) => x.length);
+  ok(unit && Math.abs(r1 - 20 / 26) < 0.001 && Math.abs(r2 - 24 / 26) < 0.001 && chosen === 1, 'R28 depths drawn in true proportion 20:24:26 (front-edge scale of the owner\'s 26 cm drawing) and the chosen one is marked', [r1.toFixed(3), r2.toFixed(3), 'chosen ' + chosen].join(' '));
+  // R29 ignition: the television switches on each time (start, every press of Optimised Preview); both facts; ends by itself or on Skip
+  const ig = await ctx.newPage(); await ig.goto(file + '?ignite=1'); await ig.waitForTimeout(2400);
+  const igT = await ig.$eval('#ign', (e) => (e.hidden ? '' : e.textContent)); await ig.waitForTimeout(1500); const igGone = await ig.$eval('#ign', (e) => e.hidden);
+  await ig.click('#vstd'); await ig.click('#vtv'); const igAgain = await ig.$eval('#ign', (e) => !e.hidden); await ig.click('#ign .skip'); await ig.waitForTimeout(400); const igSkip = await ig.$eval('#ign', (e) => e.hidden);
+  await ig.goto(file + '?ignite=0'); const igOff = await ig.$eval('#ign', (e) => e.hidden); await ig.close();
+  ok(/100% Natural Latex/.test(igT) && /Dunlop Technology/.test(igT) && igGone && igAgain && igSkip && igOff, 'R29 ignition: both mandatory facts, ends by itself, replays on Optimised Preview, Skip ends it', [igT.replace(/\s+/g, ' ').slice(0, 70), igGone, igAgain, igSkip, igOff].join(' | '));
   ok(errs.length === 0, 'no page errors', errs.join(' | '));
   await ctx.close();
 }

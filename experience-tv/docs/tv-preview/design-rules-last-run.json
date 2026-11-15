@@ -1,7 +1,7 @@
 {
- "date": "2026-11-12",
+ "date": "2026-11-15",
  "failures": 0,
- "checks": 97,
+ "checks": 103,
  "rows": [
   {
    "pass": true,
@@ -175,6 +175,16 @@
   },
   {
    "pass": true,
+   "rule": "R28 depths drawn in true proportion 20:24:26 (front-edge scale of the owner's 26 cm drawing) and the chosen one is marked",
+   "detail": "0.769 0.923 chosen 1"
+  },
+  {
+   "pass": true,
+   "rule": "R29 ignition: both mandatory facts, ends by itself, replays on Optimised Preview, Skip ends it",
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologySkip | true | true | true | true"
+  },
+  {
+   "pass": true,
    "rule": "no page errors",
    "detail": ""
   },
@@ -307,6 +317,16 @@
    "pass": true,
    "rule": "R27 7-Zone: no dark sky behind the sketch; the video card is at least as wide as the sketch (the model is the smaller)",
    "detail": "{\"bg\":\"none\",\"zw\":450,\"vw\":424,\"mw\":450}"
+  },
+  {
+   "pass": true,
+   "rule": "R28 depths drawn in true proportion 20:24:26 (front-edge scale of the owner's 26 cm drawing) and the chosen one is marked",
+   "detail": "0.769 0.923 chosen 1"
+  },
+  {
+   "pass": true,
+   "rule": "R29 ignition: both mandatory facts, ends by itself, replays on Optimised Preview, Skip ends it",
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologySkip | true | true | true | true"
   },
   {
    "pass": true,
@@ -482,6 +502,16 @@
    "pass": true,
    "rule": "R27 7-Zone: no dark sky behind the sketch; the video card is at least as wide as the sketch (the model is the smaller)",
    "detail": "{\"bg\":\"none\",\"zw\":393,\"vw\":367,\"mw\":393}"
+  },
+  {
+   "pass": true,
+   "rule": "R28 depths drawn in true proportion 20:24:26 (front-edge scale of the owner's 26 cm drawing) and the chosen one is marked",
+   "detail": "0.769 0.923 chosen 1"
+  },
+  {
+   "pass": true,
+   "rule": "R29 ignition: both mandatory facts, ends by itself, replays on Optimised Preview, Skip ends it",
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologySkip | true | true | true | true"
   },
   {
    "pass": true,

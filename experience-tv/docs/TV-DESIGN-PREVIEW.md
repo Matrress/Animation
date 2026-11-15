@@ -1,6 +1,10 @@
 # Large-screen television: design preview (for the owner to approve)
 
-Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/large-screen-design.html` in a browser (start with `?demo=1` for a filled-in order, `?step=0` to `?step=4` for a given step). Pictures: `docs/tv-preview/design-<device>-<step>.png` for the iPad Pro 12.9 in landscape and portrait, and a desktop monitor. Rebuild: `node tools/build-premium-preview.mjs && NODE_PATH=$(npm root -g) node tools/build-tv-design-preview.mjs`.
+Status: **design preview, not deployed, not the engine.** Open `docs/tv-preview/large-screen-design.html` in a browser (start with `?demo=1` for a filled-in order, `?step=0` to `?step=4` for a given step; `?ignite=1` shows the start-up in an automated browser, `?ignite=0` turns it off). Pictures: `docs/tv-preview/design-<device>-<step>.png` for the iPad Pro 12.9 in landscape and portrait, and a desktop monitor. Rebuild: `node tools/build-premium-preview.mjs && NODE_PATH=$(npm root -g) node tools/build-tv-design-preview.mjs`.
+
+## Ignition and true depths (owner, 13–15 November 2026)
+- **Ignition.** Every time the television is switched on (page start, every press of Optimised Preview) it wakes like a car's instrument panel: dark glass, a hairline of light from the centre, the leaf and BOTANIC, then the two mandatory readouts **100% Natural Latex** and **Dunlop Technology**, then the glass lights up into the stage (about 3.4 s). Skip, a tap or Esc ends it at once; reduced motion gives a short fade. Direction: `docs/TV-DASHBOARD-DIRECTION.md`.
+- **Depths in true proportion.** 20, 24 and 26 cm are the owner's 26 cm drawing with the front edge scaled 20/26, 24/26 and 1 (no exaggeration, per the master prompt); the chosen depth is marked "Chosen".
 
 ## What the owner asked for (11 November 2026), and what the preview shows
 
