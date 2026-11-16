@@ -1116,6 +1116,12 @@ body.std .monitor { display: none !important; }
 
 .sgcard b { position: relative; min-height: calc(3em + 20px); padding: 0 0 20px .28em; justify-content: center; }
 .sgcard b::after { position: absolute; left: 50%; bottom: 2px; margin: 0 !important; transform: translateX(-50%); }
+
+/* family cards carry no figures (owner XIV): the name, the divider, the count in small capitals and the glowing line */
+.sgcard { min-height: 124px; justify-content: center; padding: 22px 16px 30px; }
+.sgcard b { min-height: calc(3em + 8px); padding-bottom: 8px; font-size: 14px; letter-spacing: .28em; }
+.sgcard b::after { bottom: -6px; }
+.sgcard .cnt { margin-top: 12px; }
 </style>
 </head>
 <body>
@@ -1342,7 +1348,7 @@ var D = /*__DATA__*/;
     if (!g) {
       h += '<span class="cz-t">Choose your size family</span></div><div class="sgrid">' + SGRP.map(function (x) {
         var L = sgSizes(x), ws = L.map(function (s) { return s.dims[0]; }), mine = pk && sgOf(pk) === x;
-        return '<button class="sgcard" data-sgrp="' + x.id + '" style="--g:' + x.c + '"><b>' + esc(x.name) + '</b><span class="rg"><span>' + (Math.min.apply(null, ws) === Math.max.apply(null, ws) ? ws[0] : Math.min.apply(null, ws) + '–' + Math.max.apply(null, ws)) + '<i>cm wide</i></span><span>' + (Math.min.apply(null, ws) === Math.max.apply(null, ws) ? inch(ws[0]) : inch(Math.min.apply(null, ws)) + '–' + inch(Math.max.apply(null, ws))) + '<i>in wide</i></span></span><i class="cnt">' + L.length + (L.length === 1 ? ' size' : ' sizes') + '</i>' + (mine ? '<em class="cz-mine">' + CHECK + esc(pk.name) + '</em>' : '') + '<span class="glow"></span></button>';
+        return '<button class="sgcard" data-sgrp="' + x.id + '" style="--g:' + x.c + '"><b>' + esc(x.name) + '</b><i class="cnt">' + L.length + (L.length === 1 ? ' size' : ' sizes') + '</i>' + (mine ? '<em class="cz-mine">' + CHECK + esc(pk.name) + '</em>' : '') + '<span class="glow"></span></button>';
       }).join('') + '</div>';
     } else {
       h += '<span class="cz-t">' + esc(g.name) + '</span></div><div class="snav"><button class="cz-back" data-sgrp="">' + '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>All size families</button><span class="cz-chips" role="tablist" aria-label="Size families">' +
