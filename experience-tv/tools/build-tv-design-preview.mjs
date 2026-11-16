@@ -154,7 +154,7 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
   D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12) };          // the wordmark "Bio Dunlop" (paths 12-23), drawn in one ink
   D.bioMark = { vb: '2400 -1372 360 376', d: [bp[21], bp[20]] };      // the D with the spiral (paths 20-21)
   D.moon = b64('q-dd-moon-88.webp'); D.core = b64('q-latex-closeup.webp'); D.bowl = b64('q-latex-milk-bowl-cut-700.webp');
-  D.moonCycle = b64('moon-cycle.webp'); D.pins = b64('q-latex-pins.webp');
+  D.moonCycle = b64('moon-cycle.webp'); D.abSketch = JSON.parse(readFileSync(join(A, 'adjustable-sketch.json'), 'utf8')); D.pins = b64('q-latex-pins.webp');
   D.logos = { oeko: b64('q-logo-oekotex-mono.webp'), hohenstein: b64('q-logo-hohenstein-mono.webp'), iso9001: b64('q-logo-iso9001-mono.webp'), iso14001: b64('q-logo-iso14001-mono.webp'), siemens: b64('q-logo-siemens-monitoring-mono.webp') };
 }
 D.curated = {
@@ -208,9 +208,9 @@ D.curated = {
     band: 'Density is the foundation. Firmness regulates Support. Elasticity delivers Adaptation.',
     note: 'Density does not replace firmness or elasticity. It helps them perform more consistently over time.' },
   // owner 16 Nov: adjustable beds (a settings-style screen, like the car's climate page)
-  'adaptation/adjustable': { title: 'Made For Adjustable Beds', sub: 'One continuous natural latex core, no springs: it follows every position of an adjustable base and returns to its full shape when the base is flat.',
-    positions: [['Flat', 0, 0], ['Reading', 55, 10], ['Relax', 35, 25], ['Legs Up', 0, 45], ['Zero Gravity', 30, 40]],
-    points: [['Suitable for adjustable beds', 'Botanic can be used on adjustable bed bases.'], ['Follows the base', 'The single latex core bends with the head and leg sections, without folds or gaps.'], ['The zones stay with you', 'The seven zones keep their place under the body in every position.'], ['Back to shape', 'When the base is flat again, the latex returns to its full shape.']] },
+  'adaptation/adjustable': { title: 'Suitable For Adjustable Beds', sub: 'Botanic is a mattress for every bed, and it is suitable for adjustable beds as well. One continuous natural latex core, without springs, follows the positions of an adjustable base and returns to its full shape when the base is flat.',
+    positions: ['Flat', 'Reading', 'Relax', 'Legs Up', 'Zero Gravity'],
+    points: [['Suitable for adjustable beds', 'Botanic can also be used on adjustable bed bases. It is not made only for them.'], ['Follows the base', 'The single latex core bends with the head and leg sections, without folds or gaps.'], ['The zones stay with you', 'The seven zones keep their place under the body as the base moves.'], ['Back to shape', 'When the base is flat again, the latex returns to its full shape.']] },
   // 34 3D3269B4
   'delivery/made': { title: 'Production and delivery note', sub: 'Every Botanic mattress is prepared to order on the basis of your confirmed configuration.', made: 'Individually made to your specification', custom: 'Your Botanic mattress is custom made to your confirmed configuration, including size, height, firmness level and cover material.' },
   // 35 7EDDE74B

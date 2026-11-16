@@ -16,3 +16,4 @@ ECO-Institut has no file on the site: its name is set in type. Still missing: th
 | `q-latex-pins.webp` | Quality and Certificates page, `latex-pins.webp` (the real pin holes), resized | Comfort/Support · How Density Works |
 
 The 7-zone core glow in the ignition is a light vector sketch of the core (seven perforated bands), drawn from the Quality page photograph `latex-core-1200.webp`; no image file is shipped for it.
+| `adjustable-sketch.json` | traced from the owner's photograph (16 Nov 2026, woman on the curved latex core, `Untitled_Copy_Copy.png`): the core's bottom edge and its top surface from the photo's own outline, smoothed; the person's outline traced and smoothed. Vector only, no photo shipped. | Adaptation · Adjustable Beds |

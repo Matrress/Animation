@@ -24,7 +24,7 @@
   var CAP = {
     discover: 'Discover: the model in one screen, one film and six facts.', firmness: 'Firmness: body weight and height set the level; the figure shows Support and Adaptation.', comfort: 'Comfort: what to expect, latex behaviour, and How Density Works.',
     height: 'Sizes: every size, then the depth, with the module guiding you from one to the other.', covers: 'Covers: four real fabrics and what each one gives you.', benefits: 'Benefits: where latex begins, and why it is different.',
-    support: 'Support: bearing force, the Stretching Effect and How Density Works.', adaptation: 'Adaptation: instant response, and Adjustable Beds in every position.', zones: '7-Zone: the engineering view, one core, seven responses.',
+    support: 'Support: bearing force, the Stretching Effect and How Density Works.', adaptation: 'Adaptation: instant response, and suitable for adjustable beds.', zones: '7-Zone: the engineering view, one core, seven responses.',
     ventilation: 'Ventilation: airflow, the process in five steps.', hygiene: 'Hygiene: cleaner sleep in a 2 by 2 grid.', certs: 'Certifications: the marks and what each one covers.',
     warranty: 'Warranty: three rows, and the 12% rule for the height you chose.', delivery: 'Delivery: made to order, then your Botanic.'
   };
@@ -44,7 +44,7 @@
   add('Buy', 'The same button is now Go to Checkout. It opens the shop’s shopping cart.', function () { }, 3000);
   document.querySelectorAll('#chbar .ch').forEach(function (b, i) {
     var id = b.dataset.ch;
-    add('Explore ' + (i + 1) + ' of 14', CAP[id] || b.textContent, function () { click('#chbar [data-ch="' + id + '"]'); if (id === 'adaptation') setTimeout(function () { click('#rail [data-pn="adjustable"]'); setTimeout(function () { click('[data-abpos="4"]'); }, 600); }, 1200); if (id === 'comfort') setTimeout(function () { click('#rail [data-pn="density"]'); }, 1400); if (id === 'discover') { var ig = $('#ign'); if (ig && !ig.hidden) click('#ign .skip'); } }, (id === 'adaptation' || id === 'comfort') ? 5600 : 3800);
+    add('Explore ' + (i + 1) + ' of 14', CAP[id] || b.textContent, function () { click('#chbar [data-ch="' + id + '"]'); if (id === 'adaptation') setTimeout(function () { click('#rail [data-pn="adjustable"]'); }, 1200); if (id === 'comfort') setTimeout(function () { click('#rail [data-pn="density"]'); }, 1400); if (id === 'discover') { var ig = $('#ign'); if (ig && !ig.hidden) click('#ign .skip'); } }, (id === 'adaptation' || id === 'comfort') ? 5600 : 3800);
   });
   var pos = -1, timer = null, playing = false, token = 0;
   function show(i) { pos = Math.max(0, Math.min(steps.length - 1, i)); var s = steps[pos]; $('#tcap').innerHTML = '<b>' + s.t + '</b><span>' + s.cap + '</span>'; $('#tbar').style.width = ((pos + 1) / steps.length * 100) + '%'; try { s.fn(); } catch (e) {} }

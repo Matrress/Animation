@@ -612,8 +612,9 @@ a { color: inherit; }
 .abl { display: flex; flex-direction: column; padding: 10px 0; border-right: 1px solid var(--line); background: #FBF8F2; }
 .abp { display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 18px; border: 0; border-bottom: 1px solid var(--line); background: transparent; text-align: left; font-weight: 500; font-size: 15px; color: var(--ink2); }
 .abp:last-child { border-bottom: 0; } .abp svg { width: 22px; height: 22px; flex: none; color: var(--ink3); }
-.abp[aria-pressed=true] { color: #1A5C7E; font-weight: 700; box-shadow: inset 3px 0 0 #297CA2; background: #fff; } .abp[aria-pressed=true] svg { color: #297CA2; }
-.abp:hover { background: #fff; }
+.abh { display: block; padding: 6px 18px 10px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 700; }
+.abtag { display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px; border-radius: 8px; background: #F2F8F7; border: 1.5px solid #CFE3E1; color: var(--sel-deep); font-size: 13px; font-weight: 700; } .abtag .lf { width: 16px; height: 11px; }
+.abv { margin-top: 6px; }
 .abc { padding: 18px 22px 16px; background: radial-gradient(70% 90% at 50% 40%, #FFFFFF 0%, #F6F1E8 100%); }
 .abv svg { width: 100%; height: auto; display: block; }
 .abctl { display: grid; gap: 10px; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
@@ -952,51 +953,21 @@ var D = /*__DATA__*/;
     return '<div class="dns">' + C.cards.map(function (c, i) { return '<div class="dcd"><div class="dv">' + vis[i] + '</div><h3><span class="dic">' + ICD[i] + '</span>' + esc(c[0]) + '</h3><small>' + esc(c[1]) + '</small><p>' + esc(c[2]) + '</p></div>' + (i < 3 ? '<span class="dar" aria-hidden="true">&rarr;</span>' : ''); }).join('') + '</div>' +
       '<div class="dband">' + IC.depth + '<p>' + esc(C.band).replace(/(Density|Firmness|Elasticity)/g, '<b>$1</b>') + '</p></div><p class="dnote">' + esc(C.note) + '</p>';
   }
-  /* ADJUSTABLE BEDS: a settings screen like the car's climate page. A list of positions on the left, the core on the base in the
-     middle, two sliders under it. The drawing is a light sketch: one band (the latex core) on a hinged base. */
-  var AB = { head: 0, legs: 0, anim: null };
-  function abGeom(h, l) {   // hinged base: head 38%, seat 22%, thigh 18%, foot 22% of 760; angles in degrees
-    var r = function (d) { return d * Math.PI / 180; }, x = 470, y = 190, pts = [];
-    var seatL = 168, headL = 290, thighL = 136, footL = 166;
-    var s0 = [x - seatL / 2, y], s1 = [x + seatL / 2, y];
-    var hd = [s0[0] - headL * Math.cos(r(h)), y - headL * Math.sin(r(h))];
-    var th = [s1[0] + thighL * Math.cos(r(l)), y - thighL * Math.sin(r(l))];
-    var ft = [th[0] + footL * Math.cos(r(l * .35)), th[1] + footL * Math.sin(r(l * .35)) * (l > 0 ? 1 : 0)];
-    return [hd, s0, s1, th, ft];
-  }
-  function sleeper(g) {   // a light sketch of a person lying on the core: torso along the head section, legs along the leg sections
-    var at = function (a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]; }, up = function (p, a, b, d) { var dx = b[0] - a[0], dy = b[1] - a[1], n = Math.hypot(dx, dy) || 1; return [p[0] + dy / n * d, p[1] - dx / n * d]; };
-    var h = at(g[0], g[1], .2), sh = at(g[0], g[1], .42), hp = at(g[1], g[2], .55), kn = g[3], an = at(g[3], g[4], .78);
-    var o = [up(sh, g[0], g[1], 40), up(at(g[0], g[1], .98), g[0], g[1], 38), up(hp, g[1], g[2], 40), up(at(g[2], g[3], .55), g[2], g[3], 36), up(kn, g[2], g[3], 32), up(an, g[3], g[4], 26)];
-    var hd = up(h, g[0], g[1], 50);
-    var d = 'M' + o.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L');
-    return '<g aria-hidden="true"><path d="' + d + '" fill="none" stroke="#2A3238" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/><path d="' + d + '" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/><circle cx="' + hd[0].toFixed(1) + '" cy="' + hd[1].toFixed(1) + '" r="21" fill="#fff" stroke="#2A3238" stroke-width="2"/></g>';
-  }
-  function abSvg(h, l) {
-    var g = abGeom(h, l), path = 'M' + g.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L'), base = g.map(function (p) { return [p[0], p[1] + 30]; });
-    var bp = 'M' + base.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L');
-    return '<svg viewBox="0 -40 940 340" role="img" aria-label="The Botanic core on an adjustable base, head ' + Math.round(h) + ' degrees, legs ' + Math.round(l) + ' degrees">' +
-      '<path d="' + bp + '" fill="none" stroke="#B3AA9A" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/><path d="M' + (g[1][0] + 20) + ' ' + (g[1][1] + 34) + 'v52M' + (g[2][0] - 20) + ' ' + (g[2][1] + 34) + 'v52M300 286h340" stroke="#B3AA9A" stroke-width="6" stroke-linecap="round"/>' +
-      '<path d="' + path + '" fill="none" stroke="#2A3238" stroke-width="44" stroke-linejoin="round" stroke-linecap="round"/><path d="' + path + '" fill="none" stroke="#F4EEE2" stroke-width="40" stroke-linejoin="round" stroke-linecap="round"/>' +
-      '<path d="' + path + '" fill="none" stroke="#D2C5AE" stroke-width="3" stroke-dasharray="0 11" stroke-linecap="round" stroke-linejoin="round"/>' +
-      sleeper(g) + '</svg>';
+  /* ADJUSTABLE BEDS (owner, 16 Nov): "suitable for", never "made for". A settings-style screen: the positions it suits on the left
+     (information, not controls), and on the right a light sketch traced from the owner's photograph of the curved latex core. */
+  function abSvg() {
+    var A = D.abSketch;
+    return '<svg viewBox="' + A.vb.join(' ') + '" role="img" aria-label="A person resting on the Botanic latex core, curved as on an adjustable base">' +
+      '<path d="' + A.band + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + A.channels + '" stroke="#C9BDA8" stroke-width="5" stroke-linecap="round"/><path d="' + A.topline + '" fill="none" stroke="#D9CDB7" stroke-width="3"/>' +
+      '<path d="' + A.body + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/></svg>';
   }
   function adjustView() {
-    var C = D.curated['adaptation/adjustable'], cur = -1;
-    C.positions.forEach(function (p, i) { if (Math.round(AB.head) === p[1] && Math.round(AB.legs) === p[2]) cur = i; });
+    var C = D.curated['adaptation/adjustable'];
     var POSI = ['<path d="M3 15h18"/>', '<path d="M3 15h10l6-7"/>', '<path d="M3 15h9l5-4 4 2"/>', '<path d="M3 15h11l4-6 3 1"/>', '<path d="M3 13l5 2h6l4-6 3 1"/>'];
-    var list = '<div class="abl" role="group" aria-label="Positions">' + C.positions.map(function (p, i) { return '<button class="abp" data-abpos="' + i + '" aria-pressed="' + (i === cur) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + POSI[i] + '</svg>' + esc(p[0]) + '</button>'; }).join('') + '</div>';
-    var sl = function (id, lab, v, max) { return '<div class="abs"><label for="' + id + '">' + lab + '</label><span class="lo">Flat</span><input id="' + id + '" type="range" min="0" max="' + max + '" value="' + Math.round(v) + '"><span class="hi">Max</span></div>'; };
+    var list = '<div class="abl"><span class="abh">Positions it suits</span>' + C.positions.map(function (p, i) { return '<div class="abp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + POSI[i] + '</svg>' + esc(p) + '</div>'; }).join('') + '</div>';
     var pts = '<div class="abpts">' + C.points.map(function (x) { return '<div>' + LEAFS + '<b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>'; }).join('') + '</div>';
-    return '<div class="abw">' + list + '<div class="abc"><div class="abv" id="abv">' + abSvg(AB.head, AB.legs) + '</div><div class="abctl">' + sl('ab-head', 'Head', AB.head, 60) + sl('ab-legs', 'Legs', AB.legs, 45) + '</div></div></div>' + pts;
+    return '<div class="abw">' + list + '<div class="abc"><span class="abtag">' + LEAFS + 'Suitable for adjustable beds</span><div class="abv">' + abSvg() + '</div></div></div>' + pts;
   }
-  function abSet(h, l, animate) {
-    cancelAnimationFrame(AB.anim); var h0 = AB.head, l0 = AB.legs, t0 = performance.now(), dur = (animate && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) ? 700 : 0;
-    var step = function (t) { var k = dur ? Math.min(1, (t - t0) / dur) : 1, e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; AB.head = h0 + (h - h0) * e; AB.legs = l0 + (l - l0) * e; var v = $('#abv'); if (v) v.innerHTML = abSvg(AB.head, AB.legs); var a = $('#ab-head'), b = $('#ab-legs'); if (a) a.value = Math.round(AB.head); if (b) b.value = Math.round(AB.legs); if (k < 1) AB.anim = requestAnimationFrame(step); };
-    AB.anim = requestAnimationFrame(step);
-  }
-  document.addEventListener('input', function (e) { if (e.target.id === 'ab-head' || e.target.id === 'ab-legs') { AB[e.target.id === 'ab-head' ? 'head' : 'legs'] = +e.target.value; var v = $('#abv'); if (v) v.innerHTML = abSvg(AB.head, AB.legs); document.querySelectorAll('.abp').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); }); } });
-  document.addEventListener('click', function (e) { var b = e.target.closest('[data-abpos]'); if (!b) return; var p = D.curated['adaptation/adjustable'].positions[+b.dataset.abpos]; document.querySelectorAll('.abp').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); abSet(p[1], p[2], true); });
   function heroView() {
     var H = D.hero, B = CUR('discover/intro').bold || [], bold = function (t) { var h = esc(t); B.forEach(function (w) { h = h.replace(esc(w), '<b>' + esc(w) + '</b>'); }); return h; };
     return '<div class="hero"><div><div class="rc"><h2>' + esc(H.headline) + '</h2><p>' + bold(H.intro) + '</p><p>' + esc(H.note) + '</p></div></div>' +

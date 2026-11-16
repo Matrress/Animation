@@ -93,3 +93,7 @@ These are decided. They are not asked again and not undone by a later change. Wh
 - **Adjustable Beds** (Adaptation): a settings screen like the car's climate page: positions on the left (Flat, Reading, Relax, Legs Up, Zero Gravity), the core with a sketched sleeper on a hinged base in the middle, Head and Legs sliders, four short points. Claim used: "Suitable for adjustable beds" (owner).
 - **Mattress icon** in "Your selection": an outline, transparent, smaller; blue only when all four choices are made. No blue block, no glow.
 - **Small green leaf** marks the section labels (Explore, Select & Buy, the stage header, In <topic>, Your selection) and every card.
+
+## Adjustable beds wording and drawing (owner, 16 November 2026)
+- The claim is **"Suitable for adjustable beds"**, never "made for": Botanic is a mattress for every bed and can also be used on adjustable bases.
+- The drawing is traced from the owner's photograph (woman on the curved latex core): the core's S-curve and the person's outline, smoothed, in the latex colours. No hinged broken lines, no sliders; the positions are listed as information ("Positions it suits"), not as controls.
