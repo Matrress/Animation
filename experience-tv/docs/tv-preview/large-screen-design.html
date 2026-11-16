@@ -899,25 +899,6 @@ button.tp { width: 100%; border: 0; text-align: left; cursor: pointer; font: inh
 @media (max-width: 900px) { .jny { grid-template-columns: 1fr; } }
 /* Standard Product View: the approved description stays, full width under the gallery and the options */
 .stdv .sdesc { grid-column: 1 / -1; }
-/* ONE SCREEN (owner): on a large screen the whole interface sits in one view, like a car display; only the stage scrolls inside */
-@media (min-width: 1100px) {
-  .ivory .monitor { height: calc(100vh - 16px); min-height: 660px; max-height: 1080px; display: flex; flex-direction: column; }
-  .ivory .screen { flex: 1; min-height: 0 !important; height: 100%; grid-template-rows: auto auto minmax(0, 1fr); grid-template-columns: 216px minmax(0, 1fr) 276px; }
-  .ivory .rail, .ivory .mine { overflow-y: auto; min-height: 0; padding-top: 16px !important; padding-bottom: 16px !important; }
-  .ivory .stage { overflow-y: auto; min-height: 0; padding: 16px 22px 0 !important; }
-  .ivory .stage .act { position: sticky; bottom: 0; background: var(--stage-a); margin-top: 14px; padding: 12px 0 14px; z-index: 2; }
-  .ivory .chbar { padding: 10px 10px 0 !important; gap: 10px !important; }
-  .ivory .exg, .ivory .slg { padding: 9px 12px 11px !important; }
-  .ivory .exg { gap: 6px; } .ivory .slg { grid-template-rows: auto 40px 40px !important; row-gap: 6px; }
-  .ivory .exg .ch { height: 38px; font-size: 14px; }
-  .ivory .slg .sb { min-height: 40px; padding-top: 4px; padding-bottom: 5px; }
-  .ivory .glab { height: 14px; font-size: 10.5px; }
-  .ivory .trailbar { padding: 8px 10px 0; } .ivory .trailbar .trail { padding: 5px 12px; }
-  .ivory .q { padding: 16px 22px 15px !important; margin-bottom: 14px; } .ivory .q h1 { font-size: 28px; margin-bottom: 6px; } .ivory .q p { font-size: 15px; line-height: 1.45; }
-  .ivory .colh { margin-bottom: 10px; }
-  .ivory .rail .colh, .ivory .mine h2 { margin-bottom: 8px; }
-  .ivory .mine { gap: 10px; }
-}
 
 .tbr .pn { flex-direction: column !important; align-items: flex-start !important; flex-wrap: nowrap; padding-left: 42px !important; }
 .tbr .pn small { flex-basis: auto; padding-left: 0; margin-top: 1px; }
@@ -935,6 +916,85 @@ body.std .monitor { display: none !important; }
 @media (min-width: 1100px) { .ivory .stage > .colh, .ivory .rail > .colh, .ivory .mine > h2 { height: 28px; margin: 0 0 10px !important; } }
 
 @media (min-width: 1100px) { .ivory .rail > .colh { margin-bottom: 4px !important; } .ivory .mine > h2 { margin-bottom: 0 !important; } }
+
+/* ===== COSMIC SELECTION (owner, 16 Nov IX): choosing happens in deep space; each size family has its own light =====
+   Dark navy space, a few stars, glass cards; the light lives in a thin underline that glows in the family's colour.
+   The families walk the site's own spectrum from mint to a measured violet. No glow ever touches a white surface. */
+.cosmos { position: relative; border-radius: 18px; padding: 16px 18px 18px; color: #E6F0F5; overflow: hidden;
+  background: radial-gradient(1.2px 1.2px at 8% 18%, rgba(255,255,255,.7), transparent 60%), radial-gradient(1px 1px at 22% 72%, rgba(255,255,255,.45), transparent 60%), radial-gradient(1.4px 1.4px at 41% 12%, rgba(255,255,255,.55), transparent 60%), radial-gradient(1px 1px at 57% 86%, rgba(255,255,255,.4), transparent 60%), radial-gradient(1.2px 1.2px at 73% 26%, rgba(255,255,255,.6), transparent 60%), radial-gradient(1px 1px at 88% 64%, rgba(255,255,255,.45), transparent 60%), radial-gradient(1.3px 1.3px at 95% 8%, rgba(255,255,255,.5), transparent 60%), radial-gradient(70% 90% at 100% 0%, rgba(79,211,203,.10), transparent 60%), radial-gradient(60% 80% at 0% 100%, rgba(100,123,208,.14), transparent 60%), linear-gradient(160deg, #13304A 0%, #0B2A38 55%, #081C27 100%); }
+.cz-h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.cz-k { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: #8CEBE4; }
+.cz-t { font-size: 15px; color: rgba(230,240,245,.8); }
+.sgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.sgcard, .card.cz { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; cursor: pointer; font: inherit; color: #F2F7FA;
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025)); border: 1px solid rgba(143,208,236,.22); border-radius: 14px; padding: 14px 16px 18px; transition: border-color .18s ease, background .18s ease, transform .18s ease; }
+.sgcard:hover, .card.cz:hover { border-color: color-mix(in srgb, var(--g) 70%, transparent); background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.04)); transform: translateY(-1px); }
+.sgcard b { font-size: 17px; font-weight: 600; letter-spacing: .005em; } .sgcard i { font-style: normal; font-size: 13px; color: rgba(214,232,240,.72); }
+.sgcard .fp { width: 48px; height: 52px; margin-bottom: 6px; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--g) 55%, transparent)); }
+.glow { position: absolute; left: 16px; right: 16px; bottom: 9px; height: 2px; border-radius: 2px; background: var(--g); box-shadow: 0 0 8px var(--g), 0 0 18px color-mix(in srgb, var(--g) 50%, transparent); opacity: .85; }
+.sgcard:hover .glow, .card.cz:hover .glow { opacity: 1; }
+.cz-mine { display: inline-flex; align-items: center; gap: 5px; margin-top: 6px; font-style: normal; font-size: 12px; font-weight: 600; color: #0B2A38; background: var(--g); border-radius: 999px; padding: 2px 9px 2px 4px; }
+.cz-mine svg { width: 13px; height: 13px; } .cz-mine svg path { stroke: #0B2A38; }
+.snav { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.cz-back { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px 0 8px; border-radius: 9px; border: 1px solid rgba(143,208,236,.4); background: rgba(255,255,255,.06); color: #F2F7FA; font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+.cz-back:hover { background: rgba(255,255,255,.12); }
+.cz-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.cz-chip { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px; border-radius: 999px; border: 1px solid rgba(143,208,236,.22); background: transparent; color: rgba(230,240,245,.78); font: inherit; font-size: 12.5px; cursor: pointer; }
+.cz-chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--g); box-shadow: 0 0 6px var(--g); }
+.cz-chip:hover { border-color: color-mix(in srgb, var(--g) 70%, transparent); color: #fff; }
+.cz-chip[aria-pressed=true] { border-color: var(--g); color: #fff; background: color-mix(in srgb, var(--g) 16%, transparent); }
+.scards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.card.cz { min-height: 0; height: auto; }
+.card.cz .nm { font-size: 15px; font-weight: 600; color: #F2F7FA; }
+.card.cz .fp { width: 62px; height: 68px; margin: 4px 0 2px; filter: drop-shadow(0 0 5px color-mix(in srgb, var(--g) 50%, transparent)); }
+.card.cz .dm { font-size: 22px; font-weight: 600; color: #fff; letter-spacing: -.01em; } .card.cz .dm i { font-style: normal; font-size: 13px; font-weight: 500; margin-left: 4px; color: rgba(214,232,240,.7); }
+.card.cz .in { font-size: 12.5px; color: rgba(214,232,240,.7); }
+.card.cz[aria-pressed=true] { border-color: var(--g); background: linear-gradient(180deg, color-mix(in srgb, var(--g) 18%, transparent), rgba(255,255,255,.03)); }
+.card.cz[aria-pressed=true] .glow { height: 3px; opacity: 1; box-shadow: 0 0 10px var(--g), 0 0 24px var(--g); }
+.cz-ok { position: absolute; right: 10px; top: 10px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--g); }
+.cz-ok svg { width: 13px; height: 13px; } .cz-ok svg path { stroke: #0B2A38; }
+.ivory .cosmos .card.cz { box-shadow: none; }
+@media (max-width: 900px) { .sgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .sgcard, .card.cz { transition: none; } .sgcard:hover, .card.cz:hover { transform: none; } }
+
+/* the cards of one family share one row (King: five across; Single: three and three) */
+.scards { grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)) !important; }
+.card.cz { padding: 12px 12px 18px; } .card.cz .glow { left: 12px; right: 12px; }
+.card.cz .nm { min-height: 2.5em; line-height: 1.25; }
+.card.cz .dm { font-size: 20px; }
+.cosmos .card.cz .cz-ok { position: absolute; right: 9px; top: 9px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--g); border: 0; padding: 0; }
+/* depths: three across, in the same space as the sizes */
+.dc.cz3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 12px; }
+.cosmos .dcard.cz { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px 14px 20px; position: relative; text-align: left; color: #F2F7FA; cursor: pointer; font: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025)) !important; border: 1px solid rgba(143,208,236,.22) !important; border-radius: 14px; box-shadow: none !important; }
+.cosmos .dcard.cz:hover { border-color: color-mix(in srgb, var(--g) 70%, transparent) !important; }
+.cosmos .dcard.cz svg { width: 100%; height: auto; margin-bottom: 6px; }
+.cosmos .dcard.cz .cm { font-size: 30px; color: #fff; } .cosmos .dcard.cz .cm i { color: rgba(214,232,240,.72); }
+.cosmos .dcard.cz .nm { font-size: 16px; color: #fff; } .cosmos .dcard.cz .ds { font-size: 13.5px; line-height: 1.45; color: rgba(214,232,240,.78); }
+.cosmos .dcard.cz[aria-pressed=true] { border-color: var(--g) !important; background: linear-gradient(180deg, color-mix(in srgb, var(--g) 18%, transparent), rgba(255,255,255,.03)) !important; }
+.cosmos .dcard.cz[aria-pressed=true] .glow { height: 3px; opacity: 1; box-shadow: 0 0 10px var(--g), 0 0 24px var(--g); }
+.cosmos .dcard.cz .chosen { background: var(--g) !important; color: #0B2A38 !important; } .cosmos .dcard.cz .chosen svg path { stroke: #0B2A38; }
+@media (max-width: 900px) { .dc.cz3 { grid-template-columns: 1fr !important; } .scards { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+
+.card.cz[aria-pressed=true]::after { content: none !important; display: none !important; }
+.card.cz .dm { font-size: 19px; white-space: nowrap; }
+
+@media (min-width: 1100px) { .ivory .mine { gap: 10px; } }
+
+/* firmness and cover in the same space: the white instruments float in it; loose text reads light */
+.cz-wrap { padding-bottom: 16px; }
+.cz-wrap > .fconf, .cz-wrap .fconf { background: rgba(255,255,255,.96); }
+.cz-wrap > p, .cz-wrap .fnote, .cz-wrap > .note, .cz-wrap .hint, .cz-wrap .fhint { color: rgba(230,240,245,.82) !important; }
+.cz-wrap .hint svg, .cz-wrap .fnote svg { color: rgba(230,240,245,.82); }
+.cz-wrap .tile { box-shadow: none; }
+.cz-wrap .tile[aria-pressed=true] { outline: 2px solid #4FD3CB; outline-offset: 2px; box-shadow: 0 0 16px rgba(79,211,203,.45); }
+.cz-wrap .fcard[aria-pressed=true], .cz-wrap .fcard.on { box-shadow: 0 0 0 2px #4FD3CB, 0 0 18px rgba(79,211,203,.4); }
+
+/* inside the space, the white instruments keep their own ink; only the loose lines read light */
+.cosmos.cz-wrap { color: var(--ink); }
+.cz-wrap > .fnote, .cz-wrap > .base, .cz-wrap > p { color: rgba(230,240,245,.82) !important; }
+.cz-wrap > .fnote b { color: #fff; }
+.cz-wrap .eng, .cz-wrap .eng * { color: var(--ink); }
 </style>
 </head>
 <body>
@@ -1202,15 +1262,42 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     $('#bag').innerHTML = bagButton() + (inBag() ? '<div class="hint">Added to your bag. Go to Checkout when you are ready.</div>' : '<div class="hint" id="ready-note">' + (fb.ready ? '<b>Ready to order.</b> All four choices are made. You can still change any of them.' : '<b>' + esc(fb.guide) + '</b>') + '</div>');
     $('#native').innerHTML = bagButton('');
   }
+  /* COSMIC SELECTION (owner, 16 Nov IX): the sizes in six families, each in its own light. Tap a family to open it; the other
+     families stay one tap away, and every size belongs to exactly one family (by width). */
+  var STAR = '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" fill="currentColor"/></svg>';
+  var SGRP = [
+    { id: 'single', name: 'All Single Sizes', c: '#4FD3CB', lo: 0, hi: 100 },
+    { id: 'smalldouble', name: 'All Small Double Sizes', c: '#3FC1E6', lo: 101, hi: 129 },
+    { id: 'double', name: 'All Double Sizes', c: '#52A6F0', lo: 130, hi: 149 },
+    { id: 'king', name: 'All King Sizes', c: '#6F8CF2', lo: 150, hi: 179 },
+    { id: 'superking', name: 'All Super King Sizes', c: '#8E80F0', lo: 180, hi: 199 },
+    { id: 'emperor', name: 'All Emperor Sizes', c: '#AE97F2', lo: 200, hi: 9999 }];
+  function sgOf(s) { for (var k = 0; k < SGRP.length; k++) if (s.dims[0] >= SGRP[k].lo && s.dims[0] <= SGRP[k].hi) return SGRP[k]; return SGRP[SGRP.length - 1]; }
+  function sgSizes(g) { return D.sizes.filter(function (s) { return sgOf(s) === g; }); }
+  function footprint(w, l, c, max) {   // the mattress seen from above, in true proportion (200 x 220 cm fills the box)
+    var W = (w / 200) * max, L = (l / 220) * max * 1.1;
+    return '<svg class="fp" viewBox="0 0 ' + (max + 4) + ' ' + (max * 1.1 + 4) + '" aria-hidden="true"><rect x="' + ((max - W) / 2 + 2).toFixed(1) + '" y="' + ((max * 1.1 - L) + 2).toFixed(1) + '" width="' + W.toFixed(1) + '" height="' + L.toFixed(1) + '" rx="3" fill="' + c + '" fill-opacity=".14" stroke="' + c + '" stroke-width="1.6"/></svg>';
+  }
   function sizeView() {
-    var gs = [['SINGLE', 100], ['DOUBLE', 140], ['KING', 160], ['SUPERKING · EMPEROR', 9999]], h = '';
-    gs.forEach(function (g, gi) { var lo = gi ? gs[gi - 1][1] : 0, list = D.sizes.filter(function (s) { return s.dims[0] > lo && s.dims[0] <= g[1]; }); if (!list.length) return;
-      h += '<div class="grp"><h3>' + g[0] + '</h3><div class="cards c3">' + list.map(function (s) { var on = S.size && S.size.label === s.label;
-        return '<button class="card" data-size="' + D.sizes.indexOf(s) + '" aria-pressed="' + on + '"><span class="nm">' + esc(s.name) + '</span><span class="dm">' + s.dims[0] + ' × ' + s.dims[1] + '<i>cm</i></span><span class="in">' + inch(s.dims[0]) + ' × ' + inch(s.dims[1]) + ' in</span></button>'; }).join('') + '</div></div>'; });
+    if (S.sgrp === undefined) S.sgrp = S.size ? sgOf(S.size).id : null;
+    var g = SGRP.filter(function (x) { return x.id === S.sgrp; })[0], h = '<div class="cosmos"><div class="cz-h"><span class="cz-k">' + STAR + 'Cosmic Selection</span>';
+    if (!g) {
+      h += '<span class="cz-t">Choose your size family</span></div><div class="sgrid">' + SGRP.map(function (x) {
+        var L = sgSizes(x), ws = L.map(function (s) { return s.dims[0]; }), mine = S.size && sgOf(S.size) === x;
+        return '<button class="sgcard" data-sgrp="' + x.id + '" style="--g:' + x.c + '">' + footprint(Math.max.apply(null, ws), 200, x.c, 44) + '<b>' + esc(x.name) + '</b><i>' + L.length + ' sizes · ' + (Math.min.apply(null, ws) === Math.max.apply(null, ws) ? ws[0] : Math.min.apply(null, ws) + '–' + Math.max.apply(null, ws)) + ' cm wide</i>' + (mine ? '<em class="cz-mine">' + CHECK + esc(S.size.name) + '</em>' : '') + '<span class="glow"></span></button>';
+      }).join('') + '</div>';
+    } else {
+      h += '<span class="cz-t">' + esc(g.name) + '</span></div><div class="snav"><button class="cz-back" data-sgrp="">' + '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>All size families</button><span class="cz-chips">' +
+        SGRP.map(function (x) { return '<button class="cz-chip" data-sgrp="' + x.id + '" style="--g:' + x.c + '" aria-pressed="' + (x === g) + '"><i></i>' + esc(x.name.replace(/^All | Sizes$/g, '')) + '</button>'; }).join('') + '</span></div>' +
+        '<div class="scards" style="--g:' + g.c + ';--n:' + ({ 2: 2, 3: 3, 4: 4, 5: 5, 6: 3 }[sgSizes(g).length] || 4) + '">' + sgSizes(g).map(function (s) { var on = S.size && S.size.label === s.label;
+          return '<button class="card cz" data-size="' + D.sizes.indexOf(s) + '" aria-pressed="' + on + '">' + (on ? '<em class="cz-ok">' + CHECK + '</em>' : '') + '<span class="nm">' + esc(s.name) + '</span>' + footprint(s.dims[0], s.dims[1], g.c, 58) + '<span class="dm">' + s.dims[0] + ' × ' + s.dims[1] + '<i>cm</i></span><span class="in">' + inch(s.dims[0]) + ' × ' + inch(s.dims[1]) + ' in</span><span class="glow"></span></button>'; }).join('') + '</div>';
+    }
+    h += '</div>';
     h += '<div class="more"><span>Need another size?</span><button class="btn s" data-more="1">Tell us what you need</button></div>' +
       '<div class="form" id="form"><div><label>Model</label><input value="Botanic Original" readonly></div><div><label for="sz">The size you want</label><input id="sz" placeholder="for example 170 × 205 cm"></div><div><label for="em">Your email, for our reply</label><input id="em" type="email" placeholder="name@example.com"></div><p class="note">In the shop this form sends the model, the size and your email to Divine Dunlop support. This preview does not send anything.</p><div><button class="btn p" data-send="1">Send my request</button></div></div>';
     return h;
   }
+  var WMAX = 180;   // owner, 16 Nov IX: the body-weight scale ends at 180 kg
   function firmnessView() {
     var B = DDFirmnessCore.bands, lim = DDFirmnessCore.limits, rec = null;
     if (S.weight != null && S.height != null) rec = DDFirmnessCore.recommend(S.weight, S.height);
@@ -1218,7 +1305,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     if (S.firmness && !S.firmEdit) return firmConfirmed(S.firmness);
     var cards = [['Soft', 'Up to ' + B.softMax + ' kg', 'soft'], ['Medium', (B.softMax + 1) + ' – ' + B.mediumMax + ' kg', 'medium'], ['Firm', (B.mediumMax + 1) + ' – ' + B.firmMax + ' kg', 'firm'], ['Extra Firm', B.extraFirmMin + ' kg and over', 'xfirm']];
     var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
-    var h = '<div class="fw"><div class="sl"><div class="r"><label for="gw">Body weight</label><b id="gwv">' + (S.weight == null ? '–' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + lim.weight[0] + '" max="' + lim.weight[1] + '" value="' + (S.weight == null ? 70 : S.weight) + '"><div class="rng"><span>' + lim.weight[0] + ' kg</span><span>' + lim.weight[1] + ' kg</span></div></div>' +
+    var h = '<div class="fw"><div class="sl"><div class="r"><label for="gw">Body weight</label><b id="gwv">' + (S.weight == null ? '–' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + lim.weight[0] + '" max="' + WMAX + '" value="' + (S.weight == null ? 70 : Math.min(S.weight, WMAX)) + '"><div class="rng"><span>' + lim.weight[0] + ' kg</span><span>' + WMAX + ' kg</span></div></div>' +
       '<div class="sl"><div class="r"><label for="gh">Height</label><b id="ghv">' + (S.height == null ? '–' : S.height + ' cm') + '</b></div><input id="gh" type="range" min="' + lim.height[0] + '" max="' + lim.height[1] + '" value="' + (S.height == null ? 170 : S.height) + '"><div class="rng"><span>' + lim.height[0] + ' cm</span><span>' + lim.height[1] + ' cm</span></div></div></div>';
     var chosenC = cards.filter(function (c) { return c[0] === S.firmness; })[0] || (rec && cards.filter(function (c) { return c[0] === fk(rec.display); })[0]);
     h += '<div class="fc cmp">';
@@ -1241,7 +1328,8 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     return '<div class="fdone"><div class="fdl"><span class="fok">' + CHECK + 'Confirmed</span><small>Your firmness</small><b>' + esc(f) + '</b><i>' + esc(rg || '') + '</i><p>' + esc(dd ? dd.desc : '') + '</p><button class="btn s" data-fchange="1">Change firmness</button></div>' +
       '<div class="fdr"><svg viewBox="90 10 2550 470" role="img" aria-label="The body at the surface of the latex core"><path d="' + e.mp + '" fill="#E4EFF2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/></svg><div class="fsab"><span><b>Support</b> keeps you at the surface</span><span><b>Adaptation</b> follows your shape</span></div></div></div>';
   }
-  function depthView() { return '<div class="dc">' + D.depths.map(function (d, i) { var on = S.depth && S.depth.i === i; return '<button class="dcard" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + (on ? '<span class="chosen">' + CHECK + 'Chosen</span>' : '') + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; }).join('') + '</div>'; }
+  var DGLOW = ['#4FD3CB', '#52A6F0', '#8E80F0'];   // the three depths in the Cosmic Selection lights
+  function depthView() { return '<div class="cosmos"><div class="cz-h"><span class="cz-k">' + STAR + 'Cosmic Selection</span><span class="cz-t">Three depths, drawn in true proportion</span></div><div class="dc cz3">' + D.depths.map(function (d, i) { var on = S.depth && S.depth.i === i; return '<button class="dcard cz" style="--g:' + DGLOW[i] + '" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + (on ? '<span class="chosen">' + CHECK + 'Chosen</span>' : '') + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span><span class="glow"></span></button>'; }).join('') + '</div></div>'; }
   function coverView() {
     var c = S.cover, info;
     if (c) {
@@ -1474,14 +1562,16 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     if (st.id === 'firmness') q.innerHTML = '<h1 class="lt">' + LEAF + '<span>' + fmt(FC.title) + '</span></h1><p>' + esc(FC.sub) + '</p>';
     else if (st.id === 'review') q.innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p class="flowl">' + FL.flow.map(function (t, i) { return (i ? '<i aria-hidden="true">→</i>' : '') + (i === FL.flow.length - 1 ? '<b>' + esc(t) + '</b>' : '<span>' + esc(t) + '</span>'); }).join('') + '</p><span class="moon" role="img" aria-label="Moon" style="background-image:url(' + D.moon + ')"></span>';
     else q.innerHTML = '<h1>' + LEAF + '<span>' + fmt(st.q) + '</span></h1><p>' + esc(st.sub) + '</p>';
-    $('#answer').innerHTML = { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
+    var ans = { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
+    if (st.id === 'firmness' || st.id === 'cover') ans = '<div class="cosmos cz-wrap"><div class="cz-h"><span class="cz-k">' + STAR + 'Cosmic Selection</span><span class="cz-t">' + (st.id === 'cover' ? 'Four fabrics, one choice' : 'Your body sets your firmness') + '</span></div>' + ans + '</div>';   // one space for every choice
+    $('#answer').innerHTML = ans;
     var ok = chosen(st.id), last = S.step === STEPS.length - 1;
     $('#act').innerHTML = (S.step ? '<button class="btn s" data-back="1">Back</button>' : '') + (last ? bagButton() : '<button class="btn p" data-next="1"' + (ok ? '' : ' disabled') + '>Continue to <b>' + st.next + '</b></button>');
     $('#stageh').className = 'colh' + (st.id === 'firmness' ? ' kk' : ''); $('#stageh').innerHTML = st.id === 'firmness' ? esc(FC.kicker) + '<span class="k2">' + esc(FC.kicker2) + '</span>' : esc('Select here  ·  Step ' + (S.step + 1) + ' of ' + STEPS.length + '  ·  ' + st.label);
     drawRail(); drawMine();
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
+    var t = e.target.closest('[data-sgrp],[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
     var d = t.dataset, cg = S.coach; S.coach = null; clearTimeout(COACHT);
     if (d.coachgo != null) { goStep(cg ? cg.to : S.step); draw(); window.scrollTo({ top: 0 }); return; }
     if (d.coachstay != null) { draw(); return; }
@@ -1489,6 +1579,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     if (d.gal != null) { S.gal = !S.gal; draw(); return; }
     if (d.gimg != null) { S.gi = (+d.gimg + D.images.length) % D.images.length; draw(); return; }
     S.gal = false;   // any other button leaves the gallery
+    if (d.sgrp != null) { S.sgrp = d.sgrp || null; draw(); return; }
     if (d.ch != null) { var cc0 = chap(d.ch); goPanel(cc0.id, vis(cc0)[0].id); }
     else if (d.pn != null) goPanel(S.ch, d.pn);
     else if (d.goto != null) { var gg = d.goto.split('/'); goPanel(gg[0], gg[1]); }

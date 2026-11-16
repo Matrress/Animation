@@ -56,7 +56,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file + '?step=2'); const ft = await p.textContent('.fc'); ok(/Up to 48 kg/.test(ft) && /49 – 87 kg/.test(ft) && /88 – 114 kg/.test(ft) && /115 kg and over/.test(ft), 'R11 firmness numbers are the module\'s: 48 / 49-87 / 88-114 / 115+');
   ok((await p.$$('#gw, #gh')).length === 2, 'R12 weight and height sliders are on the large screen');
   ok(/Specialist Model: Orthopaedic Coconut Core/.test(ft) && (await p.$('a.fcard')) !== null, 'R13 Extra Firm is kept and redirected to the specialist model (a plain link)');
-  await p.goto(file + '?step=0'); ok(/\d+\.\d × \d+\.\d in/.test(await p.textContent('.cards')), 'R14 sizes are shown in centimetres and in inches');
+  await p.goto(file + '?step=0'); await p.click('[data-sgrp="single"]'); ok(/\d+\.\d × \d+\.\d in/.test(await p.textContent('.scards')), 'R14 sizes are shown in centimetres and in inches');
   // R15 depth: the owner's drawing, three heights; icon lights up when all four are chosen; zones: the mobile sketch
   await p.goto(file + '?step=1'); ok((await p.$$('.dcard svg')).length === 3, 'R15 three depths drawn from the owner\'s mattress drawing');
   await p.goto(file + '?step=0'); ok((await p.getAttribute('#mi svg', 'aria-label')).includes('0 of 4'), 'R16 the mattress icon is dim with nothing chosen');
@@ -70,10 +70,10 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.click('#galbtn'); await p.click('#vstd'); ok((await p.$$('#std select')).length === 4, 'R22 Standard Product View shows the shop\'s own four options');
   // R23 two-way sync between the standard view and the television
   await p.selectOption('#m-size', { index: 5 }); await p.click('#vtv'); const chip = await p.$$eval('.sb i', (x) => x[0].textContent); ok(chip !== 'Choose', 'R23 a choice made in the standard view is shown in the television', chip);
-  await p.click('.sb[data-go="0"]'); await p.click('.card[data-size="3"]'); await p.click('#vstd'); const sel = await p.$eval('#m-size', (s) => s.options[s.selectedIndex].text); ok(/Single 90x190/.test(sel), 'R24 a choice made in the television is shown in the standard view', sel);
+  await p.click('.sb[data-go="0"]'); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]'); await p.click('#vstd'); const sel = await p.$eval('#m-size', (s) => s.options[s.selectedIndex].text); ok(/Single 90x190/.test(sel), 'R24 a choice made in the television is shown in the standard view', sel);
   // R25 Add to Bag / Go to Checkout: one button, two faces
   await p.goto(file + '?step=4'); const face = async () => [await p.$eval('#bag .btn', (x) => x.textContent.trim() + (x.disabled ? ' [off]' : '')), await p.$eval('#native .btn', (x) => x.textContent.trim() + (x.disabled ? ' [off]' : ''))];
-  const f0 = await face(); await p.goto(file + '?step=4&demo=1'); const f1 = await face(); await p.click('#bag [data-bag]'); const f2 = await face(); await p.click('.sb[data-go="0"]'); await p.click('.card[data-size="3"]'); const f3 = await face();
+  const f0 = await face(); await p.goto(file + '?step=4&demo=1'); const f1 = await face(); await p.click('#bag [data-bag]'); const f2 = await face(); await p.click('.sb[data-go="0"]'); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]'); const f3 = await face();
   ok(/off/.test(f0[0]) && f1[0] === 'Add to Bag' && f2.join() === 'Go to Checkout,Go to Checkout' && f3[0] === 'Add to Bag', 'R25 Add to Bag waits for the four choices, becomes Go to Checkout (both buttons), and returns if a choice changes', [f0[0], f1[0], f2[0], f3[0]].join(' > '));
   // R26 every panel of every topic shows its text
   await p.goto(file); let empty = [], n = 0;
@@ -108,7 +108,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   }
   ok(!warm.length && layers.includes('explore') && layers.includes('select'), 'R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments', warm.slice(0, 4).join(' | ') || layers.join(','));
   // R34 owner 16 Nov VI: the order trail while choosing (and back from any information screen), Review over both rows, seven zones in one row, no moon over the logo, no glow on white
-  await p.goto(file + '?step=0'); await p.click('.card[data-size="3"]'); await p.click('.slg .sb[data-go="2"]'); await p.click('#rail [data-goto="firmness/principle"]');
+  await p.goto(file + '?step=0'); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]'); await p.click('.slg .sb[data-go="2"]'); await p.click('#rail [data-goto="firmness/principle"]');
   const tr = await p.evaluate(() => ({ n: document.querySelectorAll('#trailbar .tst').length, vis: !document.querySelector('#trailbar').hidden, cur: (document.querySelector('#trailbar .tst.cur') || {}).textContent, back: !!document.querySelector('#rail button.tp.back') }));
   await p.click('#trailbar .tst[data-go="0"]'); const backTo = await p.$eval('.slg .sb[aria-current=true]', (e) => e.dataset.go);
   const rv = await p.evaluate(() => { const r = document.querySelector('.slg .sb.rv').getBoundingClientRect(), a = document.querySelector('.slg .sb[data-go="1"]').getBoundingClientRect(), c = document.querySelector('.slg .sb[data-go="3"]').getBoundingClientRect(); const all = [...document.querySelectorAll('.slg .sb')].map((e) => Math.round(e.getBoundingClientRect().top)); return (Math.abs(r.top - a.top) < 2 && Math.abs(r.bottom - c.bottom) < 2) || new Set(all).size === 1; });
@@ -118,7 +118,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   const glow = await p.evaluate(() => { const sc = getComputedStyle(document.querySelector('.screen')).boxShadow, st = getComputedStyle(document.querySelector('.stage')).backgroundImage; return (sc === 'none' ? '' : 'screen ') + (/radial/.test(st) ? 'stage' : ''); });
   ok(tr.n === 5 && tr.vis && /Firmness/.test(tr.cur) && tr.back && backTo === '0' && rv && zr && trOff && moon === 'none' && !glow, 'R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white', JSON.stringify({ tr, backTo, rv, zr, trOff, moon, glow }));
   // R35 owner 16 Nov VII: Explore, Select & Buy, Your order and Your selection are four cards, each with its own colour family
-  await p.goto(file + '?step=0'); await p.click('.card[data-size="3"]');
+  await p.goto(file + '?step=0'); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]');
   const fam = await p.evaluate(() => { const g = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e).backgroundColor + '|' + getComputedStyle(e).backgroundImage.slice(0, 40) : null; }; return [g('.exg'), g('.slg'), g('#trailbar .trail'), g('.mine')]; });
   ok(fam.every(Boolean) && new Set(fam).size === 4, 'R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour', fam.join('  //  '));
   // R36 owner 16 Nov VIII: a calm start-up (no moon cycle, no mattress drawing); the Standard Product View keeps the approved description;
@@ -130,14 +130,25 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   const counted = await p.evaluate(() => /explored/i.test(document.querySelector('.screen').innerText));
   await p.click('.exg [data-ch="delivery"]'); await p.click('#rail [data-pn="journey"]'); const jn = await p.evaluate(() => ({ n: document.querySelectorAll('.jst li').length, inc: /includes delivery/i.test(document.querySelector('.jny').innerText) }));
   const vw = p.viewportSize(); let fits = true;
-  if (vw.width >= 1100) fits = await p.evaluate(() => { const m = document.querySelector('.monitor').getBoundingClientRect(); return m.height <= innerHeight; });
+  fits = await p.evaluate(() => !/(auto|scroll)/.test(getComputedStyle(document.querySelector('.stage')).overflowY) && (innerWidth < 1100 || !/(auto|scroll)/.test(getComputedStyle(document.querySelector('.rail')).overflowY)));   // owner IX: a tall screen, no inner scrolling
   await p.click('#vstd'); await p.waitForTimeout(300); const desc = await p.evaluate(() => { const h = document.querySelector('#sdesc'); return !!(h && h.shadowRoot && /Organic Latex/.test(h.shadowRoot.textContent)); });
   await p.click('#vtv'); await p.waitForTimeout(100); await p.evaluate(() => { const s = document.querySelector('#ign .skip'); if (s) s.click(); });
-  ok(!ign.moon && !ign.glow && vids >= 1 && letters === 'AB' && outline && !counted && jn.n === 7 && jn.inc && fits && desc, 'R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the monitor fits one screen', JSON.stringify({ ign, vids, letters, outline, counted, jn, fits, desc }));
+  ok(!ign.moon && !ign.glow && vids >= 1 && letters === 'AB' && outline && !counted && jn.n === 7 && jn.inc && fits && desc, 'R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; no scrolling inside the screen', JSON.stringify({ ign, vids, letters, outline, counted, jn, fits, desc }));
+  // R37 owner 16 Nov IX: Cosmic Selection: six size families, every size in exactly one, each family its own light; a family opens,
+  // the others stay one tap away, and the way back is always there; three depths side by side; the body-weight scale ends at 180 kg
+  await p.goto(file + '?step=0');
+  const fams = await p.$$eval('.sgcard', (x) => x.map((e) => [e.dataset.sgrp, e.querySelector('b').textContent, +e.querySelector('i').textContent.split(' ')[0], getComputedStyle(e).getPropertyValue('--g').trim()]));
+  const famNames = fams.map((f) => f[1]).join('|'), famTotal = fams.reduce((a, f) => a + f[2], 0), famCols = new Set(fams.map((f) => f[3])).size;
+  await p.click('[data-sgrp="king"]'); const kingN = await p.$$eval('.scards .card', (x) => x.length); const chips = await p.$$eval('.cz-chip', (x) => x.length); const rowTops = await p.$$eval('.scards .card', (x) => new Set(x.map((e) => Math.round(e.getBoundingClientRect().top))).size);
+  await p.click('.cz-chip[data-sgrp="emperor"]'); const empN = await p.$$eval('.scards .card', (x) => x.length); await p.click('.cz-back'); const backAll = await p.$$eval('.sgcard', (x) => x.length);
+  await p.goto(file + '?step=1'); const dTops = await p.$$eval('.dcard', (x) => new Set(x.map((e) => Math.round(e.getBoundingClientRect().top))).size);
+  await p.goto(file + '?step=2'); const wmax = await p.$eval('#gw', (e) => e.max);
+  const wide = p.viewportSize().width >= 1100;
+  ok(famNames === 'All Single Sizes|All Small Double Sizes|All Double Sizes|All King Sizes|All Super King Sizes|All Emperor Sizes' && famTotal === 22 && famCols === 6 && kingN === 5 && chips === 6 && (!wide || rowTops === 1) && empN === 3 && backAll === 6 && (!wide || dTops === 1) && wmax === '180', 'R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its row; three depths side by side; weight up to 180 kg', JSON.stringify({ famTotal, famCols, kingN, chips, rowTops, empN, backAll, dTops, wmax }));
   await p.goto(file + '?step=0');
   const noLong = await p.evaluate(() => !/—/.test(document.body.innerText)); ok(noLong, 'R31 no long dash is shown anywhere');
   // R32 the guide after a choice (?guide=1): says what was chosen, what comes next, then opens it by itself
-  await p.goto(file + '?step=0&guide=1'); await p.click('.card[data-size="3"]'); await p.waitForTimeout(150);
+  await p.goto(file + '?step=0&guide=1'); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]'); await p.waitForTimeout(150);
   const g1 = await p.$eval('#answer', (e) => e.textContent.replace(/\s+/g, ' ')); const g1q = await p.$eval('#q', (e) => e.textContent.replace(/\s+/g, ' ').trim()); await p.waitForTimeout(2900);
   const g2 = await p.$eval('#q', (e) => e.textContent.replace(/\s+/g, ' ').trim()); const g2s = await p.$eval('#stageh', (e) => e.textContent);
   ok(/Size chosen/.test(g1q) && /Now choose your Depth/.test(g1) && /How thick should it be/.test(g2) && /Step 2 of 5/.test(g2s), 'R32 after a choice the television says what is chosen and what is next, then opens Depth by itself', [g1q, g1.slice(0, 80), g2.slice(0, 40), g2s].join(' | '));

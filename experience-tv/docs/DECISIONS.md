@@ -147,3 +147,12 @@ Test R35 checks that the four have four different looks; R2 was updated for the 
 - **Titles:** Ventilation "Breathable … Comfort" and 7-Zone "7-Zone" in blue and a touch bolder; **Warranty and Durability** with Durability opening on the Divine Dunlop D mark.
 - **Delivery Journey** (new part B of Delivery): seven steps, each with a notification: Order confirmed, In production, Quality tested, Prepared for dispatch, In transit, At the depot, Out for delivery (the two-person delivery team). "A notification at every step", **delivery included in the price, no extra transport fees**, 20 Days Delivery.
 - **No "N of 24 explored"**: the customer decides what to read.
+
+## Cosmic Selection (owner, 16 November 2026, IX)
+- **The fixed one-screen height is withdrawn.** It hid things (the King sizes, the third depth). The screen is tall again and shows everything; there is no scrolling inside the screen or inside any card ("no lifts, no sliders").
+- **Sizes in six families.** All Single Sizes (75–100 cm wide, 6), All Small Double Sizes (120, 2), All Double Sizes (135–140, 3), All King Sizes (150–160, 5), All Super King Sizes (180, 3), All Emperor Sizes (200, 3): all 22 sizes, each in exactly one family, by width. A customer looking for a double never has to read the kings.
+- **Navigation.** Tap a family to open it. Inside, "All size families" leads back, and the six families stay one tap away as lit chips, so the customer can move between families and back to any other choice (Select & Buy, the order trail) at any time. The family of a chosen size is marked ("✓ King Long").
+- **Cosmic Selection** is the space every choice happens in (size, depth, firmness, cover): deep navy with a few stars, glass cards, and the light in a thin underline that glows in the family's colour. The six families walk the site's spectrum from mint to a measured violet (#4FD3CB, #3FC1E6, #52A6F0, #6F8CF2, #8E80F0, #AE97F2). Each size card shows its footprint drawn to scale (200 × 220 cm fills the box), centimetres and inches. The cards of a family share one row (King five across). The light stays on the dark; nothing glows on white.
+- **Depths** sit side by side in the same space (20, 24, 26 cm), so the third depth is never out of view.
+- **Body weight scale** ends at **180 kg** (the firmness ranges are unchanged: 115 kg and over is Extra Firm).
+- Test R37.

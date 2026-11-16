@@ -1,12 +1,12 @@
 {
  "date": "2026-11-16",
  "failures": 0,
- "checks": 124,
+ "checks": 127,
  "rows": [
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 52 buttons"
+   "detail": "largest radius 14px over 36 buttons"
   },
   {
    "pass": true,
@@ -21,42 +21,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "442.8 / 442.8 / 442.8"
+   "detail": "490.8 / 490.8 / 490.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "442.8 / 442.8 / 442.8"
+   "detail": "490.8 / 490.8 / 490.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "442.8 / 442.8 / 442.8"
+   "detail": "490.8 / 490.8 / 490.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "442.8 / 442.8 / 442.8"
+   "detail": "490.8 / 490.8 / 490.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "442.8 / 442.8 / 442.8"
+   "detail": "490.8 / 490.8 / 490.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "392.8 / 392.8 / 392.8"
+   "detail": "426.8 / 426.8 / 426.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "392.8 / 392.8 / 392.8"
+   "detail": "426.8 / 426.8 / 426.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "392.8 / 392.8 / 392.8"
+   "detail": "426.8 / 426.8 / 426.8"
   },
   {
    "pass": true,
@@ -205,8 +205,13 @@
   },
   {
    "pass": true,
-   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the monitor fits one screen",
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; no scrolling inside the screen",
    "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"AB\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its row; three depths side by side; weight up to 180 kg",
+   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":1,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
   },
   {
    "pass": true,
@@ -226,7 +231,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 52 buttons"
+   "detail": "largest radius 14px over 36 buttons"
   },
   {
    "pass": true,
@@ -385,8 +390,13 @@
   },
   {
    "pass": true,
-   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the monitor fits one screen",
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; no scrolling inside the screen",
    "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"AB\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its row; three depths side by side; weight up to 180 kg",
+   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":1,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
   },
   {
    "pass": true,
@@ -406,7 +416,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 52 buttons"
+   "detail": "largest radius 14px over 36 buttons"
   },
   {
    "pass": true,
@@ -421,42 +431,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "442.8 / 442.8 / 442.8"
+   "detail": "490.8 / 490.8 / 490.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "442.8 / 442.8 / 442.8"
+   "detail": "490.8 / 490.8 / 490.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "442.8 / 442.8 / 442.8"
+   "detail": "490.8 / 490.8 / 490.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "442.8 / 442.8 / 442.8"
+   "detail": "490.8 / 490.8 / 490.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "442.8 / 442.8 / 442.8"
+   "detail": "490.8 / 490.8 / 490.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "392.8 / 392.8 / 392.8"
+   "detail": "426.8 / 426.8 / 426.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "392.8 / 392.8 / 392.8"
+   "detail": "426.8 / 426.8 / 426.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "392.8 / 392.8 / 392.8"
+   "detail": "426.8 / 426.8 / 426.8"
   },
   {
    "pass": true,
@@ -605,8 +615,13 @@
   },
   {
    "pass": true,
-   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the monitor fits one screen",
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; no scrolling inside the screen",
    "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"AB\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its row; three depths side by side; weight up to 180 kg",
+   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":1,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
   },
   {
    "pass": true,

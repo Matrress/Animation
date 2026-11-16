@@ -31,7 +31,8 @@
   var steps = [];
   function add(t, cap, fn, ms) { steps.push({ t: t, cap: cap, fn: fn, ms: ms || 4400 }); }
   add('Start-up', 'Explore, Select & Buy, Custom: the module says what it is, with soft sound (after a tap).', function () { click('#chbar [data-ch="discover"]'); if (window.__ignite) window.__ignite(); }, 11800);
-  add('Select & Buy', 'The Select & Buy group (blue) holds the order. Step 1: a size. Every size in centimetres and inches, live from the shop.', function () { click('.sb[data-go="0"]'); }, 3000);
+  add('Select & Buy', 'The Select & Buy group holds the order. Step 1: a size, chosen in the Cosmic Selection.', function () { click('.sb[data-go="0"]'); }, 3000);
+  add('Select', 'Cosmic Selection: every size lives in its family (Single, Small Double, Double, King, Super King, Emperor). One touch opens the King family; the other families stay one touch away.', function () { click('[data-sgrp="king"]'); }, 3600);
   add('Select', 'The size is chosen. The module confirms it, says what comes next and opens Depth by itself.', function () { click('.card[data-size="12"]'); }, 4200);
   add('Select', 'Depth: three heights in true proportion. A touch chooses one.', function () { click('.sb[data-go="1"]'); }, 2800);
   add('Select', '24 cm chosen. The guide moves on to Firmness.', function () { click('.dcard[data-depth="1"]'); }, 4200);
