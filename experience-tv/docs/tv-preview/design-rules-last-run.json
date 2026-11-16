@@ -1,12 +1,12 @@
 {
  "date": "2026-11-16",
  "failures": 0,
- "checks": 127,
+ "checks": 130,
  "rows": [
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 14px over 36 buttons"
+   "detail": "largest radius 14px over 37 buttons"
   },
   {
    "pass": true,
@@ -215,6 +215,11 @@
   },
   {
    "pass": true,
+   "rule": "R38 size, depth and cover: pick, Confirm, then it counts; Change brings the other options back and a changed choice can be confirmed again",
+   "detail": "{\"dis0\":true,\"pickedNoCount\":true,\"en1\":true,\"sizeDone\":true,\"onlyOne\":true,\"reopen\":true,\"changed\":true,\"dDis\":true,\"dPick\":true,\"dDone\":true,\"dBack\":true,\"cDis\":true,\"cPick\":true,\"cDone\":true,\"cBack\":true}"
+  },
+  {
+   "pass": true,
    "rule": "R31 no long dash is shown anywhere",
    "detail": ""
   },
@@ -231,7 +236,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 14px over 36 buttons"
+   "detail": "largest radius 14px over 37 buttons"
   },
   {
    "pass": true,
@@ -400,6 +405,11 @@
   },
   {
    "pass": true,
+   "rule": "R38 size, depth and cover: pick, Confirm, then it counts; Change brings the other options back and a changed choice can be confirmed again",
+   "detail": "{\"dis0\":true,\"pickedNoCount\":true,\"en1\":true,\"sizeDone\":true,\"onlyOne\":true,\"reopen\":true,\"changed\":true,\"dDis\":true,\"dPick\":true,\"dDone\":true,\"dBack\":true,\"cDis\":true,\"cPick\":true,\"cDone\":true,\"cBack\":true}"
+  },
+  {
+   "pass": true,
    "rule": "R31 no long dash is shown anywhere",
    "detail": ""
   },
@@ -416,7 +426,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 14px over 36 buttons"
+   "detail": "largest radius 14px over 37 buttons"
   },
   {
    "pass": true,
@@ -622,6 +632,11 @@
    "pass": true,
    "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its row; three depths side by side; weight up to 180 kg",
    "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":1,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R38 size, depth and cover: pick, Confirm, then it counts; Change brings the other options back and a changed choice can be confirmed again",
+   "detail": "{\"dis0\":true,\"pickedNoCount\":true,\"en1\":true,\"sizeDone\":true,\"onlyOne\":true,\"reopen\":true,\"changed\":true,\"dDis\":true,\"dPick\":true,\"dDone\":true,\"dBack\":true,\"cDis\":true,\"cPick\":true,\"cDone\":true,\"cBack\":true}"
   },
   {
    "pass": true,

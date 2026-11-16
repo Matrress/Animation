@@ -79,11 +79,11 @@ for (const vp of [{ width: 1366, height: 1024 }, { width: 1024, height: 1366 }])
   const g0 = await p.textContent('#bag .hint');
   ok(/Still to choose: Size · Depth · Firmness · Cover/.test(g0), 'the guidance names every choice still to make, in the shop\'s order', g0.trim());
   await p.goto(TV + '?step=4&demo=1&promo=10'); await p.waitForTimeout(120);
-  await p.click('.sb[data-go="0"]'); await p.waitForTimeout(60); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]'); await p.waitForTimeout(80);
+  await p.click('.sb[data-go="0"]'); await p.waitForTimeout(60); if (await p.$('[data-change="size"]')) await p.click('[data-change="size"]'); if (!(await p.$('.card[data-size="3"]'))) await p.click('[data-sgrp="single"]'); await p.click('.card[data-size="3"]'); await p.click('[data-confirm="size"]'); await p.waitForTimeout(80);
   ok(await p.$eval('#bag .bagbtn', (x) => !x.disabled && x.classList.contains('ready')), 'LAW 2: after changing the size with the other three covered, the button stays READY and active');
   await p.click('#bag [data-bag]'); await p.waitForTimeout(80);
   ok((await p.textContent('#bag .bagbtn')).includes('Go to') , 'the bag: the same button is now Go to Checkout');
-  await p.click('.sb[data-go="3"]'); await p.waitForTimeout(60); await p.click('.tile[data-cover="0"]'); await p.waitForTimeout(80);
+  await p.click('.sb[data-go="3"]'); await p.waitForTimeout(60); if (await p.$('[data-change="cover"]')) await p.click('[data-change="cover"]'); await p.click('.tile[data-cover="0"]'); await p.click('[data-confirm="cover"]'); await p.waitForTimeout(80);
   ok((await p.textContent('#bag .bagbtn')).includes('Add to') && await p.$eval('#bag .bagbtn', (x) => !x.disabled), 'LAW 2: a changed cover after the bag: Add to Bag again, active, READY');
   await p.goto(TV + '?step=4&demo=1&promo=10&bag=1'); await p.waitForTimeout(120);
   ok(await p.$eval('#bag .bagbtn', (x) => x.textContent.includes('Go to') && !x.disabled), 'LAW: in the bag, the one button is Go to Checkout (its click hands over to the shop, see above)');

@@ -995,6 +995,19 @@ body.std .monitor { display: none !important; }
 .cz-wrap > .fnote, .cz-wrap > .base, .cz-wrap > p { color: rgba(230,240,245,.82) !important; }
 .cz-wrap > .fnote b { color: #fff; }
 .cz-wrap .eng, .cz-wrap .eng * { color: var(--ink); }
+
+/* pick, confirm, change: the confirm bar and the confirmed card live inside the Cosmic Selection */
+.cz-conf .fconf { margin: 14px 0 0; background: rgba(255,255,255,.96); border: 1.5px dashed rgba(143,208,236,.6); color: var(--ink); }
+.cz-conf .fconf.on { border: 1.5px solid #2A86B0; background: #fff; }
+.cz-conf .fconf span { color: var(--ink2); } .cz-conf .fconf span b { color: var(--ink); }
+.cz-conf .fdone { margin-top: 0; }
+.cz-conf .fdl { color: var(--ink); } .cz-conf .fdl b { color: var(--ink); } .cz-conf .fdl i { color: #1A5C7E; } .cz-conf .fdl small { color: var(--ink3); } .cz-conf .fdl p { color: var(--ink2); }
+.cz-conf .cdr { display: grid; place-items: center; background: radial-gradient(70% 90% at 50% 30%, #fff, #EEF4F8); }
+.cz-conf .cdr svg { width: min(100%, 360px); height: auto; max-height: 300px; }
+.cz-conf .cdr .fp rect { fill-opacity: .18; }
+.cz-conf .cpic { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 12px; background-size: cover; background-position: center; }
+.cz-conf .cbl { margin: 0 0 8px; padding-left: 18px; } .cz-conf .cbl li { margin-bottom: 4px; }
+.cz-conf .cv .tile[aria-pressed=true] { outline: 2px solid #4FD3CB; outline-offset: 2px; box-shadow: 0 0 16px rgba(79,211,203,.45); }
 </style>
 </head>
 <body>
@@ -1024,7 +1037,7 @@ body.std .monitor { display: none !important; }
 var D = /*__DATA__*/;
 (function () {
   var $ = function (s) { return document.querySelector(s); }, esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-  var S = { promo: 10, view: 'tv', gal: false, gi: 0, ch: 'discover', pn: 'intro', rd: {}, step: 0, coach: null, size: null, firmness: null, depth: null, cover: null, weight: null, height: null, bagged: null };
+  var S = { promo: 10, view: 'tv', gal: false, gi: 0, ch: 'discover', pn: 'intro', rd: {}, step: 0, coach: null, size: null, firmness: null, depth: null, cover: null, pick: {}, edit: {}, weight: null, height: null, bagged: null };
   var LEAF = '<svg class="leaf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BD26B"/><stop offset="1" stop-color="#63B963"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1.2" stroke-linecap="round"/></g></svg>';
   var SHORT = ['Organic Cotton', 'Cotton / Wool', 'Aloe Vera Blend', 'Cashmere + Silver'];
   var STEPS = [
@@ -1215,20 +1228,21 @@ var D = /*__DATA__*/;
     return '<svg class="fp" viewBox="0 0 ' + (max + 4) + ' ' + (max * 1.1 + 4) + '" aria-hidden="true"><rect x="' + ((max - W) / 2 + 2).toFixed(1) + '" y="' + ((max * 1.1 - L) + 2).toFixed(1) + '" width="' + W.toFixed(1) + '" height="' + L.toFixed(1) + '" rx="3" fill="' + c + '" fill-opacity=".14" stroke="' + c + '" stroke-width="1.6"/></svg>';
   }
   function sizeView() {
-    if (S.sgrp === undefined) S.sgrp = S.size ? sgOf(S.size).id : null;
-    var g = SGRP.filter(function (x) { return x.id === S.sgrp; })[0], h = '<div class="cosmos"><div class="cz-h"><span class="cz-k">' + STAR + 'Cosmic Selection</span>';
+    if (S.size && !S.edit.size) { var z = S.size, zg = sgOf(z);
+      return cosmosWrap('Size confirmed', doneCard('size', z.name, z.dims[0] + ' × ' + z.dims[1] + ' cm · ' + inch(z.dims[0]) + ' × ' + inch(z.dims[1]) + ' in', 'From the ' + esc(zg.name.replace(/^All /, '')) + ' family. Not the size you want? Change it: every family, from Single to Emperor, is one touch away.', footprint(z.dims[0], z.dims[1], zg.c, 150), 'size', 'Change size')); }
+    var pk = S.pick.size, g = SGRP.filter(function (x) { return x.id === S.sgrp; })[0], h = '<div class="cosmos cz-conf"><div class="cz-h"><span class="cz-k">' + STAR + 'Cosmic Selection</span>';
     if (!g) {
       h += '<span class="cz-t">Choose your size family</span></div><div class="sgrid">' + SGRP.map(function (x) {
-        var L = sgSizes(x), ws = L.map(function (s) { return s.dims[0]; }), mine = S.size && sgOf(S.size) === x;
-        return '<button class="sgcard" data-sgrp="' + x.id + '" style="--g:' + x.c + '">' + footprint(Math.max.apply(null, ws), 200, x.c, 44) + '<b>' + esc(x.name) + '</b><i>' + L.length + ' sizes · ' + (Math.min.apply(null, ws) === Math.max.apply(null, ws) ? ws[0] : Math.min.apply(null, ws) + '–' + Math.max.apply(null, ws)) + ' cm wide</i>' + (mine ? '<em class="cz-mine">' + CHECK + esc(S.size.name) + '</em>' : '') + '<span class="glow"></span></button>';
+        var L = sgSizes(x), ws = L.map(function (s) { return s.dims[0]; }), mine = pk && sgOf(pk) === x;
+        return '<button class="sgcard" data-sgrp="' + x.id + '" style="--g:' + x.c + '">' + footprint(Math.max.apply(null, ws), 200, x.c, 44) + '<b>' + esc(x.name) + '</b><i>' + L.length + ' sizes · ' + (Math.min.apply(null, ws) === Math.max.apply(null, ws) ? ws[0] : Math.min.apply(null, ws) + '–' + Math.max.apply(null, ws)) + ' cm wide</i>' + (mine ? '<em class="cz-mine">' + CHECK + esc(pk.name) + '</em>' : '') + '<span class="glow"></span></button>';
       }).join('') + '</div>';
     } else {
       h += '<span class="cz-t">' + esc(g.name) + '</span></div><div class="snav"><button class="cz-back" data-sgrp="">' + '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>All size families</button><span class="cz-chips">' +
         SGRP.map(function (x) { return '<button class="cz-chip" data-sgrp="' + x.id + '" style="--g:' + x.c + '" aria-pressed="' + (x === g) + '"><i></i>' + esc(x.name.replace(/^All | Sizes$/g, '')) + '</button>'; }).join('') + '</span></div>' +
-        '<div class="scards" style="--g:' + g.c + ';--n:' + ({ 2: 2, 3: 3, 4: 4, 5: 5, 6: 3 }[sgSizes(g).length] || 4) + '">' + sgSizes(g).map(function (s) { var on = S.size && S.size.label === s.label;
+        '<div class="scards" style="--g:' + g.c + ';--n:' + ({ 2: 2, 3: 3, 4: 4, 5: 5, 6: 3 }[sgSizes(g).length] || 4) + '">' + sgSizes(g).map(function (s) { var on = pk && pk.label === s.label;
           return '<button class="card cz" data-size="' + D.sizes.indexOf(s) + '" aria-pressed="' + on + '">' + (on ? '<em class="cz-ok">' + CHECK + '</em>' : '') + '<span class="nm">' + esc(s.name) + '</span>' + footprint(s.dims[0], s.dims[1], g.c, 58) + '<span class="dm">' + s.dims[0] + ' × ' + s.dims[1] + '<i>cm</i></span><span class="in">' + inch(s.dims[0]) + ' × ' + inch(s.dims[1]) + ' in</span><span class="glow"></span></button>'; }).join('') + '</div>';
     }
-    h += '</div>';
+    h += confirmBar('size', 'size', pk ? pk.name + ' · ' + pk.dims[0] + ' × ' + pk.dims[1] + ' cm' : '', pk ? pk.name : '') + '</div>';
     h += '<div class="more"><span>Need another size?</span><button class="btn s" data-more="1">Tell us what you need</button></div>' +
       '<div class="form" id="form"><div><label>Model</label><input value="Botanic Original" readonly></div><div><label for="sz">The size you want</label><input id="sz" placeholder="for example 170 × 205 cm"></div><div><label for="em">Your email, for our reply</label><input id="em" type="email" placeholder="name@example.com"></div><p class="note">In the shop this form sends the model, the size and your email to Divine Dunlop support. This preview does not send anything.</p><div><button class="btn p" data-send="1">Send my request</button></div></div>';
     return h;
@@ -1264,16 +1278,32 @@ var D = /*__DATA__*/;
     return '<div class="fdone"><div class="fdl"><span class="fok">' + CHECK + 'Confirmed</span><small>Your firmness</small><b>' + esc(f) + '</b><i>' + esc(rg || '') + '</i><p>' + esc(dd ? dd.desc : '') + '</p><button class="btn s" data-fchange="1">Change firmness</button></div>' +
       '<div class="fdr"><svg viewBox="90 10 2550 470" role="img" aria-label="The body at the surface of the latex core"><path d="' + e.mp + '" fill="#E4EFF2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/></svg><div class="fsab"><span><b>Support</b> keeps you at the surface</span><span><b>Adaptation</b> follows your shape</span></div></div></div>';
   }
+  /* PICK, CONFIRM, CHANGE (owner, 16 Nov X): the same logic for size, depth, firmness and cover. A touch picks (nothing is sent), the
+     customer confirms, and only then the choice counts and the module opens the next one. A confirmed choice stays open to change. */
+  function confirmBar(k, noun, pickText, btnText) {
+    var pk = S.pick[k];
+    return '<div class="fconf' + (pk ? ' on' : '') + '"><span>' + (pk ? 'Your ' + noun + ': <b>' + esc(pickText) + '</b>. Confirm it to continue.' : 'Choose your ' + noun + ', then confirm it.') + '</span><button class="btn bagbtn' + (pk ? ' ready' : '') + '" data-confirm="' + k + '"' + (pk ? '' : ' disabled') + '>' + CHECK + 'Confirm ' + (pk ? esc(btnText) : noun) + '</button></div>';
+  }
+  function doneCard(noun, big, sub, text, visual, changeKey, changeText) {
+    return '<div class="fdone"><div class="fdl"><span class="fok">' + CHECK + 'Confirmed</span><small>Your ' + noun + '</small><b>' + esc(big) + '</b><i>' + esc(sub) + '</i><p>' + text + '</p><button class="btn s" data-change="' + changeKey + '">' + esc(changeText) + '</button></div><div class="fdr cdr">' + visual + '</div></div>';
+  }
+  function cosmosWrap(note, inner) { return '<div class="cosmos cz-conf"><div class="cz-h"><span class="cz-k">' + STAR + 'Cosmic Selection</span><span class="cz-t">' + note + '</span></div>' + inner + '</div>'; }
   var DGLOW = ['#4FD3CB', '#52A6F0', '#8E80F0'];   // the three depths in the Cosmic Selection lights
-  function depthView() { return '<div class="cosmos"><div class="cz-h"><span class="cz-k">' + STAR + 'Cosmic Selection</span><span class="cz-t">Three depths, drawn in true proportion</span></div><div class="dc cz3">' + D.depths.map(function (d, i) { var on = S.depth && S.depth.i === i; return '<button class="dcard cz" style="--g:' + DGLOW[i] + '" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + (on ? '<span class="chosen">' + CHECK + 'Chosen</span>' : '') + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span><span class="glow"></span></button>'; }).join('') + '</div></div>'; }
+  function depthView() {
+    if (S.depth && !S.edit.depth) { var d = S.depth;
+      return cosmosWrap('Depth confirmed', doneCard('depth', d.cm + ' cm', d.inch.replace(/^cm · /, '') + ' · ' + d.name, esc(d.desc) + '<br><br>You can change it at any time: the other depths are one touch away.', depthSvg(+d.cm, d.i), 'depth', 'Change depth')); }
+    var pk = S.pick.depth;
+    return cosmosWrap('Three depths, drawn in true proportion', '<div class="dc cz3">' + D.depths.map(function (d, i) { var on = pk && pk.i === i; return '<button class="dcard cz" style="--g:' + DGLOW[i] + '" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + (on ? '<span class="chosen">' + CHECK + 'Selected</span>' : '') + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span><span class="glow"></span></button>'; }).join('') + '</div>' + confirmBar('depth', 'depth', pk ? pk.cm + ' cm' : '', pk ? pk.cm + ' cm' : ''));
+  }
+  function coverBullets(c) { return c.body.split(/(?<=\.)\s+/).filter(Boolean).slice(0, 4).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join(''); }
   function coverView() {
-    var c = S.cover, info;
-    if (c) {
-      var bullets = c.body.split(/(?<=\.)\s+/).filter(Boolean).slice(0, 4).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
-      info = '<div class="info" aria-live="polite"><span class="k">Your cover</span><h2>' + esc(c.name) + '</h2><span class="tg">' + esc(c.tag) + '</span><ul>' + bullets + '</ul><span class="fact">' + esc(D.coverFacts.height) + (c.mod ? ' · +£' + c.mod + ' in the shop' : '') + '</span></div>';
-    } else info = '<div class="info"><span class="k">Cover</span><h2>Four fabrics, one choice</h2><p>' + esc(D.coverSub) + '</p><p>Tap a photograph to see what that cover gives you.</p></div>';
-    return '<div class="cv"><div class="tiles">' + D.covers.map(function (x, i) { var on = c && c.i === i;
-      return '<button class="tile" data-cover="' + i + '" aria-pressed="' + on + '" aria-label="' + esc(x.name) + '"><span class="pic" style="background-image:url(' + esc(x.img) + ')"></span><span class="cap">' + esc(SHORT[i]) + '</span></button>'; }).join('') + '</div>' + info + '</div>';
+    if (S.cover && !S.edit.cover) { var c0 = S.cover;
+      return cosmosWrap('Cover confirmed', doneCard('cover', c0.name, c0.tag, '<ul class="cbl">' + coverBullets(c0) + '</ul>' + esc(D.coverFacts.height) + (c0.mod ? ' · +£' + c0.mod + ' in the shop' : ''), '<span class="cpic" style="background-image:url(' + esc(c0.img) + ')" role="img" aria-label="' + esc(c0.name) + '"></span>', 'cover', 'Change cover')); }
+    var c = S.pick.cover, info;
+    if (c) info = '<div class="info" aria-live="polite"><span class="k">Your cover</span><h2>' + esc(c.name) + '</h2><span class="tg">' + esc(c.tag) + '</span><ul>' + coverBullets(c) + '</ul><span class="fact">' + esc(D.coverFacts.height) + (c.mod ? ' · +£' + c.mod + ' in the shop' : '') + '</span></div>';
+    else info = '<div class="info"><span class="k">Cover</span><h2>Four fabrics, one choice</h2><p>' + esc(D.coverSub) + '</p><p>Tap a photograph to see what that cover gives you.</p></div>';
+    return cosmosWrap('Four fabrics, one choice', '<div class="cv"><div class="tiles">' + D.covers.map(function (x, i) { var on = c && c.i === i;
+      return '<button class="tile" data-cover="' + i + '" aria-pressed="' + on + '" aria-label="' + esc(x.name) + '"><span class="pic" style="background-image:url(' + esc(x.img) + ')"></span><span class="cap">' + esc(SHORT[i]) + '</span></button>'; }).join('') + '</div>' + info + '</div>' + confirmBar('cover', 'cover', c ? c.name : '', c ? SHORT[c.i] : ''));
   }
   function reviewView() {
     var rows = [['Size', S.size ? S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' : null, S.size ? inch(S.size.dims[0]) + ' × ' + inch(S.size.dims[1]) + ' in · ' + S.size.name : '', 0], ['Firmness', S.firmness, '', 1], ['Depth', S.depth ? S.depth.cm + ' cm' : null, S.depth ? S.depth.inch.replace(/^cm · /, '') + ' · ' + S.depth.name : '', 2], ['Cover', S.cover ? S.cover.name : null, S.cover ? S.cover.tag : '', 3]];
@@ -1499,7 +1529,7 @@ var D = /*__DATA__*/;
     else if (st.id === 'review') q.innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p class="flowl">' + FL.flow.map(function (t, i) { return (i ? '<i aria-hidden="true">→</i>' : '') + (i === FL.flow.length - 1 ? '<b>' + esc(t) + '</b>' : '<span>' + esc(t) + '</span>'); }).join('') + '</p><span class="moon" role="img" aria-label="Moon" style="background-image:url(' + D.moon + ')"></span>';
     else q.innerHTML = '<h1>' + LEAF + '<span>' + fmt(st.q) + '</span></h1><p>' + esc(st.sub) + '</p>';
     var ans = { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
-    if (st.id === 'firmness' || st.id === 'cover') ans = '<div class="cosmos cz-wrap"><div class="cz-h"><span class="cz-k">' + STAR + 'Cosmic Selection</span><span class="cz-t">' + (st.id === 'cover' ? 'Four fabrics, one choice' : 'Your body sets your firmness') + '</span></div>' + ans + '</div>';   // one space for every choice
+    if (st.id === 'firmness') ans = '<div class="cosmos cz-wrap"><div class="cz-h"><span class="cz-k">' + STAR + 'Cosmic Selection</span><span class="cz-t">Your body sets your firmness</span></div>' + ans + '</div>';   // one space for every choice
     $('#answer').innerHTML = ans;
     var ok = chosen(st.id), last = S.step === STEPS.length - 1;
     $('#act').innerHTML = (S.step ? '<button class="btn s" data-back="1">Back</button>' : '') + (last ? bagButton() : '<button class="btn p" data-next="1"' + (ok ? '' : ' disabled') + '>Continue to <b>' + st.next + '</b></button>');
@@ -1507,7 +1537,7 @@ var D = /*__DATA__*/;
     drawRail(); drawMine();
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-sgrp],[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
+    var t = e.target.closest('[data-confirm],[data-change],[data-sgrp],[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
     var d = t.dataset, cg = S.coach; S.coach = null; clearTimeout(COACHT);
     if (d.coachgo != null) { goStep(cg ? cg.to : S.step); draw(); window.scrollTo({ top: 0 }); return; }
     if (d.coachstay != null) { draw(); return; }
@@ -1522,24 +1552,27 @@ var D = /*__DATA__*/;
     else if (d.rd != null) { S.rd[S.ch + '/' + S.pn] = +d.rd; }
     else if (d.flat != null) { var f = FLAT[+d.flat]; goPanel(f[0], f[1]); }
     else if (d.go != null) goStep(+d.go);
-    else if (d.size != null) S.size = D.sizes[+d.size];
+    else if (d.size != null) S.pick.size = D.sizes[+d.size];
     else if (d.firm != null) { S.firmPick = d.firm; }
     else if (d.fconfirm != null) { if (d.fconfirm) { S.firmness = d.fconfirm; S.firmEdit = false; S.firmPick = null; } }
     else if (d.fchange != null) { S.firmEdit = true; S.firmPick = S.firmness; }
-    else if (d.depth != null) S.depth = Object.assign({ i: +d.depth }, D.depths[+d.depth]);
-    else if (d.cover != null) S.cover = Object.assign({ i: +d.cover }, D.covers[+d.cover]);
+    else if (d.depth != null) S.pick.depth = Object.assign({ i: +d.depth }, D.depths[+d.depth]);
+    else if (d.cover != null) S.pick.cover = Object.assign({ i: +d.cover }, D.covers[+d.cover]);
+    else if (d.confirm != null) { var ck = d.confirm; if (S.pick[ck]) { S[ck] = S.pick[ck]; S.pick[ck] = null; S.edit[ck] = false; } }
+    else if (d.change != null) { var hk = d.change; S.edit[hk] = true; S.pick[hk] = S[hk]; if (hk === 'size' && S.size) S.sgrp = sgOf(S.size).id; }
     else if (d.next != null) goStep(Math.min(STEPS.length - 1, S.step + 1));
     else if (d.back != null) goStep(Math.max(0, S.step - 1));
     else if (d.more != null) { $('#form').classList.toggle('on'); return; }
     else if (d.send != null) { toast('Preview only: nothing was sent. In the shop this goes to Divine Dunlop support.'); return; }
     else if (d.bag != null) { S.bagged = sig(); toast('Stand-in: in the shop this presses Ecwid\'s own Add to Bag, and the button turns into Go to Checkout when Ecwid\'s cart reports the change.'); }
     else if (d.checkout != null) { toast('Go to Checkout opens the shopping cart: the order there is built from your four choices and the promotion. The e-mail is entered in the cart. (Not opened in this preview.)'); return; }
-    if ((d.size != null || d.fconfirm || d.depth != null || d.cover != null) && S.view === 'tv' && guideOn()) startCoach();
+    if ((d.fconfirm || (d.confirm != null && S[d.confirm])) && S.view === 'tv' && guideOn()) startCoach();
     draw(); if (d.bag == null) window.scrollTo({ top: 0 });
     if (d.ch === 'discover') ignite();   // every press of Discover switches the television on again
   });
   document.addEventListener('change', function (e) {
     var k = e.target.dataset && e.target.dataset.man; if (!k) return; var v = e.target.value;
+    S.edit[k] = false; S.pick[k] = null;
     if (k === 'size') S.size = v === '' ? null : D.sizes[+v];
     else if (k === 'depth') S.depth = v === '' ? null : Object.assign({ i: +v }, D.depths[+v]);
     else if (k === 'cover') S.cover = v === '' ? null : Object.assign({ i: +v }, D.covers[+v]);

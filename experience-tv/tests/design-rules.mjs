@@ -12,6 +12,8 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const file = pathToFileURL(join(root, 'docs', 'tv-preview', 'large-screen-design.html')).href;
 let fails = 0; const rows = [];
 const ok = (c, m, d) => { rows.push({ pass: !!c, rule: m, detail: d || '' }); console.log((c ? 'PASS ' : 'FAIL ') + m + (d ? '  [' + d + ']' : '')); if (!c) fails++; };
+// pick, confirm, change: a size is picked in its family and confirmed; a confirmed one is first reopened with Change size
+const pickSize = async (p, i = 3, fam = 'single') => { if (await p.$('[data-change="size"]')) await p.click('[data-change="size"]'); if (!(await p.$('.card[data-size="' + i + '"]'))) await p.click('[data-sgrp="' + fam + '"]'); await p.click('.card[data-size="' + i + '"]'); await p.click('[data-confirm="size"]'); };
 const b = await chromium.launch();
 for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, height: 1024 }], ['iPad Pro portrait 1024x1366', { width: 1024, height: 1366 }], ['desktop 1440x900', { width: 1440, height: 900 }]]) {
   console.log('\n--- ' + label);
@@ -63,17 +65,17 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file + '?step=0&demo=1'); ok((await p.getAttribute('#mi svg', 'aria-label')).includes('ready to order'), 'R17 the mattress icon lights up when all four choices are made');
   await p.goto(file + '?ch=zones&pn=map'); ok((await p.$$('.zsk svg g[data-z]')).length === 7 && (await p.$$('.zp')).length === 7, 'R18 7-Zone uses the mobile concept: the sketch, the legend and the seven zones');
   // R19 covers: four photographs in a square and the information board
-  await p.goto(file + '?step=3&demo=1'); ok((await p.$$('.tile')).length === 4 && (await p.$('.info')) !== null, 'R19 covers: four photographs and the information board beside them');
+  await p.goto(file + '?step=3'); ok((await p.$$('.tile')).length === 4 && (await p.$('.info')) !== null, 'R19 covers: four photographs and the information board beside them');
   // R20 gallery and the view switch
   await p.goto(file); ok((await p.$('#galbtn')) !== null && (await p.$('#vstd')) !== null && (await p.textContent('.seg')).includes('Optimised Preview') && (await p.textContent('.seg')).includes('Standard Product View'), 'R20 View Model Gallery and the Optimised Preview / Standard Product View switch are on top');
   await p.click('#galbtn'); ok((await p.$('.gmain img')) !== null && (await p.$$('.gth button')).length >= 6, 'R21 the gallery opens inside the television with the photographs');
   await p.click('#galbtn'); await p.click('#vstd'); ok((await p.$$('#std select')).length === 4, 'R22 Standard Product View shows the shop\'s own four options');
   // R23 two-way sync between the standard view and the television
   await p.selectOption('#m-size', { index: 5 }); await p.click('#vtv'); const chip = await p.$$eval('.sb i', (x) => x[0].textContent); ok(chip !== 'Choose', 'R23 a choice made in the standard view is shown in the television', chip);
-  await p.click('.sb[data-go="0"]'); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]'); await p.click('#vstd'); const sel = await p.$eval('#m-size', (s) => s.options[s.selectedIndex].text); ok(/Single 90x190/.test(sel), 'R24 a choice made in the television is shown in the standard view', sel);
+  await p.click('.sb[data-go="0"]'); await pickSize(p); await p.click('#vstd'); const sel = await p.$eval('#m-size', (s) => s.options[s.selectedIndex].text); ok(/Single 90x190/.test(sel), 'R24 a choice made in the television is shown in the standard view', sel);
   // R25 Add to Bag / Go to Checkout: one button, two faces
   await p.goto(file + '?step=4'); const face = async () => [await p.$eval('#bag .btn', (x) => x.textContent.trim() + (x.disabled ? ' [off]' : '')), await p.$eval('#native .btn', (x) => x.textContent.trim() + (x.disabled ? ' [off]' : ''))];
-  const f0 = await face(); await p.goto(file + '?step=4&demo=1'); const f1 = await face(); await p.click('#bag [data-bag]'); const f2 = await face(); await p.click('.sb[data-go="0"]'); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]'); const f3 = await face();
+  const f0 = await face(); await p.goto(file + '?step=4&demo=1'); const f1 = await face(); await p.click('#bag [data-bag]'); const f2 = await face(); await p.click('.sb[data-go="0"]'); await pickSize(p); const f3 = await face();
   ok(/off/.test(f0[0]) && f1[0] === 'Add to Bag' && f2.join() === 'Go to Checkout,Go to Checkout' && f3[0] === 'Add to Bag', 'R25 Add to Bag waits for the four choices, becomes Go to Checkout (both buttons), and returns if a choice changes', [f0[0], f1[0], f2[0], f3[0]].join(' > '));
   // R26 every panel of every topic shows its text
   await p.goto(file); let empty = [], n = 0;
@@ -83,7 +85,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file + '?ch=zones&pn=map'); const zs = await p.evaluate(() => { const z = document.querySelector('.zsk'), sv = z.querySelector('svg').getBoundingClientRect(), a = document.querySelector('#answer').getBoundingClientRect(); return { bg: getComputedStyle(z).backgroundImage, ratio: +(sv.width / sv.height).toFixed(3), share: +(z.getBoundingClientRect().width / a.width).toFixed(2), video: !!document.querySelector('.pw .mini .vid') }; });
   ok(zs.bg === 'none' && Math.abs(zs.ratio - 2550 / 760) < 0.03 && zs.share >= 0.95 && zs.video, 'R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones', JSON.stringify(zs));
   // R28 depths in TRUE proportion 20 : 24 : 26 (master prompt 13.11), and the chosen depth is marked
-  await p.goto(file + '?step=1&demo=1'); const th = await p.$$eval('.dcard svg[data-k]', (x) => x.map((e) => +e.dataset.k)); const r1 = th[0] / th[2], r2 = th[1] / th[2], unit = th[2] === 1, chosen = await p.$$eval('.dcard .chosen', (x) => x.length);
+  await p.goto(file + '?step=1'); await p.click('.dcard[data-depth="1"]'); const th = await p.$$eval('.dcard svg[data-k]', (x) => x.map((e) => +e.dataset.k)); const r1 = th[0] / th[2], r2 = th[1] / th[2], unit = th[2] === 1, chosen = await p.$$eval('.dcard .chosen', (x) => x.length);
   ok(unit && Math.abs(r1 - 20 / 26) < 0.001 && Math.abs(r2 - 24 / 26) < 0.001 && chosen === 1, 'R28 depths drawn in true proportion 20:24:26 (front-edge scale of the owner\'s 26 cm drawing) and the chosen one is marked', [r1.toFixed(3), r2.toFixed(3), 'chosen ' + chosen].join(' '));
   // R29 ignition: the television switches on each time (start, every press of Optimised Preview); both facts; ends by itself or on Skip
   const ig = await ctx.newPage(); await ig.goto(file + '?ignite=1'); await ig.waitForTimeout(2400);
@@ -108,7 +110,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   }
   ok(!warm.length && layers.includes('explore') && layers.includes('select'), 'R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments', warm.slice(0, 4).join(' | ') || layers.join(','));
   // R34 owner 16 Nov VI: the order trail while choosing (and back from any information screen), Review over both rows, seven zones in one row, no moon over the logo, no glow on white
-  await p.goto(file + '?step=0'); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]'); await p.click('.slg .sb[data-go="2"]'); await p.click('#rail [data-goto="firmness/principle"]');
+  await p.goto(file + '?step=0'); await pickSize(p); await p.click('.slg .sb[data-go="2"]'); await p.click('#rail [data-goto="firmness/principle"]');
   const tr = await p.evaluate(() => ({ n: document.querySelectorAll('#trailbar .tst').length, vis: !document.querySelector('#trailbar').hidden, cur: (document.querySelector('#trailbar .tst.cur') || {}).textContent, back: !!document.querySelector('#rail button.tp.back') }));
   await p.click('#trailbar .tst[data-go="0"]'); const backTo = await p.$eval('.slg .sb[aria-current=true]', (e) => e.dataset.go);
   const rv = await p.evaluate(() => { const r = document.querySelector('.slg .sb.rv').getBoundingClientRect(), a = document.querySelector('.slg .sb[data-go="1"]').getBoundingClientRect(), c = document.querySelector('.slg .sb[data-go="3"]').getBoundingClientRect(); const all = [...document.querySelectorAll('.slg .sb')].map((e) => Math.round(e.getBoundingClientRect().top)); return (Math.abs(r.top - a.top) < 2 && Math.abs(r.bottom - c.bottom) < 2) || new Set(all).size === 1; });
@@ -118,7 +120,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   const glow = await p.evaluate(() => { const sc = getComputedStyle(document.querySelector('.screen')).boxShadow, st = getComputedStyle(document.querySelector('.stage')).backgroundImage; return (sc === 'none' ? '' : 'screen ') + (/radial/.test(st) ? 'stage' : ''); });
   ok(tr.n === 5 && tr.vis && /Firmness/.test(tr.cur) && tr.back && backTo === '0' && rv && zr && trOff && moon === 'none' && !glow, 'R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white', JSON.stringify({ tr, backTo, rv, zr, trOff, moon, glow }));
   // R35 owner 16 Nov VII: Explore, Select & Buy, Your order and Your selection are four cards, each with its own colour family
-  await p.goto(file + '?step=0'); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]');
+  await p.goto(file + '?step=0'); await pickSize(p);
   const fam = await p.evaluate(() => { const g = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e).backgroundColor + '|' + getComputedStyle(e).backgroundImage.slice(0, 40) : null; }; return [g('.exg'), g('.slg'), g('#trailbar .trail'), g('.mine')]; });
   ok(fam.every(Boolean) && new Set(fam).size === 4, 'R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour', fam.join('  //  '));
   // R36 owner 16 Nov VIII: a calm start-up (no moon cycle, no mattress drawing); the Standard Product View keeps the approved description;
@@ -145,10 +147,25 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file + '?step=2'); const wmax = await p.$eval('#gw', (e) => e.max);
   const wide = p.viewportSize().width >= 1100;
   ok(famNames === 'All Single Sizes|All Small Double Sizes|All Double Sizes|All King Sizes|All Super King Sizes|All Emperor Sizes' && famTotal === 22 && famCols === 6 && kingN === 5 && chips === 6 && (!wide || rowTops === 1) && empN === 3 && backAll === 6 && (!wide || dTops === 1) && wmax === '180', 'R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its row; three depths side by side; weight up to 180 kg', JSON.stringify({ famTotal, famCols, kingN, chips, rowTops, empN, backAll, dTops, wmax }));
+  // R38 owner 16 Nov X: size, depth and cover work like firmness: a touch only picks (nothing counts, the confirm button waits), Confirm makes it count,
+  // the confirmed choice stays open to Change (the other options come back), and a changed choice can be confirmed again
+  const flow = {};
+  await p.goto(file + '?step=0'); flow.dis0 = await p.$eval('[data-confirm="size"]', (e) => e.disabled);
+  await p.click('[data-sgrp="king"]'); await p.click('.card[data-size="12"]'); flow.pickedNoCount = !(await p.$eval('.sb[data-go="0"]', (e) => /Choose/.test(e.textContent))) === false && (await p.$eval('#trailbar .tst.ok', () => false).catch(() => true));
+  flow.en1 = await p.$eval('[data-confirm="size"]', (e) => !e.disabled && /King Long/.test(e.textContent));
+  await p.click('[data-confirm="size"]'); flow.sizeDone = await p.$eval('.sb[data-go="0"] i', (e) => /150 × 210/.test(e.textContent)); flow.onlyOne = (await p.$$('.card[data-size]')).length === 0 && !!(await p.$('[data-change="size"]'));
+  await p.click('[data-change="size"]'); flow.reopen = (await p.$$('.card[data-size]')).length >= 5 && (await p.$$('.cz-chip')).length === 6;
+  await p.click('.cz-chip[data-sgrp="double"]'); await p.click('.card[data-size="10"]'); await p.click('[data-confirm="size"]'); flow.changed = await p.$eval('.sb[data-go="0"] i', (e) => /140 × 200/.test(e.textContent));
+  await p.click('.sb[data-go="1"]'); flow.dDis = await p.$eval('[data-confirm="depth"]', (e) => e.disabled); await p.click('.dcard[data-depth="2"]'); flow.dPick = await p.$eval('.sb[data-go="1"] i', (e) => /Choose/.test(e.textContent)); await p.click('[data-confirm="depth"]');
+  flow.dDone = await p.$eval('.sb[data-go="1"] i', (e) => /26 cm/.test(e.textContent)); await p.click('[data-change="depth"]'); flow.dBack = (await p.$$('.dcard')).length === 3;
+  await p.click('.dcard[data-depth="0"]'); await p.click('[data-confirm="depth"]');
+  await p.click('.sb[data-go="3"]'); flow.cDis = await p.$eval('[data-confirm="cover"]', (e) => e.disabled); await p.click('.tile[data-cover="1"]'); flow.cPick = await p.$eval('.sb[data-go="3"] i', (e) => /Choose/.test(e.textContent)); await p.click('[data-confirm="cover"]');
+  flow.cDone = await p.$eval('.sb[data-go="3"] i', (e) => /Cotton/.test(e.textContent)); await p.click('[data-change="cover"]'); flow.cBack = (await p.$$('.tile')).length === 4;
+  ok(flow.dis0 && flow.en1 && flow.sizeDone && flow.onlyOne && flow.reopen && flow.changed && flow.dDis && flow.dPick && flow.dDone && flow.dBack && flow.cDis && flow.cPick && flow.cDone && flow.cBack, 'R38 size, depth and cover: pick, Confirm, then it counts; Change brings the other options back and a changed choice can be confirmed again', JSON.stringify(flow));
   await p.goto(file + '?step=0');
   const noLong = await p.evaluate(() => !/—/.test(document.body.innerText)); ok(noLong, 'R31 no long dash is shown anywhere');
   // R32 the guide after a choice (?guide=1): says what was chosen, what comes next, then opens it by itself
-  await p.goto(file + '?step=0&guide=1'); await p.click('[data-sgrp="single"]').catch(() => {}); await p.click('.card[data-size="3"]'); await p.waitForTimeout(150);
+  await p.goto(file + '?step=0&guide=1'); await pickSize(p); await p.waitForTimeout(150);
   const g1 = await p.$eval('#answer', (e) => e.textContent.replace(/\s+/g, ' ')); const g1q = await p.$eval('#q', (e) => e.textContent.replace(/\s+/g, ' ').trim()); await p.waitForTimeout(2900);
   const g2 = await p.$eval('#q', (e) => e.textContent.replace(/\s+/g, ' ').trim()); const g2s = await p.$eval('#stageh', (e) => e.textContent);
   ok(/Size chosen/.test(g1q) && /Now choose your Depth/.test(g1) && /How thick should it be/.test(g2) && /Step 2 of 5/.test(g2s), 'R32 after a choice the television says what is chosen and what is next, then opens Depth by itself', [g1q, g1.slice(0, 80), g2.slice(0, 40), g2s].join(' | '));

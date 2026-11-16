@@ -156,3 +156,10 @@ Test R35 checks that the four have four different looks; R2 was updated for the 
 - **Depths** sit side by side in the same space (20, 24, 26 cm), so the third depth is never out of view.
 - **Body weight scale** ends at **180 kg** (the firmness ranges are unchanged: 115 kg and over is Extra Firm).
 - Test R37.
+
+## Pick, Confirm, Change (owner, 16 November 2026, X)
+- **Every choice works like firmness.** For size, depth, firmness and cover: a touch only **picks** (the card lights, nothing counts, nothing goes to the order or the shop); a bar says "Your size: King Long · 150 × 210 cm. Confirm it to continue." with the button **Confirm King Long**; only then the choice counts (order trail, Select & Buy tile, price, Add to Bag) and the module says what comes next and opens it.
+- **A confirmed choice stays open.** The screen then shows the choice alone (badge Confirmed, its picture, its words) with **Change size / Change depth / Change firmness / Change cover**. A touch brings every option back (for sizes: the family of the chosen size is open, with all six families one touch away), the current one preselected; confirming again replaces it. The customer is never left on a first choice: Select & Buy, the order trail and the tree's header all lead back at any time.
+- **Nothing blocks anything.** Reading the information under a choice, moving to another choice, or leaving and returning never loses a pick that was confirmed; an unconfirmed pick simply does not count. "Continue to <next>" stays inactive until the choice is confirmed.
+- **In the shop** (Ecwid is the executor): only a confirmed choice is written to Ecwid's own control, exactly like firmness. The shop's own controls in the Standard Product View remain direct and are always confirmed by themselves.
+- Test R38.
