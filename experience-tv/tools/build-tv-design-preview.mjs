@@ -32,12 +32,12 @@ D.covers = D.covers.map((c, i) => Object.assign(c, { mod: [0, 0, 0, 77][i] }));
 const SPEC = [
   ['discover', 'Discover', [['intro', 'Introduction', 'hero'], ['glance', 'At a Glance', 'facts']]],
   ['firmness', 'Firmness', [['choose', 'Select Your Firmness', 'step:firmness'], ['principle', 'Correct vs Softer', 'read:0'], ['regulation', 'How It Works', 'read:1'], ['who', 'Who It Is For', 'read:2']]],
-  ['comfort', 'Comfort', [['expect', 'What To Expect', 'article'], ['behaviour', 'Latex Behaviour', 'read:0']]],
+  ['comfort', 'Comfort', [['expect', 'What To Expect', 'article'], ['behaviour', 'Latex Behaviour', 'read:0'], ['density', 'How Density Works', 'density']]],
   ['height', 'Sizes', [['sizes', 'Select Your Size', 'step:size'], ['heights', 'Select Your Depth', 'step:depth'], ['why', 'Why Height Matters', 'read:0']]],
   ['covers', 'Covers', [['choose', 'Select Your Cover', 'step:cover'], ['system', 'Cover System', 'read:4']]],
   ['benefits', 'Benefits', [['origin', 'Origin', 'points'], ['why', 'Why Latex', 'read:0']]],
-  ['support', 'Support', [['bearing', 'Bearing Force', 'points'], ['together', 'Support + Adaptation', 'read:0']]],
-  ['adaptation', 'Adaptation', [['elasticity', 'Elasticity', 'points'], ['feel', 'How It Feels', 'read:0']]],
+  ['support', 'Support', [['bearing', 'Bearing Force', 'points'], ['together', 'Support + Adaptation', 'read:0'], ['density', 'How Density Works', 'density']]],
+  ['adaptation', 'Adaptation', [['elasticity', 'Elasticity', 'points'], ['feel', 'How It Feels', 'read:0'], ['adjustable', 'Adjustable Beds', 'adjust']]],
   ['zones', '7-Zone', [['map', 'Zone Map', 'zones'], ['detail', 'Zone By Zone', 'read:0']]],
   ['ventilation', 'Ventilation', [['airflow', 'Airflow', 'points'], ['sleep', 'Why It Matters', 'read:0']]],
   ['hygiene', 'Hygiene', [['clean', 'Cleaner Sleep', 'points'], ['picture', 'Realistic Picture', 'read:0']]],
@@ -154,6 +154,7 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
   D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12) };          // the wordmark "Bio Dunlop" (paths 12-23), drawn in one ink
   D.bioMark = { vb: '2400 -1372 360 376', d: [bp[21], bp[20]] };      // the D with the spiral (paths 20-21)
   D.moon = b64('q-dd-moon-88.webp'); D.core = b64('q-latex-closeup.webp'); D.bowl = b64('q-latex-milk-bowl-cut-700.webp');
+  D.moonCycle = b64('moon-cycle.webp'); D.pins = b64('q-latex-pins.webp');
   D.logos = { oeko: b64('q-logo-oekotex-mono.webp'), hohenstein: b64('q-logo-hohenstein-mono.webp'), iso9001: b64('q-logo-iso9001-mono.webp'), iso14001: b64('q-logo-iso14001-mono.webp'), siemens: b64('q-logo-siemens-monitoring-mono.webp') };
 }
 D.curated = {
@@ -198,6 +199,18 @@ D.curated = {
   'warranty/cover': { third: { k: 'The complete sleep system', v: 'Complete your set', b: 'A compatible bed base or a Botanic topper completes the support, comfort and durability the mattress is designed for. The two pillows come with the mattress either way.' } },
   // 33 FB9568A4: 12% of the selected height (Botanic heights only)
   'warranty/conditions': { labels: ['Structural indentations (12%)', 'Rotate three times in the first six months'] },
+  // owner 16 Nov: How Density Works (owner's infographic, redrawn in the system); shown in Comfort and in Support
+  'density': { title: 'How Density Works', sub: 'The logic behind Support and comfort in natural Dunlop latex.',
+    cards: [['Density', 'The material foundation', 'A well-structured latex foam creates a stronger and more stable base.'],
+      ['Stable Structure', 'Better structural integrity', 'The material holds its shape and performance more consistently under repeated pressure.'],
+      ['Consistent Firmness', 'Support works more reliably', 'Firmness stays more controlled and predictable when the structure is stable.'],
+      ['Adaptive Comfort', 'Elasticity can respond better', 'Natural latex can contour and recover more effectively when supported by a stable internal structure.']],
+    band: 'Density is the foundation. Firmness regulates Support. Elasticity delivers Adaptation.',
+    note: 'Density does not replace firmness or elasticity. It helps them perform more consistently over time.' },
+  // owner 16 Nov: adjustable beds (a settings-style screen, like the car's climate page)
+  'adaptation/adjustable': { title: 'Made For Adjustable Beds', sub: 'One continuous natural latex core, no springs: it follows every position of an adjustable base and returns to its full shape when the base is flat.',
+    positions: [['Flat', 0, 0], ['Reading', 55, 10], ['Relax', 35, 25], ['Legs Up', 0, 45], ['Zero Gravity', 30, 40]],
+    points: [['Suitable for adjustable beds', 'Botanic can be used on adjustable bed bases.'], ['Follows the base', 'The single latex core bends with the head and leg sections, without folds or gaps.'], ['The zones stay with you', 'The seven zones keep their place under the body in every position.'], ['Back to shape', 'When the base is flat again, the latex returns to its full shape.']] },
   // 34 3D3269B4
   'delivery/made': { title: 'Production and delivery note', sub: 'Every Botanic mattress is prepared to order on the basis of your confirmed configuration.', made: 'Individually made to your specification', custom: 'Your Botanic mattress is custom made to your confirmed configuration, including size, height, firmness level and cover material.' },
   // 35 7EDDE74B

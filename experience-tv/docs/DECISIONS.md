@@ -83,3 +83,13 @@ These are decided. They are not asked again and not undone by a later change. Wh
 - **Choosing topics stand out.** In the top bar Firmness, Sizes, Covers and Delivery carry an icon, a deeper ivory and a graphite underline, and a small mark when their choice is made. The order in the left rail is one assembled instrument: four icon tiles on a line that fills as the choices are made, the next one pulsing softly.
 - **Header** always names the model: Botanic Original 100% Natural 100% Organic Latex Mattress Dunlop Technology (Botanic and Dunlop bold, Original and Organic thin, in the second colour).
 - The preview opens on Discover.
+
+## Owner's round of 16 November 2026 (II)
+- **Ignition:** the owner's moon-phase cycle loads first (about 1.4 s, sweeping left to right), then the start-up. Behind it a very light glow of the seven-zone core: a vector sketch of the core from the Quality page photograph (seven perforated bands), no image file, about 26% opacity. The moon cycle also sits as a quiet ornament in the Review band.
+- **Two groups in the top bar.** Explore (the 14 description topics, ivory) and **Select & Buy** (Size, Depth, Firmness, Cover, Review: teal underline, teal glow on hover, a mark when chosen). Teal (#23908C) is the colour of the selection system everywhere: the order line, the ticks, the next step, the gauge, the guide.
+- **Standard Product View** has its own colour: warm sand. View Model Gallery and the two views live in the "Select your Botanic here" card, which stays visible in the standard view so the customer can always switch back.
+- **Words for customers:** "screen" or "presentation screen", never "television" (internal only).
+- **How Density Works** (owner's infographic, redrawn in the system): four steps Density, Stable Structure, Consistent Firmness, Adaptive Comfort, the conclusion band and the note. In Comfort and in Support.
+- **Adjustable Beds** (Adaptation): a settings screen like the car's climate page: positions on the left (Flat, Reading, Relax, Legs Up, Zero Gravity), the core with a sketched sleeper on a hinged base in the middle, Head and Legs sliders, four short points. Claim used: "Suitable for adjustable beds" (owner).
+- **Mattress icon** in "Your selection": an outline, transparent, smaller; blue only when all four choices are made. No blue block, no glow.
+- **Small green leaf** marks the section labels (Explore, Select & Buy, the stage header, In <topic>, Your selection) and every card.

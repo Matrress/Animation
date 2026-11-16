@@ -12,3 +12,7 @@ Nothing here was generated or redrawn. Every file is the owner's own, taken from
 | `q-logo-*-mono.webp` | same module, the official marks of OEKO-TEX, Hohenstein, ISO 9001, ISO 14001, Siemens Monitoring. Converted once to one graphite ink on transparency (shape untouched), as the master prompt asks for monochrome marks. | Certifications |
 
 ECO-Institut has no file on the site: its name is set in type. Still missing: the ORGANIC wordmark of reference 01 and the original `IMG_5822.WEBP`.
+| `moon-cycle.webp` | the owner's moon-phase drawing (`startingy.png`, 16 Nov 2026), cropped to its strip | Ignition (loading), Review band |
+| `q-latex-pins.webp` | Quality and Certificates page, `latex-pins.webp` (the real pin holes), resized | Comfort/Support · How Density Works |
+
+The 7-zone core glow in the ignition is a light vector sketch of the core (seven perforated bands), drawn from the Quality page photograph `latex-core-1200.webp`; no image file is shipped for it.
