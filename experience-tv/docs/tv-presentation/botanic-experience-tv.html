@@ -1038,6 +1038,45 @@ body.std .monitor { display: none !important; }
 .sgcard b { font-size: 23px; }
 .card.cz .dm { font-size: 30px; }
 .card.cz { padding-right: 16px; }
+
+/* ===== SIZE FAMILIES, SERIOUS (owner, 16 Nov XII): the families are the map of the sizes. Large capitals with wide spacing, a clear
+   structure, rectangular (never pills); inside a family the cards return to a calm size ===== */
+.sgrid { gap: 16px; }
+.sgcard { min-height: 196px; padding: 24px 26px 30px; gap: 14px; justify-content: space-between; border-radius: 16px; }
+.sgcard b { font-size: 24px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; line-height: 1.35; }
+.sgcard .rg { gap: 6px; font-size: 21px; }
+.sgcard .rg > span:nth-child(2) { font-size: 17px; }
+.sgcard .cnt { font-size: 13px; letter-spacing: .22em; font-weight: 600; color: var(--g); }
+.sgcard .glow { left: 26px; right: 26px; bottom: 14px; height: 3px; }
+.cz-t { font-size: 14px; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; color: rgba(230,240,245,.85); }
+/* inside a family: the six families as rectangular tabs, capitals, spaced; not pills */
+.snav { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; align-items: stretch; margin-bottom: 16px; }
+.cz-back { height: auto; min-height: 58px; border-radius: 10px; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; justify-content: center; padding: 0 10px; line-height: 1.25; text-align: left; }
+.cz-chips { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.cz-chip { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 3px; height: auto; min-height: 58px; padding: 9px 11px 13px; border-radius: 10px; border: 1px solid rgba(143,208,236,.26); background: rgba(255,255,255,.04); color: rgba(230,240,245,.85); text-align: left; }
+.cz-chip .ct { font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; line-height: 1.2; }
+.cz-chip .cn { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: rgba(214,232,240,.62); }
+.cz-chip .glow { left: 11px; right: 11px; bottom: 5px; height: 2px; opacity: .55; }
+.cz-chip:hover { border-color: color-mix(in srgb, var(--g) 75%, transparent); color: #fff; }
+.cz-chip[aria-pressed=true] { border-color: var(--g); background: color-mix(in srgb, var(--g) 18%, rgba(255,255,255,.03)); color: #fff; }
+.cz-chip[aria-pressed=true] .glow { opacity: 1; height: 3px; box-shadow: 0 0 10px var(--g); }
+.cz-chip[aria-pressed=true] .cn { color: var(--g); }
+@media (max-width: 900px) { .snav { grid-template-columns: 1fr; } .cz-chips { grid-template-columns: repeat(3, minmax(0, 1fr)); } .sgcard b { font-size: 19px; letter-spacing: .14em; } }
+/* the size cards in an opened family: calm again */
+.card.cz { padding: 14px 16px 22px; gap: 6px; min-height: 108px; }
+.card.cz .nm { font-size: 15px; font-weight: 600; letter-spacing: .02em; }
+.card.cz .dm { font-size: 23px; font-weight: 600; gap: 6px; }
+.card.cz .dm i { font-size: 13px; }
+.card.cz .in { font-size: 16px; } .card.cz .in i { font-size: 12px; }
+.card.cz .glow { left: 16px; right: 16px; bottom: 10px; }
+
+.sgcard b { font-size: 22px; letter-spacing: .13em; min-height: 2.7em; display: flex; align-items: flex-start; }
+.sgcard { min-height: 184px; }
+.snav { grid-template-columns: 124px minmax(0, 1fr); }
+.cz-back { font-size: 11.5px; letter-spacing: .1em; }
+.cz-chip { padding: 9px 9px 13px; }
+.cz-chip .ct { font-size: 12px; letter-spacing: .09em; }
+.cz-chip .cn { font-size: 10.5px; letter-spacing: .08em; }
 </style>
 
 
@@ -1338,8 +1377,8 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
         return '<button class="sgcard" data-sgrp="' + x.id + '" style="--g:' + x.c + '"><b>' + esc(x.name) + '</b><span class="rg"><span>' + (Math.min.apply(null, ws) === Math.max.apply(null, ws) ? ws[0] : Math.min.apply(null, ws) + '–' + Math.max.apply(null, ws)) + '<i>cm wide</i></span><span>' + (Math.min.apply(null, ws) === Math.max.apply(null, ws) ? inch(ws[0]) : inch(Math.min.apply(null, ws)) + '–' + inch(Math.max.apply(null, ws))) + '<i>in wide</i></span></span><i class="cnt">' + L.length + (L.length === 1 ? ' size' : ' sizes') + '</i>' + (mine ? '<em class="cz-mine">' + CHECK + esc(pk.name) + '</em>' : '') + '<span class="glow"></span></button>';
       }).join('') + '</div>';
     } else {
-      h += '<span class="cz-t">' + esc(g.name) + '</span></div><div class="snav"><button class="cz-back" data-sgrp="">' + '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>All size families</button><span class="cz-chips">' +
-        SGRP.map(function (x) { return '<button class="cz-chip" data-sgrp="' + x.id + '" style="--g:' + x.c + '" aria-pressed="' + (x === g) + '"><i></i>' + esc(x.name.replace(/^All | Sizes$/g, '')) + '</button>'; }).join('') + '</span></div>' +
+      h += '<span class="cz-t">' + esc(g.name) + '</span></div><div class="snav"><button class="cz-back" data-sgrp="">' + '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>All size families</button><span class="cz-chips" role="tablist" aria-label="Size families">' +
+        SGRP.map(function (x) { return '<button class="cz-chip" role="tab" data-sgrp="' + x.id + '" style="--g:' + x.c + '" aria-pressed="' + (x === g) + '" aria-selected="' + (x === g) + '"><span class="ct">' + esc(x.name.replace(/^All | Sizes$/g, '')) + '</span><span class="cn">' + sgSizes(x).length + ' sizes</span><span class="glow"></span></button>'; }).join('') + '</span></div>' +
         '<div class="scards" style="--g:' + g.c + '">' + sgSizes(g).map(function (s, si) { var on = pk && pk.label === s.label, sp = ({ 1: [6], 2: [3, 3], 3: [2, 2, 2], 4: [3, 3, 3, 3], 5: [2, 2, 2, 3, 3], 6: [2, 2, 2, 2, 2, 2] }[sgSizes(g).length] || [2])[si];
           return '<button class="card cz" style="grid-column: span ' + sp + '" data-size="' + D.sizes.indexOf(s) + '" aria-pressed="' + on + '">' + (on ? '<em class="cz-ok">' + CHECK + '</em>' : '') + '<span class="nm">' + esc(s.name) + '</span><span class="dm">' + s.dims[0] + ' × ' + s.dims[1] + '<i>cm</i></span><span class="in">' + inch(s.dims[0]) + ' × ' + inch(s.dims[1]) + '<i>in</i></span><span class="glow"></span></button>'; }).join('') + '</div>';
     }
@@ -1605,6 +1644,12 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   /* GUIDE (owner, 16 Nov): after every choice the television says what was chosen and what comes next, then opens the next
      choice by itself after a moment. Any tap cancels it. Off in automated browsers unless ?guide=1. */
   var COACHT = null;
+  /* OWNER 16 Nov (XII): whatever is pressed, the screen stays at the information block. It is never thrown back to the top of the
+     page, so the customer never has to scroll down to see what came out. */
+  function toStage() {
+    var h = $('#stageh') || $('#q'); if (!h) return; var r = h.getBoundingClientRect();
+    if (r.top < 8 || r.top > window.innerHeight * 0.6) window.scrollTo({ top: Math.max(0, window.scrollY + r.top - 14), behavior: (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth' });
+  }
   function guideOn() { return !navigator.webdriver || /guide=1/.test(location.search); }
   function startCoach() {
     var i = S.step; if (i > 3) return; var to = nextUnchosen(); if (to < 0) to = 4;
@@ -1640,7 +1685,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-confirm],[data-change],[data-sgrp],[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
     var d = t.dataset, cg = S.coach; S.coach = null; clearTimeout(COACHT);
-    if (d.coachgo != null) { goStep(cg ? cg.to : S.step); draw(); window.scrollTo({ top: 0 }); return; }
+    if (d.coachgo != null) { goStep(cg ? cg.to : S.step); draw(); toStage(); return; }
     if (d.coachstay != null) { draw(); return; }
     if (d.view != null) { S.view = d.view; draw(); if (d.view === 'tv') ignite(); return; }
     if (d.gal != null) { S.gal = !S.gal; draw(); return; }
@@ -1668,7 +1713,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     else if (d.bag != null) { S.bagged = sig(); toast('Stand-in: in the shop this presses Ecwid\'s own Add to Bag, and the button turns into Go to Checkout when Ecwid\'s cart reports the change.'); }
     else if (d.checkout != null) { toast('Go to Checkout opens the shopping cart: the order there is built from your four choices and the promotion. The e-mail is entered in the cart. (Not opened in this preview.)'); return; }
     if ((d.fconfirm || (d.confirm != null && S[d.confirm])) && S.view === 'tv' && guideOn()) startCoach();
-    draw(); if (d.bag == null) window.scrollTo({ top: 0 });
+    draw(); if (d.ch != null || d.pn != null || d.goto != null || d.go != null || d.flat != null || d.next != null || d.back != null) toStage();   // moving to another screen: the information block comes into view; a pick or a confirm in place never moves the page
     if (d.ch === 'discover') ignite();   // every press of Discover switches the television on again
   });
   document.addEventListener('change', function (e) {

@@ -1,12 +1,12 @@
 {
  "date": "2026-11-16",
  "failures": 0,
- "checks": 130,
+ "checks": 133,
  "rows": [
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 14px over 37 buttons"
+   "detail": "largest radius 16px over 37 buttons"
   },
   {
    "pass": true,
@@ -220,6 +220,11 @@
   },
   {
    "pass": true,
+   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are capitals with wide spacing, rectangular, not pills",
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":111,\"stageTop\":278,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":2.86,\"fs\":22,\"r\":16}}"
+  },
+  {
+   "pass": true,
    "rule": "R31 no long dash is shown anywhere",
    "detail": ""
   },
@@ -236,7 +241,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 14px over 37 buttons"
+   "detail": "largest radius 16px over 37 buttons"
   },
   {
    "pass": true,
@@ -410,6 +415,11 @@
   },
   {
    "pass": true,
+   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are capitals with wide spacing, rectangular, not pills",
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":289,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":2.86,\"fs\":22,\"r\":16}}"
+  },
+  {
+   "pass": true,
    "rule": "R31 no long dash is shown anywhere",
    "detail": ""
   },
@@ -426,7 +436,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 14px over 37 buttons"
+   "detail": "largest radius 16px over 37 buttons"
   },
   {
    "pass": true,
@@ -637,6 +647,11 @@
    "pass": true,
    "rule": "R38 size, depth and cover: pick, Confirm, then it counts; Change brings the other options back and a changed choice can be confirmed again",
    "detail": "{\"dis0\":true,\"pickedNoCount\":true,\"en1\":true,\"sizeDone\":true,\"onlyOne\":true,\"reopen\":true,\"changed\":true,\"dDis\":true,\"dPick\":true,\"dDone\":true,\"dBack\":true,\"cDis\":true,\"cPick\":true,\"cDone\":true,\"cBack\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are capitals with wide spacing, rectangular, not pills",
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":235,\"stageTop\":154,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":2.86,\"fs\":22,\"r\":16}}"
   },
   {
    "pass": true,

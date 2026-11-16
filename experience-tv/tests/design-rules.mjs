@@ -58,7 +58,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file + '?step=2'); const ft = await p.textContent('.fc'); ok(/Up to 48 kg/.test(ft) && /49 – 87 kg/.test(ft) && /88 – 114 kg/.test(ft) && /115 kg and over/.test(ft), 'R11 firmness numbers are the module\'s: 48 / 49-87 / 88-114 / 115+');
   ok((await p.$$('#gw, #gh')).length === 2, 'R12 weight and height sliders are on the large screen');
   ok(/Specialist Model: Orthopaedic Coconut Core/.test(ft) && (await p.$('a.fcard')) !== null, 'R13 Extra Firm is kept and redirected to the specialist model (a plain link)');
-  await p.goto(file + '?step=0'); await p.click('[data-sgrp="single"]'); ok(/\d+ × \d+\s*cm/.test(await p.textContent('.scards')) && /\d+\.\d × \d+\.\d\s*in/.test(await p.textContent('.scards')) && (await p.$eval('.card.cz .dm', (e) => parseFloat(getComputedStyle(e).fontSize))) >= 28 && (await p.$eval('.card.cz .in', (e) => parseFloat(getComputedStyle(e).fontSize))) >= 18, 'R14 sizes are shown in centimetres and in inches, large and easy to read');
+  await p.goto(file + '?step=0'); await p.click('[data-sgrp="single"]'); ok(/\d+ × \d+\s*cm/.test(await p.textContent('.scards')) && /\d+\.\d × \d+\.\d\s*in/.test(await p.textContent('.scards')) && (await p.$eval('.card.cz .dm', (e) => parseFloat(getComputedStyle(e).fontSize))) >= 22 && (await p.$eval('.card.cz .in', (e) => parseFloat(getComputedStyle(e).fontSize))) >= 15, 'R14 sizes are shown in centimetres and in inches, large and easy to read');
   // R15 depth: the owner's drawing, three heights; icon lights up when all four are chosen; zones: the mobile sketch
   await p.goto(file + '?step=1'); ok((await p.$$('.dcard svg')).length === 3, 'R15 three depths drawn from the owner\'s mattress drawing');
   await p.goto(file + '?step=0'); ok((await p.getAttribute('#mi svg', 'aria-label')).includes('0 of 4'), 'R16 the mattress icon is dim with nothing chosen');
@@ -162,6 +162,18 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.click('.sb[data-go="3"]'); flow.cDis = await p.$eval('[data-confirm="cover"]', (e) => e.disabled); await p.click('.tile[data-cover="1"]'); flow.cPick = await p.$eval('.sb[data-go="3"] i', (e) => /Choose/.test(e.textContent)); await p.click('[data-confirm="cover"]');
   flow.cDone = await p.$eval('.sb[data-go="3"] i', (e) => /Cotton/.test(e.textContent)); await p.click('[data-change="cover"]'); flow.cBack = (await p.$$('.tile')).length === 4;
   ok(flow.dis0 && flow.en1 && flow.sizeDone && flow.onlyOne && flow.reopen && flow.changed && flow.dDis && flow.dPick && flow.dDone && flow.dBack && flow.cDis && flow.cPick && flow.cDone && flow.cBack, 'R38 size, depth and cover: pick, Confirm, then it counts; Change brings the other options back and a changed choice can be confirmed again', JSON.stringify(flow));
+  // R39 owner 16 Nov XII: pressing anything keeps the screen at the information block (never thrown to the top of the page);
+  // a pick or a confirm in place never moves the page; the size families are capitals with wide spacing and rectangular tabs, not pills
+  await p.goto(file + '?step=0'); await p.evaluate(() => scrollTo(0, 360)); await p.waitForTimeout(100); const y0 = await p.evaluate(() => scrollY);
+  await p.click('[data-sgrp="king"]'); await p.waitForTimeout(100); const yFam = await p.evaluate(() => scrollY);
+  await p.click('.card[data-size="12"]'); await p.waitForTimeout(100); const yPick = await p.evaluate(() => scrollY);
+  await p.evaluate(() => scrollTo(0, 360)); await p.waitForTimeout(100);
+  await p.goto(file + '?ch=support&pn=bearing'); await p.evaluate(() => scrollTo(0, 360)); await p.waitForTimeout(100); await p.click('#rail .pn[data-pn="together"]'); await p.waitForTimeout(900); const stageTop = await p.$eval('#stageh', (e) => Math.round(e.getBoundingClientRect().top)); const yNav = await p.evaluate(() => scrollY); const maxScr = await p.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+  await p.goto(file + '?step=0'); await p.click('[data-sgrp="king"]');
+  const famQ = await p.evaluate(() => { const c = document.querySelector('.cz-chip'), b = document.querySelector('.sgcard') || document.querySelector('.cz-chip'); const cs = getComputedStyle(c); return { r: parseFloat(cs.borderTopLeftRadius), up: getComputedStyle(c.querySelector('.ct')).textTransform, sp: parseFloat(getComputedStyle(c.querySelector('.ct')).letterSpacing) }; });
+  await p.click('.cz-back'); const fam2 = await p.$eval('.sgcard b', (e) => ({ up: getComputedStyle(e).textTransform, sp: parseFloat(getComputedStyle(e).letterSpacing), fs: parseFloat(getComputedStyle(e).fontSize), r: parseFloat(getComputedStyle(e.parentElement).borderTopLeftRadius) }));
+  const stays = yFam === y0 && yPick === y0 && (y0 < 100 || maxScr < 40 || (yNav > 0 && stageTop >= 0 && stageTop <= 400));
+  ok(stays && famQ.r <= 14 && famQ.up === 'uppercase' && famQ.sp >= 1 && fam2.up === 'uppercase' && fam2.sp >= 2 && fam2.fs >= 20 && fam2.r <= 20, 'R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are capitals with wide spacing, rectangular, not pills', JSON.stringify({ y0, yFam, yPick, yNav, stageTop, famQ, fam2 }));
   await p.goto(file + '?step=0');
   const noLong = await p.evaluate(() => !/—/.test(document.body.innerText)); ok(noLong, 'R31 no long dash is shown anywhere');
   // R32 the guide after a choice (?guide=1): says what was chosen, what comes next, then opens it by itself
