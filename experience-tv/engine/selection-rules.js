@@ -18,10 +18,11 @@
 (function (g) {
   'use strict';
   var ORDER = [['size', 'Size'], ['firmness', 'Firmness'], ['depth', 'Depth'], ['cover', 'Cover']];
+  var ORDER_SHOP = [ORDER[0], ORDER[2], ORDER[1], ORDER[3]];   // Size, Depth, Firmness, Cover
 
   /* the names of the choices that are still missing, in the customer's order */
-  function missing(sel) {
-    return ORDER.filter(function (o) { return !(sel && sel[o[0]] && sel[o[0]].key != null && sel[o[0]].key !== ''); }).map(function (o) { return o[1]; });
+  function missing(sel, order) {
+    return (order || ORDER).filter(function (o) { return !(sel && sel[o[0]] && sel[o[0]].key != null && sel[o[0]].key !== ''); }).map(function (o) { return o[1]; });
   }
   function complete(sel) { return missing(sel).length === 0; }
 
@@ -33,8 +34,8 @@
 
   /* the face of the one bag button.
      bagSig: the signature Ecwid confirmed as being in the bag (or '' when nothing is in the bag). */
-  function bagFace(sel, bagSig) {
-    if (!complete(sel)) return { face: 'add', enabled: false, ready: false, text: 'Add to Bag', guide: 'Still to choose: ' + missing(sel).join(' · ') };
+  function bagFace(sel, bagSig, order) {   // order (optional): the order the screen asks in; the large television asks Size, Depth, Firmness, Cover like the shop's own options
+    if (!complete(sel)) return { face: 'add', enabled: false, ready: false, text: 'Add to Bag', guide: 'Still to choose: ' + missing(sel, order).join(' · ') };
     if (bagSig && bagSig === signature(sel)) return { face: 'checkout', enabled: true, ready: false, text: 'Go to Checkout', guide: 'Added to your bag' };
     return { face: 'add', enabled: true, ready: true, text: 'Add to Bag', guide: bagSig ? 'Your new choice is not in the bag yet: Add to Bag again' : 'Ready to order: all four choices are made' };
   }
@@ -46,7 +47,7 @@
     return lines;
   }
 
-  var api = { ORDER: ORDER, missing: missing, complete: complete, signature: signature, bagFace: bagFace, checkoutLines: checkoutLines };
+  var api = { ORDER: ORDER, ORDER_SHOP: ORDER_SHOP, missing: missing, complete: complete, signature: signature, bagFace: bagFace, checkoutLines: checkoutLines };
   g.DDRules = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 }(typeof window !== 'undefined' ? window : globalThis));

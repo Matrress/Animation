@@ -77,7 +77,7 @@ for (const vp of [{ width: 1366, height: 1024 }, { width: 1024, height: 1366 }])
   const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
   await p.goto(TV + '?step=0'); await p.waitForTimeout(120);
   const g0 = await p.textContent('#bag .hint');
-  ok(/Still to choose: Size · Firmness · Depth · Cover/.test(g0), 'the guidance names every choice still to make, in order', g0.trim());
+  ok(/Still to choose: Size · Depth · Firmness · Cover/.test(g0), 'the guidance names every choice still to make, in the shop\'s order', g0.trim());
   await p.goto(TV + '?step=4&demo=1&promo=10'); await p.waitForTimeout(120);
   await p.click('.st[data-go="0"]'); await p.waitForTimeout(60); await p.click('.card[data-size="3"]'); await p.waitForTimeout(80);
   ok(await p.$eval('#bag .bagbtn', (x) => !x.disabled && x.classList.contains('ready')), 'LAW 2: after changing the size with the other three covered, the button stays READY and active');

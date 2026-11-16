@@ -38,9 +38,9 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   // R5 the fourteen topic buttons, always there
   await p.goto(file);
   const chs = await p.$$eval('#chbar .ch', (x) => x.map((e) => e.textContent.trim()));
-  ok(chs.join('|') === 'Discover|Firmness|Comfort|Height|Covers|Benefits|Support|Adaptation|7-Zone|Ventilation|Hygiene|Certifications|Warranty|Delivery', 'R5 the fourteen topic buttons are on top', chs.length + ' buttons');
+  ok(chs.join('|') === 'Discover|Firmness|Comfort|Sizes|Covers|Benefits|Support|Adaptation|7-Zone|Ventilation|Hygiene|Certifications|Warranty|Delivery', 'R5 the fourteen topic buttons are on top', chs.length + ' buttons');
   // R6 the invitation
-  ok((await p.textContent('.invite')).includes('Select your Botanic here') && (await p.textContent('#stageh')).includes('Select here'), 'R6 "Select your Botanic here" is shown and the stage says "Select here"');
+  await p.goto(file + '?step=0'); ok((await p.textContent('.invite')).includes('Select your Botanic here') && (await p.textContent('#stageh')).includes('Select here'), 'R6 "Select your Botanic here" is shown and the stage says "Select here"');
   // R7 the bright blue set: Add to Bag, Go to Checkout and View Model Gallery are the same blue; the two view buttons are blue-outlined, never filled blue; flat and crisp
   await p.goto(file + '?step=4&demo=1'); await p.waitForTimeout(100);
   const bag = await p.evaluate(() => { const blue = (e) => /41, 124, 162|46, 134, 175|31, 107, 147/.test(getComputedStyle(e).backgroundImage) || /rgb\(41, 124, 162\)/.test(getComputedStyle(e).backgroundColor); const blur = (e) => { const m = getComputedStyle(e).boxShadow.match(/(-?[\d.]+)px (-?[\d.]+)px ([\d.]+)px/g) || []; return Math.max(0, ...m.map((x) => parseFloat(x.split(' ')[2]))); }; const solid = [...document.querySelectorAll('.bagbtn:not(:disabled), #galbtn')]; const seg = [...document.querySelectorAll('.seg button')]; const otherSolid = [...document.querySelectorAll('.btn:not(.bagbtn), .tbtn:not(#galbtn), .seg button')].filter((e) => blue(e) && !e.classList.contains('bagbtn')); return { n: solid.length, all: solid.every(blue), blur: Math.max(...solid.map(blur)), segOutlined: seg.every((e) => getComputedStyle(e).borderTopColor === 'rgb(41, 124, 162)' && !blue(e)), otherSolid: otherSolid.length }; });
@@ -52,12 +52,12 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   // R10 no "choose by hand" screen inside the television
   const txt = await p.evaluate(() => document.body.innerText.toLowerCase()); ok(!/by hand|manual/.test(txt), 'R10 no "Choose by hand" / manual mode inside the television');
   // R11 numbers: the Firmness module's four ranges and inches on sizes
-  await p.goto(file + '?step=1'); const ft = await p.textContent('.fc'); ok(/Up to 48 kg/.test(ft) && /49 – 87 kg/.test(ft) && /88 – 114 kg/.test(ft) && /115 kg and over/.test(ft), 'R11 firmness numbers are the module\'s: 48 / 49-87 / 88-114 / 115+');
+  await p.goto(file + '?step=2'); const ft = await p.textContent('.fc'); ok(/Up to 48 kg/.test(ft) && /49 – 87 kg/.test(ft) && /88 – 114 kg/.test(ft) && /115 kg and over/.test(ft), 'R11 firmness numbers are the module\'s: 48 / 49-87 / 88-114 / 115+');
   ok((await p.$$('#gw, #gh')).length === 2, 'R12 weight and height sliders are on the large screen');
   ok(/Specialist Model: Orthopaedic Coconut Core/.test(ft) && (await p.$('a.fcard')) !== null, 'R13 Extra Firm is kept and redirected to the specialist model (a plain link)');
   await p.goto(file + '?step=0'); ok(/\d+\.\d × \d+\.\d in/.test(await p.textContent('.cards')), 'R14 sizes are shown in centimetres and in inches');
   // R15 depth: the owner's drawing, three heights; icon lights up when all four are chosen; zones: the mobile sketch
-  await p.goto(file + '?step=2'); ok((await p.$$('.dcard svg')).length === 3, 'R15 three depths drawn from the owner\'s mattress drawing');
+  await p.goto(file + '?step=1'); ok((await p.$$('.dcard svg')).length === 3, 'R15 three depths drawn from the owner\'s mattress drawing');
   await p.goto(file + '?step=0'); ok((await p.getAttribute('#mi svg', 'aria-label')).includes('0 of 4'), 'R16 the mattress icon is dim with nothing chosen');
   await p.goto(file + '?step=0&demo=1'); ok((await p.getAttribute('#mi svg', 'aria-label')).includes('ready to order'), 'R17 the mattress icon lights up when all four choices are made');
   await p.goto(file + '?ch=zones&pn=map'); ok((await p.$$('.zsk svg g[data-z]')).length === 7 && (await p.$$('.zp')).length === 7, 'R18 7-Zone uses the mobile concept: the sketch, the legend and the seven zones');
@@ -69,7 +69,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.click('#galbtn'); await p.click('#vstd'); ok((await p.$$('#std select')).length === 4, 'R22 Standard Product View shows the shop\'s own four options');
   // R23 two-way sync between the standard view and the television
   await p.selectOption('#m-size', { index: 5 }); await p.click('#vtv'); const chip = await p.$$eval('.chip b', (x) => x[0].textContent); ok(chip !== '—', 'R23 a choice made in the standard view is shown in the television', chip);
-  await p.click('.card[data-size="3"]'); await p.click('#vstd'); const sel = await p.$eval('#m-size', (s) => s.options[s.selectedIndex].text); ok(/Single 90x190/.test(sel), 'R24 a choice made in the television is shown in the standard view', sel);
+  await p.click('.st[data-go="0"]'); await p.click('.card[data-size="3"]'); await p.click('#vstd'); const sel = await p.$eval('#m-size', (s) => s.options[s.selectedIndex].text); ok(/Single 90x190/.test(sel), 'R24 a choice made in the television is shown in the standard view', sel);
   // R25 Add to Bag / Go to Checkout: one button, two faces
   await p.goto(file + '?step=4'); const face = async () => [await p.$eval('#bag .btn', (x) => x.textContent.trim() + (x.disabled ? ' [off]' : '')), await p.$eval('#native .btn', (x) => x.textContent.trim() + (x.disabled ? ' [off]' : ''))];
   const f0 = await face(); await p.goto(file + '?step=4&demo=1'); const f1 = await face(); await p.click('#bag [data-bag]'); const f2 = await face(); await p.click('.st[data-go="0"]'); await p.click('.card[data-size="3"]'); const f3 = await face();
@@ -81,14 +81,27 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file + '?ch=zones&pn=map'); const zs = await p.evaluate(() => { const z = document.querySelector('.zsk'), sv = z.querySelector('svg').getBoundingClientRect(), a = document.querySelector('#answer').getBoundingClientRect(); return { bg: getComputedStyle(z).backgroundImage, ratio: +(sv.width / sv.height).toFixed(3), share: +(z.getBoundingClientRect().width / a.width).toFixed(2), video: !!document.querySelector('.pw .mini .vid') }; });
   ok(zs.bg === 'none' && Math.abs(zs.ratio - 2550 / 760) < 0.03 && zs.share >= 0.95 && zs.video, 'R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones', JSON.stringify(zs));
   // R28 depths in TRUE proportion 20 : 24 : 26 (master prompt 13.11), and the chosen depth is marked
-  await p.goto(file + '?step=2&demo=1'); const th = await p.$$eval('.dcard svg[data-k]', (x) => x.map((e) => +e.dataset.k)); const r1 = th[0] / th[2], r2 = th[1] / th[2], unit = th[2] === 1, chosen = await p.$$eval('.dcard .chosen', (x) => x.length);
+  await p.goto(file + '?step=1&demo=1'); const th = await p.$$eval('.dcard svg[data-k]', (x) => x.map((e) => +e.dataset.k)); const r1 = th[0] / th[2], r2 = th[1] / th[2], unit = th[2] === 1, chosen = await p.$$eval('.dcard .chosen', (x) => x.length);
   ok(unit && Math.abs(r1 - 20 / 26) < 0.001 && Math.abs(r2 - 24 / 26) < 0.001 && chosen === 1, 'R28 depths drawn in true proportion 20:24:26 (front-edge scale of the owner\'s 26 cm drawing) and the chosen one is marked', [r1.toFixed(3), r2.toFixed(3), 'chosen ' + chosen].join(' '));
   // R29 ignition: the television switches on each time (start, every press of Optimised Preview); both facts; ends by itself or on Skip
   const ig = await ctx.newPage(); await ig.goto(file + '?ignite=1'); await ig.waitForTimeout(2400);
-  const igT = await ig.$eval('#ign', (e) => (e.hidden ? '' : e.textContent)); await ig.waitForTimeout(1500); const igGone = await ig.$eval('#ign', (e) => e.hidden);
+  const igT = await ig.$eval('#ign', (e) => (e.hidden ? '' : e.textContent)); await ig.waitForTimeout(7600); const igGone = await ig.$eval('#ign', (e) => e.hidden);
+  const igStart = await ig.$eval('.invite', (e) => !!e) && /Introduction/.test(await ig.textContent('#stageh'));
+  await ig.click('#ign', { force: true }).catch(() => {}); await ig.click('#chbar [data-ch="firmness"]'); await ig.click('#chbar [data-ch="discover"]'); const igDisc = await ig.$eval('#ign', (e) => !e.hidden); await ig.click('#ign .skip'); await ig.waitForTimeout(400);
   await ig.click('#vstd'); await ig.click('#vtv'); const igAgain = await ig.$eval('#ign', (e) => !e.hidden); const igSnd = await ig.evaluate(() => ({ btn: !!document.querySelector('#ign .snd'), played: window.__ambient || 0 })); await ig.click('#ign .skip'); await ig.waitForTimeout(400); const igSkip = await ig.$eval('#ign', (e) => e.hidden);
   await ig.goto(file + '?ignite=0'); const igOff = await ig.$eval('#ign', (e) => e.hidden); await ig.close();
-  ok(/100% Natural Latex/.test(igT) && /Dunlop Technology/.test(igT) && igGone && igAgain && igSkip && igOff && igSnd.btn && igSnd.played >= 1, 'R29 ignition: both mandatory facts, ends by itself, replays on Optimised Preview with the ambient sound (after a tap only), Sound on/off and Skip', [igT.replace(/\s+/g, ' ').slice(0, 70), igGone, igAgain, igSkip, igOff, JSON.stringify(igSnd)].join(' | '));
+  ok(/100% Natural Latex/.test(igT) && /Dunlop Technology/.test(igT) && /Explore/.test(igT) && /Select & Buy/.test(igT) && /Custom/.test(igT) && /Custom Dunlop Natural Environment for Healthy Sleep/.test(igT) && igGone && igStart && igDisc && igAgain && igSkip && igOff && igSnd.btn && igSnd.played >= 1, 'R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; every press of Discover and of Optimised Preview plays it again; sound after a tap; Skip', [igT.replace(/\s+/g, ' ').slice(0, 90), igGone, igStart, igDisc, igAgain, igSkip, igOff, JSON.stringify(igSnd)].join(' | '));
+  // R30 the owner's text rules (16 Nov): every rail label starts with capitals, the header names the model, the order is Size > Depth > Firmness > Cover with icons, the guide says what is next
+  await p.goto(file + '?step=0'); const rail = await p.$$eval('#rail .pn', (x) => x.map((e) => e.textContent.trim())); const stp = await p.$$eval('#rail .st b', (x) => x.map((e) => e.textContent.trim()));
+  const hdr = await p.$eval('.brand', (e) => e.textContent.replace(/\s+/g, ' ').trim()); const icons = await p.$$eval('#rail .st .n svg', (x) => x.length); const selTop = await p.$$eval('#chbar .ch.sel', (x) => x.map((e) => e.dataset.ch).join(','));
+  const guide = await p.$eval('#chips .coach', (e) => e.textContent.replace(/\s+/g, ' ').trim());
+  ok(rail.join('|') === 'Select Your Size|Select Your Depth|Why Height Matters' && stp.join('|') === 'Size|Depth|Firmness|Cover|Review' && icons === 5 && /Botanic Original 100% Natural 100% Organic Latex Mattress Dunlop Technology/.test(hdr) && selTop === 'firmness,height,covers,delivery' && /Start here\s*Choose your Size/.test(guide), 'R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now', [rail.join('/'), stp.join('/'), icons, selTop, guide].join(' | '));
+  const noLong = await p.evaluate(() => !/—/.test(document.body.innerText)); ok(noLong, 'R31 no long dash is shown anywhere');
+  // R32 the guide after a choice (?guide=1): says what was chosen, what comes next, then opens it by itself
+  await p.goto(file + '?step=0&guide=1'); await p.click('.card[data-size="3"]'); await p.waitForTimeout(150);
+  const g1 = await p.$eval('#answer', (e) => e.textContent.replace(/\s+/g, ' ')); const g1q = await p.$eval('#q', (e) => e.textContent.replace(/\s+/g, ' ').trim()); await p.waitForTimeout(2900);
+  const g2 = await p.$eval('#q', (e) => e.textContent.replace(/\s+/g, ' ').trim()); const g2s = await p.$eval('#stageh', (e) => e.textContent);
+  ok(/Size chosen/.test(g1q) && /Now choose your Depth/.test(g1) && /How thick should it be/.test(g2) && /Step 2 of 5/.test(g2s), 'R32 after a choice the television says what is chosen and what is next, then opens Depth by itself', [g1q, g1.slice(0, 80), g2.slice(0, 40), g2s].join(' | '));
   ok(errs.length === 0, 'no page errors', errs.join(' | '));
   await ctx.close();
 }

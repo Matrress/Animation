@@ -28,7 +28,7 @@ a { color: inherit; }
 .pv { font-size: 12px; color: var(--ink3); margin: 0 0 12px; }
 /* top bar: brand and the four phases */
 .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
-.brand { font-size: 18px; letter-spacing: .02em; } .brand b { font-weight: 700; }
+.brand { font-size: 19px; letter-spacing: .01em; font-weight: 300; line-height: 1.25; flex: 1 1 340px; min-width: 0; } .brand b { font-weight: 700; font-size: 23px; letter-spacing: 0; } .brand i { font-style: normal; font-weight: 300; color: #297CA2; } .brand .dl { color: #297CA2; }
 .phases { display: flex; gap: 10px; flex-wrap: wrap; }
 .ph { height: 52px; padding: 0 20px; border-radius: var(--r); border: 1.5px solid var(--line2); background: var(--white); font-weight: 600; font-size: 16px; }
 .ph[aria-current=true] { background: var(--grad-band); color: #fff; border-color: rgba(80,205,253,.5); }
@@ -52,7 +52,7 @@ a { color: inherit; }
 .invite .dn { margin-left: auto; flex: none; width: 40px; height: 40px; border-radius: 10px; background: var(--grad-band); display: grid; place-items: center; }
 /* the monitor: a thin graphite frame around the screen */
 .monitor { position: relative; background: var(--grad-band); border-radius: 14px; padding: 5px; box-shadow: 0 16px 30px -24px rgba(11,28,42,.7); }
-/* IGNITION: the television switching on (about 3.4 s). Dark instrument glass, one hairline of light opens from the centre,
+/* IGNITION (v3, about 9 s): the name, the two facts, the three essences Explore / Select & Buy / Custom, the tagline. Dark instrument glass, one hairline of light opens from the centre,
    the leaf and the name appear, then two readouts, then the glass lights up into the stage and is gone. No blur, no glow
    clouds: opacity and scale only. A tap, a key or Skip ends it at once; with reduced motion it is a quiet fade. */
 .ign { position: absolute; inset: 5px; border-radius: 10px; overflow: hidden; z-index: 6; background: linear-gradient(180deg, #10293F 0%, #0B1C2A 100%); display: grid; place-items: center; color: #fff; cursor: pointer; align-content: start; padding-top: clamp(150px, 26vh, 260px); }
@@ -482,13 +482,84 @@ a { color: inherit; }
 .ivory .eng svg path + path, .ivory .stretch svg path:nth-child(2) { fill: #FFFFFF; }
 .ivory .zsk svg > path:last-child { fill: #FFFFFF; fill-opacity: .94; stroke: #2A3238; } .ivory .zsk svg > path:nth-last-child(2) { stroke: #2A3238; }
 .ivory .stretch .arr { fill: #8FD0EC; stroke: #2A3238; }
+/* ===== OWNER ROUND 16 NOVEMBER ===== */
+/* the choosing topics in the top bar: an icon, a deeper ivory, a graphite underline; a small mark when their choice is made */
+.ch.sel { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.ch.sel svg { width: 18px; height: 18px; flex: none; }
+.ivory .ch.sel { background: #F6F0E3; border-color: #C9BDA8; color: var(--ink); font-weight: 600; box-shadow: inset 0 -3px 0 #2A3238; }
+.ivory .ch.sel:hover { background: #FBF6EA; border-color: #2A3238; }
+.ivory .ch.sel[aria-current=true] { background: var(--grad-band); color: #F6F1E7; border-color: transparent; box-shadow: inset 0 -3px 0 var(--sky); }
+.ch .okm { display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: #297CA2; flex: none; } .ch .okm svg { width: 10px; height: 10px; }
+.ch.sel.seen::after { content: none; }
+/* the order: one assembled instrument, four icon tiles on a line that fills as the choices are made */
+.rail h2 .oc { float: right; letter-spacing: .08em; color: var(--ink3); font-weight: 600; }
+.ord { display: contents; }
+@media (min-width: 1100px) {
+  .ord { display: flex; flex-direction: column; position: relative; padding: 8px 8px; border: 1.5px solid var(--line2); border-radius: 16px; background: linear-gradient(180deg, #FFFFFF, #FBF8F2); gap: 2px; }
+  .ord::before { content: ''; position: absolute; left: 33px; top: 34px; bottom: 34px; width: 2px; background: var(--line2); border-radius: 1px; }
+  .ord::after { content: ''; position: absolute; left: 33px; top: 34px; width: 2px; height: calc((100% - 68px) * var(--f)); background: #297CA2; border-radius: 1px; transition: height .5s ease; }
+}
+.ord .st { position: relative; z-index: 1; }
+.st .n { position: relative; width: 38px; height: 38px; border-radius: 11px; border: 1.5px solid var(--line2); background: #fff; color: var(--ink3); display: grid; place-items: center; flex: none; }
+.st .n svg { width: 21px; height: 21px; }
+.st .n .ck { position: absolute; right: -6px; top: -6px; width: 17px; height: 17px; border-radius: 50%; background: #297CA2; display: grid; place-items: center; border: 2px solid #fff; } .st .n .ck svg { width: 9px; height: 9px; }
+.ivory .st.done .n { background: var(--band-top); border-color: var(--band-top); color: #F6F1E7; }
+.ivory .st.cur .n, .ivory .st.cur.done .n { background: #F6F1E7; border-color: #F6F1E7; color: var(--band-top); }
+.st.next .n { border-color: #297CA2; color: #1A5C7E; animation: nextPulse 2.2s ease-in-out infinite; }
+.st.next .t span { color: #1A5C7E; font-weight: 600; }
+@keyframes nextPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(41,124,162,.35); } 50% { box-shadow: 0 0 0 6px rgba(41,124,162,0); } }
+/* the guide card in "Your selection": always says what to do now */
+.coach { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; text-align: left; width: 100%; background: #F6F0E3; border: 1.5px solid #2A3238; border-radius: var(--r); padding: 10px 14px; margin-top: 2px; color: var(--ink); }
+.coach small { grid-column: 1; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #1A5C7E; font-weight: 700; } .coach b { grid-column: 1; font-size: 16.5px; font-weight: 600; } .coach i { grid-column: 2; grid-row: 1 / span 2; font-style: normal; font-size: 22px; color: var(--ink); }
+.coach:hover { background: #FBF6EA; } .coach.ok { background: #E8F2F7; border-color: #297CA2; }
+/* the interstitial after a choice */
+.coachv { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px 26px; align-items: center; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 34px 36px 30px; position: relative; overflow: hidden; box-shadow: 0 12px 24px -22px rgba(70,55,30,.45); }
+.coachv .cv-ic { position: relative; width: 84px; height: 84px; border-radius: 22px; background: var(--grad-band); color: #F6F1E7; display: grid; place-items: center; } .coachv .cv-ic svg { width: 44px; height: 44px; }
+.coachv .cv-ic em { position: absolute; right: -8px; top: -8px; width: 30px; height: 30px; border-radius: 50%; background: #297CA2; border: 3px solid #fff; display: grid; place-items: center; } .coachv .cv-ic em svg { width: 15px; height: 15px; }
+.coachv small { display: block; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #1A5C7E; font-weight: 700; margin-bottom: 6px; }
+.coachv h2 { margin: 0 0 8px; font-size: 34px; line-height: 1.1; font-weight: 300; letter-spacing: -.01em; } .coachv p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--ink2); max-width: 58ch; }
+.coachv .cv-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--line); } .coachv .cv-bar i { display: block; height: 100%; width: 100%; background: #297CA2; transform-origin: left; animation: cvBar 2.6s linear forwards; }
+@keyframes cvBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .st.next .n { animation: none; } .coachv .cv-bar i { animation: none; } }
+@media (max-width: 700px) { .coachv { grid-template-columns: 1fr; padding: 24px 20px 26px; } .coachv h2 { font-size: 26px; } }
+/* ===== IGNITION v3: Explore / Select & Buy / Custom, then the tagline ===== */
+.ign { padding-top: clamp(80px, 15vh, 150px) !important; } .ign .mark b { font-size: 30px; } .ign .fact span { font-size: 27px; } .ign .fact small { font-size: 12px; }
+.ign .lit { top: 50% !important; }
+.ign .core { gap: 26px; width: min(940px, 92%); }
+.ign .pil { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; width: 100%; margin-top: 6px; }
+.ign .pl { text-align: center; opacity: 0; transform: translateY(8px); display: grid; justify-items: center; align-content: start; gap: 8px; padding: 0 6px; }
+.ign .pl + .pl { border-left: 1px solid rgba(255,255,255,.14); }
+.ign .pl b { font-size: 27px; font-weight: 600; letter-spacing: .01em; } .ign .pl span { font-size: 15.5px; line-height: 1.4; color: rgba(246,241,231,.78); max-width: 22ch; }
+.ign .pic { height: 62px; display: grid; place-items: center; }
+.ign .ex { display: grid; grid-template-columns: repeat(7, 15px); gap: 5px; } .ign .ex i { height: 15px; border-radius: 4px; background: rgba(246,241,231,.16); }
+.ign .sgm { display: grid; grid-template-columns: repeat(4, 30px); gap: 6px; } .ign .sgm i { height: 8px; border-radius: 4px; background: rgba(246,241,231,.16); }
+.ign .cu { width: 92px; height: 55px; } .ign .cu path { fill: none; stroke: #F6F1E7; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; } .ign .cu .dim { stroke: #8FDDFC; stroke-width: 1.2; }
+.ign .tag { margin: 8px 0 0; font-size: 32px; font-weight: 300; letter-spacing: .03em; text-align: center; opacity: 0; transform: translateY(6px); } .ign .tag b { font-weight: 700; }
+.ign .sub { margin: -6px 0 0; font-size: 16px; color: rgba(246,241,231,.7); text-align: center; opacity: 0; }
+.ign.run .pl1 { animation: ignUp .6s ease-out 3.0s forwards; } .ign.run .pl2 { animation: ignUp .6s ease-out 3.9s forwards; } .ign.run .pl3 { animation: ignUp .6s ease-out 4.8s forwards; }
+.ign.run .ex i { animation: pxOn .5s ease-out forwards; } .ign.run .sgm i { animation: pxOn .5s ease-out forwards; }
+.ign.run .cu path { animation: draw 1.4s ease-out 4.9s forwards; } .ign.run .cu .dim { animation: draw .8s ease-out 5.9s forwards; }
+.ign.run .tag { animation: ignUp .8s ease-out 6.3s forwards; } .ign.run .tag.lum { }
+.ign.run .tag .lum2 { animation: lumPass 1.8s ease-in-out 6.5s forwards; }
+.ign.run .sub { animation: ignIn .8s ease-out 7.3s forwards; }
+.ign.run .lit { animation: ignLit .8s cubic-bezier(.5,0,.2,1) 8.6s forwards !important; }
+.ign.run .core, .ign.run .skip, .ign.run .snd { animation: ignOut .4s ease-in 8.6s forwards !important; }
+@keyframes pxOn { from { background: rgba(246,241,231,.16); } 60% { background: #8FDDFC; } to { background: #F6F1E7; } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.ign .tag .lum2 { background-image: linear-gradient(100deg, rgba(255,255,255,0) 40%, #8FDDFC 46%, #E9F8FF 50%, #50CDFD 54%, rgba(255,255,255,0) 60%), linear-gradient(#fff, #fff); background-size: 300% 100%, 100% 100%; background-position: 120% 0, 0 0; background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+@media (max-width: 700px) { .ign .tag { font-size: 18px; } .ign .pl b { font-size: 16px; } .ign .pl span { font-size: 11.5px; } .ign .pil { gap: 8px; } .ign .ex { grid-template-columns: repeat(7, 8px); } .ign .sgm { grid-template-columns: repeat(4, 16px); } }
+@media (prefers-reduced-motion: reduce) {
+  .ign.run .pl, .ign.run .tag, .ign.run .sub { animation: ignIn .01s linear forwards !important; transform: none; }
+  .ign.run .ex i, .ign.run .sgm i { animation: none !important; background: #F6F1E7; } .ign.run .cu path { animation: none !important; stroke-dashoffset: 0; } .ign .tag .lum2 { animation: none !important; }
+  .ign.run .core, .ign.run .skip, .ign.run .snd { animation: ignOut .4s ease-in 2.4s forwards !important; } .ign.run .lit { animation: none !important; }
+}
 </style>
 </head>
 <body>
 <div class="app">
   <p class="pv">Design preview for the owner. Not deployed and not the engine. The recommendation is the published firmness rule, the four ranges are that module's own, the texts are the approved description, and the price and the bag are <b>stand-ins</b>: in the shop they are Ecwid's own.</p>
   <header class="top">
-    <div class="brand"><b>BOTANIC</b> / Experience</div>
+    <div class="brand" aria-label="Botanic Original 100% Natural 100% Organic Latex Mattress, Dunlop Technology"><b>Botanic</b> <i>Original</i> <span>100% Natural 100%</span> <i>Organic</i> <span>Latex Mattress</span> <b class="dl">Dunlop</b> <span>Technology</span></div>
     <div class="tools">
       <button class="tbtn" id="galbtn" data-gal="1" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg>View Model Gallery</button>
       <div class="seg" role="group" aria-label="View"><button data-view="tv" id="vtv" aria-pressed="true">Optimised Preview</button><button data-view="std" id="vstd" aria-pressed="false">Standard Product View</button></div>
@@ -512,16 +583,17 @@ a { color: inherit; }
 var D = /*__DATA__*/;
 (function () {
   var $ = function (s) { return document.querySelector(s); }, esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-  var S = { promo: 10, view: 'tv', gal: false, gi: 0, ch: 'height', pn: 'sizes', rd: {}, step: 0, size: null, firmness: null, depth: null, cover: null, weight: null, height: null, bagged: null };
+  var S = { promo: 10, view: 'tv', gal: false, gi: 0, ch: 'discover', pn: 'intro', rd: {}, step: 0, coach: null, size: null, firmness: null, depth: null, cover: null, weight: null, height: null, bagged: null };
   var LEAF = '<svg class="leaf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BD26B"/><stop offset="1" stop-color="#63B963"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#fff" stroke-opacity=".5" stroke-width="1.2" stroke-linecap="round"/></g></svg>';
   var SHORT = ['Organic Cotton', 'Cotton / Wool', 'Aloe Vera Blend', 'Cashmere + Silver'];
   var STEPS = [
-    { id: 'size', label: 'Size', q: 'How big is your bed?', sub: 'Choose your size. Every size is shown in centimetres and in inches.', next: 'Firmness' },
-    { id: 'firmness', label: 'Firmness', q: 'How firm should it be for your body?', sub: D.firmness.sub, next: 'Depth' },
-    { id: 'depth', label: 'Depth', q: 'How thick should it be?', sub: D.depthSub, next: 'Cover' },
+    { id: 'size', label: 'Size', q: 'How big is your bed?', sub: 'Choose your size. Every size is shown in centimetres and in inches.', next: 'Depth' },
+    { id: 'depth', label: 'Depth', q: 'How thick should it be?', sub: D.depthSub, next: 'Firmness' },
+    { id: 'firmness', label: 'Firmness', q: 'How firm should it be for your body?', sub: D.firmness.sub, next: 'Cover' },
     { id: 'cover', label: 'Cover', q: 'Which cover do you prefer?', sub: 'Tap a cover to see what it does for you.', next: 'Review' },
     { id: 'review', label: 'Review', q: 'Review your order', sub: 'Check your four choices, then add the mattress to your bag.', next: null }
   ];
+  var TVORDER = DDRules.ORDER_SHOP;   // the order the television asks in, the same as the shop's own options
   var CH = D.chapters, STEPMAP = { size: ['height', 'sizes'], firmness: ['firmness', 'choose'], depth: ['height', 'heights'], cover: ['covers', 'choose'], review: ['delivery', 'yours'] };
   var FLAT = []; CH.forEach(function (c) { c.panels.forEach(function (p) { FLAT.push([c.id, p.id]); }); });
   function chap(id) { return CH.filter(function (c) { return c.id === id; })[0]; }
@@ -611,31 +683,45 @@ var D = /*__DATA__*/;
     var front = ok ? 'url(#ifg)' : (n >= 3 ? '#8FA9BC' : 'none'), top = ok ? 'url(#itg)' : (n >= 1 ? '#D6E3EC' : 'none');
     return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" aria-label="' + (ok ? 'All four choices made: ready to order' : n + ' of 4 choices made') + '" style="' + (ok ? 'filter:drop-shadow(0 0 4px rgba(80,205,253,.85))' : '') + '"><defs><linearGradient id="ifg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F6585"/><stop offset="1" stop-color="#10293F"/></linearGradient><linearGradient id="itg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A9BC9"/><stop offset="1" stop-color="#1F6B93"/></linearGradient><clipPath id="icp"><path d="' + region + '"/></clipPath></defs><g transform="matrix(' + M.join(',') + ')"><path d="' + d + '" fill="' + front + '"/><path d="' + d + '" fill="' + top + '" clip-path="url(#icp)"/><path d="' + d + '" fill="none" stroke="' + stroke + '" stroke-width="2.2" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="' + stroke + '" stroke-width="2.2" ' + st + '/></g></svg>';
   }
+  var IC = {
+    size: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6.5" width="17" height="11" rx="2"/><path d="M7 3.8h10M7 3.8l1.6-1.4M7 3.8l1.6 1.4M17 3.8l-1.6-1.4M17 3.8l-1.6 1.4"/></svg>',
+    depth: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 9.5l8.5-4 8.5 4-8.5 4z"/><path d="M3.5 13.5l8.5 4 8.5-4M3.5 17.5l8.5 4 8.5-4" opacity=".6"/></svg>',
+    firmness: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="#fff"/><circle cx="15" cy="12" r="2" fill="#fff"/><circle cx="8" cy="17" r="2" fill="#fff"/></svg>',
+    cover: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M12 5v14" stroke-dasharray="2 2"/><path d="M7 9.5c1.6-1 3-1 4 0M7 14c1.6-1 3-1 4 0M13 9.5c1.6-1 3-1 4 0M13 14c1.6-1 3-1 4 0" opacity=".6"/></svg>',
+    review: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>'
+  };
+  var CKS = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var SELTOP = { height: ['size', function () { return chosen('size') && chosen('depth'); }], firmness: ['firmness', function () { return chosen('firmness'); }], covers: ['cover', function () { return chosen('cover'); }], delivery: ['review', function () { return complete(); }] };
   function drawBar() {
-    $('#chbar').innerHTML = CH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch) + '">' + esc(c.label) + '</button>'; }).join('');
+    $('#chbar').innerHTML = CH.map(function (c) { var sl = SELTOP[c.id], ok = sl && sl[1]();
+      return '<button class="ch' + (sl ? ' sel' : '') + (ok ? ' ok' : '') + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch) + '">' + (sl ? IC[sl[0]] : '') + esc(c.label) + (ok ? '<em class="okm">' + CKS + '</em>' : '') + '</button>'; }).join('');
   }
+  function nDone0() { return STEPS.slice(0, 4).filter(function (x) { return chosen(x.id); }).length; }
+  function nextUnchosen() { for (var i = 0; i < STEPS.length - 1; i++) if (!chosen(STEPS[i].id)) return i; return -1; }
   function drawRail() {
-    var cur = chap(S.ch), onStep = panel().kind === 'step';
-    var h = '<h2>In ' + esc(cur.label) + '</h2>' + cur.panels.map(function (p) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '<h2 class="h2b">Your order</h2>';
-    STEPS.forEach(function (st, i) { var done = i < STEPS.length - 1 && chosen(st.id), cur = onStep && i === S.step, v = valueOf(st.id);
-      h += '<button class="st' + (done ? ' done' : '') + (cur ? ' cur' : '') + '" data-go="' + i + '" aria-label="Step ' + (i + 1) + ': ' + st.label + (v ? ', chosen ' + esc(v) : '') + '"><span class="n">' + (done && !cur ? CHECK : (i + 1)) + '</span><span class="t"><b>' + st.label + '</b><span>' + (v ? esc(v) : (cur ? 'Choose now' : 'To do')) + '</span></span></button>'; });
-    $('#rail').innerHTML = h;
+    var cur = chap(S.ch), onStep = panel().kind === 'step', nx = nextUnchosen(), nDone = STEPS.slice(0, 4).filter(function (x) { return chosen(x.id); }).length;
+    var h = '<h2>In ' + esc(cur.label) + '</h2>' + cur.panels.map(function (p) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '<h2 class="h2b">Your order <span class="oc">' + nDone + ' of 4</span></h2><div class="ord" style="--f:' + (nDone / 4) + '">';
+    STEPS.forEach(function (st, i) { var done = i < STEPS.length - 1 && chosen(st.id), isCur = onStep && i === S.step, isNext = !isCur && i === nx, v = valueOf(st.id);
+      h += '<button class="st' + (done ? ' done' : '') + (isCur ? ' cur' : '') + (isNext ? ' next' : '') + '" data-go="' + i + '" aria-label="Step ' + (i + 1) + ': ' + st.label + (v ? ', chosen ' + esc(v) : '') + '"><span class="n">' + IC[st.id] + (done ? '<em class="ck">' + CKS + '</em>' : '') + '</span><span class="t"><b>' + st.label + '</b><span>' + (v ? esc(v) : (isCur ? 'Choose now' : (isNext ? 'Choose next' : 'To do'))) + '</span></span></button>'; });
+    $('#rail').innerHTML = h + '</div>';
   }
   function bagButton(cls) {   // ONE button, two faces (laws in engine/selection-rules.js): Add to Bag, READY, then Go to Checkout
     var bagI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>', arrI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-    var f = DDRules.bagFace(selOf(), S.bagged || '');
+    var f = DDRules.bagFace(selOf(), S.bagged || '', TVORDER);
     if (f.face === 'checkout') return '<button class="btn bagbtn ' + (cls || '') + '" data-checkout="1"><span>Go to <b>Checkout</b></span>' + arrI + '</button>';
     return '<button class="btn bagbtn ' + (cls || '') + (f.ready ? ' ready' : '') + '" data-bag="1"' + (f.enabled ? '' : ' disabled') + ' aria-describedby="ready-note"><span>' + bagI + 'Add to <b>Bag</b></span></button>';
   }
   function drawMine() {
-    var h = ''; ['size', 'firmness', 'depth', 'cover'].forEach(function (id, i) { var v = valueOf(id); h += '<button class="chip' + (v ? ' on' : '') + '" data-go="' + i + '"><small>' + id + '</small><b>' + (v ? esc(v) : '–') + '</b></button>'; });
-    var nOn = ['size', 'firmness', 'depth', 'cover'].filter(chosen).length; h = h + '<div class="gauge' + (nOn === 4 ? ' full' : '') + '" role="img" aria-label="' + nOn + ' of 4 choices made">' + [0, 1, 2, 3].map(function (i) { return '<i class="' + (i < nOn ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="gl"><span>' + nOn + ' of 4</span><span>' + (nOn === 4 ? 'Ready' : 'Your choices') + '</span></div>';
+    var h = ''; ['size', 'depth', 'firmness', 'cover'].forEach(function (id, i) { var v = valueOf(id); h += '<button class="chip' + (v ? ' on' : '') + '" data-go="' + i + '"><small>' + id + '</small><b>' + (v ? esc(v) : '–') + '</b></button>'; });
+    var nOn = ['size', 'depth', 'firmness', 'cover'].filter(chosen).length; h = h + '<div class="gauge' + (nOn === 4 ? ' full' : '') + '" role="img" aria-label="' + nOn + ' of 4 choices made">' + [0, 1, 2, 3].map(function (i) { return '<i class="' + (i < nOn ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="gl"><span>' + nOn + ' of 4</span><span>' + (nOn === 4 ? 'Ready' : 'Your choices') + '</span></div>';
     $('#chips').innerHTML = h;
     $('#mi').innerHTML = iconSvg(['size', 'firmness', 'depth', 'cover'].filter(chosen).length);
     var p = price(), full = complete();
     var sh = shop(); $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small>' + priceParts(sh) + '<span>' + (sh == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the prices and the discount are Ecwid\'s own.') + '</span>';
+    var gi = nextUnchosen();
+    $('#chips').insertAdjacentHTML('beforeend', gi < 0 ? '<button class="coach ok" data-go="4"><small>All four choices are made</small><b>Review your order</b><i aria-hidden="true">&rarr;</i></button>' : '<button class="coach" data-go="' + gi + '"><small>' + (nDone0() ? 'Next' : 'Start here') + '</small><b>Choose your ' + STEPS[gi].label + '</b><i aria-hidden="true">&rarr;</i></button>');
     $('#chips').insertAdjacentHTML('beforeend', complete() || S.size || S.firmness || S.depth || S.cover ? '' : '<p class="selhint">Select here: your choices appear in this panel as you make them.</p>');
-    var fb = DDRules.bagFace(selOf(), S.bagged || '');
+    var fb = DDRules.bagFace(selOf(), S.bagged || '', TVORDER);
     $('#bag').innerHTML = bagButton() + (inBag() ? '<div class="hint">Added to your bag. Go to Checkout when you are ready.</div>' : '<div class="hint" id="ready-note">' + (fb.ready ? '<b>Ready to order.</b> All four choices are made. You can still change any of them.' : '<b>' + esc(fb.guide) + '</b>') + '</div>');
     $('#native').innerHTML = bagButton('');
   }
@@ -813,12 +899,29 @@ var D = /*__DATA__*/;
     $('#act').innerHTML = (prev ? '<button class="btn s" data-flat="' + (i - 1) + '">Back</button>' : '') + '<button class="btn s" data-go="0">Select your Botanic</button>' + (next ? '<button class="btn p" data-flat="' + (i + 1) + '">Next: <b>' + esc(np.label) + '</b></button>' : '');
     $('#stageh').className = 'colh'; $('#stageh').innerHTML = esc(c.label + '  ·  ' + p.label) + '<span class="explore">' + explored() + ' of ' + FLAT.length + ' explored</span>';
   }
+  /* GUIDE (owner, 16 Nov): after every choice the television says what was chosen and what comes next, then opens the next
+     choice by itself after a moment. Any tap cancels it. Off in automated browsers unless ?guide=1. */
+  var COACHT = null;
+  function guideOn() { return !navigator.webdriver || /guide=1/.test(location.search); }
+  function startCoach() {
+    var i = S.step; if (i > 3) return; var to = nextUnchosen(); if (to < 0) to = 4;
+    S.coach = { from: i, to: to };
+    clearTimeout(COACHT); COACHT = setTimeout(function () { if (S.coach) { var t2 = S.coach.to; S.coach = null; goStep(t2); draw(); } }, 2600);
+  }
+  function coachDraw() {
+    var c = S.coach, from = STEPS[c.from], to = STEPS[c.to], v = valueOf(from.id), last = c.to === 4;
+    var q = $('#q'); q.className = 'q'; q.innerHTML = '<h1>' + LEAF + '<span>' + esc(from.label) + ' chosen</span></h1><p>' + esc(v) + '</p>';
+    $('#answer').innerHTML = '<div class="coachv" aria-live="polite"><div class="cv-ic">' + IC[from.id] + '<em>' + CKS + '</em></div><div class="cv-tx"><small>' + (last ? 'All four choices are made' : 'Next: ' + (c.to + 1) + ' of 4') + '</small><h2>' + (last ? 'Review your order' : 'Now choose your ' + to.label) + '</h2><p>' + esc(last ? 'Check your four choices and the price, then add the mattress to your bag.' : to.sub) + '</p></div><div class="cv-bar"><i></i></div></div>';
+    $('#act').innerHTML = '<button class="btn s" data-coachstay="1">Change my choice</button><button class="btn p" data-coachgo="1">' + (last ? 'Review' : 'Continue to <b>' + to.label + '</b>') + '</button>';
+    $('#stageh').className = 'colh'; $('#stageh').textContent = 'Select here  ·  ' + from.label + ' done';
+  }
   function draw() {
     document.body.classList.toggle('std', S.view === 'std');  $('#galbtn').setAttribute('aria-pressed', String(S.gal)); $('#vtv').setAttribute('aria-pressed', String(S.view === 'tv')); $('#vstd').setAttribute('aria-pressed', String(S.view === 'std'));
     if (S.view === 'std') { drawStd(); return; }
     var pp = panel(), cc = chap(S.ch); drawBar();
     if (S.gal) { galDraw(); drawRail(); drawMine(); return; }
     if (pp.kind !== 'step') { infoDraw(pp, cc); drawRail(); drawMine(); return; }
+    if (S.coach) { coachDraw(); drawRail(); drawMine(); return; }
     var st = STEPS[S.step], q = $('#q'), FC = CUR('firmness/choose'), FL = CUR('delivery/yours'); q.className = 'q' + (st.id === 'review' ? ' mn' : ''); seen(STEPMAP[st.id].join('/'));
     if (st.id === 'firmness') q.innerHTML = '<h1 class="lt">' + LEAF + '<span>' + fmt(FC.title) + '</span></h1><p>' + esc(FC.sub) + '</p>';
     else if (st.id === 'review') q.innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p class="flowl">' + FL.flow.map(function (t, i) { return (i ? '<i aria-hidden="true">→</i>' : '') + (i === FL.flow.length - 1 ? '<b>' + esc(t) + '</b>' : '<span>' + esc(t) + '</span>'); }).join('') + '</p><span class="moon" role="img" aria-label="Moon" style="background-image:url(' + D.moon + ')"></span>';
@@ -831,7 +934,9 @@ var D = /*__DATA__*/;
   }
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
-    var d = t.dataset;
+    var d = t.dataset, cg = S.coach; S.coach = null; clearTimeout(COACHT);
+    if (d.coachgo != null) { goStep(cg ? cg.to : S.step); draw(); window.scrollTo({ top: 0 }); return; }
+    if (d.coachstay != null) { draw(); return; }
     if (d.view != null) { S.view = d.view; draw(); if (d.view === 'tv') ignite(); return; }
     if (d.gal != null) { S.gal = !S.gal; draw(); return; }
     if (d.gimg != null) { S.gi = (+d.gimg + D.images.length) % D.images.length; draw(); return; }
@@ -851,7 +956,9 @@ var D = /*__DATA__*/;
     else if (d.send != null) { toast('Preview only: nothing was sent. In the shop this goes to Divine Dunlop support.'); return; }
     else if (d.bag != null) { S.bagged = sig(); toast('Stand-in: in the shop this presses Ecwid\'s own Add to Bag, and the button turns into Go to Checkout when Ecwid\'s cart reports the change.'); }
     else if (d.checkout != null) { toast('Go to Checkout opens the shopping cart: the order there is built from your four choices and the promotion. The e-mail is entered in the cart. (Not opened in this preview.)'); return; }
+    if ((d.size != null || d.firm != null || d.depth != null || d.cover != null) && S.view === 'tv' && guideOn()) startCoach();
     draw(); if (d.bag == null) window.scrollTo({ top: 0 });
+    if (d.ch === 'discover') ignite();   // every press of Discover switches the television on again
   });
   document.addEventListener('change', function (e) {
     var k = e.target.dataset && e.target.dataset.man; if (!k) return; var v = e.target.value;
@@ -884,12 +991,12 @@ var D = /*__DATA__*/;
   function ambient(reduce, now) {
     if (!soundOn() || !(GESTURE || now)) return; var Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
     try { AC = AC || new Ctx(); if (AC.state === 'suspended') AC.resume(); } catch (e) { return; }
-    hush(); var t0 = AC.currentTime + .05, vol = reduce ? .05 : .085, end = t0 + (reduce ? 2.0 : 3.7);
-    var bus = AC.createGain(); bus.gain.setValueAtTime(0, t0); bus.gain.linearRampToValueAtTime(vol, t0 + 1.1); bus.gain.setValueAtTime(vol, end - 1.0); bus.gain.linearRampToValueAtTime(0, end); bus.connect(AC.destination); BUS = bus;
-    var lp = AC.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = .7; lp.frequency.setValueAtTime(260, t0); lp.frequency.exponentialRampToValueAtTime(1900, t0 + 2.6); lp.connect(bus);
+    hush(); var t0 = AC.currentTime + .05, vol = reduce ? .05 : .085, end = t0 + (reduce ? 2.6 : 9.2);
+    var bus = AC.createGain(); bus.gain.setValueAtTime(0, t0); bus.gain.linearRampToValueAtTime(vol, t0 + 1.1); bus.gain.setValueAtTime(vol, end - 1.4); bus.gain.linearRampToValueAtTime(0, end); bus.connect(AC.destination); BUS = bus;
+    var lp = AC.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = .7; lp.frequency.setValueAtTime(260, t0); lp.frequency.exponentialRampToValueAtTime(2100, t0 + 6.5); lp.connect(bus);
     [[110, 'sine', 1], [110.6, 'triangle', .45], [164.8, 'sine', .7], [220, 'sine', .35]].forEach(function (v) { var o = AC.createOscillator(), g = AC.createGain(); o.type = v[1]; o.frequency.value = v[0]; g.gain.value = v[2]; o.connect(g); g.connect(lp); o.start(t0); o.stop(end + .1); });
     var bell = function (at, f, a) { var o = AC.createOscillator(), g = AC.createGain(); o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(0, at); g.gain.linearRampToValueAtTime(a, at + .02); g.gain.exponentialRampToValueAtTime(.0001, at + 1.6); o.connect(g); g.connect(bus); o.start(at); o.stop(at + 1.7); };
-    if (!reduce) { bell(t0 + 1.35, 659.3, .10); bell(t0 + 1.75, 880, .08); bell(t0 + 2.75, 1318.5, .06); }
+    if (!reduce) { bell(t0 + 1.35, 659.3, .10); bell(t0 + 1.75, 880, .08); bell(t0 + 3.0, 587.3, .07); bell(t0 + 3.9, 740, .07); bell(t0 + 4.8, 880, .07); bell(t0 + 6.35, 1318.5, .08); bell(t0 + 8.6, 1760, .05); }
     window.__ambient = (window.__ambient || 0) + 1;
   }
   var IGN = null;
@@ -897,10 +1004,17 @@ var D = /*__DATA__*/;
     var el = $('#ign'), q = location.search;
     if (/ignite=0/.test(q) || (navigator.webdriver && !/ignite=1/.test(q) && !force)) return;
     clearTimeout(IGN); var g = D.ignition, reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var P = g.pillars, ex = '', sg = '';
+    for (var k = 0; k < 14; k++) ex += '<i style="animation-delay:' + (3.05 + k * .055).toFixed(2) + 's"></i>';
+    for (var k2 = 0; k2 < 4; k2++) sg += '<i style="animation-delay:' + (3.95 + k2 * .22).toFixed(2) + 's"></i>';
+    var cu = '<svg class="cu" viewBox="0 0 64 38" aria-hidden="true"><path pathLength="1" d="M5 22L24 11H59L40 22ZM5 22V30H40V22M40 30L59 19V11"/><path class="dim" pathLength="1" d="M5 35H40M5 33V37M40 33V37"/></svg>';
+    var pics = ['<div class="ex">' + ex + '</div>', '<div class="sgm">' + sg + '</div>', cu];
     el.innerHTML = '<div class="lit"></div><div class="core"><div class="mark">' + LEAF + '<b class="lum">' + esc(g.name) + '</b></div><div class="line"></div><div class="read">' +
-      g.facts.map(function (f) { return '<div class="fact"><small>' + esc(f[0]) + '</small><span class="lum">' + esc(f[1]) + '</span></div>'; }).join('<i></i>') + '</div></div><button class="snd" type="button" data-snd="1" aria-pressed="' + soundOn() + '">' + (soundOn() ? SND_ON + 'Sound on' : SND_OFF + 'Sound off') + '</button><button class="skip" type="button" data-skip="1">Skip</button>';
+      g.facts.map(function (f) { return '<div class="fact"><small>' + esc(f[0]) + '</small><span class="lum">' + esc(f[1]) + '</span></div>'; }).join('<i></i>') + '</div>' +
+      '<div class="pil">' + P.map(function (x, i) { return '<div class="pl pl' + (i + 1) + '"><div class="pic">' + pics[i] + '</div><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>'; }).join('') + '</div>' +
+      '<p class="tag"><span class="lum2">' + esc(g.tagline) + '</span></p><p class="sub">' + esc(g.sub) + '</p></div><button class="snd" type="button" data-snd="1" aria-pressed="' + soundOn() + '">' + (soundOn() ? SND_ON + 'Sound on' : SND_OFF + 'Sound off') + '</button><button class="skip" type="button" data-skip="1">Skip</button>';
     el.className = 'ign'; el.hidden = false; void el.offsetWidth; el.className = 'ign run'; ambient(reduce);
-    IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, reduce ? 1850 : 3500);
+    IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, reduce ? 3000 : 9500);
   }
   function igniteEnd() { var el = $('#ign'); if (el.hidden) return; clearTimeout(IGN); hush(); el.className = 'ign end'; IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, 300); }
   $('#ign').addEventListener('click', function (e) { var b = e.target.closest('[data-snd]'); if (b) { e.stopPropagation(); setSound(!soundOn()); b.setAttribute('aria-pressed', String(soundOn())); b.innerHTML = soundOn() ? SND_ON + 'Sound on' : SND_OFF + 'Sound off'; if (soundOn()) ambient(false, true); else hush(); return; } igniteEnd(); });

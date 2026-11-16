@@ -31,10 +31,10 @@ D.covers = D.covers.map((c, i) => Object.assign(c, { mod: [0, 0, 0, 77][i] }));
 // ---- the information chapters: the approved description, broken into buttons (read from the source, never retyped) ----
 const SPEC = [
   ['discover', 'Discover', [['intro', 'Introduction', 'hero'], ['glance', 'At a Glance', 'facts']]],
-  ['firmness', 'Firmness', [['choose', 'Choose', 'step:firmness'], ['principle', 'Correct vs Softer', 'read:0'], ['regulation', 'How It Works', 'read:1'], ['who', 'Who It Is For', 'read:2']]],
+  ['firmness', 'Firmness', [['choose', 'Select Your Firmness', 'step:firmness'], ['principle', 'Correct vs Softer', 'read:0'], ['regulation', 'How It Works', 'read:1'], ['who', 'Who It Is For', 'read:2']]],
   ['comfort', 'Comfort', [['expect', 'What To Expect', 'article'], ['behaviour', 'Latex Behaviour', 'read:0']]],
-  ['height', 'Height', [['sizes', 'Choose size', 'step:size'], ['heights', 'Choose depth', 'step:depth'], ['why', 'Why Height Matters', 'read:0']]],
-  ['covers', 'Covers', [['choose', 'Choose cover', 'step:cover'], ['system', 'Cover System', 'read:4']]],
+  ['height', 'Sizes', [['sizes', 'Select Your Size', 'step:size'], ['heights', 'Select Your Depth', 'step:depth'], ['why', 'Why Height Matters', 'read:0']]],
+  ['covers', 'Covers', [['choose', 'Select Your Cover', 'step:cover'], ['system', 'Cover System', 'read:4']]],
   ['benefits', 'Benefits', [['origin', 'Origin', 'points'], ['why', 'Why Latex', 'read:0']]],
   ['support', 'Support', [['bearing', 'Bearing Force', 'points'], ['together', 'Support + Adaptation', 'read:0']]],
   ['adaptation', 'Adaptation', [['elasticity', 'Elasticity', 'points'], ['feel', 'How It Feels', 'read:0']]],
@@ -91,12 +91,13 @@ const MEDIA_CAP = { benefits: 'Milk to foam: where latex begins', adaptation: 'E
   }, ROOTS);
   await xb.close();
   D.hero = X.hero; D.facts = X.facts; D.factsTitle = X.factsTitle; D.features = X.features; D.factsNote = X.factsNote;
+  const TC = (t) => t.split(' ').map((w) => (w === 'vs' ? w : w.charAt(0).toUpperCase() + w.slice(1))).join(' ');
   D.chapters = SPEC.map(([id, label, panels]) => {
     const x = X[id];
     return {
-      id, label, head: x.head || null, media: MEDIA_CAP[id] || null,
+      id, label: TC(label), head: x.head || null, media: MEDIA_CAP[id] || null,
       panels: panels.map(([pid, plabel, kind]) => {
-        const o = { id: pid, label: plabel, kind: kind.split(':')[0] };
+        const o = { id: pid, label: TC(plabel), kind: kind.split(':')[0] };
         if (kind.startsWith('step:')) o.step = kind.slice(5);
         else if (kind.startsWith('read:')) { const d = x.details[+kind.slice(5)]; o.title = d.q; o.groups = d.groups; }
         else if (kind === 'article') { o.title = x.head.title; o.groups = [{ h: null, blocks: X.comfortParas.map((t) => ({ k: 'p', t })) }]; }
@@ -205,7 +206,9 @@ D.curated = {
 /* IGNITION: the start-up of the television, shown each time it is switched on (page start and every press of Optimised
    Preview). Minimal, like a car's instrument panel waking up. The two facts are mandatory and are the description's own
    (hero bar: "100% Organic · Dunlop Technology"); a later model sets its own name and facts here. */
-D.ignition = { name: 'BOTANIC', facts: [['Material', '100% Natural Latex'], ['Process', 'Dunlop Technology']] };
+D.ignition = { name: 'BOTANIC', facts: [['Material', '100% Natural Latex'], ['Process', 'Dunlop Technology']],
+  pillars: [['Explore', '14 topics, one clear way in'], ['Select & Buy', 'Four choices, then one button'], ['Custom', 'Made to order, to your confirmed specification']],
+  tagline: 'Custom Dunlop Natural Environment for Healthy Sleep', sub: 'One custom presentation module: it explores, it selects and it customises.' };
 /* HOUSE STYLE OF THE TEXT (owner, 15 November 2026), applied to every text the television shows:
    - short dashes only: the long dash (—) becomes the short one (–);
    - Support and Adaptation always begin with a capital S and A.
@@ -233,7 +236,7 @@ for (const [id, vp, touch] of PROFILES) {
   await ctx.route(/^https?:\/\//, (r) => (/^https:\/\/(media\.divinedunlop\.com|d2j6dbq0eux0bg\.cloudfront\.net)\//.test(r.request().url()) ? r.continue() : r.abort()));   // only the cover photographs are loaded; fonts fall back
   const page = await ctx.newPage(); page.on('pageerror', (e) => errs.push(id + ': ' + e.message));
   const url = pathToFileURL(file).href;
-  for (const [name, q] of [['1-size', '?step=0&demo=1'], ['2-firmness', '?step=1&demo=1'], ['3-depth', '?step=2&demo=1'], ['4-cover', '?step=3&demo=1'], ['5-review', '?step=4&demo=1'], ['6-bagged', '?step=4&demo=1&bag=1'], ['7-cover-none', '?step=3'], ['8-discover', '?ch=discover&pn=intro&demo=1'], ['9-glance', '?ch=discover&pn=glance'], ['10-firmness-read', '?ch=firmness&pn=regulation'], ['11-comfort-read', '?ch=comfort&pn=behaviour&rd=2'], ['12-zones', '?ch=zones&pn=map'], ['13-certs', '?ch=certs&pn=bodies'], ['14-warranty', '?ch=warranty&pn=cover'], ['15-benefits', '?ch=benefits&pn=origin'], ['16-gallery', '?gal=1&demo=1'], ['17-standard', '?view=std&demo=1'], ['18-zones-detail', '?ch=zones&pn=detail'], ['19-promo15', '?step=4&demo=1&promo=15'], ['20-promo17-std', '?view=std&demo=1&promo=17'], ['21-checkout', '?view=co&demo=1&bag=1']]) {
+  for (const [name, q] of [['1-size', '?step=0&demo=1'], ['2-firmness', '?step=2&demo=1'], ['3-depth', '?step=1&demo=1'], ['4-cover', '?step=3&demo=1'], ['5-review', '?step=4&demo=1'], ['6-bagged', '?step=4&demo=1&bag=1'], ['7-cover-none', '?step=3'], ['8-discover', '?ch=discover&pn=intro&demo=1'], ['9-glance', '?ch=discover&pn=glance'], ['10-firmness-read', '?ch=firmness&pn=regulation'], ['11-comfort-read', '?ch=comfort&pn=behaviour&rd=2'], ['12-zones', '?ch=zones&pn=map'], ['13-certs', '?ch=certs&pn=bodies'], ['14-warranty', '?ch=warranty&pn=cover'], ['15-benefits', '?ch=benefits&pn=origin'], ['16-gallery', '?gal=1&demo=1'], ['17-standard', '?view=std&demo=1'], ['18-zones-detail', '?ch=zones&pn=detail'], ['19-promo15', '?step=4&demo=1&promo=15'], ['20-promo17-std', '?view=std&demo=1&promo=17'], ['21-checkout', '?view=co&demo=1&bag=1']]) {
     await page.goto(url + q); await page.waitForTimeout(/cover|gallery|standard/.test(name) ? 1800 : 250);
     await page.screenshot({ path: join(out, `design-${id}-${name}.png`), fullPage: true });
   }
