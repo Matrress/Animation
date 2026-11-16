@@ -560,7 +560,7 @@ a { color: inherit; }
 .invite { flex-wrap: wrap; } .invite > div:not(.tools) { flex: 1 1 320px; min-width: 0; } .invite .tools { margin-left: auto; }
 /* 2. two groups in the top bar: Explore (the description) and Select & Buy (the order), each with its own look */
 .chbar { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(380px, .5fr) !important; gap: 10px 16px !important; align-items: start; }
-.exg { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.exg { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
 .slg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(0, .82fr); grid-template-rows: auto 46px 46px; gap: 8px; padding: 0 0 0 16px; border-left: 1.5px solid var(--line); }
 .glab { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--ink3); height: 16px; }
 .glab::before { content: ''; width: 15px; height: 11px; background: var(--leaf) no-repeat center / contain; }
@@ -572,9 +572,10 @@ a { color: inherit; }
 .sb.ok i { color: var(--sel-deep); font-weight: 600; }
 .sb[aria-current=true] { background: linear-gradient(180deg, #2E86AF 0%, #297CA2 50%, #1F6B93 100%); border-color: transparent; color: #F6F1E7; box-shadow: inset 0 -3px 0 #8FD0EC, 0 0 0 4px var(--sel-soft); } .sb[aria-current=true] svg { color: #BFEBFD; } .sb[aria-current=true] i { color: rgba(246,241,231,.75); }
 .sb .okm { position: absolute; right: 6px; top: 6px; width: 15px; height: 15px; background: var(--sel); } .sb .okm svg { width: 9px; height: 9px; color: #fff; }
-.sb { padding-right: 22px; } .sb.rv { grid-column: 3; grid-row: 2 / span 2; flex-direction: column; justify-content: center; align-items: flex-start; gap: 4px; }
+.sb { padding-right: 22px; } .sb.rv { grid-column: 3; grid-row: 3; }
+.slg .sb[data-go="0"] { grid-column: 1; grid-row: 2; } .slg .sb[data-go="1"] { grid-column: 2; grid-row: 2; } .slg .sb[data-go="2"] { grid-column: 1; grid-row: 3; } .slg .sb[data-go="3"] { grid-column: 2; grid-row: 3; }
 .sb .okm { display: grid; place-items: center; border-radius: 50%; } .sb[aria-current=true] .okm { background: #fff; } .sb[aria-current=true] .okm svg path { stroke: #1A5C7E; }
-@media (max-width: 1250px) { .chbar { grid-template-columns: 1fr !important; } .slg { border-left: 0; padding: 10px 0 0; border-top: 1.5px solid var(--line); grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: auto 46px; } .sb.rv { grid-column: auto; grid-row: auto; flex-direction: row; align-items: center; } }
+@media (max-width: 1250px) { .chbar { grid-template-columns: 1fr !important; } .slg { border-left: 0; padding: 10px 0 0; border-top: 1.5px solid var(--line); grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: auto 46px; } .sb.rv, .slg .sb[data-go] { grid-column: auto; grid-row: auto; flex-direction: row; align-items: center; } }
 @media (max-width: 700px) { .exg { grid-template-columns: repeat(4, minmax(0, 1fr)); } .slg { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; } }
 /* the selection system in teal everywhere: order line, ticks, the next step, chips, the guide card */
 @media (min-width: 1100px) { .ord::after { background: var(--sel) !important; } }
@@ -701,6 +702,23 @@ a { color: inherit; }
 @keyframes moonBreath { 0%, 100% { opacity: .8; } 50% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .ign.run .mcy { animation: none; opacity: 1; } .ign.run .mcy img { animation: none; -webkit-mask-image: none; mask-image: none; } .tbr .pn { animation: none; } }
 .stretch svg rect { transition: none; }
+
+/* OWNER 16 Nov (IV): stronger lights, every topic changes the room: the stage, the rail, the screen's edge, the question band and the current button */
+.ivory .stage { background: radial-gradient(85% 55% at 100% 0%, color-mix(in srgb, var(--tc) 24%, transparent), transparent 72%), radial-gradient(70% 45% at 0% 100%, color-mix(in srgb, var(--tc) 15%, transparent), transparent 72%), linear-gradient(180deg, var(--stage-a), var(--stage-b)); }
+.ivory .rail { background-color: #fff; background-image: linear-gradient(180deg, color-mix(in srgb, var(--tc) 12%, #fff) 0%, #fff 55%, color-mix(in srgb, var(--tc) 7%, #fff) 100%); transition: background .6s ease; }
+.ivory .mine { background-color: #fff; background-image: linear-gradient(180deg, #fff 60%, color-mix(in srgb, var(--tc) 8%, #fff) 100%); }
+.ivory .screen { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tc) 30%, transparent), 0 0 46px -8px color-mix(in srgb, var(--tc) 55%, transparent); transition: box-shadow .6s ease; }
+.ivory .q { box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--tc) 85%, #000), 0 0 0 1px color-mix(in srgb, var(--tc) 35%, transparent); }
+.ivory .q::before { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(55% 140% at 96% -10%, color-mix(in srgb, var(--tc) 55%, transparent), transparent 62%), radial-gradient(35% 100% at 4% 110%, color-mix(in srgb, var(--tc) 30%, transparent), transparent 70%); mix-blend-mode: screen; animation: aur 9s ease-in-out infinite alternate; }
+@keyframes aur { from { opacity: .75; } to { opacity: 1; } }
+.ivory .q > h1, .ivory .q > p { position: relative; z-index: 1; }
+.ivory .exg .ch[aria-current=true] { background: linear-gradient(160deg, #262E36 0%, #171C21 100%); color: #F6F1E7; border-color: transparent; box-shadow: inset 0 -3px 0 var(--c), 0 0 0 4px color-mix(in srgb, var(--c) 30%, transparent), 0 8px 22px -8px var(--c); }
+.ivory .exg .ch[aria-current=true] .td { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 35%, transparent), 0 0 12px var(--c); }
+.ivory .exg .ch:hover .td { box-shadow: 0 0 10px var(--c); }
+.ivory .tp { box-shadow: 0 12px 26px -14px color-mix(in srgb, var(--tc) 80%, #000); }
+.ivory .tp::after { opacity: 1; }
+.ivory .tbr .pn.sel small { color: var(--sel-deep); font-weight: 700; letter-spacing: .04em; } .ivory .tbr .pn[aria-current=true].sel small, .ivory .tbr .pn[aria-current=true] small { color: rgba(246,241,231,.7); }
+@media (prefers-reduced-motion: reduce) { .ivory .q::before { animation: none; } }
 </style>
 </head>
 <body>
@@ -742,14 +760,20 @@ var D = /*__DATA__*/;
   ];
   var TVORDER = DDRules.ORDER_SHOP;   // the order the television asks in, the same as the shop's own options
   var CH = D.chapters, STEPMAP = { size: ['height', 'sizes'], firmness: ['firmness', 'choose'], depth: ['height', 'heights'], cover: ['covers', 'choose'], review: ['delivery', 'yours'] };
-  var FLAT = []; CH.forEach(function (c) { c.panels.forEach(function (p) { if (p.kind !== 'step') FLAT.push([c.id, p.id]); }); });
+  /* OWNER 16 Nov (IV): no button twice. Firmness, Height and Covers are not Explore topics: they belong to Select & Buy (Firmness, Depth,
+     Cover) and their knowledge hangs under the choice in the left tree, marked as more information about that choice. */
+  var STEPCH = { height: 1, firmness: 1, covers: 1 }, STEPINFO = { size: [], depth: [['height', 'why']], firmness: [['firmness', 'principle'], ['firmness', 'regulation'], ['firmness', 'who']], cover: [['covers', 'system']], review: [] };
+  CH.forEach(function (c) { if (c.id === 'height') c.label = 'Depth'; if (c.id === 'covers') c.label = 'Cover'; });
+  var EXCH = CH.filter(function (c) { return !STEPCH[c.id]; });
+  function infoStep(ch, pn) { var r = -1; STEPS.forEach(function (st, i) { (STEPINFO[st.id] || []).forEach(function (x) { if (x[0] === ch && x[1] === pn) r = i; }); }); return r; }
+  var FLAT = []; EXCH.forEach(function (c) { c.panels.forEach(function (p) { if (p.kind !== 'step') FLAT.push([c.id, p.id]); }); });
   function vis(c) { return c.panels.filter(function (p) { return p.kind !== 'step'; }); }   // the knowledge panels of a topic
   /* every topic speaks in its own colour (owner, 16 Nov: dreamy, spacey, natural; colours as indicators) */
   var TC = { discover: '#8FA8D8', firmness: '#5B7FC7', comfort: '#A48BD0', height: '#C2A57A', covers: '#C79F86', benefits: '#93AE8B', support: '#5A6FB8', adaptation: '#8C7FD1', zones: '#5E9FC2', ventilation: '#79BFD9', hygiene: '#7FB6C1', certs: '#8E9AAF', warranty: '#C9AE6E', delivery: '#6E86B8', select: '#2A86B0' };
-  var RELATED = { size: [['height', 'why']], depth: [['height', 'why'], ['comfort', 'density']], firmness: [['firmness', 'principle'], ['firmness', 'regulation'], ['firmness', 'who']], cover: [['covers', 'system']], review: [['delivery', 'made'], ['warranty', 'cover']] };
   function chap(id) { return CH.filter(function (c) { return c.id === id; })[0]; }
   function panel() { var c = chap(S.ch); return c.panels.filter(function (p) { return p.id === S.pn; })[0] || c.panels[0]; }
-  function goPanel(c, p) { S.ch = c; S.pn = p; var pp = panel(); if (pp.kind === 'step') S.step = STEPS.map(function (x) { return x.id; }).indexOf(pp.step); }
+  function goPanel(c, p) { S.ch = c; S.pn = p; var pp = panel(); if (pp.kind === 'step') S.step = STEPS.map(function (x) { return x.id; }).indexOf(pp.step); else { var k = infoStep(c, p); if (k >= 0) S.step = k; } }
+  function inSelect() { return panel().kind === 'step' || infoStep(S.ch, S.pn) >= 0; }   // a choice, or more information about a choice
   function goStep(i) { var m = STEPMAP[STEPS[i].id]; goPanel(m[0], m[1]); }
   function flatIndex() { for (var i = 0; i < FLAT.length; i++) if (FLAT[i][0] === S.ch && FLAT[i][1] === S.pn) return i; return 0; }
   function snippet(t) { var m = t.match(/^[^.!?]*[.!?]/), s = (m ? m[0] : t); if (s.length > 52) s = s.slice(0, 50).replace(/\s+\S*$/, '') + '…'; return s; }
@@ -843,27 +867,28 @@ var D = /*__DATA__*/;
   };
   var CKS = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   function drawBar() {   // two groups: Explore (the description, 14 topics) and Select & Buy (the order: size, depth, firmness, cover, review)
-    var onStep = panel().kind === 'step';
-    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + CH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + '</div>';
+    var onStep = inSelect();
+    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + EXCH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + '</div>';
     var sl = '<div class="slg" role="group" aria-label="Select and buy"><span class="glab">Select &amp; Buy</span>' + STEPS.map(function (st, i) { var v = i < 4 ? valueOf(st.id) : (complete() ? 'Ready' : ''), ok = i < 4 ? chosen(st.id) : complete();
-      return '<button class="sb' + (ok ? ' ok' : '') + (i === 4 ? ' rv' : '') + '" data-go="' + i + '" aria-current="' + (onStep && S.step === i) + '">' + IC[st.id] + '<span><b>' + st.label + '</b><i>' + (v ? esc(v) : (i < 4 ? 'Choose' : 'Your order')) + '</i></span>' + (ok ? '<em class="okm">' + CKS + '</em>' : '') + '</button>'; }).join('') + '</div>';
+      return '<button class="sb' + (ok ? ' ok' : '') + (i === 4 ? ' rv' : '') + '" data-go="' + i + '" aria-current="' + (onStep && S.step === i) + '">' + IC[st.id] + '<span><b>' + st.label + '</b><i>' + (v ? esc(v) : (i < 4 ? 'Choose' : 'Order')) + '</i></span>' + (ok ? '<em class="okm">' + CKS + '</em>' : '') + '</button>'; }).join('') + '</div>';
     $('#chbar').innerHTML = ex + sl;
   }
   function nDone0() { return STEPS.slice(0, 4).filter(function (x) { return chosen(x.id); }).length; }
   function nextUnchosen() { for (var i = 0; i < STEPS.length - 1; i++) if (!chosen(STEPS[i].id)) return i; return -1; }
   function drawRail() {
-    var onStep = panel().kind === 'step', h;
-    if (onStep) {   // on a choice: the knowledge that belongs to it
-      var st = STEPS[S.step], rel = RELATED[st.id] || [];
-      h = '<h2 class="colh">Before you choose</h2><div class="tree" style="--tc:' + TC.select + '"><div class="tp sel">' + IC[st.id] + '<span><b>Your ' + esc(st.label) + '</b><i>Learn before you choose</i></span></div><div class="tbr">' +
-        rel.map(function (r) { var c = chap(r[0]), p = c.panels.filter(function (x) { return x.id === r[1]; })[0]; return '<button class="pn' + (SEEN[r[0] + '/' + r[1]] ? ' seen' : '') + '" data-goto="' + r[0] + '/' + r[1] + '" aria-current="false"><span class="pdot" style="background:' + TC[r[0]] + '"></span>' + esc(p.label) + '<small>' + esc(c.label) + '</small></button>'; }).join('') + '</div></div>';
+    var onSel = inSelect(), h;
+    if (onSel) {   // a choice: the choice itself first, then the more information that belongs to it
+      var st = STEPS[S.step], inf = STEPINFO[st.id] || [], stepNow = panel().kind === 'step', ci = 0;
+      var br = '<button class="pn sel' + (chosen(st.id) || (st.id === 'review' && complete()) ? ' seen' : '') + '" style="--i:' + (ci++) + '" data-go="' + S.step + '" aria-current="' + stepNow + '">' + (st.id === 'review' ? 'Your Order' : 'Select Your ' + esc(st.label)) + '<small>' + (st.id === 'review' ? 'Check and add to bag' : 'Your choice') + '</small></button>';
+      br += inf.map(function (r) { var p = chap(r[0]).panels.filter(function (x) { return x.id === r[1]; })[0]; return '<button class="pn' + (SEEN[r[0] + '/' + r[1]] ? ' seen' : '') + '" style="--i:' + (ci++) + '" data-goto="' + r[0] + '/' + r[1] + '" aria-current="' + (!stepNow && S.ch === r[0] && S.pn === r[1]) + '">' + esc(p.label) + '<small>More information</small></button>'; }).join('');
+      h = '<h2 class="colh">' + (inf.length ? 'Choose and learn' : 'Select &amp; Buy') + '</h2><div class="tree" style="--tc:' + TC.select + '"><div class="tp sel">' + IC[st.id] + '<span><b>' + esc(st.label) + '</b><i>' + (inf.length ? '1 choice · ' + inf.length + ' more information' : 'Select &amp; Buy') + '</i></span></div><div class="tbr">' + br + '</div></div>';
     } else {
       var cur = chap(S.ch), ps = vis(cur);
       h = '<h2 class="colh">In this topic</h2><div class="tree" style="--tc:' + TC[cur.id] + '"><div class="tp"><span class="tdot"></span><span><b>' + esc(cur.label) + '</b><i>' + ps.length + (ps.length === 1 ? ' part' : ' parts') + ' in this topic</i></span></div><div class="tbr">' +
         ps.map(function (p, i) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" style="--i:' + i + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '</div></div>';
     }
     $('#rail').innerHTML = h;
-    var sc = document.querySelector('.screen'); if (sc) sc.style.setProperty('--tc', onStep ? TC.select : TC[S.ch]);
+    var sc = document.querySelector('.screen'); if (sc) { sc.style.setProperty('--tc', onSel ? TC.select : TC[S.ch]); sc.setAttribute('data-topic', onSel ? 'select' : S.ch); }
   }
   function bagButton(cls) {   // ONE button, two faces (laws in engine/selection-rules.js): Add to Bag, READY, then Go to Checkout
     var bagI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>', arrI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -955,19 +980,18 @@ var D = /*__DATA__*/;
   function ptCard(x) { return '<div class="pt">' + LEAFS + '<h3>' + esc(x.t) + '</h3><p>' + esc(x.d) + '</p></div>'; }
   var TITLE_CASE = function (t) { return t.replace(/(^|[\s-])([a-z])/g, function (m, a, b) { return a + b.toUpperCase(); }).replace(/\b(The|Of|And|A|An)\b(?!$)/g, function (w, x, o) { return o ? w.toLowerCase() : w; }); };
   function engPaths() { var E = D.eng; return { vb: E.viewBox.join(' '), mp: E.mattress, bd: E.body }; }
-  function stretchSvg() {   // the Stretching Effect: the owner's engineering outline; the spine runs inside the body, and the two arrows run inside the torso along it, outward from the middle
-    var e = engPaths(), sp = D.eng.spine || [], v = '';
-    if (!sp.length) return '<svg viewBox="-60 10 2760 760" aria-hidden="true"><path d="' + e.mp + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="5"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5"/></svg>';
-    var yAt = function (x) { for (var i = 1; i < sp.length; i++) if (x <= sp[i][0]) { var a = sp[i - 1], b = sp[i], t = (x - a[0]) / (b[0] - a[0]); return a[1] + (b[1] - a[1]) * t; } return sp[sp.length - 1][1]; };
-    sp.forEach(function (q, i) { var w = 54 - Math.abs(i - sp.length / 2) * 2; v += '<rect x="' + (q[0] - w / 2).toFixed(0) + '" y="' + (q[1] - 20) + '" width="' + w.toFixed(0) + '" height="40" rx="12" fill="#DCE7F0" stroke="#2A3238" stroke-width="5"/>'; });
-    var line = '<path d="M' + sp.map(function (q) { return q[0] + ' ' + q[1]; }).join(' L') + '" class="spl" fill="none" stroke="#8FB3CF" stroke-width="14" stroke-linecap="round"/>';
-    var arr = function (x0, x1) {   // follows the spine 105 units above it, so it stays inside the torso
-      var dir = x1 > x0 ? 1 : -1, pts = [];
-      for (var x = x0; dir * (x1 - x) >= 0; x += dir * 20) pts.push([x, yAt(x) - 105]);
-      var q = pts[pts.length - 1], st = ' fill="none" stroke="#2A86B0" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>';
-      return '<path d="M' + pts.map(function (p) { return p[0] + ' ' + p[1].toFixed(0); }).join(' L') + '"' + st + '<path d="M' + (q[0] - dir * 42) + ' ' + (q[1] - 32).toFixed(0) + 'L' + q[0] + ' ' + q[1].toFixed(0) + 'L' + (q[0] - dir * 42) + ' ' + (q[1] + 32).toFixed(0) + '"' + st;
+  function stretchSvg() {   // the Stretching Effect: the sleeper lies on the shoulder, so the spine runs through the middle of the torso (neck to sacrum); the two arrows continue it inside the body, into the head and into the legs
+    var e = engPaths(), sp = D.eng.spine || [], ex = D.eng.stretch, v = '';
+    var base = '<path d="' + e.mp + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/>';
+    if (!sp.length) return '<svg viewBox="70 0 2600 770" aria-hidden="true">' + base + '</svg>';
+    sp.forEach(function (q, i) { var w = 50 - Math.abs(i - sp.length / 2) * 1.6; v += '<rect x="' + (q[0] - w / 2).toFixed(0) + '" y="' + (q[1] - 19) + '" width="' + w.toFixed(0) + '" height="38" rx="12" fill="#DCE7F0" stroke="#2A3238" stroke-width="5"/>'; });
+    var line = '<path class="spl" d="M' + sp.map(function (q) { return q[0] + ' ' + q[1]; }).join(' L') + '" fill="none" stroke="#8FB3CF" stroke-width="14" stroke-linecap="round"/>';
+    var arr = function (a) {   // a = [[from], [to]]
+      var dx = a[1][0] - a[0][0], dy = a[1][1] - a[0][1], l = Math.sqrt(dx * dx + dy * dy), ux = dx / l, uy = dy / l, h = 44, w = 30, bx = a[1][0] - ux * h, by = a[1][1] - uy * h;
+      var st = ' fill="none" stroke="#2A86B0" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>';
+      return '<path d="M' + a[0][0] + ' ' + a[0][1] + 'L' + a[1][0] + ' ' + a[1][1] + '"' + st + '<path d="M' + (bx - uy * w).toFixed(0) + ' ' + (by + ux * w).toFixed(0) + 'L' + a[1][0] + ' ' + a[1][1] + 'L' + (bx + uy * w).toFixed(0) + ' ' + (by - ux * w).toFixed(0) + '"' + st;
     };
-    return '<svg viewBox="70 0 2600 770" role="img" aria-label="Stretching effect: the spine is gently lengthened along the mattress"><path d="' + e.mp + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/>' + line + v + '<g class="sarr">' + arr(1040, 800) + arr(1220, 1560) + '</g></svg>';
+    return '<svg viewBox="70 0 2600 770" role="img" aria-label="Stretching effect: the spine, through the middle of the body, is gently lengthened towards the head and the legs">' + base + line + v + (ex ? '<g class="sarr">' + arr(ex.head) + arr(ex.tail) + '</g>' : '') + '</svg>';
   }
   var FLOWI = [
     '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 15l8-5h22l-8 5z"/><path d="M5 15v13h22V15"/><path d="M27 28l8-5V10"/><circle cx="11" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/><circle cx="23" cy="20" r="1.3"/><circle cx="14" cy="24" r="1.3"/><circle cx="20" cy="24" r="1.3"/></svg>',
@@ -1101,6 +1125,14 @@ var D = /*__DATA__*/;
     if (key === 'warranty/conditions') { $('#answer').innerHTML = condView(p); } else if (key === 'delivery/made') { $('#answer').innerHTML = madeView(); } else {
     var v = { density: densityView, adjust: adjustView, hero: heroView, facts: factsView, read: function () { return readerView(p); }, article: function () { return readerView(p); }, points: function () { return pointsView(p, c); }, certs: function () { return certsView(p, c); }, zones: function () { return zonesView(p, c); }, numerals: function () { return numeralsView(p); } }[p.kind];
     $('#answer').innerHTML = v(); }
+    var si = infoStep(c.id, p.id);
+    if (si >= 0) {   // more information about a choice: back to the choice, or on to the next piece of it
+      var inf = STEPINFO[STEPS[si].id], k = 0; inf.forEach(function (x, n) { if (x[0] === c.id && x[1] === p.id) k = n; });
+      var nx = inf[k + 1], nxp = nx && chap(nx[0]).panels.filter(function (x) { return x.id === nx[1]; })[0];
+      $('#act').innerHTML = (nx ? '<button class="btn s" data-goto="' + nx[0] + '/' + nx[1] + '">More: <b>' + esc(nxp.label) + '</b></button>' : '') + '<button class="btn p" data-go="' + si + '">Select Your <b>' + esc(STEPS[si].label) + '</b></button>';
+      $('#stageh').className = 'colh'; $('#stageh').innerHTML = esc(STEPS[si].label + '  ·  More information') + '<span class="explore">Select &amp; Buy</span>';
+      return;
+    }
     var i = flatIndex(), prev = FLAT[i - 1], next = FLAT[i + 1], np = next && chap(next[0]).panels.filter(function (x) { return x.id === next[1]; })[0];
     $('#act').innerHTML = (prev ? '<button class="btn s" data-flat="' + (i - 1) + '">Back</button>' : '') + '<button class="btn s" data-go="0">Select your Botanic</button>' + (next ? '<button class="btn p" data-flat="' + (i + 1) + '">Next: <b>' + esc(np.label) + '</b></button>' : '');
     $('#stageh').className = 'colh'; $('#stageh').innerHTML = esc(c.label + '  ·  ' + p.label) + '<span class="explore">' + explored() + ' of ' + FLAT.length + ' explored</span>';

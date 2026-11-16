@@ -31,11 +31,13 @@
   var steps = [];
   function add(t, cap, fn, ms) { steps.push({ t: t, cap: cap, fn: fn, ms: ms || 4400 }); }
   add('Start-up', 'Explore, Select & Buy, Custom: the module says what it is, with soft sound (after a tap).', function () { click('#chbar [data-ch="discover"]'); if (window.__ignite) window.__ignite(); }, 11800);
-  add('Select & Buy', 'The Select & Buy group (teal) holds the order. Step 1: a size. Every size in centimetres and inches, live from the shop.', function () { click('.sb[data-go="0"]'); }, 3000);
+  add('Select & Buy', 'The Select & Buy group (blue) holds the order. Step 1: a size. Every size in centimetres and inches, live from the shop.', function () { click('.sb[data-go="0"]'); }, 3000);
   add('Select', 'The size is chosen. The module confirms it, says what comes next and opens Depth by itself.', function () { click('.card[data-size="12"]'); }, 4200);
   add('Select', 'Depth: three heights in true proportion. A touch chooses one.', function () { click('.sb[data-go="1"]'); }, 2800);
   add('Select', '24 cm chosen. The guide moves on to Firmness.', function () { click('.dcard[data-depth="1"]'); }, 4200);
   add('Select', 'Firmness: body weight and height give the level. A touch confirms it.', function () { click('.sb[data-go="2"]'); }, 3000);
+  add('Select', 'More about Firmness hangs under the choice on the left: Correct vs Softer, How It Works, Who It Is For.', function () { click('#rail [data-goto="firmness/principle"]'); }, 3800);
+  add('Select', 'Back to the choice.', function () { click('.sb[data-go="2"]'); }, 1600);
   add('Select', 'Firm picked. The customer confirms it: the other levels fold away, and Change brings them back.', function () { click('.fcard[data-firm="Firm"]'); }, 3000);
   add('Select', 'Firm confirmed. Next is the cover.', function () { click('[data-fconfirm]'); }, 4200);
   add('Select', 'Cover: four real fabrics. A touch shows what each one gives you.', function () { click('.sb[data-go="3"]'); }, 2800);
@@ -43,9 +45,10 @@
   add('Buy', 'Review: the four choices, the price and the discount exactly as the shop gives them.', function () { click('.sb[data-go="4"]'); }, 3400);
   add('Buy', 'Add to Bag is lit only when all four choices are made. Pressing it adds the mattress.', function () { click('#bag [data-bag]'); }, 3200);
   add('Buy', 'The same button is now Go to Checkout. It opens the shop’s shopping cart.', function () { }, 3000);
-  document.querySelectorAll('#chbar .ch').forEach(function (b, i) {
+  var exAll = document.querySelectorAll('#chbar .ch');
+  exAll.forEach(function (b, i) {
     var id = b.dataset.ch;
-    add('Explore ' + (i + 1) + ' of 14', CAP[id] || b.textContent, function () { click('#chbar [data-ch="' + id + '"]'); if (id === 'adaptation') setTimeout(function () { click('#rail [data-pn="adjustable"]'); }, 1200); if (id === 'comfort') setTimeout(function () { click('#rail [data-pn="density"]'); }, 1400); if (id === 'discover') { var ig = $('#ign'); if (ig && !ig.hidden) click('#ign .skip'); } }, (id === 'adaptation' || id === 'comfort') ? 5600 : 3800);
+    add('Explore ' + (i + 1) + ' of ' + exAll.length, CAP[id] || b.textContent, function () { click('#chbar [data-ch="' + id + '"]'); if (id === 'adaptation') setTimeout(function () { click('#rail [data-pn="adjustable"]'); }, 1200); if (id === 'comfort') setTimeout(function () { click('#rail [data-pn="density"]'); }, 1400); if (id === 'discover') { var ig = $('#ign'); if (ig && !ig.hidden) click('#ign .skip'); } }, (id === 'adaptation' || id === 'comfort') ? 5600 : 3800);
   });
   var pos = -1, timer = null, playing = false, token = 0;
   function show(i) { pos = Math.max(0, Math.min(steps.length - 1, i)); var s = steps[pos]; $('#tcap').innerHTML = '<b>' + s.t + '</b><span>' + s.cap + '</span>'; $('#tbar').style.width = ((pos + 1) / steps.length * 100) + '%'; try { s.fn(); } catch (e) {} }
