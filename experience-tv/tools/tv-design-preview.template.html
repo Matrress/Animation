@@ -349,9 +349,9 @@ a { color: inherit; }
 .row4 { display: grid; grid-template-columns: 26px minmax(170px, .75fr) minmax(0, 1.6fr); gap: 16px; align-items: center; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--r); padding: 12px 18px; }
 .row4 .lf { width: 22px; height: 14px; } .row4 h3 { margin: 0; font-size: 18px; line-height: 1.2; } .row4 p { margin: 0; padding-left: 16px; border-left: 1px solid var(--line2); font-size: 15px; line-height: 1.5; color: var(--ink2); }
 @media (max-width: 760px) { .row4 { grid-template-columns: 26px 1fr; } .row4 p { grid-column: 1 / -1; border: 0; padding: 0; } }
-.stretch { margin-top: 10px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 16px 22px; display: grid; grid-template-columns: minmax(0, 1.6fr) auto; gap: 22px; align-items: center; }
+.stretch { margin-top: 10px; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 18px 26px 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; align-items: center; }
 .stretch svg { width: 100%; height: auto; display: block; }
-.stretch .lab { font-size: 14px; letter-spacing: .32em; font-weight: 600; color: #173A52; padding-left: 22px; border-left: 1px solid var(--line2); white-space: nowrap; }
+.stretch .lab { font-size: 14px; letter-spacing: .32em; font-weight: 600; color: #173A52; text-align: center; padding-top: 10px; border-top: 1px solid var(--line2); white-space: nowrap; }
 .stretch .arr { opacity: .25; animation: arrIn 2.4s ease-in-out infinite; } @keyframes arrIn { 0%, 100% { opacity: .18; } 50% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .stretch .arr { animation: none; opacity: .8; } }
 /* 7-Zone · Zone Map (24): the engineering view with the seven zones */
@@ -477,7 +477,8 @@ a { color: inherit; }
 
 .ivory .st.cur .n, .ivory .st.cur.done .n { background: #F6F1E7; border-color: #F6F1E7; color: var(--band-top); } .ivory .st.cur .t span { color: rgba(246,241,231,.8); }
 /* engineering drawings in the latex colour: ivory core, white body, graphite line */
-.ivory .eng svg path, .ivory .stretch svg path:not(.arr) { stroke: #2A3238; }
+.ivory .eng svg path, .ivory .stretch svg > path { stroke: #2A3238; }
+.ivory .stretch svg > path.spl { stroke: #8FB3CF; } .ivory .stretch .sarr path { stroke: #2A86B0; fill: none; }
 .ivory .eng svg path:first-child, .ivory .stretch svg path:first-child { fill: #F4EEE2; }
 .ivory .eng svg path + path, .ivory .stretch svg path:nth-child(2) { fill: #FFFFFF; }
 .ivory .zsk svg > path:last-child { fill: #FFFFFF; fill-opacity: .94; stroke: #2A3238; } .ivory .zsk svg > path:nth-last-child(2) { stroke: #2A3238; }
@@ -509,7 +510,7 @@ a { color: inherit; }
 .st.next .t span { color: #1A5C7E; font-weight: 600; }
 @keyframes nextPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(41,124,162,.35); } 50% { box-shadow: 0 0 0 6px rgba(41,124,162,0); } }
 /* the guide card in "Your selection": always says what to do now */
-.coach { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; text-align: left; width: 100%; background: #F6F0E3; border: 1.5px solid #2A3238; border-radius: var(--r); padding: 10px 14px; margin-top: 2px; color: var(--ink); }
+.coach { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; text-align: left; width: 100%; background: #F6F0E3; border: 1.5px solid #2A3238; border-radius: var(--r); padding: 10px 14px; margin-top: 0; color: var(--ink); }
 .coach small { grid-column: 1; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #1A5C7E; font-weight: 700; } .coach b { grid-column: 1; font-size: 16.5px; font-weight: 600; } .coach i { grid-column: 2; grid-row: 1 / span 2; font-style: normal; font-size: 22px; color: var(--ink); }
 .coach:hover { background: #FBF6EA; } .coach.ok { background: #E8F2F7; border-color: #297CA2; }
 /* the interstitial after a choice */
@@ -640,6 +641,66 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) { .ign.load .moons img { animation: none; -webkit-mask-image: none; mask-image: none; } .ign.run .glow { animation: none; opacity: .3; } .ign.run .moons { animation: none; opacity: 0; } }
 /* the moon cycle as a quiet ornament in the review band */
 .q.mn .mcyc { position: absolute; left: 28px; right: 140px; bottom: 10px; height: 12px; background-size: contain; background-repeat: no-repeat; background-position: left center; opacity: .28; }
+/* ===== OWNER ROUND 16 NOVEMBER (III): one place for the choices, the topic tree, the dreamy night ===== */
+.screen { --tc: #8FA8D8; }
+/* the topic tree on the left: the topic, then its parts hanging from one line, all in the topic's colour */
+.rail h2:not(.colh) { display: none !important; }
+.rail .colh { display: flex; margin: 0 0 8px; color: var(--ink3); } @media (max-width: 1099px) { .rail .colh { display: none; } }
+.tree { display: flex; flex-direction: column; gap: 0; width: 100%; }
+.tp { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: linear-gradient(160deg, #262E36 0%, #171C21 100%); color: #F6F1E7; position: relative; overflow: hidden; box-shadow: 0 12px 22px -18px rgba(20,22,25,.8); }
+.tp::after { content: ''; position: absolute; right: -40px; top: -50px; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--tc) 65%, transparent), transparent 68%); opacity: .7; }
+.tp .tdot { flex: none; width: 14px; height: 14px; border-radius: 50%; background: var(--tc); box-shadow: 0 0 0 4px color-mix(in srgb, var(--tc) 30%, transparent), 0 0 14px var(--tc); position: relative; z-index: 1; }
+.tp svg { flex: none; width: 22px; height: 22px; color: var(--tc); position: relative; z-index: 1; filter: brightness(1.5); }
+.tp span { display: flex; flex-direction: column; position: relative; z-index: 1; min-width: 0; } .tp b { font-size: 17px; font-weight: 600; } .tp i { font-style: normal; font-size: 12px; color: rgba(246,241,231,.68); margin-top: 1px; }
+.tbr { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 12px 0 0 26px; margin-left: 20px; }
+.tbr::before { content: ''; position: absolute; left: 0; top: 0; bottom: 23px; width: 2px; border-radius: 1px; background: linear-gradient(180deg, var(--tc), color-mix(in srgb, var(--tc) 35%, transparent)); }
+.tbr .pn { position: relative; animation: twig .38s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i, 0) * 70ms); }
+.tbr .pn::before { content: ''; position: absolute; left: -27px; top: 50%; width: 22px; height: 2px; background: color-mix(in srgb, var(--tc) 70%, transparent); }
+.tbr .pn small { display: block; font-size: 11px; color: var(--ink3); font-weight: 500; margin-top: 1px; } .tbr .pn { flex-direction: column; align-items: flex-start; justify-content: center; }
+.tbr .pn .pdot { position: absolute; right: 12px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; }
+.ivory .tbr .pn { border-color: color-mix(in srgb, var(--tc) 30%, var(--line)); background: color-mix(in srgb, var(--tc) 6%, #fff); }
+.ivory .tbr .pn:hover { border-color: var(--tc); }
+.ivory .tbr .pn[aria-current=true] { background: linear-gradient(160deg, #262E36 0%, #171C21 100%); color: #F6F1E7; border-color: transparent; box-shadow: inset 3px 0 0 var(--tc), 0 8px 16px -12px rgba(20,22,25,.7); }
+@keyframes twig { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+@media (max-width: 1099px) { .tree { flex-direction: row; flex-wrap: wrap; align-items: stretch; gap: 8px; } .tbr { flex-direction: row; flex-wrap: wrap; padding: 0; margin: 0; } .tbr::before, .tbr .pn::before { display: none; } }
+/* the Explore buttons carry their topic's colour as a small light; the current one is lit in its colour */
+.exg .ch { position: relative; } .exg .ch .td { position: absolute; left: 10px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%; background: var(--c); opacity: .9; }
+.ivory .exg .ch[aria-current=true] { box-shadow: inset 0 -3px 0 var(--c), 0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent); }
+.ivory .exg .ch[aria-current=true] .td { box-shadow: 0 0 8px var(--c); }
+/* the night sky in the question band: a few stars, a soft aurora in the topic's colour, a thin moon */
+.ivory .q { background:
+  radial-gradient(60% 120% at 92% 0%, color-mix(in srgb, var(--tc) 38%, transparent) 0%, transparent 60%),
+  radial-gradient(40% 90% at 0% 100%, color-mix(in srgb, var(--tc) 18%, transparent) 0%, transparent 70%),
+  radial-gradient(1.2px 1.2px at 12% 22%, rgba(255,255,255,.7), transparent 60%), radial-gradient(1px 1px at 28% 68%, rgba(255,255,255,.5), transparent 60%),
+  radial-gradient(1.4px 1.4px at 46% 18%, rgba(255,255,255,.6), transparent 60%), radial-gradient(1px 1px at 63% 74%, rgba(255,255,255,.45), transparent 60%),
+  radial-gradient(1.2px 1.2px at 78% 30%, rgba(255,255,255,.65), transparent 60%), radial-gradient(1px 1px at 88% 82%, rgba(255,255,255,.4), transparent 60%),
+  radial-gradient(1.1px 1.1px at 36% 42%, rgba(255,255,255,.4), transparent 60%), radial-gradient(1.3px 1.3px at 70% 52%, rgba(255,255,255,.5), transparent 60%),
+  linear-gradient(160deg, #1F2733 0%, #161C26 52%, #10151D 100%); }
+.ivory .q::after { right: 26px; top: 18px; width: 30px; height: 30px; border-radius: 50%; background: transparent; box-shadow: inset -7px 4px 0 0 rgba(246,241,231,.82); opacity: .9; }
+.ivory .q.mn::after, .ivory .q.ph::after { display: none; }
+/* the stage breathes the topic's colour, very lightly */
+.ivory .stage { background: radial-gradient(90% 50% at 100% 0%, color-mix(in srgb, var(--tc) 9%, transparent), transparent 70%), radial-gradient(70% 40% at 0% 100%, color-mix(in srgb, var(--tc) 6%, transparent), transparent 70%), linear-gradient(180deg, var(--stage-a), var(--stage-b)); transition: background .6s ease; }
+.ivory .rc h2, .ivory .pt h3, .ivory .row4 h3 { color: var(--ink); } .ivory .pt { border-top: 3px solid color-mix(in srgb, var(--tc) 55%, var(--line)); }
+/* firmness: choose, then confirm */
+.fconf { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin: 12px 0 2px; padding: 12px 14px 12px 18px; border-radius: 14px; border: 1.5px dashed var(--line2); background: #fff; }
+.fconf span { font-size: 15.5px; color: var(--ink2); } .fconf span b { color: var(--ink); }
+.fconf.on { border: 1.5px solid #2A86B0; background: #EEF6FA; }
+.fconf .btn.bagbtn { height: 50px; font-size: 16px; gap: 8px; } .fconf .btn.bagbtn svg { width: 18px; height: 18px; } .fconf .btn.bagbtn.ready { height: 54px; font-size: 17px; }
+.fdone { display: grid; grid-template-columns: minmax(230px, .7fr) minmax(0, 1.5fr); gap: 16px; align-items: stretch; }
+.fdl { background: #fff; border: 2px solid #2A86B0; border-radius: var(--rl); padding: 20px 22px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 0 0 5px rgba(42,134,176,.12); }
+.fdl .fok { display: inline-flex; align-self: flex-start; align-items: center; gap: 6px; height: 28px; padding: 0 10px 0 6px; border-radius: 8px; background: #2A86B0; color: #fff; font-size: 13px; font-weight: 700; } .fdl .fok svg { width: 15px; height: 15px; }
+.fdl small { margin-top: 10px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 700; } .fdl b { font-size: 34px; font-weight: 300; letter-spacing: -.01em; } .fdl i { font-style: normal; font-weight: 600; color: #1A5C7E; }
+.fdl p { margin: 8px 0 14px; font-size: 15px; line-height: 1.5; color: var(--ink2); } .fdl .btn { margin-top: auto; align-self: flex-start; height: 46px; font-size: 15px; }
+.fdr { background: radial-gradient(70% 90% at 50% 30%, #fff, #F6F1E8); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 18px 20px; display: grid; align-content: center; gap: 12px; } .fdr svg { width: 100%; height: auto; }
+.fsab { display: flex; justify-content: space-between; gap: 12px; font-size: 14.5px; color: var(--ink2); } .fsab b { color: var(--ink); }
+@media (max-width: 760px) { .fdone { grid-template-columns: 1fr; } }
+/* ignition: the moon cycle under the name, as wide as the name, opening with everything else */
+.ign .mcy { width: 300px; max-width: 70%; margin: -10px auto 0; opacity: 0; }
+.ign .mcy img { display: block; width: 100%; height: auto; -webkit-mask-image: linear-gradient(90deg, #000 0, #000 var(--mp, 0%), transparent calc(var(--mp, 0%) + 10%)); mask-image: linear-gradient(90deg, #000 0, #000 var(--mp, 0%), transparent calc(var(--mp, 0%) + 10%)); filter: drop-shadow(0 0 4px rgba(191,235,253,.55)); }
+.ign.run .mcy { animation: ignIn .3s ease-out 1s forwards; } .ign.run .mcy img { animation: moonSweep 2.2s cubic-bezier(.3,.1,.3,1) 1s forwards, moonBreath 4s ease-in-out 3.4s infinite; }
+@keyframes moonBreath { 0%, 100% { opacity: .8; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .ign.run .mcy { animation: none; opacity: 1; } .ign.run .mcy img { animation: none; -webkit-mask-image: none; mask-image: none; } .tbr .pn { animation: none; } }
+.stretch svg rect { transition: none; }
 </style>
 </head>
 <body>
@@ -681,7 +742,11 @@ var D = /*__DATA__*/;
   ];
   var TVORDER = DDRules.ORDER_SHOP;   // the order the television asks in, the same as the shop's own options
   var CH = D.chapters, STEPMAP = { size: ['height', 'sizes'], firmness: ['firmness', 'choose'], depth: ['height', 'heights'], cover: ['covers', 'choose'], review: ['delivery', 'yours'] };
-  var FLAT = []; CH.forEach(function (c) { c.panels.forEach(function (p) { FLAT.push([c.id, p.id]); }); });
+  var FLAT = []; CH.forEach(function (c) { c.panels.forEach(function (p) { if (p.kind !== 'step') FLAT.push([c.id, p.id]); }); });
+  function vis(c) { return c.panels.filter(function (p) { return p.kind !== 'step'; }); }   // the knowledge panels of a topic
+  /* every topic speaks in its own colour (owner, 16 Nov: dreamy, spacey, natural; colours as indicators) */
+  var TC = { discover: '#8FA8D8', firmness: '#5B7FC7', comfort: '#A48BD0', height: '#C2A57A', covers: '#C79F86', benefits: '#93AE8B', support: '#5A6FB8', adaptation: '#8C7FD1', zones: '#5E9FC2', ventilation: '#79BFD9', hygiene: '#7FB6C1', certs: '#8E9AAF', warranty: '#C9AE6E', delivery: '#6E86B8', select: '#2A86B0' };
+  var RELATED = { size: [['height', 'why']], depth: [['height', 'why'], ['comfort', 'density']], firmness: [['firmness', 'principle'], ['firmness', 'regulation'], ['firmness', 'who']], cover: [['covers', 'system']], review: [['delivery', 'made'], ['warranty', 'cover']] };
   function chap(id) { return CH.filter(function (c) { return c.id === id; })[0]; }
   function panel() { var c = chap(S.ch); return c.panels.filter(function (p) { return p.id === S.pn; })[0] || c.panels[0]; }
   function goPanel(c, p) { S.ch = c; S.pn = p; var pp = panel(); if (pp.kind === 'step') S.step = STEPS.map(function (x) { return x.id; }).indexOf(pp.step); }
@@ -779,7 +844,7 @@ var D = /*__DATA__*/;
   var CKS = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   function drawBar() {   // two groups: Explore (the description, 14 topics) and Select & Buy (the order: size, depth, firmness, cover, review)
     var onStep = panel().kind === 'step';
-    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + CH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep) + '">' + esc(c.label) + '</button>'; }).join('') + '</div>';
+    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + CH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + '</div>';
     var sl = '<div class="slg" role="group" aria-label="Select and buy"><span class="glab">Select &amp; Buy</span>' + STEPS.map(function (st, i) { var v = i < 4 ? valueOf(st.id) : (complete() ? 'Ready' : ''), ok = i < 4 ? chosen(st.id) : complete();
       return '<button class="sb' + (ok ? ' ok' : '') + (i === 4 ? ' rv' : '') + '" data-go="' + i + '" aria-current="' + (onStep && S.step === i) + '">' + IC[st.id] + '<span><b>' + st.label + '</b><i>' + (v ? esc(v) : (i < 4 ? 'Choose' : 'Your order')) + '</i></span>' + (ok ? '<em class="okm">' + CKS + '</em>' : '') + '</button>'; }).join('') + '</div>';
     $('#chbar').innerHTML = ex + sl;
@@ -787,11 +852,18 @@ var D = /*__DATA__*/;
   function nDone0() { return STEPS.slice(0, 4).filter(function (x) { return chosen(x.id); }).length; }
   function nextUnchosen() { for (var i = 0; i < STEPS.length - 1; i++) if (!chosen(STEPS[i].id)) return i; return -1; }
   function drawRail() {
-    var cur = chap(S.ch), onStep = panel().kind === 'step', nx = nextUnchosen(), nDone = STEPS.slice(0, 4).filter(function (x) { return chosen(x.id); }).length;
-    var h = '<h2>In ' + esc(cur.label) + '</h2>' + cur.panels.map(function (p) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '<h2 class="h2b">Your order <span class="oc">' + nDone + ' of 4</span></h2><div class="ord" style="--f:' + (nDone / 4) + '">';
-    STEPS.forEach(function (st, i) { var done = i < STEPS.length - 1 && chosen(st.id), isCur = onStep && i === S.step, isNext = !isCur && i === nx, v = valueOf(st.id);
-      h += '<button class="st' + (done ? ' done' : '') + (isCur ? ' cur' : '') + (isNext ? ' next' : '') + '" data-go="' + i + '" aria-label="Step ' + (i + 1) + ': ' + st.label + (v ? ', chosen ' + esc(v) : '') + '"><span class="n">' + IC[st.id] + (done ? '<em class="ck">' + CKS + '</em>' : '') + '</span><span class="t"><b>' + st.label + '</b><span>' + (v ? esc(v) : (isCur ? 'Choose now' : (isNext ? 'Choose next' : 'To do'))) + '</span></span></button>'; });
-    $('#rail').innerHTML = h + '</div>';
+    var onStep = panel().kind === 'step', h;
+    if (onStep) {   // on a choice: the knowledge that belongs to it
+      var st = STEPS[S.step], rel = RELATED[st.id] || [];
+      h = '<h2 class="colh">Before you choose</h2><div class="tree" style="--tc:' + TC.select + '"><div class="tp sel">' + IC[st.id] + '<span><b>Your ' + esc(st.label) + '</b><i>Learn before you choose</i></span></div><div class="tbr">' +
+        rel.map(function (r) { var c = chap(r[0]), p = c.panels.filter(function (x) { return x.id === r[1]; })[0]; return '<button class="pn' + (SEEN[r[0] + '/' + r[1]] ? ' seen' : '') + '" data-goto="' + r[0] + '/' + r[1] + '" aria-current="false"><span class="pdot" style="background:' + TC[r[0]] + '"></span>' + esc(p.label) + '<small>' + esc(c.label) + '</small></button>'; }).join('') + '</div></div>';
+    } else {
+      var cur = chap(S.ch), ps = vis(cur);
+      h = '<h2 class="colh">In this topic</h2><div class="tree" style="--tc:' + TC[cur.id] + '"><div class="tp"><span class="tdot"></span><span><b>' + esc(cur.label) + '</b><i>' + ps.length + (ps.length === 1 ? ' part' : ' parts') + ' in this topic</i></span></div><div class="tbr">' +
+        ps.map(function (p, i) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" style="--i:' + i + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '</div></div>';
+    }
+    $('#rail').innerHTML = h;
+    var sc = document.querySelector('.screen'); if (sc) sc.style.setProperty('--tc', onStep ? TC.select : TC[S.ch]);
   }
   function bagButton(cls) {   // ONE button, two faces (laws in engine/selection-rules.js): Add to Bag, READY, then Go to Checkout
     var bagI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>', arrI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -800,14 +872,14 @@ var D = /*__DATA__*/;
     return '<button class="btn bagbtn ' + (cls || '') + (f.ready ? ' ready' : '') + '" data-bag="1"' + (f.enabled ? '' : ' disabled') + ' aria-describedby="ready-note"><span>' + bagI + 'Add to <b>Bag</b></span></button>';
   }
   function drawMine() {
-    var h = ''; ['size', 'depth', 'firmness', 'cover'].forEach(function (id, i) { var v = valueOf(id); h += '<button class="chip' + (v ? ' on' : '') + '" data-go="' + i + '"><small>' + id + '</small><b>' + (v ? esc(v) : '–') + '</b></button>'; });
+    var h = '';
     var nOn = ['size', 'depth', 'firmness', 'cover'].filter(chosen).length; h = h + '<div class="gauge' + (nOn === 4 ? ' full' : '') + '" role="img" aria-label="' + nOn + ' of 4 choices made">' + [0, 1, 2, 3].map(function (i) { return '<i class="' + (i < nOn ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="gl"><span>' + nOn + ' of 4</span><span>' + (nOn === 4 ? 'Ready' : 'Your choices') + '</span></div>';
     $('#chips').innerHTML = h;
     $('#mi').innerHTML = iconSvg(['size', 'firmness', 'depth', 'cover'].filter(chosen).length);
     var p = price(), full = complete();
     var sh = shop(); $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small>' + priceParts(sh) + '<span>' + (sh == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the prices and the discount are Ecwid\'s own.') + '</span>';
     var gi = nextUnchosen();
-    $('#chips').insertAdjacentHTML('beforeend', gi < 0 ? '<button class="coach ok" data-go="4"><small>All four choices are made</small><b>Review your order</b><i aria-hidden="true">&rarr;</i></button>' : '<button class="coach" data-go="' + gi + '"><small>' + (nDone0() ? 'Next' : 'Start here') + '</small><b>Choose your ' + STEPS[gi].label + '</b><i aria-hidden="true">&rarr;</i></button>');
+    $('#chips').insertAdjacentHTML('afterbegin', gi < 0 ? '<button class="coach ok" data-go="4"><small>All four choices are made</small><b>Review your order</b><i aria-hidden="true">&rarr;</i></button>' : '<button class="coach" data-go="' + gi + '"><small>' + (nDone0() ? 'Next' : 'Start here') + '</small><b>Choose your ' + STEPS[gi].label + '</b><i aria-hidden="true">&rarr;</i></button>');
     $('#chips').insertAdjacentHTML('beforeend', complete() || S.size || S.firmness || S.depth || S.cover ? '' : '<p class="selhint">Select here: your choices appear in this panel as you make them.</p>');
     var fb = DDRules.bagFace(selOf(), S.bagged || '', TVORDER);
     $('#bag').innerHTML = bagButton() + (inBag() ? '<div class="hint">Added to your bag. Go to Checkout when you are ready.</div>' : '<div class="hint" id="ready-note">' + (fb.ready ? '<b>Ready to order.</b> All four choices are made. You can still change any of them.' : '<b>' + esc(fb.guide) + '</b>') + '</div>');
@@ -825,13 +897,16 @@ var D = /*__DATA__*/;
   function firmnessView() {
     var B = DDFirmnessCore.bands, lim = DDFirmnessCore.limits, rec = null;
     if (S.weight != null && S.height != null) rec = DDFirmnessCore.recommend(S.weight, S.height);
+    var fk0 = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
+    if (S.firmness && !S.firmEdit) return firmConfirmed(S.firmness);
     var cards = [['Soft', 'Up to ' + B.softMax + ' kg', 'soft'], ['Medium', (B.softMax + 1) + ' – ' + B.mediumMax + ' kg', 'medium'], ['Firm', (B.mediumMax + 1) + ' – ' + B.firmMax + ' kg', 'firm'], ['Extra Firm', B.extraFirmMin + ' kg and over', 'xfirm']];
     var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
     var h = '<div class="fw"><div class="sl"><div class="r"><label for="gw">Body weight</label><b id="gwv">' + (S.weight == null ? '–' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + lim.weight[0] + '" max="' + lim.weight[1] + '" value="' + (S.weight == null ? 70 : S.weight) + '"><div class="rng"><span>' + lim.weight[0] + ' kg</span><span>' + lim.weight[1] + ' kg</span></div></div>' +
       '<div class="sl"><div class="r"><label for="gh">Height</label><b id="ghv">' + (S.height == null ? '–' : S.height + ' cm') + '</b></div><input id="gh" type="range" min="' + lim.height[0] + '" max="' + lim.height[1] + '" value="' + (S.height == null ? 170 : S.height) + '"><div class="rng"><span>' + lim.height[0] + ' cm</span><span>' + lim.height[1] + ' cm</span></div></div></div>';
     var chosenC = cards.filter(function (c) { return c[0] === S.firmness; })[0] || (rec && cards.filter(function (c) { return c[0] === fk(rec.display); })[0]);
     h += '<div class="fc cmp">';
-    cards.forEach(function (c) { var isRec = rec && fk(rec.display) === c[0], on = S.firmness === c[0], tick = (on || (isRec && !S.firmness)) ? '<span class="tick">' + CHECK.replace('width="18" height="18"', 'width="14" height="14"') + '</span>' : '';
+    var pick = S.firmPick || (rec && fk(rec.display) !== 'Extra Firm' ? fk(rec.display) : null);
+    cards.forEach(function (c) { var isRec = rec && fk(rec.display) === c[0], on = pick === c[0], tick = on ? '<span class="tick">' + CHECK.replace('width="18" height="18"', 'width="14" height="14"') + '</span>' : '';
       if (c[2] === 'xfirm') h += '<a class="fcard' + (isRec ? ' rec' : '') + '" href="' + esc(D.specialist.url) + '" target="_blank" rel="noopener" aria-label="Extra Firm, specialist model Orthopaedic Coconut Core, opens its product page">' + tick + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="sp">Specialist Model: Orthopaedic Coconut Core ↗</span></a>';
       else h += '<button class="fcard' + (isRec ? ' rec' : '') + '" data-firm="' + c[0] + '" aria-pressed="' + on + '">' + tick + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span></button>'; });
     h += '</div><p class="fnote" id="guide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3E474D" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.5" stroke-linecap="round"/></svg><span>' + (rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : ' Body proportions refine the result near a boundary.') : 'Set your weight and height for guidance, or choose directly. Body proportions refine the result near a boundary.') + '</span></p>';
@@ -839,8 +914,15 @@ var D = /*__DATA__*/;
     var e = engPaths(), FC = CUR('firmness/choose');
     h += '<div class="eng"><svg viewBox="90 10 2550 470" role="img" aria-label="Engineering view: the body at the surface of the latex core"><path d="' + e.mp + '" fill="#fff" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#F4F8FA" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/></svg>' +
       '<div class="sab"><div><b>Support</b><span>' + esc(FC.support) + '</span></div><div class="bal">Balance<i></i></div><div><b>Adaptation</b><span>' + esc(FC.adapt) + '</span></div></div></div>';
+    h = h.replace('<p class="fnote" id="guide">', '<div class="fconf' + (pick ? ' on' : '') + '"><span>' + (pick ? 'Your firmness: <b>' + pick + '</b>. Confirm it to continue.' : 'Choose a firmness, or set your weight and height for guidance.') + '</span><button class="btn bagbtn' + (pick ? ' ready' : '') + '" data-fconfirm="' + (pick || '') + '"' + (pick ? '' : ' disabled') + '>' + CHECK + 'Confirm ' + (pick || 'firmness') + '</button></div><p class="fnote" id="guide">');
     h += '<p class="base">The four ranges are the base. Your height can move the guidance to a neighbouring level.</p>';
     return h;
+  }
+  function firmConfirmed(f) {   // the confirmed level alone, the others folded away
+    var B = DDFirmnessCore.bands, rg = { Soft: 'Up to ' + B.softMax + ' kg', Medium: (B.softMax + 1) + ' – ' + B.mediumMax + ' kg', Firm: (B.mediumMax + 1) + ' – ' + B.firmMax + ' kg' }[f], key = { Soft: 'soft', Medium: 'medium', Firm: 'firm' }[f];
+    var dd = D.firmness.cards.filter(function (x) { return x.key === key; })[0], e = engPaths(), FC = CUR('firmness/choose');
+    return '<div class="fdone"><div class="fdl"><span class="fok">' + CHECK + 'Confirmed</span><small>Your firmness</small><b>' + esc(f) + '</b><i>' + esc(rg || '') + '</i><p>' + esc(dd ? dd.desc : '') + '</p><button class="btn s" data-fchange="1">Change firmness</button></div>' +
+      '<div class="fdr"><svg viewBox="90 10 2550 470" role="img" aria-label="The body at the surface of the latex core"><path d="' + e.mp + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/></svg><div class="fsab"><span><b>Support</b> keeps you at the surface</span><span><b>Adaptation</b> follows your shape</span></div></div></div>';
   }
   function depthView() { return '<div class="dc">' + D.depths.map(function (d, i) { var on = S.depth && S.depth.i === i; return '<button class="dcard" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + (on ? '<span class="chosen">' + CHECK + 'Chosen</span>' : '') + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; }).join('') + '</div>'; }
   function coverView() {
@@ -873,10 +955,19 @@ var D = /*__DATA__*/;
   function ptCard(x) { return '<div class="pt">' + LEAFS + '<h3>' + esc(x.t) + '</h3><p>' + esc(x.d) + '</p></div>'; }
   var TITLE_CASE = function (t) { return t.replace(/(^|[\s-])([a-z])/g, function (m, a, b) { return a + b.toUpperCase(); }).replace(/\b(The|Of|And|A|An)\b(?!$)/g, function (w, x, o) { return o ? w.toLowerCase() : w; }); };
   function engPaths() { var E = D.eng; return { vb: E.viewBox.join(' '), mp: E.mattress, bd: E.body }; }
-  function stretchSvg() {   // the Stretching Effect: the owner's engineering outline (unchanged geometry) and the arrows of IMG_5822
-    var e = engPaths(), ar = '';
-    [0, 1, 2, 3, 4, 5, 6].forEach(function (i) { var x = 1250 + i * 190, sc = 1.1 + i * .16; ar += '<path class="arr" style="animation-delay:' + (i * .18) + 's" transform="translate(' + x + ' 190) scale(' + sc + ')" d="M-26 -22L26 0L-26 22L-14 0Z" fill="#50CDFD" stroke="#1A5C7E" stroke-width="2.5" stroke-linejoin="round"/>'; });
-    return '<svg viewBox="' + e.vb + '" role="img" aria-label="Stretching effect: the body is gently lengthened along the mattress"><path d="' + e.mp + '" fill="#F4F8FA" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#173A52" stroke-width="5" stroke-linejoin="round"/>' + ar + '</svg>';
+  function stretchSvg() {   // the Stretching Effect: the owner's engineering outline; the spine runs inside the body, and the two arrows run inside the torso along it, outward from the middle
+    var e = engPaths(), sp = D.eng.spine || [], v = '';
+    if (!sp.length) return '<svg viewBox="-60 10 2760 760" aria-hidden="true"><path d="' + e.mp + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="5"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5"/></svg>';
+    var yAt = function (x) { for (var i = 1; i < sp.length; i++) if (x <= sp[i][0]) { var a = sp[i - 1], b = sp[i], t = (x - a[0]) / (b[0] - a[0]); return a[1] + (b[1] - a[1]) * t; } return sp[sp.length - 1][1]; };
+    sp.forEach(function (q, i) { var w = 54 - Math.abs(i - sp.length / 2) * 2; v += '<rect x="' + (q[0] - w / 2).toFixed(0) + '" y="' + (q[1] - 20) + '" width="' + w.toFixed(0) + '" height="40" rx="12" fill="#DCE7F0" stroke="#2A3238" stroke-width="5"/>'; });
+    var line = '<path d="M' + sp.map(function (q) { return q[0] + ' ' + q[1]; }).join(' L') + '" class="spl" fill="none" stroke="#8FB3CF" stroke-width="14" stroke-linecap="round"/>';
+    var arr = function (x0, x1) {   // follows the spine 105 units above it, so it stays inside the torso
+      var dir = x1 > x0 ? 1 : -1, pts = [];
+      for (var x = x0; dir * (x1 - x) >= 0; x += dir * 20) pts.push([x, yAt(x) - 105]);
+      var q = pts[pts.length - 1], st = ' fill="none" stroke="#2A86B0" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>';
+      return '<path d="M' + pts.map(function (p) { return p[0] + ' ' + p[1].toFixed(0); }).join(' L') + '"' + st + '<path d="M' + (q[0] - dir * 42) + ' ' + (q[1] - 32).toFixed(0) + 'L' + q[0] + ' ' + q[1].toFixed(0) + 'L' + (q[0] - dir * 42) + ' ' + (q[1] + 32).toFixed(0) + '"' + st;
+    };
+    return '<svg viewBox="70 0 2600 770" role="img" aria-label="Stretching effect: the spine is gently lengthened along the mattress"><path d="' + e.mp + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/>' + line + v + '<g class="sarr">' + arr(1040, 800) + arr(1220, 1560) + '</g></svg>';
   }
   var FLOWI = [
     '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 15l8-5h22l-8 5z"/><path d="M5 15v13h22V15"/><path d="M27 28l8-5V10"/><circle cx="11" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/><circle cx="23" cy="20" r="1.3"/><circle cx="14" cy="24" r="1.3"/><circle cx="20" cy="24" r="1.3"/></svg>',
@@ -1048,7 +1139,7 @@ var D = /*__DATA__*/;
     drawRail(); drawMine();
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
+    var t = e.target.closest('[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
     var d = t.dataset, cg = S.coach; S.coach = null; clearTimeout(COACHT);
     if (d.coachgo != null) { goStep(cg ? cg.to : S.step); draw(); window.scrollTo({ top: 0 }); return; }
     if (d.coachstay != null) { draw(); return; }
@@ -1056,13 +1147,16 @@ var D = /*__DATA__*/;
     if (d.gal != null) { S.gal = !S.gal; draw(); return; }
     if (d.gimg != null) { S.gi = (+d.gimg + D.images.length) % D.images.length; draw(); return; }
     S.gal = false;   // any other button leaves the gallery
-    if (d.ch != null) { var cc0 = chap(d.ch); goPanel(cc0.id, cc0.panels[0].id); }
+    if (d.ch != null) { var cc0 = chap(d.ch); goPanel(cc0.id, vis(cc0)[0].id); }
     else if (d.pn != null) goPanel(S.ch, d.pn);
+    else if (d.goto != null) { var gg = d.goto.split('/'); goPanel(gg[0], gg[1]); }
     else if (d.rd != null) { S.rd[S.ch + '/' + S.pn] = +d.rd; }
     else if (d.flat != null) { var f = FLAT[+d.flat]; goPanel(f[0], f[1]); }
     else if (d.go != null) goStep(+d.go);
     else if (d.size != null) S.size = D.sizes[+d.size];
-    else if (d.firm != null) S.firmness = d.firm;
+    else if (d.firm != null) { S.firmPick = d.firm; }
+    else if (d.fconfirm != null) { if (d.fconfirm) { S.firmness = d.fconfirm; S.firmEdit = false; S.firmPick = null; } }
+    else if (d.fchange != null) { S.firmEdit = true; S.firmPick = S.firmness; }
     else if (d.depth != null) S.depth = Object.assign({ i: +d.depth }, D.depths[+d.depth]);
     else if (d.cover != null) S.cover = Object.assign({ i: +d.cover }, D.covers[+d.cover]);
     else if (d.next != null) goStep(Math.min(STEPS.length - 1, S.step + 1));
@@ -1071,7 +1165,7 @@ var D = /*__DATA__*/;
     else if (d.send != null) { toast('Preview only: nothing was sent. In the shop this goes to Divine Dunlop support.'); return; }
     else if (d.bag != null) { S.bagged = sig(); toast('Stand-in: in the shop this presses Ecwid\'s own Add to Bag, and the button turns into Go to Checkout when Ecwid\'s cart reports the change.'); }
     else if (d.checkout != null) { toast('Go to Checkout opens the shopping cart: the order there is built from your four choices and the promotion. The e-mail is entered in the cart. (Not opened in this preview.)'); return; }
-    if ((d.size != null || d.firm != null || d.depth != null || d.cover != null) && S.view === 'tv' && guideOn()) startCoach();
+    if ((d.size != null || d.fconfirm || d.depth != null || d.cover != null) && S.view === 'tv' && guideOn()) startCoach();
     draw(); if (d.bag == null) window.scrollTo({ top: 0 });
     if (d.ch === 'discover') ignite();   // every press of Discover switches the television on again
   });
@@ -1089,6 +1183,7 @@ var D = /*__DATA__*/;
     $('#gwv').textContent = S.weight == null ? '–' : S.weight + ' kg'; $('#ghv').textContent = S.height == null ? '–' : S.height + ' cm';
     // update in place (the slider must not be re-created while it is being dragged)
     var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
+    if (rec && !S.firmPick) { var pk = fk(rec.display); document.querySelectorAll('.fcard[data-firm]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.firm === pk)); }); var cb = document.querySelector('[data-fconfirm]'); if (cb && pk !== 'Extra Firm') { cb.dataset.fconfirm = pk; cb.disabled = false; cb.classList.add('ready'); cb.innerHTML = CHECK + 'Confirm ' + pk; var fs = document.querySelector('.fconf'); if (fs) { fs.classList.add('on'); fs.firstChild.innerHTML = 'Your firmness: <b>' + pk + '</b>. Confirm it to continue.'; } } }
     $('#guide').innerHTML = rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';
     document.querySelectorAll('.fcard').forEach(function (c) { var nm = c.querySelector('.nm').textContent, isRec = rec && fk(rec.display) === nm; c.classList.toggle('rec', !!isRec); c.classList.toggle('dim', !!(rec && !isRec)); var tag = c.querySelector('.tag'); if (isRec && !tag) c.insertAdjacentHTML('afterbegin', '<span class="tag">For you</span>'); if (!isRec && tag) tag.remove(); });
   });
@@ -1133,12 +1228,12 @@ var D = /*__DATA__*/;
     for (var k2 = 0; k2 < 4; k2++) sg += '<i style="animation-delay:' + (3.95 + k2 * .22).toFixed(2) + 's"></i>';
     var cu = '<svg class="cu" viewBox="0 0 64 38" aria-hidden="true"><path pathLength="1" d="M5 22L24 11H59L40 22ZM5 22V30H40V22M40 30L59 19V11"/><path class="dim" pathLength="1" d="M5 35H40M5 33V37M40 33V37"/></svg>';
     var pics = ['<div class="ex">' + ex + '</div>', '<div class="sgm">' + sg + '</div>', cu];
-    el.innerHTML = '<div class="lit"></div><div class="glow">' + coreSketch() + '</div><div class="moons"><img src="' + D.moonCycle + '" alt=""></div><div class="core"><div class="mark">' + LEAF + '<b class="lum">' + esc(g.name) + '</b></div><div class="line"></div><div class="read">' +
+    el.innerHTML = '<div class="lit"></div><div class="glow">' + coreSketch() + '</div><div class="core"><div class="mark">' + LEAF + '<b class="lum">' + esc(g.name) + '</b></div><div class="mcy" aria-hidden="true"><img src="' + D.moonCycle + '" alt=""></div><div class="line"></div><div class="read">' +
       g.facts.map(function (f) { return '<div class="fact"><small>' + esc(f[0]) + '</small><span class="lum">' + esc(f[1]) + '</span></div>'; }).join('<i></i>') + '</div>' +
       '<div class="pil">' + P.map(function (x, i) { return '<div class="pl pl' + (i + 1) + '"><div class="pic">' + pics[i] + '</div><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>'; }).join('') + '</div>' +
       '<p class="tag"><span class="lum2">' + esc(g.tagline) + '</span></p><p class="sub">' + esc(g.sub) + '</p></div><button class="snd" type="button" data-snd="1" aria-pressed="' + soundOn() + '">' + (soundOn() ? SND_ON + 'Sound on' : SND_OFF + 'Sound off') + '</button><button class="skip" type="button" data-skip="1">Skip</button>';
-    el.className = 'ign'; el.hidden = false; void el.offsetWidth; el.className = 'ign load';   // the moon cycle loads first
-    IGN = setTimeout(function () { el.className = 'ign run'; ambient(reduce); IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, reduce ? 3000 : 9500); }, reduce ? 300 : 1450);
+    el.className = 'ign'; el.hidden = false; void el.offsetWidth; el.className = 'ign run'; ambient(reduce);
+    IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, reduce ? 3000 : 9500);
   }
   function igniteEnd() { var el = $('#ign'); if (el.hidden) return; clearTimeout(IGN); hush(); el.className = 'ign end'; IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, 300); }
   $('#ign').addEventListener('click', function (e) { var b = e.target.closest('[data-snd]'); if (b) { e.stopPropagation(); setSound(!soundOn()); b.setAttribute('aria-pressed', String(soundOn())); b.innerHTML = soundOn() ? SND_ON + 'Sound on' : SND_OFF + 'Sound off'; if (soundOn()) ambient(false, true); else hush(); return; } igniteEnd(); });

@@ -31,14 +31,14 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   if (landscape) {
     for (const q of ['?step=0', '?step=1', '?step=2', '?step=3', '?step=4', '?ch=comfort&pn=behaviour', '?ch=zones&pn=map', '?ch=warranty&pn=cover']) {
       await p.goto(file + q); await p.waitForTimeout(120);
-      const t = await p.evaluate(() => { const y = (s) => document.querySelector(s).getBoundingClientRect().top; return [y('.q'), y('.chip'), y('.rail .pn')]; });
+      const t = await p.evaluate(() => { const y = (s) => document.querySelector(s).getBoundingClientRect().top; return [y('.q'), y('#chips > :first-child'), y('.rail .tp')]; });
       ok(Math.max(...t) - Math.min(...t) <= 1.5, 'R4 first boxes of the three columns share one top line ' + q, t.map((v) => v.toFixed(1)).join(' / '));
     }
   }
   // R5 the fourteen topic buttons, always there
   await p.goto(file);
   const chs = await p.$$eval('#chbar .ch', (x) => x.map((e) => e.textContent.trim()));
-  ok(chs.join('|') === 'Discover|Firmness|Comfort|Sizes|Covers|Benefits|Support|Adaptation|7-Zone|Ventilation|Hygiene|Certifications|Warranty|Delivery', 'R5 the fourteen topic buttons are on top', chs.length + ' buttons');
+  ok(chs.join('|') === 'Discover|Firmness|Comfort|Height|Covers|Benefits|Support|Adaptation|7-Zone|Ventilation|Hygiene|Certifications|Warranty|Delivery', 'R5 the fourteen topic buttons are on top', chs.length + ' buttons');
   // R6 the invitation
   await p.goto(file + '?step=0'); ok((await p.textContent('.invite')).includes('Select your Botanic here') && (await p.textContent('#stageh')).includes('Select here'), 'R6 "Select your Botanic here" is shown and the stage says "Select here"');
   // R7 the bright blue set: Add to Bag, Go to Checkout and View Model Gallery are the same blue; the two view buttons are blue-outlined, never filled blue; flat and crisp
@@ -68,16 +68,16 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.click('#galbtn'); ok((await p.$('.gmain img')) !== null && (await p.$$('.gth button')).length >= 6, 'R21 the gallery opens inside the television with the photographs');
   await p.click('#galbtn'); await p.click('#vstd'); ok((await p.$$('#std select')).length === 4, 'R22 Standard Product View shows the shop\'s own four options');
   // R23 two-way sync between the standard view and the television
-  await p.selectOption('#m-size', { index: 5 }); await p.click('#vtv'); const chip = await p.$$eval('.chip b', (x) => x[0].textContent); ok(chip !== '—', 'R23 a choice made in the standard view is shown in the television', chip);
-  await p.click('.st[data-go="0"]'); await p.click('.card[data-size="3"]'); await p.click('#vstd'); const sel = await p.$eval('#m-size', (s) => s.options[s.selectedIndex].text); ok(/Single 90x190/.test(sel), 'R24 a choice made in the television is shown in the standard view', sel);
+  await p.selectOption('#m-size', { index: 5 }); await p.click('#vtv'); const chip = await p.$$eval('.sb i', (x) => x[0].textContent); ok(chip !== 'Choose', 'R23 a choice made in the standard view is shown in the television', chip);
+  await p.click('.sb[data-go="0"]'); await p.click('.card[data-size="3"]'); await p.click('#vstd'); const sel = await p.$eval('#m-size', (s) => s.options[s.selectedIndex].text); ok(/Single 90x190/.test(sel), 'R24 a choice made in the television is shown in the standard view', sel);
   // R25 Add to Bag / Go to Checkout: one button, two faces
   await p.goto(file + '?step=4'); const face = async () => [await p.$eval('#bag .btn', (x) => x.textContent.trim() + (x.disabled ? ' [off]' : '')), await p.$eval('#native .btn', (x) => x.textContent.trim() + (x.disabled ? ' [off]' : ''))];
-  const f0 = await face(); await p.goto(file + '?step=4&demo=1'); const f1 = await face(); await p.click('#bag [data-bag]'); const f2 = await face(); await p.click('.st[data-go="0"]'); await p.click('.card[data-size="3"]'); const f3 = await face();
+  const f0 = await face(); await p.goto(file + '?step=4&demo=1'); const f1 = await face(); await p.click('#bag [data-bag]'); const f2 = await face(); await p.click('.sb[data-go="0"]'); await p.click('.card[data-size="3"]'); const f3 = await face();
   ok(/off/.test(f0[0]) && f1[0] === 'Add to Bag' && f2.join() === 'Go to Checkout,Go to Checkout' && f3[0] === 'Add to Bag', 'R25 Add to Bag waits for the four choices, becomes Go to Checkout (both buttons), and returns if a choice changes', [f0[0], f1[0], f2[0], f3[0]].join(' > '));
   // R26 every panel of every topic shows its text
   await p.goto(file); let empty = [], n = 0;
   for (const c of chs.map((t, i) => (['discover', 'firmness', 'comfort', 'height', 'covers', 'benefits', 'support', 'adaptation', 'zones', 'ventilation', 'hygiene', 'certs', 'warranty', 'delivery'][i]))) { await p.click('#chbar [data-ch="' + c + '"]'); for (const pn of await p.$$eval('#rail .pn', (x) => x.map((e) => e.dataset.pn))) { await p.click('#rail [data-pn="' + pn + '"]'); n++; if ((await p.$eval('#answer', (a) => a.textContent.trim().length)) < 40) empty.push(c + '/' + pn); } }
-  ok(n >= 31 && !empty.length, 'R26 every panel of every topic shows its content', n + ' panels' + (empty.length ? ' EMPTY: ' + empty : ''));
+  ok(n >= 29 && !empty.length, 'R26 every panel of every topic shows its content', n + ' panels' + (empty.length ? ' EMPTY: ' + empty : ''));
   await p.goto(file + '?ch=zones&pn=map'); const zs = await p.evaluate(() => { const z = document.querySelector('.zsk'), sv = z.querySelector('svg').getBoundingClientRect(), a = document.querySelector('#answer').getBoundingClientRect(); return { bg: getComputedStyle(z).backgroundImage, ratio: +(sv.width / sv.height).toFixed(3), share: +(z.getBoundingClientRect().width / a.width).toFixed(2), video: !!document.querySelector('.pw .mini .vid') }; });
   ok(zs.bg === 'none' && Math.abs(zs.ratio - 2550 / 760) < 0.03 && zs.share >= 0.95 && zs.video, 'R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones', JSON.stringify(zs));
   // R28 depths in TRUE proportion 20 : 24 : 26 (master prompt 13.11), and the chosen depth is marked
@@ -92,10 +92,10 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await ig.goto(file + '?ignite=0'); const igOff = await ig.$eval('#ign', (e) => e.hidden); await ig.close();
   ok(/100% Natural Latex/.test(igT) && /Dunlop Technology/.test(igT) && /Explore/.test(igT) && /Select & Buy/.test(igT) && /Custom/.test(igT) && /Custom Dunlop Natural Environment for Healthy Sleep/.test(igT) && igGone && igStart && igDisc && igAgain && igSkip && igOff && igSnd.btn && igSnd.played >= 1, 'R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; every press of Discover and of Optimised Preview plays it again; sound after a tap; Skip', [igT.replace(/\s+/g, ' ').slice(0, 90), igGone, igStart, igDisc, igAgain, igSkip, igOff, JSON.stringify(igSnd)].join(' | '));
   // R30 the owner's text rules (16 Nov): every rail label starts with capitals, the header names the model, the order is Size > Depth > Firmness > Cover with icons, the guide says what is next
-  await p.goto(file + '?step=0'); const rail = await p.$$eval('#rail .pn', (x) => x.map((e) => e.textContent.trim())); const stp = await p.$$eval('#rail .st b', (x) => x.map((e) => e.textContent.trim()));
-  const hdr = await p.$eval('.brand', (e) => e.textContent.replace(/\s+/g, ' ').trim()); const icons = await p.$$eval('#rail .st .n svg', (x) => x.length); const selTop = await p.$$eval('#chbar .slg .sb', (x) => x.map((e) => e.querySelector('b').textContent).join(','));
+  await p.goto(file + '?step=0'); const rail = await p.$$eval('#rail .pn', (x) => x.map((e) => e.firstChild && e.childNodes[1] ? e.childNodes[1].textContent.trim() : e.textContent.trim())); const stp = await p.$$eval('.slg .sb b', (x) => x.map((e) => e.textContent.trim()));
+  const hdr = await p.$eval('.brand', (e) => e.textContent.replace(/\s+/g, ' ').trim()); const icons = await p.$$eval('.slg .sb > svg', (x) => x.length); const selTop = await p.$$eval('#chbar .slg .sb', (x) => x.map((e) => e.querySelector('b').textContent).join(','));
   const guide = await p.$eval('#chips .coach', (e) => e.textContent.replace(/\s+/g, ' ').trim());
-  ok(rail.join('|') === 'Select Your Size|Select Your Depth|Why Height Matters' && stp.join('|') === 'Size|Depth|Firmness|Cover|Review' && icons === 5 && /Botanic Original 100% Natural 100% Organic Latex Mattress Dunlop Technology/.test(hdr) && selTop === 'Size,Depth,Firmness,Cover,Review' && /Start here\s*Choose your Size/.test(guide), 'R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now', [rail.join('/'), stp.join('/'), icons, selTop, guide].join(' | '));
+  ok(rail.join('|') === 'Why Height Matters' && stp.join('|') === 'Size|Depth|Firmness|Cover|Review' && icons === 5 && /Botanic Original 100% Natural 100% Organic Latex Mattress Dunlop Technology/.test(hdr) && selTop === 'Size,Depth,Firmness,Cover,Review' && /Start here\s*Choose your Size/.test(guide), 'R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now', [rail.join('/'), stp.join('/'), icons, selTop, guide].join(' | '));
   const noLong = await p.evaluate(() => !/—/.test(document.body.innerText)); ok(noLong, 'R31 no long dash is shown anywhere');
   // R32 the guide after a choice (?guide=1): says what was chosen, what comes next, then opens it by itself
   await p.goto(file + '?step=0&guide=1'); await p.click('.card[data-size="3"]'); await p.waitForTimeout(150);

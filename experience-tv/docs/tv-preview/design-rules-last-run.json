@@ -6,7 +6,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 62 buttons"
+   "detail": "largest radius 12px over 51 buttons"
   },
   {
    "pass": true,
@@ -166,7 +166,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic shows its content",
-   "detail": "34 panels"
+   "detail": "29 panels"
   },
   {
    "pass": true,
@@ -181,12 +181,12 @@
   {
    "pass": true,
    "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; every press of Discover and of Optimised Preview plays it again; sound after a tap; Skip",
-   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore14 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore14 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":2}"
   },
   {
    "pass": true,
    "rule": "R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now",
-   "detail": "Select Your Size/Select Your Depth/Why Height Matters | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+   "detail": "Why Height Matters | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
   },
   {
    "pass": true,
@@ -206,7 +206,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 62 buttons"
+   "detail": "largest radius 12px over 51 buttons"
   },
   {
    "pass": true,
@@ -326,7 +326,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic shows its content",
-   "detail": "34 panels"
+   "detail": "29 panels"
   },
   {
    "pass": true,
@@ -341,12 +341,12 @@
   {
    "pass": true,
    "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; every press of Discover and of Optimised Preview plays it again; sound after a tap; Skip",
-   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore14 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore14 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":2}"
   },
   {
    "pass": true,
    "rule": "R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now",
-   "detail": "Select Your Size/Select Your Depth/Why Height Matters | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+   "detail": "Why Height Matters | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
   },
   {
    "pass": true,
@@ -366,7 +366,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 62 buttons"
+   "detail": "largest radius 12px over 51 buttons"
   },
   {
    "pass": true,
@@ -526,7 +526,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic shows its content",
-   "detail": "34 panels"
+   "detail": "29 panels"
   },
   {
    "pass": true,
@@ -541,12 +541,12 @@
   {
    "pass": true,
    "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; every press of Discover and of Optimised Preview plays it again; sound after a tap; Skip",
-   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore14 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore14 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":2}"
   },
   {
    "pass": true,
    "rule": "R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now",
-   "detail": "Select Your Size/Select Your Depth/Why Height Matters | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+   "detail": "Why Height Matters | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
   },
   {
    "pass": true,

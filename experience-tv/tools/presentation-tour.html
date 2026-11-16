@@ -23,7 +23,7 @@
   var click = function (sel) { var e = $(sel); if (e) e.click(); return !!e; };
   var CAP = {
     discover: 'Discover: the model in one screen, one film and six facts.', firmness: 'Firmness: body weight and height set the level; the figure shows Support and Adaptation.', comfort: 'Comfort: what to expect, latex behaviour, and How Density Works.',
-    height: 'Sizes: every size, then the depth, with the module guiding you from one to the other.', covers: 'Covers: four real fabrics and what each one gives you.', benefits: 'Benefits: where latex begins, and why it is different.',
+    height: 'Height: why all three depths are valid, and what more latex changes.', covers: 'Covers: four real fabrics and what each one gives you.', benefits: 'Benefits: where latex begins, and why it is different.',
     support: 'Support: bearing force, the Stretching Effect and How Density Works.', adaptation: 'Adaptation: instant response, and suitable for adjustable beds.', zones: '7-Zone: the engineering view, one core, seven responses.',
     ventilation: 'Ventilation: airflow, the process in five steps.', hygiene: 'Hygiene: cleaner sleep in a 2 by 2 grid.', certs: 'Certifications: the marks and what each one covers.',
     warranty: 'Warranty: three rows, and the 12% rule for the height you chose.', delivery: 'Delivery: made to order, then your Botanic.'
@@ -36,7 +36,8 @@
   add('Select', 'Depth: three heights in true proportion. A touch chooses one.', function () { click('.sb[data-go="1"]'); }, 2800);
   add('Select', '24 cm chosen. The guide moves on to Firmness.', function () { click('.dcard[data-depth="1"]'); }, 4200);
   add('Select', 'Firmness: body weight and height give the level. A touch confirms it.', function () { click('.sb[data-go="2"]'); }, 3000);
-  add('Select', 'Firm chosen. Next is the cover.', function () { click('.fcard[data-firm="Firm"]'); }, 4200);
+  add('Select', 'Firm picked. The customer confirms it: the other levels fold away, and Change brings them back.', function () { click('.fcard[data-firm="Firm"]'); }, 3000);
+  add('Select', 'Firm confirmed. Next is the cover.', function () { click('[data-fconfirm]'); }, 4200);
   add('Select', 'Cover: four real fabrics. A touch shows what each one gives you.', function () { click('.sb[data-go="3"]'); }, 2800);
   add('Select', 'Cotton / Wool chosen. All four choices are made.', function () { click('.tile[data-cover="1"]'); }, 4200);
   add('Buy', 'Review: the four choices, the price and the discount exactly as the shop gives them.', function () { click('.sb[data-go="4"]'); }, 3400);
