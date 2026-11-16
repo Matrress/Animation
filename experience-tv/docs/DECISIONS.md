@@ -86,7 +86,7 @@ These are decided. They are not asked again and not undone by a later change. Wh
 
 ## Owner's round of 16 November 2026 (II)
 - **Ignition:** the owner's moon-phase cycle loads first (about 1.4 s, sweeping left to right), then the start-up. Behind it a very light glow of the seven-zone core: a vector sketch of the core from the Quality page photograph (seven perforated bands), no image file, about 26% opacity. The moon cycle also sits as a quiet ornament in the Review band.
-- **Two groups in the top bar.** Explore (the 14 description topics, ivory) and **Select & Buy** (Size, Depth, Firmness, Cover, Review: teal underline, teal glow on hover, a mark when chosen). Teal (#23908C) is the colour of the selection system everywhere: the order line, the ticks, the next step, the gauge, the guide.
+- **Two groups in the top bar.** Explore (the 14 description topics, ivory) and **Select & Buy** (Size, Depth, Firmness, Cover, Review: teal underline, teal glow on hover, a mark when chosen). The gallery blue (#2A86B0, owner 16 Nov: never green-teal) is the colour of the selection system everywhere: the order line, the ticks, the next step, the gauge, the guide.
 - **Standard Product View** has its own colour: warm sand. View Model Gallery and the two views live in the "Select your Botanic here" card, which stays visible in the standard view so the customer can always switch back.
 - **Words for customers:** "screen" or "presentation screen", never "television" (internal only).
 - **How Density Works** (owner's infographic, redrawn in the system): four steps Density, Stable Structure, Consistent Firmness, Adaptive Comfort, the conclusion band and the note. In Comfort and in Support.
