@@ -136,3 +136,14 @@ Explore, Select & Buy, Your order and Your selection are no longer buttons parte
 - **Your order (traceability): a slate ledger.** A cool grey-blue card (#E6EBF2), the steps joined by a line; done = navy tick with its value, here = a white pill with the blue line.
 - **Your selection (pay): an aqua column.** The site's mist aqua (#E8F3F5) with white cards for the price and the bag; the topic rail stays white.
 Test R35 checks that the four have four different looks; R2 was updated for the aqua column.
+
+## Owner's round of 16 November 2026 (VIII)
+- **Start-up animation: calm and clean, as before.** No moon cycle, no mattress drawing (the moon cycle is also gone from the Review band). BOTANIC, the two facts, Explore / Select & Buy / Custom ("11 topics"), the tagline.
+- **The Standard Product View keeps the product information.** Besides the shop's gallery and options, the whole approved description (the earlier, approved format with all its chapters and cards) is there, as on the shop page. In the shop the engine already puts the original description back when the customer chooses Standard Product View; the preview now shows it too. One view does not eat the other. Test R36.
+- **One screen.** On a large screen the monitor is the height of the screen (like a car display): the two groups, the order trail and the three columns are always in view; only the middle stage scrolls inside, with its actions fixed at the bottom. The chrome is tighter (38–40 px buttons, smaller band). Fixed a defect where long pages squeezed the stage header and the band.
+- **Explore buttons** carry a thin, delicate blue outline (1 px). The current topic is outlined in its own colour, and the same colour outlines its header in the tree: the button and its tree read as one.
+- **Topic parts are lettered A, B, C** in the topic's colour (also under a choice), and the stage header names the part: "Discover (A) Introduction".
+- **Films and photographs** of the description are shown: the six loops play in their topics (Discover, Benefits, Adaptation, 7-Zone, Ventilation, Certifications), the cover photographs and the gallery. The published preview can only load its own files, so they travel with the page (fetched at build time, not committed); in the shop they come from the shop's own media addresses.
+- **Titles:** Ventilation "Breathable … Comfort" and 7-Zone "7-Zone" in blue and a touch bolder; **Warranty and Durability** with Durability opening on the Divine Dunlop D mark.
+- **Delivery Journey** (new part B of Delivery): seven steps, each with a notification: Order confirmed, In production, Quality tested, Prepared for dispatch, In transit, At the depot, Out for delivery (the two-person delivery team). "A notification at every step", **delivery included in the price, no extra transport fees**, 20 Days Delivery.
+- **No "N of 24 explored"**: the customer decides what to read.

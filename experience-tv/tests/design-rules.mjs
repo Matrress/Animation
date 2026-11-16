@@ -121,6 +121,19 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file + '?step=0'); await p.click('.card[data-size="3"]');
   const fam = await p.evaluate(() => { const g = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e).backgroundColor + '|' + getComputedStyle(e).backgroundImage.slice(0, 40) : null; }; return [g('.exg'), g('.slg'), g('#trailbar .trail'), g('.mine')]; });
   ok(fam.every(Boolean) && new Set(fam).size === 4, 'R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour', fam.join('  //  '));
+  // R36 owner 16 Nov VIII: a calm start-up (no moon cycle, no mattress drawing); the Standard Product View keeps the approved description;
+  // the films of the description; lettered parts; a thin outline on Explore; the delivery journey; no "explored" count; one screen
+  await p.goto(file + '?ignite=1'); const ign = await p.evaluate(() => ({ moon: !!document.querySelector('#ign .mcy'), glow: !!document.querySelector('#ign .glow') }));
+  await p.goto(file + '?ignite=0'); const vids = await p.$$eval('.mini .vid video', (x) => x.length);
+  const letters = await p.$$eval('#rail .pn .lt', (x) => x.map((e) => e.textContent).join(''));
+  const outline = await p.$eval('.exg .ch:not([aria-current=true])', (e) => getComputedStyle(e).borderTopWidth !== '0px' && getComputedStyle(e).borderTopColor !== 'rgba(0, 0, 0, 0)');
+  const counted = await p.evaluate(() => /explored/i.test(document.querySelector('.screen').innerText));
+  await p.click('.exg [data-ch="delivery"]'); await p.click('#rail [data-pn="journey"]'); const jn = await p.evaluate(() => ({ n: document.querySelectorAll('.jst li').length, inc: /includes delivery/i.test(document.querySelector('.jny').innerText) }));
+  const vw = p.viewportSize(); let fits = true;
+  if (vw.width >= 1100) fits = await p.evaluate(() => { const m = document.querySelector('.monitor').getBoundingClientRect(); return m.height <= innerHeight; });
+  await p.click('#vstd'); await p.waitForTimeout(300); const desc = await p.evaluate(() => { const h = document.querySelector('#sdesc'); return !!(h && h.shadowRoot && /Organic Latex/.test(h.shadowRoot.textContent)); });
+  await p.click('#vtv'); await p.waitForTimeout(100); await p.evaluate(() => { const s = document.querySelector('#ign .skip'); if (s) s.click(); });
+  ok(!ign.moon && !ign.glow && vids >= 1 && letters === 'AB' && outline && !counted && jn.n === 7 && jn.inc && fits && desc, 'R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the monitor fits one screen', JSON.stringify({ ign, vids, letters, outline, counted, jn, fits, desc }));
   await p.goto(file + '?step=0');
   const noLong = await p.evaluate(() => !/—/.test(document.body.innerText)); ok(noLong, 'R31 no long dash is shown anywhere');
   // R32 the guide after a choice (?guide=1): says what was chosen, what comes next, then opens it by itself

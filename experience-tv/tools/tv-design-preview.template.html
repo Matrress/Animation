@@ -861,6 +861,80 @@ button.tp { width: 100%; border: 0; text-align: left; cursor: pointer; font: inh
 @media (max-width: 1250px) { .ivory .chbar { grid-template-columns: 1fr !important; } }
 .ivory .exg .ch:last-child { grid-column: span 2; }
 @media (max-width: 700px) { .ivory .exg .ch:last-child { grid-column: auto; } }
+/* ===== OWNER 16 Nov (VIII) ===== */
+/* Explore: a delicate blue outline on every button (no glow); the current topic keeps its colour as an outline,
+   and the same colour outlines its header in the tree, so the topic and its parts read as one */
+.ivory .exg .ch { border: 1px solid rgba(143,208,236,.42) !important; }
+.ivory .exg .ch:hover { border-color: rgba(143,208,236,.75) !important; }
+.ivory .exg .ch[aria-current=true] { border: 1.5px solid var(--c) !important; box-shadow: inset 0 -3px 0 var(--c), 0 0 0 2px #0B2A38, 0 0 0 3.5px var(--c) !important; }
+.ivory .screen[data-layer=explore] .tp { box-shadow: 0 0 0 1.5px var(--tc) !important; }
+.ivory .tbr::before { width: 1.5px; background: var(--tc) !important; }
+.ivory .tbr .pn::before { height: 1.5px; background: var(--tc) !important; }
+.tbr .pn { flex-direction: row !important; align-items: center !important; flex-wrap: wrap; gap: 0 10px; padding-left: 10px !important; }
+.tbr .pn small { flex-basis: 100%; padding-left: 32px; margin-top: -2px; }
+.tbr .pn .lt { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--tc); color: var(--tc); font-size: 11.5px; font-weight: 700; background: #fff; }
+.ivory .tbr .pn[aria-current=true] .lt { background: var(--tc); border-color: var(--tc); color: #fff; }
+.colh .lt2 { display: inline-grid; place-items: center; width: 19px; height: 19px; margin: 0 8px; border-radius: 50%; background: var(--tc); color: #fff; font-size: 10.5px; letter-spacing: 0; }
+/* the owner's accents in titles: blue and a touch bolder */
+.ivory .q h1 .acc { color: #8FD0EC; font-weight: 600; }
+.ivory .screen[data-layer=explore] .q h1 .acc { color: #A9E4F4; }
+.dword { white-space: nowrap; display: inline-flex; align-items: baseline; }
+.dmk { height: .78em; width: auto; margin-right: .02em; position: relative; top: .06em; align-self: center; } .dmk path { fill: currentColor; }
+/* films from the description */
+.mini .vid { position: relative; overflow: hidden; } .mini .vid video { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* the delivery journey */
+.jny { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.jst { list-style: none; margin: 0; padding: 0; background: #fff; border: 1px solid var(--line); border-radius: var(--rl); padding: 8px 14px; position: relative; }
+.jst li { display: grid; grid-template-columns: 28px minmax(0, 1fr) 20px; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); position: relative; }
+.jst li:last-child { border-bottom: 0; }
+.jst em { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 12px; font-weight: 700; background: var(--navy); color: #fff; }
+.jst li:last-child em { background: #2A86B0; }
+.jst span { display: flex; flex-direction: column; line-height: 1.25; } .jst b { font-size: 15px; } .jst i { font-style: normal; font-size: 13px; color: var(--ink2); }
+.jst .bell { width: 18px; height: 18px; color: #2A86B0; }
+.jside { display: grid; gap: 10px; }
+.jcard { background: #fff; border: 1px solid var(--line); border-radius: var(--rl); padding: 14px 16px; }
+.jcard small { display: block; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--ink3); margin-bottom: 6px; }
+.jcard p { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink2); } .jcard b { color: var(--ink); }
+.jcard.inc { border-color: #2A86B0; box-shadow: inset 4px 0 0 #2A86B0; }
+@media (max-width: 900px) { .jny { grid-template-columns: 1fr; } }
+/* Standard Product View: the approved description stays, full width under the gallery and the options */
+.stdv .sdesc { grid-column: 1 / -1; }
+/* ONE SCREEN (owner): on a large screen the whole interface sits in one view, like a car display; only the stage scrolls inside */
+@media (min-width: 1100px) {
+  .ivory .monitor { height: calc(100vh - 16px); min-height: 660px; max-height: 1080px; display: flex; flex-direction: column; }
+  .ivory .screen { flex: 1; min-height: 0 !important; height: 100%; grid-template-rows: auto auto minmax(0, 1fr); grid-template-columns: 216px minmax(0, 1fr) 276px; }
+  .ivory .rail, .ivory .mine { overflow-y: auto; min-height: 0; padding-top: 16px !important; padding-bottom: 16px !important; }
+  .ivory .stage { overflow-y: auto; min-height: 0; padding: 16px 22px 0 !important; }
+  .ivory .stage .act { position: sticky; bottom: 0; background: var(--stage-a); margin-top: 14px; padding: 12px 0 14px; z-index: 2; }
+  .ivory .chbar { padding: 10px 10px 0 !important; gap: 10px !important; }
+  .ivory .exg, .ivory .slg { padding: 9px 12px 11px !important; }
+  .ivory .exg { gap: 6px; } .ivory .slg { grid-template-rows: auto 40px 40px !important; row-gap: 6px; }
+  .ivory .exg .ch { height: 38px; font-size: 14px; }
+  .ivory .slg .sb { min-height: 40px; padding-top: 4px; padding-bottom: 5px; }
+  .ivory .glab { height: 14px; font-size: 10.5px; }
+  .ivory .trailbar { padding: 8px 10px 0; } .ivory .trailbar .trail { padding: 5px 12px; }
+  .ivory .q { padding: 16px 22px 15px !important; margin-bottom: 14px; } .ivory .q h1 { font-size: 28px; margin-bottom: 6px; } .ivory .q p { font-size: 15px; line-height: 1.45; }
+  .ivory .colh { margin-bottom: 10px; }
+  .ivory .rail .colh, .ivory .mine h2 { margin-bottom: 8px; }
+  .ivory .mine { gap: 10px; }
+}
+
+.tbr .pn { flex-direction: column !important; align-items: flex-start !important; flex-wrap: nowrap; padding-left: 42px !important; }
+.tbr .pn small { flex-basis: auto; padding-left: 0; margin-top: 1px; }
+.tbr .pn .lt { position: absolute; left: 11px; top: 50%; margin-top: -11px; }
+
+body.std .monitor { display: none !important; }
+@media (min-width: 1100px) { .ivory .screen > .chbar { grid-row: 1; } .ivory .screen > .trailbar { grid-row: 2; } .ivory .screen > .rail, .ivory .screen > .stage, .ivory .screen > .mine { grid-row: 3; } }
+.ivory .q:not(.nomoon):not(.mn) h1 { padding-right: 52px; }
+.dmk { height: .84em; }
+
+/* the stage scrolls as one column: its parts keep their own height and are never squeezed */
+.ivory .stage > * { flex-shrink: 0; }
+.ivory .stage > .answer { flex: 1 0 auto; }
+/* the three columns open on one line: the same heading height and gap in each */
+@media (min-width: 1100px) { .ivory .stage > .colh, .ivory .rail > .colh, .ivory .mine > h2 { height: 28px; margin: 0 0 10px !important; } }
+
+@media (min-width: 1100px) { .ivory .rail > .colh { margin-bottom: 4px !important; } .ivory .mine > h2 { margin-bottom: 0 !important; } }
 </style>
 </head>
 <body>
@@ -1012,7 +1086,7 @@ var D = /*__DATA__*/;
     review: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>'
   };
   var CKS = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-  function drawBar() {   // two groups: Explore (the description, 14 topics) and Select & Buy (the order: size, depth, firmness, cover, review)
+  function drawBar() {   // two groups: Explore (the description, 11 topics) and Select & Buy (the order: size, depth, firmness, cover, review)
     var onStep = inSelect();
     var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + EXCH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + '</div>';
     var sl = '<div class="slg" role="group" aria-label="Select and buy"><span class="glab">Select &amp; Buy</span>' + STEPS.map(function (st, i) { var v = i < 4 ? valueOf(st.id) : (complete() ? 'Ready' : ''), ok = i < 4 ? chosen(st.id) : complete();
@@ -1031,14 +1105,14 @@ var D = /*__DATA__*/;
     var onSel = inSelect(), h;
     if (onSel) {   // a choice: the button above IS the choice; here hangs only what helps to make it (no button twice)
       var st = STEPS[S.step], inf = STEPINFO[st.id] || [], stepNow = panel().kind === 'step';
-      var br = inf.map(function (r, i) { var p = chap(r[0]).panels.filter(function (x) { return x.id === r[1]; })[0]; return '<button class="pn' + (SEEN[r[0] + '/' + r[1]] ? ' seen' : '') + '" style="--i:' + i + '" data-goto="' + r[0] + '/' + r[1] + '" aria-current="' + (!stepNow && S.ch === r[0] && S.pn === r[1]) + '">' + esc(p.label) + '<small>Helps you choose</small></button>'; }).join('');
+      var br = inf.map(function (r, i) { var p = chap(r[0]).panels.filter(function (x) { return x.id === r[1]; })[0]; return '<button class="pn' + (SEEN[r[0] + '/' + r[1]] ? ' seen' : '') + '" style="--i:' + i + '" data-goto="' + r[0] + '/' + r[1] + '" aria-current="' + (!stepNow && S.ch === r[0] && S.pn === r[1]) + '"><span class="lt">' + 'ABCDEFG'.charAt(i) + '</span>' + esc(p.label) + '<small>Helps you choose</small></button>'; }).join('');
       var v = st.id === 'review' ? (complete() ? 'All four chosen' : nDone0() + ' of 4 chosen') : (valueOf(st.id) || 'Not chosen yet');
       h = '<h2 class="colh">You are choosing</h2><div class="tree sel" style="--tc:' + TC.select + '">' + (stepNow ? '<div class="tp sel on">' : '<button class="tp sel back" data-go="' + S.step + '" aria-label="Back to choosing your ' + esc(st.label) + '">') + IC[st.id] + '<span><b>' + esc(st.label) + '</b><i>' + esc(v) + (stepNow ? '' : (chosen(st.id) ? ' · Change' : ' · Choose')) + '</i></span>' + (stepNow ? '</div>' : '</button>') +
         (inf.length ? '<div class="tbr">' + br + '</div>' : '<p class="tnote">' + (st.id === 'review' ? 'Check your four choices, then add the mattress to your bag.' : 'Every size in centimetres and in inches, straight from the shop.') + '</p>') + '</div>';
     } else {
       var cur = chap(S.ch), ps = vis(cur);
       h = '<h2 class="colh">In this topic</h2><div class="tree" style="--tc:' + TC[cur.id] + '"><div class="tp"><span class="tdot"></span><span><b>' + esc(cur.label) + '</b><i>' + ps.length + (ps.length === 1 ? ' part' : ' parts') + ' in this topic</i></span></div><div class="tbr">' +
-        ps.map(function (p, i) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" style="--i:' + i + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '</div></div>';
+        ps.map(function (p, i) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" style="--i:' + i + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '"><span class="lt">' + 'ABCDEFG'.charAt(i) + '</span>' + esc(p.label) + '</button>'; }).join('') + '</div></div>';
     }
     $('#rail').innerHTML = h;
     var tb = $('#trailbar'); if (tb) { tb.hidden = !onSel || S.gal; tb.innerHTML = onSel ? trailHtml() : ''; }
@@ -1122,7 +1196,8 @@ var D = /*__DATA__*/;
     return h;
   }
   var PLAY = '<svg width="22" height="22" viewBox="0 0 24 24" fill="#173A52" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>';
-  function miniCard(c) { return c.media ? '<aside class="mini" aria-label="Short loop"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">' + esc(c.media) + '</span><span class="tv">Short loop · stand-in</span></aside>' : ''; }
+  function film(u) { return u ? '<video src="' + esc(u) + '" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>' : '<span class="pl">' + PLAY + '</span>'; }
+  function miniCard(c) { return c.media ? '<aside class="mini" aria-label="Short loop"><div class="vid">' + film(D.videos && D.videos[c.id]) + '</div><span class="cap">' + esc(c.media) + '</span><span class="tv">Short loop · from the description</span></aside>' : ''; }
   function readerView(p) {
     var k = S.ch + '/' + S.pn, C = CUR(), it = itemsOf(p, k), i = Math.min(S.rd[k] || 0, it.length - 1), cur = it[i]; seen(k + '/' + i);
     var body = cur.html ? cur.html.map(function (t) { return '<p>' + t + '</p>'; }).join('') : blocksHtml(cur.blocks), foot = cur.foot || C.foot;
@@ -1212,6 +1287,13 @@ var D = /*__DATA__*/;
       '<div class="d20"><svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"><rect x="5" y="9" width="38" height="34" rx="5"/><path d="M5 18h38M15 5v8M33 5v8" stroke-linecap="round"/><text x="24" y="38" text-anchor="middle" fill="#fff" stroke="none" font-size="16" font-weight="700" font-family="Chillax, sans-serif">20</text></svg><b>20 DAYS<br>DELIVERY</b></div></div>' +
       '<div class="cst"><h2><i>CUSTOM</i>Made to Order</h2><p>' + esc(C.custom) + '</p></div></div>';
   }
+  function journeyView() {   // owner, 16 Nov VIII: informed at every stage, delivery included in the price
+    var J = [['Order confirmed', 'Your configuration is confirmed and your Botanic enters production.'], ['In production', 'Made to your size, depth, firmness and cover.'], ['Quality tested', 'Checked before it leaves production.'], ['Prepared for dispatch', 'Packed and handed to our specialist courier.'], ['In transit', 'On its way to your local depot.'], ['At the depot', 'Arrived and ready for the final delivery.'], ['Out for delivery', 'Your two-person delivery team is on the way.']];
+    return '<div class="jny"><ol class="jst">' + J.map(function (x, i) { return '<li><em>' + (i + 1) + '</em><span><b>' + esc(x[0]) + '</b><i>' + esc(x[1]) + '</i></span><svg class="bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-label="Notification"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></li>'; }).join('') + '</ol>' +
+      '<div class="jside"><div class="jcard"><small>A notification at every step</small><p>Before anything happens, you are told. You receive a message at each stage, from us and from our specialist two-person delivery service, from production to your door.</p></div>' +
+      '<div class="jcard inc"><small>Delivery included</small><p><b>The price includes delivery.</b> No extra transport fees.</p></div>' +
+      '<div class="jcard"><small>Made to order</small><p><b>20 Days Delivery</b> from your confirmed order.</p></div></div></div>';
+  }
   function densityView() {   // the owner's infographic, redrawn in the system: four steps, one line of conclusion
     var C = D.curated.density, e = engPaths();
     var vis = [
@@ -1241,7 +1323,7 @@ var D = /*__DATA__*/;
   function heroView() {
     var H = D.hero, B = CUR('discover/intro').bold || [], bold = function (t) { var h = esc(t); B.forEach(function (w) { h = h.replace(esc(w), '<b>' + esc(w) + '</b>'); }); return h; };
     return '<div class="hero"><div><div class="rc"><h2>' + esc(H.headline) + '</h2><p>' + bold(H.intro) + '</p><p>' + esc(H.note) + '</p></div></div>' +
-      '<div><aside class="mini" aria-label="Presentation video"><div class="vid"><span class="pl">' + PLAY + '</span></div><span class="cap">Presentation video: watch the whole Botanic in full</span><span class="tv">Plays in full on demand · stand-in</span></aside>' + '<div class="brandbox"><img src="' + D.bowl + '" alt="Natural latex milk in a tapping cup, with rubber tree leaves"><div>' + wordSvg(D.bioWord, 'bioword') + '<small>DIVINE DUNLOP DREAMS</small></div></div></div></div>' +
+      '<div><aside class="mini" aria-label="Presentation video"><div class="vid">' + film(D.videos && D.videos.discover) + '</div><span class="cap">Presentation video: the whole Botanic in one loop</span><span class="tv">The full film plays on demand in the shop</span></aside>' + '<div class="brandbox"><img src="' + D.bowl + '" alt="Natural latex milk in a tapping cup, with rubber tree leaves"><div>' + wordSvg(D.bioWord, 'bioword') + '<small>DIVINE DUNLOP DREAMS</small></div></div></div></div>' +
       '<div class="fts f3">' + D.features.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '</div>';
   }
   function factsView() {
@@ -1265,20 +1347,29 @@ var D = /*__DATA__*/;
     $('#std').innerHTML = '<div class="box"><span class="tag2">The shop\'s own gallery (stand-in)</span><div class="gal"><div class="gmain"><img src="' + esc(im[i]) + '" alt="Botanic"><span class="gcount">' + (i + 1) + ' / ' + im.length + '</span></div><div class="gth">' + im.map(function (u, j) { return '<button data-gimg="' + j + '" aria-pressed="' + (j === i) + '" aria-label="Photograph ' + (j + 1) + '"><img src="' + esc(u) + '" alt=""></button>'; }).join('') + '</div></div></div>' +
       '<div class="box"><span class="tag2">The shop\'s own options (stand-in)</span><h2>' + esc(D.product.name) + '</h2><div class="pr">' + (shop() ? priceParts(shop()) : '£0') + '</div>' +
       '<label for="m-size">Size</label><select id="m-size" data-man="size">' + sz + '</select><label for="m-depth">Select Mattress Depth</label><select id="m-depth" data-man="depth">' + dp + '</select><label for="m-firmness">Firmness by body weight</label><select id="m-firmness" data-man="firmness">' + fm + '</select><label for="m-cover">Covers</label><select id="m-cover" data-man="cover">' + cv + '</select>' +
-      '<div class="bagrow">' + bagButton() + '</div><p class="nt">This is the page without the presentation screen: the same four options, the same price, the same Add to Bag. What is chosen here is shown in the television, and what is chosen in the television is shown here. Stand-in for Ecwid\'s own controls.</p></div>';
+      '<div class="bagrow">' + bagButton() + '</div><p class="nt">This is the page without the presentation screen: the same four options, the same price, the same Add to Bag. What is chosen here is shown in the television, and what is chosen in the television is shown here. Stand-in for Ecwid\'s own controls.</p></div>' +
+      '<div class="box sdesc"><span class="tag2">The approved product description, as on the shop page</span><div id="sdesc"></div></div>';
+    var host = $('#sdesc'); if (host && D.descHtml) { var sr = host.shadowRoot || host.attachShadow({ mode: 'open' }); sr.innerHTML = '<div id="productDescription" class="product-details__product-description">' + D.descHtml + '</div>'; }
+  }
+  function titleFx(key, h) {
+    if (key.indexOf('ventilation/') === 0) h = h.replace(/(Breathable)/, '<span class="acc">$1</span>').replace(/(Comfort)(?![^<]*<\/b>)/, '<span class="acc">$1</span>');
+    if (key.indexOf('zones/') === 0) h = h.replace(/(7-Zone)/, '<span class="acc">$1</span>');
+    if (key === 'warranty/cover') h = h.replace(/Durability/, '<span class="dword" aria-label="Durability">' + wordSvg(D.bioMark, 'dmk') + '<span aria-hidden="true">urability</span></span>');
+    return h;
   }
   function infoDraw(p, c) {
     var C = CUR(), key = c.id + '/' + p.id, title = p.kind === 'facts' ? D.factsTitle : (p.title || (c.head && c.head.title) || p.label), sub = null; seen(key);
     if (p.kind === 'points' || p.kind === 'zones' || p.kind === 'certs' || p.kind === 'numerals' || p.kind === 'article' || (c.id === 'delivery' && p.id === 'made')) sub = c.head && c.head.sub;
     if (p.kind === 'hero') { title = 'Know your Botanic'; sub = 'Everything about this mattress is here, one topic at a time. Use the buttons above and on the left.'; }
-    if (p.kind === 'numerals') title = 'Warranty and durability';
+    if (p.kind === 'numerals') title = 'Warranty and Durability';
+    if (p.kind === 'journey') { title = 'Your Delivery, Step By Step'; sub = 'You are informed at every stage, from production to your door. Delivery is included in the price.'; }
     if (p.kind === 'hero') title = C.title || title;
     if (C.title && p.kind !== 'hero') title = C.title; if (C.sub) sub = C.sub; if (key === 'firmness/who') sub = null;
     if (p.kind === 'density') { title = D.curated.density.title; sub = D.curated.density.sub; }
     var q = $('#q'); q.className = 'q' + (key === 'delivery/made' ? ' ph' : '') + (p.kind === 'hero' ? ' nomoon' : '');
-    q.innerHTML = (key === 'delivery/made' ? '<span class="pic" style="background-image:url(' + D.core + ')" role="img" aria-label="The perforated Botanic latex core"></span><h1><span>' + esc(title) + '</span></h1><span class="rule"></span>' : '<h1>' + (key === 'firmness/who' ? '' : LEAF) + '<span>' + fmt(title) + '</span></h1>') + (sub ? '<p>' + esc(sub) + '</p>' : '') + (p.kind === 'hero' ? wordSvg(D.bioMark, 'qmark') : '');
+    q.innerHTML = (key === 'delivery/made' ? '<span class="pic" style="background-image:url(' + D.core + ')" role="img" aria-label="The perforated Botanic latex core"></span><h1><span>' + esc(title) + '</span></h1><span class="rule"></span>' : '<h1>' + (key === 'firmness/who' ? '' : LEAF) + '<span>' + titleFx(key, fmt(title)) + '</span></h1>') + (sub ? '<p>' + esc(sub) + '</p>' : '') + (p.kind === 'hero' ? wordSvg(D.bioMark, 'qmark') : '');
     if (key === 'warranty/conditions') { $('#answer').innerHTML = condView(p); } else if (key === 'delivery/made') { $('#answer').innerHTML = madeView(); } else {
-    var v = { density: densityView, adjust: adjustView, hero: heroView, facts: factsView, read: function () { return readerView(p); }, article: function () { return readerView(p); }, points: function () { return pointsView(p, c); }, certs: function () { return certsView(p, c); }, zones: function () { return zonesView(p, c); }, numerals: function () { return numeralsView(p); } }[p.kind];
+    var v = { journey: journeyView, density: densityView, adjust: adjustView, hero: heroView, facts: factsView, read: function () { return readerView(p); }, article: function () { return readerView(p); }, points: function () { return pointsView(p, c); }, certs: function () { return certsView(p, c); }, zones: function () { return zonesView(p, c); }, numerals: function () { return numeralsView(p); } }[p.kind];
     $('#answer').innerHTML = v(); }
     var si = infoStep(c.id, p.id);
     if (si >= 0) {   // more information about a choice: back to the choice, or on to the next piece of it
@@ -1290,7 +1381,7 @@ var D = /*__DATA__*/;
     }
     var i = flatIndex(), prev = FLAT[i - 1], next = FLAT[i + 1], np = next && chap(next[0]).panels.filter(function (x) { return x.id === next[1]; })[0];
     $('#act').innerHTML = (prev ? '<button class="btn s" data-flat="' + (i - 1) + '">Back</button>' : '') + '<button class="btn s" data-go="0">Select your Botanic</button>' + (next ? '<button class="btn p" data-flat="' + (i + 1) + '">Next: <b>' + esc(np.label) + '</b></button>' : '');
-    $('#stageh').className = 'colh'; $('#stageh').innerHTML = esc(c.label + '  ·  ' + p.label) + '<span class="explore">' + explored() + ' of ' + FLAT.length + ' explored</span>';
+    $('#stageh').className = 'colh'; $('#stageh').innerHTML = esc(c.label) + '<span class="lt2">' + 'ABCDEFG'.charAt(Math.max(0, vis(c).map(function (x) { return x.id; }).indexOf(p.id))) + '</span>' + esc(p.label);
   }
   /* GUIDE (owner, 16 Nov): after every choice the television says what was chosen and what comes next, then opens the next
      choice by itself after a moment. Any tap cancels it. Off in automated browsers unless ?guide=1. */
@@ -1317,7 +1408,7 @@ var D = /*__DATA__*/;
     if (S.coach) { coachDraw(); drawRail(); drawMine(); return; }
     var st = STEPS[S.step], q = $('#q'), FC = CUR('firmness/choose'), FL = CUR('delivery/yours'); q.className = 'q' + (st.id === 'review' ? ' mn' : ''); seen(STEPMAP[st.id].join('/'));
     if (st.id === 'firmness') q.innerHTML = '<h1 class="lt">' + LEAF + '<span>' + fmt(FC.title) + '</span></h1><p>' + esc(FC.sub) + '</p>';
-    else if (st.id === 'review') q.innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p class="flowl">' + FL.flow.map(function (t, i) { return (i ? '<i aria-hidden="true">→</i>' : '') + (i === FL.flow.length - 1 ? '<b>' + esc(t) + '</b>' : '<span>' + esc(t) + '</span>'); }).join('') + '</p><span class="moon" role="img" aria-label="Moon" style="background-image:url(' + D.moon + ')"></span><span class="mcyc" aria-hidden="true" style="background-image:url(' + D.moonCycle + ')"></span>';
+    else if (st.id === 'review') q.innerHTML = '<h1>' + LEAF + '<span>' + esc(st.q) + '</span></h1><p class="flowl">' + FL.flow.map(function (t, i) { return (i ? '<i aria-hidden="true">→</i>' : '') + (i === FL.flow.length - 1 ? '<b>' + esc(t) + '</b>' : '<span>' + esc(t) + '</span>'); }).join('') + '</p><span class="moon" role="img" aria-label="Moon" style="background-image:url(' + D.moon + ')"></span>';
     else q.innerHTML = '<h1>' + LEAF + '<span>' + fmt(st.q) + '</span></h1><p>' + esc(st.sub) + '</p>';
     $('#answer').innerHTML = { size: sizeView, firmness: firmnessView, depth: depthView, cover: coverView, review: reviewView }[st.id]();
     var ok = chosen(st.id), last = S.step === STEPS.length - 1;
@@ -1396,26 +1487,17 @@ var D = /*__DATA__*/;
     if (!reduce) { bell(t0 + 1.35, 659.3, .10); bell(t0 + 1.75, 880, .08); bell(t0 + 3.0, 587.3, .07); bell(t0 + 3.9, 740, .07); bell(t0 + 4.8, 880, .07); bell(t0 + 6.35, 1318.5, .08); bell(t0 + 8.6, 1760, .05); }
     window.__ambient = (window.__ambient || 0) + 1;
   }
-  function coreSketch() {   // a light sketch of the seven-zone core (Quality page photograph): a slab, seven bands, pins; no image file
-    var w = 900, x0 = 120, x1 = 840, y0 = 60, y1 = 150, dx = -90, dy = 80, Z = [.16, .14, .12, .17, .14, .14, .13], b = '', acc = 0;
-    var P = function (u, v) { return [(x0 + (x1 - x0) * u + dx * v).toFixed(1), (y0 + (y1 - y0) * u * 0 + dy * v + (u * 0)).toFixed(1)]; };
-    var top = 'M' + P(0, 0).join(' ') + 'L' + P(1, 0).join(' ') + 'L' + P(1, 1).join(' ') + 'L' + P(0, 1).join(' ') + 'Z';
-    Z.forEach(function (z, i) { var u0 = acc, u1 = acc + z, gap = [5, 7, 9, 6, 9, 7, 5][i]; acc = u1;
-      if (i) b += '<path d="M' + P(u0, 0).join(' ') + 'L' + P(u0, 1).join(' ') + '" stroke="#BFEBFD" stroke-width="1" opacity=".55"/>';
-      for (var v = .14; v < .95; v += .14) for (var u = u0 + .012; u < u1 - .006; u += gap / 720) { var q = P(u, v); b += '<circle cx="' + q[0] + '" cy="' + q[1] + '" r="1.15"/>'; } });
-    return '<svg viewBox="0 0 ' + w + ' 230" aria-hidden="true"><path d="' + top + '" fill="none" stroke="#BFEBFD" stroke-width="1.4"/><path d="M' + P(0, 1).join(' ') + 'V' + (+P(0, 1)[1] + 46) + 'H' + P(1, 1)[0] + 'V' + P(1, 1)[1] + 'M' + P(1, 1).join(' ') + 'L' + P(1, 0).join(' ') + 'V' + (y0 + 46) + 'L' + P(1, 1)[0] + ' ' + (+P(1, 1)[1] + 46) + '" fill="none" stroke="#BFEBFD" stroke-width="1.4" stroke-linejoin="round"/><g fill="#BFEBFD" opacity=".7">' + b + '</g></svg>';
-  }
   var IGN = null;
   function ignite(force) {
     var el = $('#ign'), q = location.search;
     if (/ignite=0/.test(q) || (navigator.webdriver && !/ignite=1/.test(q) && !force)) return;
     clearTimeout(IGN); var g = D.ignition, reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var P = g.pillars, ex = '', sg = '';
-    for (var k = 0; k < 14; k++) ex += '<i style="animation-delay:' + (3.05 + k * .055).toFixed(2) + 's"></i>';
+    for (var k = 0; k < EXCH.length; k++) ex += '<i style="animation-delay:' + (3.05 + k * .055).toFixed(2) + 's"></i>';
     for (var k2 = 0; k2 < 4; k2++) sg += '<i style="animation-delay:' + (3.95 + k2 * .22).toFixed(2) + 's"></i>';
     var cu = '<svg class="cu" viewBox="0 0 64 38" aria-hidden="true"><path pathLength="1" d="M5 22L24 11H59L40 22ZM5 22V30H40V22M40 30L59 19V11"/><path class="dim" pathLength="1" d="M5 35H40M5 33V37M40 33V37"/></svg>';
     var pics = ['<div class="ex">' + ex + '</div>', '<div class="sgm">' + sg + '</div>', cu];
-    el.innerHTML = '<div class="lit"></div><div class="glow">' + coreSketch() + '</div><div class="core"><div class="mark">' + LEAF + '<b class="lum">' + esc(g.name) + '</b></div><div class="mcy" aria-hidden="true"><img src="' + D.moonCycle + '" alt=""></div><div class="line"></div><div class="read">' +
+    el.innerHTML = '<div class="lit"></div><div class="core"><div class="mark">' + LEAF + '<b class="lum">' + esc(g.name) + '</b></div><div class="line"></div><div class="read">' +
       g.facts.map(function (f) { return '<div class="fact"><small>' + esc(f[0]) + '</small><span class="lum">' + esc(f[1]) + '</span></div>'; }).join('<i></i>') + '</div>' +
       '<div class="pil">' + P.map(function (x, i) { return '<div class="pl pl' + (i + 1) + '"><div class="pic">' + pics[i] + '</div><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>'; }).join('') + '</div>' +
       '<p class="tag"><span class="lum2">' + esc(g.tagline) + '</span></p><p class="sub">' + esc(g.sub) + '</p></div><button class="snd" type="button" data-snd="1" aria-pressed="' + soundOn() + '">' + (soundOn() ? SND_ON + 'Sound on' : SND_OFF + 'Sound off') + '</button><button class="skip" type="button" data-skip="1">Skip</button>';

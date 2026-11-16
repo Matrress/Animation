@@ -43,7 +43,7 @@ const SPEC = [
   ['hygiene', 'Hygiene', [['clean', 'Cleaner Sleep', 'points'], ['picture', 'Realistic Picture', 'read:0']]],
   ['certs', 'Certifications', [['bodies', 'Certifications', 'certs'], ['made', 'Where It Is Made', 'read:0']]],
   ['warranty', 'Warranty', [['cover', 'Warranty + Gift', 'numerals'], ['conditions', 'Conditions', 'read:0']]],
-  ['delivery', 'Delivery', [['made', 'Made To Order', 'read:0'], ['yours', 'Your Botanic', 'step:review']]]
+  ['delivery', 'Delivery', [['made', 'Made To Order', 'read:0'], ['journey', 'Delivery Journey', 'journey'], ['yours', 'Your Botanic', 'step:review']]]
 ];
 const ROOTS = { discover: '#bp-top', firmness: '#bp-firmness', comfort: '#bp-comfort', height: '#bp-height', covers: '#bp-covers', benefits: '#bp-benefits', support: '#bp-support', adaptation: '#bp-adaptation', zones: '#bp-zones', ventilation: '#bp-ventilation', hygiene: '#bp-hygiene', certs: '#bp-certs', warranty: '#bp-warranty', delivery: '#bp-delivery' };
 const MEDIA_CAP = { benefits: 'Milk to foam: where latex begins', adaptation: 'Elasticity: the instant response', zones: 'Seven zones, head to feet', ventilation: 'Airflow through the channels', certs: 'Durability under pressure' };
@@ -154,8 +154,15 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
   D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12) };          // the wordmark "Bio Dunlop" (paths 12-23), drawn in one ink
   D.bioMark = { vb: '2400 -1372 360 376', d: [bp[21], bp[20]] };      // the D with the spiral (paths 20-21)
   D.moon = b64('q-dd-moon-88.webp'); D.core = b64('q-latex-closeup.webp'); D.bowl = b64('q-latex-milk-bowl-cut-700.webp');
-  D.moonCycle = b64('moon-cycle.webp'); D.abSketch = JSON.parse(readFileSync(join(A, 'adjustable-sketch.json'), 'utf8')); D.pins = b64('q-latex-pins.webp');
+  D.abSketch = JSON.parse(readFileSync(join(A, 'adjustable-sketch.json'), 'utf8')); D.pins = b64('q-latex-pins.webp');
   D.logos = { oeko: b64('q-logo-oekotex-mono.webp'), hohenstein: b64('q-logo-hohenstein-mono.webp'), iso9001: b64('q-logo-iso9001-mono.webp'), iso14001: b64('q-logo-iso14001-mono.webp'), siemens: b64('q-logo-siemens-monitoring-mono.webp') };
+}
+/* OWNER 16 Nov (VIII): the real films and photographs of the description, so the preview shows them (in the shop they come
+   from the same addresses). The Standard Product View keeps the whole approved description, as the shop page does. */
+{
+  const V = 'https://media.divinedunlop.com/videos/';
+  D.videos = { discover: V + 'botanic-natural-latex-mattress-premium-presentation-loop.mp4', benefits: V + 'natural-latex-milk-to-foam-origin.mp4', adaptation: V + 'natural-latex-elasticity-adjustable-bed.mp4', zones: V + 'natural-latex-7-zone-spinal-alignment.mp4', ventilation: V + 'natural-latex-airflow-ventilation-channels.mp4', certs: V + 'natural-latex-durability-pressure-test.mp4' };
+  D.descHtml = readFileSync(join(root, 'source', 'botanic-original-description.html'), 'utf8');
 }
 D.curated = {
   // 01 D25324CF: hero, selective bold in the introduction
@@ -220,19 +227,19 @@ D.curated = {
    Preview). Minimal, like a car's instrument panel waking up. The two facts are mandatory and are the description's own
    (hero bar: "100% Organic · Dunlop Technology"); a later model sets its own name and facts here. */
 D.ignition = { name: 'BOTANIC', facts: [['Material', '100% Natural Latex'], ['Process', 'Dunlop Technology']],
-  pillars: [['Explore', '14 topics, one clear way in'], ['Select & Buy', 'Four choices, then one button'], ['Custom', 'Made to order, to your confirmed specification']],
+  pillars: [['Explore', '11 topics, one clear way in'], ['Select & Buy', 'Four choices, then one button'], ['Custom', 'Made to order, to your confirmed specification']],
   tagline: 'Custom Dunlop Natural Environment for Healthy Sleep', sub: 'One custom presentation module: it explores, it selects and it customises.' };
 /* HOUSE STYLE OF THE TEXT (owner, 15 November 2026), applied to every text the television shows:
    - short dashes only: the long dash (—) becomes the short one (–);
    - Support and Adaptation always begin with a capital S and A.
    Ecwid's own labels (sizes, covers), addresses and pictures are never touched. */
 {
-  const SKIP = new Set(['id', 'key', 'step', 'kind', 'sizes', 'images', 'img', 'url', 'eng', 'bioWord', 'bioMark', 'moon', 'core', 'bowl', 'logos', 'zoneSketch', 'zoneTier', 'mattress', 'specialist', 'product']);
+  const SKIP = new Set(['descHtml', 'videos', 'id', 'key', 'step', 'kind', 'sizes', 'images', 'img', 'url', 'eng', 'bioWord', 'bioMark', 'moon', 'core', 'bowl', 'logos', 'zoneSketch', 'zoneTier', 'mattress', 'specialist', 'product']);
   const fix = (t) => t.replace(/\s*—\s*/g, ' – ').replace(/\bsupport\b/g, 'Support').replace(/\badaptation\b/g, 'Adaptation');
   const walk = (o) => { for (const k of Object.keys(o)) { if (SKIP.has(k)) continue; const v = o[k]; if (typeof v === 'string') o[k] = fix(v); else if (v && typeof v === 'object') walk(v); } };
   walk(D);
 }
-const html = tpl.replace('/*__CORE__*/', () => core).replace('/*__RULES__*/', () => rules).replace('/*__DATA__*/', () => JSON.stringify(D));
+const html = tpl.replace('/*__CORE__*/', () => core).replace('/*__RULES__*/', () => rules).replace('/*__DATA__*/', () => JSON.stringify(D).replace(/<\//g, '<\\/').replace(/<!--/g, '<\\u0021--'));
 const file = join(out, 'large-screen-design.html');
 writeFileSync(file, html);
 console.log('wrote', file, html.length, 'bytes; sizes', D.sizes.length);
