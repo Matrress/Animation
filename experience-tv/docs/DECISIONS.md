@@ -128,3 +128,11 @@ These are decided. They are not asked again and not undone by a later change. Wh
 - **The order trail (traceability).** While choosing, and on every "Helps you choose" screen, a strip under the two groups shows the whole order: Size (value, tick) — Depth — Firmness — Cover — Review, the current step in navy. Every step is one tap away, so the customer always sees where they are and can go back and correct. The tree's header leads back too ("Not chosen yet · Choose" or "Firm · Change"), and every information screen ends with "Back to the choice". Test R34.
 - **Review** fills both rows on the right, the same height as the four steps, parted from them by a thin line.
 - **7-Zone:** the seven zone cards sit in one row under the map (each with its tone on top), then "How to read the map" beside the film. Nothing hangs alone.
+
+## Four families, four cards (owner, 16 November 2026, VII)
+Explore, Select & Buy, Your order and Your selection are no longer buttons parted by a line. Each is its own card with its own colour life; none borrows from another.
+- **Explore (read): the night.** A navy card (#1F3D58 to #0B2A38). Translucent buttons, the topic's colour as a dot; the current topic turns white with its coloured line. The last topic spans two columns so no button hangs alone.
+- **Select & Buy (choose): the day.** An ice-blue card (#E4F0F7, line #C3DCEA) with white tiles and step numbers; the step you are on is the gallery blue #2A86B0.
+- **Your order (traceability): a slate ledger.** A cool grey-blue card (#E6EBF2), the steps joined by a line; done = navy tick with its value, here = a white pill with the blue line.
+- **Your selection (pay): an aqua column.** The site's mist aqua (#E8F3F5) with white cards for the price and the bag; the topic rail stays white.
+Test R35 checks that the four have four different looks; R2 was updated for the aqua column.

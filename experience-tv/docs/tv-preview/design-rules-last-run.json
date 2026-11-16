@@ -1,7 +1,7 @@
 {
  "date": "2026-11-16",
  "failures": 0,
- "checks": 118,
+ "checks": 121,
  "rows": [
   {
    "pass": true,
@@ -10,8 +10,8 @@
   },
   {
    "pass": true,
-   "rule": "R2 the order rail and \"Your selection\" are white cards",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6F9FC\"}"
+   "rule": "R2 the topic rail is white; \"Your selection\" is its own aqua column",
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(232, 243, 245)\",\"stage\":\"#F6F9FC\"}"
   },
   {
    "pass": true,
@@ -21,42 +21,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "462.8 / 462.8 / 462.8"
+   "detail": "494.8 / 494.8 / 494.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "462.8 / 462.8 / 462.8"
+   "detail": "494.8 / 494.8 / 494.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "462.8 / 462.8 / 462.8"
+   "detail": "494.8 / 494.8 / 494.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "462.8 / 462.8 / 462.8"
+   "detail": "494.8 / 494.8 / 494.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "462.8 / 462.8 / 462.8"
+   "detail": "494.8 / 494.8 / 494.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "430.8 / 430.8 / 430.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "430.8 / 430.8 / 430.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "430.8 / 430.8 / 430.8"
   },
   {
    "pass": true,
@@ -197,6 +197,11 @@
    "pass": true,
    "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white",
    "detail": "{\"tr\":{\"n\":5,\"vis\":true,\"cur\":\"3Firmness\",\"back\":true},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour",
+   "detail": "rgba(0, 0, 0, 0)|linear-gradient(160deg, rgb(31, 61, 88)   //  rgb(228, 240, 247)|none  //  rgb(230, 235, 242)|none  //  rgb(232, 243, 245)|none"
   },
   {
    "pass": true,
@@ -220,8 +225,8 @@
   },
   {
    "pass": true,
-   "rule": "R2 the order rail and \"Your selection\" are white cards",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6F9FC\"}"
+   "rule": "R2 the topic rail is white; \"Your selection\" is its own aqua column",
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(232, 243, 245)\",\"stage\":\"#F6F9FC\"}"
   },
   {
    "pass": true,
@@ -367,6 +372,11 @@
    "pass": true,
    "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white",
    "detail": "{\"tr\":{\"n\":5,\"vis\":true,\"cur\":\"3Firmness\",\"back\":true},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour",
+   "detail": "rgba(0, 0, 0, 0)|linear-gradient(160deg, rgb(31, 61, 88)   //  rgb(228, 240, 247)|none  //  rgb(230, 235, 242)|none  //  rgb(232, 243, 245)|none"
   },
   {
    "pass": true,
@@ -390,8 +400,8 @@
   },
   {
    "pass": true,
-   "rule": "R2 the order rail and \"Your selection\" are white cards",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6F9FC\"}"
+   "rule": "R2 the topic rail is white; \"Your selection\" is its own aqua column",
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(232, 243, 245)\",\"stage\":\"#F6F9FC\"}"
   },
   {
    "pass": true,
@@ -401,42 +411,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "462.8 / 462.8 / 462.8"
+   "detail": "494.8 / 494.8 / 494.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "462.8 / 462.8 / 462.8"
+   "detail": "494.8 / 494.8 / 494.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "462.8 / 462.8 / 462.8"
+   "detail": "494.8 / 494.8 / 494.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "462.8 / 462.8 / 462.8"
+   "detail": "494.8 / 494.8 / 494.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "462.8 / 462.8 / 462.8"
+   "detail": "494.8 / 494.8 / 494.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "430.8 / 430.8 / 430.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "430.8 / 430.8 / 430.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "430.8 / 430.8 / 430.8"
   },
   {
    "pass": true,
@@ -577,6 +587,11 @@
    "pass": true,
    "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white",
    "detail": "{\"tr\":{\"n\":5,\"vis\":true,\"cur\":\"3Firmness\",\"back\":true},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour",
+   "detail": "rgba(0, 0, 0, 0)|linear-gradient(160deg, rgb(31, 61, 88)   //  rgb(228, 240, 247)|none  //  rgb(230, 235, 242)|none  //  rgb(232, 243, 245)|none"
   },
   {
    "pass": true,

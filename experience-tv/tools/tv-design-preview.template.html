@@ -816,6 +816,51 @@ button.tp { width: 100%; border: 0; text-align: left; cursor: pointer; font: inh
 .trailbar { grid-column: 1 / -1; background: #fff; border-bottom: 1px solid var(--line); padding: 8px 16px; }
 .trailbar[hidden] { display: none; }
 .trailbar .trail { border: 0; padding: 0; border-radius: 0; }
+/* ===== FOUR FAMILIES, FOUR CARDS (owner, 16 Nov VII): each lives its own colour life, so it is clear at once what belongs to what =====
+   EXPLORE (read)        a night card: navy, translucent buttons, the topic's light as a dot and a line
+   SELECT & BUY (choose) a day card: ice blue with white tiles, the gallery blue for the step you are on
+   YOUR ORDER (trace)    a slate ledger: cool grey-blue, steps joined by a line, done = navy tick, here = white
+   YOUR SELECTION (pay)  an aqua column: the site's mist aqua, white cards for the price and the bag
+   They never borrow each other's colours. */
+.ivory .chbar { background: var(--ground) !important; border-bottom: 0 !important; padding: 12px 12px 0 !important; gap: 12px !important; }
+.ivory .trailbar { background: var(--ground); border-bottom: 0; padding: 12px 12px 0; }
+/* 1. EXPLORE: night */
+.ivory .exg { background: linear-gradient(160deg, #1F3D58 0%, #0B2A38 100%); border-radius: 16px; padding: 12px 14px 14px; box-shadow: none; }
+.ivory .exg .glab { color: rgba(230,240,245,.72); }
+.ivory .exg .ch { background: rgba(255,255,255,.07) !important; border: 1px solid rgba(255,255,255,.14) !important; color: #E6F0F5 !important; font-weight: 500; }
+.ivory .exg .ch:hover { background: rgba(255,255,255,.15) !important; border-color: rgba(255,255,255,.3) !important; }
+.ivory .exg .ch[aria-current=true] { background: #fff !important; color: #0B2A38 !important; border-color: #fff !important; font-weight: 600; box-shadow: inset 0 -3px 0 var(--c) !important; }
+.ivory .exg .ch .td { width: 8px; height: 8px; margin-top: -4px; }
+.ivory .exg .ch.seen::after { background: #8CEBE4; }
+/* 2. SELECT & BUY: day */
+.ivory .slg { background: #E4F0F7; border: 1px solid #C3DCEA; border-radius: 16px; padding: 12px 14px 14px !important; }
+.ivory .slg .glab { color: #1A5C7E; }
+.ivory .slg .sb { background: #fff !important; border: 1px solid #C3DCEA !important; }
+.ivory .slg .sb:hover { border-color: #2A86B0 !important; }
+.ivory .slg .sb[aria-current=true] { background: #2A86B0 !important; border-color: #2A86B0 !important; color: #fff !important; box-shadow: inset 0 -3px 0 #BFE6F7 !important; }
+.ivory .slg .sb[aria-current=true] svg { color: #fff !important; }
+.ivory .slg .sb.rv::before { display: none; }
+/* 3. YOUR ORDER: slate ledger */
+.ivory .trailbar .trail { background: #E6EBF2; border: 1px solid #CBD6E3; border-radius: 16px; padding: 10px 14px; }
+.ivory .trail .tk { color: #4A5E73; }
+.ivory .trail .tsep { background: #9FB0C4; }
+.ivory .tst { color: #1F3D58; }
+.ivory .tst:hover { background: rgba(255,255,255,.55); }
+.ivory .tst em { border-color: #8FA3B8; color: #4A5E73; background: transparent; }
+.ivory .tst.ok em { background: #1F3D58; border-color: #1F3D58; }
+.ivory .tst small { color: #2D4A66; }
+.ivory .tst.cur { background: #fff; color: #0B2A38; box-shadow: inset 0 -3px 0 #2A86B0; }
+.ivory .tst.cur em { border-color: #2A86B0; color: #2A86B0; } .ivory .tst.cur.ok em { background: #1F3D58; border-color: #1F3D58; color: #fff; } .ivory .tst.cur small { color: #1A5C7E; }
+/* 4. YOUR SELECTION: aqua column */
+.ivory .mine { background: #E8F3F5 !important; border-left: 1px solid #CFE3E8 !important; }
+.ivory .mine h2 { color: #3D6670; }
+.ivory .mine .price, .ivory .mine .coach { background: #fff; }
+.ivory .mine .gauge i { background: #CFE3E8; } .ivory .mine .gauge i.on { background: #2A86B0; }
+.ivory .mine .gl { color: #3D6670; }
+.ivory .rail { border-right-color: var(--line); }
+@media (max-width: 1250px) { .ivory .chbar { grid-template-columns: 1fr !important; } }
+.ivory .exg .ch:last-child { grid-column: span 2; }
+@media (max-width: 700px) { .ivory .exg .ch:last-child { grid-column: auto; } }
 </style>
 </head>
 <body>

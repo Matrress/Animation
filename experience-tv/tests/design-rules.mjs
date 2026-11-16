@@ -24,7 +24,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   ok(Math.max(...radii) <= 16, 'R1 rounded corners only: no pill or round button', 'largest radius ' + Math.max(...radii) + 'px over ' + radii.length + ' buttons');
   // R2 side cards stay white, the stage is light
   const bg = await p.evaluate(() => { const g = (s) => getComputedStyle(document.querySelector(s)).backgroundColor; return { rail: g('.rail'), mine: g('.mine'), stage: getComputedStyle(document.documentElement).getPropertyValue('--stage-a').trim() }; });
-  ok(bg.rail === 'rgb(255, 255, 255)' && bg.mine === 'rgb(255, 255, 255)', 'R2 the order rail and "Your selection" are white cards', JSON.stringify(bg));
+  ok(bg.rail === 'rgb(255, 255, 255)' && bg.mine === 'rgb(232, 243, 245)', 'R2 the topic rail is white; "Your selection" is its own aqua column', JSON.stringify(bg));
   const lum = (h) => { const n = parseInt(h.slice(1), 16); return (((n >> 16) & 255) * 0.299 + ((n >> 8) & 255) * 0.587 + (n & 255) * 0.114) / 255; };
   ok(lum(bg.stage) > 0.9, 'R3 the middle stage is the light one (not dark, not grey)', bg.stage);
   // R4 one common top line for the three columns, on every step and on information panels
@@ -117,6 +117,10 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file); const moon = await p.$eval('#q', (e) => getComputedStyle(e, '::after').display);
   const glow = await p.evaluate(() => { const sc = getComputedStyle(document.querySelector('.screen')).boxShadow, st = getComputedStyle(document.querySelector('.stage')).backgroundImage; return (sc === 'none' ? '' : 'screen ') + (/radial/.test(st) ? 'stage' : ''); });
   ok(tr.n === 5 && tr.vis && /Firmness/.test(tr.cur) && tr.back && backTo === '0' && rv && zr && trOff && moon === 'none' && !glow, 'R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white', JSON.stringify({ tr, backTo, rv, zr, trOff, moon, glow }));
+  // R35 owner 16 Nov VII: Explore, Select & Buy, Your order and Your selection are four cards, each with its own colour family
+  await p.goto(file + '?step=0'); await p.click('.card[data-size="3"]');
+  const fam = await p.evaluate(() => { const g = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e).backgroundColor + '|' + getComputedStyle(e).backgroundImage.slice(0, 40) : null; }; return [g('.exg'), g('.slg'), g('#trailbar .trail'), g('.mine')]; });
+  ok(fam.every(Boolean) && new Set(fam).size === 4, 'R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour', fam.join('  //  '));
   await p.goto(file + '?step=0');
   const noLong = await p.evaluate(() => !/—/.test(document.body.innerText)); ok(noLong, 'R31 no long dash is shown anywhere');
   // R32 the guide after a choice (?guide=1): says what was chosen, what comes next, then opens it by itself
