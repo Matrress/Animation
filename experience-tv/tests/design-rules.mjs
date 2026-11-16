@@ -107,6 +107,16 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
     layers.push(await p.$eval('.screen', (e) => e.getAttribute('data-layer')));
   }
   ok(!warm.length && layers.includes('explore') && layers.includes('select'), 'R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments', warm.slice(0, 4).join(' | ') || layers.join(','));
+  // R34 owner 16 Nov VI: the order trail while choosing (and back from any information screen), Review over both rows, seven zones in one row, no moon over the logo, no glow on white
+  await p.goto(file + '?step=0'); await p.click('.card[data-size="3"]'); await p.click('.slg .sb[data-go="2"]'); await p.click('#rail [data-goto="firmness/principle"]');
+  const tr = await p.evaluate(() => ({ n: document.querySelectorAll('#trailbar .tst').length, vis: !document.querySelector('#trailbar').hidden, cur: (document.querySelector('#trailbar .tst.cur') || {}).textContent, back: !!document.querySelector('#rail button.tp.back') }));
+  await p.click('#trailbar .tst[data-go="0"]'); const backTo = await p.$eval('.slg .sb[aria-current=true]', (e) => e.dataset.go);
+  const rv = await p.evaluate(() => { const r = document.querySelector('.slg .sb.rv').getBoundingClientRect(), a = document.querySelector('.slg .sb[data-go="1"]').getBoundingClientRect(), c = document.querySelector('.slg .sb[data-go="3"]').getBoundingClientRect(); const all = [...document.querySelectorAll('.slg .sb')].map((e) => Math.round(e.getBoundingClientRect().top)); return (Math.abs(r.top - a.top) < 2 && Math.abs(r.bottom - c.bottom) < 2) || new Set(all).size === 1; });
+  await p.goto(file + '?ch=zones&pn=map'); const zr = await p.$$eval('.zrow .zp', (x) => { const t = x.map((e) => Math.round(e.getBoundingClientRect().top)); return x.length === 7 && new Set(t).size === 1; });
+  const trOff = await p.$eval('#trailbar', (e) => e.hidden);
+  await p.goto(file); const moon = await p.$eval('#q', (e) => getComputedStyle(e, '::after').display);
+  const glow = await p.evaluate(() => { const sc = getComputedStyle(document.querySelector('.screen')).boxShadow, st = getComputedStyle(document.querySelector('.stage')).backgroundImage; return (sc === 'none' ? '' : 'screen ') + (/radial/.test(st) ? 'stage' : ''); });
+  ok(tr.n === 5 && tr.vis && /Firmness/.test(tr.cur) && tr.back && backTo === '0' && rv && zr && trOff && moon === 'none' && !glow, 'R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white', JSON.stringify({ tr, backTo, rv, zr, trOff, moon, glow }));
   await p.goto(file + '?step=0');
   const noLong = await p.evaluate(() => !/—/.test(document.body.innerText)); ok(noLong, 'R31 no long dash is shown anywhere');
   // R32 the guide after a choice (?guide=1): says what was chosen, what comes next, then opens it by itself

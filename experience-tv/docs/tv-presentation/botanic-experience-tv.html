@@ -735,6 +735,81 @@ body { background: var(--ground); }
 .ivory .screen[data-layer=select] .q { background: linear-gradient(150deg, #2A86B0 0%, #1A5C7E 55%, #123F57 100%); box-shadow: 0 18px 36px -22px rgba(26,92,126,.9); }
 .ivory .screen[data-layer=select] .q::before { display: none; } .ivory .screen[data-layer=select] .q::after { display: none; }
 /* the latex itself is drawn in the site's pale mist, outlined in slate */
+/* ===== "DIVINE NIGHT" (owner, 16 Nov VI): the site's own palette, calm and clean like the Polestar screens =====
+   Ground ice white, cards white, text and dark bands navy, accents from mint to periwinkle. No glow on white anywhere. */
+:root.ivory { --ground: #F1F6FB; --white: #FFFFFF; --line: #DCE6EE; --line2: #C3D3DF; --stage-a: #F6F9FC; --stage-b: #F1F6FB; --ink: #142A3C; --ink2: #34495A; --ink3: #607587;
+  --navy: #1F3D58; --navy-deep: #0B2A38; --mint: #4FD3CB; --grad-band: linear-gradient(160deg, #1F3D58 0%, #0B2A38 100%); }
+body { background: var(--ground); }
+.ivory .screen, .ivory .screen[data-layer] { box-shadow: none !important; }
+.ivory .screen[data-layer] .stage, .ivory .stage { background: var(--stage-a) !important; }
+.ivory .screen[data-layer] .rail, .ivory .rail { background: #fff !important; background-image: none !important; }
+.ivory .mine { background: #fff !important; background-image: none !important; }
+.ivory .chbar { background: #fff; border-bottom: 1px solid var(--line); }
+.ivory .q::before { display: none !important; }
+.ivory .tp::after { display: none; }
+.ivory .tp { box-shadow: none !important; background: var(--grad-band); }
+.ivory .tp .tdot { box-shadow: 0 0 0 3px rgba(255,255,255,.12); }
+/* the dark bands: navy, with the topic's light only on the dark (as on the site's night sections) */
+.ivory .screen[data-layer=explore] .q { background: radial-gradient(1.2px 1.2px at 12% 22%, rgba(255,255,255,.6), transparent 60%), radial-gradient(1px 1px at 28% 68%, rgba(255,255,255,.4), transparent 60%), radial-gradient(1.3px 1.3px at 46% 18%, rgba(255,255,255,.5), transparent 60%), radial-gradient(1.2px 1.2px at 78% 30%, rgba(255,255,255,.55), transparent 60%), radial-gradient(60% 120% at 100% 0%, color-mix(in srgb, var(--tc) 28%, transparent), transparent 65%), linear-gradient(160deg, #1F3D58 0%, #0B2A38 100%) !important; box-shadow: none !important; }
+.ivory .screen[data-layer=select] .q { background: linear-gradient(160deg, #2A86B0 0%, #1F3D58 100%) !important; box-shadow: none !important; }
+.ivory .q.nomoon::after { display: none !important; }
+.ivory .screen[data-layer=explore] .pt { border-top: 2px solid var(--tc); }
+/* Explore buttons: white, a thin line, the topic's dot; the current one navy with the topic's line under it. No glow. */
+.ivory .exg .ch { background: #fff; border: 1px solid var(--line); color: var(--ink2); font-weight: 500; box-shadow: none; }
+.ivory .exg .ch:hover { border-color: var(--line2); background: #F8FBFD; }
+.ivory .exg .ch .td { box-shadow: none !important; }
+.ivory .exg .ch[aria-current=true] { background: var(--navy); color: #fff; border-color: var(--navy); box-shadow: inset 0 -3px 0 var(--c) !important; }
+/* Select & Buy: four numbered steps and Review, one block; a line parts the steps from Review */
+.slg { grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(0, .78fr) !important; grid-template-rows: auto 46px 46px !important; column-gap: 8px; }
+.sb { background: #fff !important; border: 1px solid var(--line) !important; box-shadow: none !important; border-radius: 10px; color: var(--ink); }
+.sb svg { color: var(--navy) !important; } .sb i { color: var(--ink3) !important; }
+.sb:hover { border-color: #2A86B0 !important; }
+.sb.ok i { color: #1A5C7E !important; font-weight: 600; }
+.sb[aria-current=true] { background: var(--navy) !important; border-color: var(--navy) !important; color: #fff !important; box-shadow: inset 0 -3px 0 #2A86B0 !important; }
+.sb[aria-current=true] svg { color: #fff !important; } .sb[aria-current=true] i { color: rgba(255,255,255,.72) !important; }
+.sb .nbm { position: absolute; right: 7px; top: 7px; width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--line2); font-style: normal; font-size: 10px; font-weight: 700; line-height: 14px; text-align: center; color: var(--ink3); }
+.sb[aria-current=true] .nbm { border-color: rgba(255,255,255,.5); color: #fff; }
+.sb .okm { background: #2A86B0 !important; }
+.slg .sb.rv { grid-column: 3 !important; grid-row: 2 / span 2 !important; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 6px; padding: 8px; position: relative; margin: 0 !important; display: flex !important; align-self: stretch; }
+.slg .sb.rv span { align-items: center; } .slg .sb.rv svg { width: 24px; height: 24px; }
+.slg .sb.rv::before { content: ''; position: absolute; left: -5px; top: 6px; bottom: 6px; width: 1px; background: var(--line2); }
+@media (max-width: 1250px) { .slg { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; grid-template-rows: auto 46px !important; } .slg .sb.rv { grid-column: auto !important; grid-row: auto !important; flex-direction: row; } .slg .sb.rv::before { display: none; } }
+/* the tree */
+.ivory .tp.sel { background: linear-gradient(160deg, #2A86B0 0%, #1F3D58 100%); }
+button.tp { width: 100%; border: 0; text-align: left; cursor: pointer; font: inherit; }
+.ivory .tp.back:hover { filter: brightness(1.08); }
+.ivory .tbr .pn { background: #fff !important; border: 1px solid var(--line) !important; }
+.ivory .tbr .pn:hover { border-color: var(--tc) !important; }
+.ivory .tbr .pn[aria-current=true] { background: var(--navy) !important; color: #fff; border-color: var(--navy) !important; box-shadow: inset 3px 0 0 var(--tc) !important; }
+/* the order trail: where you are, what is chosen, every step one tap away */
+.colh.tr { height: auto; line-height: 1.2; margin-bottom: 14px; white-space: normal; overflow: visible; text-transform: none; letter-spacing: 0; }
+.colh.tr::before { display: none; }
+.trail { display: flex; align-items: center; gap: 0; flex-wrap: wrap; width: 100%; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 6px 8px; }
+.trail .tk { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--ink3); padding: 0 10px 0 6px; }
+.trail .tsep { flex: 1 1 10px; min-width: 10px; max-width: 34px; height: 1px; background: var(--line2); }
+.tst { display: inline-flex; align-items: center; gap: 7px; border: 0; background: transparent; padding: 5px 8px; border-radius: 8px; font: inherit; color: var(--ink2); cursor: pointer; text-align: left; }
+.tst:hover { background: #F1F6FB; }
+.tst em { flex: none; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--line2); font-style: normal; font-size: 11px; font-weight: 700; color: var(--ink3); }
+.tst em svg { width: 11px; height: 11px; }
+.tst span { display: flex; flex-direction: column; font-size: 13.5px; font-weight: 600; line-height: 1.15; } .tst small { font-size: 11.5px; font-weight: 500; color: #1A5C7E; }
+.tst.ok em { background: #2A86B0; border-color: #2A86B0; }
+.tst.cur { background: var(--navy); color: #fff; } .tst.cur em { border-color: rgba(255,255,255,.55); color: #fff; } .tst.cur small { color: rgba(255,255,255,.75); } .tst.cur.ok em { background: #2A86B0; }
+/* seven zones in one row, under the map */
+.zrow { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; margin: 10px 0 14px; }
+.zrow .zp { padding: 9px 10px; border: 1px solid var(--line); border-top: 4px solid var(--tone); border-left: 1px solid var(--line) !important; border-radius: 10px; background: #fff; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.zrow .zp small { font-size: 11px; font-weight: 700; letter-spacing: .1em; color: var(--ink3); } .zrow .zp b { font-size: 14px; line-height: 1.2; } .zrow .zp span { font-size: 12px; line-height: 1.3; color: var(--ink2); }
+.zread { background: #fff; border: 1px solid var(--line); border-radius: var(--rl); padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.zread small { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--ink3); } .zread p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink2); }
+.zread ul { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 8px; } .zread li { display: flex; align-items: center; gap: 10px; font-size: 14.5px; } .zread li i { width: 26px; height: 14px; border-radius: 4px; border: 1px solid var(--line2); }
+@media (max-width: 900px) { .zrow { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* Standard Product View: navy outline on white, its own quiet look */
+.seg button#vstd { background: #F1F6FB !important; border-color: var(--line2) !important; color: var(--navy) !important; }
+.seg button#vstd[aria-pressed=true] { background: var(--navy) !important; color: #fff !important; outline: 2px solid var(--navy); }
+
+/* the order trail runs the whole width of the screen, under the two groups, only while choosing */
+.trailbar { grid-column: 1 / -1; background: #fff; border-bottom: 1px solid var(--line); padding: 8px 16px; }
+.trailbar[hidden] { display: none; }
+.trailbar .trail { border: 0; padding: 0; border-radius: 0; }
 </style>
 
 
@@ -748,7 +823,7 @@ body { background: var(--ground); }
       <div class="seg" role="group" aria-label="View"><button data-view="tv" id="vtv" aria-pressed="true">Optimised Preview</button><button data-view="std" id="vstd" aria-pressed="false">Standard Product View</button></div>
     </div></div>
   <main class="monitor"><div class="screen">
-    <nav class="chbar" id="chbar" aria-label="The fourteen topics"></nav>
+    <nav class="chbar" id="chbar" aria-label="Explore and Select &amp; Buy"></nav><div class="trailbar" id="trailbar"></div>
     <nav class="rail" id="rail" aria-label="This topic and your order"></nav>
     <section class="stage"><div class="colh" id="stageh"></div><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
     <aside class="mine" aria-label="Your selection"><h2><span>Your selection</span><span class="mi" id="mi"></span></h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="bag" id="bag"></div></aside>
@@ -856,10 +931,11 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   var FLAT = []; EXCH.forEach(function (c) { c.panels.forEach(function (p) { if (p.kind !== 'step') FLAT.push([c.id, p.id]); }); });
   function vis(c) { return c.panels.filter(function (p) { return p.kind !== 'step'; }); }   // the knowledge panels of a topic
   /* every topic speaks in its own colour (owner, 16 Nov: dreamy, spacey, natural; colours as indicators) */
-  /* COLOUR CONCEPT "From Nature to Sleep" (owner, 16 Nov V): the site's own cool palette as the base, never brown or beige.
-     Explore is the night: each topic turns the room to its colour, and the colours walk in the order of the bar from mint (nature,
-     Discover) through aqua and sky to indigo and violet (sleep, Delivery). Select & Buy is the clear day: white and the gallery blue. */
-  var TC = { discover: '#45C49A', comfort: '#45C4B2', benefits: '#45BEC4', support: '#45A5C4', adaptation: '#458DC4', zones: '#4575C4', ventilation: '#455CC4', hygiene: '#4645C4', certs: '#5E45C4', warranty: '#7745C4', delivery: '#8F45C4', firmness: '#2A86B0', height: '#2A86B0', covers: '#2A86B0', select: '#2A86B0' };
+  /* COLOUR CONCEPT "Divine Night" (owner, 16 Nov VI): only the colours the Divine Dunlop site already uses. Navy (#1F3D58, #0B2A38) for the
+     dark bands and the text, ice white for the ground, and one family of accents from the site's mint #4FD3CB to its periwinkle #647BD0.
+     Each Explore topic takes one step of that family, in the order of the bar; Select & Buy is the gallery blue, which sits inside it.
+     Colour is an indicator (a dot, a line, a band), never a glow on white. */
+  var TC = { discover: '#42CDC3', comfort: '#44CACC', benefits: '#46BECC', support: '#49B3CC', adaptation: '#4BA8CC', zones: '#4D9ECB', ventilation: '#4F94CB', hygiene: '#528BCB', certs: '#5482CB', warranty: '#5679CB', delivery: '#5871CA', firmness: '#2A86B0', height: '#2A86B0', covers: '#2A86B0', select: '#2A86B0' };
   function chap(id) { return CH.filter(function (c) { return c.id === id; })[0]; }
   function panel() { var c = chap(S.ch); return c.panels.filter(function (p) { return p.id === S.pn; })[0] || c.panels[0]; }
   function goPanel(c, p) { S.ch = c; S.pn = p; var pp = panel(); if (pp.kind === 'step') S.step = STEPS.map(function (x) { return x.id; }).indexOf(pp.step); else { var k = infoStep(c, p); if (k >= 0) S.step = k; } }
@@ -960,18 +1036,24 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     var onStep = inSelect();
     var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + EXCH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + '</div>';
     var sl = '<div class="slg" role="group" aria-label="Select and buy"><span class="glab">Select &amp; Buy</span>' + STEPS.map(function (st, i) { var v = i < 4 ? valueOf(st.id) : (complete() ? 'Ready' : ''), ok = i < 4 ? chosen(st.id) : complete();
-      return '<button class="sb' + (ok ? ' ok' : '') + (i === 4 ? ' rv' : '') + '" data-go="' + i + '" aria-current="' + (onStep && S.step === i) + '">' + IC[st.id] + '<span><b>' + st.label + '</b><i>' + (v ? esc(v) : (i < 4 ? 'Choose' : 'Order')) + '</i></span>' + (ok ? '<em class="okm">' + CKS + '</em>' : '') + '</button>'; }).join('') + '</div>';
+      return '<button class="sb' + (ok ? ' ok' : '') + (i === 4 ? ' rv' : '') + '" data-go="' + i + '" aria-current="' + (onStep && S.step === i) + '">' + IC[st.id] + '<span><b>' + st.label + '</b><i>' + (v ? esc(v) : (i < 4 ? 'Choose' : 'Your order')) + '</i></span>' + (ok ? '<em class="okm">' + CKS + '</em>' : (i < 4 ? '<em class="nbm">' + (i + 1) + '</em>' : '')) + '</button>'; }).join('') + '</div>';
     $('#chbar').innerHTML = ex + sl;
   }
   function nDone0() { return STEPS.slice(0, 4).filter(function (x) { return chosen(x.id); }).length; }
   function nextUnchosen() { for (var i = 0; i < STEPS.length - 1; i++) if (!chosen(STEPS[i].id)) return i; return -1; }
+  function trailHtml() {   // the order, step by step: where you are, what is chosen, and every step one tap away (owner: traceability)
+    return '<nav class="trail" aria-label="Your order"><span class="tk">Your order</span>' + STEPS.map(function (st, i) {
+      var done = i < 4 ? chosen(st.id) : complete(), v = i < 4 ? valueOf(st.id) : '', cur = S.step === i;
+      return (i ? '<i class="tsep" aria-hidden="true"></i>' : '') + '<button class="tst' + (done ? ' ok' : '') + (cur ? ' cur' : '') + '" data-go="' + i + '"' + (cur ? ' aria-current="step"' : '') + '><em>' + (done ? CKS : (i < 4 ? i + 1 : '')) + '</em><span>' + st.label + (v ? '<small>' + esc(v) + '</small>' : '') + '</span></button>';
+    }).join('') + '</nav>';
+  }
   function drawRail() {
     var onSel = inSelect(), h;
     if (onSel) {   // a choice: the button above IS the choice; here hangs only what helps to make it (no button twice)
       var st = STEPS[S.step], inf = STEPINFO[st.id] || [], stepNow = panel().kind === 'step';
       var br = inf.map(function (r, i) { var p = chap(r[0]).panels.filter(function (x) { return x.id === r[1]; })[0]; return '<button class="pn' + (SEEN[r[0] + '/' + r[1]] ? ' seen' : '') + '" style="--i:' + i + '" data-goto="' + r[0] + '/' + r[1] + '" aria-current="' + (!stepNow && S.ch === r[0] && S.pn === r[1]) + '">' + esc(p.label) + '<small>Helps you choose</small></button>'; }).join('');
       var v = st.id === 'review' ? (complete() ? 'All four chosen' : nDone0() + ' of 4 chosen') : (valueOf(st.id) || 'Not chosen yet');
-      h = '<h2 class="colh">You are choosing</h2><div class="tree sel" style="--tc:' + TC.select + '"><div class="tp sel' + (stepNow ? ' on' : '') + '">' + IC[st.id] + '<span><b>' + esc(st.label) + '</b><i>' + esc(v) + '</i></span></div>' +
+      h = '<h2 class="colh">You are choosing</h2><div class="tree sel" style="--tc:' + TC.select + '">' + (stepNow ? '<div class="tp sel on">' : '<button class="tp sel back" data-go="' + S.step + '" aria-label="Back to choosing your ' + esc(st.label) + '">') + IC[st.id] + '<span><b>' + esc(st.label) + '</b><i>' + esc(v) + (stepNow ? '' : (chosen(st.id) ? ' · Change' : ' · Choose')) + '</i></span>' + (stepNow ? '</div>' : '</button>') +
         (inf.length ? '<div class="tbr">' + br + '</div>' : '<p class="tnote">' + (st.id === 'review' ? 'Check your four choices, then add the mattress to your bag.' : 'Every size in centimetres and in inches, straight from the shop.') + '</p>') + '</div>';
     } else {
       var cur = chap(S.ch), ps = vis(cur);
@@ -979,6 +1061,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
         ps.map(function (p, i) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" style="--i:' + i + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '</div></div>';
     }
     $('#rail').innerHTML = h;
+    var tb = $('#trailbar'); if (tb) { tb.hidden = !onSel || S.gal; tb.innerHTML = onSel ? trailHtml() : ''; }
     var sc = document.querySelector('.screen'); if (sc) { sc.style.setProperty('--tc', onSel ? TC.select : TC[S.ch]); sc.setAttribute('data-layer', onSel ? 'select' : 'explore'); sc.setAttribute('data-topic', onSel ? 'select' : S.ch); }
   }
   function bagButton(cls) {   // ONE button, two faces (laws in engine/selection-rules.js): Add to Bag, READY, then Go to Checkout
@@ -1122,8 +1205,9 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   function zonesView(p, c) {   // 24: the engineering view full width (never squeezed), the legend, then the seven zones beside the one film
     var T = D.zoneTier, tone = ZTONE();
     var fig = '<div class="zsk zfull" aria-label="Seven support zones, head to feet">' + zoneSvg() + '</div><p class="zlg"><span><i style="background:' + tone.s + '"></i>Softer response</span><span><i style="background:' + tone.c + '"></i>Calibrated</span><span><i style="background:' + tone.r + '"></i>Reinforced</span></p>';
-    var grid = '<div class="zgrid">' + p.items.map(function (x, i) { return '<div class="zp" style="--tone:' + tone[T[i + 1]] + '"><b>Z' + (i + 1) + ' · ' + esc(x.n) + '</b><span>' + esc(x.note) + '</span></div>'; }).join('') + '</div>';
-    return fig + '<div class="pw zwide' + (c.media ? '' : ' nomedia') + '">' + grid + miniCard(c) + '</div>';
+    var grid = '<div class="zrow">' + p.items.map(function (x, i) { return '<div class="zp" style="--tone:' + tone[T[i + 1]] + '"><small>Z' + (i + 1) + '</small><b>' + esc(x.n) + '</b><span>' + esc(x.note) + '</span></div>'; }).join('') + '</div>';
+    var read = '<div class="zread"><small>How to read the map</small><p>Seven zones from head to feet, one core. The shade shows how each zone responds:</p><ul><li><i style="background:' + tone.s + '"></i>Softer response</li><li><i style="background:' + tone.c + '"></i>Calibrated</li><li><i style="background:' + tone.r + '"></i>Reinforced</li></ul></div>';
+    return fig.split('<p class="zlg">')[0] + grid + '<div class="pw zwide' + (c.media ? '' : ' nomedia') + '">' + read + miniCard(c) + '</div>';
   }
 
   var WICO = ['<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M16 3l11 4v8c0 7-5 12-11 14C10 27 5 22 5 15V7z"/><path d="M11 16l3.5 3.5L21 12" stroke-linecap="round"/></svg>',
@@ -1211,7 +1295,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     if (p.kind === 'hero') title = C.title || title;
     if (C.title && p.kind !== 'hero') title = C.title; if (C.sub) sub = C.sub; if (key === 'firmness/who') sub = null;
     if (p.kind === 'density') { title = D.curated.density.title; sub = D.curated.density.sub; }
-    var q = $('#q'); q.className = 'q' + (key === 'delivery/made' ? ' ph' : '');
+    var q = $('#q'); q.className = 'q' + (key === 'delivery/made' ? ' ph' : '') + (p.kind === 'hero' ? ' nomoon' : '');
     q.innerHTML = (key === 'delivery/made' ? '<span class="pic" style="background-image:url(' + D.core + ')" role="img" aria-label="The perforated Botanic latex core"></span><h1><span>' + esc(title) + '</span></h1><span class="rule"></span>' : '<h1>' + (key === 'firmness/who' ? '' : LEAF) + '<span>' + fmt(title) + '</span></h1>') + (sub ? '<p>' + esc(sub) + '</p>' : '') + (p.kind === 'hero' ? wordSvg(D.bioMark, 'qmark') : '');
     if (key === 'warranty/conditions') { $('#answer').innerHTML = condView(p); } else if (key === 'delivery/made') { $('#answer').innerHTML = madeView(); } else {
     var v = { density: densityView, adjust: adjustView, hero: heroView, facts: factsView, read: function () { return readerView(p); }, article: function () { return readerView(p); }, points: function () { return pointsView(p, c); }, certs: function () { return certsView(p, c); }, zones: function () { return zonesView(p, c); }, numerals: function () { return numeralsView(p); } }[p.kind];
@@ -1221,7 +1305,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
       var inf = STEPINFO[STEPS[si].id], k = 0; inf.forEach(function (x, n) { if (x[0] === c.id && x[1] === p.id) k = n; });
       var nx = inf[k + 1], nxp = nx && chap(nx[0]).panels.filter(function (x) { return x.id === nx[1]; })[0];
       $('#act').innerHTML = (nx ? '<button class="btn s" data-goto="' + nx[0] + '/' + nx[1] + '">More: <b>' + esc(nxp.label) + '</b></button>' : '') + '<button class="btn p" data-go="' + si + '">Back to the choice</button>';
-      $('#stageh').className = 'colh'; $('#stageh').innerHTML = esc(STEPS[si].label + '  ·  More information') + '<span class="explore">Select &amp; Buy</span>';
+      $('#stageh').className = 'colh'; $('#stageh').innerHTML = esc(STEPS[si].label + '  ·  Helps you choose') + '<span class="explore">Select &amp; Buy</span>';
       return;
     }
     var i = flatIndex(), prev = FLAT[i - 1], next = FLAT[i + 1], np = next && chap(next[0]).panels.filter(function (x) { return x.id === next[1]; })[0];

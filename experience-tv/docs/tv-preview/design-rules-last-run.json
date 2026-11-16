@@ -1,47 +1,47 @@
 {
  "date": "2026-11-16",
  "failures": 0,
- "checks": 115,
+ "checks": 118,
  "rows": [
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 47 buttons"
+   "detail": "largest radius 12px over 52 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the order rail and \"Your selection\" are white cards",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6FAFB\"}"
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6F9FC\"}"
   },
   {
    "pass": true,
    "rule": "R3 the middle stage is the light one (not dark, not grey)",
-   "detail": "#F6FAFB"
+   "detail": "#F6F9FC"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "462.8 / 462.8 / 462.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "462.8 / 462.8 / 462.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "462.8 / 462.8 / 462.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "462.8 / 462.8 / 462.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "462.8 / 462.8 / 462.8"
   },
   {
    "pass": true,
@@ -195,6 +195,11 @@
   },
   {
    "pass": true,
+   "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white",
+   "detail": "{\"tr\":{\"n\":5,\"vis\":true,\"cur\":\"3Firmness\",\"back\":true},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
+  },
+  {
+   "pass": true,
    "rule": "R31 no long dash is shown anywhere",
    "detail": ""
   },
@@ -211,17 +216,17 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 47 buttons"
+   "detail": "largest radius 12px over 52 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the order rail and \"Your selection\" are white cards",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6FAFB\"}"
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6F9FC\"}"
   },
   {
    "pass": true,
    "rule": "R3 the middle stage is the light one (not dark, not grey)",
-   "detail": "#F6FAFB"
+   "detail": "#F6F9FC"
   },
   {
    "pass": true,
@@ -360,6 +365,11 @@
   },
   {
    "pass": true,
+   "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white",
+   "detail": "{\"tr\":{\"n\":5,\"vis\":true,\"cur\":\"3Firmness\",\"back\":true},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
+  },
+  {
+   "pass": true,
    "rule": "R31 no long dash is shown anywhere",
    "detail": ""
   },
@@ -376,42 +386,42 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 47 buttons"
+   "detail": "largest radius 12px over 52 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the order rail and \"Your selection\" are white cards",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6FAFB\"}"
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6F9FC\"}"
   },
   {
    "pass": true,
    "rule": "R3 the middle stage is the light one (not dark, not grey)",
-   "detail": "#F6FAFB"
+   "detail": "#F6F9FC"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "462.8 / 462.8 / 462.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "462.8 / 462.8 / 462.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "462.8 / 462.8 / 462.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "462.8 / 462.8 / 462.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "415.8 / 415.8 / 415.8"
+   "detail": "462.8 / 462.8 / 462.8"
   },
   {
    "pass": true,
@@ -562,6 +572,11 @@
    "pass": true,
    "rule": "R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments",
    "detail": "explore,explore,explore,explore,select,select,select"
+  },
+  {
+   "pass": true,
+   "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white",
+   "detail": "{\"tr\":{\"n\":5,\"vis\":true,\"cur\":\"3Firmness\",\"back\":true},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
   },
   {
    "pass": true,
