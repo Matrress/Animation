@@ -408,26 +408,26 @@ a { color: inherit; }
    ivory seats. Ivory surfaces (the colour of the latex itself), graphite instruments, one lit blue for action. Comfort first:
    soft light, hairlines instead of boxes, light type with the key words in bold. ?theme=classic shows the previous look. ===== */
 :root.ivory {
-  --ground: #F1ECE3; --line: #E6DED1; --line2: #D4CAB9; --stage-a: #FCFAF6; --stage-b: #F6F2EA;
+  --ground: #E3EEF1; --line: #D1E2E6; --line2: #BDCCD0; --stage-a: #F7FAFB; --stage-b: #EBF3F5;
   --ink: #1E2327; --ink2: #474B4E; --ink3: #7B7870; --teal: #3A5466; --teal-deep: #232B31; --abyss: #12171B;
   --band-top: #232B31; --band-end: #161B1F; --sky: #8FD0EC;
   --grad-band: linear-gradient(175deg, #2D363D 0%, #1B2126 100%);
   --grad-card: linear-gradient(160deg, #2F383F 0%, #222A30 48%, #171C20 100%);
 }
-.ivory body { background: radial-gradient(120% 70% at 50% 0%, #FAF7F1 0%, var(--ground) 70%); }
+.ivory body { background: radial-gradient(120% 70% at 50% 0%, #F2F7F9 0%, var(--ground) 70%); }
 .ivory .monitor { background: linear-gradient(180deg, #2B3339, #181D21); padding: 6px; border-radius: 18px; box-shadow: 0 30px 50px -36px rgba(40,30,15,.55), 0 0 0 1px rgba(255,255,255,.6); }
 .ivory .screen { border-radius: 13px; background: var(--stage-a); }
-.ivory .chbar { background: linear-gradient(180deg, #FFFFFF, #FBF8F2); border-bottom-color: var(--line); }
+.ivory .chbar { background: linear-gradient(180deg, #FFFFFF, #F4F8F9); border-bottom-color: var(--line); }
 .ivory .ch { border-color: var(--line); background: transparent; font-weight: 500; color: var(--ink2); }
 .ivory .ch:hover { border-color: var(--line2); background: #fff; }
-.ivory .ch[aria-current=true], .ivory .pn[aria-current=true], .ivory .ri2[aria-pressed=true], .ivory .st.cur { background: var(--grad-band); color: #F6F1E7; border-color: transparent; box-shadow: inset 0 -2px 0 var(--sky), 0 6px 14px -10px rgba(20,25,30,.7); }
+.ivory .ch[aria-current=true], .ivory .pn[aria-current=true], .ivory .ri2[aria-pressed=true], .ivory .st.cur { background: var(--grad-band); color: #E9F2F4; border-color: transparent; box-shadow: inset 0 -2px 0 var(--sky), 0 6px 14px -10px rgba(20,25,30,.7); }
 .ivory .pn { border-color: var(--line); font-weight: 500; }
 .ivory .stage { background: linear-gradient(180deg, var(--stage-a), var(--stage-b)); }
 /* the question band: instrument glass, light type, the anchor words in bold */
-.ivory .q { background: var(--grad-card); border: 0; box-shadow: inset 0 1px 0 rgba(255,255,255,.10), 0 18px 30px -24px rgba(20,22,25,.75); color: #F6F1E7; }
-.ivory .q::after { width: 420px; height: 420px; right: -160px; top: -240px; background: radial-gradient(circle, rgba(246,241,231,.10), rgba(246,241,231,0) 65%); }
+.ivory .q { background: var(--grad-card); border: 0; box-shadow: inset 0 1px 0 rgba(255,255,255,.10), 0 18px 30px -24px rgba(20,22,25,.75); color: #E9F2F4; }
+.ivory .q::after { width: 420px; height: 420px; right: -160px; top: -240px; background: radial-gradient(circle, rgba(240,247,249,.10), rgba(240,247,249,0) 65%); }
 .ivory .q h1 { font-weight: 300; letter-spacing: -.005em; } .ivory .q h1 b, .ivory .q h1 .kw { font-weight: 700; } .ivory .q h1 .acc { color: #A9DCF2; font-weight: 600; }
-.ivory .q p { color: rgba(246,241,231,.82); font-weight: 400; }
+.ivory .q p { color: rgba(240,247,249,.82); font-weight: 400; }
 .ivory .q .flowl b { color: #fff; } .ivory .q .qmark { color: #A9DCF2; }
 /* cards: white porcelain on ivory, hairline and a soft warm shadow */
 .ivory .rc, .ivory .pt, .ivory .row4, .ivory .crow, .ivory .wrow, .ivory .zp, .ivory .mini, .ivory .sl, .ivory .card, .ivory .dcard, .ivory .fcard, .ivory .tile, .ivory .info, .ivory .ri, .ivory .prbox, .ivory .fx div, .ivory .fts span, .ivory .nclk, .ivory .stretch, .ivory .zsk.zfull, .ivory .dlv .ind, .ivory .dlv .cst, .ivory .rq {
@@ -435,24 +435,24 @@ a { color: inherit; }
 .ivory .rc h2, .ivory .pt h3, .ivory .row4 h3 { font-weight: 600; }
 .ivory .rc p, .ivory .pt p, .ivory .row4 p { font-weight: 400; }
 .ivory .ri2 { border-color: var(--line); font-weight: 500; } .ivory .ri2[aria-pressed=true] i { color: var(--band-top); }
-.ivory .mini .vid { background: radial-gradient(120% 120% at 70% 20%, #3A454D 0%, #1C2227 70%); } .ivory .mini .vid::after { background: radial-gradient(circle, rgba(246,241,231,.16), rgba(246,241,231,0) 68%); }
-.ivory .btn.p { background: var(--grad-band); border-color: transparent; color: #F6F1E7; }
+.ivory .mini .vid { background: radial-gradient(120% 120% at 70% 20%, #3A454D 0%, #1C2227 70%); } .ivory .mini .vid::after { background: radial-gradient(circle, rgba(240,247,249,.16), rgba(240,247,249,0) 68%); }
+.ivory .btn.p { background: var(--grad-band); border-color: transparent; color: #E9F2F4; }
 .ivory .btn.s { background: #fff; border-color: var(--line2); }
 .ivory .rail, .ivory .mine { background: #FFFFFF; }
 .ivory .rail { border-right-color: var(--line); } .ivory .mine { border-left: 1px solid var(--line); }
 .ivory .st.done .n { background: var(--band-top); border-color: var(--band-top); }
 .ivory .st.done .t span { color: var(--teal); }
-.ivory .chip.on { background: var(--grad-band); border-color: transparent; color: #F6F1E7; box-shadow: inset 3px 0 0 var(--sky); }
+.ivory .chip.on { background: var(--grad-band); border-color: transparent; color: #E9F2F4; box-shadow: inset 3px 0 0 var(--sky); }
 .ivory .guide { background: var(--grad-card); border-left-color: var(--sky); }
-.ivory .fc.cmp .fcard[aria-pressed=true], .ivory .fc.cmp .fcard.rec { background: #FBF8F2; border: 2px solid var(--band-top); }
+.ivory .fc.cmp .fcard[aria-pressed=true], .ivory .fc.cmp .fcard.rec { background: #F4F8F9; border: 2px solid var(--band-top); }
 .ivory .fc.cmp .fcard .tick { background: var(--band-top); }
 .ivory .fc.cmp .fcard .rg { font-weight: 600; font-size: 18px; letter-spacing: -.005em; }
 .ivory .eng .sab { border-color: var(--band-top); } .ivory .eng .sab .bal, .ivory .eng .sab .bal i { color: var(--teal); } .ivory .eng .sab .bal i { background: var(--teal); }
-.ivory .eng .sab b { font-weight: 700; } .ivory .eng::after { border-color: #B9AF9F; background-image: linear-gradient(#B9AF9F, #B9AF9F); }
+.ivory .eng .sab b { font-weight: 700; } .ivory .eng::after { border-color: #9EB4BA; background-image: linear-gradient(#9EB4BA, #9EB4BA); }
 /* instrument readouts: large light figures, small spaced labels */
 .ivory .wrow .v b { font-weight: 300; font-size: 44px; letter-spacing: -.03em; } .ivory .wrow .v.t b { font-weight: 500; font-size: 22px; }
 .ivory .wrow svg, .ivory .cond .big svg, .ivory .dlv .ind svg, .ivory .flow .st2 { color: var(--band-top); }
-.ivory .exs { background: #FBF8F2; } .ivory .exs b { font-weight: 300; font-size: 26px; } .ivory .exs .on, .ivory .exs .on b { color: var(--band-top); font-weight: 600; } .ivory .exs .on span { background: var(--band-top); border-color: var(--band-top); }
+.ivory .exs { background: #F4F8F9; } .ivory .exs b { font-weight: 300; font-size: 26px; } .ivory .exs .on, .ivory .exs .on b { color: var(--band-top); font-weight: 600; } .ivory .exs .on span { background: var(--band-top); border-color: var(--band-top); }
 .ivory .cond .big h2 { font-weight: 300; } .ivory .cond .big h2 b { font-weight: 700; } .ivory .cond .big h2 mark { background: var(--band-top); font-weight: 600; }
 .ivory .dlv .d20 { background: var(--grad-card); } .ivory .dlv .d20 b { font-weight: 300; letter-spacing: .22em; }
 .ivory .dlv .cst h2 { font-weight: 300; } .ivory .dlv .cst h2 i { font-weight: 600; }
@@ -475,11 +475,11 @@ a { color: inherit; }
 .brandbox img { width: 120px; height: auto; display: block; filter: drop-shadow(0 10px 12px rgba(60,50,30,.18)); }
 .brandbox .bioword { margin: 0; width: 100%; color: var(--band-top); } .brandbox small { display: block; margin-top: 6px; font-size: 10.5px; letter-spacing: .34em; color: var(--ink3); font-weight: 500; text-align: center; }
 
-.ivory .st.cur .n, .ivory .st.cur.done .n { background: #F6F1E7; border-color: #F6F1E7; color: var(--band-top); } .ivory .st.cur .t span { color: rgba(246,241,231,.8); }
+.ivory .st.cur .n, .ivory .st.cur.done .n { background: #E9F2F4; border-color: #E9F2F4; color: var(--band-top); } .ivory .st.cur .t span { color: rgba(240,247,249,.8); }
 /* engineering drawings in the latex colour: ivory core, white body, graphite line */
 .ivory .eng svg path, .ivory .stretch svg > path { stroke: #2A3238; }
 .ivory .stretch svg > path.spl { stroke: #8FB3CF; } .ivory .stretch .sarr path { stroke: #2A86B0; fill: none; }
-.ivory .eng svg path:first-child, .ivory .stretch svg path:first-child { fill: #F4EEE2; }
+.ivory .eng svg path:first-child, .ivory .stretch svg path:first-child { fill: #E4EFF2; }
 .ivory .eng svg path + path, .ivory .stretch svg path:nth-child(2) { fill: #FFFFFF; }
 .ivory .zsk svg > path:last-child { fill: #FFFFFF; fill-opacity: .94; stroke: #2A3238; } .ivory .zsk svg > path:nth-last-child(2) { stroke: #2A3238; }
 .ivory .stretch .arr { fill: #8FD0EC; stroke: #2A3238; }
@@ -487,16 +487,16 @@ a { color: inherit; }
 /* the choosing topics in the top bar: an icon, a deeper ivory, a graphite underline; a small mark when their choice is made */
 .ch.sel { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 .ch.sel svg { width: 18px; height: 18px; flex: none; }
-.ivory .ch.sel { background: #F6F0E3; border-color: #C9BDA8; color: var(--ink); font-weight: 600; box-shadow: inset 0 -3px 0 #2A3238; }
-.ivory .ch.sel:hover { background: #FBF6EA; border-color: #2A3238; }
-.ivory .ch.sel[aria-current=true] { background: var(--grad-band); color: #F6F1E7; border-color: transparent; box-shadow: inset 0 -3px 0 var(--sky); }
+.ivory .ch.sel { background: #E6F0F3; border-color: #ADC0C4; color: var(--ink); font-weight: 600; box-shadow: inset 0 -3px 0 #2A3238; }
+.ivory .ch.sel:hover { background: #EEF5F7; border-color: #2A3238; }
+.ivory .ch.sel[aria-current=true] { background: var(--grad-band); color: #E9F2F4; border-color: transparent; box-shadow: inset 0 -3px 0 var(--sky); }
 .ch .okm { display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: #297CA2; flex: none; } .ch .okm svg { width: 10px; height: 10px; }
 .ch.sel.seen::after { content: none; }
 /* the order: one assembled instrument, four icon tiles on a line that fills as the choices are made */
 .rail h2 .oc { float: right; letter-spacing: .08em; color: var(--ink3); font-weight: 600; }
 .ord { display: contents; }
 @media (min-width: 1100px) {
-  .ord { display: flex; flex-direction: column; position: relative; padding: 8px 8px; border: 1.5px solid var(--line2); border-radius: 16px; background: linear-gradient(180deg, #FFFFFF, #FBF8F2); gap: 2px; }
+  .ord { display: flex; flex-direction: column; position: relative; padding: 8px 8px; border: 1.5px solid var(--line2); border-radius: 16px; background: linear-gradient(180deg, #FFFFFF, #F4F8F9); gap: 2px; }
   .ord::before { content: ''; position: absolute; left: 33px; top: 34px; bottom: 34px; width: 2px; background: var(--line2); border-radius: 1px; }
   .ord::after { content: ''; position: absolute; left: 33px; top: 34px; width: 2px; height: calc((100% - 68px) * var(--f)); background: #297CA2; border-radius: 1px; transition: height .5s ease; }
 }
@@ -504,18 +504,18 @@ a { color: inherit; }
 .st .n { position: relative; width: 38px; height: 38px; border-radius: 11px; border: 1.5px solid var(--line2); background: #fff; color: var(--ink3); display: grid; place-items: center; flex: none; }
 .st .n svg { width: 21px; height: 21px; }
 .st .n .ck { position: absolute; right: -6px; top: -6px; width: 17px; height: 17px; border-radius: 50%; background: #297CA2; display: grid; place-items: center; border: 2px solid #fff; } .st .n .ck svg { width: 9px; height: 9px; }
-.ivory .st.done .n { background: var(--band-top); border-color: var(--band-top); color: #F6F1E7; }
-.ivory .st.cur .n, .ivory .st.cur.done .n { background: #F6F1E7; border-color: #F6F1E7; color: var(--band-top); }
+.ivory .st.done .n { background: var(--band-top); border-color: var(--band-top); color: #E9F2F4; }
+.ivory .st.cur .n, .ivory .st.cur.done .n { background: #E9F2F4; border-color: #E9F2F4; color: var(--band-top); }
 .st.next .n { border-color: #297CA2; color: #1A5C7E; animation: nextPulse 2.2s ease-in-out infinite; }
 .st.next .t span { color: #1A5C7E; font-weight: 600; }
 @keyframes nextPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(41,124,162,.35); } 50% { box-shadow: 0 0 0 6px rgba(41,124,162,0); } }
 /* the guide card in "Your selection": always says what to do now */
-.coach { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; text-align: left; width: 100%; background: #F6F0E3; border: 1.5px solid #2A3238; border-radius: var(--r); padding: 10px 14px; margin-top: 0; color: var(--ink); }
+.coach { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; text-align: left; width: 100%; background: #E6F0F3; border: 1.5px solid #2A3238; border-radius: var(--r); padding: 10px 14px; margin-top: 0; color: var(--ink); }
 .coach small { grid-column: 1; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #1A5C7E; font-weight: 700; } .coach b { grid-column: 1; font-size: 16.5px; font-weight: 600; } .coach i { grid-column: 2; grid-row: 1 / span 2; font-style: normal; font-size: 22px; color: var(--ink); }
-.coach:hover { background: #FBF6EA; } .coach.ok { background: #E8F2F7; border-color: #297CA2; }
+.coach:hover { background: #EEF5F7; } .coach.ok { background: #E8F2F7; border-color: #297CA2; }
 /* the interstitial after a choice */
 .coachv { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px 26px; align-items: center; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 34px 36px 30px; position: relative; overflow: hidden; box-shadow: 0 12px 24px -22px rgba(70,55,30,.45); }
-.coachv .cv-ic { position: relative; width: 84px; height: 84px; border-radius: 22px; background: var(--grad-band); color: #F6F1E7; display: grid; place-items: center; } .coachv .cv-ic svg { width: 44px; height: 44px; }
+.coachv .cv-ic { position: relative; width: 84px; height: 84px; border-radius: 22px; background: var(--grad-band); color: #E9F2F4; display: grid; place-items: center; } .coachv .cv-ic svg { width: 44px; height: 44px; }
 .coachv .cv-ic em { position: absolute; right: -8px; top: -8px; width: 30px; height: 30px; border-radius: 50%; background: #297CA2; border: 3px solid #fff; display: grid; place-items: center; } .coachv .cv-ic em svg { width: 15px; height: 15px; }
 .coachv small { display: block; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #1A5C7E; font-weight: 700; margin-bottom: 6px; }
 .coachv h2 { margin: 0 0 8px; font-size: 34px; line-height: 1.1; font-weight: 300; letter-spacing: -.01em; } .coachv p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--ink2); max-width: 58ch; }
@@ -530,13 +530,13 @@ a { color: inherit; }
 .ign .pil { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; width: 100%; margin-top: 6px; }
 .ign .pl { text-align: center; opacity: 0; transform: translateY(8px); display: grid; justify-items: center; align-content: start; gap: 8px; padding: 0 6px; }
 .ign .pl + .pl { border-left: 1px solid rgba(255,255,255,.14); }
-.ign .pl b { font-size: 27px; font-weight: 600; letter-spacing: .01em; } .ign .pl span { font-size: 15.5px; line-height: 1.4; color: rgba(246,241,231,.78); max-width: 22ch; }
+.ign .pl b { font-size: 27px; font-weight: 600; letter-spacing: .01em; } .ign .pl span { font-size: 15.5px; line-height: 1.4; color: rgba(240,247,249,.78); max-width: 22ch; }
 .ign .pic { height: 62px; display: grid; place-items: center; }
-.ign .ex { display: grid; grid-template-columns: repeat(7, 15px); gap: 5px; } .ign .ex i { height: 15px; border-radius: 4px; background: rgba(246,241,231,.16); }
-.ign .sgm { display: grid; grid-template-columns: repeat(4, 30px); gap: 6px; } .ign .sgm i { height: 8px; border-radius: 4px; background: rgba(246,241,231,.16); }
-.ign .cu { width: 92px; height: 55px; } .ign .cu path { fill: none; stroke: #F6F1E7; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; } .ign .cu .dim { stroke: #8FDDFC; stroke-width: 1.2; }
+.ign .ex { display: grid; grid-template-columns: repeat(7, 15px); gap: 5px; } .ign .ex i { height: 15px; border-radius: 4px; background: rgba(240,247,249,.16); }
+.ign .sgm { display: grid; grid-template-columns: repeat(4, 30px); gap: 6px; } .ign .sgm i { height: 8px; border-radius: 4px; background: rgba(240,247,249,.16); }
+.ign .cu { width: 92px; height: 55px; } .ign .cu path { fill: none; stroke: #E9F2F4; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; } .ign .cu .dim { stroke: #8FDDFC; stroke-width: 1.2; }
 .ign .tag { margin: 8px 0 0; font-size: 32px; font-weight: 300; letter-spacing: .03em; text-align: center; opacity: 0; transform: translateY(6px); } .ign .tag b { font-weight: 700; }
-.ign .sub { margin: -6px 0 0; font-size: 16px; color: rgba(246,241,231,.7); text-align: center; opacity: 0; }
+.ign .sub { margin: -6px 0 0; font-size: 16px; color: rgba(240,247,249,.7); text-align: center; opacity: 0; }
 .ign.run .pl1 { animation: ignUp .6s ease-out 3.0s forwards; } .ign.run .pl2 { animation: ignUp .6s ease-out 3.9s forwards; } .ign.run .pl3 { animation: ignUp .6s ease-out 4.8s forwards; }
 .ign.run .ex i { animation: pxOn .5s ease-out forwards; } .ign.run .sgm i { animation: pxOn .5s ease-out forwards; }
 .ign.run .cu path { animation: draw 1.4s ease-out 4.9s forwards; } .ign.run .cu .dim { animation: draw .8s ease-out 5.9s forwards; }
@@ -545,13 +545,13 @@ a { color: inherit; }
 .ign.run .sub { animation: ignIn .8s ease-out 7.3s forwards; }
 .ign.run .lit { animation: ignLit .8s cubic-bezier(.5,0,.2,1) 8.6s forwards !important; }
 .ign.run .core, .ign.run .skip, .ign.run .snd { animation: ignOut .4s ease-in 8.6s forwards !important; }
-@keyframes pxOn { from { background: rgba(246,241,231,.16); } 60% { background: #8FDDFC; } to { background: #F6F1E7; } }
+@keyframes pxOn { from { background: rgba(240,247,249,.16); } 60% { background: #8FDDFC; } to { background: #E9F2F4; } }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 .ign .tag .lum2 { background-image: linear-gradient(100deg, rgba(255,255,255,0) 40%, #8FDDFC 46%, #E9F8FF 50%, #50CDFD 54%, rgba(255,255,255,0) 60%), linear-gradient(#fff, #fff); background-size: 300% 100%, 100% 100%; background-position: 120% 0, 0 0; background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 @media (max-width: 700px) { .ign .tag { font-size: 18px; } .ign .pl b { font-size: 16px; } .ign .pl span { font-size: 11.5px; } .ign .pil { gap: 8px; } .ign .ex { grid-template-columns: repeat(7, 8px); } .ign .sgm { grid-template-columns: repeat(4, 16px); } }
 @media (prefers-reduced-motion: reduce) {
   .ign.run .pl, .ign.run .tag, .ign.run .sub { animation: ignIn .01s linear forwards !important; transform: none; }
-  .ign.run .ex i, .ign.run .sgm i { animation: none !important; background: #F6F1E7; } .ign.run .cu path { animation: none !important; stroke-dashoffset: 0; } .ign .tag .lum2 { animation: none !important; }
+  .ign.run .ex i, .ign.run .sgm i { animation: none !important; background: #E9F2F4; } .ign.run .cu path { animation: none !important; stroke-dashoffset: 0; } .ign .tag .lum2 { animation: none !important; }
   .ign.run .core, .ign.run .skip, .ign.run .snd { animation: ignOut .4s ease-in 2.4s forwards !important; } .ign.run .lit { animation: none !important; }
 }
 /* ===== OWNER ROUND 16 NOVEMBER (II) ===== */
@@ -570,7 +570,7 @@ a { color: inherit; }
 .sb span { display: flex; flex-direction: column; min-width: 0; line-height: 1.15; } .sb b { font-size: 14.5px; font-weight: 700; } .sb i { font-style: normal; font-size: 11.5px; color: var(--ink3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sb:hover { border-color: var(--sel); box-shadow: inset 0 -3px 0 var(--sel), 0 0 0 4px var(--sel-soft); }
 .sb.ok i { color: var(--sel-deep); font-weight: 600; }
-.sb[aria-current=true] { background: linear-gradient(180deg, #2E86AF 0%, #297CA2 50%, #1F6B93 100%); border-color: transparent; color: #F6F1E7; box-shadow: inset 0 -3px 0 #8FD0EC, 0 0 0 4px var(--sel-soft); } .sb[aria-current=true] svg { color: #BFEBFD; } .sb[aria-current=true] i { color: rgba(246,241,231,.75); }
+.sb[aria-current=true] { background: linear-gradient(180deg, #2E86AF 0%, #297CA2 50%, #1F6B93 100%); border-color: transparent; color: #E9F2F4; box-shadow: inset 0 -3px 0 #8FD0EC, 0 0 0 4px var(--sel-soft); } .sb[aria-current=true] svg { color: #BFEBFD; } .sb[aria-current=true] i { color: rgba(240,247,249,.75); }
 .sb .okm { position: absolute; right: 6px; top: 6px; width: 15px; height: 15px; background: var(--sel); } .sb .okm svg { width: 9px; height: 9px; color: #fff; }
 .sb { padding-right: 22px; } .sb.rv { grid-column: 3; grid-row: 3; }
 .slg .sb[data-go="0"] { grid-column: 1; grid-row: 2; } .slg .sb[data-go="1"] { grid-column: 2; grid-row: 2; } .slg .sb[data-go="2"] { grid-column: 1; grid-row: 3; } .slg .sb[data-go="3"] { grid-column: 2; grid-row: 3; }
@@ -587,8 +587,8 @@ a { color: inherit; }
 .gauge i.on { background: var(--sel); } .gauge.full i { background: var(--sel); }
 .coachv .cv-ic em { background: var(--sel); } .coachv small { color: var(--sel-deep); } .coachv .cv-bar i { background: var(--sel); }
 /* Standard Product View: its own colour, warm sand (the room the screen sits in) */
-.seg button#vstd { background: #EFE6D6; border-color: #B9A98C; color: #3B3428; }
-.seg button#vstd[aria-pressed=true] { background: #E4D6BD; outline: 2px solid #8C7A5B; outline-offset: 2px; }
+.seg button#vstd { background: #D9E8EC; border-color: #93ACB2; color: #27383C; }
+.seg button#vstd[aria-pressed=true] { background: #C9D5D8; outline: 2px solid #607F87; outline-offset: 2px; }
 /* 6. the mattress icon: an outline that fits, no blue block, no glow */
 .mi svg { height: 24px !important; filter: none !important; }
 /* 9. the small green leaf as the mark of a natural product */
@@ -597,27 +597,27 @@ a { color: inherit; }
 /* 5. How Density Works */
 .dns { display: grid; grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr) 18px minmax(0, 1fr) 18px minmax(0, 1fr); align-items: stretch; gap: 0; }
 .dcd { background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 0 0 18px; overflow: hidden; text-align: center; box-shadow: 0 12px 24px -22px rgba(70,55,30,.45); }
-.dv { height: 118px; display: grid; place-items: center; background: linear-gradient(180deg, #FBF8F2, #F3EEE4); border-bottom: 1px solid var(--line); }
+.dv { height: 118px; display: grid; place-items: center; background: linear-gradient(180deg, #F4F8F9, #E5EFF2); border-bottom: 1px solid var(--line); }
 .dvp { display: block; width: 100%; height: 100%; background-size: cover; background-position: center; filter: saturate(.25) sepia(.18) brightness(1.04); }
 .dvs { width: 86%; height: auto; max-height: 104px; }
 .dcd h3 { margin: 14px 12px 4px; font-size: 18px; display: flex; align-items: center; justify-content: center; gap: 8px; } .dcd h3 .dic { display: grid; place-items: center; width: 24px; height: 24px; color: var(--band-top); } .dcd h3 .dic svg { width: 22px; height: 22px; } .dcd h3 .lf.dl { width: 22px; height: 15px; margin: 0; }
 .dcd small { display: block; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--sel-deep); font-weight: 700; margin: 0 10px 8px; }
 .dcd p { margin: 0 14px; font-size: 14.5px; line-height: 1.5; color: var(--ink2); }
 .dar { display: grid; place-items: center; color: var(--ink3); font-size: 16px; }
-.dband { display: flex; align-items: center; gap: 16px; margin-top: 16px; background: var(--grad-card); color: #F6F1E7; border-radius: var(--rl); padding: 16px 22px; } .dband svg { flex: none; width: 34px; height: 34px; color: #F6F1E7; padding-right: 16px; border-right: 1px solid rgba(255,255,255,.25); box-sizing: content-box; }
+.dband { display: flex; align-items: center; gap: 16px; margin-top: 16px; background: var(--grad-card); color: #E9F2F4; border-radius: var(--rl); padding: 16px 22px; } .dband svg { flex: none; width: 34px; height: 34px; color: #E9F2F4; padding-right: 16px; border-right: 1px solid rgba(255,255,255,.25); box-sizing: content-box; }
 .dband p { margin: 0; font-size: 18px; font-weight: 300; line-height: 1.4; } .dband b { font-weight: 700; }
 .dnote { margin: 10px 4px 0; font-size: 13.5px; font-style: italic; color: var(--ink3); }
 @media (max-width: 900px) { .dns { grid-template-columns: 1fr 1fr; gap: 12px; } .dar { display: none; } }
 @media (max-width: 560px) { .dns { grid-template-columns: 1fr; } }
 /* 8. Adjustable Beds: a settings screen */
 .abw { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 0; background: var(--white); border: 1.5px solid var(--line); border-radius: var(--rl); overflow: hidden; box-shadow: 0 12px 24px -22px rgba(70,55,30,.45); }
-.abl { display: flex; flex-direction: column; padding: 10px 0; border-right: 1px solid var(--line); background: #FBF8F2; }
+.abl { display: flex; flex-direction: column; padding: 10px 0; border-right: 1px solid var(--line); background: #F4F8F9; }
 .abp { display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 18px; border: 0; border-bottom: 1px solid var(--line); background: transparent; text-align: left; font-weight: 500; font-size: 15px; color: var(--ink2); }
 .abp:last-child { border-bottom: 0; } .abp svg { width: 22px; height: 22px; flex: none; color: var(--ink3); }
 .abh { display: block; padding: 6px 18px 10px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 700; }
 .abtag { display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px; border-radius: 8px; background: #EEF6FA; border: 1.5px solid #C8DFEC; color: var(--sel-deep); font-size: 13px; font-weight: 700; } .abtag .lf { width: 16px; height: 11px; }
 .abv { margin-top: 6px; }
-.abc { padding: 18px 22px 16px; background: radial-gradient(70% 90% at 50% 40%, #FFFFFF 0%, #F6F1E8 100%); }
+.abc { padding: 18px 22px 16px; background: radial-gradient(70% 90% at 50% 40%, #FFFFFF 0%, #EAF2F4 100%); }
 .abv svg { width: 100%; height: auto; display: block; }
 .abctl { display: grid; gap: 10px; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
 .abs { display: grid; grid-template-columns: 52px 34px minmax(0, 1fr) 34px; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); font-weight: 700; }
@@ -648,11 +648,11 @@ a { color: inherit; }
 .rail h2:not(.colh) { display: none !important; }
 .rail .colh { display: flex; margin: 0 0 8px; color: var(--ink3); } @media (max-width: 1099px) { .rail .colh { display: none; } }
 .tree { display: flex; flex-direction: column; gap: 0; width: 100%; }
-.tp { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: linear-gradient(160deg, #262E36 0%, #171C21 100%); color: #F6F1E7; position: relative; overflow: hidden; box-shadow: 0 12px 22px -18px rgba(20,22,25,.8); }
+.tp { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: linear-gradient(160deg, #22363B 0%, #121D21 100%); color: #E9F2F4; position: relative; overflow: hidden; box-shadow: 0 12px 22px -18px rgba(20,22,25,.8); }
 .tp::after { content: ''; position: absolute; right: -40px; top: -50px; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--tc) 65%, transparent), transparent 68%); opacity: .7; }
 .tp .tdot { flex: none; width: 14px; height: 14px; border-radius: 50%; background: var(--tc); box-shadow: 0 0 0 4px color-mix(in srgb, var(--tc) 30%, transparent), 0 0 14px var(--tc); position: relative; z-index: 1; }
 .tp svg { flex: none; width: 22px; height: 22px; color: var(--tc); position: relative; z-index: 1; filter: brightness(1.5); }
-.tp span { display: flex; flex-direction: column; position: relative; z-index: 1; min-width: 0; } .tp b { font-size: 17px; font-weight: 600; } .tp i { font-style: normal; font-size: 12px; color: rgba(246,241,231,.68); margin-top: 1px; }
+.tp span { display: flex; flex-direction: column; position: relative; z-index: 1; min-width: 0; } .tp b { font-size: 17px; font-weight: 600; } .tp i { font-style: normal; font-size: 12px; color: rgba(240,247,249,.68); margin-top: 1px; }
 .tbr { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 12px 0 0 26px; margin-left: 20px; }
 .tbr::before { content: ''; position: absolute; left: 0; top: 0; bottom: 23px; width: 2px; border-radius: 1px; background: linear-gradient(180deg, var(--tc), color-mix(in srgb, var(--tc) 35%, transparent)); }
 .tbr .pn { position: relative; animation: twig .38s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i, 0) * 70ms); }
@@ -661,7 +661,7 @@ a { color: inherit; }
 .tbr .pn .pdot { position: absolute; right: 12px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; }
 .ivory .tbr .pn { border-color: color-mix(in srgb, var(--tc) 30%, var(--line)); background: color-mix(in srgb, var(--tc) 6%, #fff); }
 .ivory .tbr .pn:hover { border-color: var(--tc); }
-.ivory .tbr .pn[aria-current=true] { background: linear-gradient(160deg, #262E36 0%, #171C21 100%); color: #F6F1E7; border-color: transparent; box-shadow: inset 3px 0 0 var(--tc), 0 8px 16px -12px rgba(20,22,25,.7); }
+.ivory .tbr .pn[aria-current=true] { background: linear-gradient(160deg, #22363B 0%, #121D21 100%); color: #E9F2F4; border-color: transparent; box-shadow: inset 3px 0 0 var(--tc), 0 8px 16px -12px rgba(20,22,25,.7); }
 @keyframes twig { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
 @media (max-width: 1099px) { .tree { flex-direction: row; flex-wrap: wrap; align-items: stretch; gap: 8px; } .tbr { flex-direction: row; flex-wrap: wrap; padding: 0; margin: 0; } .tbr::before, .tbr .pn::before { display: none; } }
 /* the Explore buttons carry their topic's colour as a small light; the current one is lit in its colour */
@@ -676,8 +676,8 @@ a { color: inherit; }
   radial-gradient(1.4px 1.4px at 46% 18%, rgba(255,255,255,.6), transparent 60%), radial-gradient(1px 1px at 63% 74%, rgba(255,255,255,.45), transparent 60%),
   radial-gradient(1.2px 1.2px at 78% 30%, rgba(255,255,255,.65), transparent 60%), radial-gradient(1px 1px at 88% 82%, rgba(255,255,255,.4), transparent 60%),
   radial-gradient(1.1px 1.1px at 36% 42%, rgba(255,255,255,.4), transparent 60%), radial-gradient(1.3px 1.3px at 70% 52%, rgba(255,255,255,.5), transparent 60%),
-  linear-gradient(160deg, #1F2733 0%, #161C26 52%, #10151D 100%); }
-.ivory .q::after { right: 26px; top: 18px; width: 30px; height: 30px; border-radius: 50%; background: transparent; box-shadow: inset -7px 4px 0 0 rgba(246,241,231,.82); opacity: .9; }
+  linear-gradient(160deg, #1B2C33 0%, #14222A 52%, #0E181D 100%); }
+.ivory .q::after { right: 26px; top: 18px; width: 30px; height: 30px; border-radius: 50%; background: transparent; box-shadow: inset -7px 4px 0 0 rgba(240,247,249,.82); opacity: .9; }
 .ivory .q.mn::after, .ivory .q.ph::after { display: none; }
 /* the stage breathes the topic's colour, very lightly */
 .ivory .stage { background: radial-gradient(90% 50% at 100% 0%, color-mix(in srgb, var(--tc) 9%, transparent), transparent 70%), radial-gradient(70% 40% at 0% 100%, color-mix(in srgb, var(--tc) 6%, transparent), transparent 70%), linear-gradient(180deg, var(--stage-a), var(--stage-b)); transition: background .6s ease; }
@@ -692,7 +692,7 @@ a { color: inherit; }
 .fdl .fok { display: inline-flex; align-self: flex-start; align-items: center; gap: 6px; height: 28px; padding: 0 10px 0 6px; border-radius: 8px; background: #2A86B0; color: #fff; font-size: 13px; font-weight: 700; } .fdl .fok svg { width: 15px; height: 15px; }
 .fdl small { margin-top: 10px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); font-weight: 700; } .fdl b { font-size: 34px; font-weight: 300; letter-spacing: -.01em; } .fdl i { font-style: normal; font-weight: 600; color: #1A5C7E; }
 .fdl p { margin: 8px 0 14px; font-size: 15px; line-height: 1.5; color: var(--ink2); } .fdl .btn { margin-top: auto; align-self: flex-start; height: 46px; font-size: 15px; }
-.fdr { background: radial-gradient(70% 90% at 50% 30%, #fff, #F6F1E8); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 18px 20px; display: grid; align-content: center; gap: 12px; } .fdr svg { width: 100%; height: auto; }
+.fdr { background: radial-gradient(70% 90% at 50% 30%, #fff, #EAF2F4); border: 1.5px solid var(--line); border-radius: var(--rl); padding: 18px 20px; display: grid; align-content: center; gap: 12px; } .fdr svg { width: 100%; height: auto; }
 .fsab { display: flex; justify-content: space-between; gap: 12px; font-size: 14.5px; color: var(--ink2); } .fsab b { color: var(--ink); }
 @media (max-width: 760px) { .fdone { grid-template-columns: 1fr; } }
 /* ignition: the moon cycle under the name, as wide as the name, opening with everything else */
@@ -712,13 +712,35 @@ a { color: inherit; }
 .ivory .q::before { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(55% 140% at 96% -10%, color-mix(in srgb, var(--tc) 55%, transparent), transparent 62%), radial-gradient(35% 100% at 4% 110%, color-mix(in srgb, var(--tc) 30%, transparent), transparent 70%); mix-blend-mode: screen; animation: aur 9s ease-in-out infinite alternate; }
 @keyframes aur { from { opacity: .75; } to { opacity: 1; } }
 .ivory .q > h1, .ivory .q > p { position: relative; z-index: 1; }
-.ivory .exg .ch[aria-current=true] { background: linear-gradient(160deg, #262E36 0%, #171C21 100%); color: #F6F1E7; border-color: transparent; box-shadow: inset 0 -3px 0 var(--c), 0 0 0 4px color-mix(in srgb, var(--c) 30%, transparent), 0 8px 22px -8px var(--c); }
+.ivory .exg .ch[aria-current=true] { background: linear-gradient(160deg, #22363B 0%, #121D21 100%); color: #E9F2F4; border-color: transparent; box-shadow: inset 0 -3px 0 var(--c), 0 0 0 4px color-mix(in srgb, var(--c) 30%, transparent), 0 8px 22px -8px var(--c); }
 .ivory .exg .ch[aria-current=true] .td { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 35%, transparent), 0 0 12px var(--c); }
 .ivory .exg .ch:hover .td { box-shadow: 0 0 10px var(--c); }
 .ivory .tp { box-shadow: 0 12px 26px -14px color-mix(in srgb, var(--tc) 80%, #000); }
 .ivory .tp::after { opacity: 1; }
-.ivory .tbr .pn.sel small { color: var(--sel-deep); font-weight: 700; letter-spacing: .04em; } .ivory .tbr .pn[aria-current=true].sel small, .ivory .tbr .pn[aria-current=true] small { color: rgba(246,241,231,.7); }
+.ivory .tbr .pn.sel small { color: var(--sel-deep); font-weight: 700; letter-spacing: .04em; } .ivory .tbr .pn[aria-current=true].sel small, .ivory .tbr .pn[aria-current=true] small { color: rgba(240,247,249,.7); }
 @media (prefers-reduced-motion: reduce) { .ivory .q::before { animation: none; } }
+
+/* ===== COLOUR CONCEPT "From Nature to Sleep" (owner, 16 Nov V) =====
+   Base: the site's own cool palette (mist #EDF5F7, aqua line #D6E6E8, slate ink #203032). No brown, no beige, no sand anywhere.
+   Two layers, two environments, so the customer always knows where they are:
+   EXPLORE = the night. The topic's colour fills the room: the stage, the left column, the screen's edge, the question band (a night sky).
+   SELECT & BUY = the clear day. White, crisp, the gallery blue only; the question band is a deep clear blue, no stars. */
+:root.ivory { --ground: #E9F2F4; --line: #D6E6E8; --line2: #BFD0D5; --stage-a: #F6FAFB; --stage-b: #EDF5F7; --ink: #182629; --ink2: #364849; --ink3: #5E7A7D; --grad-band: linear-gradient(160deg, #22363B 0%, #121D21 100%); }
+body { background: var(--ground); }
+.ivory .tnote { margin: 12px 0 0 6px; font-size: 13.5px; line-height: 1.45; color: var(--ink3); }
+.ivory .tp.sel { background: linear-gradient(160deg, #2A86B0 0%, #1A5C7E 100%); } .ivory .tp.sel svg { color: #fff; filter: none; } .ivory .tp.sel i { color: rgba(255,255,255,.82); }
+/* Explore layer: night, in the topic's colour */
+.ivory .screen[data-layer=explore] .stage { background: radial-gradient(85% 60% at 100% 0%, color-mix(in srgb, var(--tc) 26%, transparent), transparent 72%), radial-gradient(70% 50% at 0% 100%, color-mix(in srgb, var(--tc) 16%, transparent), transparent 72%), linear-gradient(180deg, color-mix(in srgb, var(--tc) 5%, #F6FAFB), #EEF4F6); }
+.ivory .screen[data-layer=explore] .rail { background-image: linear-gradient(180deg, color-mix(in srgb, var(--tc) 16%, #fff) 0%, #fff 60%, color-mix(in srgb, var(--tc) 9%, #fff) 100%); }
+.ivory .screen[data-layer=explore] .pt { border-top-color: var(--tc); }
+.ivory .screen[data-layer=explore] .q { background: radial-gradient(1.2px 1.2px at 12% 22%, rgba(255,255,255,.75), transparent 60%), radial-gradient(1px 1px at 28% 68%, rgba(255,255,255,.5), transparent 60%), radial-gradient(1.4px 1.4px at 46% 18%, rgba(255,255,255,.65), transparent 60%), radial-gradient(1px 1px at 63% 74%, rgba(255,255,255,.45), transparent 60%), radial-gradient(1.2px 1.2px at 78% 30%, rgba(255,255,255,.7), transparent 60%), radial-gradient(1.3px 1.3px at 70% 52%, rgba(255,255,255,.5), transparent 60%), linear-gradient(150deg, color-mix(in srgb, var(--tc) 46%, #142028) 0%, color-mix(in srgb, var(--tc) 22%, #0F1A20) 55%, #0C151A 100%); }
+/* Select & Buy layer: clear day, white and the gallery blue only */
+.ivory .screen[data-layer=select] { box-shadow: inset 0 0 0 1px rgba(42,134,176,.35), 0 0 40px -10px rgba(42,134,176,.45); }
+.ivory .screen[data-layer=select] .stage { background: radial-gradient(80% 50% at 100% 0%, rgba(42,134,176,.10), transparent 70%), linear-gradient(180deg, #FFFFFF, #F4F9FB); }
+.ivory .screen[data-layer=select] .rail { background-image: linear-gradient(180deg, #EAF4F9 0%, #fff 55%); }
+.ivory .screen[data-layer=select] .q { background: linear-gradient(150deg, #2A86B0 0%, #1A5C7E 55%, #123F57 100%); box-shadow: 0 18px 36px -22px rgba(26,92,126,.9); }
+.ivory .screen[data-layer=select] .q::before { display: none; } .ivory .screen[data-layer=select] .q::after { display: none; }
+/* the latex itself is drawn in the site's pale mist, outlined in slate */
 </style>
 </head>
 <body>
@@ -833,7 +855,10 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   var FLAT = []; EXCH.forEach(function (c) { c.panels.forEach(function (p) { if (p.kind !== 'step') FLAT.push([c.id, p.id]); }); });
   function vis(c) { return c.panels.filter(function (p) { return p.kind !== 'step'; }); }   // the knowledge panels of a topic
   /* every topic speaks in its own colour (owner, 16 Nov: dreamy, spacey, natural; colours as indicators) */
-  var TC = { discover: '#8FA8D8', firmness: '#5B7FC7', comfort: '#A48BD0', height: '#C2A57A', covers: '#C79F86', benefits: '#93AE8B', support: '#5A6FB8', adaptation: '#8C7FD1', zones: '#5E9FC2', ventilation: '#79BFD9', hygiene: '#7FB6C1', certs: '#8E9AAF', warranty: '#C9AE6E', delivery: '#6E86B8', select: '#2A86B0' };
+  /* COLOUR CONCEPT "From Nature to Sleep" (owner, 16 Nov V): the site's own cool palette as the base, never brown or beige.
+     Explore is the night: each topic turns the room to its colour, and the colours walk in the order of the bar from mint (nature,
+     Discover) through aqua and sky to indigo and violet (sleep, Delivery). Select & Buy is the clear day: white and the gallery blue. */
+  var TC = { discover: '#45C49A', comfort: '#45C4B2', benefits: '#45BEC4', support: '#45A5C4', adaptation: '#458DC4', zones: '#4575C4', ventilation: '#455CC4', hygiene: '#4645C4', certs: '#5E45C4', warranty: '#7745C4', delivery: '#8F45C4', firmness: '#2A86B0', height: '#2A86B0', covers: '#2A86B0', select: '#2A86B0' };
   function chap(id) { return CH.filter(function (c) { return c.id === id; })[0]; }
   function panel() { var c = chap(S.ch); return c.panels.filter(function (p) { return p.id === S.pn; })[0] || c.panels[0]; }
   function goPanel(c, p) { S.ch = c; S.pn = p; var pp = panel(); if (pp.kind === 'step') S.step = STEPS.map(function (x) { return x.id; }).indexOf(pp.step); else { var k = infoStep(c, p); if (k >= 0) S.step = k; } }
@@ -910,8 +935,8 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     var x0 = Math.min.apply(null, xs) - 100, x1 = Math.max.apply(null, xs) + 100, y0 = Math.min.apply(null, ys) - 100;
     var region = 'M' + x0 + ' ' + y0 + 'H' + x1 + 'V' + pl[pl.length - 1][1] + pl.slice().reverse().map(function (q) { return 'L' + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('') + 'L' + x0 + ' ' + pl[0][1] + 'Z';
     var d = dStr(shape), st = 'vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"';
-    return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" data-k="' + kk.toFixed(4) + '" aria-label="Mattress, ' + cm + ' cm high"><defs><linearGradient id="fg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + (IV ? '#E6DCC8' : '#2F6585') + '"/><stop offset="1" stop-color="' + (IV ? '#CDBFA5' : '#10293F') + '"/></linearGradient><linearGradient id="tg' + i + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + (IV ? '#FFFDF8' : '#F4F8FA') + '"/><stop offset="1" stop-color="' + (IV ? '#EFE6D6' : '#CBDAE5') + '"/></linearGradient><clipPath id="cp' + i + '"><path d="' + region + '"/></clipPath></defs>' +
-      '<g transform="matrix(' + M.join(',') + ')"><path d="' + dStr(G.out) + '" fill="none" stroke="' + (IV ? '#B3AA9A' : '#9AAAB4') + '" stroke-width="2" stroke-dasharray="7 6" ' + st + '/>' +
+    return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" data-k="' + kk.toFixed(4) + '" aria-label="Mattress, ' + cm + ' cm high"><defs><linearGradient id="fg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + (IV ? '#D0DBDE' : '#2F6585') + '"/><stop offset="1" stop-color="' + (IV ? '#ADC0C5' : '#10293F') + '"/></linearGradient><linearGradient id="tg' + i + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + (IV ? '#FAFCFD' : '#F4F8FA') + '"/><stop offset="1" stop-color="' + (IV ? '#D9E8EC' : '#CBDAE5') + '"/></linearGradient><clipPath id="cp' + i + '"><path d="' + region + '"/></clipPath></defs>' +
+      '<g transform="matrix(' + M.join(',') + ')"><path d="' + dStr(G.out) + '" fill="none" stroke="' + (IV ? '#97B0B6' : '#9AAAB4') + '" stroke-width="2" stroke-dasharray="7 6" ' + st + '/>' +
       '<path d="' + d + '" fill="url(#fg' + i + ')"/><path d="' + d + '" fill="url(#tg' + i + ')" clip-path="url(#cp' + i + ')"/><path d="' + d + '" fill="none" stroke="#2A3238" stroke-width="2.4" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="#2A3238" stroke-width="2.4" ' + st + '/></g></svg>';
   }
   function iconSvg(n) {   // the owner's mattress drawing as a small icon: it lights up when all four choices are made
@@ -919,7 +944,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     var d = dStr(G.out), pl = G.pl, xs = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[0]; })); }, []), ys = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[1]; })); }, []);
     var x0 = Math.min.apply(null, xs) - 100, x1 = Math.max.apply(null, xs) + 100, y0 = Math.min.apply(null, ys) - 100;
     var region = 'M' + x0 + ' ' + y0 + 'H' + x1 + 'V' + pl[pl.length - 1][1] + pl.slice().reverse().map(function (q) { return 'L' + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('') + 'L' + x0 + ' ' + pl[0][1] + 'Z';
-    var stroke = n === 0 ? '#B3AA9A' : (ok ? '#297CA2' : '#2A3238'), top = ok ? 'rgba(41,124,162,.08)' : 'none';
+    var stroke = n === 0 ? '#97B0B6' : (ok ? '#297CA2' : '#2A3238'), top = ok ? 'rgba(41,124,162,.08)' : 'none';
     return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" aria-label="' + (ok ? 'All four choices made: ready to order' : n + ' of 4 choices made') + '"><defs><clipPath id="icp"><path d="' + region + '"/></clipPath></defs><g transform="matrix(' + M.join(',') + ')"><path d="' + d + '" fill="' + top + '" clip-path="url(#icp)"/><path d="' + d + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" ' + st + '/></g></svg>';
   }
   var IC = {
@@ -941,18 +966,19 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   function nextUnchosen() { for (var i = 0; i < STEPS.length - 1; i++) if (!chosen(STEPS[i].id)) return i; return -1; }
   function drawRail() {
     var onSel = inSelect(), h;
-    if (onSel) {   // a choice: the choice itself first, then the more information that belongs to it
-      var st = STEPS[S.step], inf = STEPINFO[st.id] || [], stepNow = panel().kind === 'step', ci = 0;
-      var br = '<button class="pn sel' + (chosen(st.id) || (st.id === 'review' && complete()) ? ' seen' : '') + '" style="--i:' + (ci++) + '" data-go="' + S.step + '" aria-current="' + stepNow + '">' + (st.id === 'review' ? 'Your Order' : 'Select Your ' + esc(st.label)) + '<small>' + (st.id === 'review' ? 'Check and add to bag' : 'Your choice') + '</small></button>';
-      br += inf.map(function (r) { var p = chap(r[0]).panels.filter(function (x) { return x.id === r[1]; })[0]; return '<button class="pn' + (SEEN[r[0] + '/' + r[1]] ? ' seen' : '') + '" style="--i:' + (ci++) + '" data-goto="' + r[0] + '/' + r[1] + '" aria-current="' + (!stepNow && S.ch === r[0] && S.pn === r[1]) + '">' + esc(p.label) + '<small>More information</small></button>'; }).join('');
-      h = '<h2 class="colh">' + (inf.length ? 'Choose and learn' : 'Select &amp; Buy') + '</h2><div class="tree" style="--tc:' + TC.select + '"><div class="tp sel">' + IC[st.id] + '<span><b>' + esc(st.label) + '</b><i>' + (inf.length ? '1 choice · ' + inf.length + ' more information' : 'Select &amp; Buy') + '</i></span></div><div class="tbr">' + br + '</div></div>';
+    if (onSel) {   // a choice: the button above IS the choice; here hangs only what helps to make it (no button twice)
+      var st = STEPS[S.step], inf = STEPINFO[st.id] || [], stepNow = panel().kind === 'step';
+      var br = inf.map(function (r, i) { var p = chap(r[0]).panels.filter(function (x) { return x.id === r[1]; })[0]; return '<button class="pn' + (SEEN[r[0] + '/' + r[1]] ? ' seen' : '') + '" style="--i:' + i + '" data-goto="' + r[0] + '/' + r[1] + '" aria-current="' + (!stepNow && S.ch === r[0] && S.pn === r[1]) + '">' + esc(p.label) + '<small>Helps you choose</small></button>'; }).join('');
+      var v = st.id === 'review' ? (complete() ? 'All four chosen' : nDone0() + ' of 4 chosen') : (valueOf(st.id) || 'Not chosen yet');
+      h = '<h2 class="colh">You are choosing</h2><div class="tree sel" style="--tc:' + TC.select + '"><div class="tp sel' + (stepNow ? ' on' : '') + '">' + IC[st.id] + '<span><b>' + esc(st.label) + '</b><i>' + esc(v) + '</i></span></div>' +
+        (inf.length ? '<div class="tbr">' + br + '</div>' : '<p class="tnote">' + (st.id === 'review' ? 'Check your four choices, then add the mattress to your bag.' : 'Every size in centimetres and in inches, straight from the shop.') + '</p>') + '</div>';
     } else {
       var cur = chap(S.ch), ps = vis(cur);
       h = '<h2 class="colh">In this topic</h2><div class="tree" style="--tc:' + TC[cur.id] + '"><div class="tp"><span class="tdot"></span><span><b>' + esc(cur.label) + '</b><i>' + ps.length + (ps.length === 1 ? ' part' : ' parts') + ' in this topic</i></span></div><div class="tbr">' +
         ps.map(function (p, i) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" style="--i:' + i + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '">' + esc(p.label) + '</button>'; }).join('') + '</div></div>';
     }
     $('#rail').innerHTML = h;
-    var sc = document.querySelector('.screen'); if (sc) { sc.style.setProperty('--tc', onSel ? TC.select : TC[S.ch]); sc.setAttribute('data-topic', onSel ? 'select' : S.ch); }
+    var sc = document.querySelector('.screen'); if (sc) { sc.style.setProperty('--tc', onSel ? TC.select : TC[S.ch]); sc.setAttribute('data-layer', onSel ? 'select' : 'explore'); sc.setAttribute('data-topic', onSel ? 'select' : S.ch); }
   }
   function bagButton(cls) {   // ONE button, two faces (laws in engine/selection-rules.js): Add to Bag, READY, then Go to Checkout
     var bagI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>', arrI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -1011,7 +1037,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     var B = DDFirmnessCore.bands, rg = { Soft: 'Up to ' + B.softMax + ' kg', Medium: (B.softMax + 1) + ' – ' + B.mediumMax + ' kg', Firm: (B.mediumMax + 1) + ' – ' + B.firmMax + ' kg' }[f], key = { Soft: 'soft', Medium: 'medium', Firm: 'firm' }[f];
     var dd = D.firmness.cards.filter(function (x) { return x.key === key; })[0], e = engPaths(), FC = CUR('firmness/choose');
     return '<div class="fdone"><div class="fdl"><span class="fok">' + CHECK + 'Confirmed</span><small>Your firmness</small><b>' + esc(f) + '</b><i>' + esc(rg || '') + '</i><p>' + esc(dd ? dd.desc : '') + '</p><button class="btn s" data-fchange="1">Change firmness</button></div>' +
-      '<div class="fdr"><svg viewBox="90 10 2550 470" role="img" aria-label="The body at the surface of the latex core"><path d="' + e.mp + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/></svg><div class="fsab"><span><b>Support</b> keeps you at the surface</span><span><b>Adaptation</b> follows your shape</span></div></div></div>';
+      '<div class="fdr"><svg viewBox="90 10 2550 470" role="img" aria-label="The body at the surface of the latex core"><path d="' + e.mp + '" fill="#E4EFF2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/></svg><div class="fsab"><span><b>Support</b> keeps you at the surface</span><span><b>Adaptation</b> follows your shape</span></div></div></div>';
   }
   function depthView() { return '<div class="dc">' + D.depths.map(function (d, i) { var on = S.depth && S.depth.i === i; return '<button class="dcard" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + (on ? '<span class="chosen">' + CHECK + 'Chosen</span>' : '') + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span></button>'; }).join('') + '</div>'; }
   function coverView() {
@@ -1019,7 +1045,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     if (c) {
       var bullets = c.body.split(/(?<=\.)\s+/).filter(Boolean).slice(0, 4).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
       info = '<div class="info" aria-live="polite"><span class="k">Your cover</span><h2>' + esc(c.name) + '</h2><span class="tg">' + esc(c.tag) + '</span><ul>' + bullets + '</ul><span class="fact">' + esc(D.coverFacts.height) + (c.mod ? ' · +£' + c.mod + ' in the shop' : '') + '</span></div>';
-    } else info = '<div class="info"><span class="k">Covers</span><h2>Four covers, one choice</h2><p>' + esc(D.coverSub) + '</p><p>Tap a photograph to see what that cover gives you.</p></div>';
+    } else info = '<div class="info"><span class="k">Cover</span><h2>Four fabrics, one choice</h2><p>' + esc(D.coverSub) + '</p><p>Tap a photograph to see what that cover gives you.</p></div>';
     return '<div class="cv"><div class="tiles">' + D.covers.map(function (x, i) { var on = c && c.i === i;
       return '<button class="tile" data-cover="' + i + '" aria-pressed="' + on + '" aria-label="' + esc(x.name) + '"><span class="pic" style="background-image:url(' + esc(x.img) + ')"></span><span class="cap">' + esc(SHORT[i]) + '</span></button>'; }).join('') + '</div>' + info + '</div>';
   }
@@ -1046,7 +1072,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   function engPaths() { var E = D.eng; return { vb: E.viewBox.join(' '), mp: E.mattress, bd: E.body }; }
   function stretchSvg() {   // the Stretching Effect: the sleeper lies on the shoulder, so the spine runs through the middle of the torso (neck to sacrum); the two arrows continue it inside the body, into the head and into the legs
     var e = engPaths(), sp = D.eng.spine || [], ex = D.eng.stretch, v = '';
-    var base = '<path d="' + e.mp + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/>';
+    var base = '<path d="' + e.mp + '" fill="#E4EFF2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/>';
     if (!sp.length) return '<svg viewBox="70 0 2600 770" aria-hidden="true">' + base + '</svg>';
     sp.forEach(function (q, i) { var w = 50 - Math.abs(i - sp.length / 2) * 1.6; v += '<rect x="' + (q[0] - w / 2).toFixed(0) + '" y="' + (q[1] - 19) + '" width="' + w.toFixed(0) + '" height="38" rx="12" fill="#DCE7F0" stroke="#2A3238" stroke-width="5"/>'; });
     var line = '<path class="spl" d="M' + sp.map(function (q) { return q[0] + ' ' + q[1]; }).join(' L') + '" fill="none" stroke="#8FB3CF" stroke-width="14" stroke-linecap="round"/>';
@@ -1084,7 +1110,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     var mk = function (m) { var x = m.replace(/®/g, ''); if (document.documentElement.classList.contains('ivory')) { if (/^OEKO/.test(x)) return img(L.oeko, 'OEKO-TEX Standard 100'); if (/^Hohenstein/.test(x)) return img(L.hohenstein, 'Hohenstein'); if (/^Siemens/.test(x)) return img(L.siemens, 'Siemens Monitoring'); if (/^ISO/.test(x)) return img(L.iso9001, 'ISO 9001') + img(L.iso14001, 'ISO 14001'); } if (/^OEKO/.test(x)) return 'OEKO-TEX®<small>STANDARD 100</small>'; if (/^Siemens/.test(x)) return 'SIEMENS<small>MONITORING</small>'; if (/^ISO/.test(x)) return 'ISO<small>9001 · 14001 · OHSAS</small>'; return esc(x); };
     return '<div class="crows">' + p.items.map(function (x, i) { return '<div class="crow' + (i === 0 && c.media ? ' top' : '') + '"><div class="mk">' + mk(x.m) + '</div><div class="tx"><h3>' + LEAFS + esc(x.m) + '</h3><p><b>' + esc(x.s) + '.</b> ' + esc(x.d) + '</p></div>' + (i === 0 ? miniCard(c) : '') + '</div>'; }).join('') + '</div>';
   }
-  function ZTONE() { return document.documentElement.classList.contains('ivory') ? { s: '#F1EADD', c: '#DCCFB9', r: '#B8A88C' } : { s: '#B7C9E3', c: '#7C97C0', r: '#46628F' }; }
+  function ZTONE() { return document.documentElement.classList.contains('ivory') ? { s: '#DFECEF', c: '#C2D0D3', r: '#92ABB2' } : { s: '#B7C9E3', c: '#7C97C0', r: '#46628F' }; }
   function zoneSvg() {   // 24: the original engineering view (divine-zones), the body and the mattress unchanged; the seven zones are slices of the mattress
     var e = engPaths(), Z = D.eng.zones, T = D.zoneTier, tone = ZTONE(), g = '';
     Z.forEach(function (z, i) { g += '<clipPath id="zc' + i + '"><rect x="' + z[0] + '" y="0" width="' + z[1] + '" height="800"/></clipPath>'; });
@@ -1126,8 +1152,8 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     var vis = [
       '<span class="dvp" style="background-image:url(' + D.core + ')"></span>',
       '<span class="dvp" style="background-image:url(' + D.pins + ');background-size:180%"></span>',
-      '<svg class="dvs" viewBox="0 0 200 110" aria-hidden="true"><rect x="22" y="62" width="156" height="34" rx="6" fill="#F4EEE2" stroke="#2A3238" stroke-width="1.6"/><path d="M60 62q40 9 80 0" fill="#F4EEE2" stroke="#2A3238" stroke-width="1.6"/><g fill="#C9BDA8">' + Array.apply(null, Array(14)).map(function (x, i) { return '<circle cx="' + (32 + i * 10.5) + '" cy="' + (i % 2 ? 84 : 76) + '" r="1.6"/>'; }).join('') + '</g><rect x="84" y="22" width="32" height="36" rx="5" fill="#fff" stroke="#2A3238" stroke-width="1.6"/><rect x="92" y="14" width="16" height="9" rx="3" fill="#fff" stroke="#2A3238" stroke-width="1.6"/><path d="M60 26v18m-5-5l5 5 5-5M140 26v18m-5-5l5 5 5-5" stroke="#2A86B0" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-      '<svg class="dvs" viewBox="' + e.vb + '" aria-hidden="true"><path d="' + e.mp + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="10" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="10" stroke-linejoin="round"/></svg>'];
+      '<svg class="dvs" viewBox="0 0 200 110" aria-hidden="true"><rect x="22" y="62" width="156" height="34" rx="6" fill="#E4EFF2" stroke="#2A3238" stroke-width="1.6"/><path d="M60 62q40 9 80 0" fill="#E4EFF2" stroke="#2A3238" stroke-width="1.6"/><g fill="#ADC0C4">' + Array.apply(null, Array(14)).map(function (x, i) { return '<circle cx="' + (32 + i * 10.5) + '" cy="' + (i % 2 ? 84 : 76) + '" r="1.6"/>'; }).join('') + '</g><rect x="84" y="22" width="32" height="36" rx="5" fill="#fff" stroke="#2A3238" stroke-width="1.6"/><rect x="92" y="14" width="16" height="9" rx="3" fill="#fff" stroke="#2A3238" stroke-width="1.6"/><path d="M60 26v18m-5-5l5 5 5-5M140 26v18m-5-5l5 5 5-5" stroke="#2A86B0" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      '<svg class="dvs" viewBox="' + e.vb + '" aria-hidden="true"><path d="' + e.mp + '" fill="#E4EFF2" stroke="#2A3238" stroke-width="10" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#fff" stroke="#2A3238" stroke-width="10" stroke-linejoin="round"/></svg>'];
     var ICD = [IC.depth, '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M8 4l4 2.3v4.6L8 13.2 4 10.9V6.3zM16 4l4 2.3v4.6l-4 2.3-4-2.3V6.3zM12 11l4 2.3v4.6L12 20.2l-4-2.3v-4.6z"/></svg>', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M12 3v8m-3.5-3.5L12 11l3.5-3.5M4 15q8 4 16 0M4 19q8 4 16 0"/></svg>', LEAFS.replace('class="lf"', 'class="lf dl"')];
     return '<div class="dns">' + C.cards.map(function (c, i) { return '<div class="dcd"><div class="dv">' + vis[i] + '</div><h3><span class="dic">' + ICD[i] + '</span>' + esc(c[0]) + '</h3><small>' + esc(c[1]) + '</small><p>' + esc(c[2]) + '</p></div>' + (i < 3 ? '<span class="dar" aria-hidden="true">&rarr;</span>' : ''); }).join('') + '</div>' +
       '<div class="dband">' + IC.depth + '<p>' + esc(C.band).replace(/(Density|Firmness|Elasticity)/g, '<b>$1</b>') + '</p></div><p class="dnote">' + esc(C.note) + '</p>';
@@ -1137,7 +1163,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   function abSvg() {
     var A = D.abSketch;
     return '<svg viewBox="' + A.vb.join(' ') + '" role="img" aria-label="A person resting on the Botanic latex core, curved as on an adjustable base">' +
-      '<path d="' + A.band + '" fill="#F4EEE2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + A.channels + '" stroke="#C9BDA8" stroke-width="5" stroke-linecap="round"/><path d="' + A.topline + '" fill="none" stroke="#D9CDB7" stroke-width="3"/>' +
+      '<path d="' + A.band + '" fill="#E4EFF2" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/><path d="' + A.channels + '" stroke="#ADC0C4" stroke-width="5" stroke-linecap="round"/><path d="' + A.topline + '" fill="none" stroke="#BFCED1" stroke-width="3"/>' +
       '<path d="' + A.body + '" fill="#fff" stroke="#2A3238" stroke-width="5" stroke-linejoin="round"/></svg>';
   }
   function adjustView() {
@@ -1193,7 +1219,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     if (si >= 0) {   // more information about a choice: back to the choice, or on to the next piece of it
       var inf = STEPINFO[STEPS[si].id], k = 0; inf.forEach(function (x, n) { if (x[0] === c.id && x[1] === p.id) k = n; });
       var nx = inf[k + 1], nxp = nx && chap(nx[0]).panels.filter(function (x) { return x.id === nx[1]; })[0];
-      $('#act').innerHTML = (nx ? '<button class="btn s" data-goto="' + nx[0] + '/' + nx[1] + '">More: <b>' + esc(nxp.label) + '</b></button>' : '') + '<button class="btn p" data-go="' + si + '">Select Your <b>' + esc(STEPS[si].label) + '</b></button>';
+      $('#act').innerHTML = (nx ? '<button class="btn s" data-goto="' + nx[0] + '/' + nx[1] + '">More: <b>' + esc(nxp.label) + '</b></button>' : '') + '<button class="btn p" data-go="' + si + '">Back to the choice</button>';
       $('#stageh').className = 'colh'; $('#stageh').innerHTML = esc(STEPS[si].label + '  ·  More information') + '<span class="explore">Select &amp; Buy</span>';
       return;
     }

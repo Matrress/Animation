@@ -1,22 +1,22 @@
 {
  "date": "2026-11-16",
  "failures": 0,
- "checks": 112,
+ "checks": 115,
  "rows": [
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 48 buttons"
+   "detail": "largest radius 12px over 47 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the order rail and \"Your selection\" are white cards",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#FCFAF6\"}"
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6FAFB\"}"
   },
   {
    "pass": true,
    "rule": "R3 the middle stage is the light one (not dark, not grey)",
-   "detail": "#FCFAF6"
+   "detail": "#F6FAFB"
   },
   {
    "pass": true,
@@ -186,7 +186,12 @@
   {
    "pass": true,
    "rule": "R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now",
-   "detail": "Select Your Size | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+   "detail": " | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+  },
+  {
+   "pass": true,
+   "rule": "R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments",
+   "detail": "explore,explore,explore,explore,select,select,select"
   },
   {
    "pass": true,
@@ -206,17 +211,17 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 48 buttons"
+   "detail": "largest radius 12px over 47 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the order rail and \"Your selection\" are white cards",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#FCFAF6\"}"
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6FAFB\"}"
   },
   {
    "pass": true,
    "rule": "R3 the middle stage is the light one (not dark, not grey)",
-   "detail": "#FCFAF6"
+   "detail": "#F6FAFB"
   },
   {
    "pass": true,
@@ -346,7 +351,12 @@
   {
    "pass": true,
    "rule": "R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now",
-   "detail": "Select Your Size | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+   "detail": " | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+  },
+  {
+   "pass": true,
+   "rule": "R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments",
+   "detail": "explore,explore,explore,explore,select,select,select"
   },
   {
    "pass": true,
@@ -366,17 +376,17 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 12px over 48 buttons"
+   "detail": "largest radius 12px over 47 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the order rail and \"Your selection\" are white cards",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#FCFAF6\"}"
+   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(255, 255, 255)\",\"stage\":\"#F6FAFB\"}"
   },
   {
    "pass": true,
    "rule": "R3 the middle stage is the light one (not dark, not grey)",
-   "detail": "#FCFAF6"
+   "detail": "#F6FAFB"
   },
   {
    "pass": true,
@@ -546,7 +556,12 @@
   {
    "pass": true,
    "rule": "R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now",
-   "detail": "Select Your Size | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+   "detail": " | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+  },
+  {
+   "pass": true,
+   "rule": "R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments",
+   "detail": "explore,explore,explore,explore,select,select,select"
   },
   {
    "pass": true,
