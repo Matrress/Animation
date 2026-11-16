@@ -220,8 +220,8 @@
   },
   {
    "pass": true,
-   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are capitals with wide spacing, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":111,\"stageTop\":278,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":2.86,\"fs\":22,\"r\":16}}"
+   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":111,\"stageTop\":278,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.5,\"fs\":12.5,\"al\":\"center\",\"r\":16}}"
   },
   {
    "pass": true,
@@ -415,8 +415,8 @@
   },
   {
    "pass": true,
-   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are capitals with wide spacing, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":289,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":2.86,\"fs\":22,\"r\":16}}"
+   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":289,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.5,\"fs\":12.5,\"al\":\"center\",\"r\":16}}"
   },
   {
    "pass": true,
@@ -650,8 +650,8 @@
   },
   {
    "pass": true,
-   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are capitals with wide spacing, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":235,\"stageTop\":154,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":2.86,\"fs\":22,\"r\":16}}"
+   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":235,\"stageTop\":154,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.5,\"fs\":12.5,\"al\":\"center\",\"r\":16}}"
   },
   {
    "pass": true,
