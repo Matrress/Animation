@@ -163,3 +163,9 @@ Test R35 checks that the four have four different looks; R2 was updated for the 
 - **Nothing blocks anything.** Reading the information under a choice, moving to another choice, or leaving and returning never loses a pick that was confirmed; an unconfirmed pick simply does not count. "Continue to <next>" stays inactive until the choice is confirmed.
 - **In the shop** (Ecwid is the executor): only a confirmed choice is written to Ecwid's own control, exactly like firmness. The shop's own controls in the Standard Product View remain direct and are always confirmed by themselves.
 - Test R38.
+
+## Sizes first (owner, 16 November 2026, XI)
+- **The size is the star.** In the size step the figures are what the customer sees first: the family names 23 px, the range of each family in cm and in inches on two lines (20 px and 17 px), each size's centimetres at 30 px and its inches at 20 px, with generous spacing. The confirmed size shows as large figures (up to 60 px cm, 38 px inches) with one glowing line under them.
+- **No small mattress drawings.** The footprints are gone (from the families, the size cards and the confirmed card); the size matters more than a picture of a bed. The light is one thin glowing line under each card, in the family's colour.
+- **Rows without a lonely card:** King = 3 + 2 (the two wider), Single = 3 + 3, Small Double = 2, Double = 3, Super King = 3, Emperor = 3.
+- Tests R14 (figure sizes) and R37 updated.

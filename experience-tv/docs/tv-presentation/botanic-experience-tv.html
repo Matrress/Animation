@@ -1002,6 +1002,42 @@ body.std .monitor { display: none !important; }
 .cz-conf .cpic { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 12px; background-size: cover; background-position: center; }
 .cz-conf .cbl { margin: 0 0 8px; padding-left: 18px; } .cz-conf .cbl li { margin-bottom: 4px; }
 .cz-conf .cv .tile[aria-pressed=true] { outline: 2px solid #4FD3CB; outline-offset: 2px; box-shadow: 0 0 16px rgba(79,211,203,.45); }
+
+/* ===== SIZES FIRST (owner, 16 Nov XI): the size is the star: big, calm, spaced; centimetres and inches both easy to read.
+   No small mattress drawings; the light is one glowing line ===== */
+.sgrid { gap: 14px; }
+.sgcard { min-height: 138px; justify-content: center; gap: 8px; padding: 20px 22px 24px; }
+.sgcard b { font-size: 25px; font-weight: 600; letter-spacing: .005em; line-height: 1.15; }
+.sgcard .rg { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; font-size: 20px; font-weight: 500; color: #E9F4F8; letter-spacing: .01em; }
+.sgcard .rg i { font-style: normal; font-size: 13px; font-weight: 500; color: rgba(214,232,240,.72); letter-spacing: .02em; }
+.sgcard .rg u { text-decoration: none; color: rgba(214,232,240,.4); margin: 0 2px; }
+.sgcard .cnt { font-style: normal; font-size: 13px; color: rgba(214,232,240,.72); letter-spacing: .08em; text-transform: uppercase; }
+.sgcard .glow { left: 22px; right: 22px; bottom: 11px; }
+.scards { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)) !important; gap: 14px; }
+.card.cz { padding: 18px 20px 24px; gap: 8px; min-height: 124px; justify-content: center; }
+.card.cz .nm { min-height: 0; font-size: 18px; font-weight: 600; letter-spacing: .01em; color: #fff; }
+.card.cz .dm { display: flex; align-items: baseline; gap: 7px; font-size: 34px; font-weight: 600; letter-spacing: .01em; line-height: 1.05; white-space: nowrap; color: #fff; }
+.card.cz .dm i { font-style: normal; font-size: 15px; font-weight: 500; color: rgba(214,232,240,.78); margin: 0; }
+.card.cz .in { display: flex; align-items: baseline; gap: 6px; font-size: 20px; font-weight: 500; color: #CFE6F0; letter-spacing: .01em; }
+.card.cz .in i { font-style: normal; font-size: 13px; color: rgba(214,232,240,.7); }
+.card.cz .glow { left: 20px; right: 20px; bottom: 11px; }
+.cosmos .card.cz .cz-ok { top: 14px; right: 14px; }
+/* the confirmed size: the figures, not a drawing */
+.cz-conf .cdr .bigsz { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 8px 6px 22px; width: 100%; }
+.cz-conf .cdr .bigsz b { font-size: clamp(40px, 5.4vw, 60px); font-weight: 600; letter-spacing: .01em; color: var(--ink); display: flex; align-items: baseline; gap: 10px; line-height: 1; }
+.cz-conf .cdr .bigsz b i { font-style: normal; font-size: 20px; font-weight: 500; color: var(--ink3); }
+.cz-conf .cdr .bigsz > span { font-size: clamp(26px, 3.2vw, 38px); font-weight: 500; color: #1A5C7E; display: flex; align-items: baseline; gap: 8px; line-height: 1; }
+.cz-conf .cdr .bigsz > span i { font-style: normal; font-size: 16px; color: var(--ink3); }
+.cz-conf .cdr .bigsz .glow { left: 18%; right: 18%; bottom: 0; }
+.cz-conf .fdl i { font-size: 15px; }
+@media (max-width: 900px) { .scards .card.cz { grid-column: span 3 !important; } .sgcard b { font-size: 21px; } .card.cz .dm { font-size: 28px; } }
+
+.sgcard .rg { flex-direction: column; align-items: flex-start; gap: 2px; }
+.sgcard .rg > span { display: flex; align-items: baseline; gap: 7px; }
+.sgcard .rg > span:nth-child(2) { font-size: 17px; color: #CFE6F0; }
+.sgcard b { font-size: 23px; }
+.card.cz .dm { font-size: 30px; }
+.card.cz { padding-right: 16px; }
 </style>
 
 
@@ -1294,18 +1330,18 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   }
   function sizeView() {
     if (S.size && !S.edit.size) { var z = S.size, zg = sgOf(z);
-      return cosmosWrap('Size confirmed', doneCard('size', z.name, z.dims[0] + ' × ' + z.dims[1] + ' cm · ' + inch(z.dims[0]) + ' × ' + inch(z.dims[1]) + ' in', 'From the ' + esc(zg.name.replace(/^All /, '')) + ' family. Not the size you want? Change it: every family, from Single to Emperor, is one touch away.', footprint(z.dims[0], z.dims[1], zg.c, 150), 'size', 'Change size')); }
+      return cosmosWrap('Size confirmed', doneCard('size', z.name, z.dims[0] + ' × ' + z.dims[1] + ' cm · ' + inch(z.dims[0]) + ' × ' + inch(z.dims[1]) + ' in', 'From the ' + esc(zg.name.replace(/^All /, '')) + ' family. Not the size you want? Change it: every family, from Single to Emperor, is one touch away.', '<span class="bigsz" style="--g:' + zg.c + '"><b>' + z.dims[0] + ' × ' + z.dims[1] + '<i>cm</i></b><span>' + inch(z.dims[0]) + ' × ' + inch(z.dims[1]) + '<i>in</i></span><em class="glow"></em></span>', 'size', 'Change size')); }
     var pk = S.pick.size, g = SGRP.filter(function (x) { return x.id === S.sgrp; })[0], h = '<div class="cosmos cz-conf"><div class="cz-h"><span class="cz-k">' + STAR + 'Cosmic Selection</span>';
     if (!g) {
       h += '<span class="cz-t">Choose your size family</span></div><div class="sgrid">' + SGRP.map(function (x) {
         var L = sgSizes(x), ws = L.map(function (s) { return s.dims[0]; }), mine = pk && sgOf(pk) === x;
-        return '<button class="sgcard" data-sgrp="' + x.id + '" style="--g:' + x.c + '">' + footprint(Math.max.apply(null, ws), 200, x.c, 44) + '<b>' + esc(x.name) + '</b><i>' + L.length + ' sizes · ' + (Math.min.apply(null, ws) === Math.max.apply(null, ws) ? ws[0] : Math.min.apply(null, ws) + '–' + Math.max.apply(null, ws)) + ' cm wide</i>' + (mine ? '<em class="cz-mine">' + CHECK + esc(pk.name) + '</em>' : '') + '<span class="glow"></span></button>';
+        return '<button class="sgcard" data-sgrp="' + x.id + '" style="--g:' + x.c + '"><b>' + esc(x.name) + '</b><span class="rg"><span>' + (Math.min.apply(null, ws) === Math.max.apply(null, ws) ? ws[0] : Math.min.apply(null, ws) + '–' + Math.max.apply(null, ws)) + '<i>cm wide</i></span><span>' + (Math.min.apply(null, ws) === Math.max.apply(null, ws) ? inch(ws[0]) : inch(Math.min.apply(null, ws)) + '–' + inch(Math.max.apply(null, ws))) + '<i>in wide</i></span></span><i class="cnt">' + L.length + (L.length === 1 ? ' size' : ' sizes') + '</i>' + (mine ? '<em class="cz-mine">' + CHECK + esc(pk.name) + '</em>' : '') + '<span class="glow"></span></button>';
       }).join('') + '</div>';
     } else {
       h += '<span class="cz-t">' + esc(g.name) + '</span></div><div class="snav"><button class="cz-back" data-sgrp="">' + '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>All size families</button><span class="cz-chips">' +
         SGRP.map(function (x) { return '<button class="cz-chip" data-sgrp="' + x.id + '" style="--g:' + x.c + '" aria-pressed="' + (x === g) + '"><i></i>' + esc(x.name.replace(/^All | Sizes$/g, '')) + '</button>'; }).join('') + '</span></div>' +
-        '<div class="scards" style="--g:' + g.c + ';--n:' + ({ 2: 2, 3: 3, 4: 4, 5: 5, 6: 3 }[sgSizes(g).length] || 4) + '">' + sgSizes(g).map(function (s) { var on = pk && pk.label === s.label;
-          return '<button class="card cz" data-size="' + D.sizes.indexOf(s) + '" aria-pressed="' + on + '">' + (on ? '<em class="cz-ok">' + CHECK + '</em>' : '') + '<span class="nm">' + esc(s.name) + '</span>' + footprint(s.dims[0], s.dims[1], g.c, 58) + '<span class="dm">' + s.dims[0] + ' × ' + s.dims[1] + '<i>cm</i></span><span class="in">' + inch(s.dims[0]) + ' × ' + inch(s.dims[1]) + ' in</span><span class="glow"></span></button>'; }).join('') + '</div>';
+        '<div class="scards" style="--g:' + g.c + '">' + sgSizes(g).map(function (s, si) { var on = pk && pk.label === s.label, sp = ({ 1: [6], 2: [3, 3], 3: [2, 2, 2], 4: [3, 3, 3, 3], 5: [2, 2, 2, 3, 3], 6: [2, 2, 2, 2, 2, 2] }[sgSizes(g).length] || [2])[si];
+          return '<button class="card cz" style="grid-column: span ' + sp + '" data-size="' + D.sizes.indexOf(s) + '" aria-pressed="' + on + '">' + (on ? '<em class="cz-ok">' + CHECK + '</em>' : '') + '<span class="nm">' + esc(s.name) + '</span><span class="dm">' + s.dims[0] + ' × ' + s.dims[1] + '<i>cm</i></span><span class="in">' + inch(s.dims[0]) + ' × ' + inch(s.dims[1]) + '<i>in</i></span><span class="glow"></span></button>'; }).join('') + '</div>';
     }
     h += confirmBar('size', 'size', pk ? pk.name + ' · ' + pk.dims[0] + ' × ' + pk.dims[1] + ' cm' : '', pk ? pk.name : '') + '</div>';
     h += '<div class="more"><span>Need another size?</span><button class="btn s" data-more="1">Tell us what you need</button></div>' +

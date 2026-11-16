@@ -58,7 +58,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file + '?step=2'); const ft = await p.textContent('.fc'); ok(/Up to 48 kg/.test(ft) && /49 – 87 kg/.test(ft) && /88 – 114 kg/.test(ft) && /115 kg and over/.test(ft), 'R11 firmness numbers are the module\'s: 48 / 49-87 / 88-114 / 115+');
   ok((await p.$$('#gw, #gh')).length === 2, 'R12 weight and height sliders are on the large screen');
   ok(/Specialist Model: Orthopaedic Coconut Core/.test(ft) && (await p.$('a.fcard')) !== null, 'R13 Extra Firm is kept and redirected to the specialist model (a plain link)');
-  await p.goto(file + '?step=0'); await p.click('[data-sgrp="single"]'); ok(/\d+\.\d × \d+\.\d in/.test(await p.textContent('.scards')), 'R14 sizes are shown in centimetres and in inches');
+  await p.goto(file + '?step=0'); await p.click('[data-sgrp="single"]'); ok(/\d+ × \d+\s*cm/.test(await p.textContent('.scards')) && /\d+\.\d × \d+\.\d\s*in/.test(await p.textContent('.scards')) && (await p.$eval('.card.cz .dm', (e) => parseFloat(getComputedStyle(e).fontSize))) >= 28 && (await p.$eval('.card.cz .in', (e) => parseFloat(getComputedStyle(e).fontSize))) >= 18, 'R14 sizes are shown in centimetres and in inches, large and easy to read');
   // R15 depth: the owner's drawing, three heights; icon lights up when all four are chosen; zones: the mobile sketch
   await p.goto(file + '?step=1'); ok((await p.$$('.dcard svg')).length === 3, 'R15 three depths drawn from the owner\'s mattress drawing');
   await p.goto(file + '?step=0'); ok((await p.getAttribute('#mi svg', 'aria-label')).includes('0 of 4'), 'R16 the mattress icon is dim with nothing chosen');
@@ -139,14 +139,14 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   // R37 owner 16 Nov IX: Cosmic Selection: six size families, every size in exactly one, each family its own light; a family opens,
   // the others stay one tap away, and the way back is always there; three depths side by side; the body-weight scale ends at 180 kg
   await p.goto(file + '?step=0');
-  const fams = await p.$$eval('.sgcard', (x) => x.map((e) => [e.dataset.sgrp, e.querySelector('b').textContent, +e.querySelector('i').textContent.split(' ')[0], getComputedStyle(e).getPropertyValue('--g').trim()]));
+  const fams = await p.$$eval('.sgcard', (x) => x.map((e) => [e.dataset.sgrp, e.querySelector('b').textContent, +e.querySelector('.cnt').textContent.split(' ')[0], getComputedStyle(e).getPropertyValue('--g').trim()]));
   const famNames = fams.map((f) => f[1]).join('|'), famTotal = fams.reduce((a, f) => a + f[2], 0), famCols = new Set(fams.map((f) => f[3])).size;
   await p.click('[data-sgrp="king"]'); const kingN = await p.$$eval('.scards .card', (x) => x.length); const chips = await p.$$eval('.cz-chip', (x) => x.length); const rowTops = await p.$$eval('.scards .card', (x) => new Set(x.map((e) => Math.round(e.getBoundingClientRect().top))).size);
   await p.click('.cz-chip[data-sgrp="emperor"]'); const empN = await p.$$eval('.scards .card', (x) => x.length); await p.click('.cz-back'); const backAll = await p.$$eval('.sgcard', (x) => x.length);
   await p.goto(file + '?step=1'); const dTops = await p.$$eval('.dcard', (x) => new Set(x.map((e) => Math.round(e.getBoundingClientRect().top))).size);
   await p.goto(file + '?step=2'); const wmax = await p.$eval('#gw', (e) => e.max);
   const wide = p.viewportSize().width >= 1100;
-  ok(famNames === 'All Single Sizes|All Small Double Sizes|All Double Sizes|All King Sizes|All Super King Sizes|All Emperor Sizes' && famTotal === 22 && famCols === 6 && kingN === 5 && chips === 6 && (!wide || rowTops === 1) && empN === 3 && backAll === 6 && (!wide || dTops === 1) && wmax === '180', 'R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its row; three depths side by side; weight up to 180 kg', JSON.stringify({ famTotal, famCols, kingN, chips, rowTops, empN, backAll, dTops, wmax }));
+  ok(famNames === 'All Single Sizes|All Small Double Sizes|All Double Sizes|All King Sizes|All Super King Sizes|All Emperor Sizes' && famTotal === 22 && famCols === 6 && kingN === 5 && chips === 6 && (!wide || rowTops === 2) && empN === 3 && backAll === 6 && (!wide || dTops === 1) && wmax === '180', 'R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its rows (King three and two, no card alone); three depths side by side; weight up to 180 kg', JSON.stringify({ famTotal, famCols, kingN, chips, rowTops, empN, backAll, dTops, wmax }));
   // R38 owner 16 Nov X: size, depth and cover work like firmness: a touch only picks (nothing counts, the confirm button waits), Confirm makes it count,
   // the confirmed choice stays open to Change (the other options come back), and a changed choice can be confirmed again
   const flow = {};

@@ -105,7 +105,7 @@
   },
   {
    "pass": true,
-   "rule": "R14 sizes are shown in centimetres and in inches",
+   "rule": "R14 sizes are shown in centimetres and in inches, large and easy to read",
    "detail": ""
   },
   {
@@ -210,8 +210,8 @@
   },
   {
    "pass": true,
-   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its row; three depths side by side; weight up to 180 kg",
-   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":1,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
+   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its rows (King three and two, no card alone); three depths side by side; weight up to 180 kg",
+   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":2,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
   },
   {
    "pass": true,
@@ -295,7 +295,7 @@
   },
   {
    "pass": true,
-   "rule": "R14 sizes are shown in centimetres and in inches",
+   "rule": "R14 sizes are shown in centimetres and in inches, large and easy to read",
    "detail": ""
   },
   {
@@ -400,8 +400,8 @@
   },
   {
    "pass": true,
-   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its row; three depths side by side; weight up to 180 kg",
-   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":1,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
+   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its rows (King three and two, no card alone); three depths side by side; weight up to 180 kg",
+   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":2,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
   },
   {
    "pass": true,
@@ -525,7 +525,7 @@
   },
   {
    "pass": true,
-   "rule": "R14 sizes are shown in centimetres and in inches",
+   "rule": "R14 sizes are shown in centimetres and in inches, large and easy to read",
    "detail": ""
   },
   {
@@ -630,8 +630,8 @@
   },
   {
    "pass": true,
-   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its row; three depths side by side; weight up to 180 kg",
-   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":1,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
+   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its rows (King three and two, no card alone); three depths side by side; weight up to 180 kg",
+   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":2,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
   },
   {
    "pass": true,
