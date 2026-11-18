@@ -12,6 +12,41 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const file = pathToFileURL(join(root, 'docs', 'tv-preview', 'large-screen-design.html')).href;
 let fails = 0; const rows = [];
 const ok = (c, m, d) => { rows.push({ pass: !!c, rule: m, detail: d || '' }); console.log((c ? 'PASS ' : 'FAIL ') + m + (d ? '  [' + d + ']' : '')); if (!c) fails++; };
+// the contrast scanner: the effective background of every visible text (worst case over gradient stops) against its colour
+const SCAN = () => {
+  const P=(c)=>{const m=c.match(/rgba?\(([\d.]+)[, ]+([\d.]+)[, ]+([\d.]+)(?:[,/ ]+([\d.]+))?/);return m?[+m[1],+m[2],+m[3],m[4]===undefined?1:+m[4]]:null};
+  const lum=(c)=>{const f=(v)=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)};return .2126*f(c[0])+.7152*f(c[1])+.0722*f(c[2])};
+  const over=(top,bot)=>[top[0]*top[3]+bot[0]*(1-top[3]),top[1]*top[3]+bot[1]*(1-top[3]),top[2]*top[3]+bot[2]*(1-top[3]),1];
+  const ratio=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+  const bgs=(el)=>{ // candidate effective backgrounds (worst case across opaque gradient stops); null = photograph
+    const layers=[];let n=el,opaque=null;
+    while(n&&n.nodeType===1){const cs=getComputedStyle(n);const bi=cs.backgroundImage;
+      if(/url\(/.test(bi)&&!/gradient/.test(bi)&&n!==document.body) return null;
+      const bc=P(cs.backgroundColor);
+      const stops=/gradient/.test(bi)?(bi.match(/rgba?\([^)]*\)/g)||[]).map(P).filter(c=>c&&c[3]>=.95):[];
+      if(stops.length){opaque=stops;break;}
+      if(bc&&bc[3]>=.99){opaque=[bc];break;}
+      if(bc&&bc[3]>0) layers.push(bc);
+      n=n.parentElement;}
+    let cands=opaque||[[251,251,237,1]];
+    for(let i=layers.length-1;i>=0;i--) cands=cands.map(b=>over(layers[i],b));
+    return cands;};
+  const out=[];
+  const walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+  const seen=new Set();let t;
+  while(t=walk.nextNode()){
+    if(!t.textContent.trim()) continue; const el=t.parentElement; if(!el||seen.has(el)) continue; seen.add(el);
+    if(el.closest('script,style,#ign,[aria-hidden=true],.toast,[hidden],.sr-only')) continue;
+    const r=el.getBoundingClientRect(); if(r.width<2||r.height<2) continue;
+    const cs=getComputedStyle(el); if(cs.visibility==='hidden'||cs.display==='none') continue;
+    let op=1,n=el; while(n){op*=+getComputedStyle(n).opacity;n=n.parentElement;} if(op<.6) continue;
+    if(el.closest('button:disabled,[disabled]')) continue;
+    const fg=P(cs.color); if(!fg) continue; const cands=bgs(el); if(!cands) continue;
+    const fs=parseFloat(cs.fontSize),fw=+cs.fontWeight; const large=fs>=24||(fs>=18.66&&fw>=700); const need=large?3:4.5;
+    let worst=99; for(const b of cands){const f=fg[3]<1?over(fg,b):fg; const rr=ratio(f,b); if(rr<worst) worst=rr;}
+    if(worst<need) out.push({t:t.textContent.trim().slice(0,38),cls:(el.className&&el.className.baseVal===undefined?el.className:'').toString().slice(0,34),tag:el.tagName,r:+worst.toFixed(2),need,fg:cs.color});
+  }
+  return out;};
 // pick, confirm, change: a size is picked in its family and confirmed; a confirmed one is first reopened with Change size
 const pickSize = async (p, i = 3, fam = 'single') => { if (await p.$('[data-change="size"]')) await p.click('[data-change="size"]'); if (!(await p.$('.card[data-size="' + i + '"]'))) await p.click('[data-sgrp="' + fam + '"]'); await p.click('.card[data-size="' + i + '"]'); await p.click('[data-confirm="size"]'); };
 const b = await chromium.launch();
@@ -24,10 +59,10 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   // R1 rounded corners only: no pills on any button or link
   const radii = await p.$$eval('button, a.fcard', (x) => x.map((e) => parseFloat(getComputedStyle(e).borderTopLeftRadius)));
   ok(Math.max(...radii) <= 16, 'R1 rounded corners only: no pill or round button', 'largest radius ' + Math.max(...radii) + 'px over ' + radii.length + ' buttons');
+  const lum = (h) => { const n = parseInt(h.slice(1), 16); return (((n >> 16) & 255) * 0.299 + ((n >> 8) & 255) * 0.587 + (n & 255) * 0.114) / 255; };
   // R2 side cards stay white, the stage is light
   const bg = await p.evaluate(() => { const g = (s) => getComputedStyle(document.querySelector(s)).backgroundColor; return { rail: g('.rail'), mine: g('.mine'), stage: getComputedStyle(document.documentElement).getPropertyValue('--stage-a').trim() }; });
-  ok(bg.rail === 'rgb(255, 255, 255)' && bg.mine === 'rgb(232, 243, 245)', 'R2 the topic rail is white; "Your selection" is its own aqua column', JSON.stringify(bg));
-  const lum = (h) => { const n = parseInt(h.slice(1), 16); return (((n >> 16) & 255) * 0.299 + ((n >> 8) & 255) * 0.587 + (n & 255) * 0.114) / 255; };
+  ok(lum(bg.rail.startsWith('#') ? bg.rail : '#' + bg.rail.match(/\d+/g).slice(0, 3).map((n) => (+n).toString(16).padStart(2, '0')).join('')) > 0.9 && bg.mine === 'rgb(100, 97, 85)', 'R2 the topic rail is light (cream); "Your selection" is its own olive column (#646155)', JSON.stringify(bg));
   ok(lum(bg.stage) > 0.9, 'R3 the middle stage is the light one (not dark, not grey)', bg.stage);
   // R4 one common top line for the three columns, on every step and on information panels
   if (landscape) {
@@ -46,8 +81,8 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.goto(file + '?step=0'); ok((await p.textContent('.invite')).includes('Select your Botanic here') && (await p.textContent('#stageh')).includes('Select here'), 'R6 "Select your Botanic here" is shown and the stage says "Select here"');
   // R7 the bright blue set: Add to Bag, Go to Checkout and View Model Gallery are the same blue; the two view buttons are blue-outlined, never filled blue; flat and crisp
   await p.goto(file + '?step=4&demo=1'); await p.waitForTimeout(100);
-  const bag = await p.evaluate(() => { const blue = (e) => /41, 124, 162|46, 134, 175|31, 107, 147/.test(getComputedStyle(e).backgroundImage) || /rgb\(41, 124, 162\)/.test(getComputedStyle(e).backgroundColor); const blur = (e) => { const m = getComputedStyle(e).boxShadow.match(/(-?[\d.]+)px (-?[\d.]+)px ([\d.]+)px/g) || []; return Math.max(0, ...m.map((x) => parseFloat(x.split(' ')[2]))); }; const solid = [...document.querySelectorAll('.bagbtn:not(:disabled), #galbtn')]; const seg = [...document.querySelectorAll('.seg button')]; const otherSolid = [...document.querySelectorAll('.btn:not(.bagbtn), .tbtn:not(#galbtn), .seg button')].filter((e) => blue(e) && !e.classList.contains('bagbtn')); return { n: solid.length, all: solid.every(blue), blur: Math.max(...solid.map(blur)), segOutlined: getComputedStyle(seg[0]).borderTopColor === 'rgb(41, 124, 162)' && !blue(seg[0]) && !blue(seg[1]) && getComputedStyle(seg[1]).backgroundColor !== getComputedStyle(seg[0]).backgroundColor, otherSolid: otherSolid.length }; });
-  ok(bag.n >= 3 && bag.all && bag.blur <= 4 && bag.otherSolid === 0 && bag.segOutlined, 'R7 bright blue: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview blue-outlined, Standard Product View in its own colour; flat, no glow', 'shadow blur ' + bag.blur + 'px, ' + bag.n + ' solid, view buttons outlined ' + bag.segOutlined);
+  const bag = await p.evaluate(() => { const blue = (e) => /rgb\(24, 201, 204\)/.test(getComputedStyle(e).backgroundColor); const blur = (e) => { const m = getComputedStyle(e).boxShadow.match(/(-?[\d.]+)px (-?[\d.]+)px ([\d.]+)px/g) || []; return Math.max(0, ...m.map((x) => parseFloat(x.split(' ')[2]))); }; const solid = [...document.querySelectorAll('.bagbtn:not(:disabled), #galbtn')]; const seg = [...document.querySelectorAll('.seg button')]; const otherSolid = [...document.querySelectorAll('.btn:not(.bagbtn), .tbtn:not(#galbtn), .seg button')].filter((e) => blue(e) && !e.classList.contains('bagbtn')); return { n: solid.length, all: solid.every(blue), blur: Math.max(...solid.map(blur)), segOutlined: getComputedStyle(seg[0]).borderTopColor === 'rgb(11, 111, 117)' && !blue(seg[0]) && !blue(seg[1]) && getComputedStyle(seg[1]).backgroundColor !== getComputedStyle(seg[0]).backgroundColor, otherSolid: otherSolid.length }; });
+  ok(bag.n >= 3 && bag.all && bag.blur <= 4 && bag.otherSolid === 0 && bag.segOutlined, 'R7 the call to action in the palette teal: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow', 'shadow blur ' + bag.blur + 'px, ' + bag.n + ' solid, view buttons outlined ' + bag.segOutlined);
   // R8 thin frame
   const pad = await p.$eval('.monitor', (e) => parseFloat(getComputedStyle(e).paddingTop)); ok(pad <= 6, 'R8 the frame of the television is thin', pad + 'px');
   // R9 the leaf is green, never blue
@@ -100,15 +135,15 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   const hdr = await p.$eval('.brand', (e) => e.textContent.replace(/\s+/g, ' ').trim()); const icons = await p.$$eval('.slg .sb > svg', (x) => x.length); const selTop = await p.$$eval('#chbar .slg .sb', (x) => x.map((e) => e.querySelector('b').textContent).join(','));
   const guide = await p.$eval('#chips .coach', (e) => e.textContent.replace(/\s+/g, ' ').trim());
   const railHead = await p.$eval('#rail .tp b', (e) => e.textContent.trim()); ok(rail.length === 0 && railHead === 'Size' && stp.join('|') === 'Size|Depth|Firmness|Cover|Review' && icons === 5 && /Botanic Original 100% Natural 100% Organic Latex Mattress Dunlop Technology/.test(hdr) && selTop === 'Size,Depth,Firmness,Cover,Review' && /Start here\s*Choose your Size/.test(guide), 'R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now', [rail.join('/'), stp.join('/'), icons, selTop, guide].join(' | '));
-  // R33 the colour concept (owner 16 Nov V): no brown, beige or sand anywhere on the screen, in either layer; the two layers look different
+  // R33 the colour concept (owner 16 Nov V): only the owner's palette: none of the old blues anywhere (the one accent is the palette teal); the two layers look different
   const warm = []; let layers = [];
   for (const q of ['', '?ch=support&pn=bearing', '?ch=zones&pn=map', '?ch=warranty&pn=cover', '?step=1', '?step=3', '?step=4&demo=1']) {
     await p.goto(file + q); await p.waitForTimeout(150);
     warm.push(...(await p.evaluate(() => { const out = []; const hsl = (c) => { const m = c.match(/rgba?\(([\d.]+), ([\d.]+), ([\d.]+)(?:, ([\d.]+))?/); if (!m || (m[4] !== undefined && +m[4] < .15)) return null; const r = m[1] / 255, g = m[2] / 255, b = m[3] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn; if (!d) return null; const s = d / (1 - Math.abs(2 * l - 1)); let h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h = (h * 60 + 360) % 360; return [h, s, l]; };
-      document.querySelectorAll('body *').forEach((e) => { if (e.closest('img, video, .pic, #ign, [style*="background-image"]')) return; const cs = getComputedStyle(e); for (const k of ['backgroundColor', 'color', 'borderTopColor', 'fill', 'stroke']) { const v = hsl(cs[k] || ''); if (v && v[0] >= 15 && v[0] <= 60 && v[1] > .15 && v[2] > .12 && v[2] < .97) out.push((e.className || e.tagName) + ' ' + k + ' ' + cs[k]); } }); return out.slice(0, 5); })).map((x) => q + ' ' + x));
+      document.querySelectorAll('body *').forEach((e) => { if (e.closest('img, video, .pic, #ign, [style*="background-image"]')) return; const cs = getComputedStyle(e); for (const k of ['backgroundColor', 'color', 'borderTopColor', 'fill', 'stroke']) { const v = hsl(cs[k] || ''); if (v && v[0] >= 195 && v[0] <= 265 && v[1] > .25 && v[2] > .12 && v[2] < .97) out.push((e.className || e.tagName) + ' ' + k + ' ' + cs[k]); } }); return out.slice(0, 5); })).map((x) => q + ' ' + x));
     layers.push(await p.$eval('.screen', (e) => e.getAttribute('data-layer')));
   }
-  ok(!warm.length && layers.includes('explore') && layers.includes('select'), 'R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments', warm.slice(0, 4).join(' | ') || layers.join(','));
+  ok(!warm.length && layers.includes('explore') && layers.includes('select'), 'R33 palette: none of the old blues anywhere; Explore and Select & Buy are two environments', warm.slice(0, 4).join(' | ') || layers.join(','));
   // R34 owner 16 Nov VI: the order trail while choosing (and back from any information screen), Review over both rows, seven zones in one row, no moon over the logo, no glow on white
   await p.goto(file + '?step=0'); await pickSize(p); await p.click('.slg .sb[data-go="2"]'); await p.click('#rail [data-goto="firmness/principle"]');
   const tr = await p.evaluate(() => ({ n: document.querySelectorAll('#trailbar .tst').length, vis: !document.querySelector('#trailbar').hidden, cur: (document.querySelector('#trailbar .tst.cur') || {}).textContent, back: !!document.querySelector('#rail button.tp.back') }));
@@ -174,6 +209,12 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.click('.cz-back'); const fam2 = await p.$eval('.sgcard b', (e) => ({ up: getComputedStyle(e).textTransform, sp: parseFloat(getComputedStyle(e).letterSpacing), fs: parseFloat(getComputedStyle(e).fontSize), al: getComputedStyle(e).textAlign, noFig: !e.parentElement.querySelector('.rg') && !/\d+\s*[–-]\s*\d+/.test(e.parentElement.textContent), r: parseFloat(getComputedStyle(e.parentElement).borderTopLeftRadius) }));
   const stays = yFam === y0 && yPick === y0 && (y0 < 100 || maxScr < 40 || (yNav > 0 && stageTop >= 0 && stageTop <= 400));
   ok(stays && famQ.r <= 14 && famQ.up === 'uppercase' && famQ.sp >= 1 && fam2.up === 'uppercase' && fam2.sp >= 2 && fam2.fs >= 11 && fam2.fs <= 16 && fam2.noFig && fam2.al === 'center' && fam2.r <= 20, 'R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills', JSON.stringify({ y0, yFam, yPick, yNav, stageTop, famQ, fam2 }));
+  // R40 owner 18 Nov XV: in the owner's palette every text has strong contrast: 4.5:1 (large text 3:1) on the colour it sits on
+  const lows = new Map();
+  await p.goto(file + '?ignite=0');
+  const states = [['discover', async () => {}], ['support', async () => p.click('.exg [data-ch="support"]')], ['zones', async () => p.click('.exg [data-ch="zones"]')], ['delivery journey', async () => { await p.click('.exg [data-ch="delivery"]'); await p.click('#rail [data-pn="journey"]'); }], ['sizes', async () => p.click('.slg [data-go="0"]')], ['king', async () => p.click('[data-sgrp="king"]')], ['picked', async () => p.click('.card[data-size="12"]')], ['confirmed', async () => p.click('[data-confirm="size"]')], ['depth', async () => p.click('.slg [data-go="1"]')], ['firmness', async () => p.click('.slg [data-go="2"]')], ['cover', async () => p.click('.slg [data-go="3"]')], ['review', async () => p.click('.slg [data-go="4"]')], ['warranty', async () => p.click('.exg [data-ch="warranty"]')], ['certs', async () => p.click('.exg [data-ch="certs"]')], ['adaptation', async () => { await p.click('.exg [data-ch="adaptation"]'); await p.click('#rail [data-pn="adjustable"]'); }]];
+  for (const [n, fn] of states) { await fn(); await p.waitForTimeout(150); for (const r of await p.evaluate(SCAN)) lows.set(r.cls + '|' + r.t, n + ' ' + r.r + '/' + r.need + ' ' + r.t); }
+  ok(lows.size === 0, 'R40 every text has strong contrast on its colour (4.5:1, large text 3:1) on all main screens', [...lows.values()].slice(0, 5).join(' | ') || states.length + ' screens');
   await p.goto(file + '?step=0');
   const noLong = await p.evaluate(() => !/—/.test(document.body.innerText)); ok(noLong, 'R31 no long dash is shown anywhere');
   // R32 the guide after a choice (?guide=1): says what was chosen, what comes next, then opens it by itself

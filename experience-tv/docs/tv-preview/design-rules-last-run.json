@@ -1,7 +1,7 @@
 {
- "date": "2026-11-16",
+ "date": "2026-11-18",
  "failures": 0,
- "checks": 133,
+ "checks": 136,
  "rows": [
   {
    "pass": true,
@@ -10,13 +10,13 @@
   },
   {
    "pass": true,
-   "rule": "R2 the topic rail is white; \"Your selection\" is its own aqua column",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(232, 243, 245)\",\"stage\":\"#F6F9FC\"}"
+   "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
+   "detail": "{\"rail\":\"rgb(254, 254, 246)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
    "rule": "R3 the middle stage is the light one (not dark, not grey)",
-   "detail": "#F6F9FC"
+   "detail": "#FBFBED"
   },
   {
    "pass": true,
@@ -70,8 +70,8 @@
   },
   {
    "pass": true,
-   "rule": "R7 bright blue: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview blue-outlined, Standard Product View in its own colour; flat, no glow",
-   "detail": "shadow blur 2px, 4 solid, view buttons outlined true"
+   "rule": "R7 the call to action in the palette teal: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
+   "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
    "pass": true,
@@ -190,7 +190,7 @@
   },
   {
    "pass": true,
-   "rule": "R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments",
+   "rule": "R33 palette: none of the old blues anywhere; Explore and Select & Buy are two environments",
    "detail": "explore,explore,explore,explore,select,select,select"
   },
   {
@@ -201,7 +201,7 @@
   {
    "pass": true,
    "rule": "R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour",
-   "detail": "rgba(0, 0, 0, 0)|linear-gradient(160deg, rgb(31, 61, 88)   //  rgb(228, 240, 247)|none  //  rgb(230, 235, 242)|none  //  rgb(232, 243, 245)|none"
+   "detail": "rgb(56, 68, 66)|none  //  rgb(221, 214, 196)|none  //  rgb(106, 105, 98)|none  //  rgb(100, 97, 85)|none"
   },
   {
    "pass": true,
@@ -225,6 +225,11 @@
   },
   {
    "pass": true,
+   "rule": "R40 every text has strong contrast on its colour (4.5:1, large text 3:1) on all main screens",
+   "detail": "15 screens"
+  },
+  {
+   "pass": true,
    "rule": "R31 no long dash is shown anywhere",
    "detail": ""
   },
@@ -245,13 +250,13 @@
   },
   {
    "pass": true,
-   "rule": "R2 the topic rail is white; \"Your selection\" is its own aqua column",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(232, 243, 245)\",\"stage\":\"#F6F9FC\"}"
+   "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
+   "detail": "{\"rail\":\"rgb(254, 254, 246)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
    "rule": "R3 the middle stage is the light one (not dark, not grey)",
-   "detail": "#F6F9FC"
+   "detail": "#FBFBED"
   },
   {
    "pass": true,
@@ -265,8 +270,8 @@
   },
   {
    "pass": true,
-   "rule": "R7 bright blue: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview blue-outlined, Standard Product View in its own colour; flat, no glow",
-   "detail": "shadow blur 2px, 4 solid, view buttons outlined true"
+   "rule": "R7 the call to action in the palette teal: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
+   "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
    "pass": true,
@@ -385,7 +390,7 @@
   },
   {
    "pass": true,
-   "rule": "R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments",
+   "rule": "R33 palette: none of the old blues anywhere; Explore and Select & Buy are two environments",
    "detail": "explore,explore,explore,explore,select,select,select"
   },
   {
@@ -396,7 +401,7 @@
   {
    "pass": true,
    "rule": "R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour",
-   "detail": "rgba(0, 0, 0, 0)|linear-gradient(160deg, rgb(31, 61, 88)   //  rgb(228, 240, 247)|none  //  rgb(230, 235, 242)|none  //  rgb(232, 243, 245)|none"
+   "detail": "rgb(56, 68, 66)|none  //  rgb(221, 214, 196)|none  //  rgb(106, 105, 98)|none  //  rgb(100, 97, 85)|none"
   },
   {
    "pass": true,
@@ -420,6 +425,11 @@
   },
   {
    "pass": true,
+   "rule": "R40 every text has strong contrast on its colour (4.5:1, large text 3:1) on all main screens",
+   "detail": "15 screens"
+  },
+  {
+   "pass": true,
    "rule": "R31 no long dash is shown anywhere",
    "detail": ""
   },
@@ -440,13 +450,13 @@
   },
   {
    "pass": true,
-   "rule": "R2 the topic rail is white; \"Your selection\" is its own aqua column",
-   "detail": "{\"rail\":\"rgb(255, 255, 255)\",\"mine\":\"rgb(232, 243, 245)\",\"stage\":\"#F6F9FC\"}"
+   "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
+   "detail": "{\"rail\":\"rgb(254, 254, 246)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
    "rule": "R3 the middle stage is the light one (not dark, not grey)",
-   "detail": "#F6F9FC"
+   "detail": "#FBFBED"
   },
   {
    "pass": true,
@@ -500,8 +510,8 @@
   },
   {
    "pass": true,
-   "rule": "R7 bright blue: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview blue-outlined, Standard Product View in its own colour; flat, no glow",
-   "detail": "shadow blur 2px, 4 solid, view buttons outlined true"
+   "rule": "R7 the call to action in the palette teal: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
+   "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
    "pass": true,
@@ -620,7 +630,7 @@
   },
   {
    "pass": true,
-   "rule": "R33 colour concept: no brown, beige or sand anywhere; Explore and Select & Buy are two environments",
+   "rule": "R33 palette: none of the old blues anywhere; Explore and Select & Buy are two environments",
    "detail": "explore,explore,explore,explore,select,select,select"
   },
   {
@@ -631,7 +641,7 @@
   {
    "pass": true,
    "rule": "R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour",
-   "detail": "rgba(0, 0, 0, 0)|linear-gradient(160deg, rgb(31, 61, 88)   //  rgb(228, 240, 247)|none  //  rgb(230, 235, 242)|none  //  rgb(232, 243, 245)|none"
+   "detail": "rgb(56, 68, 66)|none  //  rgb(221, 214, 196)|none  //  rgb(106, 105, 98)|none  //  rgb(100, 97, 85)|none"
   },
   {
    "pass": true,
@@ -652,6 +662,11 @@
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
    "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":235,\"stageTop\":154,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+  },
+  {
+   "pass": true,
+   "rule": "R40 every text has strong contrast on its colour (4.5:1, large text 3:1) on all main screens",
+   "detail": "15 screens"
   },
   {
    "pass": true,
