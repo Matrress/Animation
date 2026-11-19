@@ -1,5 +1,5 @@
 {
- "date": "2026-11-18",
+ "date": "2026-11-19",
  "failures": 0,
  "checks": 136,
  "rows": [
@@ -21,42 +21,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "490.8 / 490.8 / 490.8"
+   "detail": "504.8 / 504.8 / 504.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "490.8 / 490.8 / 490.8"
+   "detail": "504.8 / 504.8 / 504.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "490.8 / 490.8 / 490.8"
+   "detail": "504.8 / 504.8 / 504.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "490.8 / 490.8 / 490.8"
+   "detail": "504.8 / 504.8 / 504.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "490.8 / 490.8 / 490.8"
+   "detail": "504.8 / 504.8 / 504.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "426.8 / 426.8 / 426.8"
+   "detail": "440.8 / 440.8 / 440.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "426.8 / 426.8 / 426.8"
+   "detail": "440.8 / 440.8 / 440.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "426.8 / 426.8 / 426.8"
+   "detail": "440.8 / 440.8 / 440.8"
   },
   {
    "pass": true,
@@ -70,7 +70,7 @@
   },
   {
    "pass": true,
-   "rule": "R7 the call to action in the palette teal: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
    "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
@@ -125,7 +125,7 @@
   },
   {
    "pass": true,
-   "rule": "R18 7-Zone uses the mobile concept: the sketch, the legend and the seven zones",
+   "rule": "R18 7-Zone: each zone carries its own name and note inside the drawing (no separate boxes, no Z-numbers); the shade key beside the film",
    "detail": ""
   },
   {
@@ -166,12 +166,12 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "30 panels"
+   "detail": "31 panels"
   },
   {
    "pass": true,
    "rule": "R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones",
-   "detail": "{\"bg\":\"none\",\"ratio\":3.355,\"share\":1,\"video\":true}"
+   "detail": "{\"bg\":\"none\",\"ratio\":2.339,\"share\":1,\"video\":true}"
   },
   {
    "pass": true,
@@ -190,18 +190,18 @@
   },
   {
    "pass": true,
-   "rule": "R33 palette: none of the old blues anywhere; Explore and Select & Buy are two environments",
+   "rule": "R33 palette (coffee and vanilla, XVI): none of the old blues and no teal anywhere outside the logo; Explore and Select & Buy are two environments",
    "detail": "explore,explore,explore,explore,select,select,select"
   },
   {
    "pass": true,
-   "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white",
+   "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones carry their text inside the drawing; no moon over the logo; no glow on white",
    "detail": "{\"tr\":{\"n\":5,\"vis\":true,\"cur\":\"3Firmness\",\"back\":true},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
   },
   {
    "pass": true,
    "rule": "R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour",
-   "detail": "rgb(56, 68, 66)|none  //  rgb(221, 214, 196)|none  //  rgb(106, 105, 98)|none  //  rgb(100, 97, 85)|none"
+   "detail": "rgb(67, 66, 57)|none  //  rgb(221, 214, 196)|none  //  rgb(106, 105, 98)|none  //  rgb(100, 97, 85)|none"
   },
   {
    "pass": true,
@@ -221,7 +221,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":356,\"yFam\":356,\"yPick\":356,\"yNav\":111,\"stageTop\":278,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":125,\"stageTop\":278,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -270,7 +270,7 @@
   },
   {
    "pass": true,
-   "rule": "R7 the call to action in the palette teal: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
    "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
@@ -325,7 +325,7 @@
   },
   {
    "pass": true,
-   "rule": "R18 7-Zone uses the mobile concept: the sketch, the legend and the seven zones",
+   "rule": "R18 7-Zone: each zone carries its own name and note inside the drawing (no separate boxes, no Z-numbers); the shade key beside the film",
    "detail": ""
   },
   {
@@ -366,12 +366,12 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "30 panels"
+   "detail": "31 panels"
   },
   {
    "pass": true,
    "rule": "R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones",
-   "detail": "{\"bg\":\"none\",\"ratio\":3.355,\"share\":1,\"video\":true}"
+   "detail": "{\"bg\":\"none\",\"ratio\":2.339,\"share\":1,\"video\":true}"
   },
   {
    "pass": true,
@@ -390,18 +390,18 @@
   },
   {
    "pass": true,
-   "rule": "R33 palette: none of the old blues anywhere; Explore and Select & Buy are two environments",
+   "rule": "R33 palette (coffee and vanilla, XVI): none of the old blues and no teal anywhere outside the logo; Explore and Select & Buy are two environments",
    "detail": "explore,explore,explore,explore,select,select,select"
   },
   {
    "pass": true,
-   "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white",
+   "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones carry their text inside the drawing; no moon over the logo; no glow on white",
    "detail": "{\"tr\":{\"n\":5,\"vis\":true,\"cur\":\"3Firmness\",\"back\":true},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
   },
   {
    "pass": true,
    "rule": "R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour",
-   "detail": "rgb(56, 68, 66)|none  //  rgb(221, 214, 196)|none  //  rgb(106, 105, 98)|none  //  rgb(100, 97, 85)|none"
+   "detail": "rgb(67, 66, 57)|none  //  rgb(221, 214, 196)|none  //  rgb(106, 105, 98)|none  //  rgb(100, 97, 85)|none"
   },
   {
    "pass": true,
@@ -421,7 +421,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":289,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":242,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -461,42 +461,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "490.8 / 490.8 / 490.8"
+   "detail": "504.8 / 504.8 / 504.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "490.8 / 490.8 / 490.8"
+   "detail": "504.8 / 504.8 / 504.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "490.8 / 490.8 / 490.8"
+   "detail": "504.8 / 504.8 / 504.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "490.8 / 490.8 / 490.8"
+   "detail": "504.8 / 504.8 / 504.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "490.8 / 490.8 / 490.8"
+   "detail": "504.8 / 504.8 / 504.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "426.8 / 426.8 / 426.8"
+   "detail": "440.8 / 440.8 / 440.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "426.8 / 426.8 / 426.8"
+   "detail": "440.8 / 440.8 / 440.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "426.8 / 426.8 / 426.8"
+   "detail": "440.8 / 440.8 / 440.8"
   },
   {
    "pass": true,
@@ -510,7 +510,7 @@
   },
   {
    "pass": true,
-   "rule": "R7 the call to action in the palette teal: Add to Bag, Go to Checkout and View Model Gallery; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
    "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
@@ -565,7 +565,7 @@
   },
   {
    "pass": true,
-   "rule": "R18 7-Zone uses the mobile concept: the sketch, the legend and the seven zones",
+   "rule": "R18 7-Zone: each zone carries its own name and note inside the drawing (no separate boxes, no Z-numbers); the shade key beside the film",
    "detail": ""
   },
   {
@@ -606,12 +606,12 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "30 panels"
+   "detail": "31 panels"
   },
   {
    "pass": true,
    "rule": "R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones",
-   "detail": "{\"bg\":\"none\",\"ratio\":3.355,\"share\":1,\"video\":true}"
+   "detail": "{\"bg\":\"none\",\"ratio\":2.34,\"share\":1,\"video\":true}"
   },
   {
    "pass": true,
@@ -630,18 +630,18 @@
   },
   {
    "pass": true,
-   "rule": "R33 palette: none of the old blues anywhere; Explore and Select & Buy are two environments",
+   "rule": "R33 palette (coffee and vanilla, XVI): none of the old blues and no teal anywhere outside the logo; Explore and Select & Buy are two environments",
    "detail": "explore,explore,explore,explore,select,select,select"
   },
   {
    "pass": true,
-   "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones sit in one row; no moon over the logo; no glow on white",
+   "rule": "R34 the order trail shows every step while choosing and leads back; Review fills both rows; the seven zones carry their text inside the drawing; no moon over the logo; no glow on white",
    "detail": "{\"tr\":{\"n\":5,\"vis\":true,\"cur\":\"3Firmness\",\"back\":true},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
   },
   {
    "pass": true,
    "rule": "R35 Explore (night), Select & Buy (day), Your order (slate) and Your selection (aqua) are four cards, each with its own colour",
-   "detail": "rgb(56, 68, 66)|none  //  rgb(221, 214, 196)|none  //  rgb(106, 105, 98)|none  //  rgb(100, 97, 85)|none"
+   "detail": "rgb(67, 66, 57)|none  //  rgb(221, 214, 196)|none  //  rgb(106, 105, 98)|none  //  rgb(100, 97, 85)|none"
   },
   {
    "pass": true,
@@ -661,7 +661,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":235,\"stageTop\":154,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":249,\"stageTop\":154,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,

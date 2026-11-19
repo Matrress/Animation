@@ -43,7 +43,7 @@ const SPEC = [
   ['hygiene', 'Hygiene', [['clean', 'Cleaner Sleep', 'points'], ['picture', 'Realistic Picture', 'read:0']]],
   ['certs', 'Certifications', [['bodies', 'Certifications', 'certs'], ['made', 'Where It Is Made', 'read:0']]],
   ['warranty', 'Warranty', [['cover', 'Warranty + Gift', 'numerals'], ['conditions', 'Conditions', 'read:0']]],
-  ['delivery', 'Delivery', [['made', 'Made To Order', 'read:0'], ['journey', 'Delivery Journey', 'journey'], ['yours', 'Your Botanic', 'step:review']]]
+  ['delivery', 'Delivery', [['made', 'Made To Order', 'read:0'], ['journey', 'Delivery Journey', 'journey'], ['prep', 'Before It Arrives', 'prep'], ['yours', 'Your Botanic', 'step:review']]]
 ];
 const ROOTS = { discover: '#bp-top', firmness: '#bp-firmness', comfort: '#bp-comfort', height: '#bp-height', covers: '#bp-covers', benefits: '#bp-benefits', support: '#bp-support', adaptation: '#bp-adaptation', zones: '#bp-zones', ventilation: '#bp-ventilation', hygiene: '#bp-hygiene', certs: '#bp-certs', warranty: '#bp-warranty', delivery: '#bp-delivery' };
 const MEDIA_CAP = { benefits: 'Milk to foam: where latex begins', adaptation: 'Elasticity: the instant response', zones: 'Seven zones, head to feet', ventilation: 'Airflow through the channels', certs: 'Durability under pressure' };
@@ -150,9 +150,11 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
 {
   const A = join(root, 'assets', 'botanic'), b64 = (f) => 'data:image/webp;base64,' + readFileSync(join(A, f)).toString('base64');
   D.eng = JSON.parse(readFileSync(join(A, 'engineering-view.json'), 'utf8'));
-  const bio = readFileSync(join(A, 'bio-dunlop.svg'), 'utf8'), bp = [...bio.matchAll(/<path[^>]*d="([^"]+)"/g)].map((m) => m[1]);
-  D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12) };          // the wordmark "Bio Dunlop" (paths 12-23), drawn in one ink
-  D.bioMark = { vb: '2400 -1372 360 376', d: [bp[21], bp[20]] };      // the D with the spiral (paths 20-21)
+  const bio = readFileSync(join(A, 'bio-dunlop.svg'), 'utf8'), bm = [...bio.matchAll(/<path([^>]*)d="([^"]+)"/g)], bp = bm.map((m) => m[2]), bf = bm.map((m) => ((m[1].match(/fill="([^"]+)"/) || [])[1]) || null);
+  // OWNER 19 Nov: the logo in its own colours, exactly as on the site (the emblem in #009289 and #092600, the wordmark in #009289)
+  D.bioFull = { vb: bio.match(/viewBox="([^"]+)"/)[1], d: bp, f: bf };
+  D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12), f: bf.slice(12) };   // the wordmark "Bio Dunlop" (paths 12-23)
+  D.bioMark = { vb: '2400 -1372 360 376', d: [bp[21], bp[20]], f: [bf[21], bf[20]] };   // the D with the spiral (paths 20-21)
   D.moon = b64('q-dd-moon-88.webp'); D.core = b64('q-latex-closeup.webp'); D.bowl = b64('q-latex-milk-bowl-cut-700.webp');
   D.abSketch = JSON.parse(readFileSync(join(A, 'adjustable-sketch.json'), 'utf8')); D.pins = b64('q-latex-pins.webp');
   D.logos = { oeko: b64('q-logo-oekotex-mono.webp'), hohenstein: b64('q-logo-hohenstein-mono.webp'), iso9001: b64('q-logo-iso9001-mono.webp'), iso14001: b64('q-logo-iso14001-mono.webp'), siemens: b64('q-logo-siemens-monitoring-mono.webp') };
@@ -234,7 +236,7 @@ D.ignition = { name: 'BOTANIC', facts: [['Material', '100% Natural Latex'], ['Pr
    - Support and Adaptation always begin with a capital S and A.
    Ecwid's own labels (sizes, covers), addresses and pictures are never touched. */
 {
-  const SKIP = new Set(['descHtml', 'videos', 'id', 'key', 'step', 'kind', 'sizes', 'images', 'img', 'url', 'eng', 'bioWord', 'bioMark', 'moon', 'core', 'bowl', 'logos', 'zoneSketch', 'zoneTier', 'mattress', 'specialist', 'product']);
+  const SKIP = new Set(['descHtml', 'videos', 'bioFull', 'prep', 'id', 'key', 'step', 'kind', 'sizes', 'images', 'img', 'url', 'eng', 'bioWord', 'bioMark', 'moon', 'core', 'bowl', 'logos', 'zoneSketch', 'zoneTier', 'mattress', 'specialist', 'product']);
   const fix = (t) => t.replace(/\s*—\s*/g, ' – ').replace(/\bsupport\b/g, 'Support').replace(/\badaptation\b/g, 'Adaptation');
   const walk = (o) => { for (const k of Object.keys(o)) { if (SKIP.has(k)) continue; const v = o[k]; if (typeof v === 'string') o[k] = fix(v); else if (v && typeof v === 'object') walk(v); } };
   walk(D);

@@ -44,63 +44,47 @@
    300
   ],
   [
-   771,
-   259
+   756,
+   266
   ],
   [
-   843,
-   242
+   812,
+   247
   ],
   [
-   914,
-   237
-  ],
-  [
-   986,
-   236
-  ],
-  [
-   1057,
+   868,
    239
   ],
   [
-   1129,
-   246
+   924,
+   237
   ],
   [
-   1200,
+   980,
+   236
+  ],
+  [
+   1036,
+   238
+  ],
+  [
+   1092,
+   243
+  ],
+  [
+   1148,
+   248
+  ],
+  [
+   1204,
    253
   ],
   [
-   1271,
-   260
-  ],
-  [
-   1343,
-   263
-  ],
-  [
-   1414,
-   262
-  ],
-  [
-   1486,
-   263
-  ],
-  [
-   1557,
-   264
-  ],
-  [
-   1629,
-   267
-  ],
-  [
-   1700,
-   272
+   1260,
+   258
   ]
  ],
- "spineNote": "Midline of the body outline (the sleeper lies on the shoulder, so the spine runs through the middle of the torso), neck to sacrum; measured from the outline, smoothed.",
+ "spineNote": "Midline of the side-lying body, neck to the lower back; it ends above the pelvis (owner, 19 Nov).",
  "stretch": {
   "head": [
    [
@@ -114,12 +98,12 @@
   ],
   "tail": [
    [
-    1745,
-    275
+    1292,
+    262
    ],
    [
-    1965,
-    287
+    1490,
+    268
    ]
   ]
  }
