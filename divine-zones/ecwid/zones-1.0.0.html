@@ -1,0 +1,239 @@
+<!-- Divine DunlopDreams Seven Zones 1.0.0 · една Custom code секция -->
+<section class="dz7" id="dz7" aria-labelledby="dz7-h">
+<style>
+@font-face{font-family:DZ7Chillax;src:url(https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/assets/chillax-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:DZ7Chillax;src:url(https://cdn.jsdelivr.net/gh/Matrress/Animation@f727e88417fd562938847735378af9a167e96034/divine-hero/release/1.20.2/assets/chillax-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
+.dz7{--ink:#EEF4F5;--ink2:#C9D7DB;--mut:#AFC3C9;--acc:#4FD3CB;--acc2:#A4D4DC;--line:rgba(164,212,220,.2);--f:DZ7Chillax,Chillax,Outfit,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;position:relative;isolation:isolate;overflow:hidden;box-sizing:border-box;margin:0;padding:clamp(56px,7vw,104px) 16px clamp(56px,7vw,96px);color:var(--ink);font-family:var(--f);font-size:17px;line-height:1.6;text-align:left;background:radial-gradient(1100px 620px at 50% -8%,rgba(79,211,203,.13),transparent 64%),radial-gradient(900px 700px at 100% 100%,rgba(164,212,220,.07),transparent 60%),linear-gradient(180deg,#0e2533,#0a1b26)}
+.dz7 *,.dz7 *:before,.dz7 *:after{box-sizing:border-box}
+.dz7 h2,.dz7 h3,.dz7 p,.dz7 ol,.dz7 ul,.dz7 li{margin:0;padding:0;font-family:var(--f)!important;letter-spacing:normal;text-transform:none}
+.dz7 ol,.dz7 ul{list-style:none}
+.dz7 button{font:inherit;color:inherit;background:none;border:0;margin:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.dz7 :focus-visible{outline:2px solid var(--acc);outline-offset:4px;border-radius:12px}
+
+/* ambient: две бавни светлини и листото като воден знак */
+.dz7-amb{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.dz7-amb i{position:absolute;border-radius:50%;filter:blur(110px)}
+.dz7-a1{width:560px;height:560px;left:-9%;top:16%;background:rgba(79,211,203,.20);animation:dz7-d1 26s ease-in-out infinite alternate}
+.dz7-a2{width:640px;height:640px;right:-11%;bottom:-14%;background:rgba(164,212,220,.15);animation:dz7-d2 32s ease-in-out infinite alternate}
+@keyframes dz7-d1{to{transform:translate(140px,70px) scale(1.12)}}
+@keyframes dz7-d2{to{transform:translate(-120px,-60px) scale(1.08)}}
+.dz7-in{position:relative;max-width:1220px;margin:0 auto}
+.dz7-in:before{content:"";position:absolute;right:-40px;top:-30px;width:280px;height:280px;opacity:.09;pointer-events:none;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23A4D4DC' stroke-width='2'%3E%3Cpath d='M30 170C60 120 100 70 175 25C150 95 105 150 30 170Z'/%3E%3Cpath d='M30 170C80 125 125 80 175 25'/%3E%3Cpath d='M70 140l-6-30M95 115l-4-34M120 90l-2-36M140 70l2-32M88 128l30 4M112 104l32 2M134 80l28-2'/%3E%3C/svg%3E")}
+
+/* хедър */
+.dz7-hd{position:relative;max-width:820px;margin:0 auto clamp(34px,4.5vw,56px);text-align:center}
+.dz7 .dz7-eb{color:var(--acc);font-size:16px;line-height:1.4;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.dz7 .dz7-h{margin-top:14px;font-size:clamp(31px,3.7vw,50px);line-height:1.1;font-weight:400;letter-spacing:-.015em;color:var(--ink);text-wrap:balance}
+.dz7 .dz7-h b{font-weight:600;color:var(--acc)}
+.dz7 .dz7-lede{margin:18px auto 0;max-width:700px;color:var(--ink2);font-size:clamp(17px,1.35vw,19px);line-height:1.6}
+
+/* сцената */
+.dz7-stage{position:relative;max-width:1180px;margin:0 auto}
+.dz7-svg{display:block;width:100%;height:auto;overflow:visible}
+.dz7-grid line{stroke:rgba(164,212,220,.09);stroke-width:1;stroke-dasharray:3 7}
+.dz7-curveg{fill:none;stroke:rgba(79,211,203,.16);stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
+.dz7-curve{fill:none;stroke:rgba(164,212,220,.6);stroke-width:2;stroke-linecap:round}
+.dz7-col{transition:opacity .35s}
+.dz7-col .lit{opacity:0;animation:dz7-lit 8.4s ease-in-out infinite;animation-delay:calc(var(--i) * .55s)}
+@keyframes dz7-lit{0%,24%,100%{opacity:0}9%{opacity:.55}}
+.dz7-flash{fill:#4FD3CB;opacity:0;pointer-events:none}
+.dz7-flash.go{animation:dz7-fl .8s ease-out}
+@keyframes dz7-fl{0%{opacity:.34}100%{opacity:0}}
+.dz7:not(.dz7-vis) .dz7-col .lit,.dz7:not(.dz7-vis) .dz7-amb i{animation-play-state:paused}
+.dz7[data-on] .dz7-col:not(.on){opacity:.38}
+.dz7 .dz7-col.on .lit{animation:none;opacity:.55}
+
+/* имена под колоните */
+.dz7-names{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));column-gap:1.17%;padding:0 3.33%;margin-top:clamp(10px,1.4vw,18px)}
+.dz7-names li{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;transition:opacity .3s}
+.dz7-names i{font-style:normal;font-size:13px;line-height:1;font-weight:600;letter-spacing:.16em;color:var(--acc)}
+.dz7-names .t{font-size:clamp(14px,1.45vw,17px);line-height:1.25;font-weight:600;color:var(--ink2);transition:color .3s}
+.dz7[data-on] .dz7-names li:not(.on){opacity:.45}
+.dz7-names li.on .t{color:#fff}
+.dz7-hits{position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));column-gap:1.17%;padding:0 3.33%}
+.dz7-hit{display:block;width:100%;height:100%;border-radius:18px;outline-offset:-2px!important}
+
+/* малкият прозорец */
+.dz7-tipw{position:relative;max-width:1180px;min-height:178px;margin:clamp(14px,2vw,22px) auto 0}
+.dz7-hint{margin:0;padding-top:30px;text-align:center;font-size:16px;line-height:1.5;color:var(--mut);transition:opacity .25s}
+.dz7[data-on] .dz7-hint{opacity:0}
+.dz7-tip{position:absolute;top:0;left:0;width:min(560px,100%);padding:18px 22px 22px;border-radius:18px;background:#10303d;border:1px solid rgba(164,212,220,.38);box-shadow:0 22px 50px -22px rgba(0,0,0,.85),0 0 40px -12px rgba(79,211,203,.45);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .28s,transform .28s,visibility 0s .28s}
+.dz7-tip.show{opacity:1;visibility:visible;transform:none;transition:opacity .28s,transform .28s}
+.dz7-tip:before{content:"";position:absolute;top:-8px;left:calc(var(--ax,50%) - 8px);width:16px;height:16px;transform:rotate(45deg);background:#10303d;border-left:1px solid rgba(164,212,220,.38);border-top:1px solid rgba(164,212,220,.38)}
+.dz7-zt{display:flex;align-items:center;gap:12px;margin:0 0 6px}
+.dz7-zt i{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#06222a;font-style:normal;font-size:15px;font-weight:600}
+.dz7 .dz7-zt h3{font-size:21px;line-height:1.2;font-weight:600;color:#fff}
+.dz7-zv{display:block;margin:0 0 8px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.dz7-tip p{font-size:17px;line-height:1.55;color:var(--ink2)}
+.dz7-list{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* отдолу */
+.dz7-foot{position:relative;display:grid;justify-items:center;gap:22px;max-width:1180px;margin:clamp(30px,4vw,46px) auto 0;padding-top:clamp(28px,3.6vw,40px)}
+.dz7-foot:before{content:"";position:absolute;left:12.5%;right:12.5%;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(164,212,220,.45) 12%,rgba(164,212,220,.45) 88%,transparent)}
+.dz7-leaf{display:inline-flex;padding:10px 18px;border-radius:16px;background:#F3F7F7;box-shadow:0 0 0 1px rgba(164,212,220,.5),0 14px 36px -14px rgba(79,211,203,.5)}
+.dz7-leaf img{display:block;height:46px;width:auto}
+.dz7-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.dz7 .dz7-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-height:48px;padding:11px 24px;border-radius:999px;border:1.5px solid rgba(164,212,220,.55);background:#ffffff08;color:var(--ink)!important;font-size:16px;font-weight:600;line-height:1.2;text-decoration:none!important;letter-spacing:.01em;transition:background-color .3s,border-color .3s,box-shadow .35s,transform .25s}
+.dz7 .dz7-btn:hover{border-color:var(--acc);background:#4fd3cb1a;box-shadow:0 0 0 4px #4fd3cb1a,0 10px 30px -10px #4fd3cb8c;transform:translateY(-1px)}
+.dz7 .dz7-btn.is-pri{background:var(--acc);border-color:var(--acc);color:#06222a!important}
+.dz7 .dz7-btn.is-pri:hover{background:#6fe0d9;box-shadow:0 0 0 4px #4fd3cb2e,0 12px 34px -10px #4fd3cbbf}
+.dz7 .dz7-btn u{text-decoration:none;transition:transform .3s}
+.dz7 .dz7-btn:hover u{transform:translate(3px)}
+
+/* телефон: само скицата, статична */
+@media (max-width:640px),(max-width:940px) and (max-height:520px) and (orientation:landscape){
+.dz7-amb i,.dz7-col .lit{animation:none}
+.dz7-tipw,.dz7-hits{display:none}
+.dz7-names{margin-top:12px}
+.dz7-names i{display:none}
+.dz7-names .t{writing-mode:vertical-rl;transform:rotate(180deg);height:84px;font-size:14px;letter-spacing:.02em}
+.dz7-btns{flex-direction:column;align-items:stretch;width:100%}
+.dz7 .dz7-btn{width:100%}
+.dz7[data-on] .dz7-col:not(.on){opacity:1}
+}
+@media (prefers-reduced-motion:reduce){.dz7-amb i,.dz7-col .lit{animation:none}}
+</style>
+<div class="dz7-amb" aria-hidden="true"><i class="dz7-a1"></i><i class="dz7-a2"></i></div>
+<div class="dz7-in">
+<header class="dz7-hd">
+<p class="dz7-eb">Seven Zone Support</p>
+<h2 class="dz7-h" id="dz7-h">Seven zones, each one supporting your body <b>in its own way</b></h2>
+<p class="dz7-lede">Seven zones run under the body: head, shoulder, back, pelvis, knees, legs and ankles. Each one carries a different share of your weight, so every part of the body gets the support that suits it. The columns show how support is distributed between the zones.</p>
+</header>
+<div class="dz7-stage">
+<svg class="dz7-svg" id="dz7-svg" viewBox="0 26 1200 404" aria-hidden="true" focusable="false"><defs>
+<linearGradient id="dz7-gb" gradientUnits="userSpaceOnUse" x1="0" y1="40" x2="0" y2="340"><stop offset="0" stop-color="#7FE8E0" stop-opacity=".78"/><stop offset=".45" stop-color="#4FD3CB" stop-opacity=".34"/><stop offset="1" stop-color="#4FD3CB" stop-opacity=".07"/></linearGradient>
+<linearGradient id="dz7-gl" gradientUnits="userSpaceOnUse" x1="0" y1="40" x2="0" y2="340"><stop offset="0" stop-color="#E9FFFD" stop-opacity=".85"/><stop offset="1" stop-color="#4FD3CB" stop-opacity=".12"/></linearGradient>
+<linearGradient id="dz7-gc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9FFFD"/><stop offset="1" stop-color="#8CEBE4"/></linearGradient>
+<linearGradient id="dz7-ga" gradientUnits="userSpaceOnUse" x1="0" y1="40" x2="0" y2="340"><stop offset="0" stop-color="#4FD3CB" stop-opacity=".16"/><stop offset="1" stop-color="#4FD3CB" stop-opacity="0"/></linearGradient>
+<linearGradient id="dz7-gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A4D4DC" stop-opacity=".30"/><stop offset="1" stop-color="#A4D4DC" stop-opacity=".07"/></linearGradient>
+<radialGradient id="dz7-gf" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#4FD3CB" stop-opacity=".38"/><stop offset="1" stop-color="#4FD3CB" stop-opacity="0"/></radialGradient>
+<linearGradient id="dz7-cg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<pattern id="dz7-cells" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="url(#dz7-cg)"/></pattern>
+</defs>
+<ellipse cx="600" cy="404" rx="590" ry="26" fill="url(#dz7-gf)"/>
+<g class="dz7-grid"><line x1="24" x2="1176" y1="265" y2="265"/><line x1="24" x2="1176" y1="190" y2="190"/><line x1="24" x2="1176" y1="115" y2="115"/><line x1="24" x2="1176" y1="40" y2="40"/></g>
+<path id="dz7-area" d="M40,175.0L114.0,175.0C141.0,171.5 222.0,165.5 276.0,154.0C330.0,142.5 384.0,122.5 438.0,106.0C492.0,89.5 546.0,52.0 600.0,55.0C654.0,58.0 708.0,107.5 762.0,124.0C816.0,140.5 870.0,143.0 924.0,154.0C978.0,165.0 1059.0,184.0 1086.0,190.0L1160,190.0L1160,340L40,340Z" fill="url(#dz7-ga)"/>
+<g id="dz7-cols"><g class="dz7-col" data-z="1" style="--i:0"><path class="b" d="M40,340L40,199.0Q40,175.0 64,175.0L164,175.0Q188,175.0 188,199.0L188,340Z" fill="url(#dz7-gb)"/><path class="cl" d="M40,340L40,199.0Q40,175.0 64,175.0L164,175.0Q188,175.0 188,199.0L188,340Z" fill="url(#dz7-cells)"/><path class="lit" d="M40,340L40,199.0Q40,175.0 64,175.0L164,175.0Q188,175.0 188,199.0L188,340Z" fill="url(#dz7-gl)"/><rect class="cap" x="66" y="175.0" width="96" height="4" rx="2" fill="url(#dz7-gc)"/></g><g class="dz7-col" data-z="2" style="--i:1"><path class="b" d="M202,340L202,178.0Q202,154.0 226,154.0L326,154.0Q350,154.0 350,178.0L350,340Z" fill="url(#dz7-gb)"/><path class="cl" d="M202,340L202,178.0Q202,154.0 226,154.0L326,154.0Q350,154.0 350,178.0L350,340Z" fill="url(#dz7-cells)"/><path class="lit" d="M202,340L202,178.0Q202,154.0 226,154.0L326,154.0Q350,154.0 350,178.0L350,340Z" fill="url(#dz7-gl)"/><rect class="cap" x="228" y="154.0" width="96" height="4" rx="2" fill="url(#dz7-gc)"/></g><g class="dz7-col" data-z="3" style="--i:2"><path class="b" d="M364,340L364,130.0Q364,106.0 388,106.0L488,106.0Q512,106.0 512,130.0L512,340Z" fill="url(#dz7-gb)"/><path class="cl" d="M364,340L364,130.0Q364,106.0 388,106.0L488,106.0Q512,106.0 512,130.0L512,340Z" fill="url(#dz7-cells)"/><path class="lit" d="M364,340L364,130.0Q364,106.0 388,106.0L488,106.0Q512,106.0 512,130.0L512,340Z" fill="url(#dz7-gl)"/><rect class="cap" x="390" y="106.0" width="96" height="4" rx="2" fill="url(#dz7-gc)"/></g><g class="dz7-col" data-z="4" style="--i:3"><path class="b" d="M526,340L526,79.0Q526,55.0 550,55.0L650,55.0Q674,55.0 674,79.0L674,340Z" fill="url(#dz7-gb)"/><path class="cl" d="M526,340L526,79.0Q526,55.0 550,55.0L650,55.0Q674,55.0 674,79.0L674,340Z" fill="url(#dz7-cells)"/><path class="lit" d="M526,340L526,79.0Q526,55.0 550,55.0L650,55.0Q674,55.0 674,79.0L674,340Z" fill="url(#dz7-gl)"/><rect class="cap" x="552" y="55.0" width="96" height="4" rx="2" fill="url(#dz7-gc)"/></g><g class="dz7-col" data-z="5" style="--i:4"><path class="b" d="M688,340L688,148.0Q688,124.0 712,124.0L812,124.0Q836,124.0 836,148.0L836,340Z" fill="url(#dz7-gb)"/><path class="cl" d="M688,340L688,148.0Q688,124.0 712,124.0L812,124.0Q836,124.0 836,148.0L836,340Z" fill="url(#dz7-cells)"/><path class="lit" d="M688,340L688,148.0Q688,124.0 712,124.0L812,124.0Q836,124.0 836,148.0L836,340Z" fill="url(#dz7-gl)"/><rect class="cap" x="714" y="124.0" width="96" height="4" rx="2" fill="url(#dz7-gc)"/></g><g class="dz7-col" data-z="6" style="--i:5"><path class="b" d="M850,340L850,178.0Q850,154.0 874,154.0L974,154.0Q998,154.0 998,178.0L998,340Z" fill="url(#dz7-gb)"/><path class="cl" d="M850,340L850,178.0Q850,154.0 874,154.0L974,154.0Q998,154.0 998,178.0L998,340Z" fill="url(#dz7-cells)"/><path class="lit" d="M850,340L850,178.0Q850,154.0 874,154.0L974,154.0Q998,154.0 998,178.0L998,340Z" fill="url(#dz7-gl)"/><rect class="cap" x="876" y="154.0" width="96" height="4" rx="2" fill="url(#dz7-gc)"/></g><g class="dz7-col" data-z="7" style="--i:6"><path class="b" d="M1012,340L1012,214.0Q1012,190.0 1036,190.0L1136,190.0Q1160,190.0 1160,214.0L1160,340Z" fill="url(#dz7-gb)"/><path class="cl" d="M1012,340L1012,214.0Q1012,190.0 1036,190.0L1136,190.0Q1160,190.0 1160,214.0L1160,340Z" fill="url(#dz7-cells)"/><path class="lit" d="M1012,340L1012,214.0Q1012,190.0 1036,190.0L1136,190.0Q1160,190.0 1160,214.0L1160,340Z" fill="url(#dz7-gl)"/><rect class="cap" x="1038" y="190.0" width="96" height="4" rx="2" fill="url(#dz7-gc)"/></g></g>
+<path id="dz7-curveg" class="dz7-curveg" d="M114.0,175.0C141.0,171.5 222.0,165.5 276.0,154.0C330.0,142.5 384.0,122.5 438.0,106.0C492.0,89.5 546.0,52.0 600.0,55.0C654.0,58.0 708.0,107.5 762.0,124.0C816.0,140.5 870.0,143.0 924.0,154.0C978.0,165.0 1059.0,184.0 1086.0,190.0"/>
+<path id="dz7-curve" class="dz7-curve" d="M114.0,175.0C141.0,171.5 222.0,165.5 276.0,154.0C330.0,142.5 384.0,122.5 438.0,106.0C492.0,89.5 546.0,52.0 600.0,55.0C654.0,58.0 708.0,107.5 762.0,124.0C816.0,140.5 870.0,143.0 924.0,154.0C978.0,165.0 1059.0,184.0 1086.0,190.0"/>
+<rect x="24" y="338" width="1152" height="54" rx="18" fill="url(#dz7-gs)" stroke="rgba(164,212,220,.38)" stroke-width="1.2"/>
+<rect x="24" y="338" width="1152" height="54" rx="18" fill="url(#dz7-cells)" opacity=".9"/>
+<rect x="46" y="339.5" width="1108" height="1.5" rx=".75" fill="#fff" opacity=".28"/>
+<rect id="dz7-flash" class="dz7-flash" x="24" y="338" width="1152" height="54" rx="18"/>
+</svg>
+<ul class="dz7-names" aria-hidden="true"><li data-z="1"><i>01</i><span class="t">Head</span></li><li data-z="2"><i>02</i><span class="t">Shoulder</span></li><li data-z="3"><i>03</i><span class="t">Back</span></li><li data-z="4"><i>04</i><span class="t">Pelvis</span></li><li data-z="5"><i>05</i><span class="t">Knees</span></li><li data-z="6"><i>06</i><span class="t">Legs</span></li><li data-z="7"><i>07</i><span class="t">Ankles</span></li></ul>
+<div class="dz7-hits"><button type="button" class="dz7-hit" data-z="1" aria-label="Head: show what this zone does" aria-controls="dz7-tip"></button><button type="button" class="dz7-hit" data-z="2" aria-label="Shoulder: show what this zone does" aria-controls="dz7-tip"></button><button type="button" class="dz7-hit" data-z="3" aria-label="Back: show what this zone does" aria-controls="dz7-tip"></button><button type="button" class="dz7-hit" data-z="4" aria-label="Pelvis: show what this zone does" aria-controls="dz7-tip"></button><button type="button" class="dz7-hit" data-z="5" aria-label="Knees: show what this zone does" aria-controls="dz7-tip"></button><button type="button" class="dz7-hit" data-z="6" aria-label="Legs: show what this zone does" aria-controls="dz7-tip"></button><button type="button" class="dz7-hit" data-z="7" aria-label="Ankles: show what this zone does" aria-controls="dz7-tip"></button></div>
+</div>
+<div class="dz7-tipw"><p class="dz7-hint" id="dz7-hint">Hover over a zone to see what it does.</p><div class="dz7-tip" id="dz7-tip" role="status" aria-live="polite"></div></div>
+<ol class="dz7-list" id="dz7-list">
+<li data-z="1"><div class="dz7-zt"><i aria-hidden="true">1</i><h3>Head</h3></div><span class="dz7-zv">Settles in</span><p>The head is one of the lighter parts of the body. This zone gives way and lets the head settle in, instead of pushing it back.</p></li>
+<li data-z="2"><div class="dz7-zt"><i aria-hidden="true">2</i><h3>Shoulder</h3></div><span class="dz7-zv">Yields</span><p>The shoulder is the widest part of a side sleeper and takes a large share of the load. The latex yields here, so the shoulder settles into the surface and the spine can stay level.</p></li>
+<li data-z="3"><div class="dz7-zt"><i aria-hidden="true">3</i><h3>Back</h3></div><span class="dz7-zv">Rises to meet</span><p>Under the waist the latex rises to meet the natural curve of the lower back. It supports the hollow without pushing into it, so the spine keeps its neutral line.</p></li>
+<li data-z="4"><div class="dz7-zt"><i aria-hidden="true">4</i><h3>Pelvis</h3></div><span class="dz7-zv">Holds firm</span><p>The pelvis carries the most weight. This zone is reinforced, so the hips do not sink below the shoulders and the spine is not bent out of line.</p></li>
+<li data-z="5"><div class="dz7-zt"><i aria-hidden="true">5</i><h3>Knees</h3></div><span class="dz7-zv">Spreads the load</span><p>Latex spreads the weight of the knees over a wider area, so no single point carries too much and the joint is not pressed into the surface.</p></li>
+<li data-z="6"><div class="dz7-zt"><i aria-hidden="true">6</i><h3>Legs</h3></div><span class="dz7-zv">Follows the shape</span><p>Latex is elastic. It gives under muscle and soft tissue and comes back, following your shape without holding it, so muscles do not work to push against the surface.</p></li>
+<li data-z="7"><div class="dz7-zt"><i aria-hidden="true">7</i><h3>Ankles</h3></div><span class="dz7-zv">Releases</span><p>At the far end the load is light. Lower, more even pressure here helps you stay comfortable and change position freely.</p></li>
+</ol>
+<div class="dz7-foot">
+<span class="dz7-leaf"><img src="https://cdn.jsdelivr.net/gh/Matrress/Animation@9d681f860c9dae7dd866236d6824f413443b8512/divine-home-discovery/assets/bio-dunlop.svg" alt="Bio Dunlop" width="120" height="46" loading="lazy" decoding="async"></span>
+<div class="dz7-btns">
+<a class="dz7-btn is-pri" href="https://divinedunlop.com/products/latex-mattresses-collection">Find Your 7 Zone Latex Mattress <u aria-hidden="true">→</u></a>
+<a class="dz7-btn" href="https://divinedunlop.com/products/latex-toppers-collection">Find Your 7 Zone Latex Topper <u aria-hidden="true">→</u></a>
+</div>
+</div>
+</div>
+<script>
+(function(){
+  var s=document.getElementById('dz7');
+  if(!s)return;
+  var N=7,X0=40,CW=148,GAP=14,BASE=340,MAXH=300,R=24;
+  var H=[0.55, 0.62, 0.78, 0.95, 0.72, 0.62, 0.5];
+  var cols=s.querySelectorAll('.dz7-col'),areaEl=document.getElementById('dz7-area'),curveEl=document.getElementById('dz7-curve'),curveG=document.getElementById('dz7-curveg');
+  var mq=window.matchMedia('(max-width:640px)'),mq2=window.matchMedia('(max-width:940px) and (max-height:520px) and (orientation:landscape)'),rm=window.matchMedia('(prefers-reduced-motion:reduce)');
+  function still(){return mq.matches||mq2.matches||rm.matches}
+  function colD(i,h){
+    var x=X0+i*(CW+GAP),y=BASE-h;
+    return 'M'+x+','+BASE+'L'+x+','+(y+R)+'Q'+x+','+y+' '+(x+R)+','+y+'L'+(x+CW-R)+','+y+'Q'+(x+CW)+','+y+' '+(x+CW)+','+(y+R)+'L'+(x+CW)+','+BASE+'Z';
+  }
+  function curve(p){
+    var q=[p[0]].concat(p,[p[p.length-1]]),d='M'+p[0][0].toFixed(1)+','+p[0][1].toFixed(1);
+    for(var i=1;i<q.length-2;i++){
+      var a=q[i-1],b=q[i],c=q[i+1],e=q[i+2];
+      d+='C'+(b[0]+(c[0]-a[0])/6).toFixed(1)+','+(b[1]+(c[1]-a[1])/6).toFixed(1)+' '+(c[0]-(e[0]-b[0])/6).toFixed(1)+','+(c[1]-(e[1]-b[1])/6).toFixed(1)+' '+c[0].toFixed(1)+','+c[1].toFixed(1);
+    }
+    return d;
+  }
+  function draw(t,flat){
+    var pts=[];
+    for(var i=0;i<N;i++){
+      var p=flat?1:.82+.18*(.5+.5*Math.sin(6.2832*(t-i*.37)/2.6)),h=H[i]*MAXH*p,y=BASE-h,d=colD(i,h),x=X0+i*(CW+GAP);
+      var ps=cols[i].querySelectorAll('path'),cap=cols[i].querySelector('.cap');
+      for(var k=0;k<ps.length;k++)ps[k].setAttribute('d',d);
+      cap.setAttribute('y',y.toFixed(1));
+      pts.push([x+CW/2,y]);
+    }
+    var cd=curve(pts);
+    curveEl.setAttribute('d',cd);curveG.setAttribute('d',cd);
+    var xl=X0,xr=X0+(N-1)*(CW+GAP)+CW;
+    areaEl.setAttribute('d','M'+xl+','+pts[0][1].toFixed(1)+'L'+cd.slice(1)+'L'+xr+','+pts[N-1][1].toFixed(1)+'L'+xr+','+BASE+'L'+xl+','+BASE+'Z');
+  }
+  var vis=true,raf=0,t0=0;
+  function loop(ts){
+    raf=0;
+    if(still()){draw(0,true);return}
+    if(!vis)return;
+    if(!t0)t0=ts;
+    draw((ts-t0)/1000,false);
+    raf=requestAnimationFrame(loop);
+  }
+  function kick(){if(!raf)raf=requestAnimationFrame(loop)}
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(x){vis=x.isIntersecting;s.classList[vis?'add':'remove']('dz7-vis');if(vis)kick()});
+    },{threshold:.05}).observe(s);
+  }else{s.classList.add('dz7-vis');kick()}
+  [mq,mq2,rm].forEach(function(m){if(m.addEventListener)m.addEventListener('change',function(){draw(0,true);kick()})});
+  if(still())draw(0,true);
+
+  /* малкият прозорец */
+  var tip=document.getElementById('dz7-tip'),hint=document.getElementById('dz7-hint'),tw=s.querySelector('.dz7-tipw');
+  var hits=s.querySelectorAll('.dz7-hit'),lis=s.querySelectorAll('.dz7-names li'),flash=document.getElementById('dz7-flash'),cur=null;
+  if(!window.matchMedia('(hover:hover)').matches&&hint)hint.textContent='Tap a zone to see what it does.';
+  function mark(z){
+    for(var k=0;k<cols.length;k++)cols[k].classList[cols[k].getAttribute('data-z')===z?'add':'remove']('on');
+    for(var j=0;j<lis.length;j++)lis[j].classList[lis[j].getAttribute('data-z')===z?'add':'remove']('on');
+  }
+  function show(z,btn){
+    var li=s.querySelector('.dz7-list [data-z="'+z+'"]');
+    if(!li)return;
+    cur=z;
+    tip.innerHTML=li.innerHTML;
+    var wr=tw.getBoundingClientRect(),br=btn.getBoundingClientRect(),cx=br.left+br.width/2-wr.left,w=tip.offsetWidth,left=Math.max(0,Math.min(cx-w/2,tw.clientWidth-w));
+    tip.style.left=left+'px';
+    tip.style.setProperty('--ax',Math.max(22,Math.min(w-22,cx-left))+'px');
+    tip.classList.add('show');
+    s.setAttribute('data-on','1');
+    mark(z);
+    flash.classList.remove('go');void flash.getBoundingClientRect();flash.classList.add('go');
+  }
+  function hide(){
+    cur=null;
+    tip.classList.remove('show');
+    s.removeAttribute('data-on');
+    mark('');
+  }
+  for(var k=0;k<hits.length;k++){
+    (function(h){
+      var z=h.getAttribute('data-z');
+      h.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse')show(z,h)});
+      h.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse')hide()});
+      h.addEventListener('click',function(e){if(e.pointerType&&e.pointerType!=='mouse'||e.detail===0){cur===z?hide():show(z,h)}});
+      h.addEventListener('focus',function(){show(z,h)});
+      h.addEventListener('blur',hide);
+    })(hits[k]);
+  }
+  document.addEventListener('pointerdown',function(e){if(cur&&e.pointerType!=='mouse'&&!s.contains(e.target))hide()});
+})();
+</script>
+</section>
