@@ -205,3 +205,13 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - **7-Zone:** the zone name and its note are written inside each zone of the drawing (the mattress drawn deeper to hold them; ink chosen per shade for contrast). No separate boxes, no Z1–Z7 labels. Beside the film, a short key to the three shades.
 - **Wording is human and direct** ("Everything about the mattress, topic by topic.", "A message at every stage. Delivery is included in the price.", "Your choices appear here.").
 - Tests: R7 (green CTA, square gallery tile), R18, R27 (drawing ratio 2550/1090), R33 (no teal), R34 (zones inside the drawing). All 136 design checks, the price, selection and sync contracts pass.
+
+## Round XVII (owner, 19 November 2026, wireframe IMG_6191)
+- **7-Zone drawing shallower.** The zone block is no longer a "foundation": the drawing is about 9% less deep (ratio 2550 : 995). Names and notes stay inside their zones; the narrow Feet & Ankles zone gets a slightly smaller type on two lines.
+- **Adaptation and its film keep their former size and outline.** The film column is the old 250 px with a 16 : 9 picture, not stretched; the four cards are horizontal rows beside it.
+- **The leaf is the Botanic green** (#93AB57 to #6E8A3A), no longer the pale, milky green.
+- **Your selection:** the mattress icon is no longer in the heading. It sits below the Add to Bag button, large (88% of the column width) and calm, in vanilla; it turns soft green when all four choices are made. The card has 14 px of air above it and never touches the cards above.
+- **Your order** is exactly as wide as the Explore card above it (same left and right edge), and no longer runs over the Your selection column.
+- **The film panel is redesigned** as in the wireframe: a latte panel, inside it a coffee card holding the film and its title in vanilla, and a line of text on the latte beneath it. Used for every film (Discover, Benefits, Adaptation, 7-Zone, Ventilation, Certifications). On Discover the bowl picture and the logo sit in the same panel.
+- **Optimised Preview / Standard Product View:** one common latte card, no green border. The pressed button is coffee with vanilla text; hover and press change the colour.
+- Tests: R7 (no border on the view switch), R9 (leaf colours), R27 (drawing ratio). All 136 design checks and the price, selection and sync contracts pass.

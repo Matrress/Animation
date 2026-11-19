@@ -70,7 +70,7 @@
   },
   {
    "pass": true,
-   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
    "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
@@ -80,8 +80,8 @@
   },
   {
    "pass": true,
-   "rule": "R9 the leaf is green",
-   "detail": "#9BD26B,#63B963"
+   "rule": "R9 the leaf is the Botanic green, not a milky one",
+   "detail": "#93AB57,#6E8A3A"
   },
   {
    "pass": true,
@@ -171,7 +171,7 @@
   {
    "pass": true,
    "rule": "R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones",
-   "detail": "{\"bg\":\"none\",\"ratio\":2.339,\"share\":1,\"video\":true}"
+   "detail": "{\"bg\":\"none\",\"ratio\":2.563,\"share\":1,\"video\":true}"
   },
   {
    "pass": true,
@@ -270,7 +270,7 @@
   },
   {
    "pass": true,
-   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
    "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
@@ -280,8 +280,8 @@
   },
   {
    "pass": true,
-   "rule": "R9 the leaf is green",
-   "detail": "#9BD26B,#63B963"
+   "rule": "R9 the leaf is the Botanic green, not a milky one",
+   "detail": "#93AB57,#6E8A3A"
   },
   {
    "pass": true,
@@ -371,7 +371,7 @@
   {
    "pass": true,
    "rule": "R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones",
-   "detail": "{\"bg\":\"none\",\"ratio\":2.339,\"share\":1,\"video\":true}"
+   "detail": "{\"bg\":\"none\",\"ratio\":2.563,\"share\":1,\"video\":true}"
   },
   {
    "pass": true,
@@ -510,7 +510,7 @@
   },
   {
    "pass": true,
-   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; Optimised Preview outlined, Standard Product View in its own colour; flat, no glow",
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
    "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
@@ -520,8 +520,8 @@
   },
   {
    "pass": true,
-   "rule": "R9 the leaf is green",
-   "detail": "#9BD26B,#63B963"
+   "rule": "R9 the leaf is the Botanic green, not a milky one",
+   "detail": "#93AB57,#6E8A3A"
   },
   {
    "pass": true,
@@ -611,7 +611,7 @@
   {
    "pass": true,
    "rule": "R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones",
-   "detail": "{\"bg\":\"none\",\"ratio\":2.34,\"share\":1,\"video\":true}"
+   "detail": "{\"bg\":\"none\",\"ratio\":2.563,\"share\":1,\"video\":true}"
   },
   {
    "pass": true,
