@@ -7,6 +7,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { OWN } from './own-panels.mjs';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -30,19 +31,19 @@ D.covers = D.covers.map((c, i) => Object.assign(c, { mod: [0, 0, 0, 77][i] }));
 
 // ---- the information chapters: the approved description, broken into buttons (read from the source, never retyped) ----
 const SPEC = [
-  ['discover', 'Discover', [['intro', 'Introduction', 'hero'], ['glance', 'At a Glance', 'facts']]],
-  ['firmness', 'Firmness', [['choose', 'Select Your Firmness', 'step:firmness'], ['principle', 'Correct vs Softer', 'read:0'], ['regulation', 'How It Works', 'read:1'], ['who', 'Who It Is For', 'read:2']]],
-  ['comfort', 'Comfort', [['expect', 'What To Expect', 'article'], ['behaviour', 'Latex Behaviour', 'read:0'], ['density', 'How Density Works', 'density']]],
-  ['height', 'Height', [['sizes', 'Select Your Size', 'step:size'], ['heights', 'Select Your Depth', 'step:depth'], ['why', 'Why Height Matters', 'read:0']]],
-  ['covers', 'Covers', [['choose', 'Select Your Cover', 'step:cover'], ['system', 'Cover System', 'read:4']]],
+  ['discover', 'Discover', [['intro', 'Introduction', 'hero'], ['glance', 'At a Glance', 'facts'], ['who', 'Who It Is For', 'copy:firmness/who'], ['promise', 'Honest Promise', 'own:promise']]],
+  ['firmness', 'Firmness', [['choose', 'Select Your Firmness', 'step:firmness'], ['principle', 'Correct vs Softer', 'read:0'], ['regulation', 'How It Works', 'read:1'], ['who', 'Who It Is For', 'read:2'], ['lying', 'Lying, Not Sitting', 'own:lying'], ['balance', 'Firmer Is Not Always Better', 'own:balance']]],
+  ['comfort', 'Comfort', [['expect', 'What To Expect', 'article'], ['first', 'Your First Ten Days', 'own:first'], ['behaviour', 'Latex Behaviour', 'read:0'], ['density', 'How Density Works', 'density']]],
+  ['height', 'Height', [['sizes', 'Select Your Size', 'step:size'], ['heights', 'Select Your Depth', 'step:depth'], ['why', 'Why Height Matters', 'read:0'], ['cover', 'Core And Cover', 'copy:covers/fit']]],
+  ['covers', 'Covers', [['choose', 'Select Your Cover', 'step:cover'], ['fit', 'How The Cover Fits', 'coverfit'], ['care', 'Zip And Washing', 'covercare'], ['warranty', 'Covers And Warranty', 'coverwarranty'], ['system', 'Cover System', 'read:4']]],
   ['benefits', 'Benefits', [['origin', 'Origin', 'points'], ['why', 'Why Latex', 'read:0']]],
-  ['support', 'Support', [['bearing', 'Bearing Force', 'points'], ['together', 'Support + Adaptation', 'read:0'], ['density', 'How Density Works', 'density']]],
-  ['adaptation', 'Adaptation', [['elasticity', 'Elasticity', 'points'], ['feel', 'How It Feels', 'read:0'], ['adjustable', 'Adjustable Beds', 'adjust']]],
+  ['support', 'Support', [['bearing', 'Bearing Force', 'points'], ['feel', 'How Support Feels', 'own:supportfeel'], ['together', 'Support + Adaptation', 'read:0'], ['density', 'How Density Works', 'density']]],
+  ['adaptation', 'Adaptation', [['elasticity', 'Elasticity', 'points'], ['why', 'Why It Matters', 'own:adaptwhy'], ['feel', 'How It Feels', 'read:0'], ['adjustable', 'Adjustable Beds', 'adjust']]],
   ['zones', '7-Zone', [['map', 'Zone Map', 'zones'], ['detail', 'Zone By Zone', 'read:0']]],
   ['ventilation', 'Ventilation', [['airflow', 'Airflow', 'points'], ['sleep', 'Why It Matters', 'read:0']]],
-  ['hygiene', 'Hygiene', [['clean', 'Cleaner Sleep', 'points'], ['picture', 'Realistic Picture', 'read:0']]],
-  ['certs', 'Certifications', [['bodies', 'Certifications', 'certs'], ['made', 'Where It Is Made', 'read:0']]],
-  ['warranty', 'Warranty', [['cover', 'Warranty + Gift', 'numerals'], ['conditions', 'Conditions', 'read:0']]],
+  ['hygiene', 'Hygiene', [['clean', 'Cleaner Sleep', 'points'], ['wash', 'Zip And Washing', 'copy:covers/care'], ['picture', 'Realistic Picture', 'read:0']]],
+  ['certs', 'Certifications', [['bodies', 'Certifications', 'certs'], ['plants', 'Three Plants In Europe', 'own:plants'], ['made', 'Where It Is Made', 'read:0']]],
+  ['warranty', 'Warranty', [['cover', 'Warranty + Gift', 'numerals'], ['covers', 'Covers And Warranty', 'copy:covers/warranty'], ['conditions', 'Conditions', 'read:0']]],
   ['delivery', 'Delivery', [['made', 'Made To Order', 'read:0'], ['journey', 'Delivery Journey', 'journey'], ['prep', 'Before It Arrives', 'prep'], ['yours', 'Your Botanic', 'step:review']]]
 ];
 const ROOTS = { discover: '#bp-top', firmness: '#bp-firmness', comfort: '#bp-comfort', height: '#bp-height', covers: '#bp-covers', benefits: '#bp-benefits', support: '#bp-support', adaptation: '#bp-adaptation', zones: '#bp-zones', ventilation: '#bp-ventilation', hygiene: '#bp-hygiene', certs: '#bp-certs', warranty: '#bp-warranty', delivery: '#bp-delivery' };
@@ -98,6 +99,8 @@ const MEDIA_CAP = { benefits: 'Milk to foam: where latex begins', adaptation: 'E
       id, label: TC(label), head: x.head || null, media: MEDIA_CAP[id] || null,
       panels: panels.map(([pid, plabel, kind]) => {
         const o = { id: pid, label: TC(plabel), kind: kind.split(':')[0] };
+        if (kind.startsWith('copy:')) { o.from = kind.slice(5); return o; }
+        if (kind.startsWith('own:')) { const w = OWN[kind.slice(4)]; o.kind = 'read'; o.title = w.title; o.groups = JSON.parse(JSON.stringify(w.groups)); return o; }
         if (kind.startsWith('step:')) o.step = kind.slice(5);
         else if (kind.startsWith('read:')) { const d = x.details[+kind.slice(5)]; o.title = d.q; o.groups = d.groups; }
         else if (kind === 'article') { o.title = x.head.title; o.groups = [{ h: null, blocks: X.comfortParas.map((t) => ({ k: 'p', t })) }]; }
@@ -109,6 +112,8 @@ const MEDIA_CAP = { benefits: 'Milk to foam: where latex begins', adaptation: 'E
       })
     };
   });
+  // a panel shown in two places is one panel: Who It Is For (Discover + Firmness), Core And Cover (Depth + Cover), Zip And Washing (Hygiene + Cover), Covers And Warranty (Warranty + Cover)
+  D.chapters.forEach((c) => c.panels.forEach((p) => { if (p.kind === 'copy') { const [sc, sp] = p.from.split('/'); const src = D.chapters.find((k) => k.id === sc).panels.find((k) => k.id === sp); const { id, label } = p; Object.keys(p).forEach((k) => delete p[k]); Object.assign(p, JSON.parse(JSON.stringify(src)), { id, label }); } }));
   // every text of the description that a panel shows is read from the source above; report what was taken
   const cnt = D.chapters.reduce((n, c) => n + c.panels.length, 0);
   console.log('information chapters:', D.chapters.length, 'chapters,', cnt, 'panels; groups per reader:', D.chapters.flatMap((c) => c.panels.filter((p) => p.groups).map((p) => c.id + '/' + p.id + ':' + p.groups.length)).join(' '));
@@ -225,6 +230,7 @@ D.curated = {
   // 35 7EDDE74B
   'delivery/yours': { flow: ['Add to your bag', 'Go to Checkout', 'Place your Order'] }
 };
+D.curated['discover/who'] = D.curated['firmness/who'];   // the same panel, in Discover as well as in Firmness
 /* IGNITION: the start-up of the television, shown each time it is switched on (page start and every press of Optimised
    Preview). Minimal, like a car's instrument panel waking up. The two facts are mandatory and are the description's own
    (hero bar: "100% Organic · Dunlop Technology"); a later model sets its own name and facts here. */

@@ -1,7 +1,7 @@
 {
  "date": "2026-11-19",
  "failures": 0,
- "checks": 136,
+ "checks": 142,
  "rows": [
   {
    "pass": true,
@@ -21,42 +21,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "504.8 / 504.8 / 504.8"
+   "detail": "524.8 / 524.8 / 524.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "504.8 / 504.8 / 504.8"
+   "detail": "524.8 / 524.8 / 524.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "504.8 / 504.8 / 504.8"
+   "detail": "524.8 / 524.8 / 524.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "504.8 / 504.8 / 504.8"
+   "detail": "524.8 / 524.8 / 524.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "504.8 / 504.8 / 504.8"
+   "detail": "524.8 / 524.8 / 524.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "440.8 / 440.8 / 440.8"
+   "detail": "460.8 / 460.8 / 460.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "440.8 / 440.8 / 440.8"
+   "detail": "460.8 / 460.8 / 460.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "440.8 / 440.8 / 440.8"
+   "detail": "460.8 / 460.8 / 460.8"
   },
   {
    "pass": true,
@@ -81,7 +81,7 @@
   {
    "pass": true,
    "rule": "R9 the leaf is the Botanic green, not a milky one",
-   "detail": "#93AB57,#6E8A3A"
+   "detail": "#6E8601,#6E8601"
   },
   {
    "pass": true,
@@ -166,7 +166,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "31 panels"
+   "detail": "43 panels"
   },
   {
    "pass": true,
@@ -206,7 +206,7 @@
   {
    "pass": true,
    "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; no scrolling inside the screen",
-   "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"AB\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
+   "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
   },
   {
    "pass": true,
@@ -221,12 +221,22 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":125,\"stageTop\":278,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":145,\"stageTop\":278,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
    "rule": "R40 every text has strong contrast on its colour (4.5:1, large text 3:1) on all main screens",
-   "detail": "15 screens"
+   "detail": "26 screens"
+  },
+  {
+   "pass": true,
+   "rule": "R41 one green #6E8601 for Add to Bag, Confirm and the gallery tile, white labels, a white edge; the leaf in the same green",
+   "detail": "{\"gr\":{\"bag\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"gal\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"galLabel\":\"rgb(255, 255, 255)\",\"leaf\":\"#6E8601,#6E8601\"},\"cf\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R42 Covers explained (fit with a drawing, zip and washing at 40°C, warranty only for the core, a spare cover); Who It Is For in Discover and Firmness; the customer letter in Firmness, Comfort, Support, Adaptation and Certifications; the cover facts also in Hygiene and Warranty",
+   "detail": "{\"fitSvg\":\"24 cmin totalCover · 1 cmLatex core · 22 cmthe part the warr\",\"railC\":[\"AHow The Cover FitsHelps you choose\",\"BZip And WashingHelps you choose\",\"CCovers And WarrantyHelps you choose\",\"DCover SystemHelps you choose\"],\"who1\":1052,\"who2\":1052}"
   },
   {
    "pass": true,
@@ -281,7 +291,7 @@
   {
    "pass": true,
    "rule": "R9 the leaf is the Botanic green, not a milky one",
-   "detail": "#93AB57,#6E8A3A"
+   "detail": "#6E8601,#6E8601"
   },
   {
    "pass": true,
@@ -366,7 +376,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "31 panels"
+   "detail": "43 panels"
   },
   {
    "pass": true,
@@ -406,7 +416,7 @@
   {
    "pass": true,
    "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; no scrolling inside the screen",
-   "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"AB\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
+   "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
   },
   {
    "pass": true,
@@ -421,12 +431,22 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":242,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":314,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
    "rule": "R40 every text has strong contrast on its colour (4.5:1, large text 3:1) on all main screens",
-   "detail": "15 screens"
+   "detail": "26 screens"
+  },
+  {
+   "pass": true,
+   "rule": "R41 one green #6E8601 for Add to Bag, Confirm and the gallery tile, white labels, a white edge; the leaf in the same green",
+   "detail": "{\"gr\":{\"bag\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"gal\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"galLabel\":\"rgb(255, 255, 255)\",\"leaf\":\"#6E8601,#6E8601\"},\"cf\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R42 Covers explained (fit with a drawing, zip and washing at 40°C, warranty only for the core, a spare cover); Who It Is For in Discover and Firmness; the customer letter in Firmness, Comfort, Support, Adaptation and Certifications; the cover facts also in Hygiene and Warranty",
+   "detail": "{\"fitSvg\":\"24 cmin totalCover · 1 cmLatex core · 22 cmthe part the warr\",\"railC\":[\"AHow The Cover FitsHelps you choose\",\"BZip And WashingHelps you choose\",\"CCovers And WarrantyHelps you choose\",\"DCover SystemHelps you choose\"],\"who1\":1052,\"who2\":1052}"
   },
   {
    "pass": true,
@@ -461,42 +481,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "504.8 / 504.8 / 504.8"
+   "detail": "524.8 / 524.8 / 524.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "504.8 / 504.8 / 504.8"
+   "detail": "524.8 / 524.8 / 524.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "504.8 / 504.8 / 504.8"
+   "detail": "524.8 / 524.8 / 524.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "504.8 / 504.8 / 504.8"
+   "detail": "524.8 / 524.8 / 524.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "504.8 / 504.8 / 504.8"
+   "detail": "524.8 / 524.8 / 524.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "440.8 / 440.8 / 440.8"
+   "detail": "460.8 / 460.8 / 460.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "440.8 / 440.8 / 440.8"
+   "detail": "460.8 / 460.8 / 460.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "440.8 / 440.8 / 440.8"
+   "detail": "460.8 / 460.8 / 460.8"
   },
   {
    "pass": true,
@@ -521,7 +541,7 @@
   {
    "pass": true,
    "rule": "R9 the leaf is the Botanic green, not a milky one",
-   "detail": "#93AB57,#6E8A3A"
+   "detail": "#6E8601,#6E8601"
   },
   {
    "pass": true,
@@ -606,7 +626,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "31 panels"
+   "detail": "43 panels"
   },
   {
    "pass": true,
@@ -646,7 +666,7 @@
   {
    "pass": true,
    "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; no scrolling inside the screen",
-   "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"AB\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
+   "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
   },
   {
    "pass": true,
@@ -661,12 +681,22 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":249,\"stageTop\":154,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":269,\"stageTop\":154,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
    "rule": "R40 every text has strong contrast on its colour (4.5:1, large text 3:1) on all main screens",
-   "detail": "15 screens"
+   "detail": "26 screens"
+  },
+  {
+   "pass": true,
+   "rule": "R41 one green #6E8601 for Add to Bag, Confirm and the gallery tile, white labels, a white edge; the leaf in the same green",
+   "detail": "{\"gr\":{\"bag\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"gal\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"galLabel\":\"rgb(255, 255, 255)\",\"leaf\":\"#6E8601,#6E8601\"},\"cf\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R42 Covers explained (fit with a drawing, zip and washing at 40°C, warranty only for the core, a spare cover); Who It Is For in Discover and Firmness; the customer letter in Firmness, Comfort, Support, Adaptation and Certifications; the cover facts also in Hygiene and Warranty",
+   "detail": "{\"fitSvg\":\"24 cmin totalCover · 1 cmLatex core · 22 cmthe part the warr\",\"railC\":[\"AHow The Cover FitsHelps you choose\",\"BZip And WashingHelps you choose\",\"CCovers And WarrantyHelps you choose\",\"DCover SystemHelps you choose\"],\"who1\":1052,\"who2\":1052}"
   },
   {
    "pass": true,
