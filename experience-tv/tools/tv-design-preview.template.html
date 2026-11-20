@@ -1378,6 +1378,12 @@ body { background: #F5F4E5; }
 .conv input::-webkit-outer-spin-button, .conv input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .conv .eq { font-size: 18px; font-weight: 700; color: #384442; }
 .fcard .rg2 { display: block; font-size: 13px; color: #384442; margin-top: 2px; }
+
+/* ===== ROUND XXIV (owner, 20 Nov): the Bio Dunlop logo and the cup of latex always sit under Add to Bag, one after the other ===== */
+.ivory .mine .brandc { flex: none; background: #FEFEF6; border: 1px solid #DDD6C4; border-radius: 16px; padding: 14px 16px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.ivory .mine .brandc .bioword { width: 78%; height: auto; margin: 0; }
+.ivory .mine .brandc small { display: block; font-size: 10.5px; letter-spacing: .34em; font-weight: 600; color: #384442; text-align: center; margin: -2px 0 2px; }
+.ivory .mine .brandc img { width: 66%; height: auto; display: block; }
 </style>
 </head>
 <body>
@@ -1394,7 +1400,7 @@ body { background: #F5F4E5; }
     <nav class="chbar" id="chbar" aria-label="Explore and Select &amp; Buy"></nav><div class="trailbar" id="trailbar"></div>
     <nav class="rail" id="rail" aria-label="This topic and your order"></nav>
     <section class="stage"><div class="colh" id="stageh"></div><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
-    <aside class="mine" aria-label="Your selection"><h2><span>Your selection</span></h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="mi" id="mi"></div><div class="bag" id="bag"></div></aside>
+    <aside class="mine" aria-label="Your selection"><h2><span>Your selection</span></h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="mi" id="mi"></div><div class="bag" id="bag"></div><div class="brandc" id="brandc"></div></aside>
   </div>
     <div class="ign" id="ign" hidden role="region" aria-label="The screen is starting"></div></main>
   <section id="std" class="stdv" aria-label="Standard Product View (stand-in)"></section>
@@ -1575,6 +1581,7 @@ var D = /*__DATA__*/;
     var h = '';
     var nOn = ['size', 'depth', 'firmness', 'cover'].filter(chosen).length; h = h + '<div class="gauge' + (nOn === 4 ? ' full' : '') + '" role="img" aria-label="' + nOn + ' of 4 choices made">' + [0, 1, 2, 3].map(function (i) { return '<i class="' + (i < nOn ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="gl"><span>' + nOn + ' of 4</span><span>' + (nOn === 4 ? 'Ready' : 'Your choices') + '</span></div>';
     $('#chips').innerHTML = h;
+    var bc0 = $('#brandc'); if (bc0 && !bc0.firstChild) bc0.innerHTML = wordSvg(D.bioFull, 'bioword full') + '<small>DIVINE DUNLOP DREAMS</small><img src="' + D.bowl + '" alt="Natural latex milk in a tapping cup, with rubber tree leaves">';
     $('#mi').innerHTML = mattressCard(); var mi0 = $('#mi'); if (mi0) mi0.classList.toggle('ok', ['size', 'firmness', 'depth', 'cover'].filter(chosen).length >= 4);
     var p = price(), full = complete();
     var sh = shop(); $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small>' + priceParts(sh) + '<span>' + (sh == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the prices and the discount are Ecwid\'s own.') + '</span>';
@@ -1897,7 +1904,7 @@ var D = /*__DATA__*/;
   function heroView() {
     var H = D.hero, B = CUR('discover/intro').bold || [], bold = function (t) { var h = esc(t); B.forEach(function (w) { h = h.replace(esc(w), '<b>' + esc(w) + '</b>'); }); return h; };
     return '<div class="hero"><div><div class="rc"><h2>' + esc(H.headline) + '</h2><p>' + bold(H.intro) + '</p><p>' + esc(H.note) + '</p></div></div>' +
-      '<div>' + filmPanel('The whole Botanic in one loop', 'The full film plays on demand in the shop.', film(D.videos && D.videos.discover), '<div class="brandbox"><img src="' + D.bowl + '" alt="Natural latex milk in a tapping cup, with rubber tree leaves"><div>' + wordSvg(D.bioFull, 'bioword full') + '<small>DIVINE DUNLOP DREAMS</small></div></div>', 'Presentation video') + '</div></div>' +
+      '<div>' + filmPanel('The whole Botanic in one loop', 'The full film plays on demand in the shop.', film(D.videos && D.videos.discover), '', 'Presentation video') + '</div></div>' +
       '<div class="fts f3">' + D.features.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '</div>';
   }
   function factsView() {

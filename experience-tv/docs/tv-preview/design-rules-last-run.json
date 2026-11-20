@@ -1,7 +1,7 @@
 {
  "date": "2026-11-20",
  "failures": 0,
- "checks": 151,
+ "checks": 154,
  "rows": [
   {
    "pass": true,
@@ -221,7 +221,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":305,\"yFam\":305,\"yPick\":305,\"yNav\":59,\"stageTop\":281,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":305,\"yFam\":305,\"yPick\":305,\"yNav\":212,\"stageTop\":128,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -257,6 +257,11 @@
    "pass": true,
    "rule": "R45 weight in kg and stones and pounds, height in cm and inches: typed or slid, each changes the others at once, an out-of-range value waits, and the firmness guidance follows",
    "detail": "{\"w1\":{\"kg\":\"82\",\"st\":\"12\",\"lb\":\"13\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"82\",\"gh\":\"170\",\"wv\":\"82 kg\",\"wi\":\"12 st 13 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"w2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"4\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"72\",\"gh\":\"170\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"h1\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"182\",\"inch\":\"71.7\",\"gw\":\"72\",\"gh\":\"182\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"182 cm\",\"hi\":\"6 ft 0 in\",\"rec\":1},\"h2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"178\",\"inch\":\"70\",\"gw\":\"72\",\"gh\":\"178\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1},\"bad\":\"72\",\"w3\":{\"kg\":\"100\",\"st\":\"15\",\"lb\":\"10\",\"cm\":\"178\",\"inch\":\"70.1\",\"gw\":\"100\",\"gh\":\"178\",\"wv\":\"100 kg\",\"wi\":\"15 st 10 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1}}"
+  },
+  {
+   "pass": true,
+   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first; the Discover panel no longer holds them",
+   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
   },
   {
    "pass": true,
@@ -485,6 +490,11 @@
   },
   {
    "pass": true,
+   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first; the Discover panel no longer holds them",
+   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
+  },
+  {
+   "pass": true,
    "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
    "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
   },
@@ -711,7 +721,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":183,\"stageTop\":157,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":326,\"stageTop\":14,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -747,6 +757,11 @@
    "pass": true,
    "rule": "R45 weight in kg and stones and pounds, height in cm and inches: typed or slid, each changes the others at once, an out-of-range value waits, and the firmness guidance follows",
    "detail": "{\"w1\":{\"kg\":\"82\",\"st\":\"12\",\"lb\":\"13\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"82\",\"gh\":\"170\",\"wv\":\"82 kg\",\"wi\":\"12 st 13 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"w2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"4\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"72\",\"gh\":\"170\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"h1\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"182\",\"inch\":\"71.7\",\"gw\":\"72\",\"gh\":\"182\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"182 cm\",\"hi\":\"6 ft 0 in\",\"rec\":1},\"h2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"178\",\"inch\":\"70\",\"gw\":\"72\",\"gh\":\"178\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1},\"bad\":\"72\",\"w3\":{\"kg\":\"100\",\"st\":\"15\",\"lb\":\"10\",\"cm\":\"178\",\"inch\":\"70.1\",\"gw\":\"100\",\"gh\":\"178\",\"wv\":\"100 kg\",\"wi\":\"15 st 10 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1}}"
+  },
+  {
+   "pass": true,
+   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first; the Discover panel no longer holds them",
+   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
   },
   {
    "pass": true,
