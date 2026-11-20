@@ -1379,11 +1379,22 @@ body { background: #F5F4E5; }
 .conv .eq { font-size: 18px; font-weight: 700; color: #384442; }
 .fcard .rg2 { display: block; font-size: 13px; color: #384442; margin-top: 2px; }
 
-/* ===== ROUND XXIV (owner, 20 Nov): the Bio Dunlop logo and the cup of latex always sit under Add to Bag, one after the other ===== */
-.ivory .mine .brandc { flex: none; background: #FEFEF6; border: 1px solid #DDD6C4; border-radius: 16px; padding: 14px 16px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.ivory .mine .brandc .bioword { width: 78%; height: auto; margin: 0; }
-.ivory .mine .brandc small { display: block; font-size: 10.5px; letter-spacing: .34em; font-weight: 600; color: #384442; text-align: center; margin: -2px 0 2px; }
-.ivory .mine .brandc img { width: 66%; height: auto; display: block; }
+/* ===== ROUND XXIV (owner, 20 Nov): the Bio Dunlop logo and the cup of latex always sit under Add to Bag, one after the other; no card ===== */
+.ivory .mine .brandc { flex: none; background: transparent; border: 0; padding: 8px 6px 4px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.ivory .mine .brandc .bioword { width: 80%; height: auto; margin: 0; }
+.ivory .mine .brandc .bioword path { stroke: #FBFBED; stroke-width: 44; stroke-linejoin: round; paint-order: stroke fill; }   /* a thin vanilla cut edge, so the green stands out on the olive */
+.ivory .mine .brandc small { display: block; font-size: 10.5px; letter-spacing: .34em; font-weight: 600; color: #FBFBED; text-align: center; margin: -2px 0 2px; }
+.ivory .mine .brandc img { width: 68%; height: auto; display: block; filter: drop-shadow(1.5px 0 0 #FBFBED) drop-shadow(-1.5px 0 0 #FBFBED) drop-shadow(0 1.5px 0 #FBFBED) drop-shadow(0 -1.5px 0 #FBFBED); }
+/* the full film */
+.hero .fpan .fullbtn { align-self: stretch; margin: 2px 8px 8px; height: 54px; font-size: 19px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #6E8601 !important; color: #FFFFFF !important; border: 2px solid #F6F8EA !important; box-shadow: 0 0 0 2px #3F4440 !important; }
+.hero .fpan .fullbtn svg { color: #FFFFFF; } .hero .fpan .fullbtn:hover { background: #5D7200 !important; }
+.hero .fpan .vid { cursor: pointer; }
+.vmodal { position: fixed; inset: 0; z-index: 90; background: #000; display: grid; place-items: center; }
+.vmodal[hidden] { display: none; }
+.vmodal video { width: 100vw; height: 100vh; max-width: 100%; max-height: 100%; object-fit: contain; background: #000; }
+.vmodal .vclose { position: absolute; top: 14px; right: 18px; z-index: 2; width: 52px; height: 52px; border-radius: 14px; border: 2px solid #F6F8EA; background: #434239; color: #FBFBED; font-size: 34px; line-height: 1; cursor: pointer; }
+.vmodal:fullscreen video { width: 100%; height: 100%; }
+body.vopen { overflow: hidden; }
 </style>
 </head>
 <body>
@@ -1407,6 +1418,7 @@ body { background: #F5F4E5; }
   <div class="shopstrip"><span>Below this screen the shop's own options and Add to Bag stay on the page, always. Right: the shop's own button (stand-in). It and the button on the screen are one and the same.</span><span id="native"></span></div>
 </div>
 <div class="toast" id="toast" role="status"></div>
+<div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-label="Botanic: the full film" hidden><button class="vclose" type="button" aria-label="Close the film">&times;</button><video id="vfull" controls playsinline preload="none"></video></div>
 <script>/*__CORE__*/</script>
 <script>/*__RULES__*/</script>
 <script>
@@ -1904,7 +1916,7 @@ var D = /*__DATA__*/;
   function heroView() {
     var H = D.hero, B = CUR('discover/intro').bold || [], bold = function (t) { var h = esc(t); B.forEach(function (w) { h = h.replace(esc(w), '<b>' + esc(w) + '</b>'); }); return h; };
     return '<div class="hero"><div><div class="rc"><h2>' + esc(H.headline) + '</h2><p>' + bold(H.intro) + '</p><p>' + esc(H.note) + '</p></div></div>' +
-      '<div>' + filmPanel('The whole Botanic in one loop', 'The full film plays on demand in the shop.', film(D.videos && D.videos.discover), '', 'Presentation video') + '</div></div>' +
+      '<div>' + filmPanel('The whole Botanic in one loop', 'Watch the whole film, full screen, with sound.', film(D.videos && D.videos.discover), '<button class="btn p fullbtn" type="button" data-playfull="discoverFull"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>Watch the full video</button>', 'Presentation video') + '</div></div>' +
       '<div class="fts f3">' + D.features.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '</div>';
   }
   function factsView() {
@@ -2009,7 +2021,25 @@ var D = /*__DATA__*/;
     $('#stageh').className = 'colh' + (st.id === 'firmness' ? ' kk' : ''); $('#stageh').innerHTML = st.id === 'firmness' ? esc(FC.kicker) + '<span class="k2">' + esc(FC.kicker2) + '</span>' : esc('Select here  ·  Step ' + (S.step + 1) + ' of ' + STEPS.length + '  ·  ' + st.label);
     drawRail(); drawMine();
   }
+  /* THE FULL FILM: the loop in the panel is the short version; the whole presentation opens full screen, with controls and sound.
+     The file is the shop's own full presentation; nothing is loaded until the customer asks for it. */
+  function playFull(key) {
+    var u = D.videos && D.videos[key], m = $('#vmodal'), v = $('#vfull'); if (!u || !m || !v) return;
+    v.src = u; m.hidden = false; document.body.classList.add('vopen');
+    var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
+    var rf = m.requestFullscreen || m.webkitRequestFullscreen;
+    if (rf) { try { var r = rf.call(m); if (r && r.catch) r.catch(function () {}); } catch (x) {} } else if (v.webkitEnterFullscreen) { try { v.webkitEnterFullscreen(); } catch (y) {} }   // iPhone Safari: the film's own full screen
+    var c = m.querySelector('.vclose'); if (c) c.focus();
+  }
+  function closeFull() {
+    var m = $('#vmodal'), v = $('#vfull'); if (!m || m.hidden) return;
+    v.pause(); v.removeAttribute('src'); try { v.load(); } catch (x) {} m.hidden = true; document.body.classList.remove('vopen');
+    if (document.fullscreenElement && document.exitFullscreen) { try { document.exitFullscreen(); } catch (y) {} } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) { try { document.webkitExitFullscreen(); } catch (z) {} }
+  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeFull(); });
   document.addEventListener('click', function (e) {
+    var pf = e.target.closest('[data-playfull], .hero .fpan .vid'); if (pf) { playFull(pf.dataset.playfull || 'discoverFull'); return; }
+    if (e.target.closest('#vmodal .vclose')) { closeFull(); return; }
     var t = e.target.closest('[data-confirm],[data-change],[data-sgrp],[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
     var d = t.dataset, cg = S.coach; S.coach = null; clearTimeout(COACHT);
     if (d.coachgo != null) { goStep(cg ? cg.to : S.step); draw(); toStage(); return; }

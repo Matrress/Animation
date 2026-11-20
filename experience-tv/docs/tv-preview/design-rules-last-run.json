@@ -1,12 +1,12 @@
 {
  "date": "2026-11-20",
  "failures": 0,
- "checks": 154,
+ "checks": 157,
  "rows": [
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 37 buttons"
+   "detail": "largest radius 16px over 38 buttons"
   },
   {
    "pass": true,
@@ -221,7 +221,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":305,\"yFam\":305,\"yPick\":305,\"yNav\":212,\"stageTop\":128,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":305,\"yFam\":305,\"yPick\":305,\"yNav\":220,\"stageTop\":120,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -260,8 +260,13 @@
   },
   {
    "pass": true,
-   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first; the Discover panel no longer holds them",
-   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
+   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, cut out on the column with no white card; the Discover panel no longer holds them",
+   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
+  },
+  {
+   "pass": true,
+   "rule": "R47 Discover offers the whole film (not the loop) full screen with controls; nothing is loaded before it is asked for; Escape, the close button and a tap on the loop work",
+   "detail": "{\"fv0\":{\"btn\":true,\"src0\":null,\"hid\":true,\"key\":true},\"fv1\":{\"hid\":false,\"src\":\"https://media.divinedunlop.com/videos/botanic-natural-latex-mattress-premium-presentation-full.mp4\",\"ctl\":true},\"fv2\":{\"hid\":true,\"src\":null},\"fv3\":true,\"fv4\":true}"
   },
   {
    "pass": true,
@@ -276,7 +281,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 37 buttons"
+   "detail": "largest radius 16px over 38 buttons"
   },
   {
    "pass": true,
@@ -490,8 +495,13 @@
   },
   {
    "pass": true,
-   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first; the Discover panel no longer holds them",
-   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
+   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, cut out on the column with no white card; the Discover panel no longer holds them",
+   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
+  },
+  {
+   "pass": true,
+   "rule": "R47 Discover offers the whole film (not the loop) full screen with controls; nothing is loaded before it is asked for; Escape, the close button and a tap on the loop work",
+   "detail": "{\"fv0\":{\"btn\":true,\"src0\":null,\"hid\":true,\"key\":true},\"fv1\":{\"hid\":false,\"src\":\"https://media.divinedunlop.com/videos/botanic-natural-latex-mattress-premium-presentation-full.mp4\",\"ctl\":true},\"fv2\":{\"hid\":true,\"src\":null},\"fv3\":true,\"fv4\":true}"
   },
   {
    "pass": true,
@@ -506,7 +516,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 37 buttons"
+   "detail": "largest radius 16px over 38 buttons"
   },
   {
    "pass": true,
@@ -760,8 +770,13 @@
   },
   {
    "pass": true,
-   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first; the Discover panel no longer holds them",
-   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
+   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, cut out on the column with no white card; the Discover panel no longer holds them",
+   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
+  },
+  {
+   "pass": true,
+   "rule": "R47 Discover offers the whole film (not the loop) full screen with controls; nothing is loaded before it is asked for; Escape, the close button and a tap on the loop work",
+   "detail": "{\"fv0\":{\"btn\":true,\"src0\":null,\"hid\":true,\"key\":true},\"fv1\":{\"hid\":false,\"src\":\"https://media.divinedunlop.com/videos/botanic-natural-latex-mattress-premium-presentation-full.mp4\",\"ctl\":true},\"fv2\":{\"hid\":true,\"src\":null},\"fv3\":true,\"fv4\":true}"
   },
   {
    "pass": true,

@@ -168,7 +168,7 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
    from the same addresses). The Standard Product View keeps the whole approved description, as the shop page does. */
 {
   const V = 'https://media.divinedunlop.com/videos/';
-  D.videos = { discover: V + 'botanic-natural-latex-mattress-premium-presentation-loop.mp4', benefits: V + 'natural-latex-milk-to-foam-origin.mp4', adaptation: V + 'natural-latex-elasticity-adjustable-bed.mp4', zones: V + 'natural-latex-7-zone-spinal-alignment.mp4', ventilation: V + 'natural-latex-airflow-ventilation-channels.mp4', certs: V + 'natural-latex-durability-pressure-test.mp4' };
+  D.videos = { discover: V + 'botanic-natural-latex-mattress-premium-presentation-loop.mp4', discoverFull: V + 'botanic-natural-latex-mattress-premium-presentation-full.mp4', benefits: V + 'natural-latex-milk-to-foam-origin.mp4', adaptation: V + 'natural-latex-elasticity-adjustable-bed.mp4', zones: V + 'natural-latex-7-zone-spinal-alignment.mp4', ventilation: V + 'natural-latex-airflow-ventilation-channels.mp4', certs: V + 'natural-latex-durability-pressure-test.mp4' };
   D.descHtml = readFileSync(join(root, 'source', 'botanic-original-description.html'), 'utf8');
 }
 D.curated = {
