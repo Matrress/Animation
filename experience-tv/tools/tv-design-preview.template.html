@@ -1423,6 +1423,16 @@ body.vopen { overflow: hidden; }
 .inst .ic b { font-size: 16px; color: #2E3633; } .inst .ic p { margin: 0; font-size: 15px; line-height: 1.55; color: #384442; }
 .inst .ic .n { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #566901; font-weight: 700; }
 @media (max-width: 900px) { .inst { grid-template-columns: 1fr; } }
+
+/* ===== ROUND XXVIII (owner, 20 Nov): the parts of the open topic appear under the Explore row when it is pressed ===== */
+.exg .exsub { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: rgba(251,251,237,.08); border: 1px solid rgba(251,251,237,.16); }
+.exg .exsub .exh { font: 700 13px var(--f); letter-spacing: .14em; text-transform: uppercase; color: #FBFBED; margin-right: 6px; display: inline-flex; align-items: center; gap: 8px; }
+.exg .exsub .exh i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.exg .exsub button { height: 36px; padding: 0 12px; border-radius: 9px; border: 1px solid rgba(251,251,237,.24); background: transparent; color: #FBFBED; font: 600 14px var(--f); cursor: pointer; }
+.exg .exsub button b { color: #DBD4C2; margin-right: 6px; font-weight: 700; }
+.exg .exsub button:hover { background: rgba(251,251,237,.14); }
+.exg .exsub button[aria-current=true] { background: #FBFBED; color: #2E3633; border-color: #FBFBED; }
+.exg .exsub button[aria-current=true] b { color: #566901; }
 </style>
 </head>
 <body>
@@ -1581,10 +1591,13 @@ var D = /*__DATA__*/;
   var CKS = '<svg viewBox="0 0 24 24" fill="none" stroke="#FEFEF6" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   function drawBar() {   // two groups: Explore (the description, 11 topics) and Select & Buy (the order: size, depth, firmness, cover, review)
     var onStep = inSelect();
-    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span><button class="allt" type="button" data-contents="1" aria-pressed="' + (!!S.all) + '">All topics</button>' + EXCH.map(function (c) { var parts = vis(c).map(function (p, i) { return '<button type="button" data-goto="' + c.id + '/' + p.id + '"><b>' + 'ABCDEFG'.charAt(i) + '</b>' + esc(p.label) + '</button>'; }).join(''); return '<div class="chw"><button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep && !S.all) + '"><span class="td"></span>' + esc(c.label) + '</button><div class="sub" role="menu" aria-label="' + esc(c.label) + ' parts">' + parts + '</div></div>'; }).join('') + '</div>';
+    var cur0 = EXCH.filter(function (c) { return c.id === S.ch; })[0];
+    /* the parts of the topic that is open open under the Explore row, pressed not hovered: a tap on a part goes to it */
+    var strip = (!onStep && !S.all && cur0) ? '<div class="exsub" role="group" aria-label="' + esc(cur0.label) + ' parts"><span class="exh" style="--c:' + TC[cur0.id] + '"><i></i>' + esc(cur0.label) + '</span>' + vis(cur0).map(function (p, k) { var on = S.pn === p.id; return '<button type="button" data-goto="' + cur0.id + '/' + p.id + '"' + (on ? ' aria-current="true"' : '') + '><b>' + 'ABCDEFG'.charAt(k) + '</b>' + esc(p.label) + '</button>'; }).join('') + '</div>' : '';
+    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span><button class="allt" type="button" data-contents="1" aria-pressed="' + (!!S.all) + '">All topics</button>' + EXCH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep && !S.all) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + strip + '</div>';
     var sl = '<div class="slg" role="group" aria-label="Select and buy"><span class="glab">Select &amp; Buy</span>' + STEPS.map(function (st, i) { var v = i < 4 ? valueOf(st.id) : (complete() ? 'Ready' : ''), ok = i < 4 ? chosen(st.id) : complete();
       return '<button class="sb' + (ok ? ' ok' : '') + (i === 4 ? ' rv' : '') + '" data-go="' + i + '" aria-current="' + (onStep && S.step === i) + '">' + IC[st.id] + '<span><b>' + st.label + '</b><i>' + (v ? esc(v) : (i < 4 ? 'Choose' : 'Your order')) + '</i></span>' + (ok ? '<em class="okm">' + CKS + '</em>' : (i < 4 ? '<em class="nbm">' + (i + 1) + '</em>' : '')) + '</button>'; }).join('') + '</div>';
-    $('#chbar').innerHTML = ex + sl;
+    var cbh = ex + sl; if (cbh !== window.__cbh) { window.__cbh = cbh; $('#chbar').innerHTML = cbh; }
   }
   function nDone0() { return STEPS.slice(0, 4).filter(function (x) { return chosen(x.id); }).length; }
   function nextUnchosen() { for (var i = 0; i < STEPS.length - 1; i++) if (!chosen(STEPS[i].id)) return i; return -1; }

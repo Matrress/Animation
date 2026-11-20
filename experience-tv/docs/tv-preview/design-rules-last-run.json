@@ -6,7 +6,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 75 buttons"
+   "detail": "largest radius 16px over 39 buttons"
   },
   {
    "pass": true,
@@ -46,17 +46,17 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "418.0 / 418.0 / 418.0"
+   "detail": "484.0 / 484.0 / 484.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "418.0 / 418.0 / 418.0"
+   "detail": "484.0 / 484.0 / 484.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "418.0 / 418.0 / 418.0"
+   "detail": "484.0 / 484.0 / 484.0"
   },
   {
    "pass": true,
@@ -221,7 +221,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":345,\"yFam\":345,\"yPick\":345,\"yNav\":211,\"stageTop\":169,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":345,\"yFam\":345,\"yPick\":345,\"yNav\":277,\"stageTop\":169,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -270,8 +270,8 @@
   },
   {
    "pass": true,
-   "rule": "R48 Explore: each topic lists its parts on hover and a tap opens the topic; \"All topics\" opens the whole nomenclature from the start, and a choice from it opens that part",
-   "detail": "{\"xp\":{\"allt\":true,\"wraps\":11,\"parts\":36,\"subHidden\":true},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36},\"xg\":{\"contents\":false,\"where\":\"ComfortAWhat To Expect\"}}"
+   "rule": "R48 pressing a topic opens its parts in a strip under the Explore row, without hover; a part goes to its page and the strip follows; All topics opens the whole nomenclature and a choice from it opens that part",
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":4,\"head0\":\"Discover\"},\"xc\":{\"head\":\"Comfort\",\"n\":4,\"want\":4,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortBYour First Ten Days\",\"strip\":4,\"cur\":\"BYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
   },
   {
    "pass": true,
@@ -296,7 +296,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 75 buttons"
+   "detail": "largest radius 16px over 39 buttons"
   },
   {
    "pass": true,
@@ -471,7 +471,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":273,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":339,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -520,8 +520,8 @@
   },
   {
    "pass": true,
-   "rule": "R48 Explore: each topic lists its parts on hover and a tap opens the topic; \"All topics\" opens the whole nomenclature from the start, and a choice from it opens that part",
-   "detail": "{\"xp\":{\"allt\":true,\"wraps\":11,\"parts\":36,\"subHidden\":true},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36},\"xg\":{\"contents\":false,\"where\":\"ComfortAWhat To Expect\"}}"
+   "rule": "R48 pressing a topic opens its parts in a strip under the Explore row, without hover; a part goes to its page and the strip follows; All topics opens the whole nomenclature and a choice from it opens that part",
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":4,\"head0\":\"Discover\"},\"xc\":{\"head\":\"Comfort\",\"n\":4,\"want\":4,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortBYour First Ten Days\",\"strip\":4,\"cur\":\"BYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
   },
   {
    "pass": true,
@@ -546,7 +546,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 75 buttons"
+   "detail": "largest radius 16px over 39 buttons"
   },
   {
    "pass": true,
@@ -586,17 +586,17 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "418.0 / 418.0 / 418.0"
+   "detail": "484.0 / 484.0 / 484.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "418.0 / 418.0 / 418.0"
+   "detail": "484.0 / 484.0 / 484.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "418.0 / 418.0 / 418.0"
+   "detail": "484.0 / 484.0 / 484.0"
   },
   {
    "pass": true,
@@ -761,7 +761,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":335,\"stageTop\":45,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":86,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -810,8 +810,8 @@
   },
   {
    "pass": true,
-   "rule": "R48 Explore: each topic lists its parts on hover and a tap opens the topic; \"All topics\" opens the whole nomenclature from the start, and a choice from it opens that part",
-   "detail": "{\"xp\":{\"allt\":true,\"wraps\":11,\"parts\":36,\"subHidden\":true},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36},\"xg\":{\"contents\":false,\"where\":\"ComfortAWhat To Expect\"}}"
+   "rule": "R48 pressing a topic opens its parts in a strip under the Explore row, without hover; a part goes to its page and the strip follows; All topics opens the whole nomenclature and a choice from it opens that part",
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":4,\"head0\":\"Discover\"},\"xc\":{\"head\":\"Comfort\",\"n\":4,\"want\":4,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortBYour First Ten Days\",\"strip\":4,\"cur\":\"BYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
   },
   {
    "pass": true,

@@ -283,3 +283,11 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - **Delivery has an Installation part**, second, after What To Expect: prepare the bed in the room where the mattress will stay; carry it in its bag, lay it on the prepared bed and unpack it there (the heavy lifting once, not twice); the small label on the lower short edge (the side that gives the width) names the material and shows which end goes to the feet, so decide where the head goes before you unpack; two people for the large and heavy ones.
 - Tests R48 (Explore parts, All topics, a choice from it) and R49 (Installation), R50 (no white card; the tone of the column). All 166 design-rule checks and the price, selection and sync contracts pass.
 - Open for the owner: the exact wording on the label (the owner said the material, for example wool, and the foot end) should be checked against a real label before it goes live.
+
+## Round XXVIII (owner, 20 November 2026) — replaces the hover list of round XXVII
+- **No hover.** The hover list of round XXVII made the screen flicker when a part was pressed, and it was not a touch behaviour. It is removed.
+- **Pressing a topic opens its parts in a strip under the Explore row:** the topic's name on the left (with its colour), then its parts (A, B, C…). The part on the glass is marked. A tap on a part goes to that part; the strip follows the choice. Pressing another topic moves the strip to it. The topic buttons themselves do not change: the main folder (Delivery, Discover, the preview) stays as it is.
+- **All topics** is still always at the start of Explore and opens the whole nomenclature; a choice from it opens that part.
+- **Nothing blinks on a press:** the Explore row is redrawn only when its markup changes.
+- **Why a strip under the row, not under the button:** a Explore cell is about 130 px wide, too narrow for part names such as "Your First Ten Days". If the owner wants the parts directly under the pressed button, the row itself has to open, and that is a layout decision to test.
+- Test R48 updated (pressing opens the strip; a part goes to its page; All topics; no hover).
