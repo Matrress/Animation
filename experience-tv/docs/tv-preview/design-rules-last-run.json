@@ -1,12 +1,12 @@
 {
  "date": "2026-11-20",
  "failures": 0,
- "checks": 157,
+ "checks": 166,
  "rows": [
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 38 buttons"
+   "detail": "largest radius 16px over 75 buttons"
   },
   {
    "pass": true,
@@ -21,42 +21,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "482.0 / 482.0 / 482.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "482.0 / 482.0 / 482.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "482.0 / 482.0 / 482.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "482.0 / 482.0 / 482.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "482.0 / 482.0 / 482.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "378.0 / 378.0 / 378.0"
+   "detail": "418.0 / 418.0 / 418.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "378.0 / 378.0 / 378.0"
+   "detail": "418.0 / 418.0 / 418.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "378.0 / 378.0 / 378.0"
+   "detail": "418.0 / 418.0 / 418.0"
   },
   {
    "pass": true,
@@ -166,7 +166,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "44 panels"
+   "detail": "45 panels"
   },
   {
    "pass": true,
@@ -221,7 +221,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":305,\"yFam\":305,\"yPick\":305,\"yNav\":163,\"stageTop\":177,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":345,\"yFam\":345,\"yPick\":345,\"yNav\":211,\"stageTop\":169,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -251,7 +251,7 @@
   {
    "pass": true,
    "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
-   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,made,journey,yours\"}"
+   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,install,made,journey,yours\"}"
   },
   {
    "pass": true,
@@ -270,6 +270,21 @@
   },
   {
    "pass": true,
+   "rule": "R48 Explore: each topic lists its parts on hover and a tap opens the topic; \"All topics\" opens the whole nomenclature from the start, and a choice from it opens that part",
+   "detail": "{\"xp\":{\"allt\":true,\"wraps\":11,\"parts\":36,\"subHidden\":true},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36},\"xg\":{\"contents\":false,\"where\":\"ComfortAWhat To Expect\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R49 Delivery has an Installation part after What To Expect: prepare the bed, carry it in its bag, lay it down, unpack it there, read the label on the lower short edge for the feet, two people for the large ones",
+   "detail": "\"prep,install,made,journey,yours\""
+  },
+  {
+   "pass": true,
+   "rule": "R50 the mattress card has no white card; the contour turns green with Ready when all four are chosen; the brand block is a tone of the column, not a latte card",
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"bgCol\":\"rgb(100, 97, 85)\",\"stroke\":\"#6E8601\",\"ready\":true}"
+  },
+  {
+   "pass": true,
    "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
    "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
   },
@@ -281,7 +296,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 38 buttons"
+   "detail": "largest radius 16px over 75 buttons"
   },
   {
    "pass": true,
@@ -401,7 +416,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "44 panels"
+   "detail": "45 panels"
   },
   {
    "pass": true,
@@ -456,7 +471,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":231,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":273,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -486,7 +501,7 @@
   {
    "pass": true,
    "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
-   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,made,journey,yours\"}"
+   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,install,made,journey,yours\"}"
   },
   {
    "pass": true,
@@ -505,6 +520,21 @@
   },
   {
    "pass": true,
+   "rule": "R48 Explore: each topic lists its parts on hover and a tap opens the topic; \"All topics\" opens the whole nomenclature from the start, and a choice from it opens that part",
+   "detail": "{\"xp\":{\"allt\":true,\"wraps\":11,\"parts\":36,\"subHidden\":true},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36},\"xg\":{\"contents\":false,\"where\":\"ComfortAWhat To Expect\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R49 Delivery has an Installation part after What To Expect: prepare the bed, carry it in its bag, lay it down, unpack it there, read the label on the lower short edge for the feet, two people for the large ones",
+   "detail": "\"prep,install,made,journey,yours\""
+  },
+  {
+   "pass": true,
+   "rule": "R50 the mattress card has no white card; the contour turns green with Ready when all four are chosen; the brand block is a tone of the column, not a latte card",
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"bgCol\":\"rgb(100, 97, 85)\",\"stroke\":\"#6E8601\",\"ready\":true}"
+  },
+  {
+   "pass": true,
    "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
    "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
   },
@@ -516,7 +546,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 38 buttons"
+   "detail": "largest radius 16px over 75 buttons"
   },
   {
    "pass": true,
@@ -531,42 +561,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "482.0 / 482.0 / 482.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "482.0 / 482.0 / 482.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "482.0 / 482.0 / 482.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "482.0 / 482.0 / 482.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "482.0 / 482.0 / 482.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "378.0 / 378.0 / 378.0"
+   "detail": "418.0 / 418.0 / 418.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "378.0 / 378.0 / 378.0"
+   "detail": "418.0 / 418.0 / 418.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "378.0 / 378.0 / 378.0"
+   "detail": "418.0 / 418.0 / 418.0"
   },
   {
    "pass": true,
@@ -676,7 +706,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "44 panels"
+   "detail": "45 panels"
   },
   {
    "pass": true,
@@ -731,7 +761,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":287,\"stageTop\":53,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":335,\"stageTop\":45,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -761,7 +791,7 @@
   {
    "pass": true,
    "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
-   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,made,journey,yours\"}"
+   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,install,made,journey,yours\"}"
   },
   {
    "pass": true,
@@ -777,6 +807,21 @@
    "pass": true,
    "rule": "R47 Discover offers the whole film (not the loop) full screen with controls; nothing is loaded before it is asked for; Escape, the close button and a tap on the loop work",
    "detail": "{\"fv0\":{\"btn\":true,\"src0\":null,\"hid\":true,\"key\":true},\"fv1\":{\"hid\":false,\"src\":\"https://media.divinedunlop.com/videos/botanic-natural-latex-mattress-premium-presentation-full.mp4\",\"ctl\":true},\"fv2\":{\"hid\":true,\"src\":null},\"fv3\":true,\"fv4\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R48 Explore: each topic lists its parts on hover and a tap opens the topic; \"All topics\" opens the whole nomenclature from the start, and a choice from it opens that part",
+   "detail": "{\"xp\":{\"allt\":true,\"wraps\":11,\"parts\":36,\"subHidden\":true},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36},\"xg\":{\"contents\":false,\"where\":\"ComfortAWhat To Expect\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R49 Delivery has an Installation part after What To Expect: prepare the bed, carry it in its bag, lay it down, unpack it there, read the label on the lower short edge for the feet, two people for the large ones",
+   "detail": "\"prep,install,made,journey,yours\""
+  },
+  {
+   "pass": true,
+   "rule": "R50 the mattress card has no white card; the contour turns green with Ready when all four are chosen; the brand block is a tone of the column, not a latte card",
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"bgCol\":\"rgb(100, 97, 85)\",\"stroke\":\"#6E8601\",\"ready\":true}"
   },
   {
    "pass": true,

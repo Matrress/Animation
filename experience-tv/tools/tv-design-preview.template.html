@@ -1380,9 +1380,9 @@ body { background: #F5F4E5; }
 .fcard .rg2 { display: block; font-size: 13px; color: #384442; margin-top: 2px; }
 
 /* ===== ROUND XXIV / XXVI (owner, 20 Nov): the Bio Dunlop logo and the cup of latex always sit under Add to Bag, one after the other, as they are: on the palette's latte, not a white card; no outline; smaller ===== */
-.ivory .mine .brandc { flex: none; background: #DDD6C4; border: 0; border-radius: 16px; padding: 12px 10px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.ivory .mine .brandc { flex: none; background: #5B5A4F; border: 0; border-radius: 16px; padding: 12px 10px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .ivory .mine .brandc .bioword { width: 56%; height: auto; margin: 0; }
-.ivory .mine .brandc small { display: block; font-size: 9px; letter-spacing: .3em; font-weight: 600; color: #2E3633; text-align: center; margin: -2px 0 2px; }
+.ivory .mine .brandc small { display: block; font-size: 9px; letter-spacing: .3em; font-weight: 600; color: #FBFBED; text-align: center; margin: -2px 0 2px; }
 .ivory .mine .brandc img { width: 46%; height: auto; display: block; filter: none; }
 /* the full film */
 .hero .fpan .fullbtn { align-self: stretch; margin: 2px 8px 8px; height: 54px; font-size: 19px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #6E8601 !important; color: #FFFFFF !important; border: 2px solid #F6F8EA !important; box-shadow: 0 0 0 2px #3F4440 !important; }
@@ -1394,6 +1394,35 @@ body { background: #F5F4E5; }
 .vmodal .vclose { position: absolute; top: 14px; right: 18px; z-index: 2; width: 52px; height: 52px; border-radius: 14px; border: 2px solid #F6F8EA; background: #434239; color: #FBFBED; font-size: 34px; line-height: 1; cursor: pointer; }
 .vmodal:fullscreen video { width: 100%; height: 100%; }
 body.vopen { overflow: hidden; }
+
+/* ===== ROUND XXVII (owner, 20 Nov): the card stays coffee; the mattress is drawn in vanilla and changes only its contour; the brand block is a tone of the column; the Explore parts and Installation ===== */
+.ivory .mine .mi { flex: none; background: transparent; border: 0; border-radius: 0; padding: 4px 0 2px; margin: 0; }
+.ivory .mine .mi svg { height: 128px !important; width: auto !important; max-width: 100%; filter: none !important; display: block; }
+.ivory .mine .rdy { color: #FBFBED; }
+/* Explore: the parts of a topic open on hover (a pointer), a tap goes straight to the topic; "All topics" is always there */
+.exg .chw { position: relative; min-width: 0; }
+.exg .chw .ch { width: 100%; }
+.exg .chw .sub { display: none; position: absolute; left: 0; width: 280px; max-width: 80vw; top: calc(100% + 6px); z-index: 40; background: #2E3633; border-radius: 12px; padding: 8px; flex-direction: column; gap: 4px; box-shadow: 0 14px 30px -12px rgba(20,24,22,.7); }
+@media (hover: hover) and (pointer: fine) { .exg .chw:hover .sub, .exg .chw:focus-within .sub { display: flex; } }
+.exg .chw .sub button { text-align: left; min-height: 36px; padding: 6px 12px; border-radius: 8px; border: 0; background: rgba(251,251,237,.08); color: #FBFBED; font: 600 14px var(--f); line-height: 1.25; cursor: pointer; }
+.exg .chw .sub button:hover, .exg .chw .sub button:focus-visible { background: rgba(251,251,237,.2); }
+.exg .chw .sub button b { font-weight: 700; margin-right: 6px; color: #DBD4C2; }
+.exg .allt { grid-column: 1 / -1; justify-self: start; height: 34px; padding: 0 14px; border-radius: 9px; border: 1.5px solid rgba(251,251,237,.45); background: transparent; color: #FBFBED; font: 700 13px var(--f); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
+.exg .allt:hover { background: rgba(251,251,237,.12); }
+/* the whole nomenclature from the start */
+.contents { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.contents section { background: #FEFEF6; border: 1px solid #DDD6C4; border-radius: 14px; padding: 14px 16px; }
+.contents h3 { margin: 0 0 8px; font-size: 16px; color: #2E3633; } .contents h3 span { color: #566901; font-weight: 700; margin-right: 6px; }
+.contents ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.contents li button { width: 100%; text-align: left; border: 0; background: transparent; padding: 6px 8px; border-radius: 8px; font: 500 15px var(--f); color: #2E3633; cursor: pointer; }
+.contents li button:hover { background: #EFEBDD; }
+@media (max-width: 900px) { .contents { grid-template-columns: 1fr; } }
+/* Installation */
+.inst { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.inst .ic { background: #FEFEF6; border: 1px solid #DDD6C4; border-radius: 14px; padding: 16px 18px; display: grid; gap: 6px; }
+.inst .ic b { font-size: 16px; color: #2E3633; } .inst .ic p { margin: 0; font-size: 15px; line-height: 1.55; color: #384442; }
+.inst .ic .n { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #566901; font-weight: 700; }
+@media (max-width: 900px) { .inst { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -1539,7 +1568,7 @@ var D = /*__DATA__*/;
     var d = dStr(G.out), pl = G.pl, xs = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[0]; })); }, []), ys = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[1]; })); }, []);
     var x0 = Math.min.apply(null, xs) - 100, x1 = Math.max.apply(null, xs) + 100, y0 = Math.min.apply(null, ys) - 100;
     var region = 'M' + x0 + ' ' + y0 + 'H' + x1 + 'V' + pl[pl.length - 1][1] + pl.slice().reverse().map(function (q) { return 'L' + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('') + 'L' + x0 + ' ' + pl[0][1] + 'Z';
-    var stroke = ok ? '#6E8601' : (n === 0 ? '#9C9783' : '#384442'), top = ok ? 'rgba(110,134,1,.26)' : (fm ? 'rgba(93,184,196,.62)' : 'none');
+    var stroke = ok ? '#6E8601' : (n === 0 ? '#CFC9B4' : '#FBFBED'), top = ok ? 'rgba(110,134,1,.34)' : (fm ? 'rgba(93,184,196,.55)' : 'none');
     return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" aria-label="' + (ok ? 'All four choices made: ready to order' : n + ' of 4 choices made') + '"><defs><clipPath id="icp"><path d="' + region + '"/></clipPath></defs><g transform="matrix(' + M.join(',') + ')"><path d="' + d + '" fill="' + top + '" clip-path="url(#icp)"/><path d="' + d + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" ' + st + '/></g></svg>';
   }
   var IC = {
@@ -1552,7 +1581,7 @@ var D = /*__DATA__*/;
   var CKS = '<svg viewBox="0 0 24 24" fill="none" stroke="#FEFEF6" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   function drawBar() {   // two groups: Explore (the description, 11 topics) and Select & Buy (the order: size, depth, firmness, cover, review)
     var onStep = inSelect();
-    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + EXCH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + '</div>';
+    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span><button class="allt" type="button" data-contents="1" aria-pressed="' + (!!S.all) + '">All topics</button>' + EXCH.map(function (c) { var parts = vis(c).map(function (p, i) { return '<button type="button" data-goto="' + c.id + '/' + p.id + '"><b>' + 'ABCDEFG'.charAt(i) + '</b>' + esc(p.label) + '</button>'; }).join(''); return '<div class="chw"><button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep && !S.all) + '"><span class="td"></span>' + esc(c.label) + '</button><div class="sub" role="menu" aria-label="' + esc(c.label) + ' parts">' + parts + '</div></div>'; }).join('') + '</div>';
     var sl = '<div class="slg" role="group" aria-label="Select and buy"><span class="glab">Select &amp; Buy</span>' + STEPS.map(function (st, i) { var v = i < 4 ? valueOf(st.id) : (complete() ? 'Ready' : ''), ok = i < 4 ? chosen(st.id) : complete();
       return '<button class="sb' + (ok ? ' ok' : '') + (i === 4 ? ' rv' : '') + '" data-go="' + i + '" aria-current="' + (onStep && S.step === i) + '">' + IC[st.id] + '<span><b>' + st.label + '</b><i>' + (v ? esc(v) : (i < 4 ? 'Choose' : 'Your order')) + '</i></span>' + (ok ? '<em class="okm">' + CKS + '</em>' : (i < 4 ? '<em class="nbm">' + (i + 1) + '</em>' : '')) + '</button>'; }).join('') + '</div>';
     $('#chbar').innerHTML = ex + sl;
@@ -2001,10 +2030,17 @@ var D = /*__DATA__*/;
     $('#act').innerHTML = '<button class="btn s" data-coachstay="1">Change my choice</button><button class="btn p" data-coachgo="1">' + (last ? 'Review' : 'Continue to <b>' + to.label + '</b>') + '</button>';
     $('#stageh').className = 'colh'; $('#stageh').textContent = 'Select here  ·  ' + from.label + ' done';
   }
+  function contentsDraw() {   // the whole nomenclature from the start: every topic and its parts, one tap to any of them
+    $('#q').className = 'q'; $('#q').innerHTML = '<h1><span>' + LEAF.replace('class="leaf"', 'class="leaf" style="margin-right:6px"') + 'All topics</span></h1><p>Everything about the Botanic, in order. Choose a topic or a part; the television opens it directly.</p>';
+    $('#answer').innerHTML = '<div class="contents">' + EXCH.map(function (c, i) { return '<section><h3><span>' + (i + 1) + '</span>' + esc(c.label) + '</h3><ol>' + vis(c).map(function (p, j) { return '<li><button type="button" data-goto="' + c.id + '/' + p.id + '">' + 'ABCDEFG'.charAt(j) + '&nbsp;&nbsp;' + esc(p.label) + '</button></li>'; }).join('') + '</ol></section>'; }).join('') + '</div>';
+    $('#act').innerHTML = '';
+    $('#stageh').className = 'colh'; $('#stageh').innerHTML = 'Explore  ·  All topics';
+  }
   function draw() {
     document.body.classList.toggle('std', S.view === 'std');  $('#galbtn').setAttribute('aria-pressed', String(S.gal)); $('#vtv').setAttribute('aria-pressed', String(S.view === 'tv')); $('#vstd').setAttribute('aria-pressed', String(S.view === 'std'));
     if (S.view === 'std') { drawStd(); return; }
     var pp = panel(), cc = chap(S.ch); drawBar();
+    if (S.all) { contentsDraw(); drawRail(); drawMine(); return; }
     if (S.gal) { galDraw(); drawRail(); drawMine(); return; }
     if (pp.kind !== 'step') { infoDraw(pp, cc); drawRail(); drawMine(); return; }
     if (S.coach) { coachDraw(); drawRail(); drawMine(); return; }
@@ -2039,6 +2075,9 @@ var D = /*__DATA__*/;
   document.addEventListener('click', function (e) {
     var pf = e.target.closest('[data-playfull], .hero .fpan .vid'); if (pf) { playFull(pf.dataset.playfull || 'discoverFull'); return; }
     if (e.target.closest('#vmodal .vclose')) { closeFull(); return; }
+    if (e.target.closest('[data-contents]')) { S.all = !S.all; S.gal = false; draw(); toStage(); return; }
+    if (e.target.closest('[data-goto]') && S.all) { S.all = false; }
+    if (e.target.closest('[data-ch]') && !e.target.closest('[data-goto]')) { S.all = false; }
     var t = e.target.closest('[data-confirm],[data-change],[data-sgrp],[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
     var d = t.dataset, cg = S.coach; S.coach = null; clearTimeout(COACHT);
     if (d.coachgo != null) { goStep(cg ? cg.to : S.step); draw(); toStage(); return; }

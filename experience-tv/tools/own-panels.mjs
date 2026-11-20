@@ -1,5 +1,10 @@
 // OWN panels: written from the owner's letter to a customer (19 Nov XVIII). The essence, in our own words, direct and human; not the approved description.
 export const OWN = {
+  install: { title: 'Installation', groups: [
+    { h: 'Prepare the bed first', blocks: [{ k: 'p', t: 'Before delivery day, make the bed ready in the room where the mattress will stay. Clear the floor and the path to the bedroom, and check the doors, the stairs and the corners on the way.' }] },
+    { h: 'Carry it in its bag, lay it down, then unpack', blocks: [{ k: 'p', t: 'Bring the mattress into the room still in its transport bag. Lay it on the prepared bed and unpack it there. Most of the heavy lifting and the awkward turns happen on the way in, so do them once, in the place where it will stay.' }] },
+    { h: 'Which way round', blocks: [{ k: 'p', t: 'Look for the small label on the lower short edge, the side that gives the width. It names the material and shows which end goes to the feet. Decide where the head goes before you unpack.' }] },
+    { h: 'Two people for the large ones', blocks: [{ k: 'p', t: 'A large or heavy mattress is not a one-person job. Plan two people for the carry and the unpacking.' }] }] },
   zoneswork: { title: 'How The 7 Zones Work', groups: [
     { h: 'One latex, one firmness', blocks: [{ k: 'p', t: 'The Botanic core is one piece of natural latex. It has exactly the same structure and exactly the same firmness from your head to your feet. The zones are not made of different materials, and they are not different firmnesses.' }] },
     { h: 'The perforation does the work', blocks: [{ k: 'p', t: 'What changes from zone to zone is the perforation, the pattern of holes in the latex. A different perforation gives a different level of support in each area of the body.' }] },
