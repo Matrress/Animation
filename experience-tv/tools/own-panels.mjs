@@ -1,5 +1,9 @@
 // OWN panels: written from the owner's letter to a customer (19 Nov XVIII). The essence, in our own words, direct and human; not the approved description.
 export const OWN = {
+  direct: { title: 'Buy Direct From The Maker', groups: [
+    { h: 'You buy from the maker', blocks: [{ k: 'p', t: 'You order straight from Divine Dunlop Dreams, the manufacturer of Botanic. The people who make your mattress are the people who sell it to you.' }] },
+    { h: 'Where it is made', blocks: [{ k: 'p', t: 'Your Botanic is made in Germany, under European production control. It is sent from our own logistics depot and administration in the UK.' }] },
+    { h: 'What happens next', blocks: [{ k: 'p', t: 'Your order goes into production the day it is placed. Allow approximately 20 days for manufacture and preparation for delivery.' }] }] },
   promise: { title: 'What We Promise, And What We Do Not', groups: [
     { h: 'What Botanic gives you', blocks: [{ k: 'p', t: 'Excellent anatomical adaptation, stable orthopaedic support and a healthy sleeping environment. Everything on this screen exists for those three things.' }] },
     { h: 'What it is not', blocks: [{ k: 'p', t: 'Botanic is not a medical device. We do not say it treats or cures any condition. A mattress maker who tells you that a mattress cures a condition is not telling you the truth.' }] },

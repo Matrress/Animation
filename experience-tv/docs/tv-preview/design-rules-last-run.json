@@ -1,7 +1,7 @@
 {
- "date": "2026-11-19",
+ "date": "2026-11-20",
  "failures": 0,
- "checks": 142,
+ "checks": 145,
  "rows": [
   {
    "pass": true,
@@ -21,42 +21,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "524.8 / 524.8 / 524.8"
+   "detail": "520.8 / 520.8 / 520.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "524.8 / 524.8 / 524.8"
+   "detail": "520.8 / 520.8 / 520.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "524.8 / 524.8 / 524.8"
+   "detail": "520.8 / 520.8 / 520.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "524.8 / 524.8 / 524.8"
+   "detail": "520.8 / 520.8 / 520.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "524.8 / 524.8 / 524.8"
+   "detail": "520.8 / 520.8 / 520.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "460.8 / 460.8 / 460.8"
+   "detail": "456.8 / 456.8 / 456.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "460.8 / 460.8 / 460.8"
+   "detail": "456.8 / 456.8 / 456.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "460.8 / 460.8 / 460.8"
+   "detail": "456.8 / 456.8 / 456.8"
   },
   {
    "pass": true,
@@ -76,7 +76,7 @@
   {
    "pass": true,
    "rule": "R8 the frame of the television is thin",
-   "detail": "6px"
+   "detail": "2px"
   },
   {
    "pass": true,
@@ -166,7 +166,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "43 panels"
+   "detail": "44 panels"
   },
   {
    "pass": true,
@@ -221,7 +221,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":145,\"stageTop\":278,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":236,\"stageTop\":183,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -247,6 +247,11 @@
    "pass": true,
    "rule": "R32 after a choice the television says what is chosen and what is next, then opens Depth by itself",
    "detail": "Size chosen90 × 190 cm | Next: 2 of 4Now choose your DepthThree heights are available. All three deliver  | How thick should it be?Three heights are | Select here  ·  Step 2 of 5  ·  Depth"
+  },
+  {
+   "pass": true,
+   "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; the core is shown at the foot of Your selection",
+   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"core\":true,\"order\":true},\"r43b\":true}"
   },
   {
    "pass": true,
@@ -286,7 +291,7 @@
   {
    "pass": true,
    "rule": "R8 the frame of the television is thin",
-   "detail": "6px"
+   "detail": "2px"
   },
   {
    "pass": true,
@@ -376,7 +381,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "43 panels"
+   "detail": "44 panels"
   },
   {
    "pass": true,
@@ -431,7 +436,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":314,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":310,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -457,6 +462,11 @@
    "pass": true,
    "rule": "R32 after a choice the television says what is chosen and what is next, then opens Depth by itself",
    "detail": "Size chosen90 × 190 cm | Next: 2 of 4Now choose your DepthThree heights are available. All three deliver  | How thick should it be?Three heights are | Select here  ·  Step 2 of 5  ·  Depth"
+  },
+  {
+   "pass": true,
+   "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; the core is shown at the foot of Your selection",
+   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"core\":true,\"order\":true},\"r43b\":true}"
   },
   {
    "pass": true,
@@ -481,42 +491,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "524.8 / 524.8 / 524.8"
+   "detail": "520.8 / 520.8 / 520.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "524.8 / 524.8 / 524.8"
+   "detail": "520.8 / 520.8 / 520.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "524.8 / 524.8 / 524.8"
+   "detail": "520.8 / 520.8 / 520.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "524.8 / 524.8 / 524.8"
+   "detail": "520.8 / 520.8 / 520.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "524.8 / 524.8 / 524.8"
+   "detail": "520.8 / 520.8 / 520.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "460.8 / 460.8 / 460.8"
+   "detail": "456.8 / 456.8 / 456.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "460.8 / 460.8 / 460.8"
+   "detail": "456.8 / 456.8 / 456.8"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "460.8 / 460.8 / 460.8"
+   "detail": "456.8 / 456.8 / 456.8"
   },
   {
    "pass": true,
@@ -536,7 +546,7 @@
   {
    "pass": true,
    "rule": "R8 the frame of the television is thin",
-   "detail": "6px"
+   "detail": "2px"
   },
   {
    "pass": true,
@@ -626,7 +636,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "43 panels"
+   "detail": "44 panels"
   },
   {
    "pass": true,
@@ -681,7 +691,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":269,\"stageTop\":154,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":59,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -707,6 +717,11 @@
    "pass": true,
    "rule": "R32 after a choice the television says what is chosen and what is next, then opens Depth by itself",
    "detail": "Size chosen90 × 190 cm | Next: 2 of 4Now choose your DepthThree heights are available. All three deliver  | How thick should it be?Three heights are | Select here  ·  Step 2 of 5  ·  Depth"
+  },
+  {
+   "pass": true,
+   "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; the core is shown at the foot of Your selection",
+   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"core\":true,\"order\":true},\"r43b\":true}"
   },
   {
    "pass": true,

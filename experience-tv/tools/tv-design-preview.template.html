@@ -63,7 +63,7 @@ a { color: inherit; }
 .ign .mark svg { width: 30px; height: 22px; }
 .ign .mark b { font-size: 26px; font-weight: 500; letter-spacing: .42em; margin-right: -.42em; }
 /* luminous lettering: one band of light passes through the words once; the letters stay solid white and readable */
-.ign .lum { background-image: linear-gradient(100deg, rgba(254,254,246,0) 40%, #C2CF9A 46%, #F8F7E9 50%, #6E8601 54%, rgba(254,254,246,0) 60%), linear-gradient(#FEFEF6, #FEFEF6); background-size: 300% 100%, 100% 100%; background-position: 120% 0, 0 0; background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 10px rgba(110,134,1,.30)); }
+.ign .lum { background-image: linear-gradient(#6E8601, #6E8601) !important; background-color: transparent !important; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #6E8601; filter: none !important; }
 .ign.run .mark .lum { animation: lumPass 1.6s ease-in-out 1.0s forwards; }
 .ign.run .fact:first-child .lum { animation: lumPass 1.4s ease-in-out 1.7s forwards; } .ign.run .fact:last-child .lum { animation: lumPass 1.4s ease-in-out 2.05s forwards; }
 @keyframes lumPass { from { background-position: 120% 0, 0 0; } to { background-position: -20% 0, 0 0; } }
@@ -73,7 +73,7 @@ a { color: inherit; }
 .ign .read { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 28px; width: 100%; }
 .ign .read i { background: rgba(254,254,246,.18); opacity: 0; }
 .ign .fact { opacity: 0; transform: translateY(6px); text-align: center; }
-.ign .fact small { display: block; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #C2CF9A; font-weight: 600; }
+.ign .fact small { display: block; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #DBD4C2; font-weight: 600; }
 .ign .fact span { display: block; font-size: 23px; font-weight: 600; margin-top: 6px; letter-spacing: .01em; }
 .ign .skip { position: absolute; right: 14px; top: 12px; height: 32px; padding: 0 12px; border-radius: 8px; border: 1px solid rgba(254,254,246,.28); background: transparent; color: rgba(254,254,246,.82); font-size: 13px; font-weight: 500; }
 .ign.run .line { animation: ignLine .75s cubic-bezier(.2,.7,.1,1) .15s forwards; }
@@ -415,8 +415,8 @@ a { color: inherit; }
   --grad-card: linear-gradient(160deg, #384442 0%, #384442 48%, #323B38 100%);
 }
 .ivory body { background: radial-gradient(120% 70% at 50% 0%, #F9F9EA 0%, var(--ground) 70%); }
-.ivory .monitor { background: linear-gradient(180deg, #384442, #323C3A); padding: 6px; border-radius: 18px; box-shadow: 0 30px 50px -36px rgba(50,59,56,.55), 0 0 0 1px rgba(254,254,246,.6); }
-.ivory .screen { border-radius: 13px; background: var(--stage-a); }
+.ivory .monitor { background: linear-gradient(180deg, #384442, #323C3A); padding: 2px; border-radius: 12px; box-shadow: 0 30px 50px -36px rgba(50,59,56,.55), 0 0 0 1px rgba(254,254,246,.6); }
+.ivory .screen { border-radius: 10px; background: var(--stage-a); }
 .ivory .chbar { background: linear-gradient(180deg, #FEFEF6, #FAF9EB); border-bottom-color: var(--line); }
 .ivory .ch { border-color: var(--line); background: transparent; font-weight: 500; color: var(--ink2); }
 .ivory .ch:hover { border-color: var(--line2); background: #FEFEF6; }
@@ -534,7 +534,7 @@ a { color: inherit; }
 .ign .pic { height: 62px; display: grid; place-items: center; }
 .ign .ex { display: grid; grid-template-columns: repeat(7, 15px); gap: 5px; } .ign .ex i { height: 15px; border-radius: 4px; background: rgba(248,248,233,.16); }
 .ign .sgm { display: grid; grid-template-columns: repeat(4, 30px); gap: 6px; } .ign .sgm i { height: 8px; border-radius: 4px; background: rgba(248,248,233,.16); }
-.ign .cu { width: 92px; height: 55px; } .ign .cu path { fill: none; stroke: #F3F2E2; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; } .ign .cu .dim { stroke: #C2CF9A; stroke-width: 1.2; }
+.ign .cu { width: 92px; height: 55px; } .ign .cu path { fill: none; stroke: #F3F2E2; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; } .ign .cu .dim { stroke: #6E8601; stroke-width: 1.2; }
 .ign .tag { margin: 8px 0 0; font-size: 32px; font-weight: 300; letter-spacing: .03em; text-align: center; opacity: 0; transform: translateY(6px); } .ign .tag b { font-weight: 700; }
 .ign .sub { margin: -6px 0 0; font-size: 16px; color: rgba(248,248,233,.7); text-align: center; opacity: 0; }
 .ign.run .pl1 { animation: ignUp .6s ease-out 3.0s forwards; } .ign.run .pl2 { animation: ignUp .6s ease-out 3.9s forwards; } .ign.run .pl3 { animation: ignUp .6s ease-out 4.8s forwards; }
@@ -545,9 +545,9 @@ a { color: inherit; }
 .ign.run .sub { animation: ignIn .8s ease-out 7.3s forwards; }
 .ign.run .lit { animation: ignLit .8s cubic-bezier(.5,0,.2,1) 8.6s forwards !important; }
 .ign.run .core, .ign.run .skip, .ign.run .snd { animation: ignOut .4s ease-in 8.6s forwards !important; }
-@keyframes pxOn { from { background: rgba(248,248,233,.16); } 60% { background: #C2CF9A; } to { background: #F3F2E2; } }
+@keyframes pxOn { from { background: rgba(248,248,233,.16); } 60% { background: #6E8601; } to { background: #F3F2E2; } }
 @keyframes draw { to { stroke-dashoffset: 0; } }
-.ign .tag .lum2 { background-image: linear-gradient(100deg, rgba(254,254,246,0) 40%, #C2CF9A 46%, #F8F7E9 50%, #6E8601 54%, rgba(254,254,246,0) 60%), linear-gradient(#FEFEF6, #FEFEF6); background-size: 300% 100%, 100% 100%; background-position: 120% 0, 0 0; background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ign .tag .lum2 { background-image: linear-gradient(#6E8601, #6E8601) !important; background-color: transparent !important; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #6E8601; filter: none !important; }
 @media (max-width: 700px) { .ign .tag { font-size: 18px; } .ign .pl b { font-size: 16px; } .ign .pl span { font-size: 11.5px; } .ign .pil { gap: 8px; } .ign .ex { grid-template-columns: repeat(7, 8px); } .ign .sgm { grid-template-columns: repeat(4, 16px); } }
 @media (prefers-reduced-motion: reduce) {
   .ign.run .pl, .ign.run .tag, .ign.run .sub { animation: ignIn .01s linear forwards !important; transform: none; }
@@ -634,7 +634,7 @@ a { color: inherit; }
 @property --mp { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
 @keyframes moonSweep { from { --mp: -12%; } to { --mp: 100%; } }
 @keyframes moonAway { to { opacity: 0; transform: translate(-50%, 160px) scale(.6); } }
-.ign .glow { position: absolute; left: 50%; top: clamp(300px, 52vh, 520px); width: min(1040px, 92%); transform: translateX(-50%); opacity: 0; pointer-events: none; filter: drop-shadow(0 0 6px rgba(194,207,154,.55)); }
+.ign .glow { position: absolute; left: 50%; top: clamp(300px, 52vh, 520px); width: min(1040px, 92%); transform: translateX(-50%); opacity: 0; pointer-events: none; filter: none; }
 .ign .glow svg { width: 100%; height: auto; display: block; }
 .ign.run .glow { animation: glowIn 2.4s ease-out .4s forwards; }
 @keyframes glowIn { to { opacity: .26; } }
@@ -1357,6 +1357,18 @@ body { background: #F5F4E5; }
 /* the lettered badges: always strong (coffee disc, vanilla letter, the topic colour as the ring) */
 .colh .lt2 { background: #434239 !important; color: #FBFBED !important; box-shadow: 0 0 0 2px var(--tc); }
 .ivory .tbr .pn[aria-current=true] .lt { background: #FBFBED !important; color: #2E3633 !important; border: 2px solid var(--tc) !important; }
+
+/* ===== ROUND XIX (owner, 20 Nov): the mattress card, the core cutout, one green in the start-up ===== */
+.ivory .mine .mi { flex: none; background: #FEFEF6; border: 1px solid #DDD6C4; border-radius: 16px; padding: 10px 14px 10px; margin: 0; }
+.ivory .mine .mic { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.ivory .mine .mi svg { height: 104px !important; width: auto !important; max-width: 100%; filter: none !important; display: block; }
+.ivory .mine .rdy { font-size: 13px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #566901; line-height: 1; padding-bottom: 2px; }
+/* the core: a cut-out, no frame, fading into the card; always in view at the foot of Your selection */
+.ivory .mine .corep { margin-top: auto; position: relative; height: 150px; border-radius: 16px; overflow: hidden; background: transparent; }
+.ivory .mine .corep img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; opacity: .95; -webkit-mask-image: radial-gradient(ellipse 58% 62% at 50% 50%, #000 52%, transparent 100%); mask-image: radial-gradient(ellipse 58% 62% at 50% 50%, #000 52%, transparent 100%); }
+@media (max-width: 1099px) { .ivory .mine .corep { display: none; } }
+/* the start-up: no pale green anywhere on the logo */
+.ign .lum, .ign .tag .lum2 { background-size: 100% 100% !important; background-position: 0 0 !important; animation: none !important; }
 </style>
 </head>
 <body>
@@ -1373,7 +1385,7 @@ body { background: #F5F4E5; }
     <nav class="chbar" id="chbar" aria-label="Explore and Select &amp; Buy"></nav><div class="trailbar" id="trailbar"></div>
     <nav class="rail" id="rail" aria-label="This topic and your order"></nav>
     <section class="stage"><div class="colh" id="stageh"></div><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
-    <aside class="mine" aria-label="Your selection"><h2><span>Your selection</span></h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="bag" id="bag"></div><div class="mi" id="mi"></div></aside>
+    <aside class="mine" aria-label="Your selection"><h2><span>Your selection</span></h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="mi" id="mi"></div><div class="bag" id="bag"></div><div class="corep" aria-hidden="true"><img id="corepic" alt=""></div></aside>
   </div>
     <div class="ign" id="ign" hidden role="region" aria-label="The screen is starting"></div></main>
   <section id="std" class="stdv" aria-label="Standard Product View (stand-in)"></section>
@@ -1492,12 +1504,16 @@ var D = /*__DATA__*/;
       '<g transform="matrix(' + M.join(',') + ')"><path d="' + dStr(G.out) + '" fill="none" stroke="' + (IV ? '#9C9783' : '#9D9884') + '" stroke-width="2" stroke-dasharray="7 6" ' + st + '/>' +
       '<path d="' + d + '" fill="url(#fg' + i + ')"/><path d="' + d + '" fill="url(#tg' + i + ')" clip-path="url(#cp' + i + ')"/><path d="' + d + '" fill="none" stroke="#384442" stroke-width="2.4" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="#384442" stroke-width="2.4" ' + st + '/></g></svg>';
   }
-  function iconSvg(n) {   // the owner's mattress drawing as a small icon: it lights up when all four choices are made
+  function mattressCard() {   // a vanilla card above Add to Bag: the contour is grey, then the firmness gives the sky tint, then all four choices make the whole contour green with the word Ready
+    var n = ['size', 'firmness', 'depth', 'cover'].filter(chosen).length, fm = !!chosen('firmness'), ok = n >= 4;
+    return '<div class="mic' + (ok ? ' ok' : '') + '">' + iconSvg(n, fm) + (ok ? '<span class="rdy">Ready</span>' : '') + '</div>';
+  }
+  function iconSvg(n, fm) {   // the owner's mattress drawing as a small icon: it lights up when all four choices are made
     GI = GI || mat(D.mattress.icon); var G = GI, bb = box(G), M = G.M, ok = n >= 4, st = 'vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"';
     var d = dStr(G.out), pl = G.pl, xs = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[0]; })); }, []), ys = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[1]; })); }, []);
     var x0 = Math.min.apply(null, xs) - 100, x1 = Math.max.apply(null, xs) + 100, y0 = Math.min.apply(null, ys) - 100;
     var region = 'M' + x0 + ' ' + y0 + 'H' + x1 + 'V' + pl[pl.length - 1][1] + pl.slice().reverse().map(function (q) { return 'L' + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('') + 'L' + x0 + ' ' + pl[0][1] + 'Z';
-    var stroke = n === 0 ? '#CFCAB5' : '#FBFBED', top = ok ? '#6E8601' : 'none';
+    var stroke = ok ? '#6E8601' : (n === 0 ? '#9C9783' : '#384442'), top = ok ? 'rgba(110,134,1,.26)' : (fm ? 'rgba(93,184,196,.40)' : 'none');
     return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" aria-label="' + (ok ? 'All four choices made: ready to order' : n + ' of 4 choices made') + '"><defs><clipPath id="icp"><path d="' + region + '"/></clipPath></defs><g transform="matrix(' + M.join(',') + ')"><path d="' + d + '" fill="' + top + '" clip-path="url(#icp)"/><path d="' + d + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" ' + st + '/></g></svg>';
   }
   var IC = {
@@ -1550,7 +1566,7 @@ var D = /*__DATA__*/;
     var h = '';
     var nOn = ['size', 'depth', 'firmness', 'cover'].filter(chosen).length; h = h + '<div class="gauge' + (nOn === 4 ? ' full' : '') + '" role="img" aria-label="' + nOn + ' of 4 choices made">' + [0, 1, 2, 3].map(function (i) { return '<i class="' + (i < nOn ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="gl"><span>' + nOn + ' of 4</span><span>' + (nOn === 4 ? 'Ready' : 'Your choices') + '</span></div>';
     $('#chips').innerHTML = h;
-    $('#mi').innerHTML = iconSvg(['size', 'firmness', 'depth', 'cover'].filter(chosen).length);
+    $('#mi').innerHTML = mattressCard(); var mi0 = $('#mi'); if (mi0) mi0.classList.toggle('ok', ['size', 'firmness', 'depth', 'cover'].filter(chosen).length >= 4); var cp0 = $('#corepic'); if (cp0 && !cp0.getAttribute('src')) cp0.src = D.core;
     var p = price(), full = complete();
     var sh = shop(); $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small>' + priceParts(sh) + '<span>' + (sh == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the prices and the discount are Ecwid\'s own.') + '</span>';
     var gi = nextUnchosen();

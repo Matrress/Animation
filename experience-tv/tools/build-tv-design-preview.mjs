@@ -44,7 +44,7 @@ const SPEC = [
   ['hygiene', 'Hygiene', [['clean', 'Cleaner Sleep', 'points'], ['wash', 'Zip And Washing', 'copy:covers/care'], ['picture', 'Realistic Picture', 'read:0']]],
   ['certs', 'Certifications', [['bodies', 'Certifications', 'certs'], ['plants', 'Three Plants In Europe', 'own:plants'], ['made', 'Where It Is Made', 'read:0']]],
   ['warranty', 'Warranty', [['cover', 'Warranty + Gift', 'numerals'], ['covers', 'Covers And Warranty', 'copy:covers/warranty'], ['conditions', 'Conditions', 'read:0']]],
-  ['delivery', 'Delivery', [['made', 'Made To Order', 'read:0'], ['journey', 'Delivery Journey', 'journey'], ['prep', 'Before It Arrives', 'prep'], ['yours', 'Your Botanic', 'step:review']]]
+  ['delivery', 'Delivery', [['direct', 'Buy Direct From The Maker', 'own:direct'], ['made', 'Made To Order', 'read:0'], ['journey', 'Delivery Journey', 'journey'], ['prep', 'Before It Arrives', 'prep'], ['yours', 'Your Botanic', 'step:review']]]
 ];
 const ROOTS = { discover: '#bp-top', firmness: '#bp-firmness', comfort: '#bp-comfort', height: '#bp-height', covers: '#bp-covers', benefits: '#bp-benefits', support: '#bp-support', adaptation: '#bp-adaptation', zones: '#bp-zones', ventilation: '#bp-ventilation', hygiene: '#bp-hygiene', certs: '#bp-certs', warranty: '#bp-warranty', delivery: '#bp-delivery' };
 const MEDIA_CAP = { benefits: 'Milk to foam: where latex begins', adaptation: 'Elasticity: the instant response', zones: 'Seven zones, head to feet', ventilation: 'Airflow through the channels', certs: 'Durability under pressure' };
@@ -155,7 +155,7 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
 {
   const A = join(root, 'assets', 'botanic'), b64 = (f) => 'data:image/webp;base64,' + readFileSync(join(A, f)).toString('base64');
   D.eng = JSON.parse(readFileSync(join(A, 'engineering-view.json'), 'utf8'));
-  const bio = readFileSync(join(A, 'bio-dunlop.svg'), 'utf8'), bm = [...bio.matchAll(/<path([^>]*)d="([^"]+)"/g)], bp = bm.map((m) => m[2]), bf = bm.map((m) => ((m[1].match(/fill="([^"]+)"/) || [])[1]) || null);
+  const bio = readFileSync(join(A, 'bio-dunlop.svg'), 'utf8'), bm = [...bio.matchAll(/<path([^>]*)d="([^"]+)"/g)], bp = bm.map((m) => m[2]), bf = bm.map((m) => ((m[1].match(/fill="([^"]+)"/) || [])[1]) || null).map((f) => (f === '#009289' ? '#6E8601' : f));   // XIX: the site's teal becomes the approved green (the leaf, the mark, the wordmark)
   // OWNER 19 Nov: the logo in its own colours, exactly as on the site (the emblem in #009289 and #092600, the wordmark in #009289)
   D.bioFull = { vb: bio.match(/viewBox="([^"]+)"/)[1], d: bp, f: bf };
   D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12), f: bf.slice(12) };   // the wordmark "Bio Dunlop" (paths 12-23)
