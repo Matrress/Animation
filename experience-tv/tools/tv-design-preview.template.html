@@ -1407,7 +1407,7 @@ body.vopen { overflow: hidden; }
 .exg .chw .sub button { text-align: left; min-height: 36px; padding: 6px 12px; border-radius: 8px; border: 0; background: rgba(251,251,237,.08); color: #FBFBED; font: 600 14px var(--f); line-height: 1.25; cursor: pointer; }
 .exg .chw .sub button:hover, .exg .chw .sub button:focus-visible { background: rgba(251,251,237,.2); }
 .exg .chw .sub button b { font-weight: 700; margin-right: 6px; color: #DBD4C2; }
-.exg .allt { grid-column: 1 / -1; justify-self: start; height: 34px; padding: 0 14px; border-radius: 9px; border: 1.5px solid rgba(251,251,237,.45); background: transparent; color: #FBFBED; font: 700 13px var(--f); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
+.exg .allt { display: none; }
 .exg .allt:hover { background: rgba(251,251,237,.12); }
 /* the whole nomenclature from the start */
 .contents { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -1433,6 +1433,13 @@ body.vopen { overflow: hidden; }
 .exg .exsub button:hover { background: rgba(251,251,237,.14); }
 .exg .exsub button[aria-current=true] { background: #FBFBED; color: #2E3633; border-color: #FBFBED; }
 .exg .exsub button[aria-current=true] b { color: #566901; }
+
+/* ===== ROUND XXIX (owner, 20 Nov): All topics is outside the Explore card, at the foot of the left column ===== */
+.rail .allt-r { margin-top: auto; height: 42px; width: 100%; border-radius: 10px; border: 1.5px solid #CFC8B4; background: #FEFEF6; color: #2E3633; font: 700 13px var(--f); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
+.rail .allt-r:hover { background: #EFEBDD; border-color: #8C8878; }
+.rail .allt-r[aria-pressed=true] { background: #434239; color: #FBFBED; border-color: #434239; }
+@media (min-width: 1100px) { .rail .allt-r { position: sticky; bottom: 12px; } }
+@media (max-width: 1099px) { .rail .allt-r { margin-top: 8px; width: auto; padding: 0 16px; } }
 </style>
 </head>
 <body>
@@ -1594,7 +1601,7 @@ var D = /*__DATA__*/;
     var cur0 = EXCH.filter(function (c) { return c.id === S.ch; })[0];
     /* the parts of the topic that is open open under the Explore row, pressed not hovered: a tap on a part goes to it */
     var strip = (!onStep && !S.all && cur0) ? '<div class="exsub" role="group" aria-label="' + esc(cur0.label) + ' parts"><span class="exh" style="--c:' + TC[cur0.id] + '"><i></i>' + esc(cur0.label) + '</span>' + vis(cur0).map(function (p, k) { var on = S.pn === p.id; return '<button type="button" data-goto="' + cur0.id + '/' + p.id + '"' + (on ? ' aria-current="true"' : '') + '><b>' + 'ABCDEFG'.charAt(k) + '</b>' + esc(p.label) + '</button>'; }).join('') + '</div>' : '';
-    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span><button class="allt" type="button" data-contents="1" aria-pressed="' + (!!S.all) + '">All topics</button>' + EXCH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep && !S.all) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + strip + '</div>';
+    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + EXCH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep && !S.all) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + strip + '</div>';
     var sl = '<div class="slg" role="group" aria-label="Select and buy"><span class="glab">Select &amp; Buy</span>' + STEPS.map(function (st, i) { var v = i < 4 ? valueOf(st.id) : (complete() ? 'Ready' : ''), ok = i < 4 ? chosen(st.id) : complete();
       return '<button class="sb' + (ok ? ' ok' : '') + (i === 4 ? ' rv' : '') + '" data-go="' + i + '" aria-current="' + (onStep && S.step === i) + '">' + IC[st.id] + '<span><b>' + st.label + '</b><i>' + (v ? esc(v) : (i < 4 ? 'Choose' : 'Your order')) + '</i></span>' + (ok ? '<em class="okm">' + CKS + '</em>' : (i < 4 ? '<em class="nbm">' + (i + 1) + '</em>' : '')) + '</button>'; }).join('') + '</div>';
     var cbh = ex + sl; if (cbh !== window.__cbh) { window.__cbh = cbh; $('#chbar').innerHTML = cbh; }
@@ -1620,6 +1627,7 @@ var D = /*__DATA__*/;
       h = '<h2 class="colh">In this topic</h2><div class="tree" style="--tc:' + TC[cur.id] + '"><div class="tp"><span class="tdot"></span><span><b>' + esc(cur.label) + '</b><i>' + ps.length + (ps.length === 1 ? ' part' : ' parts') + ' in this topic</i></span></div><div class="tbr">' +
         ps.map(function (p, i) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" style="--i:' + i + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '"><span class="lt">' + 'ABCDEFG'.charAt(i) + '</span>' + esc(p.label) + '</button>'; }).join('') + '</div></div>';
     }
+    h += '<button class="allt-r" type="button" data-contents="1" aria-pressed="' + (!!S.all) + '">All topics</button>';   // the whole nomenclature: at the foot of the left column, outside the Explore card
     $('#rail').innerHTML = h;
     var tb = $('#trailbar'); if (tb) { tb.hidden = !onSel || S.gal; tb.innerHTML = onSel ? trailHtml() : ''; }
     var sc = document.querySelector('.screen'); if (sc) { sc.style.setProperty('--tc', onSel ? TC.select : TC[S.ch]); sc.setAttribute('data-layer', onSel ? 'select' : 'explore'); sc.setAttribute('data-topic', onSel ? 'select' : S.ch); }
