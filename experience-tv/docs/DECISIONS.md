@@ -292,6 +292,7 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - **Why a strip under the row, not under the button:** a Explore cell is about 130 px wide, too narrow for part names such as "Your First Ten Days". If the owner wants the parts directly under the pressed button, the row itself has to open, and that is a layout decision to test.
 - Test R48 updated (pressing opens the strip; a part goes to its page; All topics; no hover).
 
-## Round XXIX (owner, 20 November 2026)
-- **All topics is outside the Explore card**, at the foot of the left column, under the topic tree (sticky at the bottom on a large screen; under the topics on a small one). It opens the whole nomenclature from the start, as before. Explore keeps only its topics and the strip of the open topic's parts.
-- Test R48 looks for the button in the left column.
+## Round XXIX (owner, 20 November 2026) — replaces the earlier placement of All topics
+- **All topics sits in the free cell of the Explore card**, after Delivery (the row's last place). It has the height of a topic button, a dashed vanilla outline and a list mark, so it reads as a different thing: the way to the whole list. It is not inside the topics' list and it is not in the left column.
+- **Pressing it shows the whole nomenclature in the main area** (every topic and its parts, in order); a choice from it opens that part. The strip of the open topic's parts is hidden while the whole list is open, so the path is not shown twice.
+- Test R48 looks for the button in the Explore card and for 11 topics.
