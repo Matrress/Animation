@@ -1,7 +1,7 @@
 {
  "date": "2026-11-20",
  "failures": 0,
- "checks": 148,
+ "checks": 151,
  "rows": [
   {
    "pass": true,
@@ -255,6 +255,11 @@
   },
   {
    "pass": true,
+   "rule": "R45 weight in kg and stones and pounds, height in cm and inches: typed or slid, each changes the others at once, an out-of-range value waits, and the firmness guidance follows",
+   "detail": "{\"w1\":{\"kg\":\"82\",\"st\":\"12\",\"lb\":\"13\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"82\",\"gh\":\"170\",\"wv\":\"82 kg\",\"wi\":\"12 st 13 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"w2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"4\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"72\",\"gh\":\"170\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"h1\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"182\",\"inch\":\"71.7\",\"gw\":\"72\",\"gh\":\"182\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"182 cm\",\"hi\":\"6 ft 0 in\",\"rec\":1},\"h2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"178\",\"inch\":\"70\",\"gw\":\"72\",\"gh\":\"178\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1},\"bad\":\"72\",\"w3\":{\"kg\":\"100\",\"st\":\"15\",\"lb\":\"10\",\"cm\":\"178\",\"inch\":\"70.1\",\"gw\":\"100\",\"gh\":\"178\",\"wv\":\"100 kg\",\"wi\":\"15 st 10 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1}}"
+  },
+  {
+   "pass": true,
    "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
    "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
   },
@@ -472,6 +477,11 @@
    "pass": true,
    "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
    "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,made,journey,yours\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R45 weight in kg and stones and pounds, height in cm and inches: typed or slid, each changes the others at once, an out-of-range value waits, and the firmness guidance follows",
+   "detail": "{\"w1\":{\"kg\":\"82\",\"st\":\"12\",\"lb\":\"13\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"82\",\"gh\":\"170\",\"wv\":\"82 kg\",\"wi\":\"12 st 13 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"w2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"4\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"72\",\"gh\":\"170\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"h1\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"182\",\"inch\":\"71.7\",\"gw\":\"72\",\"gh\":\"182\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"182 cm\",\"hi\":\"6 ft 0 in\",\"rec\":1},\"h2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"178\",\"inch\":\"70\",\"gw\":\"72\",\"gh\":\"178\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1},\"bad\":\"72\",\"w3\":{\"kg\":\"100\",\"st\":\"15\",\"lb\":\"10\",\"cm\":\"178\",\"inch\":\"70.1\",\"gw\":\"100\",\"gh\":\"178\",\"wv\":\"100 kg\",\"wi\":\"15 st 10 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1}}"
   },
   {
    "pass": true,
@@ -732,6 +742,11 @@
    "pass": true,
    "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
    "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,made,journey,yours\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R45 weight in kg and stones and pounds, height in cm and inches: typed or slid, each changes the others at once, an out-of-range value waits, and the firmness guidance follows",
+   "detail": "{\"w1\":{\"kg\":\"82\",\"st\":\"12\",\"lb\":\"13\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"82\",\"gh\":\"170\",\"wv\":\"82 kg\",\"wi\":\"12 st 13 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"w2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"4\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"72\",\"gh\":\"170\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"h1\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"182\",\"inch\":\"71.7\",\"gw\":\"72\",\"gh\":\"182\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"182 cm\",\"hi\":\"6 ft 0 in\",\"rec\":1},\"h2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"178\",\"inch\":\"70\",\"gw\":\"72\",\"gh\":\"178\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1},\"bad\":\"72\",\"w3\":{\"kg\":\"100\",\"st\":\"15\",\"lb\":\"10\",\"cm\":\"178\",\"inch\":\"70.1\",\"gw\":\"100\",\"gh\":\"178\",\"wv\":\"100 kg\",\"wi\":\"15 st 10 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1}}"
   },
   {
    "pass": true,

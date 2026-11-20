@@ -1367,13 +1367,24 @@ body { background: #F5F4E5; }
 .ign .lum, .ign .tag .lum2 { background-size: 100% 100% !important; background-position: 0 0 !important; animation: none !important; }
 /* the Discover title is long: it never runs under the emblem */
 .ivory .q.nomoon h1 { padding-right: 70px; }
+
+/* ===== ROUND XXIII (owner, 20 Nov): weight in kg and stones, height in cm and inches, typed or slid ===== */
+.sl .r .val { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.1; } .sl .r .val i { font-style: normal; font-size: 15px; font-weight: 600; color: #384442; margin-top: 2px; }
+.conv { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; margin-top: 10px; padding-top: 12px; border-top: 1px solid #DDD6C4; }
+.conv label { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #384442; }
+.conv input { width: 56px; height: 42px; box-sizing: border-box; border: 1.5px solid #CFC8B4; border-radius: 10px; background: #FEFEF6; font: 600 18px var(--f); color: #2E3633; text-align: center; padding: 0 6px; -moz-appearance: textfield; }
+.conv input::placeholder { color: #8C8878; font-weight: 500; font-size: 14px; text-transform: none; letter-spacing: 0; }
+.conv input:focus { outline: 2px solid #6E8601; outline-offset: 1px; border-color: #6E8601; }
+.conv input::-webkit-outer-spin-button, .conv input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.conv .eq { font-size: 18px; font-weight: 700; color: #384442; }
+.fcard .rg2 { display: block; font-size: 13px; color: #384442; margin-top: 2px; }
 </style>
 </head>
 <body>
 <div class="app">
   <p class="pv">Design preview for the owner. Not deployed and not the engine. The recommendation is the published firmness rule, the four ranges are that module's own, the texts are the approved description, and the price and the bag are <b>stand-ins</b>: in the shop they are Ecwid's own.</p>
   <header class="top">
-    <div class="brand" aria-label="Botanic Original 100% Natural 100% Organic Latex Mattress, Dunlop Technology"><b>Botanic</b> <i>Original</i> <span>100% Natural 100%</span> <i>Organic</i> <span>Latex Mattress</span> <b class="dl">Dunlop</b> <span>Technology</span></div>
+    <div class="brand" aria-label="Botanic Original 100% Organic Latex Mattress, Dunlop Technology"><b>Botanic</b> <i>Original</i> <span>100%</span> <i>Organic</i> <span>Latex Mattress</span> <b class="dl">Dunlop</b> <span>Technology</span></div>
     <div class="tools">
       <button class="tbtn" id="galbtn" data-gal="1" aria-pressed="false" aria-label="View Model Gallery" title="View Model Gallery"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span>Gallery</span></button>
       <div class="seg" role="group" aria-label="View"><button data-view="tv" id="vtv" aria-pressed="true">Optimised Preview</button><button data-view="std" id="vstd" aria-pressed="false">Standard Product View</button></div>
@@ -1611,21 +1622,46 @@ var D = /*__DATA__*/;
     return h;
   }
   var WMAX = 180;   // owner, 16 Nov IX: the body-weight scale ends at 180 kg
+  /* WEIGHT AND HEIGHT, both measures (owner, 20 Nov XXIII): kg or stones and pounds, cm or inches; typed or slid, converted both ways.
+     The firmness rule works in whole kilograms and centimetres, so the typed value is rounded to those. */
+  var K_LB = 2.2046226218, C_IN = 2.54;
+  function stLb(kg) { var lb = Math.round(kg * K_LB), st = Math.floor(lb / 14); return [st, lb - st * 14]; }
+  function ftIn(cm) { var i = Math.round(cm / C_IN), ft = Math.floor(i / 12); return [ft, i - ft * 12]; }
+  function wImp(kg) { var a = stLb(kg); return a[0] + ' st ' + a[1] + ' lb'; }
+  function hImp(cm) { var a = ftIn(cm); return a[0] + ' ft ' + a[1] + ' in'; }
+  function inchTxt(cm) { return String(Math.round(cm / C_IN * 10) / 10); }
+  function readTyped(id) {   // what a typed field means in whole kg or cm, or null while it is empty, incomplete or out of range
+    var L = DDFirmnessCore.limits, num = function (x) { var v = parseFloat(String($('#' + x).value).replace(',', '.')); return isNaN(v) ? null : v; }, v;
+    if (id === 'wkg') v = num('wkg'); else if (id === 'wst' || id === 'wlb') v = num('wst') == null && num('wlb') == null ? null : ((num('wst') || 0) * 14 + (num('wlb') || 0)) / K_LB;
+    else if (id === 'hcm') v = num('hcm'); else v = num('hin') == null ? null : num('hin') * C_IN;
+    if (v == null) return null; v = Math.round(v);
+    var lo = id[0] === 'w' ? L.weight[0] : L.height[0], hi = id[0] === 'w' ? WMAX : L.height[1];
+    return v < lo || v > hi ? null : v;
+  }
+  function syncBody(skip) {   // write S.weight and S.height into every control except the one being typed in
+    var w = S.weight, h = S.height, pair = (skip === 'wst' || skip === 'wlb') ? ['wst', 'wlb'] : [skip], set = function (id, v) { var e = $('#' + id); if (e && pair.indexOf(id) < 0 && document.activeElement !== e) e.value = v; };
+    if ($('#gwv')) { $('#gwv').textContent = w == null ? '–' : w + ' kg'; $('#gwi').textContent = w == null ? '' : wImp(w); }
+    if ($('#ghv')) { $('#ghv').textContent = h == null ? '–' : h + ' cm'; $('#ghi').textContent = h == null ? '' : hImp(h); }
+    if (w != null) { set('gw', Math.min(w, WMAX)); set('wkg', w); var a = stLb(w); set('wst', a[0]); set('wlb', a[1]); }
+    if (h != null) { set('gh', h); set('hcm', h); set('hin', inchTxt(h)); }
+  }
   function firmnessView() {
     var B = DDFirmnessCore.bands, lim = DDFirmnessCore.limits, rec = null;
     if (S.weight != null && S.height != null) rec = DDFirmnessCore.recommend(S.weight, S.height);
     var fk0 = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
     if (S.firmness && !S.firmEdit) return firmConfirmed(S.firmness);
-    var cards = [['Soft', 'Up to ' + B.softMax + ' kg', 'soft'], ['Medium', (B.softMax + 1) + ' – ' + B.mediumMax + ' kg', 'medium'], ['Firm', (B.mediumMax + 1) + ' – ' + B.firmMax + ' kg', 'firm'], ['Extra Firm', B.extraFirmMin + ' kg and over', 'xfirm']];
+    var cards = [['Soft', 'Up to ' + B.softMax + ' kg', 'soft', 'Up to ' + wImp(B.softMax)], ['Medium', (B.softMax + 1) + ' – ' + B.mediumMax + ' kg', 'medium', wImp(B.softMax + 1) + ' – ' + wImp(B.mediumMax)], ['Firm', (B.mediumMax + 1) + ' – ' + B.firmMax + ' kg', 'firm', wImp(B.mediumMax + 1) + ' – ' + wImp(B.firmMax)], ['Extra Firm', B.extraFirmMin + ' kg and over', 'xfirm', wImp(B.extraFirmMin) + ' and over']];
     var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
-    var h = '<div class="fw"><div class="sl"><div class="r"><label for="gw">Body weight</label><b id="gwv">' + (S.weight == null ? '–' : S.weight + ' kg') + '</b></div><input id="gw" type="range" min="' + lim.weight[0] + '" max="' + WMAX + '" value="' + (S.weight == null ? 70 : Math.min(S.weight, WMAX)) + '"><div class="rng"><span>' + lim.weight[0] + ' kg</span><span>' + WMAX + ' kg</span></div></div>' +
-      '<div class="sl"><div class="r"><label for="gh">Height</label><b id="ghv">' + (S.height == null ? '–' : S.height + ' cm') + '</b></div><input id="gh" type="range" min="' + lim.height[0] + '" max="' + lim.height[1] + '" value="' + (S.height == null ? 170 : S.height) + '"><div class="rng"><span>' + lim.height[0] + ' cm</span><span>' + lim.height[1] + ' cm</span></div></div></div>';
+    var h = '<div class="fw"><div class="sl"><div class="r"><label for="gw">Body weight</label><span class="val"><b id="gwv">' + (S.weight == null ? '–' : S.weight + ' kg') + '</b><i id="gwi">' + (S.weight == null ? '' : wImp(S.weight)) + '</i></span></div><input id="gw" type="range" min="' + lim.weight[0] + '" max="' + WMAX + '" value="' + (S.weight == null ? 70 : Math.min(S.weight, WMAX)) + '"><div class="rng"><span>' + lim.weight[0] + ' kg · ' + wImp(lim.weight[0]) + '</span><span>' + WMAX + ' kg · ' + wImp(WMAX) + '</span></div>' +
+      '<div class="conv" role="group" aria-label="Type your weight"><label>kg<input id="wkg" type="number" inputmode="decimal" min="' + lim.weight[0] + '" max="' + WMAX + '" step="1" placeholder="kg" value="' + (S.weight == null ? '' : S.weight) + '"></label><span class="eq">=</span><label>st<input id="wst" type="number" inputmode="numeric" min="0" max="29" step="1" placeholder="st" value="' + (S.weight == null ? '' : stLb(S.weight)[0]) + '"></label><label>lb<input id="wlb" type="number" inputmode="decimal" min="0" max="13" step="1" placeholder="lb" value="' + (S.weight == null ? '' : stLb(S.weight)[1]) + '"></label></div></div>' +
+      '<div class="sl"><div class="r"><label for="gh">Height</label><span class="val"><b id="ghv">' + (S.height == null ? '–' : S.height + ' cm') + '</b><i id="ghi">' + (S.height == null ? '' : hImp(S.height)) + '</i></span></div><input id="gh" type="range" min="' + lim.height[0] + '" max="' + lim.height[1] + '" value="' + (S.height == null ? 170 : S.height) + '"><div class="rng"><span>' + lim.height[0] + ' cm · ' + hImp(lim.height[0]) + '</span><span>' + lim.height[1] + ' cm · ' + hImp(lim.height[1]) + '</span></div>' +
+      '<div class="conv" role="group" aria-label="Type your height"><label>cm<input id="hcm" type="number" inputmode="decimal" min="' + lim.height[0] + '" max="' + lim.height[1] + '" step="1" placeholder="cm" value="' + (S.height == null ? '' : S.height) + '"></label><span class="eq">=</span><label>in<input id="hin" type="number" inputmode="decimal" min="' + Math.round(lim.height[0] / C_IN) + '" max="' + Math.round(lim.height[1] / C_IN) + '" step="0.5" placeholder="inches" value="' + (S.height == null ? '' : inchTxt(S.height)) + '"></label></div></div></div>';
     var chosenC = cards.filter(function (c) { return c[0] === S.firmness; })[0] || (rec && cards.filter(function (c) { return c[0] === fk(rec.display); })[0]);
     h += '<div class="fc cmp">';
     var pick = S.firmPick || (rec && fk(rec.display) !== 'Extra Firm' ? fk(rec.display) : null);
     cards.forEach(function (c) { var isRec = rec && fk(rec.display) === c[0], on = pick === c[0], tick = on ? '<span class="tick">' + CHECK.replace('width="18" height="18"', 'width="14" height="14"') + '</span>' : '';
-      if (c[2] === 'xfirm') h += '<a class="fcard' + (isRec ? ' rec' : '') + '" href="' + esc(D.specialist.url) + '" target="_blank" rel="noopener" aria-label="Extra Firm, specialist model Orthopaedic Coconut Core, opens its product page">' + tick + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="sp">Specialist Model: Orthopaedic Coconut Core ↗</span></a>';
-      else h += '<button class="fcard' + (isRec ? ' rec' : '') + '" data-firm="' + c[0] + '" aria-pressed="' + on + '">' + tick + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span></button>'; });
+      if (c[2] === 'xfirm') h += '<a class="fcard' + (isRec ? ' rec' : '') + '" href="' + esc(D.specialist.url) + '" target="_blank" rel="noopener" aria-label="Extra Firm, specialist model Orthopaedic Coconut Core, opens its product page">' + tick + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="rg2">' + c[3] + '</span><span class="sp">Specialist Model: Orthopaedic Coconut Core ↗</span></a>';
+      else h += '<button class="fcard' + (isRec ? ' rec' : '') + '" data-firm="' + c[0] + '" aria-pressed="' + on + '">' + tick + '<span class="nm">' + c[0] + '</span><span class="rg">' + c[1] + '</span><span class="rg2">' + c[3] + '</span></button>'; });
     h += '</div><p class="fnote" id="guide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3F4945" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.5" stroke-linecap="round"/></svg><span>' + (rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : ' Body proportions refine the result near a boundary.') : 'Set your weight and height for guidance, or choose directly. Body proportions refine the result near a boundary.') + '</span></p>';
     if (chosenC) { var dd = D.firmness.cards.filter(function (x) { return x.key === chosenC[2]; })[0]; h += '<p class="fdesc"><b>' + chosenC[0] + '.</b> ' + esc(dd.desc) + '</p>'; }
     var e = engPaths(), FC = CUR('firmness/choose');
@@ -1898,7 +1934,7 @@ var D = /*__DATA__*/;
   function infoDraw(p, c) {
     var C = CUR(), key = c.id + '/' + p.id, title = p.kind === 'facts' ? D.factsTitle : (p.title || (c.head && c.head.title) || p.label), sub = null; seen(key);
     if (p.kind === 'points' || p.kind === 'zones' || p.kind === 'certs' || p.kind === 'numerals' || p.kind === 'article' || (c.id === 'delivery' && p.id === 'made')) sub = c.head && c.head.sub;
-    if (p.kind === 'hero') { title = 'Botanic Original – 100% Natural Latex Mattress'; sub = 'Everything about the mattress, topic by topic.'; }
+    if (p.kind === 'hero') { title = 'Botanic Original – 100% Organic Latex Mattress'; sub = 'Everything about the mattress, topic by topic.'; }
     if (p.kind === 'numerals') title = 'Warranty and Durability';
     if (p.kind === 'journey') { title = 'Your Delivery, Step By Step'; sub = 'A message at every stage. Delivery is included in the price.'; }
     if (p.kind === 'prep') { title = 'What To Expect Before Your Mattress Arrives'; sub = 'You buy directly from the manufacturer. This is what to expect before your mattress arrives.'; }
@@ -2013,10 +2049,14 @@ var D = /*__DATA__*/;
     else if (k === 'firmness') { if (v === 'Extra Firm') toast('Extra Firm is a specialist model: Orthopaedic Coconut Core. Nothing was changed in the shop.'); else S.firmness = v === '' ? null : v; }
     draw();
   });
+  document.addEventListener('change', function (e) { var id = e.target.id; if (/^(wkg|wst|wlb|hcm|hin)$/.test(id)) { if (readTyped(id) == null) syncBody(''); else syncBody(id); } });   // an empty or out-of-range field goes back to the last good value
   document.addEventListener('input', function (e) {
-    if (e.target.id === 'gw') S.weight = +e.target.value; else if (e.target.id === 'gh') S.height = +e.target.value; else return;
+    var id = e.target.id;
+    if (id === 'gw') S.weight = +e.target.value; else if (id === 'gh') S.height = +e.target.value;
+    else if (/^(wkg|wst|wlb|hcm|hin)$/.test(id)) { var tv = readTyped(id); if (tv == null) return; if (id[0] === 'w') S.weight = tv; else S.height = tv; }   // a value that is not complete or not in range waits until it is
+    else return;
     var B = DDFirmnessCore, rec = (S.weight != null && S.height != null) ? B.recommend(S.weight, S.height) : null;
-    $('#gwv').textContent = S.weight == null ? '–' : S.weight + ' kg'; $('#ghv').textContent = S.height == null ? '–' : S.height + ' cm';
+    syncBody(id);
     // update in place (the slider must not be re-created while it is being dragged)
     var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
     if (rec && !S.firmPick) { var pk = fk(rec.display); document.querySelectorAll('.fcard[data-firm]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.firm === pk)); }); var cb = document.querySelector('[data-fconfirm]'); if (cb && pk !== 'Extra Firm') { cb.dataset.fconfirm = pk; cb.disabled = false; cb.classList.add('ready'); cb.innerHTML = CHECK + 'Confirm ' + pk; var fs = document.querySelector('.fconf'); if (fs) { fs.classList.add('on'); fs.firstChild.innerHTML = 'Your firmness: <b>' + pk + '</b>. Confirm it to continue.'; } } }

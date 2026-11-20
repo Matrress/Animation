@@ -254,3 +254,8 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - **The start-up plays once,** when the model is entered. Pressing Discover or Optimised Preview no longer plays it again. (The guided tour of the presentation can still play it on its own start-up step.)
 - **"Buying directly from the manufacturer"** is the wording, never "from the maker". It is said once (round XXI), under the title of Delivery's first part.
 - Tests: R6 and R29 updated.
+
+## Round XXIII (owner, 20 November 2026)
+- **The header line is said once:** "Botanic Original 100% Organic Latex Mattress Dunlop Technology" (the second "100% Natural" is gone). The Discover title is "Botanic Original – 100% Organic Latex Mattress". The start-up's required fact "Material: 100% Natural Latex" is the owner's earlier decision and is unchanged.
+- **Firmness: weight and height in both measures.** Body weight: kilograms, or stones and pounds. Height: centimetres, or inches. Each can be slid or typed; typing in one measure changes the others at once, and both measures are always shown (82 kg and 12 st 13 lb; 182 cm and 6 ft 0 in, also at the ends of each slider). A value that is not complete or not in range waits and does not change anything; leaving the field puts the last good value back. Stones and pounds are one pair: what a person types there is not rewritten. The firmness rule keeps working in whole kilograms and centimetres, so a typed value is rounded to them (1 lb is about 0.45 kg). The four firmness cards also show their ranges in stones and pounds.
+- Test R45 checks the conversions both ways, the wait on a wrong value and the guidance.

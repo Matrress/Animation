@@ -173,7 +173,7 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
 }
 D.curated = {
   // 01 D25324CF: hero, selective bold in the introduction
-  'discover/intro': { title: '{Botanic} Original – 100% Natural Latex Mattress', bold: ['100% Organic Original Dunlop latex', 'precise balance', 'anatomical adaptation', 'orthopaedic support'] },
+  'discover/intro': { title: '{Botanic} Original – 100% Organic Latex Mattress', bold: ['100% Organic Original Dunlop latex', 'precise balance', 'anatomical adaptation', 'orthopaedic support'] },
   // 03 5748F204: the firmness question band
   'firmness/choose': { kicker: 'Dunlop firmness regulations according to body proportions', kicker2: 'Based on engineering research', title: 'What [Support] and [Adaptation] does your body need?', sub: 'We regulate the mattress to your body, not by feel. With the proven Dunlop engineering method, we provide a reliable and precise selection.',
     support: 'Keeps your body at the surface, without the deep sinking sensation of memory foam.', adapt: 'Distributes body weight in the most adaptive way, optimising pressure relief and muscle relaxation.' },
