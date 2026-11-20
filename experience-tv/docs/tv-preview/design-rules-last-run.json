@@ -221,7 +221,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":305,\"yFam\":305,\"yPick\":305,\"yNav\":220,\"stageTop\":120,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":305,\"yFam\":305,\"yPick\":305,\"yNav\":163,\"stageTop\":177,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -260,8 +260,8 @@
   },
   {
    "pass": true,
-   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, cut out on the column with no white card; the Discover panel no longer holds them",
-   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
+   "rule": "R46 the Bio Dunlop logo (its own two tones, the teal replaced by the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, as they are: on the palette latte (never a white card), no outline, small; the Discover panel no longer holds them",
+   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"}]"
   },
   {
    "pass": true,
@@ -495,8 +495,8 @@
   },
   {
    "pass": true,
-   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, cut out on the column with no white card; the Discover panel no longer holds them",
-   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
+   "rule": "R46 the Bio Dunlop logo (its own two tones, the teal replaced by the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, as they are: on the palette latte (never a white card), no outline, small; the Discover panel no longer holds them",
+   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"}]"
   },
   {
    "pass": true,
@@ -731,7 +731,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":326,\"stageTop\":14,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":287,\"stageTop\":53,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -770,8 +770,8 @@
   },
   {
    "pass": true,
-   "rule": "R46 the Bio Dunlop logo (in the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, cut out on the column with no white card; the Discover panel no longer holds them",
-   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)\"}]"
+   "rule": "R46 the Bio Dunlop logo (its own two tones, the teal replaced by the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, as they are: on the palette latte (never a white card), no outline, small; the Discover panel no longer holds them",
+   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"}]"
   },
   {
    "pass": true,

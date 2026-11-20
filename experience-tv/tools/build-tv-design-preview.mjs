@@ -155,7 +155,7 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
 {
   const A = join(root, 'assets', 'botanic'), b64 = (f) => 'data:image/webp;base64,' + readFileSync(join(A, f)).toString('base64');
   D.eng = JSON.parse(readFileSync(join(A, 'engineering-view.json'), 'utf8'));
-  const bio = readFileSync(join(A, 'bio-dunlop.svg'), 'utf8'), bm = [...bio.matchAll(/<path([^>]*)d="([^"]+)"/g)], bp = bm.map((m) => m[2]), bf = bm.map((m) => ((m[1].match(/fill="([^"]+)"/) || [])[1]) || null).map((f) => (f ? '#6E8601' : f));   // XX (owner 20 Nov): the whole Bio Dunlop logo (leaf, mark, wordmark) is the one approved green
+  const bio = readFileSync(join(A, 'bio-dunlop.svg'), 'utf8'), bm = [...bio.matchAll(/<path([^>]*)d="([^"]+)"/g)], bp = bm.map((m) => m[2]), bf = bm.map((m) => ((m[1].match(/fill="([^"]+)"/) || [])[1]) || null).map((f) => (f === '#009289' ? '#6E8601' : f));   // XXVI (owner 20 Nov): the logo keeps its own design: the site's teal becomes the approved green, the dark details stay as drawn
   // OWNER 19 Nov: the logo in its own colours, exactly as on the site (the emblem in #009289 and #092600, the wordmark in #009289)
   D.bioFull = { vb: bio.match(/viewBox="([^"]+)"/)[1], d: bp, f: bf };
   D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12), f: bf.slice(12) };   // the wordmark "Bio Dunlop" (paths 12-23)
