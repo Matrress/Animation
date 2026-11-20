@@ -296,3 +296,13 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - **All topics sits in the free cell of the Explore card**, after Delivery (the row's last place). It has the height of a topic button, a dashed vanilla outline and a list mark, so it reads as a different thing: the way to the whole list. It is not inside the topics' list and it is not in the left column.
 - **Pressing it shows the whole nomenclature in the main area** (every topic and its parts, in order); a choice from it opens that part. The strip of the open topic's parts is hidden while the whole list is open, so the path is not shown twice.
 - Test R48 looks for the button in the Explore card and for 11 topics.
+
+## Round XXX (owner, 20 November 2026)
+- **All topics sits beside the Gallery button** in the header line: a tile of the Gallery's size, in the coffee tone (not green), with a list mark. It opens the whole nomenclature in the main area. It is no longer in the Explore card and not in the left column, so the Explore card's depth does not change.
+- **Installation is rewritten** in the owner's points, short sentences: prepare the home (bedside tables, valuables, the floor and the route); plan the route (stairs, landings, corners; carry slowly); how to remove the packaging easily (carry it in its bag to the prepared bed, unpack there; keep the bag for storage, moves and transport); two people, always (a king, a double or larger; help each other; never handle it alone, never leave anyone alone with it; a heavy product); the correct position on the bed (the small label on the lower short edge; the material and the foot end); turn it about once a month for the first six months, then regularly. The set-up takes about 15 to 20 minutes of care and organisation.
+- **Open points for the owner, not yet published as fact:**
+  1. **"Foldable" and "never rolled" contradict each other.** The owner's note says the mattress is foldable and can be carried through stairs and corners. The product page (Why it is never rolled) says 100% natural latex cannot be rolled, compressed or vacuum-packed. The Installation text says nothing about folding. Which is true?
+  2. **Turning:** the warranty text says "rotate three times in the first six months"; the Installation text now says "about once a month for the first six months". One of them must change.
+  3. **"20 years":** the owner's note mentions 20 years of life with turning. It is a claim, and it is not written in the page; it needs the owner's approval.
+  4. The owner's wording "a lady should never be left in such a position" is written in a gender-neutral form ("never leave anyone alone with it"), with the same intent.
+- Tests R48 (All topics beside Gallery), R49 (the new Installation points).

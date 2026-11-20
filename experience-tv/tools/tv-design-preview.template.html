@@ -1407,10 +1407,7 @@ body.vopen { overflow: hidden; }
 .exg .chw .sub button { text-align: left; min-height: 36px; padding: 6px 12px; border-radius: 8px; border: 0; background: rgba(251,251,237,.08); color: #FBFBED; font: 600 14px var(--f); line-height: 1.25; cursor: pointer; }
 .exg .chw .sub button:hover, .exg .chw .sub button:focus-visible { background: rgba(251,251,237,.2); }
 .exg .chw .sub button b { font-weight: 700; margin-right: 6px; color: #DBD4C2; }
-.exg .allt { grid-column: auto; justify-self: stretch; height: 46px; border-radius: 10px; border: 1.5px dashed rgba(251,251,237,.7); background: transparent; color: #FBFBED; font: 700 13px var(--f); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.exg .allt .ai { font-size: 15px; line-height: 1; }
-.exg .allt:hover { background: rgba(251,251,237,.12); border-style: solid; }
-.exg .allt[aria-pressed=true] { background: #FBFBED; color: #2E3633; border: 1.5px solid #FBFBED; }
+
 .exg .allt:hover { background: rgba(251,251,237,.12); }
 /* the whole nomenclature from the start */
 .contents { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -1437,6 +1434,13 @@ body.vopen { overflow: hidden; }
 .exg .exsub button[aria-current=true] { background: #FBFBED; color: #2E3633; border-color: #FBFBED; }
 .exg .exsub button[aria-current=true] b { color: #566901; }
 
+
+/* ===== ROUND XXX (owner, 20 Nov): All topics sits beside the Gallery button, a tile of its own size, in the coffee tone ===== */
+.allbtn { width: 88px; height: 76px; padding: 6px; border-radius: 14px; border: 1px solid #434239; background: #FEFEF6; color: #2E3633; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; font: 700 12.5px var(--f); letter-spacing: .08em; text-transform: uppercase; }
+.allbtn svg { width: 22px; height: 22px; color: #434239; }
+.allbtn:hover { border-color: #8C8878; background: #EFEBDD; }
+.allbtn[aria-pressed=true] { background: #434239; color: #FBFBED; border-color: #434239; }
+.allbtn[aria-pressed=true] svg { color: #FBFBED; }
 </style>
 </head>
 <body>
@@ -1446,6 +1450,7 @@ body.vopen { overflow: hidden; }
     <div class="brand" aria-label="Botanic Original 100% Organic Latex Mattress, Dunlop Technology"><b>Botanic</b> <i>Original</i> <span>100%</span> <i>Organic</i> <span>Latex Mattress</span> <b class="dl">Dunlop</b> <span>Technology</span></div>
     <div class="tools">
       <button class="tbtn" id="galbtn" data-gal="1" aria-pressed="false" aria-label="View Model Gallery" title="View Model Gallery"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span>Gallery</span></button>
+      <button class="allbtn" id="allbtn" type="button" data-contents="1" aria-pressed="false" aria-label="All topics: the whole list" title="All topics"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>All topics</span></button>
       <div class="seg" role="group" aria-label="View"><button data-view="tv" id="vtv" aria-pressed="true">Optimised Preview</button><button data-view="std" id="vstd" aria-pressed="false">Standard Product View</button></div>
     </div>
   </header>
@@ -1598,7 +1603,7 @@ var D = /*__DATA__*/;
     var cur0 = EXCH.filter(function (c) { return c.id === S.ch; })[0];
     /* the parts of the topic that is open open under the Explore row, pressed not hovered: a tap on a part goes to it */
     var strip = (!onStep && !S.all && cur0) ? '<div class="exsub" role="group" aria-label="' + esc(cur0.label) + ' parts"><span class="exh" style="--c:' + TC[cur0.id] + '"><i></i>' + esc(cur0.label) + '</span>' + vis(cur0).map(function (p, k) { var on = S.pn === p.id; return '<button type="button" data-goto="' + cur0.id + '/' + p.id + '"' + (on ? ' aria-current="true"' : '') + '><b>' + 'ABCDEFG'.charAt(k) + '</b>' + esc(p.label) + '</button>'; }).join('') + '</div>' : '';
-    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + EXCH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep && !S.all) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + '<button class="allt" type="button" data-contents="1" aria-pressed="' + (!!S.all) + '"><span class="ai" aria-hidden="true">&#9776;</span>All topics</button>' + strip + '</div>';
+    var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + EXCH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep && !S.all) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + strip + '</div>';
     var sl = '<div class="slg" role="group" aria-label="Select and buy"><span class="glab">Select &amp; Buy</span>' + STEPS.map(function (st, i) { var v = i < 4 ? valueOf(st.id) : (complete() ? 'Ready' : ''), ok = i < 4 ? chosen(st.id) : complete();
       return '<button class="sb' + (ok ? ' ok' : '') + (i === 4 ? ' rv' : '') + '" data-go="' + i + '" aria-current="' + (onStep && S.step === i) + '">' + IC[st.id] + '<span><b>' + st.label + '</b><i>' + (v ? esc(v) : (i < 4 ? 'Choose' : 'Your order')) + '</i></span>' + (ok ? '<em class="okm">' + CKS + '</em>' : (i < 4 ? '<em class="nbm">' + (i + 1) + '</em>' : '')) + '</button>'; }).join('') + '</div>';
     var cbh = ex + sl; if (cbh !== window.__cbh) { window.__cbh = cbh; $('#chbar').innerHTML = cbh; }
@@ -2054,7 +2059,7 @@ var D = /*__DATA__*/;
     $('#stageh').className = 'colh'; $('#stageh').innerHTML = 'Explore  ·  All topics';
   }
   function draw() {
-    document.body.classList.toggle('std', S.view === 'std');  $('#galbtn').setAttribute('aria-pressed', String(S.gal)); $('#vtv').setAttribute('aria-pressed', String(S.view === 'tv')); $('#vstd').setAttribute('aria-pressed', String(S.view === 'std'));
+    document.body.classList.toggle('std', S.view === 'std'); $('#allbtn').setAttribute('aria-pressed', String(!!S.all));  $('#galbtn').setAttribute('aria-pressed', String(S.gal)); $('#vtv').setAttribute('aria-pressed', String(S.view === 'tv')); $('#vstd').setAttribute('aria-pressed', String(S.view === 'std'));
     if (S.view === 'std') { drawStd(); return; }
     var pp = panel(), cc = chap(S.ch); drawBar();
     if (S.all) { contentsDraw(); drawRail(); drawMine(); return; }
