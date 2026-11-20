@@ -1,7 +1,7 @@
 {
  "date": "2026-11-20",
- "failures": 0,
- "checks": 145,
+ "failures": 3,
+ "checks": 148,
  "rows": [
   {
    "pass": true,
@@ -249,6 +249,11 @@
    "detail": "Size chosen90 × 190 cm | Next: 2 of 4Now choose your DepthThree heights are available. All three deliver  | How thick should it be?Three heights are | Select here  ·  Step 2 of 5  ·  Depth"
   },
   {
+   "pass": false,
+   "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
+   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":2,\"panels\":\"prep,made,journey,yours\"}"
+  },
+  {
    "pass": true,
    "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
    "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
@@ -462,6 +467,11 @@
    "pass": true,
    "rule": "R32 after a choice the television says what is chosen and what is next, then opens Depth by itself",
    "detail": "Size chosen90 × 190 cm | Next: 2 of 4Now choose your DepthThree heights are available. All three deliver  | How thick should it be?Three heights are | Select here  ·  Step 2 of 5  ·  Depth"
+  },
+  {
+   "pass": false,
+   "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
+   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":2,\"panels\":\"prep,made,journey,yours\"}"
   },
   {
    "pass": true,
@@ -717,6 +727,11 @@
    "pass": true,
    "rule": "R32 after a choice the television says what is chosen and what is next, then opens Depth by itself",
    "detail": "Size chosen90 × 190 cm | Next: 2 of 4Now choose your DepthThree heights are available. All three deliver  | How thick should it be?Three heights are | Select here  ·  Step 2 of 5  ·  Depth"
+  },
+  {
+   "pass": false,
+   "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
+   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":2,\"panels\":\"prep,made,journey,yours\"}"
   },
   {
    "pass": true,

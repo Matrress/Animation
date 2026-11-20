@@ -241,3 +241,9 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 ## Round XX (owner, 20 November 2026)
 - **The whole Bio Dunlop logo is the one approved green, #6E8601**: the leaf, the mark and the wordmark. Last round only the teal parts were changed; the dark leaf and letters (#092600) are now green too.
 - **The core picture in Your selection is removed** (final decision of the owner: too heavy). Your selection keeps the price, the mattress card and the bag. The earlier idea of a core cut-out elsewhere in the module is withdrawn until the owner asks for it again.
+
+## Round XXI (owner, 20 November 2026)
+- **Delivery opens with "What To Expect Before Your Mattress Arrives"** (the four cards: packaging, getting the home ready, why it is never rolled, the two-person team). It is the first part of Delivery and the most important one; Made To Order and Delivery Journey follow.
+- **"You buy directly from the manufacturer" is said once**, as the sentence under that title. The separate "Buy Direct From The Maker" part (round XIX) is removed: one sentence says it all, and a whole section would say nothing more.
+- **7-Zone gets a new part, "How 7 Zones Work"** (five short readings): one latex with exactly the same structure and firmness from head to foot; the zones are not different materials and not different firmnesses; the perforation sets the support in each area; a less open perforation leaves more latex and raises the support, a more open one softens the area; the spine is supported with the stretching effect and the pelvis is held up; the shoulders have their own adaptation and the back and lower back feel supported with lightness, not pressure and not weight.
+- Test R44 checks the order of Delivery, the single sentence and the 7-Zone text.

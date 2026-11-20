@@ -39,12 +39,12 @@ const SPEC = [
   ['benefits', 'Benefits', [['origin', 'Origin', 'points'], ['why', 'Why Latex', 'read:0']]],
   ['support', 'Support', [['bearing', 'Bearing Force', 'points'], ['feel', 'How Support Feels', 'own:supportfeel'], ['together', 'Support + Adaptation', 'read:0'], ['density', 'How Density Works', 'density']]],
   ['adaptation', 'Adaptation', [['elasticity', 'Elasticity', 'points'], ['why', 'Why It Matters', 'own:adaptwhy'], ['feel', 'How It Feels', 'read:0'], ['adjustable', 'Adjustable Beds', 'adjust']]],
-  ['zones', '7-Zone', [['map', 'Zone Map', 'zones'], ['detail', 'Zone By Zone', 'read:0']]],
+  ['zones', '7-Zone', [['map', 'Zone Map', 'zones'], ['how', 'How 7 Zones Work', 'own:zoneswork'], ['detail', 'Zone By Zone', 'read:0']]],
   ['ventilation', 'Ventilation', [['airflow', 'Airflow', 'points'], ['sleep', 'Why It Matters', 'read:0']]],
   ['hygiene', 'Hygiene', [['clean', 'Cleaner Sleep', 'points'], ['wash', 'Zip And Washing', 'copy:covers/care'], ['picture', 'Realistic Picture', 'read:0']]],
   ['certs', 'Certifications', [['bodies', 'Certifications', 'certs'], ['plants', 'Three Plants In Europe', 'own:plants'], ['made', 'Where It Is Made', 'read:0']]],
   ['warranty', 'Warranty', [['cover', 'Warranty + Gift', 'numerals'], ['covers', 'Covers And Warranty', 'copy:covers/warranty'], ['conditions', 'Conditions', 'read:0']]],
-  ['delivery', 'Delivery', [['direct', 'Buy Direct From The Maker', 'own:direct'], ['made', 'Made To Order', 'read:0'], ['journey', 'Delivery Journey', 'journey'], ['prep', 'Before It Arrives', 'prep'], ['yours', 'Your Botanic', 'step:review']]]
+  ['delivery', 'Delivery', [['prep', 'What To Expect', 'prep'], ['made', 'Made To Order', 'read:0'], ['journey', 'Delivery Journey', 'journey'], ['yours', 'Your Botanic', 'step:review']]]
 ];
 const ROOTS = { discover: '#bp-top', firmness: '#bp-firmness', comfort: '#bp-comfort', height: '#bp-height', covers: '#bp-covers', benefits: '#bp-benefits', support: '#bp-support', adaptation: '#bp-adaptation', zones: '#bp-zones', ventilation: '#bp-ventilation', hygiene: '#bp-hygiene', certs: '#bp-certs', warranty: '#bp-warranty', delivery: '#bp-delivery' };
 const MEDIA_CAP = { benefits: 'Milk to foam: where latex begins', adaptation: 'Elasticity: the instant response', zones: 'Seven zones, head to feet', ventilation: 'Airflow through the channels', certs: 'Durability under pressure' };

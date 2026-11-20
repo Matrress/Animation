@@ -1,9 +1,11 @@
 // OWN panels: written from the owner's letter to a customer (19 Nov XVIII). The essence, in our own words, direct and human; not the approved description.
 export const OWN = {
-  direct: { title: 'Buy Direct From The Maker', groups: [
-    { h: 'You buy from the maker', blocks: [{ k: 'p', t: 'You order straight from Divine Dunlop Dreams, the manufacturer of Botanic. The people who make your mattress are the people who sell it to you.' }] },
-    { h: 'Where it is made', blocks: [{ k: 'p', t: 'Your Botanic is made in Germany, under European production control. It is sent from our own logistics depot and administration in the UK.' }] },
-    { h: 'What happens next', blocks: [{ k: 'p', t: 'Your order goes into production the day it is placed. Allow approximately 20 days for manufacture and preparation for delivery.' }] }] },
+  zoneswork: { title: 'How The 7 Zones Work', groups: [
+    { h: 'One latex, one firmness', blocks: [{ k: 'p', t: 'The Botanic core is one piece of natural latex. It has exactly the same structure and exactly the same firmness from your head to your feet. The zones are not made of different materials, and they are not different firmnesses.' }] },
+    { h: 'The perforation does the work', blocks: [{ k: 'p', t: 'What changes from zone to zone is the perforation, the pattern of holes in the latex. A different perforation gives a different level of support in each area of the body.' }] },
+    { h: 'More support, or more softness', blocks: [{ k: 'p', t: 'A less open perforation leaves more latex under the body and raises the support in that area. A more open perforation leaves less latex and makes that area softer. The firmness never changes; the perforation raises the support or relaxes it.' }] },
+    { h: 'Spine and pelvis', blocks: [{ k: 'p', t: 'Your spine is supported along its length, with a gentle stretching effect. Your pelvis is held up, so it does not sink below the rest of your body.' }] },
+    { h: 'Shoulders and back', blocks: [{ k: 'p', t: 'Your shoulders have their own adaptation zone, so they can settle in. Your back and lower back are supported and you feel the support, but with lightness, not with pressure and not with weight.' }] }] },
   promise: { title: 'What We Promise, And What We Do Not', groups: [
     { h: 'What Botanic gives you', blocks: [{ k: 'p', t: 'Excellent anatomical adaptation, stable orthopaedic support and a healthy sleeping environment. Everything on this screen exists for those three things.' }] },
     { h: 'What it is not', blocks: [{ k: 'p', t: 'Botanic is not a medical device. We do not say it treats or cures any condition. A mattress maker who tells you that a mattress cures a condition is not telling you the truth.' }] },

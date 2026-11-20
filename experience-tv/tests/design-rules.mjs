@@ -239,6 +239,12 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   const g1 = await p.$eval('#answer', (e) => e.textContent.replace(/\s+/g, ' ')); const g1q = await p.$eval('#q', (e) => e.textContent.replace(/\s+/g, ' ').trim()); await p.waitForTimeout(2900);
   const g2 = await p.$eval('#q', (e) => e.textContent.replace(/\s+/g, ' ').trim()); const g2s = await p.$eval('#stageh', (e) => e.textContent);
   ok(/Size chosen/.test(g1q) && /Now choose your Depth/.test(g1) && /How thick should it be/.test(g2) && /Step 2 of 5/.test(g2s), 'R32 after a choice the television says what is chosen and what is next, then opens Depth by itself', [g1q, g1.slice(0, 80), g2.slice(0, 40), g2s].join(' | '));
+  // R44 owner 20 Nov XXI: Delivery opens with What To Expect Before Your Mattress Arrives, and "directly from the manufacturer" is said once (no chapter of its own);
+  // 7-Zone explains that the latex and its firmness are the same everywhere and only the perforation changes the support
+  await p.goto(file + '?ch=delivery&ignite=0'); await p.waitForTimeout(150);
+  const dl = await p.evaluate(() => ({ first: (document.querySelector('#rail .pn') || {}).textContent, h1: (document.querySelector('#q h1') || {}).textContent, q: document.querySelector('#q').textContent, direct: (document.body.textContent.match(/directly from the manufacturer/g) || []).length, panels: D.chapters.find((c) => c.id === 'delivery').panels.map((x) => x.id).join(',') }));
+  const zw = await p.evaluate(() => JSON.stringify(D.chapters.find((c) => c.id === 'zones').panels.find((x) => x.id === 'how')));
+  ok(/What To Expect/.test(dl.first) && /What To Expect Before Your Mattress Arrives/.test(dl.h1) && dl.direct === 1 && dl.panels.indexOf('prep') === 0 && dl.panels.indexOf('direct') < 0 && /same firmness/.test(zw) && /perforation/.test(zw) && /not different firmnesses/.test(zw) && /lightness/.test(zw), 'R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support', JSON.stringify(dl));
   // R43 owner 20 Nov XIX: the mattress card above Add to Bag turns its whole contour green with the word Ready when all four are chosen;
   // the core cut-out sits at the foot of Your selection; the outer frame is at most 2 px; the start-up wordmark is one green
   await p.goto(file + '?step=4&demo=1&ignite=0'); await p.waitForTimeout(120);
