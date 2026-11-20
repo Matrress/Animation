@@ -1578,7 +1578,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     var d = dStr(G.out), pl = G.pl, xs = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[0]; })); }, []), ys = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[1]; })); }, []);
     var x0 = Math.min.apply(null, xs) - 100, x1 = Math.max.apply(null, xs) + 100, y0 = Math.min.apply(null, ys) - 100;
     var region = 'M' + x0 + ' ' + y0 + 'H' + x1 + 'V' + pl[pl.length - 1][1] + pl.slice().reverse().map(function (q) { return 'L' + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('') + 'L' + x0 + ' ' + pl[0][1] + 'Z';
-    var stroke = ok ? '#6E8601' : (n === 0 ? '#9C9783' : '#384442'), top = ok ? 'rgba(110,134,1,.26)' : (fm ? 'rgba(93,184,196,.40)' : 'none');
+    var stroke = ok ? '#6E8601' : (n === 0 ? '#9C9783' : '#384442'), top = ok ? 'rgba(110,134,1,.26)' : (fm ? 'rgba(93,184,196,.62)' : 'none');
     return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" aria-label="' + (ok ? 'All four choices made: ready to order' : n + ' of 4 choices made') + '"><defs><clipPath id="icp"><path d="' + region + '"/></clipPath></defs><g transform="matrix(' + M.join(',') + ')"><path d="' + d + '" fill="' + top + '" clip-path="url(#icp)"/><path d="' + d + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" ' + st + '/></g></svg>';
   }
   var IC = {
