@@ -233,7 +233,11 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - **The logo's teal (#009289) becomes the approved green** everywhere the logo appears: the emblem and the wordmark under Discover, and the Bio Dunlop leaf. The dark ink of the logo (#092600) stays.
 - **Buy direct from the maker:** a new Delivery panel, first in Delivery: you order from Divine Dunlop Dreams, the manufacturer; made in Germany; sent from our UK depot; about 20 days for manufacture and preparation (the owner's letter, our words).
 - **The mattress card** sits in Your selection, directly above Add to Bag, on a vanilla card. Its contour is grey while nothing is chosen. The size, the depth and the cover never change its colour. Choosing firmness gives it the decorative sky tint (#5DB8C4 at 40 %). When all four choices are made, the whole contour is #6E8601 and the word Ready appears under it (#566901, bold).
-- **The core cut-out** is at the foot of Your selection, always in view (the owner's own photograph, cut out with a soft oval mask, no frame; hidden below 1100 px).
+- ~~The core cut-out at the foot of Your selection~~ was withdrawn by the owner on 20 Nov (see Round XX).
 - **The outer frame is 2 px** (it was 6 px: three times thinner).
 - **Equity:** the integration status and the open questions are in `docs/EQUITY-INTEGRATION.md`. The production embed does not yet carry rounds XVI to XIX.
 - Tests: R33 allows the sky tint in the mattress card only; R43 checks the card, the frame, the core and the order. All 145 design-rule checks and the price, selection and sync contracts pass.
+
+## Round XX (owner, 20 November 2026)
+- **The whole Bio Dunlop logo is the one approved green, #6E8601**: the leaf, the mark and the wordmark. Last round only the teal parts were changed; the dark leaf and letters (#092600) are now green too.
+- **The core picture in Your selection is removed** (final decision of the owner: too heavy). Your selection keeps the price, the mattress card and the bag. The earlier idea of a core cut-out elsewhere in the module is withdrawn until the owner asks for it again.

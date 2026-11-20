@@ -11,7 +11,7 @@ Status: **20 November 2026.** Desk review of the repository only. Nothing was ch
 | **C. Mobile** | `docs/mobile/premium/preview/graphite.html` | 255 KB | Not yet | Defined by the owner. Its palette is **still slate blue and navy** (`#364849`, `#203032`, `#46628F`, `#8CA2C2`, `#C3D5ED`). It is not the coffee, vanilla and green palette. |
 | **D. Presentation** | `docs/tv-presentation/botanic-experience-tv.html` (Artifact) | 867 KB | No. Review only. | Current. |
 
-**The main fact to hold on to:** the design of the last four rounds (the green, the Cover panels, the zones in the drawing, the core cut-out, the mattress card, the owner's texts) lives in path B. Path A, the one the shop would run, does not have it yet. Nothing in B can be pasted into Equity as it is.
+**The main fact to hold on to:** the design of the last four rounds (the green, the Cover panels, the zones in the drawing, the mattress card, the owner's texts) lives in path B. Path A, the one the shop would run, does not have it yet. Nothing in B can be pasted into Equity as it is.
 
 ## 2. Where Equity sits, from the repository
 
@@ -31,7 +31,7 @@ Status: **20 November 2026.** Desk review of the repository only. Nothing was ch
 ## 4. Plan, in order (nothing goes live without the owner's go)
 
 1. **One set of tokens.** Move the palette into one file used by the design, the engine and the mobile: coffee `#434239`, deep slate `#2E3633`, vanilla `#FBFBED`, latte `#DDD6C4`, the one green `#6E8601` (text on light `#566901`), the decorative sky `#5DB8C4` (only in the mattress card). The mobile's blue palette is replaced here, and nowhere else.
-2. **Port the visual layer to the engine.** The components are: the four-family header, Your order, Your selection with the mattress card and the core cut-out, the Cosmic Selection, the zones drawing, the film panel, the Cover panels, the Delivery part C, the start-up. Each one is ported with its tests; `tests/embed.mjs` and `tests/smoke.mjs` must stay green.
+2. **Port the visual layer to the engine.** The components are: the four-family header, Your order, Your selection with the mattress card, the Cosmic Selection, the zones drawing, the film panel, the Cover panels, the Delivery part C, the start-up. Each one is ported with its tests; `tests/embed.mjs` and `tests/smoke.mjs` must stay green.
 3. **Port the design rules.** `tests/design-rules.mjs` tests the sandbox file. Its checks (contrast R40, one green R41, the content R42, the mattress card R43) must run against the embed as well.
 4. **Build and check the embed**: `node tools/build.mjs`, `node tools/build-embed.mjs`, `node tests/smoke.mjs`, `node tests/embed.mjs`. Check the file's size and hash against `dist/embed/MANIFEST.txt`.
 5. **Test product only** (876405767). Paste the description and the loader there, following `docs/DEPLOYMENT.md`, Steps 0 to 3. The live product stays as it is.
