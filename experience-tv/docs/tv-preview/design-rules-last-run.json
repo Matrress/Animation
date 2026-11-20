@@ -21,42 +21,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "520.8 / 520.8 / 520.8"
+   "detail": "442.0 / 442.0 / 442.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "520.8 / 520.8 / 520.8"
+   "detail": "442.0 / 442.0 / 442.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "520.8 / 520.8 / 520.8"
+   "detail": "442.0 / 442.0 / 442.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "520.8 / 520.8 / 520.8"
+   "detail": "442.0 / 442.0 / 442.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "520.8 / 520.8 / 520.8"
+   "detail": "442.0 / 442.0 / 442.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "456.8 / 456.8 / 456.8"
+   "detail": "378.0 / 378.0 / 378.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "456.8 / 456.8 / 456.8"
+   "detail": "378.0 / 378.0 / 378.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "456.8 / 456.8 / 456.8"
+   "detail": "378.0 / 378.0 / 378.0"
   },
   {
    "pass": true,
@@ -65,7 +65,7 @@
   },
   {
    "pass": true,
-   "rule": "R6 \"Select your Botanic here\" is shown and the stage says \"Select here\"",
+   "rule": "R6 no \"Select your Botanic\" row or button (the right card says where to start); the gallery and the view switch sit in the header line; the stage says \"Select here\"",
    "detail": ""
   },
   {
@@ -180,8 +180,8 @@
   },
   {
    "pass": true,
-   "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; every press of Discover and of Optimised Preview plays it again; sound after a tap; Skip",
-   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":2}"
+   "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; it plays once, when the model is entered: pressing Discover or Optimised Preview does not play it again; sound after a tap; Skip",
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
   },
   {
    "pass": true,
@@ -221,7 +221,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":137,\"stageTop\":282,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":305,\"yFam\":305,\"yPick\":305,\"yNav\":59,\"stageTop\":281,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -285,7 +285,7 @@
   },
   {
    "pass": true,
-   "rule": "R6 \"Select your Botanic here\" is shown and the stage says \"Select here\"",
+   "rule": "R6 no \"Select your Botanic\" row or button (the right card says where to start); the gallery and the view switch sit in the header line; the stage says \"Select here\"",
    "detail": ""
   },
   {
@@ -400,8 +400,8 @@
   },
   {
    "pass": true,
-   "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; every press of Discover and of Optimised Preview plays it again; sound after a tap; Skip",
-   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":2}"
+   "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; it plays once, when the model is entered: pressing Discover or Optimised Preview does not play it again; sound after a tap; Skip",
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
   },
   {
    "pass": true,
@@ -441,7 +441,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":310,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":231,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -501,42 +501,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "520.8 / 520.8 / 520.8"
+   "detail": "442.0 / 442.0 / 442.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "520.8 / 520.8 / 520.8"
+   "detail": "442.0 / 442.0 / 442.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "520.8 / 520.8 / 520.8"
+   "detail": "442.0 / 442.0 / 442.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "520.8 / 520.8 / 520.8"
+   "detail": "442.0 / 442.0 / 442.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "520.8 / 520.8 / 520.8"
+   "detail": "442.0 / 442.0 / 442.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "456.8 / 456.8 / 456.8"
+   "detail": "378.0 / 378.0 / 378.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "456.8 / 456.8 / 456.8"
+   "detail": "378.0 / 378.0 / 378.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "456.8 / 456.8 / 456.8"
+   "detail": "378.0 / 378.0 / 378.0"
   },
   {
    "pass": true,
@@ -545,7 +545,7 @@
   },
   {
    "pass": true,
-   "rule": "R6 \"Select your Botanic here\" is shown and the stage says \"Select here\"",
+   "rule": "R6 no \"Select your Botanic\" row or button (the right card says where to start); the gallery and the view switch sit in the header line; the stage says \"Select here\"",
    "detail": ""
   },
   {
@@ -660,8 +660,8 @@
   },
   {
    "pass": true,
-   "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; every press of Discover and of Optimised Preview plays it again; sound after a tap; Skip",
-   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":2}"
+   "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; it plays once, when the model is entered: pressing Discover or Optimised Preview does not play it again; sound after a tap; Skip",
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
   },
   {
    "pass": true,
@@ -701,7 +701,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":261,\"stageTop\":158,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":183,\"stageTop\":157,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,

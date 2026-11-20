@@ -247,3 +247,10 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - **"You buy directly from the manufacturer" is said once**, as the sentence under that title. The separate "Buy Direct From The Maker" part (round XIX) is removed: one sentence says it all, and a whole section would say nothing more.
 - **7-Zone gets a new part, "How 7 Zones Work"** (five short readings): one latex with exactly the same structure and firmness from head to foot; the zones are not different materials and not different firmnesses; the perforation sets the support in each area; a less open perforation leaves more latex and raises the support, a more open one softens the area; the spine is supported with the stretching effect and the pelvis is held up; the shoulders have their own adaptation and the back and lower back feel supported with lightness, not pressure and not weight.
 - Test R44 checks the order of Delivery, the single sentence and the 7-Zone text.
+
+## Round XXII (owner, 20 November 2026)
+- **No "Select your Botanic" row and no "Select your Botanic" button.** The row above the screen (title and sentence) is gone, and so is the button in the row under the information: the right card already says where to start ("Start here: Choose your Size"). The screen is shallower, so more of every topic fits on one screen. The Gallery tile and the view switch (Optimised Preview, Standard Product View) now sit in the header line, to the right of the model's name.
+- **The Discover title says what the product is:** "Botanic Original – 100% Natural Latex Mattress" ("Know your Botanic" said nothing: Botanic is a name).
+- **The start-up plays once,** when the model is entered. Pressing Discover or Optimised Preview no longer plays it again. (The guided tour of the presentation can still play it on its own start-up step.)
+- **"Buying directly from the manufacturer"** is the wording, never "from the maker". It is said once (round XXI), under the title of Delivery's first part.
+- Tests: R6 and R29 updated.
