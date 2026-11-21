@@ -1,0 +1,68 @@
+{
+ "text": "#FFFFFF everywhere in the description (464 text elements verified in Chromium)",
+ "rows": [
+  {
+   "surface": "Gradient top (turquoise graphite)",
+   "bg": "#1A5F6E",
+   "white_text_ratio": 7.23,
+   "AA_text": true,
+   "AAA_text": true
+  },
+  {
+   "surface": "Gradient 24%",
+   "bg": "#163F4B",
+   "white_text_ratio": 11.37,
+   "AA_text": true,
+   "AAA_text": true
+  },
+  {
+   "surface": "Gradient 58%",
+   "bg": "#0F2A33",
+   "white_text_ratio": 15.01,
+   "AA_text": true,
+   "AAA_text": true
+  },
+  {
+   "surface": "Gradient bottom (deep graphite)",
+   "bg": "#0A1E24",
+   "white_text_ratio": 17.16,
+   "AA_text": true,
+   "AAA_text": true
+  },
+  {
+   "surface": "Zone block lightest (#173842)",
+   "bg": "#173842",
+   "white_text_ratio": 12.49,
+   "AA_text": true,
+   "AAA_text": true
+  },
+  {
+   "surface": "Zone block end (#12303A)",
+   "bg": "#12303A",
+   "white_text_ratio": 13.91,
+   "AA_text": true,
+   "AAA_text": true
+  },
+  {
+   "surface": "Primary button start (#1B6676)",
+   "bg": "#1B6676",
+   "white_text_ratio": 6.54,
+   "AA_text": true,
+   "AAA_text": false
+  },
+  {
+   "surface": "Primary button end (#163F4B)",
+   "bg": "#163F4B",
+   "white_text_ratio": 11.37,
+   "AA_text": true,
+   "AAA_text": true
+  },
+  {
+   "surface": "Closing band (#12303A)",
+   "bg": "#12303A",
+   "white_text_ratio": 13.91,
+   "AA_text": true,
+   "AAA_text": true
+  }
+ ]
+}

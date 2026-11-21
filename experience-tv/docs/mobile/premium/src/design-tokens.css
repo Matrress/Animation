@@ -1,0 +1,78 @@
+/* DESIGN TOKENS: the single place for the colour system of the Graphite preview.
+   Created by tools/t1-consolidate.mjs (T1) from the approved layers. Edit the values here, never in a rule.
+   --dd-<name>        a colour (solid)
+   --dd-rgb-<name>    the same colour as "r, g, b", used for transparent versions: rgba(var(--dd-rgb-sky), .22)
+   --dd-grad-N / --dd-shadow-N   a gradient or shadow used more than once */
+:root {
+  --dd-abyss: #0B1C2A;
+  --dd-frame-end: #0E2030;
+  --dd-frame-top: #0E2A3E;
+  --dd-band-end: #10293F;
+  --dd-teal-deep: #163D57;
+  --dd-band-top: #173A52;
+  --dd-teal: #1A5C7E;
+  --dd-zone-card: #1B3650;
+  --dd-teal-hover: #1F6A8F;
+  --dd-graphite-2: #232B31;
+  --dd-ink: #272D32;
+  --dd-teal-line: #2A5A7A;
+  --dd-graphite-1: #2E363C;
+  --dd-petrol: #2F565A;
+  --dd-ink-2: #3E474D;
+  --dd-leaf-dark: #3FA3D9;
+  --dd-sky: #50CDFD;
+  --dd-ink-3: #5B666E;
+  --dd-leaf-light: #9ADCF8;
+  --dd-c-aebbc6: #AEBBC6;
+  --dd-c-c3d5ed: #C3D5ED;
+  --dd-c-c9d3db: #C9D3DB;
+  --dd-c-c9dce2: #C9DCE2;
+  --dd-line: #D3E0E5;
+  --dd-notice: #E4EEF1;
+  --dd-ground: #F2F7F9;
+  --dd-c-f2f7fb: #F2F7FB;
+  --dd-white: #FFFFFF;
+  --dd-rgb-c-0e283c: 14, 40, 60;
+  --dd-rgb-c-141c22: 20, 28, 34;
+  --dd-rgb-teal: 26, 92, 126;
+  --dd-rgb-ink: 39, 45, 50;
+  --dd-rgb-sky: 80, 205, 253;
+  --dd-rgb-white: 255, 255, 255;
+  /* used first by #bp-top .p-feature */
+  --dd-grad-1: radial-gradient(80% 55% at 100% 0%, rgba(var(--dd-rgb-sky), .16), transparent 62%),
+    linear-gradient(175deg, var(--dd-band-top) 0%, var(--dd-band-end) 100%);
+  /* used first by #bp-top .p-feature */
+  --dd-shadow-1: inset 0 1px 0 rgba(var(--dd-rgb-sky), .38);
+  /* used first by #bp-top .b-main-video-card */
+  --dd-grad-2: linear-gradient(160deg, var(--dd-teal) 0%, var(--dd-teal-deep) 45%, var(--dd-abyss) 100%);
+  /* used first by #bp-top .b-main-video-card .b-main-video-frame */
+  --dd-grad-3: linear-gradient(135deg, var(--dd-frame-top), var(--dd-abyss));
+  /* used first by #bp-top .b-cover-menu */
+  --dd-shadow-2: 0 8px 18px -12px rgba(var(--dd-rgb-teal), .45);
+  /* used first by #bp-top .b-btn-p:hover */
+  --dd-grad-4: linear-gradient(135deg, var(--dd-teal-hover), var(--dd-teal));
+  /* used first by #bp-top .b-cover-menu::after */
+  --dd-grad-5: radial-gradient(closest-side, rgba(var(--dd-rgb-sky), .12), transparent);
+  /* used first by #bp-top .b-btn-hero-p */
+  --dd-grad-6: linear-gradient(135deg, var(--dd-teal), var(--dd-teal-deep));
+  /* used first by #bp-top .b-btn-hero-p */
+  --dd-shadow-3: 0 0 0 4px rgba(var(--dd-rgb-sky), .14), 0 6px 14px -8px rgba(var(--dd-rgb-teal), .8);
+  /* used first by #bp-top .b-btn-hero-o */
+  --dd-shadow-4: 0 0 0 4px rgba(var(--dd-rgb-white), .06);
+}
+
+/* Configurator (Graphite Blue) palette, moved here unchanged from graphite.css. Same selector, same values. */
+.gx {
+  --bg: #151C26;
+  --panel: #242D3C;
+  --chip: #293649;
+  --chip-line: #3F4E64;
+  --sel: #556A89;
+  --sel-line: #C3D5ED;
+  --dock: #1A2332;
+  --dock-line: #3A4659;
+  --ink: #F2F6FB;
+  --mut: #9FB0C6;
+  --head: #A6B3C4;
+  --dis: #414141;
+}

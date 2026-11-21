@@ -1,0 +1,146 @@
+[
+ {
+  "pair": "Headings on ground",
+  "fg": "#272D32",
+  "bg": "#F2F7F9",
+  "ratio": 12.9,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Body on ground",
+  "fg": "#3E474D",
+  "bg": "#F2F7F9",
+  "ratio": 8.79,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Captions on ground",
+  "fg": "#5B666E",
+  "bg": "#F2F7F9",
+  "ratio": 5.45,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Body on white card",
+  "fg": "#3E474D",
+  "bg": "#FFFFFF",
+  "ratio": 9.49,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Captions on white card",
+  "fg": "#5B666E",
+  "bg": "#FFFFFF",
+  "ratio": 5.88,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Card title on white",
+  "fg": "#272D32",
+  "bg": "#FFFFFF",
+  "ratio": 13.93,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Petrol link on ground",
+  "fg": "#2F565A",
+  "bg": "#F2F7F9",
+  "ratio": 7.48,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Petrol link on notice",
+  "fg": "#2F565A",
+  "bg": "#E4EEF1",
+  "ratio": 6.85,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Notice text",
+  "fg": "#272D32",
+  "bg": "#E4EEF1",
+  "ratio": 11.81,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "White on petrol button",
+  "fg": "#FFFFFF",
+  "bg": "#2F565A",
+  "ratio": 8.08,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Petrol outline button text",
+  "fg": "#2F565A",
+  "bg": "#F2F7F9",
+  "ratio": 7.48,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Sky numbers on depth band",
+  "fg": "#50CDFD",
+  "bg": "#1E3036",
+  "ratio": 7.5,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Zone names on depth",
+  "fg": "#F2F7FB",
+  "bg": "#1E3036",
+  "ratio": 12.72,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Zone notes on depth",
+  "fg": "#AEBBC6",
+  "bg": "#26393F",
+  "ratio": 6.16,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Legend on depth",
+  "fg": "#C3D5ED",
+  "bg": "#1E3036",
+  "ratio": 9.18,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Proof text on depth",
+  "fg": "#C3D5ED",
+  "bg": "#1E3036",
+  "ratio": 9.18,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Dark button text on Sky",
+  "fg": "#0F1A22",
+  "bg": "#50CDFD",
+  "ratio": 9.65,
+  "AA_text": true,
+  "used_as_text": true
+ },
+ {
+  "pair": "Sky as TEXT on ground (rejected)",
+  "fg": "#50CDFD",
+  "bg": "#F2F7F9",
+  "ratio": 1.69,
+  "AA_text": false,
+  "used_as_text": false
+ }
+]

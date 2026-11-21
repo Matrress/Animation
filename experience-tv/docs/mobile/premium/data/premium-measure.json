@@ -1,0 +1,79 @@
+{
+ "date": "2026-11-10T16:51:54.174Z",
+ "code": {
+  "sync": {
+   "raw": 8476,
+   "gzip": 2937
+  },
+  "configurator": {
+   "raw": 19869,
+   "gzip": 6349
+  },
+  "firmnessCore": {
+   "raw": 4405,
+   "gzip": 1532
+  },
+  "premiumCss": {
+   "raw": 14389,
+   "gzip": 3842
+  },
+  "contentCss": {
+   "raw": 5332,
+   "gzip": 1731
+  },
+  "phoneLayerJsRaw": 32750,
+  "phoneLayerJsGzip": 10818,
+  "note": "unminified source; a production build would be smaller (not measured)",
+  "televisionBundle": {
+   "raw": 284194,
+   "gzip": 72719
+  }
+ },
+ "concepts": {
+  "sheet": {
+   "chosenNatively": 4,
+   "domAtLoad": 1140,
+   "domAfterFlow": 1213,
+   "panelNodes": 73,
+   "scriptMsInit": 27,
+   "scriptMsFlow": 108,
+   "layoutMsFlow": 167,
+   "styleMsFlow": 46,
+   "heapMB": 2.9,
+   "interactions": 123,
+   "slowestInteractionMs": 128,
+   "p75InteractionMs": 56,
+   "cls": 0
+  },
+  "stage": {
+   "chosenNatively": 4,
+   "domAtLoad": 1140,
+   "domAfterFlow": 1229,
+   "panelNodes": 89,
+   "scriptMsInit": 31,
+   "scriptMsFlow": 156,
+   "layoutMsFlow": 250,
+   "styleMsFlow": 66,
+   "heapMB": 3,
+   "interactions": 157,
+   "slowestInteractionMs": 128,
+   "p75InteractionMs": 56,
+   "cls": 0
+  },
+  "journey": {
+   "chosenNatively": 4,
+   "domAtLoad": 1259,
+   "domAfterFlow": 1214,
+   "panelNodes": 74,
+   "scriptMsInit": 23,
+   "scriptMsFlow": 102,
+   "layoutMsFlow": 137,
+   "styleMsFlow": 41,
+   "heapMB": 3,
+   "interactions": 199,
+   "slowestInteractionMs": 120,
+   "p75InteractionMs": 32,
+   "cls": 0.1951
+  }
+ }
+}

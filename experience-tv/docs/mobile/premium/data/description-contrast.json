@@ -1,0 +1,107 @@
+[
+ {
+  "pair": "Body text",
+  "fg": "#C9D3DB",
+  "bg": "#272D32",
+  "ratio": 9.17,
+  "AA": true
+ },
+ {
+  "pair": "Body text on cards",
+  "fg": "#C9D3DB",
+  "bg": "#3E474D",
+  "ratio": 6.25,
+  "AA": true
+ },
+ {
+  "pair": "Captions",
+  "fg": "#9AA8B4",
+  "bg": "#272D32",
+  "ratio": 5.73,
+  "AA": true
+ },
+ {
+  "pair": "Quiet text on cards (lifted)",
+  "fg": "#B8C4CE",
+  "bg": "#3E474D",
+  "ratio": 5.34,
+  "AA": true
+ },
+ {
+  "pair": "Headings",
+  "fg": "#F2F7FB",
+  "bg": "#272D32",
+  "ratio": 12.92,
+  "AA": true
+ },
+ {
+  "pair": "Headings on depth",
+  "fg": "#F2F7FB",
+  "bg": "#1E3036",
+  "ratio": 12.72,
+  "AA": true
+ },
+ {
+  "pair": "Sky on base",
+  "fg": "#50CDFD",
+  "bg": "#272D32",
+  "ratio": 7.62,
+  "AA": true
+ },
+ {
+  "pair": "Sky on cards",
+  "fg": "#50CDFD",
+  "bg": "#3E474D",
+  "ratio": 5.19,
+  "AA": true
+ },
+ {
+  "pair": "Sky on depth",
+  "fg": "#50CDFD",
+  "bg": "#1E3036",
+  "ratio": 7.5,
+  "AA": true
+ },
+ {
+  "pair": "Mist on depth",
+  "fg": "#C3D5ED",
+  "bg": "#1E3036",
+  "ratio": 9.18,
+  "AA": true
+ },
+ {
+  "pair": "Button text on Sky",
+  "fg": "#0F1A22",
+  "bg": "#50CDFD",
+  "ratio": 9.65,
+  "AA": true
+ },
+ {
+  "pair": "White on petrol",
+  "fg": "#FFFFFF",
+  "bg": "#2F565A",
+  "ratio": 8.08,
+  "AA": true
+ },
+ {
+  "pair": "Light Sky on petrol (lifted)",
+  "fg": "#8BE0FF",
+  "bg": "#2F565A",
+  "ratio": 5.46,
+  "AA": true
+ },
+ {
+  "pair": "Zone note on cards",
+  "fg": "#AEBBC6",
+  "bg": "#3E474D",
+  "ratio": 4.84,
+  "AA": true
+ },
+ {
+  "pair": "White on depth",
+  "fg": "#FFFFFF",
+  "bg": "#1E3036",
+  "ratio": 13.71,
+  "AA": true
+ }
+]
