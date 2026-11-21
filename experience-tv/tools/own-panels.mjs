@@ -11,8 +11,8 @@ export const OWN = {
       { k: 'p', t: 'Those foams often make you choose: a soft, sinking feel with weak support, or an even firmness with weak adaptation. Latex does not ask you to choose.' }] },
     { h: 'Latex Is Bio-Based', blocks: [
       { k: 'p', t: 'Natural Dunlop latex is tapped from the rubber tree, a renewable plant. The material is biodegradable and can be traced from the plantation to the finished mattress.' },
-      { k: 'p', t: 'In our case the latex milk comes from Indonesia. The rubber tree grows only in the tropics, so this is the one step that happens outside Europe.' },
-      { k: 'p', t: 'Everything after that is European production: cleaning the latex, preparing it, shaping it, making the covers, sewing, quality checks and distribution. It is certified for the European market and European customers, with many certificates, including for baby use.' }] },
+      { k: 'p', t: 'In our case the latex milk comes from Indonesia. The rubber tree grows only in the tropics, and Indonesia is where ours grows. This is the one step that happens outside Europe.' },
+      { k: 'p', t: 'Everything after that is European production, and the mattresses are made in Germany: cleaning the latex, preparing it, shaping it, making the covers, sewing, quality checks and distribution. It is certified for the European market and European customers, with many certificates, including for baby use.' }] },
     { h: 'Breathability Advantage', blocks: [{ k: 'p', t: 'The open-cell matrix of latex foam, combined with engineered ventilation channels, allows far greater airflow than memory or PU foams. This keeps the sleep surface drier, fresher and less prone to heat build-up. This is a structural advantage, not a surface treatment.' }] },
     { h: 'Why Latex Costs More', blocks: [
       { k: 'p', t: 'Making latex foam is a very expensive process. It takes real craft, precision and far more engineering accuracy than other foams.' },
