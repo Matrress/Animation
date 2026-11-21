@@ -1,7 +1,7 @@
 {
  "date": "2026-11-21",
  "failures": 0,
- "checks": 178,
+ "checks": 190,
  "rows": [
   {
    "pass": true,
@@ -46,7 +46,7 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "486.0 / 486.0 / 486.0"
   },
   {
    "pass": true,
@@ -166,7 +166,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "45 panels"
+   "detail": "47 panels"
   },
   {
    "pass": true,
@@ -271,7 +271,7 @@
   {
    "pass": true,
    "rule": "R48 pressing a topic opens its parts in a strip under the Explore row, without hover; a part goes to its page and the strip follows; All topics opens the whole nomenclature and a choice from it opens that part",
-   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":4,\"head0\":\"Discover\"},\"xc\":{\"head\":\"Comfort\",\"n\":4,\"want\":4,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortBYour First Ten Days\",\"strip\":4,\"cur\":\"BYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":4,\"head0\":\"Discover\"},\"xc\":{\"head\":\"Comfort\",\"n\":5,\"want\":5,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":5,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":38,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
   },
   {
    "pass": true,
@@ -295,7 +295,7 @@
   },
   {
    "pass": true,
-   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (59 pages checked)",
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (61 pages checked)",
    "detail": ""
   },
   {
@@ -307,6 +307,26 @@
    "pass": true,
    "rule": "R51 the header and the start-up screen carry \"Organic Latex\" / \"Natural Latex\" in bold",
    "detail": "{\"hdr51\":{\"t\":\"Organic Latex\",\"w\":800,\"lbl\":\"Botanic Original 100% Organic Latex Mattress Dunlop Technology\"},\"igb\":{\"n\":1,\"all\":\"100% Natural Latex | Dunlop Technology\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Comfort has Who It Is For: the solid classic, one firmness, stable support matched to the weight",
+   "detail": "expect,who,first Who Is This Mattress For?"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Benefits opens with Not Petroleum-Based; Latex Is Bio-Based names Indonesia, the tropics, the European production and baby use; Why Latex Costs More says why",
+   "detail": "Not Petroleum-Based|Latex Is Bio-Based|Breathability Advantage|Why Latex Costs More"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Support and Adaptation carry the same point with a clear headline (highest support and highest adaptation, together)",
+   "detail": "Highest Support And Highest Adaptation, Together"
+  },
+  {
+   "pass": true,
+   "rule": "R52 the point opens from both Support and Adaptation",
+   "detail": "{\"r52b\":{\"h1\":\"Highest Support And Highest Adaptation, Together\",\"cur\":\"CSupport + Adaptation\"},\"r52c\":\"Highest Support And Highest Adaptation, Together\"}"
   },
   {
    "pass": true,
@@ -436,7 +456,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "45 panels"
+   "detail": "47 panels"
   },
   {
    "pass": true,
@@ -541,7 +561,7 @@
   {
    "pass": true,
    "rule": "R48 pressing a topic opens its parts in a strip under the Explore row, without hover; a part goes to its page and the strip follows; All topics opens the whole nomenclature and a choice from it opens that part",
-   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":4,\"head0\":\"Discover\"},\"xc\":{\"head\":\"Comfort\",\"n\":4,\"want\":4,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortBYour First Ten Days\",\"strip\":4,\"cur\":\"BYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":4,\"head0\":\"Discover\"},\"xc\":{\"head\":\"Comfort\",\"n\":5,\"want\":5,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":5,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":38,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
   },
   {
    "pass": true,
@@ -565,7 +585,7 @@
   },
   {
    "pass": true,
-   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (59 pages checked)",
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (61 pages checked)",
    "detail": ""
   },
   {
@@ -577,6 +597,26 @@
    "pass": true,
    "rule": "R51 the header and the start-up screen carry \"Organic Latex\" / \"Natural Latex\" in bold",
    "detail": "{\"hdr51\":{\"t\":\"Organic Latex\",\"w\":800,\"lbl\":\"Botanic Original 100% Organic Latex Mattress Dunlop Technology\"},\"igb\":{\"n\":1,\"all\":\"100% Natural Latex | Dunlop Technology\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Comfort has Who It Is For: the solid classic, one firmness, stable support matched to the weight",
+   "detail": "expect,who,first Who Is This Mattress For?"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Benefits opens with Not Petroleum-Based; Latex Is Bio-Based names Indonesia, the tropics, the European production and baby use; Why Latex Costs More says why",
+   "detail": "Not Petroleum-Based|Latex Is Bio-Based|Breathability Advantage|Why Latex Costs More"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Support and Adaptation carry the same point with a clear headline (highest support and highest adaptation, together)",
+   "detail": "Highest Support And Highest Adaptation, Together"
+  },
+  {
+   "pass": true,
+   "rule": "R52 the point opens from both Support and Adaptation",
+   "detail": "{\"r52b\":{\"h1\":\"Highest Support And Highest Adaptation, Together\",\"cur\":\"CSupport + Adaptation\"},\"r52c\":\"Highest Support And Highest Adaptation, Together\"}"
   },
   {
    "pass": true,
@@ -626,7 +666,7 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "486.0 / 486.0 / 486.0"
   },
   {
    "pass": true,
@@ -746,7 +786,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "45 panels"
+   "detail": "47 panels"
   },
   {
    "pass": true,
@@ -851,7 +891,7 @@
   {
    "pass": true,
    "rule": "R48 pressing a topic opens its parts in a strip under the Explore row, without hover; a part goes to its page and the strip follows; All topics opens the whole nomenclature and a choice from it opens that part",
-   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":4,\"head0\":\"Discover\"},\"xc\":{\"head\":\"Comfort\",\"n\":4,\"want\":4,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortBYour First Ten Days\",\"strip\":4,\"cur\":\"BYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":36,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":4,\"head0\":\"Discover\"},\"xc\":{\"head\":\"Comfort\",\"n\":5,\"want\":5,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":5,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":38,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
   },
   {
    "pass": true,
@@ -875,7 +915,7 @@
   },
   {
    "pass": true,
-   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (59 pages checked)",
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (61 pages checked)",
    "detail": ""
   },
   {
@@ -887,6 +927,26 @@
    "pass": true,
    "rule": "R51 the header and the start-up screen carry \"Organic Latex\" / \"Natural Latex\" in bold",
    "detail": "{\"hdr51\":{\"t\":\"Organic Latex\",\"w\":800,\"lbl\":\"Botanic Original 100% Organic Latex Mattress Dunlop Technology\"},\"igb\":{\"n\":1,\"all\":\"100% Natural Latex | Dunlop Technology\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Comfort has Who It Is For: the solid classic, one firmness, stable support matched to the weight",
+   "detail": "expect,who,first Who Is This Mattress For?"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Benefits opens with Not Petroleum-Based; Latex Is Bio-Based names Indonesia, the tropics, the European production and baby use; Why Latex Costs More says why",
+   "detail": "Not Petroleum-Based|Latex Is Bio-Based|Breathability Advantage|Why Latex Costs More"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Support and Adaptation carry the same point with a clear headline (highest support and highest adaptation, together)",
+   "detail": "Highest Support And Highest Adaptation, Together"
+  },
+  {
+   "pass": true,
+   "rule": "R52 the point opens from both Support and Adaptation",
+   "detail": "{\"r52b\":{\"h1\":\"Highest Support And Highest Adaptation, Together\",\"cur\":\"CSupport + Adaptation\"},\"r52c\":\"Highest Support And Highest Adaptation, Together\"}"
   },
   {
    "pass": true,

@@ -1,5 +1,29 @@
 // OWN panels: written from the owner's letter to a customer (19 Nov XVIII). The essence, in our own words, direct and human; not the approved description.
 export const OWN = {
+  whocomfort: { title: 'Who Is This Mattress For?', groups: [
+    { h: 'The solid, classic choice', blocks: [{ k: 'p', t: 'Botanic Original is the solid, classic latex mattress. It is for people who want one clear firmness and stable support, and who do not want to mix two comfort levels.' }] },
+    { h: 'Stable support for your weight', blocks: [{ k: 'p', t: 'What matters is your body weight. You choose the firmness that matches your weight, and Botanic holds you steadily on it, night after night.' }] },
+    { h: 'All the basics of a good latex mattress', blocks: [{ k: 'p', t: 'Every main solution of a good latex mattress is built in: natural Dunlop latex, seven anatomical zones, ventilation and a washable zip-off cover. Nothing you need is missing, and nothing is added that you do not.' }] }] },
+  whylatex: { title: 'What Makes Organic Latex Different', groups: [
+    { h: 'Not Petroleum-Based', blocks: [
+      { k: 'p', t: 'Botanic is not made from petroleum. It is made from the milk of the rubber tree, a plant.' },
+      { k: 'p', t: 'Memory foam, HR foam and standard polyurethane foam are made from refined petroleum. Latex is not.' },
+      { k: 'p', t: 'Those foams often make you choose: a soft, sinking feel with weak support, or an even firmness with weak adaptation. Latex does not ask you to choose.' }] },
+    { h: 'Latex Is Bio-Based', blocks: [
+      { k: 'p', t: 'Natural Dunlop latex is tapped from the rubber tree, a renewable plant. The material is biodegradable and can be traced from the plantation to the finished mattress.' },
+      { k: 'p', t: 'In our case the latex milk comes from Indonesia. The rubber tree grows only in the tropics, so this is the one step that happens outside Europe.' },
+      { k: 'p', t: 'Everything after that is European production: cleaning the latex, preparing it, shaping it, making the covers, sewing, quality checks and distribution. It is certified for the European market and its customers, including for baby use.' }] },
+    { h: 'Breathability Advantage', blocks: [{ k: 'p', t: 'The open-cell matrix of latex foam, combined with engineered ventilation channels, allows far greater airflow than memory or PU foams. This keeps the sleep surface drier, fresher and less prone to heat build-up. This is a structural advantage, not a surface treatment.' }] },
+    { h: 'Why Latex Costs More', blocks: [
+      { k: 'p', t: 'Making latex foam is a very expensive process. It takes real craft, precision and far more engineering accuracy than other foams.' },
+      { k: 'p', t: 'A latex mattress is not just a mattress. It is a system of many functions in balance: anatomical and orthopaedic comfort, seven zones and, just as important, ventilation, which gives you temperature comfort.' },
+      { k: 'p', t: 'That is what makes it a top-class mattress with the most premium feel. It is more complex to make, and it asks more of the maker.' }] }] },
+  highboth: { title: 'Highest Support And Highest Adaptation, Together', groups: [
+    { h: 'Two strengths, both at the top', blocks: [{ k: 'p', t: 'In a latex mattress, support and adaptation are both at the highest values you will find in a mattress. And they do not get in each other’s way.' }] },
+    { h: 'Support comes from density', blocks: [{ k: 'p', t: 'Latex is very dense, almost twice as dense as many of the foams used in mattresses. That density carries your weight and gives you strong, stable support.' }] },
+    { h: 'Adaptation comes from elasticity', blocks: [{ k: 'p', t: 'Latex is also among the most flexible and elastic materials in nature. It answers at once, in every position, with no delay: the highest instant adaptation.' }] },
+    { h: 'They need each other', blocks: [{ k: 'p', t: 'Without density, elasticity would only let you sink. Without elasticity, density would only be hard. Together they give you support and adaptation at the same time, both at their highest.' }] },
+    { h: 'This is the strength of latex', blocks: [{ k: 'p', t: 'This balance is what makes latex so strong as a sleeping surface. The same point is explained in Support and in Adaptation, because it is one idea.' }] }] },
   install: { title: 'Installation', groups: [
     { h: 'Prepare the home', blocks: [{ k: 'p', t: 'Make the flat safe before the delivery. Move the bedside tables and anything fragile or valuable that stands near the route. Clear the floor, the hallway and the bedroom door, so the way from the door to the bed is free and safe. The whole set-up takes about 15 to 20 minutes of care and some organisation. Then comes the rest, and the pleasure of your new natural mattress.' }] },
     { h: 'Plan the route', blocks: [{ k: 'p', t: 'Stairs, landings and tight corners need the most room and the most care. Measure the doors, the stairs and the corners before the day. Carry the mattress slowly, turning it at each corner, and never rush a turn.' }] },
