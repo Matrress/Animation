@@ -1,7 +1,7 @@
 {
- "date": "2026-11-20",
+ "date": "2026-11-21",
  "failures": 0,
- "checks": 166,
+ "checks": 178,
  "rows": [
   {
    "pass": true,
@@ -290,6 +290,26 @@
   },
   {
    "pass": true,
+   "rule": "R51 the open topic and part are the same vanilla item with the same green notch in the top row, the parts strip and the tree, with the same words",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (59 pages checked)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 every \"Organic Latex\" and \"Natural Latex\" on the screen is bold",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 the header and the start-up screen carry \"Organic Latex\" / \"Natural Latex\" in bold",
+   "detail": "{\"hdr51\":{\"t\":\"Organic Latex\",\"w\":800,\"lbl\":\"Botanic Original 100% Organic Latex Mattress Dunlop Technology\"},\"igb\":{\"n\":1,\"all\":\"100% Natural Latex | Dunlop Technology\"}}"
+  },
+  {
+   "pass": true,
    "rule": "no page errors",
    "detail": ""
   },
@@ -537,6 +557,26 @@
    "pass": true,
    "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
    "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R51 the open topic and part are the same vanilla item with the same green notch in the top row, the parts strip and the tree, with the same words",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (59 pages checked)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 every \"Organic Latex\" and \"Natural Latex\" on the screen is bold",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 the header and the start-up screen carry \"Organic Latex\" / \"Natural Latex\" in bold",
+   "detail": "{\"hdr51\":{\"t\":\"Organic Latex\",\"w\":800,\"lbl\":\"Botanic Original 100% Organic Latex Mattress Dunlop Technology\"},\"igb\":{\"n\":1,\"all\":\"100% Natural Latex | Dunlop Technology\"}}"
   },
   {
    "pass": true,
@@ -827,6 +867,26 @@
    "pass": true,
    "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
    "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R51 the open topic and part are the same vanilla item with the same green notch in the top row, the parts strip and the tree, with the same words",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (59 pages checked)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 every \"Organic Latex\" and \"Natural Latex\" on the screen is bold",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 the header and the start-up screen carry \"Organic Latex\" / \"Natural Latex\" in bold",
+   "detail": "{\"hdr51\":{\"t\":\"Organic Latex\",\"w\":800,\"lbl\":\"Botanic Original 100% Organic Latex Mattress Dunlop Technology\"},\"igb\":{\"n\":1,\"all\":\"100% Natural Latex | Dunlop Technology\"}}"
   },
   {
    "pass": true,

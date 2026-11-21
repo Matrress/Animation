@@ -243,7 +243,7 @@ D.ignition = { name: 'BOTANIC', facts: [['Material', '100% Natural Latex'], ['Pr
    Ecwid's own labels (sizes, covers), addresses and pictures are never touched. */
 {
   const SKIP = new Set(['descHtml', 'videos', 'bioFull', 'prep', 'id', 'key', 'step', 'kind', 'sizes', 'images', 'img', 'url', 'eng', 'bioWord', 'bioMark', 'moon', 'core', 'bowl', 'logos', 'zoneSketch', 'zoneTier', 'mattress', 'specialist', 'product']);
-  const fix = (t) => t.replace(/\s*—\s*/g, ' – ').replace(/\bsupport\b/g, 'Support').replace(/\badaptation\b/g, 'Adaptation');
+  const fix = (t) => t.replace(/\b(?:Organic\s+Natural|Natural\s+Organic)\b/gi, 'Organic').replace(/\s*—\s*/g, ' – ').replace(/\bsupport\b/g, 'Support').replace(/\badaptation\b/g, 'Adaptation');
   const walk = (o) => { for (const k of Object.keys(o)) { if (SKIP.has(k)) continue; const v = o[k]; if (typeof v === 'string') o[k] = fix(v); else if (v && typeof v === 'object') walk(v); } };
   walk(D);
 }

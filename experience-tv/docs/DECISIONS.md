@@ -306,3 +306,10 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
   3. **"20 years":** the owner's note mentions 20 years of life with turning. It is a claim, and it is not written in the page; it needs the owner's approval.
   4. The owner's wording "a lady should never be left in such a position" is written in a gender-neutral form ("never leave anyone alone with it"), with the same intent.
 - Tests R48 (All topics beside Gallery), R49 (the new Installation points).
+
+## Round XXXI (owner, 21 November 2026)
+- **The open topic is one item in three places.** The top Explore button, the part in the strip under it, and the tree in the left column (its heading and the current part) are the same vanilla item with the same 4 px green notch at the foot and the same words and letters. The tree's other parts stay dark. In Select & Buy the same idea holds in dark: the open choice at the top and the choice heading in the tree both carry the green notch. Nobody should read the two as different things.
+- **"Organic Natural" / "Natural Organic" never appear.** The build now turns any such pairing into "Organic" in everything the television writes (for example the Benefits title is now "Why Organic Latex Is Different"). Test R51 checks 59 pages of the screen.
+- **"Organic Latex" and "Natural Latex" are always bold**, wherever the television writes them (titles, text, the header, the start-up screen). The words themselves are not changed, only wrapped. Test R51 checks every visible occurrence.
+- **Not touched, by design: the Standard Product View.** It shows the shop's approved description verbatim (the real shop's own text). That text contains one "Organic Natural Latex" (source/botanic-original-description.html, in "Why Organic Natural Latex Is Different") and its own formatting. We do not change the approved source or the live shop; if the owner wants this one phrase corrected, it is a one-word edit in the shop's description, to be approved first.
+- Test R51 added; 178 design-rule checks and the price, selection and sync contracts pass.

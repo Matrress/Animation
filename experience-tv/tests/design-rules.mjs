@@ -296,6 +296,49 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   const r43 = await p.evaluate(() => { const mi = document.querySelector('#mi'), mic = mi && mi.querySelector('.mic'), rdy = mi && mi.querySelector('.rdy'), path = mi && mi.querySelector('svg path[stroke]'), mon = getComputedStyle(document.querySelector('.monitor')).paddingTop, bag = document.querySelector('#bag .bagbtn'); const order = mi && bag ? (mi.compareDocumentPosition(bag) & Node.DOCUMENT_POSITION_FOLLOWING) > 0 : false; return { ok: mic && mic.classList.contains('ok'), rdy: !!rdy, stroke: path ? path.getAttribute('stroke') : null, mon, order }; });
   await p.goto(file + '?step=0&ignite=0'); await p.waitForTimeout(120); const r43b = await p.evaluate(() => !document.querySelector('.mic.ok') && !document.querySelector('.rdy'));
   ok(r43.ok && r43.rdy && r43.stroke === '#6E8601' && parseFloat(r43.mon) <= 2 && r43.order && r43b, 'R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection', JSON.stringify({ r43, r43b }));
+  // R51 owner 21 Nov XXXI: the open topic is ONE item in three places (top row, parts strip, tree): vanilla with the same green notch, the same words;
+  // "Organic Natural"/"Natural Organic" never appears; "Organic Latex"/"Natural Latex" is always bold
+  const R51 = [['delivery', 'prep'], ['comfort', 'first'], ['zones', 'how']];
+  let r51ok = true, r51bad = [];
+  for (const [ch, pn] of R51) {
+    await p.goto(file + '?ch=' + ch + '&pn=' + pn + '&ignite=0'); await p.waitForTimeout(150);
+    const tw = await p.evaluate(() => { const cs = (el) => el ? { bg: getComputedStyle(el).backgroundColor, sh: getComputedStyle(el).boxShadow, tx: el.textContent.replace(/\s+/g, ' ').trim() } : null;
+      return { top: cs(document.querySelector('.exg .ch[aria-current=true]')), part: cs(document.querySelector('.exg .exsub button[aria-current=true]')), root: cs(document.querySelector('.tree .tp')), rootB: (document.querySelector('.tree .tp b') || {}).textContent, cur: cs(document.querySelector('.tbr .pn[aria-current=true]')) }; });
+    const V = 'rgb(251, 251, 237)', notch = (e) => e && e.bg === V && /rgb\(86, 105, 1\)/.test(e.sh);
+    const lab = (s) => (s || '').replace(/^[A-G]\s*/, '').replace(/Helps you choose$/, '').trim();
+    const good = tw.top && tw.part && tw.root && tw.cur && notch(tw.top) && notch(tw.part) && notch(tw.root) && notch(tw.cur) && tw.rootB === tw.top.tx && lab(tw.part.tx) === lab(tw.cur.tx) && tw.part.tx.charAt(0) === tw.cur.tx.charAt(0);
+    if (!good) { r51ok = false; r51bad.push(ch + '/' + pn + ' ' + JSON.stringify(tw)); }
+  }
+  ok(r51ok, 'R51 the open topic and part are the same vanilla item with the same green notch in the top row, the parts strip and the tree, with the same words', r51bad.join(' || '));
+  const pageSet = [];
+  const allPanels = await p.evaluate(() => D.chapters.map((c) => c.panels.map((q) => c.id + '|' + q.id)).reduce((a, b) => a.concat(b), []));
+  for (const k of allPanels) pageSet.push('?ch=' + k.split('|')[0] + '&pn=' + k.split('|')[1]);
+  for (let i = 0; i < 5; i++) pageSet.push('?step=' + i);
+  let pairs = [], unbold = [], ptot = 0;
+  for (const q of pageSet) {
+    await p.goto(file + q + (q.indexOf('?') === 0 ? '&' : '?') + 'ignite=0'); await p.waitForTimeout(60);
+    const rr = await p.evaluate(() => { const root = document.querySelector('.monitor'), txt = root.innerText || '', bad = [];
+      const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n;
+      while ((n = w.nextNode())) { if (!/(organic|natural)\s+latex/i.test(n.nodeValue)) continue; let pr = n.parentNode, ok = false, hid = false;
+        for (; pr && pr !== root; pr = pr.parentNode) { const nm = (pr.nodeName || '').toUpperCase(); if (nm === 'B' || nm === 'STRONG') ok = true; if (pr.id === 'std' || pr.id === 'vmodal' || nm === 'SCRIPT' || nm === 'STYLE') hid = true; }
+        if (!ok && !hid) bad.push(n.nodeValue.trim().slice(0, 60)); }
+      return { pair: /(organic[\s,\/&-]+(and\s+)?natural|natural[\s,\/&-]+(and\s+)?organic)/i.test(txt), bad }; });
+    ptot++; if (rr.pair) pairs.push(q); rr.bad.forEach((b) => unbold.push(q + ' : ' + b));
+  }
+  for (const btn of ['#galbtn', '#allbtn']) {
+    await p.goto(file + '?ignite=0'); await p.waitForTimeout(80); await p.evaluate((s) => document.querySelector(s).click(), btn); await p.waitForTimeout(150);
+    const rr = await p.evaluate(() => { const root = document.querySelector('.monitor'), txt = root.innerText || '', bad = []; const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n;
+      while ((n = w.nextNode())) { if (!/(organic|natural)\s+latex/i.test(n.nodeValue)) continue; let pr = n.parentNode, ok = false; for (; pr && pr !== root; pr = pr.parentNode) { const nm = (pr.nodeName || '').toUpperCase(); if (nm === 'B' || nm === 'STRONG') ok = true; } if (!ok) bad.push(n.nodeValue.trim().slice(0, 60)); }
+      return { pair: /(organic[\s,\/&-]+(and\s+)?natural|natural[\s,\/&-]+(and\s+)?organic)/i.test(txt), bad }; });
+    ptot++; if (rr.pair) pairs.push(btn); rr.bad.forEach((b) => unbold.push(btn + ' : ' + b));
+  }
+  ok(pairs.length === 0 && ptot > 50, 'R51 "Organic Natural" and "Natural Organic" appear nowhere on any page of the screen (' + ptot + ' pages checked)', pairs.join(', '));
+  ok(unbold.length === 0, 'R51 every "Organic Latex" and "Natural Latex" on the screen is bold', unbold.slice(0, 6).join(' | '));
+  await p.goto(file + '?ignite=0'); await p.waitForTimeout(100);
+  const hdr51 = await p.evaluate(() => { const o = document.querySelector('.brand b.ol'); return { t: o && o.textContent, w: o && parseInt(getComputedStyle(o).fontWeight, 10), lbl: document.querySelector('.brand').textContent.replace(/\s+/g, ' ').trim() }; });
+  await p.goto(file + '?ignite=1'); await p.waitForTimeout(500);
+  const igb = await p.evaluate(() => { const s = [...document.querySelectorAll('#ign strong.olx')].map((e) => e.textContent); return { n: s.length, all: [...document.querySelectorAll('#ign .fact span')].map((e) => e.textContent).join(' | ') }; });
+  ok(hdr51.t === 'Organic Latex' && hdr51.w >= 700 && !/Organic\s+Natural|Natural\s+Organic/i.test(hdr51.lbl) && (!/(organic|natural)\s+latex/i.test(igb.all) || igb.n > 0), 'R51 the header and the start-up screen carry "Organic Latex" / "Natural Latex" in bold', JSON.stringify({ hdr51, igb }));
   ok(errs.length === 0, 'no page errors', errs.join(' | '));
   await ctx.close();
 }
