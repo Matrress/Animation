@@ -27,9 +27,10 @@ const out = join(root, 'dist', 'experience'); mkdirSync(out, { recursive: true }
 const page = readFileSync(join(root, 'docs', 'tv-preview', 'large-screen-design.html'), 'utf8');
 const hostJs = readFileSync(join(root, 'engine', 'experience-host.js'), 'utf8');
 
-const BASE = 'https://media.divinedunlop.com/ddtv/';                // where the owner uploads the two files
+const arg = (k) => ((process.argv.find((x) => x.startsWith('--' + k + '=')) || '').split('=').slice(1).join('=')) || '';
+const BASE = (arg('base') || 'https://media.divinedunlop.com/ddtv/').replace(/\/?$/, '/');   // where the files are uploaded (--base=...)
 const FONT = 'https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap';
-const PRODUCTS = [876405767];                                        // the test product only; the live one after the owner's word
+const PRODUCTS = (arg('products') || '876405767').split(',').map(Number).filter(Boolean);   // the test product only; the live one after the owner's word (--products=831592302)
 
 function must(cond, what) { if (!cond) { console.error('BUILD STOPPED: ' + what); process.exit(1); } }
 function replaceExact(src, a, b, n = 1) {

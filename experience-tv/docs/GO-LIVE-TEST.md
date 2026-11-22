@@ -1,5 +1,11 @@
 # Putting the Botanic Experience on the test product (876405767)
 
+> **The one package (22 Nov).** `node tools/build-package.mjs` builds everything and writes `dist/botanic-ddtv-package.zip`: the folder
+> `upload/ddtv/` (four files), `paste/1-loader.txt`, `paste/2-description.html` and `PASTE-ME.html` (both blocks with a Copy button
+> each, and the steps in Bulgarian). The owner uploads one folder and pastes two blocks; nothing is assembled or chosen. For the live
+> product, or another host: `node tools/build-package.mjs --products=831592302 --base=https://HOST/ddtv/` (everything below then
+> applies with those values).
+
 Everything below is prepared and tested locally on the real Ecwid page (E2: nothing saved). These steps need the owner's access.
 The live product 831592302 is not touched: the loader and both files start **only** on 876405767.
 

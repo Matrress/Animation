@@ -117,8 +117,10 @@
   function priceTexts() {
     var r = shopRoot(); if (!r) return null;
     var cur = txt(r.querySelector('.details-product-price__value'));
-    var old = txt(r.querySelector('.details-product-price-compare__container s, .details-product-price-compare__container .details-product-price-compare__price'));
-    var badge = txt(r.querySelector('.product-details__product-price-discount'));
+    /* the struck earlier price and the discount note exist only while the store has a promotion; whatever its kind (a percentage, an
+       amount, a sale price), the television shows the shop's own texts and nothing else */
+    var old = txt(r.querySelector('.details-product-price-compare__container s, .details-product-price-compare__container del, .details-product-price-compare__price, .product-details__product-price s, .product-details__product-price del'));
+    var badge = txt(r.querySelector('.product-details__product-price-discount, .details-product-price-compare__discount'));
     return { cur: cur, old: old && old !== cur ? old : '', badge: badge };
   }
   function priceSig() { var p = priceTexts(); return p ? p.cur + '|' + p.old + '|' + p.badge : ''; }
@@ -126,7 +128,7 @@
   function shop(S) {
     if (!S.size) return null;
     var p = priceTexts(); if (!p || !p.cur) return null;
-    if (/^£?\s*0([.,]0+)?$/.test(p.cur.replace(/\s/g, ''))) return { cur: '…', old: '', badge: '' };
+    if (/^[^\d]*0([.,]0+)?[^\d]*$/.test(p.cur.replace(/[\s\u00a0]/g, ''))) return { cur: '…', old: '', badge: '' };   /* Ecwid is still updating (its base price is zero): never show a zero */
     return p;
   }
 

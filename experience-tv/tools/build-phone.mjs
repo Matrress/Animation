@@ -19,7 +19,8 @@ const out = join(root, 'dist', 'experience'); mkdirSync(out, { recursive: true }
 const S = (f) => readFileSync(join(SRC, f), 'utf8');
 const preview = readFileSync(join(root, 'docs', 'mobile', 'premium', 'preview', 'graphite.html'), 'utf8');
 const FONT = 'https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap';
-const PRODUCTS = [876405767];
+const arg = (k) => ((process.argv.find((x) => x.startsWith('--' + k + '=')) || '').split('=').slice(1).join('=')) || '';
+const PRODUCTS = (arg('products') || '876405767').split(',').map(Number).filter(Boolean);   // --products=831592302 for the live product
 function must(c, w) { if (!c) { console.error('BUILD STOPPED: ' + w); process.exit(1); } }
 
 // ---------- the approved palette (DECISIONS: coffee #434239, deep slate #2E3633, vanilla #FBFBED, latte #DDD6C4, olive #646155,
