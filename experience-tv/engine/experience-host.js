@@ -235,7 +235,7 @@
     E.OnPageLoaded.add(onPage);
     if (E.OnProductSelectedOptionsChanged) E.OnProductSelectedOptionsChanged.add(function () { schedule(); });
     if (E.OnCartChanged) E.OnCartChanged.add(onCart);
-    var id = currentProductId();
+    var id = currentProductId(); if (id == null && global.__ddtvPage) id = Number(global.__ddtvPage.productId);
     if (id != null) onPage({ type: 'PRODUCT', productId: id });
   }
   (function waitEcwid(n) {

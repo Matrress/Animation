@@ -35,6 +35,8 @@ const URL = 'https://divinedunlop.com/products/botanic-original-100-organic-late
   await p.waitForSelector('.details-product-option select', { timeout: 45000 }); await p.waitForTimeout(2500);
   try { await p.getByRole('button', { name: /decline/i }).first().click({ timeout: 2500 }); } catch (e) { /* no banner */ }
   const descBefore = await p.evaluate(() => (document.querySelector('.product-details__description') || {}).textContent.length);
+  const seo = () => p.evaluate(() => ({ title: document.title, canon: (document.querySelector('link[rel=canonical]') || {}).href, ld: [...document.querySelectorAll('script[type="application/ld+json"]')].map((x) => x.textContent).join('|'), desc: (document.querySelector('meta[name=description]') || {}).content, robots: (document.querySelector('meta[name=robots]') || {}).content || '' }));
+  const seoBefore = await seo();
   await p.evaluate((code) => { window.__ddtvAllow = [831592302]; (0, eval)(code); }, js);
   await p.waitForSelector('#ddtv-experience', { timeout: 15000 }); await p.waitForTimeout(1500);
 
@@ -104,6 +106,9 @@ const URL = 'https://divinedunlop.com/products/botanic-original-100-organic-late
   const on = await p.evaluate(() => !!document.getElementById('ddtv-experience'));
   ok(!off.host && !off.cls && !off.fold && on, 'S7 another product removes the television and the fold; the listed product mounts it again', JSON.stringify({ off, on }));
 
+  // S9: what search engines read stays Ecwid's
+  const seoAfter = await seo();
+  ok(JSON.stringify(seoAfter) === JSON.stringify(seoBefore) && seoBefore.ld.length > 100, 'S9 the title, canonical address, meta description, robots and the structured data stay exactly Ecwid\'s', seoBefore.title + ' · ' + seoBefore.canon);
   // S6
   const bad = posts.filter((u) => /cart|checkout|order|payment/i.test(u) && !/catalog/i.test(u));
   ok(bad.length === 0, 'S6 no cart, checkout or order request', bad.join(' | ') || posts.length + ' POSTs, all catalogue');

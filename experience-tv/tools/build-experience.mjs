@@ -16,7 +16,7 @@
 //   botanic-tv-logos.js    the certificate logos, loaded on demand (upload next to it)
 //   loader.html            what goes into Ecwid → Website → Custom JavaScript code (≤ 4000 characters)
 //   MANIFEST.txt           sizes, gzip sizes, hashes
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
 import { dirname, join } from 'node:path';
@@ -82,6 +82,9 @@ css = ':host{all:initial;display:block;contain:layout style}\n' + css +
   '\n.ddx .pv,.ddx .seg,.ddx .stdv,.ddx .shopstrip{display:none!important}';
 
 // ---------- 4. the markup: the same, inside one root ----------
+// the preview's own notes are not for customers (hidden anyway): out of the module
+markup = markup.replace(/<p class="pv">[\s\S]*?<\/p>/, '').replace(/(<div class="shopstrip">)<span>[\s\S]*?<\/span>/, '$1').replace('aria-label="Standard Product View (stand-in)"', 'aria-hidden="true"');
+must(!/stand-in|Ecwid/i.test(markup), 'no preview note left in the markup');
 markup = '<div class="ddx ivory">' + markup + '</div>';
 
 // ---------- 5. the behaviour: the approved script, bound to the Shadow DOM and to Ecwid ----------
@@ -155,19 +158,33 @@ const logosJs = `/* Botanic Experience: certificate logos, loaded when Certifica
 writeFileSync(join(out, 'botanic-tv-logos.js'), logosJs);
 
 // ---------- 7. the loader for Ecwid → Website → Custom JavaScript code ----------
-const loader = `<script>/* Divine Dunlop Dreams: Botanic Experience loader (${version}). Phones keep the shop's page; tablets and computers get the television. ?ddtv=off: nothing. */
-(function(w,d){if(/[?&]ddtv=off\\b/.test(w.location.search)||w.__ddtvLoader)return;w.__ddtvLoader=1;var s=w.screen||{},p=Math.min(s.width||9999,s.height||9999)<600;if(p&&!/[?&]ddtv=tv\\b/.test(w.location.search))return;var e=d.createElement('script');e.async=true;e.src='${BASE}botanic-tv.js?v=${version}';e.onerror=function(){d.documentElement.setAttribute('data-ddtv-load','failed')};d.head.appendChild(e)})(window,document);
+// the phone layer is built first (tools/build-phone.mjs); its own version keys the cache
+const phonePath = join(out, 'botanic-phone.js');
+must(existsSync(phonePath), 'build the phone layer first: node tools/build-phone.mjs');
+const phoneV = createHash('sha256').update(readFileSync(phonePath)).digest('hex').slice(0, 10);
+const loader = `<script>/* Divine Dunlop Dreams: Botanic Experience loader (tv ${version}, phone ${phoneV}). Downloads nothing until a listed product page is open; then the device decides (never the window): phones get the phone layer, tablets and computers the television. ?ddtv=off: nothing. */
+(function(w,d){var q=w.location.search,L=${JSON.stringify(PRODUCTS)},done=0;if(/[?&]ddtv=off\\b/.test(q)||w.__ddtvLoader)return;w.__ddtvLoader=1;
+function go(id){if(done||L.indexOf(+id)<0)return;done=1;w.__ddtvPage={type:'PRODUCT',productId:+id};var s=w.screen||{},p=Math.min(s.width||9999,s.height||9999)<600;if(/[?&]ddtv=tv\\b/.test(q))p=false;if(/[?&]ddtv=phone\\b/.test(q))p=true;var e=d.createElement('script');e.async=true;e.src='${BASE}'+(p?'botanic-phone.js?v=${phoneV}':'botanic-tv.js?v=${version}');e.onerror=function(){d.documentElement.setAttribute('data-ddtv-load','failed')};d.head.appendChild(e)}
+function here(){var n=d.querySelector('[class*="ecwid-productBrowser-ProductPage-"]'),m=n&&/ProductPage-(\\d+)/.exec(n.className);if(m)go(m[1])}
+(function wait(n){if(w.Ecwid&&w.Ecwid.OnPageLoaded){w.Ecwid.OnPageLoaded.add(function(g){if(g&&g.type==='PRODUCT')go(g.productId)});here();return}if(n<300)setTimeout(function(){wait(n+1)},100)})(0)})(window,document);
 </script>`;
 must(loader.length <= 4000, 'the loader fits the 4000-character field');
 writeFileSync(join(out, 'loader.html'), loader);
 
+// ---------- 8. the description for the product (the indexed text and the fallback): the approved source, with the owner's rule
+//            "never Organic Natural" (21 Nov) applied; nothing else is changed ----------
+const srcDesc = readFileSync(join(root, 'source', 'botanic-original-description.html'), 'utf8');
+const desc = srcDesc.replace(/\b(?:Organic\s+Natural|Natural\s+Organic)\b/g, 'Organic');
+must(!/Organic\s+Natural|Natural\s+Organic/i.test(desc), 'no "Organic Natural" in the description');
+must(!/<script/i.test(desc), 'no script in the description');
+writeFileSync(join(out, 'botanic-description.html'), desc);
 const gz = (s) => gzipSync(Buffer.from(s)).length;
 const sha = (s) => createHash('sha256').update(s).digest('hex');
 const manifest = `Botanic Experience: store module (${version})
 botanic-tv.js        ${tv.length} bytes, gzip ${gz(tv)}   sha256 ${sha(tv)}
 ${BOWL_FILE.padEnd(20)} ${readFileSync(join(out, BOWL_FILE)).length} bytes (picture)
 botanic-tv-logos.js  ${logosJs.length} bytes, gzip ${gz(logosJs)}   sha256 ${sha(logosJs)}
-loader.html          ${loader.length} characters (field limit 4000)
+loader.html          ${loader.length} characters (field limit 4000)\nbotanic-description.html ${desc.length} characters (the product description, HTML mode; the bridge takes 100 000, so it is pasted in Ecwid's admin)
 upload to            ${BASE}
 products             ${PRODUCTS.join(', ')}
 left out of the data ${Object.entries(dropped).map(([k, v]) => k + ' ' + v).join(', ')}
