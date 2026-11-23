@@ -1,7 +1,7 @@
 {
- "date": "2026-11-22",
+ "date": "2026-11-23",
  "failures": 0,
- "checks": 190,
+ "checks": 192,
  "rows": [
   {
    "pass": true,
@@ -21,27 +21,27 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "292.0 / 292.0 / 292.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "292.0 / 292.0 / 292.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "292.0 / 292.0 / 292.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "292.0 / 292.0 / 292.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "292.0 / 292.0 / 292.0"
   },
   {
    "pass": true,
@@ -115,12 +115,12 @@
   },
   {
    "pass": true,
-   "rule": "R16 the mattress icon is dim with nothing chosen",
+   "rule": "R16 (XXXV) the photograph of the mattress is in Your selection from the start, without Ready",
    "detail": ""
   },
   {
    "pass": true,
-   "rule": "R17 the mattress icon lights up when all four choices are made",
+   "rule": "R17 (XXXV) all four choices made: the photograph stays and carries Ready",
    "detail": ""
   },
   {
@@ -221,7 +221,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":305,\"yFam\":305,\"yPick\":305,\"yNav\":235,\"stageTop\":169,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":260,\"yFam\":260,\"yPick\":260,\"yNav\":148,\"stageTop\":256,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -260,8 +260,8 @@
   },
   {
    "pass": true,
-   "rule": "R46 the Bio Dunlop logo (its own two tones, the teal replaced by the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, as they are: on the palette latte (never a white card), no outline, small; the Discover panel no longer holds them",
-   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"}]"
+   "rule": "R46 (XXXV) only the cup sits under Add to Bag, small, on the column's tone; no Bio Dunlop logo in Your selection; nothing of it in the Discover panel",
+   "detail": "[{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false}]"
   },
   {
    "pass": true,
@@ -280,13 +280,13 @@
   },
   {
    "pass": true,
-   "rule": "R50 the mattress card has no white card; the contour turns green with Ready when all four are chosen; the brand block is a tone of the column, not a latte card",
-   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"bgCol\":\"rgb(100, 97, 85)\",\"stroke\":\"#6E8601\",\"ready\":true}"
+   "rule": "R50 (XXXV) the photograph stands on the column without a white card and carries Ready when all four are chosen; the brand block is a tone of the column",
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"photo\":true,\"ready\":true}"
   },
   {
    "pass": true,
-   "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
-   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
+   "rule": "R43 (XXXV) the mattress photograph is above Add to Bag and carries Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
+   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"photo\":true,\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
   },
   {
    "pass": true,
@@ -405,12 +405,12 @@
   },
   {
    "pass": true,
-   "rule": "R16 the mattress icon is dim with nothing chosen",
+   "rule": "R16 (XXXV) the photograph of the mattress is in Your selection from the start, without Ready",
    "detail": ""
   },
   {
    "pass": true,
-   "rule": "R17 the mattress icon lights up when all four choices are made",
+   "rule": "R17 (XXXV) all four choices made: the photograph stays and carries Ready",
    "detail": ""
   },
   {
@@ -511,7 +511,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":360,\"stageTop\":297,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":260,\"yFam\":260,\"yPick\":260,\"yNav\":360,\"stageTop\":297,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -550,8 +550,8 @@
   },
   {
    "pass": true,
-   "rule": "R46 the Bio Dunlop logo (its own two tones, the teal replaced by the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, as they are: on the palette latte (never a white card), no outline, small; the Discover panel no longer holds them",
-   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"}]"
+   "rule": "R46 (XXXV) only the cup sits under Add to Bag, small, on the column's tone; no Bio Dunlop logo in Your selection; nothing of it in the Discover panel",
+   "detail": "[{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false}]"
   },
   {
    "pass": true,
@@ -570,13 +570,13 @@
   },
   {
    "pass": true,
-   "rule": "R50 the mattress card has no white card; the contour turns green with Ready when all four are chosen; the brand block is a tone of the column, not a latte card",
-   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"bgCol\":\"rgb(100, 97, 85)\",\"stroke\":\"#6E8601\",\"ready\":true}"
+   "rule": "R50 (XXXV) the photograph stands on the column without a white card and carries Ready when all four are chosen; the brand block is a tone of the column",
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"photo\":true,\"ready\":true}"
   },
   {
    "pass": true,
-   "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
-   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
+   "rule": "R43 (XXXV) the mattress photograph is above Add to Bag and carries Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
+   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"photo\":true,\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
   },
   {
    "pass": true,
@@ -641,27 +641,27 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "292.0 / 292.0 / 292.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "292.0 / 292.0 / 292.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "292.0 / 292.0 / 292.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "292.0 / 292.0 / 292.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "292.0 / 292.0 / 292.0"
   },
   {
    "pass": true,
@@ -735,12 +735,12 @@
   },
   {
    "pass": true,
-   "rule": "R16 the mattress icon is dim with nothing chosen",
+   "rule": "R16 (XXXV) the photograph of the mattress is in Your selection from the start, without Ready",
    "detail": ""
   },
   {
    "pass": true,
-   "rule": "R17 the mattress icon lights up when all four choices are made",
+   "rule": "R17 (XXXV) all four choices made: the photograph stays and carries Ready",
    "detail": ""
   },
   {
@@ -841,7 +841,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":360,\"yFam\":360,\"yPick\":360,\"yNav\":359,\"stageTop\":45,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":260,\"yFam\":260,\"yPick\":260,\"yNav\":272,\"stageTop\":132,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -880,8 +880,8 @@
   },
   {
    "pass": true,
-   "rule": "R46 the Bio Dunlop logo (its own two tones, the teal replaced by the one green) and the cup of latex sit under Add to Bag in the right column on every screen, logo first, as they are: on the palette latte (never a white card), no outline, small; the Discover panel no longer holds them",
-   "detail": "[{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"},{\"after\":true,\"logoFirst\":true,\"inCol\":true,\"edge\":false,\"small\":true,\"card\":false,\"hero\":false,\"fills\":\"rgb(110, 134, 1)|rgb(9, 38, 0)\"}]"
+   "rule": "R46 (XXXV) only the cup sits under Add to Bag, small, on the column's tone; no Bio Dunlop logo in Your selection; nothing of it in the Discover panel",
+   "detail": "[{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false}]"
   },
   {
    "pass": true,
@@ -900,13 +900,13 @@
   },
   {
    "pass": true,
-   "rule": "R50 the mattress card has no white card; the contour turns green with Ready when all four are chosen; the brand block is a tone of the column, not a latte card",
-   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"bgCol\":\"rgb(100, 97, 85)\",\"stroke\":\"#6E8601\",\"ready\":true}"
+   "rule": "R50 (XXXV) the photograph stands on the column without a white card and carries Ready when all four are chosen; the brand block is a tone of the column",
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"photo\":true,\"ready\":true}"
   },
   {
    "pass": true,
-   "rule": "R43 the mattress card is above Add to Bag, turns green with the word Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
-   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"stroke\":\"#6E8601\",\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
+   "rule": "R43 (XXXV) the mattress photograph is above Add to Bag and carries Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
+   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"photo\":true,\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
   },
   {
    "pass": true,
@@ -951,6 +951,16 @@
   {
    "pass": true,
    "rule": "no page errors",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R53 one screen while choosing: menus in view, Confirm above Add to Bag in Your selection and on the glass, both visible, the photograph in view, Confirm gone when all four are confirmed",
+   "detail": "[]"
+  },
+  {
+   "pass": true,
+   "rule": "R53 a phone keeps the normal page (no held screen)",
    "detail": ""
   }
  ]

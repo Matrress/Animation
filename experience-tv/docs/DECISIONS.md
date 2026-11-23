@@ -339,3 +339,26 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - **Prices follow the shop, always.** The television never computes a price: it shows Ecwid's own price, struck price and discount note, whatever the promotion is. Simulated-shop test `tests/experience-promo.mjs` changes the promotion while the television is open: a percentage (20 %, 10 %, 15 %), an amount off (£120), the end of the promotion (the struck price and the note disappear), a new promotion, an option that costs more (Extra Firm +£88), a cheaper depth, no size chosen. In every case the television shows what the shop shows within the shop's own update (about 0.7 to 2.5 s); while Ecwid is still updating it never shows a zero price. The reader accepts any currency format and the shop's struck price in either of its two markups.
 - **Options follow the shop.** A choice made in Ecwid's dropdown reaches the television and the other way round. A new option value that the television does not know yet (for example a 28 cm depth) breaks nothing and the price still follows the shop; showing such a value on the television needs its data updated and the package rebuilt (the shop stays the authority meanwhile).
 - **Coupon codes and cart promotions** (a code, a threshold on the order) are applied by Ecwid in the cart, not on the product page, so the product page never shows them and neither does the television; the cart is Ecwid's.
+
+## Round XXXV (owner, 23 November 2026): choosing happens on one screen
+- **Confirm sits in Your selection, directly above Add to Bag** (no longer inside the Cosmic Selection, where on an iPad it fell
+  below the glass). It belongs to the step on screen ("Confirm Single", "Confirm 24 cm", "Confirm Medium", "Confirm Cotton / Wool");
+  disabled until a pick; gone once that step is confirmed; gone for good once all four are confirmed, and then only Add to Bag
+  remains, marked Ready. "Change" brings it back for that step.
+- **The photograph of the mattress replaces the drawn icon** in Your selection and is always in view while choosing. It is the
+  owner's own photograph, trimmed to its contour only (`assets/botanic/q-botanic-cutaway-900.webp`, 900 × 460, not retouched);
+  Ready appears on it when all four are chosen. In the shop it is a file next to the module (`botanic-mattress.webp`).
+- **The Bio Dunlop logo leaves the column;** the cup of latex stays under Add to Bag. On a very short glass the cup only shows when it
+  has room to be seen whole.
+- **One screen while choosing (the stabiliser).** On a tablet or a monitor (width ≥ 800 px, height ≥ 600 px) the screen takes the
+  height of the glass and sits at its top while choosing: Explore, Select & Buy and Your selection stay in view; only the middle
+  scrolls if it is longer, and nothing is made smaller. From 800 to 1 099 px wide (iPad portrait, older iPads) it is two columns
+  (the choice and Your selection). Under 900 px of height the order line folds away (the Select & Buy row says the same) and the
+  cards are tighter. Explore keeps the normal page; phones keep the phone layer.
+- Measured (Confirm and Add to Bag both on the glass, menus in view): 1920 × 1080, 1440 × 900, 1366 × 1024, 1366 × 950,
+  1180 × 820, 1133 × 744, 1080 × 810, 1024 × 768, 1024 × 1366, 834 × 1194, 820 × 1180, 810 × 1080. Rule R53 checks it on five
+  sizes and a phone.
+- **The bridge (23 Nov):** `ecwid_update_product_250k` and the staged-HTML tools are live. The test product 876405767 already holds
+  the approved description (141 642 characters; identical to the package apart from two `&mdash;` in CSS comments that Ecwid
+  stores as "—"). The bridge does not expose Custom JavaScript code or file uploads to the media host, so the loader and the five
+  files remain the owner's two steps.

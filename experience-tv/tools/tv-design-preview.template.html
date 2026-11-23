@@ -1458,6 +1458,63 @@ body.vopen { overflow: hidden; }
 /* the two terms, always bold */
 strong.olx { font-weight: 800; }
 .brand b.ol { font-size: 19px; font-weight: 800; color: #566901; letter-spacing: .01em; }
+/* ===== ROUND XXXV (owner, 23 Nov): choosing happens on one screen. Confirm sits in Your selection directly above Add to Bag and
+   leaves once all four choices are confirmed; the photograph of the mattress is always in view; the Bio Dunlop logo leaves the
+   column and the cup stays under the bag. On a tablet or a monitor the screen is held to the height of the glass while choosing:
+   the menus at the top stay in view, only the middle scrolls if it is longer, and nothing is made smaller. ===== */
+.ivory .mine .mi { flex: none; padding: 0; margin: 0; background: transparent; border: 0; display: flex; align-items: center; justify-content: center; }
+.ivory .mine .mic { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.ivory .mine .mi img { display: block; width: 100%; height: auto; max-height: 160px; object-fit: contain; filter: drop-shadow(0 12px 14px rgba(20,24,22,.32)); }
+.ivory .mine .mic .rdy { position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px; border-radius: 10px; background: #566901; color: #FFFFFF; border: 2px solid #F6F8EA; box-shadow: 0 0 0 2px #3F4440; font-size: 12px; font-weight: 700; letter-spacing: .16em; line-height: 1; }
+.ivory .mine .mic .rdy svg { color: #FFFFFF; width: 14px !important; height: 14px !important; max-width: none; display: inline-block; }
+.ivory .mine .mconf:empty { display: none; }
+.ivory .mine .fconf.mc { margin: 0; padding: 10px; flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 8px; border-radius: 14px; background: #FEFEF6; border: 1.5px dashed #CFC8B4; }
+.ivory .mine .fconf.mc.on { border: 1.5px solid #FEFEF6; box-shadow: 0 0 0 2px rgba(110,134,1,.55); }
+.ivory .mine .fconf.mc span { font-size: 14.5px; line-height: 1.3; color: #384442; text-align: center; }
+.ivory .mine .fconf.mc span b { color: #2E3633; }
+.ivory .mine .fconf.mc:not(.on) span { display: none; }
+.ivory .mine .fconf.mc .btn.bagbtn { width: 100%; height: 56px; font-size: 19px; font-weight: 700; justify-content: center; white-space: nowrap; }
+.ivory .mine .fconf.mc .btn.bagbtn:disabled { height: 48px; font-size: 16px; }
+.ivory .mine .brandc { padding: 8px 10px; }
+.ivory .mine .brandc img { width: auto; max-width: 52%; max-height: 96px; object-fit: contain; }
+@media (min-width: 800px) {
+  .ivory .screen.fit { height: var(--fit-h, 100vh); min-height: 0; grid-template-rows: auto auto minmax(0, 1fr); }
+  .ivory .screen.fit > .rail, .ivory .screen.fit > .stage, .ivory .screen.fit > .mine { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+  .ivory .screen.fit .mine .mi { flex: 1 1 0; min-height: 78px; max-height: 190px; }
+  .ivory .screen.fit .mine .mi img { height: 100%; max-height: 100%; }
+  .ivory .screen.fit .mine .brandc { flex: 0 1 auto; min-height: 0; overflow: hidden; }
+  .ivory .screen.fit .mine .brandc img { max-height: 72px; }
+}
+@media (min-width: 800px) and (max-width: 1099px) {
+  .ivory .screen.fit { grid-template-columns: minmax(0, 1fr) 280px; grid-template-rows: auto auto auto minmax(0, 1fr); }
+  .ivory .screen.fit > .chbar { grid-column: 1 / -1; grid-row: 1; } .ivory .screen.fit > .trailbar { grid-column: 1 / -1; grid-row: 2; }
+  .ivory .screen.fit > .rail { grid-column: 1; grid-row: 3; overflow: visible; }
+  .ivory .screen.fit > .stage { grid-column: 1; grid-row: 4; }
+  .ivory .screen.fit > .mine { grid-column: 2; grid-row: 3 / 5; margin: 12px 12px 12px 0; }
+}
+/* a short glass (under 900 px of height): the order line folds away (the Select & Buy row above says the same), the cards are tighter,
+   the cup takes only the room that is left */
+@media (min-width: 800px) {
+  .ivory .screen.fit.fit-s > .trailbar { display: none; }
+  .ivory .screen.fit.fit-s > .mine { gap: 6px; padding-top: 8px !important; padding-bottom: 10px; }
+  .ivory .screen.fit.fit-s .mine > h2 { height: 22px; line-height: 22px; }
+  .ivory .screen.fit.fit-s .mine .coach { padding: 7px 12px; } .ivory .screen.fit.fit-s .mine .coach b { font-size: 15.5px; }
+  .ivory .screen.fit.fit-s .mine .gauge { margin-top: 2px; } .ivory .screen.fit.fit-s .mine .gl { margin: 0; }
+  .ivory .screen.fit.fit-s .mine .price { padding: 8px 14px; } .ivory .screen.fit.fit-s .mine .price > span:last-child { display: none; }
+  .ivory .screen.fit.fit-s .mine .fconf.mc { padding: 8px; gap: 6px; } .ivory .screen.fit.fit-s .mine .fconf.mc span { font-size: 13.5px; }
+  .ivory .screen.fit.fit-s .mine .fconf.mc .btn.bagbtn { height: 52px; }
+  .ivory .screen.fit.fit-s .mine .bag .btn { height: 56px; } .ivory .screen.fit.fit-s .mine .bag { gap: 4px; }
+  .ivory .screen.fit.fit-s .mine .mi { min-height: 64px; }
+  .ivory .screen.fit.fit-s .mine .brandc { flex: 1 1 0; padding: 4px 8px; display: flex; align-items: center; justify-content: center; }
+  .ivory .screen.fit.fit-s .mine .brandc img { max-height: 100%; height: 100%; min-height: 0; }
+  .ivory .screen.fit.fit-s .mine .price:not(:has(.prow)) { display: flex; align-items: center; justify-content: space-between; }
+  .ivory .screen.fit.fit-s .mine .price:not(:has(.prow)) b { font-size: 24px; }
+  .ivory .screen.fit .mine .brandc.tiny { visibility: hidden; }
+}
+/* a narrow screen in portrait: the columns stack; the confirm and the bag come first in Your selection, right under the choice */
+@media (max-width: 799px) {
+  .ivory .screen[data-layer=select] .mine > h2 { order: -3; } .ivory .screen[data-layer=select] .mine .mconf { order: -2; } .ivory .screen[data-layer=select] .mine .bag { order: -1; }
+}
 </style>
 </head>
 <body>
@@ -1475,7 +1532,7 @@ strong.olx { font-weight: 800; }
     <nav class="chbar" id="chbar" aria-label="Explore and Select &amp; Buy"></nav><div class="trailbar" id="trailbar"></div>
     <nav class="rail" id="rail" aria-label="This topic and your order"></nav>
     <section class="stage"><div class="colh" id="stageh"></div><div class="q" id="q"></div><div class="answer" id="answer"></div><div class="act" id="act"></div></section>
-    <aside class="mine" aria-label="Your selection"><h2><span>Your selection</span></h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="mi" id="mi"></div><div class="bag" id="bag"></div><div class="brandc" id="brandc"></div></aside>
+    <aside class="mine" aria-label="Your selection"><h2><span>Your selection</span></h2><div class="chips" id="chips"></div><div class="price" id="price" aria-live="polite"></div><div class="mi" id="mi"></div><div class="mconf" id="mconf"></div><div class="bag" id="bag"></div><div class="brandc" id="brandc"></div></aside>
   </div>
     <div class="ign" id="ign" hidden role="region" aria-label="The screen is starting"></div></main>
   <section id="std" class="stdv" aria-label="Standard Product View (stand-in)"></section>
@@ -1584,7 +1641,7 @@ var D = /*__DATA__*/;
   function mat(parts) { var out = toA(parsePath(parts.out), parts.ta), inn = toA(parsePath(parts.inn), parts.tb); return { out: out, inn: inn, pl: poly(inn), M: parts.outer }; }
   function thick(G, k) { return G.out.map(function (c) { return { c: c.c, p: c.p.map(function (q) { var yt = yTop(G.pl, q[0]); return q[1] > yt + 0.5 ? [q[0], yt + (q[1] - yt) * k] : q; }) }; }); }
   function box(G) { var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, M = G.M; G.out.concat(G.inn).forEach(function (c) { c.p.forEach(function (q) { var x = M[0] * q[0] + M[2] * q[1] + M[4], y = M[1] * q[0] + M[3] * q[1] + M[5]; x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }); }); var mx = (x1 - x0) * .04, my = (y1 - y0) * .06; return [x0 - mx, y0 - my, x1 - x0 + 2 * mx, y1 - y0 + 2 * my]; }
-  var GD, GI;
+  var GD;
   function depthSvg(cm, i) {   // the three depths: the owner's drawing, only the thickness of the front edge changes, in TRUE proportion 20 : 24 : 26 (master prompt, 13.11: never exaggerated); the 26 cm outline dashed behind
     var IV = document.documentElement.classList.contains('ivory'); GD = GD || mat(D.mattress.depth); var G = GD, kk = cm / 26, shape = thick(G, kk), bb = box(G), M = G.M, pl = G.pl;
     var xs = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[0]; })); }, []), ys = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[1]; })); }, []);
@@ -1595,17 +1652,9 @@ var D = /*__DATA__*/;
       '<g transform="matrix(' + M.join(',') + ')"><path d="' + dStr(G.out) + '" fill="none" stroke="' + (IV ? '#9C9783' : '#9D9884') + '" stroke-width="2" stroke-dasharray="7 6" ' + st + '/>' +
       '<path d="' + d + '" fill="url(#fg' + i + ')"/><path d="' + d + '" fill="url(#tg' + i + ')" clip-path="url(#cp' + i + ')"/><path d="' + d + '" fill="none" stroke="#384442" stroke-width="2.4" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="#384442" stroke-width="2.4" ' + st + '/></g></svg>';
   }
-  function mattressCard() {   // a vanilla card above Add to Bag: the contour is grey, then the firmness gives the sky tint, then all four choices make the whole contour green with the word Ready
-    var n = ['size', 'firmness', 'depth', 'cover'].filter(chosen).length, fm = !!chosen('firmness'), ok = n >= 4;
-    return '<div class="mic' + (ok ? ' ok' : '') + '">' + iconSvg(n, fm) + (ok ? '<span class="rdy">Ready</span>' : '') + '</div>';
-  }
-  function iconSvg(n, fm) {   // the owner's mattress drawing as a small icon: it lights up when all four choices are made
-    GI = GI || mat(D.mattress.icon); var G = GI, bb = box(G), M = G.M, ok = n >= 4, st = 'vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"';
-    var d = dStr(G.out), pl = G.pl, xs = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[0]; })); }, []), ys = G.out.reduce(function (a, c) { return a.concat(c.p.map(function (q) { return q[1]; })); }, []);
-    var x0 = Math.min.apply(null, xs) - 100, x1 = Math.max.apply(null, xs) + 100, y0 = Math.min.apply(null, ys) - 100;
-    var region = 'M' + x0 + ' ' + y0 + 'H' + x1 + 'V' + pl[pl.length - 1][1] + pl.slice().reverse().map(function (q) { return 'L' + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('') + 'L' + x0 + ' ' + pl[0][1] + 'Z';
-    var stroke = ok ? '#6E8601' : (n === 0 ? '#CFC9B4' : '#FBFBED'), top = ok ? 'rgba(110,134,1,.34)' : (fm ? 'rgba(93,184,196,.55)' : 'none');
-    return '<svg viewBox="' + bb.map(function (v) { return v.toFixed(0); }).join(' ') + '" role="img" aria-label="' + (ok ? 'All four choices made: ready to order' : n + ' of 4 choices made') + '"><defs><clipPath id="icp"><path d="' + region + '"/></clipPath></defs><g transform="matrix(' + M.join(',') + ')"><path d="' + d + '" fill="' + top + '" clip-path="url(#icp)"/><path d="' + d + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" ' + st + '/><path d="' + dStr(G.inn) + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" ' + st + '/></g></svg>';
+  function mattressCard() {   // ROUND XXXV (owner, 23 Nov): the photograph of the mattress, always in view while choosing; Ready when all four are made
+    var ok = complete();
+    return '<div class="mic' + (ok ? ' ok' : '') + '"><img src="' + D.photo + '" alt="The Botanic mattress: the quilted cover and the Organic Latex core" width="900" height="460" decoding="async">' + (ok ? '<span class="rdy">' + CHECK.replace('width="18" height="18"', 'width="14" height="14"') + 'Ready</span>' : '') + '</div>';
   }
   var IC = {
     size: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6.5" width="17" height="11" rx="2"/><path d="M7 3.8h10M7 3.8l1.6-1.4M7 3.8l1.6 1.4M17 3.8l-1.6-1.4M17 3.8l-1.6 1.4"/></svg>',
@@ -1649,6 +1698,31 @@ var D = /*__DATA__*/;
     $('#rail').innerHTML = h;
     var tb = $('#trailbar'); if (tb) { tb.hidden = !onSel || S.gal; tb.innerHTML = onSel ? trailHtml() : ''; }
     var sc = document.querySelector('.screen'); if (sc) { sc.style.setProperty('--tc', onSel ? TC.select : TC[S.ch]); sc.setAttribute('data-layer', onSel ? 'select' : 'explore'); sc.setAttribute('data-topic', onSel ? 'select' : S.ch); }
+    applyFit();
+  }
+  /* ONE SCREEN WHILE CHOOSING (owner, 23 Nov): on a tablet or a monitor the screen takes the height of the glass and sits at its top;
+     a new choice brings the middle back to its start. A phone, a short window or the standard view keep the normal page. */
+  var FITKEY = '';
+  function fitNow() { var sc = document.querySelector('.screen'); return !!(sc && sc.classList.contains('fit')); }
+  function applyFit() {
+    var sc = document.querySelector('.screen'); if (!sc) return;
+    var on = S.view === 'tv' && !S.gal && !S.all && sc.getAttribute('data-layer') === 'select' && window.innerWidth >= 800 && window.innerHeight >= 600;
+    sc.classList.toggle('fit', on); sc.classList.toggle('fit-s', on && window.innerHeight < 900);
+    if (window.requestAnimationFrame) requestAnimationFrame(cupRoom);
+    if (!on) { FITKEY = ''; sc.style.removeProperty('--fit-h'); return; }
+    sc.style.setProperty('--fit-h', Math.round(window.innerHeight - 4) + 'px');
+    var key = S.ch + '/' + S.pn + '/' + (S.coach ? 'c' : '');
+    if (key !== FITKEY) {
+      FITKEY = key;
+      var st = sc.querySelector('.stage'); if (st) st.scrollTop = 0;
+      var rl = sc.querySelector('.rail'); if (rl) rl.scrollTop = 0;
+      var top = sc.getBoundingClientRect().top; if (Math.abs(top - 2) > 1) window.scrollTo(0, Math.max(0, window.scrollY + top - 2));
+    }
+  }
+  window.addEventListener('resize', function () { if (S.view === 'tv') applyFit(); });
+  function cupRoom() {   // on a short glass the cup only shows when it has room to be seen whole
+    var bc = document.querySelector('#brandc'), im = bc && bc.querySelector('img'); if (!im) return;
+    bc.classList.remove('tiny'); if (fitNow() && im.getBoundingClientRect().height < 44) bc.classList.add('tiny');
   }
   function bagButton(cls) {   // ONE button, two faces (laws in engine/selection-rules.js): Add to Bag, READY, then Go to Checkout
     var bagI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>', arrI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -1660,13 +1734,13 @@ var D = /*__DATA__*/;
     var h = '';
     var nOn = ['size', 'depth', 'firmness', 'cover'].filter(chosen).length; h = h + '<div class="gauge' + (nOn === 4 ? ' full' : '') + '" role="img" aria-label="' + nOn + ' of 4 choices made">' + [0, 1, 2, 3].map(function (i) { return '<i class="' + (i < nOn ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="gl"><span>' + nOn + ' of 4</span><span>' + (nOn === 4 ? 'Ready' : 'Your choices') + '</span></div>';
     $('#chips').innerHTML = h;
-    var bc0 = $('#brandc'); if (bc0 && !bc0.firstChild) bc0.innerHTML = wordSvg(D.bioFull, 'bioword full') + '<small>DIVINE DUNLOP DREAMS</small><img src="' + D.bowl + '" alt="Natural latex milk in a tapping cup, with rubber tree leaves">';
-    $('#mi').innerHTML = mattressCard(); var mi0 = $('#mi'); if (mi0) mi0.classList.toggle('ok', ['size', 'firmness', 'depth', 'cover'].filter(chosen).length >= 4);
+    var bc0 = $('#brandc'); if (bc0 && !bc0.firstChild) bc0.innerHTML = '<img src="' + D.bowl + '" alt="Natural latex milk in a tapping cup, with rubber tree leaves">';
+    $('#mi').innerHTML = mattressCard(); var mi0 = $('#mi'); if (mi0) mi0.classList.toggle('ok', complete());
+    $('#mconf').innerHTML = confirmBox();
     var p = price(), full = complete();
     var sh = shop(); $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small>' + priceParts(sh) + '<span>' + (sh == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the prices and the discount are Ecwid\'s own.') + '</span>';
     var gi = nextUnchosen();
     $('#chips').insertAdjacentHTML('afterbegin', gi < 0 ? '<button class="coach ok" data-go="4"><small>All four choices are made</small><b>Review your order</b><i aria-hidden="true">&rarr;</i></button>' : '<button class="coach" data-go="' + gi + '"><small>' + (nDone0() ? 'Next' : 'Start here') + '</small><b>Choose your ' + STEPS[gi].label + '</b><i aria-hidden="true">&rarr;</i></button>');
-    $('#chips').insertAdjacentHTML('beforeend', complete() || S.size || S.firmness || S.depth || S.cover ? '' : '<p class="selhint">Your choices appear here.</p>');
     var fb = DDRules.bagFace(selOf(), S.bagged || '', TVORDER);
     $('#bag').innerHTML = bagButton() + (inBag() ? '<div class="hint">Added to your bag. Go to Checkout when you are ready.</div>' : '<div class="hint" id="ready-note">' + (fb.ready ? '<b>Ready to order.</b> All four choices are made. You can still change any of them.' : '<b>' + esc(fb.guide) + '</b>') + '</div>');
     $('#native').innerHTML = bagButton('');
@@ -1702,7 +1776,7 @@ var D = /*__DATA__*/;
         '<div class="scards" style="--g:' + g.c + '">' + sgSizes(g).map(function (s, si) { var on = pk && pk.label === s.label, sp = ({ 1: [6], 2: [3, 3], 3: [2, 2, 2], 4: [3, 3, 3, 3], 5: [2, 2, 2, 3, 3], 6: [2, 2, 2, 2, 2, 2] }[sgSizes(g).length] || [2])[si];
           return '<button class="card cz" style="grid-column: span ' + sp + '" data-size="' + D.sizes.indexOf(s) + '" aria-pressed="' + on + '">' + (on ? '<em class="cz-ok">' + CHECK + '</em>' : '') + '<span class="nm">' + esc(s.name) + '</span><span class="dm">' + s.dims[0] + ' × ' + s.dims[1] + '<i>cm</i></span><span class="in">' + inch(s.dims[0]) + ' × ' + inch(s.dims[1]) + '<i>in</i></span><span class="glow"></span></button>'; }).join('') + '</div>';
     }
-    h += confirmBar('size', 'size', pk ? pk.name + ' · ' + pk.dims[0] + ' × ' + pk.dims[1] + ' cm' : '', pk ? pk.name : '') + '</div>';
+    h += '</div>';
     h += '<div class="more"><span>Need another size?</span><button class="btn s" data-more="1">Tell us what you need</button></div>' +
       '<div class="form" id="form"><div><label>Model</label><input value="Botanic Original" readonly></div><div><label for="sz">The size you want</label><input id="sz" placeholder="for example 170 × 205 cm"></div><div><label for="em">Your email, for our reply</label><input id="em" type="email" placeholder="name@example.com"></div><p class="note">In the shop this form sends the model, the size and your email to Divine Dunlop support. This preview does not send anything.</p><div><button class="btn p" data-send="1">Send my request</button></div></div>';
     return h;
@@ -1753,7 +1827,6 @@ var D = /*__DATA__*/;
     var e = engPaths(), FC = CUR('firmness/choose');
     h += '<div class="eng"><svg viewBox="90 10 2550 470" role="img" aria-label="Engineering view: the body at the surface of the latex core"><path d="' + e.mp + '" fill="#FEFEF6" stroke="#384442" stroke-width="5" stroke-linejoin="round"/><path d="' + e.bd + '" fill="#FAFAEC" stroke="#384442" stroke-width="5" stroke-linejoin="round"/></svg>' +
       '<div class="sab"><div><b>Support</b><span>' + esc(FC.support) + '</span></div><div class="bal">Balance<i></i></div><div><b>Adaptation</b><span>' + esc(FC.adapt) + '</span></div></div></div>';
-    h = h.replace('<p class="fnote" id="guide">', '<div class="fconf' + (pick ? ' on' : '') + '"><span>' + (pick ? 'Your firmness: <b>' + pick + '</b>. Confirm it to continue.' : 'Choose a firmness, or set your weight and height for guidance.') + '</span><button class="btn bagbtn' + (pick ? ' ready' : '') + '" data-fconfirm="' + (pick || '') + '"' + (pick ? '' : ' disabled') + '>' + CHECK + 'Confirm ' + (pick || 'firmness') + '</button></div><p class="fnote" id="guide">');
     h += '<p class="base">The four ranges are the base. Your height can move the guidance to a neighbouring level.</p>';
     return h;
   }
@@ -1765,9 +1838,28 @@ var D = /*__DATA__*/;
   }
   /* PICK, CONFIRM, CHANGE (owner, 16 Nov X): the same logic for size, depth, firmness and cover. A touch picks (nothing is sent), the
      customer confirms, and only then the choice counts and the module opens the next one. A confirmed choice stays open to change. */
-  function confirmBar(k, noun, pickText, btnText) {
-    var pk = S.pick[k];
-    return '<div class="fconf' + (pk ? ' on' : '') + '"><span>' + (pk ? 'Your ' + noun + ': <b>' + esc(pickText) + '</b>. Confirm it to continue.' : 'Choose your ' + noun + ', then confirm it.') + '</span><button class="btn bagbtn' + (pk ? ' ready' : '') + '" data-confirm="' + k + '"' + (pk ? '' : ' disabled') + '>' + CHECK + 'Confirm ' + (pk ? esc(btnText) : noun) + '</button></div>';
+  /* ROUND XXXV (owner, 23 Nov): Confirm sits in Your selection, directly above Add to Bag, so it never falls below the screen. It
+     belongs to the step on screen, and once all four choices are confirmed it is gone: only Add to Bag remains, marked Ready. */
+  function firmPickNow() {
+    if (S.firmPick) return S.firmPick;
+    var rec = (S.weight != null && S.height != null) ? DDFirmnessCore.recommend(S.weight, S.height) : null, f = rec && { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm' }[rec.display];
+    return f || null;
+  }
+  function confirmBox() {
+    if (S.all || S.gal || S.coach || panel().kind !== 'step') return '';   // a step already confirmed has nothing to confirm (all four confirmed: none)
+    var st = STEPS[S.step]; if (!st || st.id === 'review') return '';
+    var k = st.id, CK = CHECK.replace('width="18" height="18"', 'width="16" height="16"');
+    if (k === 'firmness') {
+      if (S.firmness && !S.firmEdit) return '';
+      var fp = firmPickNow();
+      return '<div class="fconf mc' + (fp ? ' on' : '') + '"><span>' + (fp ? 'Your firmness: <b>' + fp + '</b>' : 'Choose a firmness, then confirm it here.') + '</span><button class="btn bagbtn' + (fp ? ' ready' : '') + '" data-fconfirm="' + (fp || '') + '"' + (fp ? '' : ' disabled') + '>' + CK + 'Confirm ' + (fp || 'firmness') + '</button></div>';
+    }
+    if (S[k] && !S.edit[k]) return '';
+    var pk = S.pick[k], txt = '', btn = '';
+    if (pk && k === 'size') { txt = pk.name + ' · ' + pk.dims[0] + ' × ' + pk.dims[1] + ' cm'; btn = pk.name; }
+    else if (pk && k === 'depth') { txt = btn = pk.cm + ' cm'; }
+    else if (pk && k === 'cover') { txt = pk.name; btn = SHORT[pk.i] || 'cover'; }
+    return '<div class="fconf mc' + (pk ? ' on' : '') + '"><span>' + (pk ? 'Your ' + k + ': <b>' + esc(txt) + '</b>' : 'Choose your ' + k + ', then confirm it here.') + '</span><button class="btn bagbtn' + (pk ? ' ready' : '') + '" data-confirm="' + k + '"' + (pk ? '' : ' disabled') + '>' + CK + 'Confirm ' + esc(pk ? btn : k) + '</button></div>';
   }
   function doneCard(noun, big, sub, text, visual, changeKey, changeText) {
     return '<div class="fdone"><div class="fdl"><span class="fok">' + CHECK + 'Confirmed</span><small>Your ' + noun + '</small><b>' + esc(big) + '</b><i>' + esc(sub) + '</i><p>' + text + '</p><button class="btn s" data-change="' + changeKey + '">' + esc(changeText) + '</button></div><div class="fdr cdr">' + visual + '</div></div>';
@@ -1778,7 +1870,7 @@ var D = /*__DATA__*/;
     if (S.depth && !S.edit.depth) { var d = S.depth;
       return cosmosWrap('Depth confirmed', doneCard('depth', d.cm + ' cm', d.inch.replace(/^cm · /, '') + ' · ' + d.name, esc(d.desc), depthSvg(+d.cm, d.i), 'depth', 'Change depth')); }
     var pk = S.pick.depth;
-    return cosmosWrap('Three depths, drawn in true proportion', '<div class="dc cz3">' + D.depths.map(function (d, i) { var on = pk && pk.i === i; return '<button class="dcard cz" style="--g:' + DGLOW[i] + '" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + (on ? '<span class="chosen">' + CHECK + 'Selected</span>' : '') + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span><span class="glow"></span></button>'; }).join('') + '</div>' + confirmBar('depth', 'depth', pk ? pk.cm + ' cm' : '', pk ? pk.cm + ' cm' : ''));
+    return cosmosWrap('Three depths, drawn in true proportion', '<div class="dc cz3">' + D.depths.map(function (d, i) { var on = pk && pk.i === i; return '<button class="dcard cz" style="--g:' + DGLOW[i] + '" data-depth="' + i + '" aria-pressed="' + on + '">' + depthSvg(+d.cm, i) + (on ? '<span class="chosen">' + CHECK + 'Selected</span>' : '') + '<span class="cm">' + esc(d.cm) + '<i>' + esc(d.inch) + '</i></span><span class="nm">' + esc(d.name) + '</span><span class="ds">' + esc(d.desc) + '</span><span class="glow"></span></button>'; }).join('') + '</div>');
   }
   function coverBullets(c) { return c.body.split(/(?<=\.)\s+/).filter(Boolean).slice(0, 4).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join(''); }
   function coverView() {
@@ -1788,7 +1880,7 @@ var D = /*__DATA__*/;
     if (c) info = '<div class="info" aria-live="polite"><span class="k">Your cover</span><h2>' + esc(c.name) + '</h2><span class="tg">' + esc(c.tag) + '</span><ul>' + coverBullets(c) + '</ul><span class="fact">' + esc(D.coverFacts.height) + (c.mod ? ' · +£' + c.mod + ' in the shop' : '') + '</span></div>';
     else info = '<div class="info"><span class="k">Cover</span><h2>Four fabrics, one choice</h2><p>' + esc(D.coverSub) + '</p><p>Tap a photograph to see what that cover gives you.</p></div>';
     return cosmosWrap('Four fabrics, one choice', '<div class="cv"><div class="tiles">' + D.covers.map(function (x, i) { var on = c && c.i === i;
-      return '<button class="tile" data-cover="' + i + '" aria-pressed="' + on + '" aria-label="' + esc(x.name) + '"><span class="pic" style="background-image:url(' + esc(x.img) + ')"></span><span class="cap">' + esc(SHORT[i]) + '</span></button>'; }).join('') + '</div>' + info + '</div>' + confirmBar('cover', 'cover', c ? c.name : '', c ? SHORT[c.i] : ''));
+      return '<button class="tile" data-cover="' + i + '" aria-pressed="' + on + '" aria-label="' + esc(x.name) + '"><span class="pic" style="background-image:url(' + esc(x.img) + ')"></span><span class="cap">' + esc(SHORT[i]) + '</span></button>'; }).join('') + '</div>' + info + '</div>');
   }
   function reviewView() {
     var rows = [['Size', S.size ? S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' : null, S.size ? inch(S.size.dims[0]) + ' × ' + inch(S.size.dims[1]) + ' in · ' + S.size.name : '', 0], ['Firmness', S.firmness, '', 1], ['Depth', S.depth ? S.depth.cm + ' cm' : null, S.depth ? S.depth.inch.replace(/^cm · /, '') + ' · ' + S.depth.name : '', 2], ['Cover', S.cover ? S.cover.name : null, S.cover ? S.cover.tag : '', 3]];
@@ -2166,7 +2258,7 @@ var D = /*__DATA__*/;
     if ((d.fconfirm || (d.confirm != null && S[d.confirm])) && S.view === 'tv' && guideOn()) startCoach();
     var nav = d.ch != null || d.pn != null || d.goto != null || d.go != null || d.flat != null || d.next != null || d.back != null, hd0 = $('#stageh'), t0 = hd0 ? hd0.getBoundingClientRect().top : null, y0 = window.scrollY;
     draw();
-    if (nav) {   // the information block stays where it was on the glass; if the page got shorter and the browser moved it, it is put back
+    if (nav && !fitNow()) {   // the information block stays where it was on the glass; if the page got shorter and the browser moved it, it is put back
       var hd1 = $('#stageh'), t1 = hd1 ? hd1.getBoundingClientRect().top : null;
       if (y0 > 0 && t0 !== null && t1 !== null && t0 >= 8 && t0 <= window.innerHeight * 0.6) { if (Math.abs(t1 - t0) > 2) window.scrollTo(0, Math.max(0, window.scrollY + t1 - t0)); } else toStage();
     }   // moving to another screen: the information block comes into view; a pick or a confirm in place never moves the page
@@ -2190,7 +2282,7 @@ var D = /*__DATA__*/;
     syncBody(id);
     // update in place (the slider must not be re-created while it is being dragged)
     var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
-    if (rec && !S.firmPick) { var pk = fk(rec.display); document.querySelectorAll('.fcard[data-firm]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.firm === pk)); }); var cb = document.querySelector('[data-fconfirm]'); if (cb && pk !== 'Extra Firm') { cb.dataset.fconfirm = pk; cb.disabled = false; cb.classList.add('ready'); cb.innerHTML = CHECK + 'Confirm ' + pk; var fs = document.querySelector('.fconf'); if (fs) { fs.classList.add('on'); fs.firstChild.innerHTML = 'Your firmness: <b>' + pk + '</b>. Confirm it to continue.'; } } }
+    if (rec && !S.firmPick) { var pk = fk(rec.display); document.querySelectorAll('.fcard[data-firm]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.firm === pk)); }); var cb = document.querySelector('[data-fconfirm]'); if (cb && pk !== 'Extra Firm') { cb.dataset.fconfirm = pk; cb.disabled = false; cb.classList.add('ready'); cb.innerHTML = CHECK + 'Confirm ' + pk; var fs = document.querySelector('.fconf'); if (fs) { fs.classList.add('on'); fs.firstChild.innerHTML = 'Your firmness: <b>' + pk + '</b>'; } } }
     $('#guide').innerHTML = rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';
     document.querySelectorAll('.fcard').forEach(function (c) { var nm = c.querySelector('.nm').textContent, isRec = rec && fk(rec.display) === nm; c.classList.toggle('rec', !!isRec); c.classList.toggle('dim', !!(rec && !isRec)); var tag = c.querySelector('.tag'); if (isRec && !tag) c.insertAdjacentHTML('afterbegin', '<span class="tag">For you</span>'); if (!isRec && tag) tag.remove(); });
   });

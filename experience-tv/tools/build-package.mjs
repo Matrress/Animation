@@ -4,7 +4,7 @@
 //
 // It builds the phone layer and the television (same --base and --products), then writes dist/package/ and one zip:
 //   botanic-ddtv-package.zip
-//     upload/ddtv/…        the four files, to be uploaded as one folder (to the --base address)
+//     upload/ddtv/…        the five files, to be uploaded as one folder (to the --base address)
 //     paste/1-loader.txt   → Ecwid → Website → Advanced website settings → Custom JavaScript code
 //     paste/2-description.html → the product's Description, HTML mode
 //     PASTE-ME.html        a page with the two blocks and a Copy button each, and the steps
@@ -22,7 +22,7 @@ run('build-phone.mjs'); run('build-experience.mjs');
 const D = join(root, 'dist', 'experience'), P = join(root, 'dist', 'package');
 rmSync(P, { recursive: true, force: true });
 mkdirSync(join(P, 'upload', 'ddtv'), { recursive: true }); mkdirSync(join(P, 'paste'), { recursive: true });
-for (const f of ['botanic-tv.js', 'botanic-phone.js', 'botanic-tv-logos.js', 'botanic-cup.webp']) copyFileSync(join(D, f), join(P, 'upload', 'ddtv', f));
+for (const f of ['botanic-tv.js', 'botanic-phone.js', 'botanic-tv-logos.js', 'botanic-cup.webp', 'botanic-mattress.webp']) copyFileSync(join(D, f), join(P, 'upload', 'ddtv', f));
 const loader = readFileSync(join(D, 'loader.html'), 'utf8').trim();
 const desc = readFileSync(join(D, 'botanic-description.html'), 'utf8');
 writeFileSync(join(P, 'paste', '1-loader.txt'), loader);
@@ -49,7 +49,7 @@ code{background:#EFEBDD;border-radius:6px;padding:1px 6px} small{color:#646155}
 <p><small>Продукт: <b>${products}</b> · Файловете се зареждат от: <code>${base}</code></small></p>
 
 <h2><span class="n">1</span>Качи папката <code>upload/ddtv/</code></h2>
-<div class="box">В пакета (zip) има папка <code>upload/ddtv/</code> с 4 файла. Качи <b>цялата папка</b> така, че файловете да се отварят на:<br><code>${base}botanic-tv.js</code> (и другите три до него).<br>Видеата не се качват: те остават на сегашните си линкове.</div>
+<div class="box">В пакета (zip) има папка <code>upload/ddtv/</code> с 5 файла. Качи <b>цялата папка</b> така, че файловете да се отварят на:<br><code>${base}botanic-tv.js</code> (и другите четири до него).<br>Видеата не се качват: те остават на сегашните си линкове.</div>
 
 <h2><span class="n">2</span>Зареждащ скрипт</h2>
 <div class="box">Ecwid админ → <b>Website</b> → <b>Advanced website settings</b> → <b>Custom JavaScript code</b> → Add code → постави → Save.

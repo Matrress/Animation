@@ -1,7 +1,7 @@
 # Putting the Botanic Experience on the test product (876405767)
 
 > **The one package (22 Nov).** `node tools/build-package.mjs` builds everything and writes `dist/botanic-ddtv-package.zip`: the folder
-> `upload/ddtv/` (four files), `paste/1-loader.txt`, `paste/2-description.html` and `PASTE-ME.html` (both blocks with a Copy button
+> `upload/ddtv/` (five files), `paste/1-loader.txt`, `paste/2-description.html` and `PASTE-ME.html` (both blocks with a Copy button
 > each, and the steps in Bulgarian). The owner uploads one folder and pastes two blocks; nothing is assembled or chosen. For the live
 > product, or another host: `node tools/build-package.mjs --products=831592302 --base=https://HOST/ddtv/` (everything below then
 > applies with those values).
@@ -15,7 +15,8 @@ Files (built by `node tools/build-phone.mjs && node tools/build-experience.mjs`,
 |---|---|---|
 | `botanic-tv.js` | the television (tablets, laptops, monitors) | upload to `https://media.divinedunlop.com/ddtv/` |
 | `botanic-tv-logos.js` | the certificate logos (loaded when Certifications is opened) | the same folder |
-| `botanic-cup.webp` | the cup picture of the brand block | the same folder |
+| `botanic-cup.webp` | the cup picture under Add to Bag | the same folder |
+| `botanic-mattress.webp` | the photograph of the mattress in Your selection (23 Nov) | the same folder |
 | `botanic-phone.js` | the phone layer (guided configuration, approved palette) | the same folder |
 | `loader.html` | ~1 300 characters | Ecwid admin → Website → Advanced website settings → **Custom JavaScript code** → Add code |
 | `botanic-description.html` | the approved description (only change: "Organic Natural" → "Organic") | product 876405767 → Description → **HTML mode (`<>`)**, replace everything |
@@ -24,7 +25,7 @@ Files (built by `node tools/build-phone.mjs && node tools/build-experience.mjs`,
 
 ## Steps
 
-1. **Upload the four files** to `media.divinedunlop.com/ddtv/` (the same server as the videos). Check one of them:
+1. **Upload the five files** to `media.divinedunlop.com/ddtv/` (the same server as the videos). Check one of them:
    `curl -sI https://media.divinedunlop.com/ddtv/botanic-tv.js` → `200`, `content-type: application/javascript` (or `text/javascript`).
    Compression saves about three quarters of the download: in nginx, `gzip on; gzip_types application/javascript text/javascript;`.
 2. **Paste the loader** (`loader.html`, the whole text with its `<script>` tags) into Custom JavaScript code and save.

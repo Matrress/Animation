@@ -65,6 +65,13 @@ const BOWL_FILE = 'botanic-cup.' + (bowlM[1] === 'jpeg' ? 'jpg' : bowlM[1]);
 writeFileSync(join(out, BOWL_FILE), Buffer.from(bowlM[2], 'base64'));
 dropped.bowl = D.bowl.length;
 D.bowl = '__BASE__' + BOWL_FILE;
+// the photograph of the mattress (XXXV, 23 Nov): a real file too, the same way
+const photoM = /^data:image\/(webp|png|jpeg);base64,(.+)$/.exec(D.photo || '');
+must(photoM, 'the mattress photograph is a data URI in the design');
+const PHOTO_FILE = 'botanic-mattress.' + (photoM[1] === 'jpeg' ? 'jpg' : photoM[1]);
+writeFileSync(join(out, PHOTO_FILE), Buffer.from(photoM[2], 'base64'));
+dropped.photo = D.photo.length;
+D.photo = '__BASE__' + PHOTO_FILE;
 const dataJs = JSON.stringify(D).replace(/<\//g, '<\\/').replace(/<!--/g, '<\\u0021--');
 
 // ---------- 3. the styles: from a page to a Shadow DOM ----------
@@ -184,6 +191,7 @@ const sha = (s) => createHash('sha256').update(s).digest('hex');
 const manifest = `Botanic Experience: store module (${version})
 botanic-tv.js        ${tv.length} bytes, gzip ${gz(tv)}   sha256 ${sha(tv)}
 ${BOWL_FILE.padEnd(20)} ${readFileSync(join(out, BOWL_FILE)).length} bytes (picture)
+${PHOTO_FILE.padEnd(20)} ${readFileSync(join(out, PHOTO_FILE)).length} bytes (picture)
 botanic-tv-logos.js  ${logosJs.length} bytes, gzip ${gz(logosJs)}   sha256 ${sha(logosJs)}
 loader.html          ${loader.length} characters (field limit 4000)\nbotanic-description.html ${desc.length} characters (the product description, HTML mode; the bridge takes 100 000, so it is pasted in Ecwid's admin)
 upload to            ${BASE}

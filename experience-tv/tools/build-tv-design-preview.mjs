@@ -127,7 +127,7 @@ function mattressParts(file) {
   if (ms.length !== 3 || ds.length !== 2) throw new Error(file + ': unexpected structure');
   return { outer: ms[0], ta: [ms[1][0], ms[1][3], ms[1][4], ms[1][5]], tb: [ms[2][0], ms[2][3], ms[2][4], ms[2][5]], out: ds[0], inn: ds[1] };
 }
-D.mattress = { depth: mattressParts('owner-mattress-depth.svg'), icon: mattressParts('owner-mattress-icon.svg') };
+D.mattress = { depth: mattressParts('owner-mattress-depth.svg') };   // XXXV (23 Nov): the icon drawing gave way to the photograph (D.photo)
 
 // ---- the seven-zone sketch: the same recoloured illustration as the mobile preview (original geometry) ----
 {
@@ -157,10 +157,10 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
   D.eng = JSON.parse(readFileSync(join(A, 'engineering-view.json'), 'utf8'));
   const bio = readFileSync(join(A, 'bio-dunlop.svg'), 'utf8'), bm = [...bio.matchAll(/<path([^>]*)d="([^"]+)"/g)], bp = bm.map((m) => m[2]), bf = bm.map((m) => ((m[1].match(/fill="([^"]+)"/) || [])[1]) || null).map((f) => (f === '#009289' ? '#6E8601' : f));   // XXVI (owner 20 Nov): the logo keeps its own design: the site's teal becomes the approved green, the dark details stay as drawn
   // OWNER 19 Nov: the logo in its own colours, exactly as on the site (the emblem in #009289 and #092600, the wordmark in #009289)
-  D.bioFull = { vb: bio.match(/viewBox="([^"]+)"/)[1], d: bp, f: bf };
   D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12), f: bf.slice(12) };   // the wordmark "Bio Dunlop" (paths 12-23)
   D.bioMark = { vb: '2400 -1372 360 376', d: [bp[21], bp[20]], f: [bf[21], bf[20]] };   // the D with the spiral (paths 20-21)
   D.moon = b64('q-dd-moon-88.webp'); D.core = b64('q-latex-closeup.webp'); D.bowl = b64('q-latex-milk-bowl-cut-700.webp');
+  D.photo = b64('q-botanic-cutaway-900.webp');   // XXXV (owner, 23 Nov): the owner's photograph of the mattress, trimmed to its contour, not altered
   D.abSketch = JSON.parse(readFileSync(join(A, 'adjustable-sketch.json'), 'utf8')); D.pins = b64('q-latex-pins.webp');
   D.logos = { oeko: b64('q-logo-oekotex-mono.webp'), hohenstein: b64('q-logo-hohenstein-mono.webp'), iso9001: b64('q-logo-iso9001-mono.webp'), iso14001: b64('q-logo-iso14001-mono.webp'), siemens: b64('q-logo-siemens-monitoring-mono.webp') };
 }
@@ -242,7 +242,7 @@ D.ignition = { name: 'BOTANIC', facts: [['Material', '100% Natural Latex'], ['Pr
    - Support and Adaptation always begin with a capital S and A.
    Ecwid's own labels (sizes, covers), addresses and pictures are never touched. */
 {
-  const SKIP = new Set(['descHtml', 'videos', 'bioFull', 'prep', 'id', 'key', 'step', 'kind', 'sizes', 'images', 'img', 'url', 'eng', 'bioWord', 'bioMark', 'moon', 'core', 'bowl', 'logos', 'zoneSketch', 'zoneTier', 'mattress', 'specialist', 'product']);
+  const SKIP = new Set(['descHtml', 'videos', 'photo', 'prep', 'id', 'key', 'step', 'kind', 'sizes', 'images', 'img', 'url', 'eng', 'bioWord', 'bioMark', 'moon', 'core', 'bowl', 'logos', 'zoneSketch', 'zoneTier', 'mattress', 'specialist', 'product']);
   const fix = (t) => t.replace(/\b(?:Organic\s+Natural|Natural\s+Organic)\b/gi, 'Organic').replace(/\s*—\s*/g, ' – ').replace(/\bsupport\b/g, 'Support').replace(/\badaptation\b/g, 'Adaptation');
   const walk = (o) => { for (const k of Object.keys(o)) { if (SKIP.has(k)) continue; const v = o[k]; if (typeof v === 'string') o[k] = fix(v); else if (v && typeof v === 'object') walk(v); } };
   walk(D);
