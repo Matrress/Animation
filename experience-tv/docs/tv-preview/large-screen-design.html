@@ -1478,8 +1478,13 @@ strong.olx { font-weight: 800; }
 .ivory .mine .brandc { padding: 8px 10px; }
 .ivory .mine .brandc img { width: auto; max-width: 52%; max-height: 96px; object-fit: contain; }
 @media (min-width: 800px) {
-  .ivory .screen.fit { height: var(--fit-h, 100vh); min-height: 0; grid-template-rows: auto auto minmax(0, 1fr); }
-  .ivory .screen.fit > .rail, .ivory .screen.fit > .stage, .ivory .screen.fit > .mine { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+  .ivory .screen.fit { height: auto; min-height: var(--fit-h, 100vh); overflow: clip; grid-template-rows: auto auto minmax(0, 1fr); }
+  /* the middle is OPEN: no box with a floor, no scroll bar of its own; it is as long as its text. Only Your selection is a fixed card, held in view */
+  .ivory .screen.fit > .stage { min-height: 0; overflow: visible; }
+  .ivory .screen.fit > .rail { align-self: stretch; overflow: visible; }   /* the whole column keeps its face; the heading and the tree of the topic are held in view inside it */
+  .ivory .screen.fit > .rail > .colh { position: sticky; top: 8px; z-index: 2; background: inherit; }
+  .ivory .screen.fit > .rail > .tree { position: sticky; top: 36px; }
+  .ivory .screen.fit > .mine { align-self: start; position: sticky; top: 8px; height: var(--mine-h, auto); min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
   .ivory .screen.fit .mine .mi { flex: 1 1 0; min-height: 78px; max-height: 190px; }
   .ivory .screen.fit .mine .mi img { height: 100%; max-height: 100%; }
   .ivory .screen.fit .mine .brandc { flex: 0 1 auto; min-height: 0; overflow: hidden; }
@@ -1556,7 +1561,7 @@ strong.olx { font-weight: 800; }
   .ivory .screen.fit > .rail > .colh, .ivory .screen.fit > .stage > .colh, .ivory .screen.fit > .mine > h2 { height: 20px !important; line-height: 20px !important; margin: 0 0 8px !important; }
   .ivory .screen.fit > .stage > .colh .k2 { line-height: 20px; }
   /* reading panels: the text scrolls inside the glass; the way on ("Next: ...") stays in view at the foot of it */
-  .ivory .screen.fit[data-layer=explore] .stage > .act { position: sticky; bottom: -12px; z-index: 4; margin-top: 8px; padding: 14px 0 12px; background: linear-gradient(180deg, rgba(251,251,237,0), #FBFBED 34%); }
+  .ivory .screen.fit[data-layer=explore] .stage > .act { position: sticky; bottom: 0; z-index: 4; margin-top: 8px; padding: 14px 0 12px; background: linear-gradient(180deg, rgba(251,251,237,0), #FBFBED 34%); }
   /* the parts of the open topic stand in ONE row for every topic, so the height above never changes from a topic to the next */
   .ivory .screen.fit .exg .exsub { flex-wrap: nowrap; gap: 6px; padding: 8px 10px; }
   .ivory .screen.fit .exg .exsub .exh { margin-right: 2px; font-size: 12px; letter-spacing: .1em; flex: none; }
@@ -1882,7 +1887,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   }
   /* ONE SCREEN WHILE CHOOSING (owner, 23 Nov): on a tablet or a monitor the screen takes the height of the glass and sits at its top;
      a new choice brings the middle back to its start. A phone, a short window or the standard view keep the normal page. */
-  var FITKEY = '', NAVD = false, ALN = false;   // NAVD: the customer has acted; until then the page is never moved
+  var FITKEY = '', NAVD = false, ALN = false, FITH = 0;   // NAVD: the customer has acted; until then the page is never moved
   function fitNow() { var sc = document.querySelector('.screen'); return !!(sc && sc.classList.contains('fit')); }
   function applyFit() {
     var sc = document.querySelector('.screen'); if (!sc) return;
@@ -1890,11 +1895,12 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     sc.classList.toggle('fit', on); sc.classList.toggle('fit-s', on && window.innerHeight < 900); if (!on) sc.classList.remove('fc2', 'fc3', 'fm1', 'fm2', 'fm3');
     if (window.requestAnimationFrame) requestAnimationFrame(cupRoom);
     if (!on) { FITKEY = ''; sc.style.removeProperty('--fit-h'); return; }
-    sc.style.setProperty('--fit-h', Math.round(window.innerHeight - 4) + 'px');
+    FITH = Math.round(window.innerHeight - 4); sc.style.setProperty('--fit-h', FITH + 'px');
+    var tops = ['.rail', '.stage'].map(function (q) { var e = sc.querySelector(q); return e && getComputedStyle(e).display !== 'none' ? e.getBoundingClientRect().top - sc.getBoundingClientRect().top : 1e9; }), rowTop = Math.min.apply(null, tops);
+    if (rowTop < 1e8) sc.style.setProperty('--mine-h', Math.max(300, FITH - rowTop - 14) + 'px');
     var key = S.ch + '/' + S.pn + '/' + (S.coach ? 'c' : '');
     if (key !== FITKEY || (NAVD && !ALN)) {
       FITKEY = key;
-      var st = sc.querySelector('.stage'); if (st) st.scrollTop = 0;
       var rl = sc.querySelector('.rail'); if (rl) rl.scrollTop = 0;
       var top = sc.getBoundingClientRect().top; if (NAVD) { ALN = true; if (Math.abs(top - 2) > 1) window.scrollTo(0, Math.max(0, window.scrollY + top - 2)); }
     }
@@ -1902,7 +1908,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   function compactStage() {   // fc2 then fc3 only if the step still does not stand whole in the height that is there
     var sc = document.querySelector('.screen'), st = sc && sc.querySelector('.stage'); if (!st) return;
     sc.classList.remove('fc2', 'fc3'); if (!fitNow()) return;
-    var over = function () { return st.scrollHeight - st.clientHeight > 1; };
+    var over = function () { return sc.getBoundingClientRect().height - FITH > 1; };   // the open middle makes the whole screen taller than the glass
     if (sc.getAttribute('data-layer') === 'select' && over()) { sc.classList.add('fc2'); if (over()) sc.classList.add('fc3'); }
     var mn = sc.querySelector('.mine'); sc.classList.remove('fm1', 'fm2', 'fm3'); if (!mn) return;   // Your selection: the photograph gives way first, the bowl last
     var mover = function () { return mn.scrollHeight - mn.clientHeight > 1; };

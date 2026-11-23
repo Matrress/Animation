@@ -1,7 +1,7 @@
 {
  "date": "2026-11-23",
  "failures": 0,
- "checks": 193,
+ "checks": 194,
  "rows": [
   {
    "pass": true,
@@ -11,7 +11,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(254, 254, 245)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -205,7 +205,7 @@
   },
   {
    "pass": true,
-   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the rail never scrolls and the text scrolls only inside the held glass",
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the middle is open: no scroll box of its own, the rail never scrolls",
    "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
   },
   {
@@ -341,7 +341,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(254, 254, 245)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -495,7 +495,7 @@
   },
   {
    "pass": true,
-   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the rail never scrolls and the text scrolls only inside the held glass",
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the middle is open: no scroll box of its own, the rail never scrolls",
    "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
   },
   {
@@ -631,7 +631,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -825,7 +825,7 @@
   },
   {
    "pass": true,
-   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the rail never scrolls and the text scrolls only inside the held glass",
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the middle is open: no scroll box of its own, the rail never scrolls",
    "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
   },
   {
@@ -967,6 +967,11 @@
    "pass": true,
    "rule": "R54 the cover cards are square; the Confirm words fit the button; on 1366x790 (the iPad in the viewer), 1440x900, 1366x1024 and 1024x1366 every step, confirmed or not, and the review stand whole without scrolling, Add to Bag in view",
    "detail": "[]"
+  },
+  {
+   "pass": true,
+   "rule": "R55 the middle is open (no scroll box, as long as its text); Your selection is one fixed card of one height in all eleven topics and stays in view; the tree of the topic stays in view",
+   "detail": "{\"sameMine\":true,\"sameChrome\":true,\"open\":true,\"longOnes\":true,\"held\":true,\"er\":0,\"mineH\":\"550,550,550,550,550,550,550,550,550,550,550\",\"tall\":\"1136,920,1282,1282,1116,1234,1226,987,1309,819,1005\"}"
   }
  ]
 }

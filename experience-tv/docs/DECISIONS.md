@@ -411,3 +411,14 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
   in all eleven topics (Comfort and Adaptation have five parts and used to wrap and push everything 44 px). The tighter layout of round XXXVII
   belongs to the choosing layer only; reading panels keep their own sizes.
 - Measured on 1366 × 790 (the iPad in the viewer): the screen top 2 px, the chrome 222 px, the card 550 px, the same for all eleven topics.
+
+## Round XXXIX (owner, 23 November 2026): the middle card is open
+- **Correction of round XXXVIII.** Holding the whole glass was right for "Your selection" and wrong for the middle card: the main information card
+  was locked in a box with a floor ("an elevator"), the text sank into it and could be hidden. The middle must be open, free, as long as its text,
+  with no limit that covers or cuts it.
+- **Now:** the middle has no scroll box of its own (`overflow: visible`; it measures its text and the screen grows with it; the page scrolls normally).
+  Only "Your selection" is a fixed card, of one height and one place in every topic, held in view (sticky) while the page scrolls. The tree of the
+  topic on the left is held in view too, inside a column that keeps its whole face, and "Back / Next: …" stays at the foot of the window while the
+  text is read. The glass height (about 790 px on the iPad in the viewer) is now a MINIMUM height of the screen, not a limit: the choosing steps are
+  laid out to fit it (round XXXVII), the reading panels are free to be longer.
+- Rule R55 checks it in all eleven topics (no scroll box, same card height, same height above, the card and the tree in view while scrolling).

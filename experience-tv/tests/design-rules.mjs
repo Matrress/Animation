@@ -168,10 +168,10 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   const counted = await p.evaluate(() => /explored/i.test(document.querySelector('.screen').innerText));
   await p.click('.exg [data-ch="delivery"]'); await p.click('#rail [data-pn="journey"]'); const jn = await p.evaluate(() => ({ n: document.querySelectorAll('.jst li').length, inc: /includes delivery/i.test(document.querySelector('.jny').innerText) }));
   const vw = p.viewportSize(); let fits = true;
-  fits = await p.evaluate(() => { const r = document.querySelector('.rail'), sc = document.querySelector('.screen'); return r.scrollHeight - r.clientHeight <= 2 && (innerWidth < 800 || innerHeight < 600 || sc.classList.contains('fit')); });   // owner IX, XXXVIII: the rail never scrolls; reading text scrolls only inside the held glass (the choosing steps never: R54)
+  fits = await p.evaluate(() => { const r = document.querySelector('.rail'), st = document.querySelector('.stage'); return r.scrollHeight - r.clientHeight <= 2 && !/(auto|scroll)/.test(getComputedStyle(st).overflowY) && st.scrollHeight - st.clientHeight <= 1; });   // owner IX, XXXIX: the middle card is OPEN (it is as long as its text, the page scrolls); only Your selection is a fixed card (R55)
   await p.click('#vstd'); await p.waitForTimeout(300); const desc = await p.evaluate(() => { const h = document.querySelector('#sdesc'); return !!(h && h.shadowRoot && /Organic Latex/.test(h.shadowRoot.textContent)); });
   await p.click('#vtv'); await p.waitForTimeout(100); await p.evaluate(() => { const s = document.querySelector('#ign .skip'); if (s) s.click(); });
-  ok(!ign.moon && !ign.glow && vids >= 1 && letters === 'ABCD' && outline && !counted && jn.n === 7 && jn.inc && fits && desc, 'R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the rail never scrolls and the text scrolls only inside the held glass', JSON.stringify({ ign, vids, letters, outline, counted, jn, fits, desc }));
+  ok(!ign.moon && !ign.glow && vids >= 1 && letters === 'ABCD' && outline && !counted && jn.n === 7 && jn.inc && fits && desc, 'R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the middle is open: no scroll box of its own, the rail never scrolls', JSON.stringify({ ign, vids, letters, outline, counted, jn, fits, desc }));
   // R37 owner 16 Nov IX: Cosmic Selection: six size families, every size in exactly one, each family its own light; a family opens,
   // the others stay one tap away, and the way back is always there; three depths side by side; the body-weight scale ends at 180 kg
   await p.goto(file + '?step=0');
@@ -361,6 +361,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   for (const vp of [{ width: 1366, height: 950 }, { width: 1180, height: 750 }, { width: 1080, height: 740 }, { width: 1920, height: 1080 }, { width: 820, height: 1100 }]) {
     const c = await b.newContext({ viewport: vp, screen: vp }); await c.route(/^https?:/, (r) => r.abort()); const q = await c.newPage(); const er = []; q.on('pageerror', (e) => er.push(e.message));
     await q.goto(file + '?step=0&ignite=0'); await q.waitForTimeout(150); await q.click('[data-sgrp="single"]'); await q.click('.card[data-size="3"]'); await q.waitForTimeout(100);
+    await q.evaluate(() => { const sc = document.querySelector('.screen'); scrollBy(0, sc.getBoundingClientRect().top - 2); });   // the glass is seated, as the customer's first action seats it
     const m = await q.evaluate(() => { const H = innerHeight, r = (s) => { const e = document.querySelector(s); return e ? e.getBoundingClientRect() : null; }, cf = document.querySelector('[data-confirm="size"]'), bag = document.querySelector('#bag .bagbtn');
       return { fit: document.querySelector('.screen').classList.contains('fit'), menus: r('.exg').top >= 0 && r('.slg').bottom <= H, inMine: !!(cf && cf.closest('.mine')), notInStage: !document.querySelector('#answer [data-confirm], #answer [data-fconfirm]'), above: !!(cf && bag && cf.getBoundingClientRect().bottom <= bag.getBoundingClientRect().top), conf: !!cf && cf.getBoundingClientRect().bottom <= H && !cf.disabled, bag: bag.getBoundingClientRect().bottom <= H + 1, photo: r('#mi img').height >= 60, air: (() => { const mm = r('.mine'), im = r('#mi img'); return im.left - mm.left >= 28 && mm.right - im.right >= 28; })(), cupLow: (() => { const bc = document.querySelector('#brandc'); if (bc.classList.contains('tiny')) return true; const im = r('#brandc img'), mm = r('.mine'); return mm.bottom - im.bottom <= 44; })() }; });
     await q.click('[data-confirm="size"]'); await q.waitForTimeout(100); m.gone = !(await q.$('[data-confirm="size"]'));
@@ -379,7 +380,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   for (const vp of [{ width: 1366, height: 790 }, { width: 1440, height: 900 }, { width: 1366, height: 1024 }, { width: 1024, height: 1366 }]) {
     const c = await b.newContext({ viewport: vp, screen: vp }); await c.route(/^https?:/, (r) => r.abort()); const q = await c.newPage(); const er = []; q.on('pageerror', (e) => er.push(e.message));
     const m = { vp: vp.width + 'x' + vp.height, steps: [] };
-    const read = async (tag) => { await q.waitForTimeout(150); const o = await q.evaluate(() => { const g = (s) => { const e = document.querySelector(s); return e ? e.scrollHeight - e.clientHeight : 0; }; const bag = document.querySelector('#bag .bagbtn'), cf = document.querySelector('.mconf .btn'); return { stage: g('.stage'), mine: g('.mine'), bag: !!bag && bag.getBoundingClientRect().bottom <= innerHeight, fit: !cf || (cf.scrollWidth <= cf.clientWidth + 1 && cf.querySelector('span').scrollWidth <= cf.querySelector('span').clientWidth + 1) }; }); if (o.stage > 2 || o.mine > 2 || !o.bag || !o.fit) m.steps.push(tag + ' ' + JSON.stringify(o)); };
+    const read = async (tag) => { await q.waitForTimeout(150); await q.evaluate(() => { const sc = document.querySelector('.screen'); scrollBy(0, sc.getBoundingClientRect().top - 2); }); const o = await q.evaluate(() => { const g = (s) => { const e = document.querySelector(s); return e ? e.scrollHeight - e.clientHeight : 0; }; const bag = document.querySelector('#bag .bagbtn'), cf = document.querySelector('.mconf .btn'); return { stage: Math.round(document.querySelector('.screen').getBoundingClientRect().bottom - innerHeight), mine: g('.mine'), bag: !!bag && bag.getBoundingClientRect().bottom <= innerHeight, fit: !cf || (cf.scrollWidth <= cf.clientWidth + 1 && cf.querySelector('span').scrollWidth <= cf.querySelector('span').clientWidth + 1) }; }); if (o.stage > 2 || o.mine > 2 || !o.bag || !o.fit) m.steps.push(tag + ' ' + JSON.stringify(o)); };
     await q.goto(file + '?step=0&ignite=0'); await q.waitForTimeout(150); await q.click('[data-sgrp="single"]'); await q.click('.card[data-size="3"]'); await read('size'); await q.click('[data-confirm="size"]'); await read('size✓');
     await q.click('[data-next]'); await q.click('[data-depth="1"]'); await read('depth'); await q.click('[data-confirm="depth"]'); await read('depth✓');
     await q.click('[data-next]'); await q.click('.fcard[data-firm="Medium"]'); await read('firmness'); await q.click('[data-fconfirm]'); await read('firmness✓');
@@ -391,6 +392,24 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   }
   const bad = out.filter((m) => m.steps.length || !m.sq || !m.longConfirm || m.err);
   ok(!bad.length, 'R54 the cover cards are square; the Confirm words fit the button; on 1366x790 (the iPad in the viewer), 1440x900, 1366x1024 and 1024x1366 every step, confirmed or not, and the review stand whole without scrolling, Add to Bag in view', JSON.stringify(bad));
+}
+// R55 owner 23 Nov XXXIX: the middle card is OPEN: no scroll box, no floor that holds the text back; only Your selection is a fixed card, the same
+// in every topic, held in view while the page scrolls; the topic's tree is held in view too and Back / Next stays at the foot of the window.
+{
+  const c = await b.newContext({ viewport: { width: 1366, height: 790 }, screen: { width: 1366, height: 790 } }); await c.route(/^https?:/, (r) => r.abort()); const q = await c.newPage(); const er = []; q.on('pageerror', (e) => er.push(e.message));
+  await q.goto(file + '?ignite=0'); await q.waitForTimeout(300);
+  const rows = [];
+  for (const ch of ['discover', 'comfort', 'benefits', 'support', 'adaptation', 'zones', 'ventilation', 'hygiene', 'certs', 'warranty', 'delivery']) {
+    await q.click('.exg [data-ch="' + ch + '"]'); await q.waitForTimeout(250); await q.evaluate(() => scrollTo(0, 0)); await q.waitForTimeout(80);
+    const a = await q.evaluate(() => { const st = document.querySelector('.stage'), m = document.querySelector('.mine'), sc = document.querySelector('.screen'); return { ov: getComputedStyle(st).overflowY, box: st.scrollHeight - st.clientHeight, mineH: Math.round(m.getBoundingClientRect().height), chrome: Math.round(document.querySelector('.rail').getBoundingClientRect().top - sc.getBoundingClientRect().top), tall: Math.round(sc.getBoundingClientRect().height) }; });
+    await q.evaluate(() => scrollTo(0, 480)); await q.waitForTimeout(150);
+    const d = await q.evaluate(() => { const m = document.querySelector('.mine').getBoundingClientRect(), t = document.querySelector('.rail > .tree').getBoundingClientRect(); return { mineTop: Math.round(m.top), mineBottom: Math.round(m.bottom), treeTop: Math.round(t.top) }; });
+    rows.push({ ch, ...a, ...d });
+  }
+  const sameMine = rows.every((r) => Math.abs(r.mineH - rows[0].mineH) <= 1), sameChrome = rows.every((r) => Math.abs(r.chrome - rows[0].chrome) <= 1), open = rows.every((r) => r.ov === 'visible' && r.box <= 1), longOnes = rows.filter((r) => r.tall > 790).length >= 5;
+  const held = rows.filter((r) => r.tall > 1000).every((r) => Math.abs(r.mineTop - 8) <= 3 && r.mineBottom <= 790 && r.treeTop <= 60 && r.treeTop >= 0);
+  ok(sameMine && sameChrome && open && longOnes && held && !er.length, 'R55 the middle is open (no scroll box, as long as its text); Your selection is one fixed card of one height in all eleven topics and stays in view; the tree of the topic stays in view', JSON.stringify({ sameMine, sameChrome, open, longOnes, held, er: er.length, mineH: rows.map((r) => r.mineH).join(','), tall: rows.map((r) => r.tall).join(',') }));
+  await c.close();
 }
 await b.close();
 writeFileSync(join(root, 'docs', 'tv-preview', 'design-rules-last-run.json'), JSON.stringify({ date: new Date().toISOString().slice(0, 10), failures: fails, checks: rows.length, rows }, null, 1));
