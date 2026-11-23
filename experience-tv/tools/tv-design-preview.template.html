@@ -1470,9 +1470,9 @@ strong.olx { font-weight: 800; }
 .ivory .mine .mconf:empty { display: none; }
 .ivory .mine .fconf.mc { margin: 0; padding: 10px; flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 8px; border-radius: 14px; background: #FEFEF6; border: 1.5px dashed #CFC8B4; }
 .ivory .mine .fconf.mc.on { border: 1.5px solid #FEFEF6; box-shadow: 0 0 0 2px rgba(110,134,1,.55); }
-.ivory .mine .fconf.mc span { font-size: 14.5px; line-height: 1.3; color: #384442; text-align: center; }
-.ivory .mine .fconf.mc span b { color: #2E3633; }
-.ivory .mine .fconf.mc:not(.on) span { display: none; }
+.ivory .mine .fconf.mc > span { font-size: 14.5px; line-height: 1.3; color: #384442; text-align: center; }
+.ivory .mine .fconf.mc > span b { color: #2E3633; }
+.ivory .mine .fconf.mc:not(.on) > span { display: none; }
 .ivory .mine .fconf.mc .btn.bagbtn { width: 100%; height: 56px; font-size: 19px; font-weight: 700; justify-content: center; white-space: nowrap; }
 .ivory .mine .fconf.mc .btn.bagbtn:disabled { height: 48px; font-size: 16px; }
 .ivory .mine .brandc { padding: 8px 10px; }
@@ -1501,7 +1501,7 @@ strong.olx { font-weight: 800; }
   .ivory .screen.fit.fit-s .mine .coach { padding: 7px 12px; } .ivory .screen.fit.fit-s .mine .coach b { font-size: 15.5px; }
   .ivory .screen.fit.fit-s .mine .gauge { margin-top: 2px; } .ivory .screen.fit.fit-s .mine .gl { margin: 0; }
   .ivory .screen.fit.fit-s .mine .price { padding: 8px 14px; } .ivory .screen.fit.fit-s .mine .price > span:last-child { display: none; }
-  .ivory .screen.fit.fit-s .mine .fconf.mc { padding: 8px; gap: 6px; } .ivory .screen.fit.fit-s .mine .fconf.mc span { font-size: 13.5px; }
+  .ivory .screen.fit.fit-s .mine .fconf.mc { padding: 8px; gap: 6px; } .ivory .screen.fit.fit-s .mine .fconf.mc > span { font-size: 13.5px; }
   .ivory .screen.fit.fit-s .mine .fconf.mc .btn.bagbtn { height: 52px; }
   .ivory .screen.fit.fit-s .mine .bag .btn { height: 56px; } .ivory .screen.fit.fit-s .mine .bag { gap: 4px; }
   .ivory .screen.fit.fit-s .mine .mi { min-height: 64px; }
@@ -1535,6 +1535,94 @@ strong.olx { font-weight: 800; }
   .ivory .screen.fit .mine .brandc img { max-height: 70px; width: auto; height: auto; }
   .ivory .screen.fit.fit-s .mine .brandc { flex: 0 1 auto; padding: 0 8px; }
   .ivory .screen.fit.fit-s .mine .brandc img { max-height: 54px; }
+}
+/* ===== ROUND XXXVII (owner, 23 Nov): the cover cards are SQUARE (the photograph is the card, the name sits on it); the Confirm button
+   says what it confirms in one short word that always fits its space (the choice is named in the line above it); and the glass is
+   used with care: while choosing on a tablet or a monitor every step is laid out to stand whole in the height that is really there
+   (an iPad Pro in the viewer is about 790 px high), with no scrolling. What cannot fit at the base size is stepped down in two
+   moves (fc2, fc3): the longer explanations leave the screen (they stay one tap away in "Helps you choose"), nothing is cut. ===== */
+.cz-conf .cv .tiles { grid-auto-rows: auto; align-content: start; align-self: start; gap: 12px; }
+.cz-conf .cv .tile { position: relative; display: block; width: 100%; aspect-ratio: 1 / 1; padding: 0; overflow: hidden; border-radius: 16px; }
+.cz-conf .cv .tile .pic { position: absolute; inset: 0; display: block; width: 100%; height: 100%; min-height: 0; flex: none; border-radius: 0; background-size: cover; background-position: center; }
+.cz-conf .cv .tile .cap { position: absolute; left: 0; right: 0; bottom: 0; display: block; padding: 26px 12px 10px; font-size: 15px; font-weight: 700; line-height: 1.2; color: #FFFFFF; text-align: left; background: linear-gradient(180deg, rgba(24,28,26,0), rgba(24,28,26,.74)); }
+.cz-conf .cv .tile[aria-pressed=true] .cap { background: linear-gradient(180deg, rgba(60,80,0,0), rgba(60,80,0,.82)); }
+.cz-conf .cv .info { align-self: stretch; }
+.ivory .mine .fconf.mc .btn.bagbtn { padding: 0 10px; gap: 8px; font-size: 19px; font-weight: 700; white-space: nowrap; }
+@media (max-width: 1099px) { .ivory .mine .fconf.mc .btn.bagbtn { padding: 0 6px; } .ivory .mine .fconf.mc .btn.bagbtn > svg { display: none; } }   /* the narrow column: the words first, the tick gives way */
+.ivory .mine .fconf.mc .btn.bagbtn > span { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: inherit; font-weight: inherit; line-height: inherit; }
+@media (min-width: 800px) {
+  /* the three columns keep one heading row of one height, so their first boxes share one top line */
+  .ivory .screen.fit > .rail, .ivory .screen.fit > .stage, .ivory .screen.fit > .mine { padding-top: 8px !important; }
+  .ivory .screen.fit > .rail > .colh, .ivory .screen.fit > .stage > .colh, .ivory .screen.fit > .mine > h2 { height: 20px !important; line-height: 20px !important; margin: 0 0 8px !important; }
+  .ivory .screen.fit > .stage > .colh .k2 { line-height: 20px; }
+  .ivory .screen.fit > .mine { gap: 8px; margin-top: 0; }
+  .ivory .screen.fit > .mine > h2 { margin: 0 !important; }
+  .ivory .screen.fit > .rail { gap: 0; }
+  .ivory .screen.fit > .rail > .tree { margin-top: 0 !important; }
+  .ivory .screen.fit .stage { padding-right: 24px; padding-bottom: 12px; padding-left: 24px; }
+  .ivory .screen.fit .q { padding: 14px 22px 14px; margin: 0 0 10px; }
+  .ivory .screen.fit .q h1 { font-size: 28px; line-height: 1.1; margin: 0 0 4px; padding-right: 40px; }
+  .ivory .screen.fit .q p { font-size: 15.5px; line-height: 1.3; }
+  .ivory .screen.fit .cosmos { padding: 12px 16px; }
+  .ivory .screen.fit .cz-h { margin: 0 0 10px; }
+  .ivory .screen.fit .act { margin: 10px 0 0; padding: 10px 0 0; }
+  .ivory .screen.fit .act .btn { height: 52px; }
+  /* size */
+  .ivory .screen.fit .more { margin: 8px 0 0; min-height: 0; }
+  .ivory .screen.fit .more .btn { height: 38px; }
+  .ivory .screen.fit .snav { margin-bottom: 8px; }
+  .ivory .screen.fit .scards .card.cz { padding-top: 10px; padding-bottom: 10px; min-height: 0; }
+  /* firmness */
+  .ivory .screen.fit .fw { margin: 0 0 10px; gap: 12px; }
+  .ivory .screen.fit .fw .sl { padding: 10px 14px 8px; }
+  .ivory .screen.fit .fw .sl .r { margin: 0 0 2px; }
+  .ivory .screen.fit .fw .sl input[type=range] { height: 28px; }
+  .ivory .screen.fit .fw .conv { margin: 4px 0 0; padding-top: 6px; }
+  .ivory .screen.fit .fw .conv input { height: 34px; font-size: 16px; }
+  .ivory .screen.fit .fc.cmp .fcard { padding: 8px 10px 8px; }
+  .ivory .screen.fit #guide { margin-top: 6px; }
+  /* the engineering drawing and the small print only when the glass is tall enough for them */
+  /* a confirmed choice: the same card, tighter; the cover's photograph fills its half instead of setting the height */
+  .ivory .screen.fit .fdone { gap: 12px; }
+  .ivory .screen.fit .fdl { padding: 14px 18px; }
+  .ivory .screen.fit .fdl small { margin-top: 4px; }
+  .ivory .screen.fit .fdl b { font-size: 28px; line-height: 1.1; }
+  .ivory .screen.fit .fdl p { margin: 4px 0 8px; font-size: 14px; line-height: 1.4; }
+  .ivory .screen.fit .fdl .btn { height: 40px; }
+  .ivory .screen.fit .cz-conf .cbl { margin: 0 0 4px; padding-left: 18px; font-size: 14px; line-height: 1.38; }
+  .ivory .screen.fit .cz-conf .cbl li { margin-bottom: 2px; }
+  .ivory .screen.fit .cz-conf .fdone:has(.cpic) { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); align-items: start; }
+  .ivory .screen.fit.fit-s .fdl { padding: 10px 16px; } .ivory .screen.fit.fit-s .fdl b { font-size: 24px; } .ivory .screen.fit.fit-s .fdl .fok { height: 24px; }
+  .ivory .screen.fit.fit-s .cz-conf .cbl { font-size: 13.5px; line-height: 1.34; margin-bottom: 2px; } .ivory .screen.fit.fit-s .fdl .btn { height: 36px; }
+  .ivory .screen.fit.fit-s .cz-conf .fdl > p { font-size: 13px; margin: 2px 0 6px; line-height: 1.3; }
+  .ivory .screen.fit .cz-conf .fdr.cdr:has(.cpic) { padding: 0; background: none; border: 0; display: block; align-self: start; }
+  .ivory .screen.fit .cz-conf .fdr.cdr .cpic { display: block; width: 100%; aspect-ratio: 1 / 1; height: auto; border-radius: 16px; }
+  /* review */
+  .ivory .screen.fit .rv { gap: 8px; margin-bottom: 8px; }
+  .ivory .screen.fit .ri { min-height: 54px; padding: 8px 16px; }
+  .ivory .screen.fit .ri .v { font-size: 17px; }
+  .ivory .screen.fit .ri .btn { height: 38px; }
+  .ivory .screen.fit .added { padding: 10px 16px; margin-bottom: 8px; }
+  .ivory .screen.fit .stage .prbox { padding: 10px 16px; }
+  /* the cover's explanation stands as tall as the four square cards beside it */
+  .ivory .screen.fit .cz-conf .cv .info { padding: 14px 18px; gap: 6px; }
+  .ivory .screen.fit .cz-conf .cv .info h2 { font-size: 22px; line-height: 1.12; }
+  .ivory .screen.fit .cz-conf .cv .info .tg { font-size: 14.5px; }
+  .ivory .screen.fit .cz-conf .cv .info ul { gap: 6px; margin-top: 2px; }
+  .ivory .screen.fit .cz-conf .cv .info li { font-size: 14px; line-height: 1.36; padding-left: 20px; }
+  .ivory .screen.fit .cz-conf .cv .info li::before { top: 5px; }
+  .ivory .screen.fit .cz-conf .cv .info .fact { padding-top: 8px; font-size: 12.5px; line-height: 1.3; }
+  .ivory .screen.fit .cz-conf .cv .info p { font-size: 14.5px; line-height: 1.4; }
+  .ivory .screen.fit.fc2 .eng, .ivory .screen.fit.fc2 .base { display: none; }
+  .ivory .screen.fit.fm1 .mine .mi { min-height: 76px; padding: 8px 14px 8px; }
+  .ivory .screen.fit.fm1 .mine .mic .rdy { left: 8px; top: 4px; padding: 3px 8px 3px 6px; font-size: 11px; }
+  .ivory .screen.fit.fm2 .mine .brandc { display: none; }
+  .ivory .screen.fit.fm3 .mine .coach { padding: 6px 12px; } .ivory .screen.fit.fm3 .mine .price { padding: 8px 14px; }
+  .ivory .screen.fit.fm3 .mine .fconf.mc { padding: 7px 8px; gap: 5px; } .ivory .screen.fit.fm3 .mine .fconf.mc .btn.bagbtn { height: 48px; }
+  .ivory .screen.fit.fm3 .mine .bag { gap: 3px; } .ivory .screen.fit.fm3 .mine .bag .btn { height: 52px; }
+  .ivory .screen.fit.fc3 .fdesc { display: none; }
+  .ivory .screen.fit.fc3 .q p { display: none; }
+  .ivory .screen.fit.fc3 .q { padding: 10px 20px; }
 }
 </style>
 </head>
@@ -1728,7 +1816,7 @@ var D = /*__DATA__*/;
   function applyFit() {
     var sc = document.querySelector('.screen'); if (!sc) return;
     var on = S.view === 'tv' && !S.gal && !S.all && sc.getAttribute('data-layer') === 'select' && window.innerWidth >= 800 && window.innerHeight >= 600;
-    sc.classList.toggle('fit', on); sc.classList.toggle('fit-s', on && window.innerHeight < 900);
+    sc.classList.toggle('fit', on); sc.classList.toggle('fit-s', on && window.innerHeight < 900); if (!on) sc.classList.remove('fc2', 'fc3', 'fm1', 'fm2', 'fm3');
     if (window.requestAnimationFrame) requestAnimationFrame(cupRoom);
     if (!on) { FITKEY = ''; sc.style.removeProperty('--fit-h'); return; }
     sc.style.setProperty('--fit-h', Math.round(window.innerHeight - 4) + 'px');
@@ -1740,7 +1828,18 @@ var D = /*__DATA__*/;
       var top = sc.getBoundingClientRect().top; if (Math.abs(top - 2) > 1) window.scrollTo(0, Math.max(0, window.scrollY + top - 2));
     }
   }
-  window.addEventListener('resize', function () { if (S.view === 'tv') applyFit(); });
+  function compactStage() {   // fc2 then fc3 only if the step still does not stand whole in the height that is there
+    var sc = document.querySelector('.screen'), st = sc && sc.querySelector('.stage'); if (!st) return;
+    sc.classList.remove('fc2', 'fc3'); if (!fitNow()) return;
+    var over = function () { return st.scrollHeight - st.clientHeight > 1; };
+    if (over()) { sc.classList.add('fc2'); if (over()) sc.classList.add('fc3'); }
+    var mn = sc.querySelector('.mine'); sc.classList.remove('fm1', 'fm2', 'fm3'); if (!mn) return;   // Your selection: the photograph gives way first, the bowl last
+    var mover = function () { return mn.scrollHeight - mn.clientHeight > 1; };
+    if (mover()) { sc.classList.add('fm1'); if (mover()) { sc.classList.add('fm2'); if (mover()) sc.classList.add('fm3'); } }
+  }
+  window.addEventListener('resize', function () { if (S.view === 'tv') { applyFit(); compactStage(); } });
+  window.addEventListener('load', function () { if (S.view === 'tv') compactStage(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (S.view === 'tv') compactStage(); });
   function cupRoom() {   // on a short glass the cup only shows when it has room to be seen whole
     var bc = document.querySelector('#brandc'), im = bc && bc.querySelector('img'); if (!im) return;
     bc.classList.remove('tiny'); if (fitNow() && im.getBoundingClientRect().height < 34) bc.classList.add('tiny');
@@ -1873,14 +1972,14 @@ var D = /*__DATA__*/;
     if (k === 'firmness') {
       if (S.firmness && !S.firmEdit) return '';
       var fp = firmPickNow();
-      return '<div class="fconf mc' + (fp ? ' on' : '') + '"><span>' + (fp ? 'Your firmness: <b>' + fp + '</b>' : 'Choose a firmness, then confirm it here.') + '</span><button class="btn bagbtn' + (fp ? ' ready' : '') + '" data-fconfirm="' + (fp || '') + '"' + (fp ? '' : ' disabled') + '>' + CK + 'Confirm ' + (fp || 'firmness') + '</button></div>';
+      return '<div class="fconf mc' + (fp ? ' on' : '') + '"><span>' + (fp ? 'Your firmness: <b>' + fp + '</b>' : 'Choose a firmness, then confirm it here.') + '</span><button class="btn bagbtn' + (fp ? ' ready' : '') + '" data-fconfirm="' + (fp || '') + '"' + (fp ? '' : ' disabled') + ' aria-label="Confirm firmness' + (fp ? ': ' + fp : '') + '">' + CK + '<span>Confirm firmness</span></button></div>';
     }
     if (S[k] && !S.edit[k]) return '';
     var pk = S.pick[k], txt = '', btn = '';
     if (pk && k === 'size') { txt = pk.name + ' · ' + pk.dims[0] + ' × ' + pk.dims[1] + ' cm'; btn = pk.name; }
     else if (pk && k === 'depth') { txt = btn = pk.cm + ' cm'; }
     else if (pk && k === 'cover') { txt = pk.name; btn = SHORT[pk.i] || 'cover'; }
-    return '<div class="fconf mc' + (pk ? ' on' : '') + '"><span>' + (pk ? 'Your ' + k + ': <b>' + esc(txt) + '</b>' : 'Choose your ' + k + ', then confirm it here.') + '</span><button class="btn bagbtn' + (pk ? ' ready' : '') + '" data-confirm="' + k + '"' + (pk ? '' : ' disabled') + '>' + CK + 'Confirm ' + esc(pk ? btn : k) + '</button></div>';
+    return '<div class="fconf mc' + (pk ? ' on' : '') + '"><span>' + (pk ? 'Your ' + k + ': <b>' + esc(txt) + '</b>' : 'Choose your ' + k + ', then confirm it here.') + '</span><button class="btn bagbtn' + (pk ? ' ready' : '') + '" data-confirm="' + k + '"' + (pk ? '' : ' disabled') + ' aria-label="Confirm ' + k + (pk ? ': ' + esc(btn) : '') + '">' + CK + '<span>Confirm ' + k + '</span></button></div>';
   }
   function doneCard(noun, big, sub, text, visual, changeKey, changeText) {
     return '<div class="fdone"><div class="fdl"><span class="fok">' + CHECK + 'Confirmed</span><small>Your ' + noun + '</small><b>' + esc(big) + '</b><i>' + esc(sub) + '</i><p>' + text + '</p><button class="btn s" data-change="' + changeKey + '">' + esc(changeText) + '</button></div><div class="fdr cdr">' + visual + '</div></div>';
@@ -1901,7 +2000,7 @@ var D = /*__DATA__*/;
     if (c) info = '<div class="info" aria-live="polite"><span class="k">Your cover</span><h2>' + esc(c.name) + '</h2><span class="tg">' + esc(c.tag) + '</span><ul>' + coverBullets(c) + '</ul><span class="fact">' + esc(D.coverFacts.height) + (c.mod ? ' · +£' + c.mod + ' in the shop' : '') + '</span></div>';
     else info = '<div class="info"><span class="k">Cover</span><h2>Four fabrics, one choice</h2><p>' + esc(D.coverSub) + '</p><p>Tap a photograph to see what that cover gives you.</p></div>';
     return cosmosWrap('Four fabrics, one choice', '<div class="cv"><div class="tiles">' + D.covers.map(function (x, i) { var on = c && c.i === i;
-      return '<button class="tile" data-cover="' + i + '" aria-pressed="' + on + '" aria-label="' + esc(x.name) + '"><span class="pic" style="background-image:url(' + esc(x.img) + ')"></span><span class="cap">' + esc(SHORT[i]) + '</span></button>'; }).join('') + '</div>' + info + '</div>');
+      return '<button class="tile" data-cover="' + i + '" aria-pressed="' + on + '" aria-label="' + esc(x.name) + '"><span class="pic" style="background-image:url(' + esc(x.img) + ')"><span class="cap">' + esc(SHORT[i]) + '</span></span></button>'; }).join('') + '</div>' + info + '</div>');
   }
   function reviewView() {
     var rows = [['Size', S.size ? S.size.dims[0] + ' × ' + S.size.dims[1] + ' cm' : null, S.size ? inch(S.size.dims[0]) + ' × ' + inch(S.size.dims[1]) + ' in · ' + S.size.name : '', 0], ['Firmness', S.firmness, '', 1], ['Depth', S.depth ? S.depth.cm + ' cm' : null, S.depth ? S.depth.inch.replace(/^cm · /, '') + ' · ' + S.depth.name : '', 2], ['Cover', S.cover ? S.cover.name : null, S.cover ? S.cover.tag : '', 3]];
@@ -2224,7 +2323,7 @@ var D = /*__DATA__*/;
       t.parentNode.replaceChild(f, t);
     });
   }
-  function draw() { draw0(); boldTerms(); }
+  function draw() { draw0(); boldTerms(); compactStage(); }
   /* THE FULL FILM: the loop in the panel is the short version; the whole presentation opens full screen, with controls and sound.
      The file is the shop's own full presentation; nothing is loaded until the customer asks for it. */
   function playFull(key) {
@@ -2303,7 +2402,7 @@ var D = /*__DATA__*/;
     syncBody(id);
     // update in place (the slider must not be re-created while it is being dragged)
     var fk = function (d) { return { 'SOFT': 'Soft', 'MEDIUM': 'Medium', 'FIRM': 'Firm', 'EXTRA FIRM': 'Extra Firm' }[d]; };
-    if (rec && !S.firmPick) { var pk = fk(rec.display); document.querySelectorAll('.fcard[data-firm]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.firm === pk)); }); var cb = document.querySelector('[data-fconfirm]'); if (cb && pk !== 'Extra Firm') { cb.dataset.fconfirm = pk; cb.disabled = false; cb.classList.add('ready'); cb.innerHTML = CHECK + 'Confirm ' + pk; var fs = document.querySelector('.fconf'); if (fs) { fs.classList.add('on'); fs.firstChild.innerHTML = 'Your firmness: <b>' + pk + '</b>'; } } }
+    if (rec && !S.firmPick) { var pk = fk(rec.display); document.querySelectorAll('.fcard[data-firm]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.firm === pk)); }); var cb = document.querySelector('[data-fconfirm]'); if (cb && pk !== 'Extra Firm') { cb.dataset.fconfirm = pk; cb.disabled = false; cb.classList.add('ready'); cb.setAttribute('aria-label', 'Confirm firmness: ' + pk); var fs = document.querySelector('.fconf'); if (fs) { fs.classList.add('on'); fs.firstChild.innerHTML = 'Your firmness: <b>' + pk + '</b>'; } } }
     $('#guide').innerHTML = rec ? 'Guidance for your body: <b>' + fk(rec.display) + '</b>.' + (rec.second ? ' ' + esc(D.firmness.decision2) : '') : 'Set your weight and height for guidance, or choose directly.';
     document.querySelectorAll('.fcard').forEach(function (c) { var nm = c.querySelector('.nm').textContent, isRec = rec && fk(rec.display) === nm; c.classList.toggle('rec', !!isRec); c.classList.toggle('dim', !!(rec && !isRec)); var tag = c.querySelector('.tag'); if (isRec && !tag) c.insertAdjacentHTML('afterbegin', '<span class="tag">For you</span>'); if (!isRec && tag) tag.remove(); });
   });

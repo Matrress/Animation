@@ -378,3 +378,22 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
   Adaptation, 7-Zone, Ventilation, Certifications) loads, "Watch the full video" opens the 62-second film full screen, and nothing is
   requested from the media host.
 - Rule R53 now also checks the air around the photograph and the cup at the bottom of the card.
+
+## Round XXXVII (owner, 23 November 2026): square covers, a button that fits its words, and one glass without scrolling
+- **The cover cards are square** (the photograph is the card; the name sits on it, white on a soft shade). Four squares, the explanation
+  beside them. A confirmed cover is the same square swatch beside its text. Rule R54 measures width = height.
+- **The Confirm button says what it confirms in one short word that always fits:** "Confirm size / depth / firmness / cover". The choice
+  itself ("Your cover: Cashmere + Silver Ions") is named in the line above the button, and the button's accessible name carries both. The
+  long names no longer overrun the button (R54 checks the words against the button's inner space).
+- **Where the covers' photographs went in the preview:** like the films, they are on `media.divinedunlop.com`, and so are the eight Ecwid
+  Gallery pictures (on Ecwid's image host); the artifact viewer admits only its own files. `tools/build-preview-artifact.mjs` now
+  publishes all 19 (7 films, 4 covers, 8 gallery pictures) beside the preview page. The design, the module and the package keep their own addresses.
+- **One glass, no scrolling, nothing hidden for good.** The glass that is really there is smaller than the screen: an iPad Pro 12.9" in the
+  artifact viewer has about 1366 × 790 px, because of the browser bars and the viewer's header. The select layer is laid out for that:
+  the step line above the title is dropped (the Select & Buy row says the same), the title band is tighter, the size row "Need another size?"
+  and the cards are tighter, the two sliders are lower, the confirmed cards are compact, and the cover explanation stands as tall as the four
+  squares. Where a step still does not fit, it steps down in two moves, measured on the real height (never by guess): first the engineering
+  drawing, the small print and the kicker leave the screen (they remain in "Helps you choose"), then the descriptions. Your selection does the same
+  for its column: the photograph gives way first, the bowl last. On taller screens (1366 × 1024, 1920 × 1080, portrait iPads) everything shows.
+- **Measured, no scrolling in either column:** 1366 × 790, 1440 × 900, 1366 × 1024, 1024 × 1366, every step, confirmed or not, and the review.
+  Shorter glasses (an iPad Air or Pro 11" in the viewer, about 600 px) keep the menus in view and scroll only the middle.

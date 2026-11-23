@@ -188,7 +188,7 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   const flow = {};
   await p.goto(file + '?step=0'); flow.dis0 = await p.$eval('[data-confirm="size"]', (e) => e.disabled);
   await p.click('[data-sgrp="king"]'); await p.click('.card[data-size="12"]'); flow.pickedNoCount = !(await p.$eval('.sb[data-go="0"]', (e) => /Choose/.test(e.textContent))) === false && (await p.$eval('#trailbar .tst.ok', () => false).catch(() => true));
-  flow.en1 = await p.$eval('[data-confirm="size"]', (e) => !e.disabled && /King Long/.test(e.textContent));
+  flow.en1 = await p.$eval('[data-confirm="size"]', (e) => !e.disabled && /King Long/.test(e.getAttribute('aria-label')) && /^\s*Confirm size\s*$/.test(e.textContent) && /King Long/.test(document.querySelector('.mconf').textContent));
   await p.click('[data-confirm="size"]'); flow.sizeDone = await p.$eval('.sb[data-go="0"] i', (e) => /150 × 210/.test(e.textContent)); flow.onlyOne = (await p.$$('.card[data-size]')).length === 0 && !!(await p.$('[data-change="size"]'));
   await p.click('[data-change="size"]'); flow.reopen = (await p.$$('.card[data-size]')).length >= 5 && (await p.$$('.cz-chip')).length === 6;
   await p.click('.cz-chip[data-sgrp="double"]'); await p.click('.card[data-size="10"]'); await p.click('[data-confirm="size"]'); flow.changed = await p.$eval('.sb[data-go="0"] i', (e) => /140 × 200/.test(e.textContent));
@@ -370,6 +370,26 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   ok(r53.every((m) => m.fit && m.menus && m.inMine && m.notInStage && m.above && m.conf && m.bag && m.photo && m.air && m.cupLow && m.gone && m.firm && m.none && !m.err), 'R53 one screen while choosing: menus in view, Confirm above Add to Bag in Your selection and on the glass, both visible, the photograph in view with air on both sides (XXXVI), the cup at the very bottom of the card, Confirm gone when all four are confirmed', JSON.stringify(r53.filter((m) => !(m.fit && m.menus && m.inMine && m.notInStage && m.above && m.conf && m.bag && m.photo && m.air && m.cupLow && m.gone && m.firm && m.none && !m.err))));
   const c = await b.newContext({ viewport: { width: 390, height: 844 }, screen: { width: 390, height: 844 } }); await c.route(/^https?:/, (r) => r.abort()); const q = await c.newPage();
   await q.goto(file + '?step=0&ignite=0'); await q.waitForTimeout(120); ok(!(await q.evaluate(() => document.querySelector('.screen').classList.contains('fit'))), 'R53 a phone keeps the normal page (no held screen)'); await c.close();
+}
+// R54 owner 23 Nov XXXVII: the cover cards are SQUARE; the Confirm button's words always fit their space; and on the glass that is really
+// there (an iPad Pro in the viewer is about 1366 x 790) every step stands whole without scrolling, in both columns, with Add to Bag in view.
+{
+  const out = [];
+  for (const vp of [{ width: 1366, height: 790 }, { width: 1440, height: 900 }, { width: 1366, height: 1024 }, { width: 1024, height: 1366 }]) {
+    const c = await b.newContext({ viewport: vp, screen: vp }); await c.route(/^https?:/, (r) => r.abort()); const q = await c.newPage(); const er = []; q.on('pageerror', (e) => er.push(e.message));
+    const m = { vp: vp.width + 'x' + vp.height, steps: [] };
+    const read = async (tag) => { await q.waitForTimeout(150); const o = await q.evaluate(() => { const g = (s) => { const e = document.querySelector(s); return e ? e.scrollHeight - e.clientHeight : 0; }; const bag = document.querySelector('#bag .bagbtn'), cf = document.querySelector('.mconf .btn'); return { stage: g('.stage'), mine: g('.mine'), bag: !!bag && bag.getBoundingClientRect().bottom <= innerHeight, fit: !cf || (cf.scrollWidth <= cf.clientWidth + 1 && cf.querySelector('span').scrollWidth <= cf.querySelector('span').clientWidth + 1) }; }); if (o.stage > 2 || o.mine > 2 || !o.bag || !o.fit) m.steps.push(tag + ' ' + JSON.stringify(o)); };
+    await q.goto(file + '?step=0&ignite=0'); await q.waitForTimeout(150); await q.click('[data-sgrp="single"]'); await q.click('.card[data-size="3"]'); await read('size'); await q.click('[data-confirm="size"]'); await read('size✓');
+    await q.click('[data-next]'); await q.click('[data-depth="1"]'); await read('depth'); await q.click('[data-confirm="depth"]'); await read('depth✓');
+    await q.click('[data-next]'); await q.click('.fcard[data-firm="Medium"]'); await read('firmness'); await q.click('[data-fconfirm]'); await read('firmness✓');
+    await q.click('[data-next]'); await read('cover');
+    m.sq = await q.$$eval('.tile', (t) => t.length === 4 && t.every((e) => { const r = e.getBoundingClientRect(); return Math.abs(r.width - r.height) <= 1.5 && r.width >= 120; }));
+    await q.click('[data-cover="3"]'); await read('cover picked'); m.longConfirm = await q.$eval('.mconf .btn', (e) => { const sp = e.querySelector('span'); return sp.textContent.trim() === 'Confirm cover' && sp.scrollWidth <= sp.clientWidth + 1 && /Cashmere/.test(e.getAttribute('aria-label')); });
+    await q.click('[data-confirm="cover"]'); await read('cover✓'); await q.click('[data-next]'); await read('review');
+    m.err = er.length; out.push(m); await c.close();
+  }
+  const bad = out.filter((m) => m.steps.length || !m.sq || !m.longConfirm || m.err);
+  ok(!bad.length, 'R54 the cover cards are square; the Confirm words fit the button; on 1366x790 (the iPad in the viewer), 1440x900, 1366x1024 and 1024x1366 every step, confirmed or not, and the review stand whole without scrolling, Add to Bag in view', JSON.stringify(bad));
 }
 await b.close();
 writeFileSync(join(root, 'docs', 'tv-preview', 'design-rules-last-run.json'), JSON.stringify({ date: new Date().toISOString().slice(0, 10), failures: fails, checks: rows.length, rows }, null, 1));

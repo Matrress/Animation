@@ -1,7 +1,7 @@
 {
  "date": "2026-11-23",
  "failures": 0,
- "checks": 192,
+ "checks": 193,
  "rows": [
   {
    "pass": true,
@@ -11,7 +11,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(254, 254, 246)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -21,27 +21,27 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "292.0 / 292.0 / 292.0"
+   "detail": "266.0 / 266.0 / 266.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "292.0 / 292.0 / 292.0"
+   "detail": "266.0 / 266.0 / 266.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "292.0 / 292.0 / 292.0"
+   "detail": "266.0 / 266.0 / 266.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "292.0 / 292.0 / 292.0"
+   "detail": "266.0 / 266.0 / 266.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "292.0 / 292.0 / 292.0"
+   "detail": "266.0 / 266.0 / 266.0"
   },
   {
    "pass": true,
@@ -341,7 +341,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(254, 254, 246)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -631,7 +631,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(254, 254, 246)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -641,27 +641,27 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "292.0 / 292.0 / 292.0"
+   "detail": "266.0 / 266.0 / 266.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "292.0 / 292.0 / 292.0"
+   "detail": "266.0 / 266.0 / 266.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "292.0 / 292.0 / 292.0"
+   "detail": "266.0 / 266.0 / 266.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "292.0 / 292.0 / 292.0"
+   "detail": "266.0 / 266.0 / 266.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "292.0 / 292.0 / 292.0"
+   "detail": "266.0 / 266.0 / 266.0"
   },
   {
    "pass": true,
@@ -962,6 +962,11 @@
    "pass": true,
    "rule": "R53 a phone keeps the normal page (no held screen)",
    "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R54 the cover cards are square; the Confirm words fit the button; on 1366x790 (the iPad in the viewer), 1440x900, 1366x1024 and 1024x1366 every step, confirmed or not, and the review stand whole without scrolling, Add to Bag in view",
+   "detail": "[]"
   }
  ]
 }
