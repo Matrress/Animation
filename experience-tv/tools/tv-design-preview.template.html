@@ -1555,74 +1555,81 @@ strong.olx { font-weight: 800; }
   .ivory .screen.fit > .rail, .ivory .screen.fit > .stage, .ivory .screen.fit > .mine { padding-top: 8px !important; }
   .ivory .screen.fit > .rail > .colh, .ivory .screen.fit > .stage > .colh, .ivory .screen.fit > .mine > h2 { height: 20px !important; line-height: 20px !important; margin: 0 0 8px !important; }
   .ivory .screen.fit > .stage > .colh .k2 { line-height: 20px; }
+  /* reading panels: the text scrolls inside the glass; the way on ("Next: ...") stays in view at the foot of it */
+  .ivory .screen.fit[data-layer=explore] .stage > .act { position: sticky; bottom: -12px; z-index: 4; margin-top: 8px; padding: 14px 0 12px; background: linear-gradient(180deg, rgba(251,251,237,0), #FBFBED 34%); }
+  /* the parts of the open topic stand in ONE row for every topic, so the height above never changes from a topic to the next */
+  .ivory .screen.fit .exg .exsub { flex-wrap: nowrap; gap: 6px; padding: 8px 10px; }
+  .ivory .screen.fit .exg .exsub .exh { margin-right: 2px; font-size: 12px; letter-spacing: .1em; flex: none; }
+  .ivory .screen.fit .exg .exsub button { padding: 0 9px; height: 34px; font-size: 13px; white-space: nowrap; flex: 0 1 auto; min-width: 0; }
+  .ivory .screen.fit .exg .exsub button b { margin-right: 4px; }
   .ivory .screen.fit > .mine { gap: 8px; margin-top: 0; }
   .ivory .screen.fit > .mine > h2 { margin: 0 !important; }
   .ivory .screen.fit > .rail { gap: 0; }
   .ivory .screen.fit > .rail > .tree { margin-top: 0 !important; }
-  .ivory .screen.fit .stage { padding-right: 24px; padding-bottom: 12px; padding-left: 24px; }
-  .ivory .screen.fit .q { padding: 14px 22px 14px; margin: 0 0 10px; }
-  .ivory .screen.fit .q h1 { font-size: 28px; line-height: 1.1; margin: 0 0 4px; padding-right: 40px; }
-  .ivory .screen.fit .q p { font-size: 15.5px; line-height: 1.3; }
-  .ivory .screen.fit .cosmos { padding: 12px 16px; }
-  .ivory .screen.fit .cz-h { margin: 0 0 10px; }
-  .ivory .screen.fit .act { margin: 10px 0 0; padding: 10px 0 0; }
-  .ivory .screen.fit .act .btn { height: 52px; }
+  .ivory .screen.fit[data-layer=select] .stage { padding-right: 24px; padding-bottom: 12px; padding-left: 24px; }
+  .ivory .screen.fit[data-layer=select] .q { padding: 14px 22px 14px; margin: 0 0 10px; }
+  .ivory .screen.fit[data-layer=select] .q h1 { font-size: 28px; line-height: 1.1; margin: 0 0 4px; padding-right: 40px; }
+  .ivory .screen.fit[data-layer=select] .q p { font-size: 15.5px; line-height: 1.3; }
+  .ivory .screen.fit[data-layer=select] .cosmos { padding: 12px 16px; }
+  .ivory .screen.fit[data-layer=select] .cz-h { margin: 0 0 10px; }
+  .ivory .screen.fit[data-layer=select] .act { margin: 10px 0 0; padding: 10px 0 0; }
+  .ivory .screen.fit[data-layer=select] .act .btn { height: 52px; }
   /* size */
-  .ivory .screen.fit .more { margin: 8px 0 0; min-height: 0; }
-  .ivory .screen.fit .more .btn { height: 38px; }
-  .ivory .screen.fit .snav { margin-bottom: 8px; }
-  .ivory .screen.fit .scards .card.cz { padding-top: 10px; padding-bottom: 10px; min-height: 0; }
+  .ivory .screen.fit[data-layer=select] .more { margin: 8px 0 0; min-height: 0; }
+  .ivory .screen.fit[data-layer=select] .more .btn { height: 38px; }
+  .ivory .screen.fit[data-layer=select] .snav { margin-bottom: 8px; }
+  .ivory .screen.fit[data-layer=select] .scards .card.cz { padding-top: 10px; padding-bottom: 10px; min-height: 0; }
   /* firmness */
-  .ivory .screen.fit .fw { margin: 0 0 10px; gap: 12px; }
-  .ivory .screen.fit .fw .sl { padding: 10px 14px 8px; }
-  .ivory .screen.fit .fw .sl .r { margin: 0 0 2px; }
-  .ivory .screen.fit .fw .sl input[type=range] { height: 28px; }
-  .ivory .screen.fit .fw .conv { margin: 4px 0 0; padding-top: 6px; }
-  .ivory .screen.fit .fw .conv input { height: 34px; font-size: 16px; }
-  .ivory .screen.fit .fc.cmp .fcard { padding: 8px 10px 8px; }
-  .ivory .screen.fit #guide { margin-top: 6px; }
+  .ivory .screen.fit[data-layer=select] .fw { margin: 0 0 10px; gap: 12px; }
+  .ivory .screen.fit[data-layer=select] .fw .sl { padding: 10px 14px 8px; }
+  .ivory .screen.fit[data-layer=select] .fw .sl .r { margin: 0 0 2px; }
+  .ivory .screen.fit[data-layer=select] .fw .sl input[type=range] { height: 28px; }
+  .ivory .screen.fit[data-layer=select] .fw .conv { margin: 4px 0 0; padding-top: 6px; }
+  .ivory .screen.fit[data-layer=select] .fw .conv input { height: 34px; font-size: 16px; }
+  .ivory .screen.fit[data-layer=select] .fc.cmp .fcard { padding: 8px 10px 8px; }
+  .ivory .screen.fit[data-layer=select] #guide { margin-top: 6px; }
   /* the engineering drawing and the small print only when the glass is tall enough for them */
   /* a confirmed choice: the same card, tighter; the cover's photograph fills its half instead of setting the height */
-  .ivory .screen.fit .fdone { gap: 12px; }
-  .ivory .screen.fit .fdl { padding: 14px 18px; }
-  .ivory .screen.fit .fdl small { margin-top: 4px; }
-  .ivory .screen.fit .fdl b { font-size: 28px; line-height: 1.1; }
-  .ivory .screen.fit .fdl p { margin: 4px 0 8px; font-size: 14px; line-height: 1.4; }
-  .ivory .screen.fit .fdl .btn { height: 40px; }
-  .ivory .screen.fit .cz-conf .cbl { margin: 0 0 4px; padding-left: 18px; font-size: 14px; line-height: 1.38; }
-  .ivory .screen.fit .cz-conf .cbl li { margin-bottom: 2px; }
-  .ivory .screen.fit .cz-conf .fdone:has(.cpic) { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); align-items: start; }
-  .ivory .screen.fit.fit-s .fdl { padding: 10px 16px; } .ivory .screen.fit.fit-s .fdl b { font-size: 24px; } .ivory .screen.fit.fit-s .fdl .fok { height: 24px; }
-  .ivory .screen.fit.fit-s .cz-conf .cbl { font-size: 13.5px; line-height: 1.34; margin-bottom: 2px; } .ivory .screen.fit.fit-s .fdl .btn { height: 36px; }
-  .ivory .screen.fit.fit-s .cz-conf .fdl > p { font-size: 13px; margin: 2px 0 6px; line-height: 1.3; }
-  .ivory .screen.fit .cz-conf .fdr.cdr:has(.cpic) { padding: 0; background: none; border: 0; display: block; align-self: start; }
-  .ivory .screen.fit .cz-conf .fdr.cdr .cpic { display: block; width: 100%; aspect-ratio: 1 / 1; height: auto; border-radius: 16px; }
+  .ivory .screen.fit[data-layer=select] .fdone { gap: 12px; }
+  .ivory .screen.fit[data-layer=select] .fdl { padding: 14px 18px; }
+  .ivory .screen.fit[data-layer=select] .fdl small { margin-top: 4px; }
+  .ivory .screen.fit[data-layer=select] .fdl b { font-size: 28px; line-height: 1.1; }
+  .ivory .screen.fit[data-layer=select] .fdl p { margin: 4px 0 8px; font-size: 14px; line-height: 1.4; }
+  .ivory .screen.fit[data-layer=select] .fdl .btn { height: 40px; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .cbl { margin: 0 0 4px; padding-left: 18px; font-size: 14px; line-height: 1.38; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .cbl li { margin-bottom: 2px; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .fdone:has(.cpic) { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); align-items: start; }
+  .ivory .screen.fit[data-layer=select].fit-s .fdl { padding: 10px 16px; } .ivory .screen.fit.fit-s .fdl b { font-size: 24px; } .ivory .screen.fit.fit-s .fdl .fok { height: 24px; }
+  .ivory .screen.fit[data-layer=select].fit-s .cz-conf .cbl { font-size: 13.5px; line-height: 1.34; margin-bottom: 2px; } .ivory .screen.fit.fit-s .fdl .btn { height: 36px; }
+  .ivory .screen.fit[data-layer=select].fit-s .cz-conf .fdl > p { font-size: 13px; margin: 2px 0 6px; line-height: 1.3; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .fdr.cdr:has(.cpic) { padding: 0; background: none; border: 0; display: block; align-self: start; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .fdr.cdr .cpic { display: block; width: 100%; aspect-ratio: 1 / 1; height: auto; border-radius: 16px; }
   /* review */
-  .ivory .screen.fit .rv { gap: 8px; margin-bottom: 8px; }
-  .ivory .screen.fit .ri { min-height: 54px; padding: 8px 16px; }
-  .ivory .screen.fit .ri .v { font-size: 17px; }
-  .ivory .screen.fit .ri .btn { height: 38px; }
-  .ivory .screen.fit .added { padding: 10px 16px; margin-bottom: 8px; }
-  .ivory .screen.fit .stage .prbox { padding: 10px 16px; }
+  .ivory .screen.fit[data-layer=select] .rv { gap: 8px; margin-bottom: 8px; }
+  .ivory .screen.fit[data-layer=select] .ri { min-height: 54px; padding: 8px 16px; }
+  .ivory .screen.fit[data-layer=select] .ri .v { font-size: 17px; }
+  .ivory .screen.fit[data-layer=select] .ri .btn { height: 38px; }
+  .ivory .screen.fit[data-layer=select] .added { padding: 10px 16px; margin-bottom: 8px; }
+  .ivory .screen.fit[data-layer=select] .stage .prbox { padding: 10px 16px; }
   /* the cover's explanation stands as tall as the four square cards beside it */
-  .ivory .screen.fit .cz-conf .cv .info { padding: 14px 18px; gap: 6px; }
-  .ivory .screen.fit .cz-conf .cv .info h2 { font-size: 22px; line-height: 1.12; }
-  .ivory .screen.fit .cz-conf .cv .info .tg { font-size: 14.5px; }
-  .ivory .screen.fit .cz-conf .cv .info ul { gap: 6px; margin-top: 2px; }
-  .ivory .screen.fit .cz-conf .cv .info li { font-size: 14px; line-height: 1.36; padding-left: 20px; }
-  .ivory .screen.fit .cz-conf .cv .info li::before { top: 5px; }
-  .ivory .screen.fit .cz-conf .cv .info .fact { padding-top: 8px; font-size: 12.5px; line-height: 1.3; }
-  .ivory .screen.fit .cz-conf .cv .info p { font-size: 14.5px; line-height: 1.4; }
-  .ivory .screen.fit.fc2 .eng, .ivory .screen.fit.fc2 .base { display: none; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .cv .info { padding: 14px 18px; gap: 6px; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .cv .info h2 { font-size: 22px; line-height: 1.12; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .cv .info .tg { font-size: 14.5px; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .cv .info ul { gap: 6px; margin-top: 2px; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .cv .info li { font-size: 14px; line-height: 1.36; padding-left: 20px; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .cv .info li::before { top: 5px; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .cv .info .fact { padding-top: 8px; font-size: 12.5px; line-height: 1.3; }
+  .ivory .screen.fit[data-layer=select] .cz-conf .cv .info p { font-size: 14.5px; line-height: 1.4; }
+  .ivory .screen.fit[data-layer=select].fc2 .eng, .ivory .screen.fit.fc2 .base { display: none; }
   .ivory .screen.fit.fm1 .mine .mi { min-height: 76px; padding: 8px 14px 8px; }
   .ivory .screen.fit.fm1 .mine .mic .rdy { left: 8px; top: 4px; padding: 3px 8px 3px 6px; font-size: 11px; }
   .ivory .screen.fit.fm2 .mine .brandc { display: none; }
   .ivory .screen.fit.fm3 .mine .coach { padding: 6px 12px; } .ivory .screen.fit.fm3 .mine .price { padding: 8px 14px; }
   .ivory .screen.fit.fm3 .mine .fconf.mc { padding: 7px 8px; gap: 5px; } .ivory .screen.fit.fm3 .mine .fconf.mc .btn.bagbtn { height: 48px; }
   .ivory .screen.fit.fm3 .mine .bag { gap: 3px; } .ivory .screen.fit.fm3 .mine .bag .btn { height: 52px; }
-  .ivory .screen.fit.fc3 .fdesc { display: none; }
-  .ivory .screen.fit.fc3 .q p { display: none; }
-  .ivory .screen.fit.fc3 .q { padding: 10px 20px; }
+  .ivory .screen.fit[data-layer=select].fc3 .fdesc { display: none; }
+  .ivory .screen.fit[data-layer=select].fc3 .q p { display: none; }
+  .ivory .screen.fit[data-layer=select].fc3 .q { padding: 10px 20px; }
 }
 </style>
 </head>
@@ -1811,28 +1818,28 @@ var D = /*__DATA__*/;
   }
   /* ONE SCREEN WHILE CHOOSING (owner, 23 Nov): on a tablet or a monitor the screen takes the height of the glass and sits at its top;
      a new choice brings the middle back to its start. A phone, a short window or the standard view keep the normal page. */
-  var FITKEY = '';
+  var FITKEY = '', NAVD = false, ALN = false;   // NAVD: the customer has acted; until then the page is never moved
   function fitNow() { var sc = document.querySelector('.screen'); return !!(sc && sc.classList.contains('fit')); }
   function applyFit() {
     var sc = document.querySelector('.screen'); if (!sc) return;
-    var on = S.view === 'tv' && !S.gal && !S.all && sc.getAttribute('data-layer') === 'select' && window.innerWidth >= 800 && window.innerHeight >= 600;
+    var on = S.view === 'tv' && window.innerWidth >= 800 && window.innerHeight >= 600;
     sc.classList.toggle('fit', on); sc.classList.toggle('fit-s', on && window.innerHeight < 900); if (!on) sc.classList.remove('fc2', 'fc3', 'fm1', 'fm2', 'fm3');
     if (window.requestAnimationFrame) requestAnimationFrame(cupRoom);
     if (!on) { FITKEY = ''; sc.style.removeProperty('--fit-h'); return; }
     sc.style.setProperty('--fit-h', Math.round(window.innerHeight - 4) + 'px');
     var key = S.ch + '/' + S.pn + '/' + (S.coach ? 'c' : '');
-    if (key !== FITKEY) {
+    if (key !== FITKEY || (NAVD && !ALN)) {
       FITKEY = key;
       var st = sc.querySelector('.stage'); if (st) st.scrollTop = 0;
       var rl = sc.querySelector('.rail'); if (rl) rl.scrollTop = 0;
-      var top = sc.getBoundingClientRect().top; if (Math.abs(top - 2) > 1) window.scrollTo(0, Math.max(0, window.scrollY + top - 2));
+      var top = sc.getBoundingClientRect().top; if (NAVD) { ALN = true; if (Math.abs(top - 2) > 1) window.scrollTo(0, Math.max(0, window.scrollY + top - 2)); }
     }
   }
   function compactStage() {   // fc2 then fc3 only if the step still does not stand whole in the height that is there
     var sc = document.querySelector('.screen'), st = sc && sc.querySelector('.stage'); if (!st) return;
     sc.classList.remove('fc2', 'fc3'); if (!fitNow()) return;
     var over = function () { return st.scrollHeight - st.clientHeight > 1; };
-    if (over()) { sc.classList.add('fc2'); if (over()) sc.classList.add('fc3'); }
+    if (sc.getAttribute('data-layer') === 'select' && over()) { sc.classList.add('fc2'); if (over()) sc.classList.add('fc3'); }
     var mn = sc.querySelector('.mine'); sc.classList.remove('fm1', 'fm2', 'fm3'); if (!mn) return;   // Your selection: the photograph gives way first, the bowl last
     var mover = function () { return mn.scrollHeight - mn.clientHeight > 1; };
     if (mover()) { sc.classList.add('fm1'); if (mover()) { sc.classList.add('fm2'); if (mover()) sc.classList.add('fm3'); } }
@@ -2346,6 +2353,7 @@ var D = /*__DATA__*/;
     if (e.target.closest('[data-contents]')) { S.all = !S.all; S.gal = false; draw(); toStage(); return; }
     if (e.target.closest('[data-goto]') && S.all) { S.all = false; }
     if (e.target.closest('[data-ch]') && !e.target.closest('[data-goto]')) { S.all = false; }
+    NAVD = true;
     var t = e.target.closest('[data-confirm],[data-change],[data-sgrp],[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
     var d = t.dataset, cg = S.coach; S.coach = null; clearTimeout(COACHT);
     if (d.coachgo != null) { goStep(cg ? cg.to : S.step); draw(); toStage(); return; }

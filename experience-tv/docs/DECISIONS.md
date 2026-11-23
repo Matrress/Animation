@@ -397,3 +397,17 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
   for its column: the photograph gives way first, the bowl last. On taller screens (1366 × 1024, 1920 × 1080, portrait iPads) everything shows.
 - **Measured, no scrolling in either column:** 1366 × 790, 1440 × 900, 1366 × 1024, 1024 × 1366, every step, confirmed or not, and the review.
   Shorter glasses (an iPad Air or Pro 11" in the viewer, about 600 px) keep the menus in view and scroll only the middle.
+
+## Round XXXVIII (owner, 23 November 2026): Your selection is constant; the screen does not pump
+- **The owner's observation:** in the reading topics (Discover, Benefits, Support …) "Your selection" stretched down with the length of the text
+  (over 1 100 px in Discover), so the card was long, ragged and different on every panel; the mattress floated in the middle of nothing, the
+  bag sat far below, and the page pumped up and down from one panel to the next.
+- **Rule:** Your selection is a constant card. Its job is to help the choosing and to stay in choosing mode; it never follows the length of
+  a text. It has one height and one place on every panel, in every topic.
+- **How:** the held glass (round XXXV) now also holds the reading layer, the gallery and the list of all topics: on a tablet or a monitor
+  (≥ 800 × 600) the screen takes the height of the glass; the menus above and the three columns stay put; only the reading text in the middle
+  scrolls inside the glass, with "Back / Next: …" held in view at its foot. The first look never jumps (the page is moved to the glass only
+  after the customer's first action). The parts of the open topic (A, B, C …) stand in one row for every topic, so the height above is the same
+  in all eleven topics (Comfort and Adaptation have five parts and used to wrap and push everything 44 px). The tighter layout of round XXXVII
+  belongs to the choosing layer only; reading panels keep their own sizes.
+- Measured on 1366 × 790 (the iPad in the viewer): the screen top 2 px, the chrome 222 px, the card 550 px, the same for all eleven topics.

@@ -11,7 +11,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -21,42 +21,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "266.0 / 266.0 / 266.0"
+   "detail": "416.0 / 416.0 / 416.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "266.0 / 266.0 / 266.0"
+   "detail": "416.0 / 416.0 / 416.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "266.0 / 266.0 / 266.0"
+   "detail": "416.0 / 416.0 / 416.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "266.0 / 266.0 / 266.0"
+   "detail": "416.0 / 416.0 / 416.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "266.0 / 266.0 / 266.0"
+   "detail": "416.0 / 416.0 / 416.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "486.0 / 486.0 / 486.0"
+   "detail": "410.0 / 410.0 / 410.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "410.0 / 410.0 / 410.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "410.0 / 410.0 / 410.0"
   },
   {
    "pass": true,
@@ -205,7 +205,7 @@
   },
   {
    "pass": true,
-   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; no scrolling inside the screen",
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the rail never scrolls and the text scrolls only inside the held glass",
    "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
   },
   {
@@ -221,7 +221,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":260,\"yFam\":260,\"yPick\":260,\"yNav\":148,\"stageTop\":256,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":260,\"yFam\":150,\"yPick\":150,\"yNav\":150,\"stageTop\":232,\"scrTop\":2,\"isFit\":true,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -495,7 +495,7 @@
   },
   {
    "pass": true,
-   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; no scrolling inside the screen",
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the rail never scrolls and the text scrolls only inside the held glass",
    "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
   },
   {
@@ -511,7 +511,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":260,\"yFam\":260,\"yPick\":260,\"yNav\":360,\"stageTop\":297,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":260,\"yFam\":150,\"yPick\":150,\"yNav\":150,\"stageTop\":533,\"scrTop\":2,\"isFit\":true,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -641,42 +641,42 @@
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=0",
-   "detail": "266.0 / 266.0 / 266.0"
+   "detail": "416.0 / 416.0 / 416.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=1",
-   "detail": "266.0 / 266.0 / 266.0"
+   "detail": "416.0 / 416.0 / 416.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=2",
-   "detail": "266.0 / 266.0 / 266.0"
+   "detail": "416.0 / 416.0 / 416.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=3",
-   "detail": "266.0 / 266.0 / 266.0"
+   "detail": "416.0 / 416.0 / 416.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?step=4",
-   "detail": "266.0 / 266.0 / 266.0"
+   "detail": "416.0 / 416.0 / 416.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=comfort&pn=behaviour",
-   "detail": "486.0 / 486.0 / 486.0"
+   "detail": "410.0 / 410.0 / 410.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=zones&pn=map",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "410.0 / 410.0 / 410.0"
   },
   {
    "pass": true,
    "rule": "R4 first boxes of the three columns share one top line ?ch=warranty&pn=cover",
-   "detail": "442.0 / 442.0 / 442.0"
+   "detail": "410.0 / 410.0 / 410.0"
   },
   {
    "pass": true,
@@ -825,7 +825,7 @@
   },
   {
    "pass": true,
-   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; no scrolling inside the screen",
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the rail never scrolls and the text scrolls only inside the held glass",
    "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
   },
   {
@@ -841,7 +841,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":260,\"yFam\":260,\"yPick\":260,\"yNav\":272,\"stageTop\":132,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":260,\"yFam\":150,\"yPick\":150,\"yNav\":150,\"stageTop\":232,\"scrTop\":2,\"isFit\":true,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
