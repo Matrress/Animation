@@ -281,7 +281,7 @@
   {
    "pass": true,
    "rule": "R50 (XXXV) the photograph stands on the column without a white card and carries Ready when all four are chosen; the brand block is a tone of the column",
-   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"photo\":true,\"ready\":true}"
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgba(0, 0, 0, 0)\",\"photo\":true,\"ready\":true}"
   },
   {
    "pass": true,
@@ -571,7 +571,7 @@
   {
    "pass": true,
    "rule": "R50 (XXXV) the photograph stands on the column without a white card and carries Ready when all four are chosen; the brand block is a tone of the column",
-   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"photo\":true,\"ready\":true}"
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgba(0, 0, 0, 0)\",\"photo\":true,\"ready\":true}"
   },
   {
    "pass": true,
@@ -901,7 +901,7 @@
   {
    "pass": true,
    "rule": "R50 (XXXV) the photograph stands on the column without a white card and carries Ready when all four are chosen; the brand block is a tone of the column",
-   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgb(91, 90, 79)\",\"photo\":true,\"ready\":true}"
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgba(0, 0, 0, 0)\",\"photo\":true,\"ready\":true}"
   },
   {
    "pass": true,
@@ -955,7 +955,7 @@
   },
   {
    "pass": true,
-   "rule": "R53 one screen while choosing: menus in view, Confirm above Add to Bag in Your selection and on the glass, both visible, the photograph in view, Confirm gone when all four are confirmed",
+   "rule": "R53 one screen while choosing: menus in view, Confirm above Add to Bag in Your selection and on the glass, both visible, the photograph in view with air on both sides (XXXVI), the cup at the very bottom of the card, Confirm gone when all four are confirmed",
    "detail": "[]"
   },
   {

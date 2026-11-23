@@ -362,3 +362,19 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
   the approved description (141 642 characters; identical to the package apart from two `&mdash;` in CSS comments that Ecwid
   stores as "—"). The bridge does not expose Custom JavaScript code or file uploads to the media host, so the loader and the five
   files remain the owner's two steps.
+
+## Round XXXVI (owner, 23 November 2026): the mattress is placed; the videos are back in the preview
+- **The photograph of the mattress is placed, not stuck on.** It stands on its own soft spotlight inside Your selection, smaller
+  (about 72 % of the column, at most 188 px), with air on every side (at least 28 px from the column's edges) and a soft shadow
+  on the floor. "Ready" sits in the corner of that space, not on the photograph. On a short glass it gives way first (never the
+  buttons).
+- **The cup of latex is pushed to the very bottom of the card,** without a card of its own, under the buttons. The buttons
+  (Confirm, Add to Bag) sit above it, lower than before, on one line with the rest of the column.
+- **The videos were not lost; the preview could not show them.** The artifact viewer only admits the artifact's own files, so a
+  video on `media.divinedunlop.com` showed as an empty white box there (the links are intact: `D.videos`, 7 films, the same
+  addresses as in the store). `tools/build-preview-artifact.mjs` fetches those seven files (about 10 MB) from the owner's own
+  links and publishes them beside the preview page; the page then points at them. Only the preview is changed: the design file,
+  the store module and the package keep the owner's links. Checked: the loop in every panel that has one (Discover, Benefits,
+  Adaptation, 7-Zone, Ventilation, Certifications) loads, "Watch the full video" opens the 62-second film full screen, and nothing is
+  requested from the media host.
+- Rule R53 now also checks the air around the photograph and the cup at the bottom of the card.

@@ -1515,6 +1515,27 @@ strong.olx { font-weight: 800; }
 @media (max-width: 799px) {
   .ivory .screen[data-layer=select] .mine > h2 { order: -3; } .ivory .screen[data-layer=select] .mine .mconf { order: -2; } .ivory .screen[data-layer=select] .mine .bag { order: -1; }
 }
+/* ===== ROUND XXXVI (owner, 23 Nov): the mattress is placed, not stuck on. It stands on its own spotlight with air on every side and
+   a soft floor shadow, smaller than before; Ready sits in the corner of that space, not on the photograph. The bowl of latex is
+   pushed to the very bottom of the card; the buttons sit above it, lower, on one line. ===== */
+.ivory .mine .mi { position: relative; flex: 1 1 auto; min-height: 150px; padding: 26px 22px 22px; margin: 0; border-radius: 16px; background: radial-gradient(72% 64% at 50% 58%, rgba(251,251,237,.14), rgba(251,251,237,0) 74%); display: flex; align-items: center; justify-content: center; }
+.ivory .mine .mic { position: static; isolation: isolate; width: 100%; height: auto; display: flex; align-items: center; justify-content: center; }
+.ivory .mine .mi img { width: 72%; max-width: 188px; height: auto; max-height: none; filter: drop-shadow(0 8px 8px rgba(20,24,22,.26)); }
+.ivory .mine .mic::after { content: ''; position: absolute; left: 16%; right: 16%; bottom: -6px; height: 12px; border-radius: 50%; background: radial-gradient(closest-side, rgba(20,24,22,.34), rgba(20,24,22,0)); z-index: -1; }
+.ivory .mine .mic .rdy { left: 12px; top: 10px; }
+.ivory .mine .brandc { background: transparent; border: 0; padding: 0 10px; margin: 2px 0 -6px; display: flex; justify-content: center; }
+.ivory .mine .brandc img { width: auto; max-width: 38%; max-height: 82px; object-fit: contain; filter: drop-shadow(0 6px 6px rgba(20,24,22,.28)); }
+@media (min-width: 800px) {
+  .ivory .screen.fit .mine .mi { flex: 1 1 0; min-height: 112px; max-height: 250px; padding: 22px 18px 16px; }
+  .ivory .screen.fit .mine .mic { height: 100%; }
+  .ivory .screen.fit .mine .mi img { width: auto; max-width: 74%; height: 100%; max-height: 100%; object-fit: contain; }
+  .ivory .screen.fit.fit-s .mine .mi { min-height: 88px; padding: 10px 14px 8px; }
+  .ivory .screen.fit.fit-s .mine .mic .rdy { left: 8px; top: 4px; padding: 3px 8px 3px 6px; font-size: 11px; }
+  .ivory .screen.fit .mine .brandc { flex: 0 1 auto; min-height: 0; background: transparent; }
+  .ivory .screen.fit .mine .brandc img { max-height: 70px; width: auto; height: auto; }
+  .ivory .screen.fit.fit-s .mine .brandc { flex: 0 1 auto; padding: 0 8px; }
+  .ivory .screen.fit.fit-s .mine .brandc img { max-height: 54px; }
+}
 </style>
 </head>
 <body>
@@ -1786,7 +1807,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   window.addEventListener('resize', function () { if (S.view === 'tv') applyFit(); });
   function cupRoom() {   // on a short glass the cup only shows when it has room to be seen whole
     var bc = document.querySelector('#brandc'), im = bc && bc.querySelector('img'); if (!im) return;
-    bc.classList.remove('tiny'); if (fitNow() && im.getBoundingClientRect().height < 44) bc.classList.add('tiny');
+    bc.classList.remove('tiny'); if (fitNow() && im.getBoundingClientRect().height < 34) bc.classList.add('tiny');
   }
   function bagButton(cls) {   // ONE button, two faces (laws in engine/selection-rules.js): Add to Bag, READY, then Go to Checkout
     var bagI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>', arrI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
