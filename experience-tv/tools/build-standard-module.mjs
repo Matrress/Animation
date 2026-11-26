@@ -22,7 +22,9 @@ const css = readFileSync(join(root, 'tools', 'standard-module.css'), 'utf8');
 
 const browser = await chromium.launch({ args: ['--no-sandbox'] });
 const page = await browser.newPage();
-const res = await page.evaluate(({ src }) => {
+const GJ = JSON.parse(readFileSync(join(root, 'products', 'botanic.gallery.json'), 'utf8'));   // the owner's pictures, one per topic (the same list the television uses)
+const GALLERY = GJ.items.map((x) => ({ key: x.key, url: GJ.base + x.name, alt: x.alt, bg: x.bg, w: x.w, h: x.h }));
+const res = await page.evaluate(({ src, GALLERY }) => {
   const doc = new DOMParser().parseFromString(src, 'text/html');
   const pageEl = doc.querySelector('.dd-botanic-page');
   const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -146,7 +148,12 @@ const res = await page.evaluate(({ src }) => {
   const GAL = 'https://d2j6dbq0eux0bg.cloudfront.net/images/100333285/products/831592302/';
   const POSTER = 'https://media.divinedunlop.com/ddtv/botanic-film-poster-80b9f7612d35f0228ee6.webp';   // a frame of the film itself (8 s), 11 KB: the window shows a picture, the film (3.4 MB) is fetched only when a customer presses play
   const HANDS = 'https://media.divinedunlop.com/ddtv/botanic-hands-core-482a3635808f7d9b16c9.webp';   // the owner's photo (26 Nov): hands on the cut-open latex mattress
-  const photo = '<figure class="dd-ph"><img src="' + HANDS + '" alt="Hands resting on a Botanic latex mattress that is cut open to show its natural latex core and the quilted cover" width="1100" height="1100" loading="lazy" decoding="async"></figure>';
+  // owner, 26 Nov: the photo slot of the header is a small GALLERY (swipe with a finger or a mouse; the television engine adds the dots' taps, the arrows and the enlargement).
+  // Plain markup, no script, no button: it works as a slider on its own. The first picture is the owner's hands photo, then the pictures of the topics, each fitted whole.
+  const slides = [{ key: 'hands', url: HANDS, alt: 'Hands resting on a Botanic latex mattress that is cut open to show its natural latex core and the quilted cover', w: 1100, h: 1100 }].concat(GALLERY);
+  const photo = '<figure class="dd-ph dd-gal" aria-roledescription="carousel" aria-label="Pictures of the mattress"><div class="dd-gal__v">' +
+    slides.map((x, i) => '<div class="dd-gal__s dd-gal__s--' + x.key + '"><img src="' + x.url + '" alt="' + att(x.alt) + '" width="' + x.w + '" height="' + x.h + '"' + (i === 0 ? '' : ' loading="lazy"') + ' decoding="async" draggable="false"></div>').join('') +
+    '</div><div class="dd-gal__d" aria-hidden="true">' + slides.map((x, i) => '<span class="dd-gal__dot' + (i === 0 ? ' on' : '') + '"></span>').join('') + '</div></figure>';
   // header: a coffee text panel and the photo side by side (the photo fills the height of the panel, nothing is left empty), then the key points as tiles, the how-to note and the glance cards
   const header = '<header class="dd-hd" id="bp-top-head"><div class="dd-hd__t dd-dk"><p class="dd-eyebrow">' + esc(eyebrow) + '</p>' +
     '<h2 class="dd-title"><span class="dd-title__b">' + esc(logo) + '</span> <em>' + esc(h1em) + '</em> ' + esc(h1rest) + '</h2>' +
@@ -196,7 +203,7 @@ const res = await page.evaluate(({ src }) => {
   const lost = []; for (const [w, n] of A) { const k = B.get(w) || 0; if (k < n) lost.push(w + '×' + (n - k)); }
   const added = []; for (const [w, n] of B) { const k = A.get(w) || 0; if (k < n) added.push(w + '×' + (n - k)); }
   return { html, missing, lost, added, srcWords: [...A.values()].reduce((a, b) => a + b, 0), outWords: [...B.values()].reduce((a, b) => a + b, 0) };
-}, { src });
+}, { src, GALLERY });
 await browser.close();
 
 const out = join(root, 'dist', 'standard'); mkdirSync(out, { recursive: true });
@@ -204,7 +211,8 @@ const out = join(root, 'dist', 'standard'); mkdirSync(out, { recursive: true });
 const part = (t, from, to) => { const i = from ? t.indexOf(from) + from.length : 0, j = to ? t.indexOf(to) : t.length; return t.slice(i, j); };
 const prefix = (rules) => rules.replace(/\/\*[\s\S]*?\*\//g, '').replace(/([^{}]+)\{([^{}]*)\}/g, (m, sel, body) => sel.split(',').map((x) => x.trim()).map((x) => x.startsWith('.dd-std') ? '#bp-top' + x : '#bp-top ' + x).join(',') + '{' + body + '}');
 const mini = (t) => t.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, ' ').replace(/\s*([{};,>])\s*/g, '$1').replace(/;}/g, '}').trim();
-const cssMin = mini(part(css, null, '/*=MODULE=*/') + prefix(part(css, '/*=MODULE=*/', '/*=END=*/')) + part(css, '/*=END=*/', null));
+const galCss = '.dd-gal__s--hands{background:#EFE9DA}' + GALLERY.map((x) => '.dd-gal__s--' + x.key + '{background:' + x.bg + '}').join('');
+const cssMin = mini(part(css, null, '/*=MODULE=*/') + prefix(part(css, '/*=MODULE=*/', '/*=END=*/')) + part(css, '/*=END=*/', null) + galCss);
 const full = '<style>' + cssMin + '</style>' + res.html;
 writeFileSync(join(out, 'botanic-standard-description.html'), full);
 const rep = [

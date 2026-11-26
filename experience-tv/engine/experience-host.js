@@ -179,6 +179,14 @@
     '.ddtv-fold{border:1.5px solid #384442!important;background:#FEFEF6!important;color:#2E3633!important}' +
     '.ddtv-fold:hover{background:#384442!important;color:#FBFBED!important}' +
     'html.ddtv-classic #ddtv-info{display:none!important}' +
+    /* owner, 26 Nov: the gallery of the standard module (arrows) and its enlargement (a lightbox that closes with the X, Esc or a tap outside) */
+    '.dd-gal__a{all:unset;box-sizing:border-box;position:absolute;top:50%;width:34px;height:34px;margin-top:-17px;border-radius:50%;display:grid;place-items:center;background:rgba(46,54,51,.74);color:#FBFBED;cursor:pointer;z-index:2;opacity:0;transition:opacity .15s}' +
+    '.dd-gal__prev{left:8px}.dd-gal__next{right:8px}.dd-gal:hover .dd-gal__a:not(:disabled),.dd-gal__a:focus-visible{opacity:1}@media (hover:none){.dd-gal__a:not(:disabled){opacity:.86}}.dd-gal__a:disabled{display:none}.dd-gal__a:focus-visible,.dd-gal__dot:focus-visible{outline:2px solid #6E8601;outline-offset:2px}' +
+    '#ddtv-lb{position:fixed;inset:0;z-index:2147483000;box-sizing:border-box;padding:max(14px,env(safe-area-inset-top)) 14px 14px;background:rgba(24,29,27,.94);display:grid;grid-template-rows:minmax(0,1fr) auto;gap:10px;font-family:Chillax,"Helvetica Neue",Arial,sans-serif}' +
+    '#ddtv-lb .ddtv-lb__b{min-height:0;display:flex;align-items:center;justify-content:center;border-radius:12px;overflow:hidden}#ddtv-lb img{display:block;width:100%;height:100%;object-fit:contain;max-width:none;-webkit-user-drag:none;user-select:none}' +
+    '#ddtv-lb .ddtv-lb__t{display:flex;justify-content:space-between;gap:14px;align-items:baseline;color:#FBFBED;font:500 14px/1.4 Chillax,"Helvetica Neue",Arial,sans-serif}#ddtv-lb .ddtv-lb__t b{white-space:nowrap;font-weight:600;letter-spacing:.04em}' +
+    '#ddtv-lb button{all:unset;box-sizing:border-box;position:absolute;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(46,54,51,.86);color:#FBFBED;cursor:pointer;border:1.5px solid rgba(251,251,237,.5);z-index:2}#ddtv-lb button:hover{background:#FBFBED;color:#2E3633}#ddtv-lb button:focus-visible{outline:2px solid #FBFBED;outline-offset:2px}' +
+    '#ddtv-lb .ddtv-lb__c{top:max(16px,env(safe-area-inset-top));right:16px}#ddtv-lb .ddtv-lb__a{top:50%;margin-top:-23px}#ddtv-lb .ddtv-lb__p{left:16px}#ddtv-lb .ddtv-lb__n{right:16px}' +
     '#ddtv-experience{display:block;width:100%;margin:0 0 24px;clear:both}' +
     'html.ddtv-classic #ddtv-experience{display:none}';
 
@@ -249,7 +257,7 @@
   var onResize = function () { clearTimeout(onResize.t); onResize.t = setTimeout(bleed, 60); };
 
   /* ---------- mount and unmount (Ecwid swaps product pages without reloading) ---------- */
-  function schedule() { if (pending) return; pending = setTimeout(function () { pending = null; pull(); ensureFold(); }, 80); }
+  function schedule() { if (pending) return; pending = setTimeout(function () { pending = null; pull(); ensureFold(); galScan(); }, 80); }
   function mount(pid) {
     if (host && doc.body.contains(host)) return host;
     if (isPhone() && !global.__ddtvForceTv) return null;
@@ -275,6 +283,7 @@
     doc.addEventListener('change', onNativeChange, true);
     poll = setInterval(function () { if (!doc.hidden) { keep(); pull(); } }, 1500);
     lastPid = pid;
+    galScan();
     keep();
     return host;
   }
@@ -282,6 +291,7 @@
   function keep() {
     var cl = doc.documentElement.classList; if (!host || !A) return;
     if (!doc.getElementById('ddtv-page-css')) pageStyle();
+    galScan();
     if (A.S && A.S.view === 'tv' && !cl.contains('ddtv-classic')) {
       if (!cl.contains('ddtv-on')) cl.add('ddtv-on');
       if (!inForce()) { adopt(); fallback = true; }
@@ -347,6 +357,52 @@
     each('#tile-product-details .ins-tile__wrap', { 'margin-top': '14px' }, on);
     each('.product-details__description', { 'max-height': '0', overflow: 'hidden', padding: '0', margin: '0' }, on && !doc.documentElement.classList.contains('ddtv-desc-open'));
   }
+
+  /* ===== the gallery of the standard module (owner, 26 Nov). The module's markup (.dd-gal) is a plain slider that works without script; the engine makes the dots
+     tappable, adds the arrows and a mouse drag, and opens the picture large (a lightbox) with a close button, Esc and a tap outside. ===== */
+  var AL = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>',
+      AR = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg>',
+      AX = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var lb = null, lbKey = null, lbFrom = null;
+  function lbClose() {
+    if (!lb) return; if (lb.parentNode) lb.parentNode.removeChild(lb); lb = null; doc.removeEventListener('keydown', lbKey, true); doc.documentElement.style.overflow = '';
+    if (lbFrom && lbFrom.focus) try { lbFrom.focus({ preventScroll: true }); } catch (e) { /* none */ } lbFrom = null;
+  }
+  function lbShow(items, i, from) {
+    i = Math.max(0, Math.min(items.length - 1, i)); var it = items[i]; lbFrom = from || lbFrom;
+    if (!lb) {
+      lb = doc.createElement('div'); lb.id = 'ddtv-lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Picture');
+      lb.addEventListener('click', function (e) { var t = e.target.closest ? e.target.closest('button') : null; if (t) { var a = t.getAttribute('data-s'); if (a === 'x') lbClose(); else lbShow(items, lb.__i + (+a)); return; } if (e.target === lb || (e.target.classList && e.target.classList.contains('ddtv-lb__b'))) lbClose(); });
+      var sx = null; lb.addEventListener('pointerdown', function (e) { sx = e.clientX; }); lb.addEventListener('pointerup', function (e) { if (sx == null) return; var dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 60) lbShow(items, lb.__i + (dx < 0 ? 1 : -1)); });
+      lbKey = function (e) { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); lbClose(); } else if (e.key === 'ArrowRight') { e.preventDefault(); lbShow(items, lb.__i + 1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); lbShow(items, lb.__i - 1); } };
+      doc.addEventListener('keydown', lbKey, true); doc.documentElement.style.overflow = 'hidden'; (doc.body || doc.documentElement).appendChild(lb);
+    }
+    lb.__i = i;
+    lb.innerHTML = '<div class="ddtv-lb__b"><img alt=""></div><div class="ddtv-lb__t"><span></span><b>' + (i + 1) + ' / ' + items.length + '</b></div>' +
+      '<button type="button" class="ddtv-lb__c" data-s="x" aria-label="Close the picture">' + AX + '</button>' + (i > 0 ? '<button type="button" class="ddtv-lb__a ddtv-lb__p" data-s="-1" aria-label="Previous picture">' + AL + '</button>' : '') + (i < items.length - 1 ? '<button type="button" class="ddtv-lb__a ddtv-lb__n" data-s="1" aria-label="Next picture">' + AR + '</button>' : '');
+    lb.querySelector('.ddtv-lb__b').style.background = it.bg || '#2E3633'; lb.querySelector('img').src = it.url; lb.querySelector('img').setAttribute('alt', it.alt || ''); lb.querySelector('.ddtv-lb__t span').textContent = it.alt || '';
+    var c = lb.querySelector('.ddtv-lb__c'); if (c && c.focus) try { c.focus({ preventScroll: true }); } catch (e) { /* none */ }
+  }
+  function galWire(g) {
+    var v = g.querySelector('.dd-gal__v'); if (!v) return; g.setAttribute('data-ddg', '1');
+    var sl = v.querySelectorAll('.dd-gal__s'), dots = g.querySelectorAll('.dd-gal__dot'), n = sl.length, raf = 0, drag = null, moved = false, cur = 0;
+    var items = []; for (var k = 0; k < n; k++) { var im = sl[k].querySelector('img'); items.push({ url: im ? (im.currentSrc || im.src) : '', alt: im ? im.getAttribute('alt') : '', bg: global.getComputedStyle(sl[k]).backgroundColor }); }
+    var mk = function (cls, label, html) { var b = doc.createElement('button'); b.type = 'button'; b.className = 'dd-gal__a ' + cls; b.setAttribute('aria-label', label); b.innerHTML = html; g.appendChild(b); return b; };
+    var pv = mk('dd-gal__prev', 'Previous picture', AL), nx = mk('dd-gal__next', 'Next picture', AR);
+    var show = function (i) { cur = i; for (var d = 0; d < dots.length; d++) dots[d].className = 'dd-gal__dot' + (d === i ? ' on' : ''); pv.disabled = i <= 0; nx.disabled = i >= n - 1; };
+    var go = function (i, smooth) { i = Math.max(0, Math.min(n - 1, i)); v.scrollTo({ left: i * v.clientWidth, behavior: smooth ? 'smooth' : 'auto' }); show(i); };
+    show(0);
+    for (var d = 0; d < dots.length; d++) (function (d2) { dots[d2].setAttribute('role', 'button'); dots[d2].setAttribute('tabindex', '0'); dots[d2].setAttribute('aria-label', 'Picture ' + (d2 + 1) + ' of ' + n); dots[d2].addEventListener('click', function () { go(d2, true); }); dots[d2].addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(d2, true); } }); })(d);
+    g.removeAttribute('aria-hidden'); var dw = g.querySelector('.dd-gal__d'); if (dw) dw.removeAttribute('aria-hidden');
+    pv.addEventListener('click', function () { go(cur - 1, true); }); nx.addEventListener('click', function () { go(cur + 1, true); });
+    v.addEventListener('scroll', function () { if (raf) return; raf = global.requestAnimationFrame(function () { raf = 0; var i = Math.max(0, Math.min(n - 1, Math.round(v.scrollLeft / (v.clientWidth || 1)))); if (i !== cur) show(i); }); });
+    v.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse' || e.button !== 0) return; drag = { x: e.clientX, s: v.scrollLeft, i: cur }; moved = false; });
+    v.addEventListener('pointermove', function (e) { if (!drag) return; var dx = e.clientX - drag.x; if (!moved && Math.abs(dx) > 5) { moved = true; v.className += ' dd-drag'; try { v.setPointerCapture(e.pointerId); } catch (x) { /* none */ } } if (moved) v.scrollLeft = drag.s - dx; });
+    var end = function (e) { if (!drag) return; var dd = drag, dx = e.clientX - dd.x; drag = null; v.__moved = moved; if (!moved) return; v.className = v.className.replace(/\s*dd-drag/, ''); var t = Math.round(v.scrollLeft / (v.clientWidth || 1)); if (t === dd.i && Math.abs(dx) > 40) t = dd.i + (dx < 0 ? 1 : -1); go(t, true); };
+    v.addEventListener('pointerup', end); v.addEventListener('pointercancel', end);
+    v.addEventListener('click', function (e) { if (v.__moved) { v.__moved = false; return; } var s = e.target.closest ? e.target.closest('.dd-gal__s') : null; if (!s) return; var i = 0; while ((s = s.previousElementSibling)) i++; lbShow(items, i, e.target); });
+  }
+  function galScan() { var g = doc.querySelectorAll('.dd-gal:not([data-ddg])'); for (var i = 0; i < g.length; i++) { try { galWire(g[i]); } catch (e) { g[i].setAttribute('data-ddg', 'x'); } } }
 
   /* ?ddtv=debug (kept for the tab, ?ddtv=nodebug ends it): a small read-out in the corner with what the page is doing, for a screenshot from a device that cannot be inspected */
   (function debugPanel() {

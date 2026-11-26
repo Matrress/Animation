@@ -234,6 +234,8 @@ D.curated['discover/who'] = D.curated['firmness/who'];   // the same panel, in D
 /* IGNITION: the start-up of the television, shown each time it is switched on (page start and every press of Optimised
    Preview). Minimal, like a car's instrument panel waking up. The two facts are mandatory and are the description's own
    (hero bar: "100% Organic · Dunlop Technology"); a later model sets its own name and facts here. */
+/* owner, 26 Nov: the mini-gallery of Your selection (and the gallery of the standard module): the owner's pictures, fitted whole, one per topic */
+{ const GJ = JSON.parse(readFileSync(join(root, 'products', 'botanic.gallery.json'), 'utf8')); D.gallery = GJ.items.map((x) => ({ key: x.key, url: GJ.base + x.name, alt: x.alt, bg: x.bg, w: x.w, h: x.h })); }
 D.ignition = { name: 'BOTANIC', facts: [['Material', '100% Natural Latex'], ['Process', 'Dunlop Technology']],
   pillars: [['Explore', '11 topics, one clear way in'], ['Select & Buy', 'Four choices, then one button'], ['Custom', 'Made to order, to your confirmed specification']],
   tagline: 'Custom Dunlop Natural Environment for Healthy Sleep', sub: 'One custom presentation module: it explores, it selects and it customises.' };

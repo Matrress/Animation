@@ -52,10 +52,18 @@
 .dd-hd { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 10px; margin: 0 0 8px; }
 .dd-hd > * { grid-column: 1 / -1; margin: 0; }
 .dd-hd__t { background: var(--coffee); border-radius: 18px; padding: 22px 22px 8px; }
-.dd-ph { margin: 0; border-radius: 18px; overflow: hidden; background: var(--latte); min-height: 240px; }
-.dd-ph img { width: 100%; height: 100%; min-height: 240px; border-radius: 0; object-fit: cover; object-position: 30% 55%; }
+.dd-ph { margin: 0; border-radius: 18px; overflow: hidden; background: var(--latte); min-height: 240px; position: relative; aspect-ratio: 4 / 3; }
+/* the gallery: one picture at a time, fitted whole (never cropped), swiped sideways; the dots show where you are (the engine makes them tappable and adds arrows and the enlargement) */
+.dd-gal__v { position: absolute; inset: 0; display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; border-radius: inherit; }
+.dd-gal__v::-webkit-scrollbar { display: none; }
+.dd-gal__v.dd-drag { scroll-snap-type: none; cursor: grabbing; user-select: none; }
+.dd-gal__s { flex: 0 0 100%; min-width: 0; height: 100%; scroll-snap-align: center; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
+.dd-gal__s img { display: block; width: 100%; height: 100%; min-height: 0; border-radius: 0; object-fit: contain; cursor: zoom-in; -webkit-user-drag: none; }
+.dd-gal__d { position: absolute; left: 0; right: 0; bottom: 6px; display: flex; justify-content: center; pointer-events: none; }
+.dd-gal__dot { width: 7px; height: 7px; margin: 3px; border-radius: 50%; background: rgba(255,255,255,.88); box-shadow: 0 0 0 1px rgba(36,42,40,.5); pointer-events: auto; cursor: pointer; }
+.dd-gal__dot.on { background: #6E8601; box-shadow: 0 0 0 1.5px #FEFEF6; transform: scale(1.25); }
 @container dd (max-width: 560px) { .dd-key li { grid-column: span 6; } .dd-glance > div { grid-column: span 6; } .dd-duo figure:first-child, .dd-duo figure:last-child { grid-column: span 12; } }
-@container dd (min-width: 640px) { .dd-hd__t { grid-column: 1 / 9; grid-row: 1; } .dd-ph { grid-column: 9 / -1; grid-row: 1; } .dd-ph img { position: absolute; inset: 0; } .dd-ph { position: relative; } }
+@container dd (min-width: 640px) { .dd-hd__t { grid-column: 1 / 8; grid-row: 1; } .dd-ph { grid-column: 8 / -1; grid-row: 1; } .dd-ph { aspect-ratio: auto; } }
 .dd-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 8px !important; }
 .dd-title { font-size: clamp(26px, 3.6vw, 36px); line-height: 1.12; font-weight: 300; margin: 0 0 12px; }
 .dd-std .dd-dk .dd-title__b { display: block; font-weight: 700; letter-spacing: -.01em; color: var(--olt) !important; }
@@ -190,5 +198,7 @@
 .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button *, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button,
 .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button *, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button { filter: none !important; mix-blend-mode: normal !important; }
 /* owner, 26 Nov: the shop's own product title (here a draft name) is not shown above the module; it stays in the page for readers of the code and search engines. The module's header carries the name. */
+/* owner, 26 Nov: the shop's own picture block is not shown where this module stands (the module's gallery and the television's own pictures replace it; the main picture stays in the page for the category tile, the shop's data and search engines) */
+.product-details:has(.dd-std) .product-details__gallery { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; clip-path: inset(50%) !important; opacity: 0 !important; pointer-events: none !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }
 .product-details:has(.dd-std) .product-details__product-title { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; clip-path: inset(50%) !important; white-space: nowrap !important; margin: 0 !important; padding: 0 !important; border: 0 !important; opacity: 0 !important; pointer-events: none !important; }
 html.ddtv-on #bp-top .dd-how { display: none !important; }
