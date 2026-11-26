@@ -64,12 +64,12 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   const bg = await p.evaluate(() => { const g = (s) => getComputedStyle(document.querySelector(s)).backgroundColor; return { rail: g('.rail'), mine: g('.mine'), stage: getComputedStyle(document.documentElement).getPropertyValue('--stage-a').trim() }; });
   ok(lum(bg.rail.startsWith('#') ? bg.rail : '#' + bg.rail.match(/\d+/g).slice(0, 3).map((n) => (+n).toString(16).padStart(2, '0')).join('')) > 0.9 && bg.mine === 'rgb(100, 97, 85)', 'R2 the topic rail is light (cream); "Your selection" is its own olive column (#646155)', JSON.stringify(bg));
   ok(lum(bg.stage) > 0.9, 'R3 the middle stage is the light one (not dark, not grey)', bg.stage);
-  // R4 one common top line for the three columns, on every step and on information panels
+  // R4 one common top line for the three columns, on every step and on information panels (owner, 26 Nov: the CARD Your selection itself, not its first inner box, stands level with the open middle card and the tree card)
   if (landscape) {
     for (const q of ['?step=0', '?step=1', '?step=2', '?step=3', '?step=4', '?ch=comfort&pn=behaviour', '?ch=zones&pn=map', '?ch=warranty&pn=cover']) {
       await p.goto(file + q); await p.waitForTimeout(120);
-      const t = await p.evaluate(() => { const y = (s) => document.querySelector(s).getBoundingClientRect().top; return [y('.q'), y('#chips > :first-child'), y('.rail .tp')]; });
-      ok(Math.max(...t) - Math.min(...t) <= 1.5, 'R4 first boxes of the three columns share one top line ' + q, t.map((v) => v.toFixed(1)).join(' / '));
+      const t = await p.evaluate(() => { const y = (s) => document.querySelector(s).getBoundingClientRect().top; return [y('.q'), y('.mine'), y('.rail .tp')]; });
+      ok(Math.max(...t) - Math.min(...t) <= 1.5, 'R4 the open middle card, the card Your selection and the tree card share one top line ' + q, t.map((v) => v.toFixed(1)).join(' / '));
     }
   }
   // R5 the eleven Explore topics (owner 16 Nov IV: Firmness, Height and Covers live only in Select & Buy, never twice)
@@ -271,18 +271,18 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   await p.keyboard.press('Escape'); await p.waitForTimeout(100); const fv2 = await p.evaluate(() => ({ hid: document.querySelector('#vmodal').hidden, src: document.querySelector('#vfull').getAttribute('src') }));
   await p.click('.hero .fpan .vid'); await p.waitForTimeout(150); const fv3 = await p.evaluate(() => !document.querySelector('#vmodal').hidden); await p.click('#vmodal .vclose'); await p.waitForTimeout(100); const fv4 = await p.evaluate(() => document.querySelector('#vmodal').hidden);
   ok(fv0.btn && !fv0.src0 && fv0.hid && fv0.key && !fv1.hid && /presentation-full\.mp4$/.test(fv1.src || '') && fv1.ctl && fv2.hid && !fv2.src && fv3 && fv4, 'R47 Discover offers the whole film (not the loop) full screen with controls; nothing is loaded before it is asked for; Escape, the close button and a tap on the loop work', JSON.stringify({ fv0, fv1, fv2, fv3, fv4 }));
-  // R48 owner 20 Nov XXVIII: pressing a topic opens its parts in a strip under the Explore row (no hover, nothing blinks); a part goes to its page; All topics opens the whole nomenclature from the start
+  // R48 (owner 20 Nov XXVIII; changed 26 Nov): there is NO parts strip under the Explore row: the parts of the open topic are in the "In this topic" tree on the left, with one line saying that a tap moves between them; a part goes to its page; All topics opens the whole nomenclature from the start
   await p.goto(file + '?ignite=0'); await p.waitForTimeout(150);
-  const xk = await p.evaluate(() => ({ allt: !!document.querySelector('#allbtn') && !document.querySelector('.exg .allt') && !document.querySelector('#rail .allt-r') && document.querySelectorAll('.exg .ch').length === 11, hoverWraps: document.querySelectorAll('.exg .chw').length, strip0: document.querySelectorAll('.exg .exsub button').length, head0: (document.querySelector('.exg .exsub .exh') || {}).textContent }));
+  const xk = await p.evaluate(() => ({ allt: !!document.querySelector('#allbtn') && !document.querySelector('.exg .allt') && !document.querySelector('#rail .allt-r') && document.querySelectorAll('.exg .ch').length === 11, hoverWraps: document.querySelectorAll('.exg .chw').length, strip0: document.querySelectorAll('.exg .exsub').length, tree0: document.querySelectorAll('#rail .tbr .pn').length, head0: (document.querySelector('#rail .tp b') || {}).textContent, hint0: (document.querySelector('#rail .tnote') || {}).textContent }));
   await p.click('.exg [data-ch="comfort"]'); await p.waitForTimeout(150);
-  const xc = await p.evaluate(() => ({ head: (document.querySelector('.exg .exsub .exh') || {}).textContent, n: document.querySelectorAll('.exg .exsub button').length, want: D.chapters.find((c) => c.id === 'comfort').panels.filter((x) => x.kind !== 'step').length, cur: (document.querySelector('.exg .exsub button[aria-current=true]') || {}).textContent }));
-  await p.click('.exg .exsub button[data-goto="comfort/first"]'); await p.waitForTimeout(150);
-  const xg = await p.evaluate(() => ({ where: document.querySelector('#stageh').textContent.trim(), strip: document.querySelectorAll('.exg .exsub button').length, cur: (document.querySelector('.exg .exsub button[aria-current=true]') || {}).textContent }));
+  const xc = await p.evaluate(() => ({ strip: document.querySelectorAll('.exg .exsub').length, head: (document.querySelector('#rail .tp b') || {}).textContent, n: document.querySelectorAll('#rail .tbr .pn').length, want: D.chapters.find((c) => c.id === 'comfort').panels.filter((x) => x.kind !== 'step').length, cur: (document.querySelector('#rail .tbr .pn[aria-current=true]') || {}).textContent }));
+  await p.click('#rail .tbr .pn[data-pn="first"]'); await p.waitForTimeout(150);
+  const xg = await p.evaluate(() => ({ where: document.querySelector('#stageh').textContent.trim(), strip: document.querySelectorAll('.exg .exsub').length, n: document.querySelectorAll('#rail .tbr .pn').length, cur: (document.querySelector('#rail .tbr .pn[aria-current=true]') || {}).textContent }));
   await p.click('#allbtn'); await p.waitForTimeout(150);
   const xa = await p.evaluate(() => ({ title: document.querySelector('#q h1').textContent.trim(), cards: document.querySelectorAll('.contents section').length, items: document.querySelectorAll('.contents li button').length, strip: document.querySelectorAll('.exg .exsub').length }));
   await p.click('.contents li button[data-goto="delivery/install"]'); await p.waitForTimeout(150);
   const xb = await p.evaluate(() => ({ where: document.querySelector('#stageh').textContent.trim(), contents: !!document.querySelector('.contents') }));
-  ok(xk.allt && xk.hoverWraps === 0 && xk.strip0 >= 3 && /Discover/i.test(xk.head0 || '') && /Comfort/i.test(xc.head || '') && xc.n === xc.want && /What To Expect/.test(xc.cur || '') && /Comfort/.test(xg.where) && xg.strip === xc.want && xa.title === 'All topics' && xa.cards === 11 && xa.items >= 30 && xa.strip === 0 && /Delivery/.test(xb.where) && !xb.contents, 'R48 pressing a topic opens its parts in a strip under the Explore row, without hover; a part goes to its page and the strip follows; All topics opens the whole nomenclature and a choice from it opens that part', JSON.stringify({ xk, xc, xg, xa, xb }));
+  ok(xk.allt && xk.hoverWraps === 0 && xk.strip0 === 0 && xk.tree0 >= 3 && /Tap a part/.test(xk.hint0 || '') && /Discover/i.test(xk.head0 || '') && xc.strip === 0 && /Comfort/i.test(xc.head || '') && xc.n === xc.want && /What To Expect/.test(xc.cur || '') && /Comfort/.test(xg.where) && xg.strip === 0 && xg.n === xc.want && xa.title === 'All topics' && xa.cards === 11 && xa.items >= 30 && xa.strip === 0 && /Delivery/.test(xb.where) && !xb.contents, 'R48 no parts strip under the Explore row: the parts are in the tree on the left with a hint line; a part goes to its page; All topics opens the whole nomenclature and a choice from it opens that part', JSON.stringify({ xk, xc, xg, xa, xb }));
   // R49 owner 20 Nov XXVII: Delivery has an Installation part with the orientation advice and the two-people advice
   await p.goto(file + '?ch=delivery&pn=install&ignite=0'); await p.waitForTimeout(150);
   const ins = await p.evaluate(() => { const P = D.chapters.find((c) => c.id === 'delivery').panels.find((x) => x.id === 'install'); return { h1: document.querySelector('#q h1').textContent.trim(), txt: JSON.stringify(P.groups), order: D.chapters.find((c) => c.id === 'delivery').panels.map((x) => x.id).join(',') }; });
@@ -304,13 +304,13 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   for (const [ch, pn] of R51) {
     await p.goto(file + '?ch=' + ch + '&pn=' + pn + '&ignite=0'); await p.waitForTimeout(150);
     const tw = await p.evaluate(() => { const cs = (el) => el ? { bg: getComputedStyle(el).backgroundColor, sh: getComputedStyle(el).boxShadow, tx: el.textContent.replace(/\s+/g, ' ').trim() } : null;
-      return { top: cs(document.querySelector('.exg .ch[aria-current=true]')), part: cs(document.querySelector('.exg .exsub button[aria-current=true]')), root: cs(document.querySelector('.tree .tp')), rootB: (document.querySelector('.tree .tp b') || {}).textContent, cur: cs(document.querySelector('.tbr .pn[aria-current=true]')) }; });
+      return { top: cs(document.querySelector('.exg .ch[aria-current=true]')), root: cs(document.querySelector('.tree .tp')), rootB: (document.querySelector('.tree .tp b') || {}).textContent, cur: cs(document.querySelector('.tbr .pn[aria-current=true]')) }; });
     const V = 'rgb(251, 251, 237)', notch = (e) => e && e.bg === V && /rgb\(86, 105, 1\)/.test(e.sh);
     const lab = (s) => (s || '').replace(/^[A-G]\s*/, '').replace(/Helps you choose$/, '').trim();
-    const good = tw.top && tw.part && tw.root && tw.cur && notch(tw.top) && notch(tw.part) && notch(tw.root) && notch(tw.cur) && tw.rootB === tw.top.tx && lab(tw.part.tx) === lab(tw.cur.tx) && tw.part.tx.charAt(0) === tw.cur.tx.charAt(0);
+    const good = tw.top && tw.root && tw.cur && notch(tw.top) && notch(tw.root) && notch(tw.cur) && tw.rootB === tw.top.tx && true;
     if (!good) { r51ok = false; r51bad.push(ch + '/' + pn + ' ' + JSON.stringify(tw)); }
   }
-  ok(r51ok, 'R51 the open topic and part are the same vanilla item with the same green notch in the top row, the parts strip and the tree, with the same words', r51bad.join(' || '));
+  ok(r51ok, 'R51 the open topic and part are the same vanilla item with the same green notch in the top row and the tree, with the same words', r51bad.join(' || '));
   const pageSet = [];
   const allPanels = await p.evaluate(() => D.chapters.map((c) => c.panels.map((q) => c.id + '|' + q.id)).reduce((a, b) => a.concat(b), []));
   for (const k of allPanels) pageSet.push('?ch=' + k.split('|')[0] + '&pn=' + k.split('|')[1]);

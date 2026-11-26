@@ -153,11 +153,15 @@
   function checkout() { if (global.Ecwid && global.Ecwid.openPage) global.Ecwid.openPage('cart'); }
 
   /* ---------- the long description: still in the page (it is the indexed text), folded under the television ---------- */
-  var PAGE_CSS = 'html.ddtv-on:not(.ddtv-desc-open) .product-details__description{max-height:420px;overflow:hidden;position:relative;' +
+  var PAGE_CSS = 'html.ddtv-on .product-details__sidebar,html.ddtv-on .details-product-share{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;opacity:0!important;pointer-events:none!important;border:0!important;margin:0!important;padding:0!important}' +
+    'html.ddtv-on:not(.ddtv-desc-open) .product-details__description{max-height:420px;overflow:hidden;position:relative;' +
     '-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}' +
     '.ddtv-fold{display:block;margin:14px auto 28px;padding:12px 22px;border-radius:12px;border:1.5px solid #434239;background:#FBFBED;color:#2E3633;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif;cursor:pointer}' +
     '.ddtv-fold:hover{background:#434239;color:#FBFBED}' +
-    '#ddtv-experience{display:block;width:100%;margin:0 0 24px;clear:both}';
+    '#ddtv-experience{display:block;width:100%;margin:0 0 24px;clear:both}' +
+    'html.ddtv-classic #ddtv-experience{display:none}' +
+    '#ddtv-back{display:block;margin:0 auto 18px;padding:12px 22px;border-radius:12px;border:1.5px solid #434239;background:#FBFBED;color:#2E3633;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif;cursor:pointer}' +
+    '#ddtv-back:hover{background:#434239;color:#FBFBED}';
   function pageStyle() {
     if (doc.getElementById('ddtv-page-css')) return;
     var st = doc.createElement('style'); st.id = 'ddtv-page-css'; st.textContent = PAGE_CSS; (doc.head || doc.documentElement).appendChild(st);
@@ -171,6 +175,26 @@
     foldBtn.textContent = doc.documentElement.classList.contains('ddtv-desc-open') ? 'Fold the description' : 'Read the full description';
     foldBtn.onclick = function () { var on = doc.documentElement.classList.toggle('ddtv-desc-open'); foldBtn.textContent = on ? 'Fold the description' : 'Read the full description'; };
     d.parentNode.insertBefore(foldBtn, d.nextSibling);
+  }
+
+  /* the classic view: the shop's own page, the television steps aside; one button brings it back */
+  function classic() {
+    if (!host) return;
+    doc.documentElement.classList.remove('ddtv-on', 'ddtv-desc-open');
+    doc.documentElement.classList.add('ddtv-classic');
+    if (foldBtn && foldBtn.parentNode) foldBtn.parentNode.removeChild(foldBtn); foldBtn = null;
+    if (!doc.getElementById('ddtv-back')) {
+      var r = shopRoot(); if (!r) return;
+      var bk = doc.createElement('button'); bk.id = 'ddtv-back'; bk.type = 'button'; bk.textContent = 'Optimised Preview';
+      bk.onclick = tvOn; r.parentNode.insertBefore(bk, r);
+    }
+  }
+  function tvOn() {
+    doc.documentElement.classList.remove('ddtv-classic');
+    doc.documentElement.classList.add('ddtv-on');
+    var bk = doc.getElementById('ddtv-back'); if (bk && bk.parentNode) bk.parentNode.removeChild(bk);
+    if (A) { A.S.view = 'tv'; A.draw(); }
+    ensureFold();
   }
 
   /* The approved design is drawn for the whole width of the screen (its own maximum is 1440 px, centred); the shop's column is
@@ -195,7 +219,7 @@
     pd.parentNode.insertBefore(host, pd);
     var R = host.attachShadow ? host.attachShadow({ mode: 'open' }) : host;
     app = global.__DDTVX_TV(R, {   // the television, built from the approved design
-      shop: shop, addToBag: addToBag, checkout: checkout, after: push,
+      shop: shop, addToBag: addToBag, checkout: checkout, classic: classic, after: push,
       firstTime: function () { try { if (global.sessionStorage.getItem('ddtvIgnited')) return false; global.sessionStorage.setItem('ddtvIgnited', '1'); } catch (e) { /* private mode: play it */ } return true; },
       attach: function (api) { A = api; pull.ps = priceSig(); pull(); }
     });
@@ -216,7 +240,8 @@
     if (host && host.parentNode) host.parentNode.removeChild(host);
     if (foldBtn && foldBtn.parentNode) foldBtn.parentNode.removeChild(foldBtn);
     host = null; app = null; A = null; foldBtn = null;
-    doc.documentElement.classList.remove('ddtv-on', 'ddtv-desc-open');
+    doc.documentElement.classList.remove('ddtv-on', 'ddtv-desc-open', 'ddtv-classic');
+    var bk = doc.getElementById('ddtv-back'); if (bk && bk.parentNode) bk.parentNode.removeChild(bk);
   }
 
   function onPage(page) {

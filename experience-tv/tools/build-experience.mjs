@@ -87,7 +87,7 @@ let css = css0
 must(!/(^|[\s,}])(html|body)[\s,.{:]/.test(css.replace(/\.(ddx|ivory)/g, '')), 'no html/body selector left');
 css = ':host{all:initial;display:block;contain:layout style}\n' + css +
   '\n.ddx{display:block;font-family:var(--f);font-size:16px;line-height:1.4;color:var(--ink);text-align:left;border-radius:14px;overflow:hidden}' +
-  '\n.ddx .pv,.ddx .seg,.ddx .stdv,.ddx .shopstrip{display:none!important}';
+  '\n.ddx .pv,.ddx .stdv,.ddx .shopstrip{display:none!important}';
 
 // ---------- 4. the markup: the same, inside one root ----------
 // the preview's own notes are not for customers (hidden anyway): out of the module
@@ -116,7 +116,11 @@ body = replaceExact(body, "'Stand-in here. In the shop, the prices and the disco
 // the custom-size request: the store's contact page (there is no form backend in the shop)
 body = body.replace(/toast\('Preview only: nothing was sent\.[^']*'\)/, "window.open('https://divinedunlop.com/contact-us', '_blank')");
 // after every drawing, the shop's dropdowns follow the screen
-body = replaceExact(body, 'function draw() { draw0(); boldTerms(); }', 'function draw() { draw0(); boldTerms(); if (H.after) H.after(); }');
+body = replaceExact(body, 'function draw() { draw0(); boldTerms(); compactStage(); }', 'function draw() { draw0(); boldTerms(); compactStage(); if (H.after) H.after(); }');
+// the layout code must see the television's own markup: it lives in a Shadow DOM, the page cannot find it
+body = body.split('document.querySelectorAll(').join('W.querySelectorAll(').split('document.querySelector(').join('W.querySelector(');
+// Standard Product View: the television steps aside and the shop's own page is shown (not a stand-in)
+body = replaceExact(body, "if (S.view === 'std') { drawStd(); return; }", "if (S.view === 'std') { H.classic(); return; }");
 // the certificate logos arrive on demand
 body = replaceExact(body, 'var L = D.logos || {},', 'var L = (LOGOS(), D.logos || {}),');
 // the start-up film plays once per visit in the shop (the owner: it plays when the model is entered, not at every page view)
