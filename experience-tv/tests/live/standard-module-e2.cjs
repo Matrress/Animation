@@ -41,7 +41,7 @@ const analyse = async (b64) => {
   await p.goto(URL, { waitUntil: 'commit', timeout: 90000 }); await p.waitForSelector('.details-product-option select', { timeout: 80000 }); await p.waitForTimeout(3500);
   try { await p.getByRole('button', { name: /decline/i }).first().click({ timeout: 2000 }); } catch (e) { /* none */ }
   await p.waitForTimeout(2000); media.length = 0;
-  await p.evaluate((h) => { document.querySelector('.dd-botanic-page').parentElement.innerHTML = h; }, html); await p.waitForTimeout(2500);
+  await p.evaluate((h) => { const o = document.querySelector('.dd-botanic-page'); (o ? o.parentElement : document.querySelector('.product-details__description')).innerHTML = h; }, html); await p.waitForTimeout(2500);
   // M1
   const m1 = await p.evaluate(() => { const t = [...document.querySelectorAll('#bp-top .dd-t')], v = [...document.querySelectorAll('#bp-top video')]; return { topics: t.length, open: t.filter((x) => x.open).length, scripts: document.querySelectorAll('#bp-top script').length, videos: v.length, preloadNone: v.every((x) => x.getAttribute('preload') === 'none'), autoplay: v.some((x) => x.hasAttribute('autoplay')), loop: v.some((x) => x.hasAttribute('loop')) }; });
   ok(m1.topics === 13 && m1.open === 0 && m1.scripts === 0 && m1.videos >= 6 && m1.preloadNone && !m1.autoplay && !m1.loop && media.length === 0, 'M1 13 topics, all closed; no script; every video waits for its play button; nothing fetched', JSON.stringify({ ...m1, fetched: media }));
@@ -133,6 +133,10 @@ const analyse = async (b64) => {
     const crypto = require('crypto'); let st = 0, same = false;
     if (m) { try { const body = require('child_process').execFileSync('curl', ['-s', '-w', '\n%{http_code}', 'https://media.divinedunlop.com/ddtv/' + m[1]], { maxBuffer: 5e6 }).toString(); const code = +body.trim().split('\n').pop(); st = code; if (code === 200) { const txt = body.slice(0, body.lastIndexOf('\n')); same = crypto.createHash('sha256').update(Buffer.from(txt)).digest('hex') === crypto.createHash('sha256').update(logos).digest('hex'); } } catch (e) { st = 'error ' + e.message; } }
     ok(!!m && st === 200 && same, 'M12 the certificate logos the television asks for are on the media host and are the built file (no 404)', JSON.stringify({ file: m && m[1], status: st, same }));
+    // every picture the television asks for (the mattress and the cup) is on the media host too: a name that is not there shows a broken picture
+    const pics = [...new Set([...tvJs.matchAll(/__BASE__(botanic-[a-z]+-[0-9a-f]{20}\.webp)/g)].map((x) => x[1]).concat([...tvJs.matchAll(/'(botanic-(?:cup|mattress)-[0-9a-f]{20}\.webp)'/g)].map((x) => x[1])))];
+    const codes = pics.map((f) => { try { return [f, +require('child_process').execFileSync('curl', ['-s', '-o', '/dev/null', '-w', '%{http_code}', 'https://media.divinedunlop.com/ddtv/' + f]).toString()]; } catch (e) { return [f, 'error']; } });
+    ok(pics.length >= 2 && codes.every((x) => x[1] === 200), 'M12b the mattress and cup pictures the television asks for are on the media host (no broken picture in Your selection)', JSON.stringify(codes));
   }
   // M6
   await p.click('#ddtv-to-standard'); await p.waitForTimeout(1500);

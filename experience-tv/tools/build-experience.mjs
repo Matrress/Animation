@@ -61,15 +61,19 @@ D.logos = {};
 // the cup picture: a real file next to the module (a picture inside the script cannot be compressed and is downloaded twice)
 const bowlM = /^data:image\/(webp|png|jpeg);base64,(.+)$/.exec(D.bowl || '');
 must(bowlM, 'the cup picture is a data URI in the design');
-const BOWL_FILE = 'botanic-cup.' + (bowlM[1] === 'jpeg' ? 'jpg' : bowlM[1]);
-writeFileSync(join(out, BOWL_FILE), Buffer.from(bowlM[2], 'base64'));
+// named by content, as the logos are: the television asks for exactly the file that is on the media host
+const contentName = (stem, ext, bytes) => stem + '-' + createHash('sha256').update(bytes).digest('hex').slice(0, 20) + '.' + ext;
+const bowlBytes = Buffer.from(bowlM[2], 'base64');
+const BOWL_FILE = contentName('botanic-cup', bowlM[1] === 'jpeg' ? 'jpg' : bowlM[1], bowlBytes);
+writeFileSync(join(out, BOWL_FILE), bowlBytes);
 dropped.bowl = D.bowl.length;
 D.bowl = '__BASE__' + BOWL_FILE;
 // the photograph of the mattress (XXXV, 23 Nov): a real file too, the same way
 const photoM = /^data:image\/(webp|png|jpeg);base64,(.+)$/.exec(D.photo || '');
 must(photoM, 'the mattress photograph is a data URI in the design');
-const PHOTO_FILE = 'botanic-mattress.' + (photoM[1] === 'jpeg' ? 'jpg' : photoM[1]);
-writeFileSync(join(out, PHOTO_FILE), Buffer.from(photoM[2], 'base64'));
+const photoBytes = Buffer.from(photoM[2], 'base64');
+const PHOTO_FILE = contentName('botanic-mattress', photoM[1] === 'jpeg' ? 'jpg' : photoM[1], photoBytes);
+writeFileSync(join(out, PHOTO_FILE), photoBytes);
 dropped.photo = D.photo.length;
 D.photo = '__BASE__' + PHOTO_FILE;
 const dataJs = JSON.stringify(D).replace(/<\//g, '<\\/').replace(/<!--/g, '<\\u0021--');

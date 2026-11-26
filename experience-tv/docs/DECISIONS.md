@@ -462,3 +462,14 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - The information blocks between the views keep the television's cream and green edge again.
 - Tests: M7 (television palette only, dark and light rows, readable), M8, M9, M10, M11 (no wasted space).
 - **Fix (26 Nov, after a check of the live file):** the television build pointed the certificate logos at `botanic-tv-logos.js`, which does not exist on the media host (404). The live file used the content-named `botanic-tv-logos-a113e8835ca26317da31.js`. The build now names the logos file by its content, and the television points to that name (same bytes, already published). The module test M12 fetches the logos from the real host (it used to be hidden by a mocked route), and the package builder uses the same name. Published television file: `botanic-tv-e2a6ff35beefe7d0e960.js` (media job ddtv-botanic-tv-logos-20261126).
+
+## Round XLIII (owner, 26 November 2026): the mattress picture back, the shop title hidden in the television, measured figures
+- **The mattress picture in Your selection was missing**: the television asked for `botanic-mattress.webp` and `botanic-cup.webp`, which are not on the media host (404). The build now names pictures by their content (as the logos are); the television asks for `botanic-mattress-bb551f7c2024811f76fd.webp` and `botanic-cup-e2c8a567cfdb092d6495.webp`, which already exist with the same bytes. Test M12b checks the real host.
+- **The sentence "Botanic Experience TV | TEST DRAFT"** is the shop's own product name (the H1 of the product, Ecwid). While the television is shown, the title is visually hidden (the same way as the breadcrumb), kept in the page (test S14). Removing it everywhere is a rename of the test product in the Ecwid admin (Name field) – not done from here.
+- Published television: `botanic-tv-2bc894e4f0b09bae094b.js` (media job ddtv-botanic-tv-pictures-20261126). Description v10 points to it.
+- **Measured (one run each, 1366 px, 26 Nov, transfer sizes as the browser downloads them):**
+  - before (live Botanic 831592302, untouched): 11.86 MB, 85 requests, 9.99 MB of video, LCP 5.5 s, load 2.5 s, 39 headings, 4 images.
+  - after, television on (test 876405767): 2.26 MB, 75 requests, the television's own loop 0.45 MB, LCP 2.3 s, load 2.1 s, 41 headings, 8 images, every image with alt text.
+  - after, television off (module only): 1.69 MB, 73 requests, no video, LCP 6.1 s. The module alone does not improve LCP; the speed comes with the television.
+  - Visible description words: 4975 before, 4885 after (nothing of the approved text is missing, test M2).
+  - The test product is not the live product (other pictures, other gallery): the comparison is indicative, to be repeated on the live page after release.
