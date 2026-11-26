@@ -101,7 +101,7 @@ markup = '<div class="ddx ivory">' + markup + '</div>';
 
 // ---------- 5. the behaviour: the approved script, bound to the Shadow DOM and to Ecwid ----------
 let body = main.slice(main.indexOf('(function () {') + '(function () {'.length, main.lastIndexOf('})();'));
-body = replaceExact(body, 'var $ = function (s) { return document.querySelector(s); }', 'var $ = function (s) { return R.querySelector(s); }');
+body = replaceExact(body, 'var $ = function (s) { var e = document.querySelector(s); return STABLE[s] ? stable(e) : e; }', 'var $ = function (s) { var e = R.querySelector(s); return STABLE[s] ? stable(e) : e; }');
 body = body.split('document.querySelectorAll(').join('R.querySelectorAll(');
 body = body.split('document.querySelector(').join('R.querySelector(');
 body = body.split("document.documentElement.classList.contains('ivory')").join('true');
@@ -132,7 +132,7 @@ body = replaceExact(body, "if (S.view === 'tv') ignite();", "if (S.view === 'tv'
 // the television tells the host where its state is, before the first picture
 const tail = body.lastIndexOf('  draw();');
 must(tail > 0, 'the first draw');
-body = body.slice(0, tail) + '  H.attach({ S: S, draw: draw, D: D });\n' + body.slice(tail);
+body = body.slice(0, tail) + '  H.attach({ S: S, draw: draw, drawPrice: drawPrice, D: D });\n' + body.slice(tail);
 must(!/Stand-in|stand-in:|Preview only/.test(body.replace(/function shop_standin[\s\S]*?\n  \}/, '').replace(/function drawStd\(\)[\s\S]*?\n  \}\n/, '')), 'no stand-in message left (the unreachable Standard Product View aside)');
 
 const factory = `

@@ -1660,7 +1660,17 @@ strong.olx { font-weight: 800; }
 <script>
 var D = /*__DATA__*/;
 (function () {
-  var $ = function (s) { return document.querySelector(s); }, esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  /* STABLE REGIONS (owner, 26 Nov: "Your selection blinks in convulsions"): every draw used to write these regions again, so the picture of the mattress, the
+     buttons and the panels were thrown away and built anew several times for one click (once for the choice, again when the shop's price arrived).
+     A region now keeps what it has when the HTML it is given is the same; nothing is rebuilt, nothing blinks, a finger on a button is not lost. */
+  var STABLE = { '#q': 1, '#answer': 1, '#act': 1, '#stageh': 1, '#rail': 1, '#trailbar': 1, '#mi': 1, '#mconf': 1, '#price': 1, '#bag': 1, '#native': 1 };
+  var INNER = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML');
+  var stable = function (el) {
+    if (!el || el.__stable || !INNER) return el; el.__stable = 1;
+    Object.defineProperty(el, 'innerHTML', { configurable: true, get: function () { return INNER.get.call(this); }, set: function (v) { v = String(v); if (this.__h === v && this.firstChild) return; this.__h = v; INNER.set.call(this, v); } });
+    return el;
+  };
+  var $ = function (s) { var e = document.querySelector(s); return STABLE[s] ? stable(e) : e; }, esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var S = { promo: 10, view: 'tv', gal: false, gi: 0, ch: 'discover', pn: 'intro', rd: {}, step: 0, coach: null, size: null, firmness: null, depth: null, cover: null, pick: {}, edit: {}, weight: null, height: null, bagged: null };
   var LEAF = '<svg class="leaf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6E8601"/><stop offset="1" stop-color="#6E8601"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#FEFEF6" stroke-opacity=".5" stroke-width="1.2" stroke-linecap="round"/></g></svg>';
   var SHORT = ['Organic Cotton', 'Cotton / Wool', 'Aloe Vera Blend', 'Cashmere + Silver'];
@@ -1869,17 +1879,26 @@ var D = /*__DATA__*/;
   function drawMine() {
     var h = '';
     var nOn = ['size', 'depth', 'firmness', 'cover'].filter(chosen).length; h = h + '<div class="gauge' + (nOn === 4 ? ' full' : '') + '" role="img" aria-label="' + nOn + ' of 4 choices made">' + [0, 1, 2, 3].map(function (i) { return '<i class="' + (i < nOn ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="gl"><span>' + nOn + ' of 4</span><span>' + (nOn === 4 ? 'Ready' : 'Your choices') + '</span></div>';
-    $('#chips').innerHTML = h;
+    var gi = nextUnchosen();
+    var coach = gi < 0 ? '<button class="coach ok" data-go="4"><small>All four choices are made</small><b>Review your order</b><i aria-hidden="true">&rarr;</i></button>' : '<button class="coach" data-go="' + gi + '"><small>' + (nDone0() ? 'Next' : 'Start here') + '</small><b>Choose your ' + STEPS[gi].label + '</b><i aria-hidden="true">&rarr;</i></button>';
+    var ch = $('#chips'), chh = coach + h; if (ch && (ch.__h !== chh || !ch.firstChild)) { ch.__h = chh; ch.innerHTML = chh; }   // one write, the coach first (it was two writes)
     var bc0 = $('#brandc'); if (bc0 && !bc0.firstChild) bc0.innerHTML = '<img src="' + D.bowl + '" alt="Natural latex milk in a tapping cup, with rubber tree leaves">';
     $('#mi').innerHTML = mattressCard(); var mi0 = $('#mi'); if (mi0) mi0.classList.toggle('ok', complete());
     $('#mconf').innerHTML = confirmBox();
-    var p = price(), full = complete();
-    var sh = shop(); $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small>' + priceParts(sh) + '<span>' + (sh == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the prices and the discount are Ecwid\'s own.') + '</span>';
-    var gi = nextUnchosen();
-    $('#chips').insertAdjacentHTML('afterbegin', gi < 0 ? '<button class="coach ok" data-go="4"><small>All four choices are made</small><b>Review your order</b><i aria-hidden="true">&rarr;</i></button>' : '<button class="coach" data-go="' + gi + '"><small>' + (nDone0() ? 'Next' : 'Start here') + '</small><b>Choose your ' + STEPS[gi].label + '</b><i aria-hidden="true">&rarr;</i></button>');
+    drawBuy();
+  }
+  function drawBuy() {   // the price and the bag: the only parts of Your selection that the shop's price can change
+    var full = complete(), sh = shop(); $('#price').innerHTML = '<small>' + (full ? 'Your price' : (S.size ? 'Starting price' : 'Price')) + '</small>' + priceParts(sh) + '<span>' + (sh == null ? 'Choose a size to see the price.' : 'Stand-in here. In the shop, the prices and the discount are Ecwid\'s own.') + '</span>';
     var fb = DDRules.bagFace(selOf(), S.bagged || '', TVORDER);
     $('#bag').innerHTML = bagButton() + (inBag() ? '<div class="hint">Added to your bag. Go to Checkout when you are ready.</div>' : '<div class="hint" id="ready-note">' + (fb.ready ? '<b>Ready to order.</b> All four choices are made. You can still change any of them.' : '<b>' + esc(fb.guide) + '</b>') + '</div>');
     $('#native').innerHTML = bagButton('');
+  }
+  /* the shop's price changed and nothing else: only the places that show a price are drawn again (the middle of the screen is left alone,
+     unless it is the review, which shows the price) */
+  function drawPrice() {
+    if (S.view !== 'tv') { draw(); return; }
+    if (!S.all && !S.gal && !S.coach && panel().kind === 'step' && STEPS[S.step].id === 'review') { draw(); return; }
+    drawBuy(); compactStage();
   }
   /* COSMIC SELECTION (owner, 16 Nov IX): the sizes in six families, each in its own light. Tap a family to open it; the other
      families stay one tap away, and every size belongs to exactly one family (by width). */

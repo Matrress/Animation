@@ -91,9 +91,10 @@
       var v = tvValue(r, shop[r], A.D); if (v == null) return;
       S[r] = v; if (S.pick) S.pick[r] = null; if (S.edit) S.edit[r] = false; changed = true;
     });
-    var ps = priceSig();
-    if (ps !== pull.ps) { pull.ps = ps; changed = true; }
-    if (changed) { busy = true; try { A.draw(); } finally { busy = false; } }
+    /* a change of the choices draws the whole screen; a change of the price alone draws only what shows a price (the screen does not blink
+       while the shop's price arrives a moment after a choice) */
+    var ps = priceSig(), priceChanged = ps !== pull.ps; if (priceChanged) pull.ps = ps;
+    if (changed || priceChanged) { busy = true; try { if (!changed && A.drawPrice) A.drawPrice(); else A.draw(); } finally { busy = false; } }
   }
 
   /* the television changed: set the shop's own dropdowns, the way a customer would */

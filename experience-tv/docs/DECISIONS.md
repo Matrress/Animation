@@ -473,3 +473,12 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
   - after, television off (module only): 1.69 MB, 73 requests, no video, LCP 6.1 s. The module alone does not improve LCP; the speed comes with the television.
   - Visible description words: 4975 before, 4885 after (nothing of the approved text is missing, test M2).
   - The test product is not the live product (other pictures, other gallery): the comparison is indicative, to be repeated on the live page after release.
+
+## Round XLIV (owner, 26 November 2026): the television does not blink; the title is gone in both views; Firmness open
+- **Why Your selection blinked** (measured on the real page, `tests/live/stability-e2.cjs`): every draw wrote all regions again. The picture of the mattress was built anew 12 times for ten clicks, and the shop's price, which arrives a moment after a choice, drew the whole screen a second time (the middle panel included). The picture slot is elastic (112-250 px): when the Confirm box appears or the price grows it changes size.
+- **Fix**: (1) a region (`#q #answer #act #stageh #rail #trailbar #mi #mconf #price #bag #native`) keeps what it has when the HTML it is given is the same; (2) the chips are written once; (3) a change of the shop's price alone draws only the price block (`drawPrice`), not the middle; the review step, which shows the price, still draws whole. Result: picture rebuilds 12 -> 0, idle writes 0, at most two writes per click, Your selection moves at most 9 px.
+- Not changed (honest limit): the picture slot's height still follows the free space (Confirm box, price block). A fixed layout would need the card to be taller than the iPad's glass allows.
+- The shop's product title (the draft name) is hidden visually in the standard view too (module CSS), as in the television; it stays in the page (M13, S14).
+- The first topic of the module (Firmness) is open when the page loads; the others stay closed (M1).
+- Layout shift at load (measured): 0.004 standard, 0.04-0.07 with the television (it appears about 6 s after the request and the loader reserves 70vh, the television is 1.2-2.1 vh high): below Google's 0.1, can be lowered by reserving more height in the loader.
+- Test hygiene: the pictures and logos are no longer mocked in the live tests; the television asks the real media host.

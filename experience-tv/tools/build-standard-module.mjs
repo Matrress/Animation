@@ -161,7 +161,7 @@ const res = await page.evaluate(({ src }) => {
     const n = txt(sh.querySelector('.b-sh__n')).replace(/^\d+\s*[—–-]\s*/, ''), t = txt(sh.querySelector('.b-sh__t')), sub = sh.querySelector('.b-sh__s');
     let body = sub ? '<p class="dd-lead">' + inline(sub).trim() + '</p>' : '';
     for (const c of bw.children) if (c !== sh) body += conv(c);
-    return '<details class="dd-t dd-tg' + (gi + 1) + '" id="bp-' + id + '"><summary><h2 class="dd-t__h">' + esc(n) + '</h2>' + (t ? '<span class="dd-t__s">' + esc(t) + '</span>' : '') + '</summary><div class="dd-t__b">' + body + '</div></details>';
+    return '<details class="dd-t dd-tg' + (gi + 1) + '" id="bp-' + id + '"' + (id === 'firmness' ? ' open' : '') + '><summary><h2 class="dd-t__h">' + esc(n) + '</h2>' + (t ? '<span class="dd-t__s">' + esc(t) + '</span>' : '') + '</summary><div class="dd-t__b">' + body + '</div></details>';
   };
   const GROUPS = [
     ['Choose your mattress', ['firmness', 'height', 'covers']],

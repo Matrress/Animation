@@ -30,7 +30,7 @@ const URL = 'https://divinedunlop.com/products/botanic-original-100-organic-late
   p.on('pageerror', (e) => errs.push(e.message));
   p.on('request', (r) => { if (r.method() === 'POST') posts.push(r.url()); });
   await p.route(new RegExp('media\\.divinedunlop\\.com/ddtv/botanic-tv-logos-[0-9a-f]{20}\\.js'), (r) => r.fulfill({ contentType: 'text/javascript', body: logos }));
-  await p.route(/https:\/\/media\.divinedunlop\.com\/ddtv\/botanic-(cup|mattress)\./, (r) => { const n = /botanic-(cup|mattress)\./.exec(r.request().url())[1]; r.fulfill({ contentType: 'image/webp', body: fs.readFileSync(R + 'dist/experience/' + fs.readdirSync(R + 'dist/experience').find((f) => f.startsWith('botanic-' + n + '.'))) }); });
+  // the pictures are NOT mocked any more: the television asks the real media host for them (a missing file would show here)
   await p.goto(URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await p.waitForSelector('.details-product-option select', { timeout: 45000 }); await p.waitForTimeout(2500);
   try { await p.getByRole('button', { name: /decline/i }).first().click({ timeout: 2500 }); } catch (e) { /* no banner */ }

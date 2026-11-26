@@ -43,7 +43,7 @@ const b = await chromium.launch();
 const ctx = await b.newContext({ viewport: { width: 1366, height: 1000 }, screen: { width: 1366, height: 1000 } });
 const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message));
 await p.route('https://shop.test/**', (r) => r.fulfill({ contentType: 'text/html', body: PAGE }));
-await p.route('https://media.divinedunlop.com/**', (r) => r.fulfill({ contentType: /\.js/.test(r.request().url()) ? 'text/javascript' : 'image/webp', body: /\.js/.test(r.request().url()) ? '/* x */' : readFileSync(dist + readdirSync(dist).find((f) => /^botanic-cup\./.test(f))) }));
+await p.route('https://media.divinedunlop.com/**', (r) => r.fulfill({ contentType: /\.js/.test(r.request().url()) ? 'text/javascript' : 'image/webp', body: /\.js/.test(r.request().url()) ? '/* x */' : readFileSync(dist + readdirSync(dist).find((f) => /^botanic-cup-[0-9a-f]{20}\./.test(f))) }));
 await p.goto('https://shop.test/', { waitUntil: 'load' });
 await p.evaluate((code) => { window.__ddtvAllow = [876405767]; (0, eval)(code); }, js);
 await p.waitForSelector('#ddtv-experience', { timeout: 10000 }); await p.waitForTimeout(500);

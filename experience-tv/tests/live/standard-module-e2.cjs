@@ -43,8 +43,8 @@ const analyse = async (b64) => {
   await p.waitForTimeout(2000); media.length = 0;
   await p.evaluate((h) => { const o = document.querySelector('.dd-botanic-page'); (o ? o.parentElement : document.querySelector('.product-details__description')).innerHTML = h; }, html); await p.waitForTimeout(2500);
   // M1
-  const m1 = await p.evaluate(() => { const t = [...document.querySelectorAll('#bp-top .dd-t')], v = [...document.querySelectorAll('#bp-top video')]; return { topics: t.length, open: t.filter((x) => x.open).length, scripts: document.querySelectorAll('#bp-top script').length, videos: v.length, preloadNone: v.every((x) => x.getAttribute('preload') === 'none'), autoplay: v.some((x) => x.hasAttribute('autoplay')), loop: v.some((x) => x.hasAttribute('loop')) }; });
-  ok(m1.topics === 13 && m1.open === 0 && m1.scripts === 0 && m1.videos >= 6 && m1.preloadNone && !m1.autoplay && !m1.loop && media.length === 0, 'M1 13 topics, all closed; no script; every video waits for its play button; nothing fetched', JSON.stringify({ ...m1, fetched: media }));
+  const m1 = await p.evaluate(() => { const t = [...document.querySelectorAll('#bp-top .dd-t')], v = [...document.querySelectorAll('#bp-top video')]; return { topics: t.length, open: t.filter((x) => x.open).length, firstOpen: !!(t[0] && t[0].open && t[0].id === 'bp-firmness'), scripts: document.querySelectorAll('#bp-top script').length, videos: v.length, preloadNone: v.every((x) => x.getAttribute('preload') === 'none'), autoplay: v.some((x) => x.hasAttribute('autoplay')), loop: v.some((x) => x.hasAttribute('loop')) }; });
+  ok(m1.topics === 13 && m1.open === 1 && m1.firstOpen && m1.scripts === 0 && m1.videos >= 6 && m1.preloadNone && !m1.autoplay && !m1.loop && media.length === 0, 'M1 13 topics, only the first (Firmness) open; no script; every video waits for its play button; nothing fetched', JSON.stringify({ ...m1, fetched: media }));
   // M2
   const lost = (report.match(/WORDS LOST[^\n]*: ([^\n]*)/) || [, ''])[1].trim().split(/\s+/).filter(Boolean).map((x) => x.replace(/×\d+$/, ''));
   const allowed = new Set(['organic', 'premium', 'main', 'video', 'cotton', 'wool', 'aloe', 'vera', 'cashmere', 'silver']), unexpected = lost.filter((w) => !allowed.has(w) && !/^\d{2}$/.test(w) && w !== 'none');
@@ -127,6 +127,9 @@ const analyse = async (b64) => {
   const fullShot = await p.screenshot(); const fr = await p.evaluate(analyse, fullShot.toString('base64')); worstShare = Math.max(worstShare, 100 * fr.green / fr.n);
   ok(worstShare <= 10, 'M4 green is at most 10 % of what is on the screen in every view tried (worst ' + worstShare.toFixed(2) + ' %)', worstShare.toFixed(2) + ' %');
   ok(parseFloat(ib.radius) >= 10 && parseFloat(ib.radius) < 40 && parseFloat(ib.btnRadius) < 40, 'M3 the information block and its button are rounded boxes, not pills', JSON.stringify({ r: ib.radius, b: ib.btnRadius }));
+  // M13 (owner, 26 Nov): the shop's own product title is not shown above the module, but stays in the page
+  const m13 = await p.evaluate(() => { const t = [...document.querySelectorAll('.product-details__product-title')]; const vis = t.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 1 || r.height > 1; }); return { count: t.length, visible: vis.length, text: (t[0] && t[0].textContent.trim().slice(0, 30)) || '' }; });
+  ok(m13.count >= 1 && m13.visible === 0 && m13.text.length > 0, 'M13 the shop\'s product title is kept in the page but not shown above the module', JSON.stringify(m13));
   // M12: the television's certificate logos are really on the media host (a mocked route hid a 404 once): the name the television asks for answers 200 with the built bytes
   {
     const tvJs = fs.readFileSync(R + 'dist/experience/botanic-tv.js', 'utf8'); const m = /(botanic-tv-logos-[0-9a-f]{20}\.js)\?v=/.exec(tvJs);
