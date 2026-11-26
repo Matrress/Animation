@@ -1630,6 +1630,11 @@ strong.olx { font-weight: 800; }
 }
 /* owner, 26 Nov: Your selection starts level with the open card in the middle (the offset is measured by alignMine) */
 @media (min-width: 1100px) { .ivory .screen > .mine { margin-top: var(--mine-off, 0px) !important; } }
+/* owner, 26 Nov: with the second order bar gone, Your selection has the room it used to share: the photograph may grow a little more, and the cup stays at the very bottom of the card */
+@media (min-width: 800px) {
+  .ivory .screen.fit .mine .mi { max-height: 300px; }
+  .ivory .screen.fit .mine .brandc { margin-top: auto; }
+}
 </style>
 </head>
 <body>
@@ -1859,18 +1864,12 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
     /* the parts of the topic that is open open under the Explore row, pressed not hovered: a tap on a part goes to it */
     /* owner, 26 Nov: the parts strip under the Explore row is gone; the parts are in the "In this topic" tree on the left (no second copy of the same navigation) */
     var ex = '<div class="exg" role="group" aria-label="Explore"><span class="glab">Explore</span>' + EXCH.map(function (c) { return '<button class="ch' + (c.panels.some(function (p) { return SEEN[c.id + '/' + p.id]; }) ? ' seen' : '') + '" style="--c:' + TC[c.id] + '" data-ch="' + c.id + '" aria-current="' + (c.id === S.ch && !onStep && !S.all) + '"><span class="td"></span>' + esc(c.label) + '</button>'; }).join('') + '</div>';
-    var sl = '<div class="slg" role="group" aria-label="Select and buy"><span class="glab">Select &amp; Buy</span>' + STEPS.map(function (st, i) { var v = i < 4 ? valueOf(st.id) : (complete() ? 'Ready' : ''), ok = i < 4 ? chosen(st.id) : complete();
+    var sl = '<div class="slg" role="group" aria-label="Select and buy"><span class="glab">Select &amp; Buy · Your order</span>' + STEPS.map(function (st, i) { var v = i < 4 ? valueOf(st.id) : (complete() ? 'Ready' : ''), ok = i < 4 ? chosen(st.id) : complete();
       return '<button class="sb' + (ok ? ' ok' : '') + (i === 4 ? ' rv' : '') + '" data-go="' + i + '" aria-current="' + (onStep && S.step === i) + '">' + IC[st.id] + '<span><b>' + st.label + '</b><i>' + (v ? esc(v) : (i < 4 ? 'Choose' : 'Your order')) + '</i></span>' + (ok ? '<em class="okm">' + CKS + '</em>' : (i < 4 ? '<em class="nbm">' + (i + 1) + '</em>' : '')) + '</button>'; }).join('') + '</div>';
     var cbh = ex + sl; if (cbh !== window.__cbh) { window.__cbh = cbh; $('#chbar').innerHTML = cbh; }
   }
   function nDone0() { return STEPS.slice(0, 4).filter(function (x) { return chosen(x.id); }).length; }
   function nextUnchosen() { for (var i = 0; i < STEPS.length - 1; i++) if (!chosen(STEPS[i].id)) return i; return -1; }
-  function trailHtml() {   // the order, step by step: where you are, what is chosen, and every step one tap away (owner: traceability)
-    return '<nav class="trail" aria-label="Your order"><span class="tk">Your order</span>' + STEPS.map(function (st, i) {
-      var done = i < 4 ? chosen(st.id) : complete(), v = i < 4 ? valueOf(st.id) : '', cur = S.step === i;
-      return (i ? '<i class="tsep" aria-hidden="true"></i>' : '') + '<button class="tst' + (done ? ' ok' : '') + (cur ? ' cur' : '') + '" data-go="' + i + '"' + (cur ? ' aria-current="step"' : '') + '><em>' + (done ? CKS : (i < 4 ? i + 1 : '')) + '</em><span>' + st.label + (v ? '<small>' + esc(v) + '</small>' : '') + '</span></button>';
-    }).join('') + '</nav>';
-  }
   function drawRail() {
     var onSel = inSelect(), h;
     if (onSel) {   // a choice: the button above IS the choice; here hangs only what helps to make it (no button twice)
@@ -1885,7 +1884,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
         ps.map(function (p, i) { return '<button class="pn' + (SEEN[cur.id + '/' + p.id] ? ' seen' : '') + '" style="--i:' + i + '" data-pn="' + p.id + '" aria-current="' + (p.id === S.pn) + '"><span class="lt">' + 'ABCDEFG'.charAt(i) + '</span>' + esc(p.label) + '</button>'; }).join('') + '</div><p class="tnote">Tap a part to move between them, forward or back.</p></div>';
     }
     $('#rail').innerHTML = h;
-    var tb = $('#trailbar'); if (tb) { tb.hidden = !onSel || S.gal; tb.innerHTML = onSel ? trailHtml() : ''; }
+    var tb = $('#trailbar'); if (tb) { tb.hidden = true; tb.innerHTML = ''; }   // owner, 26 Nov: no second bar for the order; the Select & Buy card above IS the order (every step one tap away, Review, the chosen values)
     var sc = document.querySelector('.screen'); if (sc) { sc.style.setProperty('--tc', onSel ? TC.select : TC[S.ch]); sc.setAttribute('data-layer', onSel ? 'select' : 'explore'); sc.setAttribute('data-topic', onSel ? 'select' : S.ch); }
     applyFit();
   }

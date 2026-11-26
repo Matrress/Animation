@@ -251,6 +251,10 @@
     if (isPhone() && !global.__ddtvForceTv) return null;
     var pd = shopRoot(); if (!pd || !pd.parentNode) return null;
     pageStyle();
+    /* first of all: from this moment the shop's own top row (the path Home / Store / ..., the title, the 100 px above) is hidden, so the loader's
+       hold can pass the job on without a gap and nothing shows while the television is built (on a slow tablet that takes seconds) */
+    doc.documentElement.classList.add('ddtv-on');
+    try {
     host = doc.createElement('div'); host.id = 'ddtv-experience'; host.setAttribute('data-ddtv', 'tv');
     pd.parentNode.insertBefore(host, pd);
     var R = host.attachShadow ? host.attachShadow({ mode: 'open' }) : host;
@@ -259,15 +263,21 @@
       firstTime: function () { try { if (global.sessionStorage.getItem('ddtvIgnited')) return false; global.sessionStorage.setItem('ddtvIgnited', '1'); } catch (e) { /* private mode: play it */ } return true; },
       attach: function (api) { A = api; pull.ps = priceSig(); pull(); }
     });
-    doc.documentElement.classList.add('ddtv-on');
+    } catch (err) { unmount(); return null; }   // if the television cannot be built, the shop's page is given back whole
     bleed(); global.addEventListener('resize', onResize);
     ensureFold();
     mo = new MutationObserver(schedule);
     mo.observe(pd, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class', 'selected', 'disabled'] });
     doc.addEventListener('change', onNativeChange, true);
-    poll = setInterval(function () { if (!doc.hidden) pull(); }, 1500);
+    poll = setInterval(function () { if (!doc.hidden) { keep(); pull(); } }, 1500);
     lastPid = pid;
     return host;
+  }
+  /* the page's state is asserted, not assumed: if the shop's own script ever removes the style or the class while the television is on, it is put back within a moment */
+  function keep() {
+    var cl = doc.documentElement.classList; if (!host || !A) return;
+    if (!doc.getElementById('ddtv-page-css')) pageStyle();
+    if (A.S && A.S.view === 'tv' && !cl.contains('ddtv-on') && !cl.contains('ddtv-classic')) cl.add('ddtv-on');
   }
   function onNativeChange(e) { if (e.target && e.target.closest && e.target.closest('.details-product-option')) schedule(); }
   function unmount() {
