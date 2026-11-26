@@ -1,0 +1,117 @@
+@import url('https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap');
+
+/* ECWID: its own "Show more" cut-off, fade and button are switched off, so the description is always whole in the page
+   (readers and search engines see all of it; the topics below fold only by their own menus) */
+.ec-size .ec-store .product-details__product-description,
+.ec-size .ec-store [class*="product-details-module__content"],
+.ec-size .ec-store [class*="product-details__product-description"] {
+  height: auto !important; min-height: 0 !important; max-height: none !important; overflow: visible !important;
+  clip: auto !important; clip-path: none !important; -webkit-mask: none !important; mask: none !important;
+  -webkit-line-clamp: unset !important; line-clamp: unset !important; content-visibility: visible !important;
+}
+.ec-size .ec-store [class*="product-details-module__content"]::before,
+.ec-size .ec-store [class*="product-details-module__content"]::after,
+.ec-size .ec-store .product-details__product-description::before,
+.ec-size .ec-store .product-details__product-description::after { display: none !important; content: none !important; }
+.ec-size .ec-store [class*="product-details-module__btn-more"],
+.ec-size .ec-store [class*="product-details-module__btn-less"] { display: none !important; }
+
+/*=MODULE=*/
+/* THE STANDARD MODULE: the colours and the type of the television (one family) */
+.dd-std {
+  --ink: #2E3633; --gr: #384442; --cream: #FBFBED; --paper: #FEFEF6; --tan: #DDD6C4; --line: #D6CFBC;
+  --ol: #6E8601; --ol2: #566901; --mid: #646155;
+  font-family: Chillax, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.6; font-weight: 400; color: var(--ink);
+  -webkit-font-smoothing: antialiased; text-align: left;
+}
+.dd-std *, .dd-std *::before, .dd-std *::after { box-sizing: border-box; }
+.dd-std p { margin: 0 0 .8em; }
+.dd-std strong { font-weight: 700; }
+.dd-std a { color: var(--ol2); text-decoration: underline; text-underline-offset: 2px; }
+.dd-std h3, .dd-std h4 { font-family: inherit; color: var(--gr); line-height: 1.3; margin: 1.1em 0 .45em; }
+.dd-std h3 { font-size: 18px; font-weight: 700; }
+.dd-std h4 { font-size: 16px; font-weight: 700; }
+.dd-std ul, .dd-std ol { margin: 0 0 .9em; padding-left: 1.25em; }
+.dd-std li { margin: 0 0 .35em; }
+.dd-std img { max-width: 100%; height: auto; border-radius: 10px; display: block; }
+.dd-std table { border-collapse: collapse; width: 100%; margin: 0 0 1em; font-size: 15px; }
+.dd-std th, .dd-std td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+
+/* header: one calm card (no dark hero, no second bar) */
+.dd-hd { background: var(--cream); border: 1px solid var(--line); border-radius: 18px; padding: 22px 22px 12px; margin: 0 0 8px; }
+.dd-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ol2); margin: 0 0 8px !important; }
+.dd-title { font-size: clamp(26px, 3.6vw, 36px); line-height: 1.12; font-weight: 300; margin: 0 0 12px; color: var(--gr); }
+.dd-title__b { display: block; font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
+.dd-title em { font-style: normal; font-weight: 300; }
+.dd-intro { font-size: 17px; }
+.dd-key { display: flex; flex-wrap: wrap; gap: 6px 8px; list-style: none; margin: 12px 0 !important; padding: 0 !important; }
+.dd-key li { margin: 0 !important; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-size: 13.5px; font-weight: 500; display: inline-flex; gap: 7px; align-items: center; }
+.dd-key li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ol); flex: none; }
+.dd-rule { font-size: 15px; color: var(--mid); }
+.dd-how, .dd-how * { color: var(--cream) !important; }
+.dd-how { background: var(--gr); border-radius: 12px; padding: 10px 14px; font-size: 15px; font-weight: 500; }
+.dd-glance__t { font-size: 12px !important; font-weight: 600 !important; letter-spacing: .14em; text-transform: uppercase; color: var(--ol2) !important; margin: 16px 0 8px !important; }
+.dd-glance { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px; margin: 0 0 12px; padding: 0; }
+.dd-glance > div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; }
+.dd-glance dt { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ol2); font-weight: 600; }
+.dd-glance dd { margin: 2px 0 0; font-weight: 600; }
+.dd-glance small { display: block; font-weight: 400; font-size: 12.5px; color: var(--mid); line-height: 1.4; margin-top: 2px; }
+
+/* groups and topics: one menu, closed until opened */
+.dd-grp { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ol2); margin: 22px 4px 8px !important; }
+.dd-std summary { list-style: none; cursor: pointer; }
+.dd-std summary::-webkit-details-marker { display: none; }
+.dd-t { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; margin: 0 0 8px; overflow: hidden; }
+.dd-t > summary { display: flex; align-items: center; gap: 10px 14px; padding: 13px 16px; flex-wrap: wrap; }
+.dd-t > summary::after, .dd-m > summary::after { content: ""; width: 9px; height: 9px; border-right: 2px solid var(--ol2); border-bottom: 2px solid var(--ol2); transform: rotate(45deg); margin-left: auto; flex: none; transition: transform .18s; }
+.dd-t[open] > summary::after, .dd-m[open] > summary::after { transform: rotate(-135deg); }
+.dd-t > summary:hover, .dd-t[open] > summary { background: var(--cream); }
+.dd-t[open] { border-color: var(--ol); }
+.dd-t__h { font-size: 18px; font-weight: 700; line-height: 1.25; margin: 0 !important; color: var(--ink); font-family: inherit; }
+.dd-t__s { font-size: 14px; color: var(--mid); font-weight: 400; flex: 1 1 220px; }
+.dd-t__b { padding: 6px 18px 16px; border-top: 1px solid var(--line); }
+.dd-lead { font-size: 17px; margin-top: 10px !important; }
+.dd-std summary:focus-visible { outline: 3px solid var(--ol); outline-offset: -3px; border-radius: 12px; }
+
+/* inner menus: "learn more" */
+.dd-m { border-left: 3px solid var(--ol); background: var(--cream); border-radius: 0 12px 12px 0; margin: 12px 0; }
+.dd-m > summary { display: flex; align-items: center; gap: 12px; padding: 11px 14px; font-weight: 600; font-size: 15.5px; color: var(--gr); }
+.dd-m__b { padding: 2px 16px 12px; }
+
+/* small cards (firmness, heights, covers, benefits ...): the first line of a card is its name */
+.dd-g { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 12px 0; }
+.dd-cov, .dd-g:has(> .dd-m) { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.dd-c { background: var(--cream); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; }
+.dd-c > p { margin: 0 0 .3em; font-size: 15px; }
+.dd-c > p:first-child, .dd-c > .k-name, .dd-c > .k-label, .dd-c > .k-title, .dd-c > .k-lbl { font-weight: 700; color: var(--gr); }
+.dd-c > .k-kg, .dd-c > .k-st, .dd-c > .k-val { font-weight: 600; color: var(--ol2); }
+.dd-c > .k-mark { font-weight: 700; color: var(--ol2); font-size: 18px; margin: 0; }
+.dd-c > p:last-child { margin-bottom: 0; }
+.dd-t__b > .dd-c { margin: 12px 0; }
+
+/* cover pictures with their own words */
+.dd-cv { margin: 0; background: var(--cream); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+.dd-cv img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; margin: 0 0 8px; }
+.dd-cv figcaption { font-size: 15px; line-height: 1.4; }
+.dd-g > .dd-m { margin: 0; }
+
+/* videos: only when asked for (nothing is fetched before the play button is pressed) */
+.dd-v { margin: 14px 0; }
+.dd-v__f { border-radius: 12px; overflow: hidden; background: var(--gr); aspect-ratio: 16 / 9; }
+.dd-v video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--gr); }
+.dd-v figcaption { font-size: 14px; color: var(--mid); margin-top: 6px; line-height: 1.4; }
+.dd-v figcaption .k-mode { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ol2); font-weight: 600; }
+.dd-film { margin: 12px 0 0; }
+
+/* the closing line */
+.dd-end { margin: 22px 0 6px; padding: 16px 18px; background: var(--gr); color: var(--cream); border-radius: 16px; }
+.dd-end h3 { color: var(--cream) !important; margin: 0 0 6px; }
+.dd-end p { margin: 0; color: #E9E6D4 !important; }
+
+/*=END=*/
+/* ECWID'S OWN SELECTORS (size, depth, firmness, covers, bag): the same ones, in the family colours, and within reach while reading */
+.product-details:has(.dd-std) .form-control { border-radius: 10px !important; }
+.product-details:has(.dd-std) .details-product-option__title { font-weight: 700; color: #2E3633; }
+@media (min-width: 900px) {
+  .product-details:has(.dd-std) .product-details__sidebar { position: sticky; top: 16px; }
+}

@@ -102,6 +102,11 @@ const URL = 'https://divinedunlop.com/products/botanic-original-100-organic-late
 
   if (SHOT) { await p.evaluate(() => window.scrollTo(0, 0)); await click('[data-ch="discover"]'); await p.waitForTimeout(600); await p.screenshot({ path: SHOT, fullPage: false }); }
 
+  // S11 (owner, 26 Nov): the standard view shows the whole description and the page as the shop made it: no fold button, the breadcrumb row is back
+  await p.evaluate(() => window.scrollTo(0, 0)); await p.locator('#ddtv-experience #vstd').first().click({ timeout: 15000 }); await p.waitForTimeout(1500);
+  const s11 = await p.evaluate(() => { const f = document.querySelector('.ddtv-fold'), t = document.querySelector('.product-details__top'), r = t && t.getBoundingClientRect(); return { cls: document.documentElement.className, foldShown: !!f && getComputedStyle(f).display !== 'none', topW: r ? Math.round(r.width) : null, back: !!document.getElementById('ddtv-back'), selects: document.querySelectorAll('.details-product-option select').length, bag: !!document.querySelector('.details-product-purchase button, .details-product-purchase__add-to-bag') }; });
+  ok(/ddtv-classic/.test(s11.cls) && !s11.foldShown && (s11.topW === null || s11.topW > 100) && s11.back && s11.selects >= 4, 'S11 the standard view: no fold button, the breadcrumb row is back, the shop\'s four selectors are there, one button returns to the optimised preview', JSON.stringify(s11));
+  await p.click('#ddtv-back'); await p.waitForTimeout(1200);
   // S7: product guard
   await p.evaluate(() => DDTVX._test.onPage({ type: 'PRODUCT', productId: 1 }));
   const off = await p.evaluate(() => ({ host: !!document.getElementById('ddtv-experience'), cls: document.documentElement.classList.contains('ddtv-on'), fold: !!document.querySelector('.ddtv-fold') }));

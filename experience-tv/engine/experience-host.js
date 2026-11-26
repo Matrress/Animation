@@ -163,6 +163,7 @@
     'html.ddtv-on:not(.ddtv-desc-open) .product-details__description{max-height:0;overflow:hidden;padding:0!important;margin:0!important}' +
     '.ddtv-fold{display:block!important;clear:both!important;float:none!important;box-sizing:border-box!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:14px auto 28px!important;padding:12px 22px!important;border-radius:12px!important;border:1.5px solid #434239!important;background:#FBFBED!important;color:#2E3633!important;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif!important;text-align:center!important;cursor:pointer}' +
     '.ddtv-fold:hover{background:#434239!important;color:#FBFBED!important}' +
+    'html.ddtv-classic .ddtv-fold{display:none!important}' +   /* the standard view shows the whole description: no fold button there */
     '#ddtv-experience{display:block;width:100%;margin:0 0 24px;clear:both}' +
     'html.ddtv-classic #ddtv-experience{display:none}' +
     '#ddtv-back{display:block!important;clear:both!important;float:none!important;box-sizing:border-box!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:0 auto 18px!important;padding:12px 22px!important;border-radius:12px!important;border:1.5px solid #434239!important;background:#FBFBED!important;color:#2E3633!important;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif!important;text-align:center!important;cursor:pointer}' +
