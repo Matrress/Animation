@@ -20,7 +20,7 @@ let fails = 0; const ok = (c, m, d) => { console.log((c ? 'PASS ' : 'FAIL ') + m
   await p.goto('https://divinedunlop.com/products/botanic-original-100-organic-latex-mattress-dunlop?cb=' + Date.now(), { waitUntil: 'commit', timeout: 90000 });
   await p.waitForSelector('.details-product-option select', { timeout: 80000 }); await p.waitForTimeout(3000);
   try { await p.getByRole('button', { name: /decline/i }).first().click({ timeout: 2000 }); } catch (e) { /* none */ }
-  await p.evaluate((code) => { window.__ddtvAllow = [831592302]; (0, eval)(code); }, js);
+  await p.evaluate((code) => { try { sessionStorage.setItem('ddtvDebug', '1'); } catch (e) { /* none */ } window.__ddtvAllow = [831592302]; (0, eval)(code); }, js);
   await p.waitForSelector('#ddtv-experience', { timeout: 30000 }); await p.waitForTimeout(4500);
   await p.evaluate(() => {
     const sh = document.getElementById('ddtv-experience').shadowRoot; window.__f = { muts: [], t0: performance.now(), imgSwaps: 0, rects: [], marks: [], answerWrites: 0 };
@@ -48,6 +48,14 @@ let fails = 0; const ok = (c, m, d) => { console.log((c ? 'PASS ' : 'FAIL ') + m
   await p.waitForTimeout(2500); const w1 = await p.evaluate(() => window.__f.answerWrites);
   const priceShown = await p.evaluate(() => (document.getElementById('ddtv-experience').shadowRoot.querySelector('#price') || {}).textContent || '');
   ok(priceShown !== priceBefore && w1 === w0, 'T5 when only the shop\'s price changes, the price is drawn again and the middle of the screen is not written', 'middle writes: ' + (w1 - w0) + ' · price block changed: ' + (priceShown !== priceBefore) + ' · now: ' + priceShown.replace(/\s+/g, ' ').slice(0, 60));
+  // T6: the font link can never hold the page's style updates (a Safari behaviour; here the contract is checked: print media, not in the head, switched on at arrival)
+  const fl = await p.evaluate(() => { const l = document.getElementById('ddtv-font'); const st = document.getElementById('ddtv-page-css'); const info = document.querySelector('#ddtv-info'); return { has: !!l, inHead: !!(l && l.parentNode === document.head), mediaNow: l && l.media, loaded: !!(l && l.sheet), pageCssInline: !!(st && st.tagName === 'STYLE' && st.sheet && st.sheet.cssRules.length > 10), infoBorder: info ? getComputedStyle(info).borderLeftWidth : null }; });
+  ok(fl.has && !fl.inHead && (fl.mediaNow === 'print' || fl.mediaNow === 'all'), 'T6a the font is a link outside the head with media print until it has arrived (never a render-blocking head link)', JSON.stringify(fl));
+  ok(fl.pageCssInline && fl.infoBorder === '4px', 'T6b the page\'s own stylesheet is inline text and in force (the information block has its 4 px green edge)', JSON.stringify(fl));
+  await p.evaluate(() => { const l = document.getElementById('ddtv-font'); if (l && l.media === 'print') l.dispatchEvent(new Event('load')); });
+  ok(await p.evaluate(() => document.getElementById('ddtv-font').media) === 'all', 'T6c when the font has arrived the link is switched on (media all)');
+  await p.waitForTimeout(1500); const dbg = await p.evaluate(() => { const d = document.getElementById('ddtv-debug'); return d ? d.textContent : null; });
+  ok(!!dbg && /page css: \d+ rules\s+in force: true/.test(dbg) && /font link: media=/.test(dbg) && /top row: hidden/.test(dbg) && /sidebar: hidden/.test(dbg) && /description: hidden/.test(dbg), 'T6d the opt-in read-out (?ddtv=debug) is in the corner and reports: stylesheet in force, font link state, top row, sidebar and description hidden', (dbg || 'no panel').replace(/\n/g, ' | ').slice(0, 330));
   ok(errs.length === 0, 'no page error of ours', errs.join(' | '));
   console.log(fails ? `\n${fails} stability check(s) FAILED` : '\nAll stability checks passed (real Ecwid DOM, local, nothing saved)'); await b.close(); process.exit(fails ? 1 : 0);
 })().catch((e) => { console.error('HARNESS ERROR', e); process.exit(2); });

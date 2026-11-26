@@ -185,7 +185,10 @@
   function pageStyle() {
     if (doc.getElementById('ddtv-page-css')) return;
     var st = doc.createElement('style'); st.id = 'ddtv-page-css'; st.textContent = PAGE_CSS; (doc.head || doc.documentElement).appendChild(st);
-    if (CFG.fontCss && !doc.getElementById('ddtv-font')) { var l = doc.createElement('link'); l.id = 'ddtv-font'; l.rel = 'stylesheet'; l.href = CFG.fontCss; (doc.head || doc.documentElement).appendChild(l); }
+    /* owner, 26 Nov (iPad): Safari holds back the page's style updates while a stylesheet link added to the head is still loading, so the television stood
+       with the shop's top row, sidebar and old description around it until the font host answered. The font is therefore fetched as a print-media link in the
+       body (never render-blocking) and switched on when it has arrived; the page's own rules are inline text and do not wait for any network. */
+    if (CFG.fontCss && !doc.getElementById('ddtv-font')) { var l = doc.createElement('link'); l.id = 'ddtv-font'; l.rel = 'stylesheet'; l.media = 'print'; l.onload = function () { l.media = 'all'; }; l.href = CFG.fontCss; (doc.body || doc.head || doc.documentElement).appendChild(l); }
   }
   var BOTH = 'Both show the same mattress and the same choices, so you only need one of them.';
   function infoHtml(inStd) {
@@ -277,6 +280,7 @@
   function keep() {
     var cl = doc.documentElement.classList; if (!host || !A) return;
     if (!doc.getElementById('ddtv-page-css')) pageStyle();
+    if (!inForce()) adopt();
     if (A.S && A.S.view === 'tv' && !cl.contains('ddtv-on') && !cl.contains('ddtv-classic')) cl.add('ddtv-on');
   }
   function onNativeChange(e) { if (e.target && e.target.closest && e.target.closest('.details-product-option')) schedule(); }
@@ -315,6 +319,33 @@
     if (global.Ecwid && global.Ecwid.OnPageLoaded) { boot(); return; }
     if (n < 300) setTimeout(function () { waitEcwid(n + 1); }, 100);
   })(0);
+
+  /* the page's rules are checked, not assumed: if the stylesheet is in the page but not in force (a browser that holds style updates), the same rules
+     are also given as a constructable sheet, which does not depend on the head */
+  var adopted = false;
+  function inForce() { if (!infoBox || !infoBox.isConnected) return true; try { return global.getComputedStyle(infoBox).borderLeftWidth === '4px'; } catch (e) { return true; } }
+  function adopt() { if (adopted) return; try { var sh = new global.CSSStyleSheet(); sh.replaceSync(PAGE_CSS); doc.adoptedStyleSheets = (doc.adoptedStyleSheets || []).concat([sh]); adopted = true; } catch (e) { /* an older browser: nothing more to try */ } }
+
+  /* ?ddtv=debug (kept for the tab, ?ddtv=nodebug ends it): a small read-out in the corner with what the page is doing, for a screenshot from a device that cannot be inspected */
+  (function debugPanel() {
+    var q = global.location.search, on = false;
+    try { if (/[?&]ddtv=debug\b/.test(q)) global.sessionStorage.setItem('ddtvDebug', '1'); if (/[?&]ddtv=nodebug\b/.test(q)) global.sessionStorage.removeItem('ddtvDebug'); on = global.sessionStorage.getItem('ddtvDebug') === '1'; } catch (e) { on = /[?&]ddtv=debug\b/.test(q); }
+    if (!on) return;
+    var b = doc.createElement('pre'); b.id = 'ddtv-debug';
+    b.setAttribute('style', 'position:fixed;left:6px;bottom:6px;z-index:2147483647;margin:0;padding:6px 8px;max-width:94vw;background:rgba(0,0,0,.82);color:#9f9;font:11px/1.35 Menlo,monospace;white-space:pre-wrap;pointer-events:none;border-radius:6px');
+    var vis = function (sel) { var e = doc.querySelector(sel); if (!e) return '-'; var r = e.getBoundingClientRect(), cs = global.getComputedStyle(e); return (r.width > 2 && r.height > 2 && cs.visibility !== 'hidden' && cs.opacity !== '0') ? 'SHOWN ' + Math.round(r.height) : 'hidden'; };
+    setInterval(function () {
+      if (!b.parentNode) (doc.body || doc.documentElement).appendChild(b);
+      var f = doc.getElementById('ddtv-font'), pc = doc.getElementById('ddtv-page-css'), e = doc.getElementById('ddtv-early'), h = doc.getElementById('ddtv-experience');
+      b.textContent = 'ddtv ' + (CFG.version || 'dev') + '  t=' + Math.round(global.performance ? global.performance.now() : 0) + ' ms  ' + global.innerWidth + 'x' + global.innerHeight + ' screen ' + (global.screen && global.screen.width) + 'x' + (global.screen && global.screen.height) + '\n' +
+        'html: ' + doc.documentElement.className.replace(/\s+/g, ' ') + '\n' +
+        'page css: ' + (pc ? (pc.sheet ? pc.sheet.cssRules.length + ' rules' : 'NO SHEET') : 'MISSING') + '  in force: ' + (infoBox ? inForce() : 'n/a') + '  adopted: ' + adopted + '  early: ' + (e ? 'yes' : 'no') + '\n' +
+        'font link: ' + (f ? 'media=' + f.media + (f.sheet ? ' loaded' : ' loading') : 'none') + '  fonts: ' + (doc.fonts ? doc.fonts.status : '?') + '\n' +
+        'top row: ' + vis('.product-details__top') + '   title: ' + vis('.product-details__product-title') + '\n' +
+        'sidebar: ' + vis('.product-details__sidebar') + '   description: ' + vis('.product-details__description') + '\n' +
+        'host: ' + (h ? Math.round(h.getBoundingClientRect().height) : 'none') + '  A: ' + (A ? 'set' : 'null') + '  view: ' + (A && A.S ? A.S.view : '-') + '  hidden: ' + doc.hidden;
+    }, 700);
+  })();
 
   global.DDTVX = {
     version: CFG.version || 'dev', mount: mount, unmount: unmount, pull: pull, push: push,

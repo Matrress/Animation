@@ -23,7 +23,10 @@
   function style() {
     if (doc.getElementById('ddphone-css')) return;
     var st = doc.createElement('style'); st.id = 'ddphone-css'; st.textContent = global.__DDPHONE_CSS; (doc.head || doc.documentElement).appendChild(st);
-    if (CFG.fontCss && !doc.getElementById('ddtv-font')) { var l = doc.createElement('link'); l.id = 'ddtv-font'; l.rel = 'stylesheet'; l.href = CFG.fontCss; (doc.head || doc.documentElement).appendChild(l); }
+    /* owner, 26 Nov (iPad): Safari holds back the page's style updates while a stylesheet link added to the head is still loading, so the television stood
+       with the shop's top row, sidebar and old description around it until the font host answered. The font is therefore fetched as a print-media link in the
+       body (never render-blocking) and switched on when it has arrived; the page's own rules are inline text and do not wait for any network. */
+    if (CFG.fontCss && !doc.getElementById('ddtv-font')) { var l = doc.createElement('link'); l.id = 'ddtv-font'; l.rel = 'stylesheet'; l.media = 'print'; l.onload = function () { l.media = 'all'; }; l.href = CFG.fontCss; (doc.body || doc.head || doc.documentElement).appendChild(l); }
   }
   function mount(pid) {
     if (mounted === pid && doc.getElementById('cfg-cta')) return true;
