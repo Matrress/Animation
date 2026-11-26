@@ -205,7 +205,7 @@
       infoBox.innerHTML = infoHtml(false) + '<div class="ddtv-info__a"></div>';
       var to = doc.createElement('button'); to.type = 'button'; to.className = 'ddtv-btn'; to.id = 'ddtv-to-standard'; to.textContent = 'Open the Standard Product View'; to.onclick = classic;
       foldBtn = doc.createElement('button'); foldBtn.type = 'button'; foldBtn.className = 'ddtv-fold';
-      foldBtn.onclick = function () { var on = doc.documentElement.classList.toggle('ddtv-desc-open'); foldBtn.setAttribute('aria-expanded', String(on)); foldBtn.textContent = on ? 'Fold the description' : 'Read the full description'; };
+      foldBtn.onclick = function () { var on = doc.documentElement.classList.toggle('ddtv-desc-open'); foldBtn.setAttribute('aria-expanded', String(on)); foldBtn.textContent = on ? 'Fold the description' : 'Read the full description'; if (fallback) inlineApply(true); };
       var a = infoBox.querySelector('.ddtv-info__a'); a.appendChild(to); a.appendChild(foldBtn);
     }
     var open = doc.documentElement.classList.contains('ddtv-desc-open');
@@ -216,6 +216,7 @@
   /* the classic view: the shop's own page, the television steps aside; one button brings it back */
   function classic() {
     if (!host) return;
+    if (fallback) inlineApply(false);
     doc.documentElement.classList.remove('ddtv-on', 'ddtv-desc-open');
     doc.documentElement.classList.add('ddtv-classic');
     if (infoBox && infoBox.parentNode) infoBox.parentNode.removeChild(infoBox); infoBox = null; foldBtn = null;
@@ -274,14 +275,18 @@
     doc.addEventListener('change', onNativeChange, true);
     poll = setInterval(function () { if (!doc.hidden) { keep(); pull(); } }, 1500);
     lastPid = pid;
+    keep();
     return host;
   }
   /* the page's state is asserted, not assumed: if the shop's own script ever removes the style or the class while the television is on, it is put back within a moment */
   function keep() {
     var cl = doc.documentElement.classList; if (!host || !A) return;
     if (!doc.getElementById('ddtv-page-css')) pageStyle();
-    if (!inForce()) adopt();
-    if (A.S && A.S.view === 'tv' && !cl.contains('ddtv-on') && !cl.contains('ddtv-classic')) cl.add('ddtv-on');
+    if (A.S && A.S.view === 'tv' && !cl.contains('ddtv-classic')) {
+      if (!cl.contains('ddtv-on')) cl.add('ddtv-on');
+      if (!inForce()) { adopt(); fallback = true; }
+      if (fallback) inlineApply(true);
+    }
   }
   function onNativeChange(e) { if (e.target && e.target.closest && e.target.closest('.details-product-option')) schedule(); }
   function unmount() {
@@ -289,6 +294,7 @@
     doc.removeEventListener('change', onNativeChange, true); global.removeEventListener('resize', onResize);
     if (host && host.parentNode) host.parentNode.removeChild(host);
     if (infoBox && infoBox.parentNode) infoBox.parentNode.removeChild(infoBox);
+    if (fallback) inlineApply(false); fallback = false;
     host = null; app = null; A = null; foldBtn = null; infoBox = null;
     doc.documentElement.classList.remove('ddtv-on', 'ddtv-desc-open', 'ddtv-classic');
     var bx = doc.getElementById('ddtv-backbox'); if (bx && bx.parentNode) bx.parentNode.removeChild(bx);
@@ -322,9 +328,25 @@
 
   /* the page's rules are checked, not assumed: if the stylesheet is in the page but not in force (a browser that holds style updates), the same rules
      are also given as a constructable sheet, which does not depend on the head */
-  var adopted = false;
-  function inForce() { if (!infoBox || !infoBox.isConnected) return true; try { return global.getComputedStyle(infoBox).borderLeftWidth === '4px'; } catch (e) { return true; } }
+  var adopted = false, fallback = false;
+  function inForce() {
+    try {
+      var t = doc.querySelector('.product-details__top'); if (t) return global.getComputedStyle(t).width === '1px';
+      if (infoBox && infoBox.isConnected) return global.getComputedStyle(infoBox).borderLeftWidth === '4px';
+    } catch (e) { /* cannot tell: leave it */ }
+    return true;
+  }
   function adopt() { if (adopted) return; try { var sh = new global.CSSStyleSheet(); sh.replaceSync(PAGE_CSS); doc.adoptedStyleSheets = (doc.adoptedStyleSheets || []).concat([sh]); adopted = true; } catch (e) { /* an older browser: nothing more to try */ } }
+  /* insurance by effect, not by cause (owner, 26 Nov, iPad: the television stood with the shop's top row, sidebar and old description around it until
+     something made Safari apply the page's rules): if the rules are not in force while the television is on, the same hiding is also written on the elements
+     themselves; it is taken back with the classic view and with unmount */
+  var HIDE = { position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', 'clip-path': 'inset(50%)', opacity: '0', 'pointer-events': 'none', margin: '0', padding: '0', border: '0' };
+  function inlineApply(on) {
+    var each = function (sel, props, set) { var n = doc.querySelectorAll(sel); for (var i = 0; i < n.length; i++) for (var k in props) { if (set) n[i].style.setProperty(k, props[k], 'important'); else n[i].style.removeProperty(k); } };
+    each('.product-details__top,.product-details__product-title,.product-details__sidebar,.details-product-share', HIDE, on);
+    each('#tile-product-details .ins-tile__wrap', { 'margin-top': '14px' }, on);
+    each('.product-details__description', { 'max-height': '0', overflow: 'hidden', padding: '0', margin: '0' }, on && !doc.documentElement.classList.contains('ddtv-desc-open'));
+  }
 
   /* ?ddtv=debug (kept for the tab, ?ddtv=nodebug ends it): a small read-out in the corner with what the page is doing, for a screenshot from a device that cannot be inspected */
   (function debugPanel() {
@@ -339,7 +361,7 @@
       var f = doc.getElementById('ddtv-font'), pc = doc.getElementById('ddtv-page-css'), e = doc.getElementById('ddtv-early'), h = doc.getElementById('ddtv-experience');
       b.textContent = 'ddtv ' + (CFG.version || 'dev') + '  t=' + Math.round(global.performance ? global.performance.now() : 0) + ' ms  ' + global.innerWidth + 'x' + global.innerHeight + ' screen ' + (global.screen && global.screen.width) + 'x' + (global.screen && global.screen.height) + '\n' +
         'html: ' + doc.documentElement.className.replace(/\s+/g, ' ') + '\n' +
-        'page css: ' + (pc ? (pc.sheet ? pc.sheet.cssRules.length + ' rules' : 'NO SHEET') : 'MISSING') + '  in force: ' + (infoBox ? inForce() : 'n/a') + '  adopted: ' + adopted + '  early: ' + (e ? 'yes' : 'no') + '\n' +
+        'page css: ' + (pc ? (pc.sheet ? pc.sheet.cssRules.length + ' rules' : 'NO SHEET') : 'MISSING') + '  in force: ' + (infoBox ? inForce() : 'n/a') + '  adopted: ' + adopted + '  inline: ' + fallback + '  early: ' + (e ? 'yes' : 'no') + '\n' +
         'font link: ' + (f ? 'media=' + f.media + (f.sheet ? ' loaded' : ' loading') : 'none') + '  fonts: ' + (doc.fonts ? doc.fonts.status : '?') + '\n' +
         'top row: ' + vis('.product-details__top') + '   title: ' + vis('.product-details__product-title') + '\n' +
         'sidebar: ' + vis('.product-details__sidebar') + '   description: ' + vis('.product-details__description') + '\n' +

@@ -56,6 +56,14 @@ let fails = 0; const ok = (c, m, d) => { console.log((c ? 'PASS ' : 'FAIL ') + m
   ok(await p.evaluate(() => document.getElementById('ddtv-font').media) === 'all', 'T6c when the font has arrived the link is switched on (media all)');
   await p.waitForTimeout(1500); const dbg = await p.evaluate(() => { const d = document.getElementById('ddtv-debug'); return d ? d.textContent : null; });
   ok(!!dbg && /page css: \d+ rules\s+in force: true/.test(dbg) && /font link: media=/.test(dbg) && /top row: hidden/.test(dbg) && /sidebar: hidden/.test(dbg) && /description: hidden/.test(dbg), 'T6d the opt-in read-out (?ddtv=debug) is in the corner and reports: stylesheet in force, font link state, top row, sidebar and description hidden', (dbg || 'no panel').replace(/\n/g, ' | ').slice(0, 330));
+  // T7: the page's stylesheet is switched off (as if the browser did not apply it) and the constructable sheet is refused: the hiding is still there, written on the elements
+  await p.evaluate(() => { CSSStyleSheet.prototype.replaceSync = function () { throw new Error('refused'); }; document.getElementById('ddtv-page-css').disabled = true; });
+  await p.waitForTimeout(3600);
+  const fb = await p.evaluate(() => { const v = (sel) => { const e = document.querySelector(sel); if (!e) return null; const r = e.getBoundingClientRect(), cs = getComputedStyle(e); return (r.width > 2 && r.height > 2 && cs.visibility !== 'hidden' && cs.opacity !== '0') ? Math.round(r.height) : 0; }; const d = document.getElementById('ddtv-debug'); return { top: v('.product-details__top'), side: v('.product-details__sidebar'), desc: v('.product-details__description'), inline: /inline: true/.test(d ? d.textContent : ''), edge: (document.querySelector('.product-details__top') || {}).style && document.querySelector('.product-details__top').style.position }; });
+  ok(fb.top === 0 && fb.side === 0 && fb.desc === 0 && fb.inline, 'T7a with the page stylesheet switched off, the top row, sidebar and description are still hidden (written on the elements) and the read-out says inline: true', JSON.stringify(fb));
+  await p.evaluate(() => { window.DDTVX.unmount(); });
+  const un = await p.evaluate(() => ['.product-details__top', '.product-details__sidebar', '.product-details__description', '#tile-product-details .ins-tile__wrap'].map((s) => (document.querySelector(s) || { style: { cssText: 'missing' } }).style.cssText));
+  ok(un.every((x) => x === ''), 'T7b unmount takes the written hiding back: the shop\'s own page is whole again', JSON.stringify(un));
   ok(errs.length === 0, 'no page error of ours', errs.join(' | '));
   console.log(fails ? `\n${fails} stability check(s) FAILED` : '\nAll stability checks passed (real Ecwid DOM, local, nothing saved)'); await b.close(); process.exit(fails ? 1 : 0);
 })().catch((e) => { console.error('HARNESS ERROR', e); process.exit(2); });
