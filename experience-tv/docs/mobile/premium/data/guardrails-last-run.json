@@ -1,5 +1,5 @@
 {
- "date": "2026-11-26T19:13:16.998Z",
+ "date": "2026-11-26T19:29:35.493Z",
  "simulated": true,
  "note": "simulated Ecwid, Chromium only",
  "results": [
@@ -101,7 +101,7 @@
   {
    "ok": true,
    "msg": "G5 layout shift on load does not exceed today's level (ratchet)",
-   "detail": "CLS 0.0000"
+   "detail": "CLS 0.6022"
   },
   {
    "ok": true,
@@ -237,6 +237,7 @@
  "openItems": [
   "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on desktop 1440x900, mouse",
   "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on iPad Pro 12.9 (3rd gen) portrait 1024x1366, touch",
+  "G5 target: layout shift below 0.1 on iPad Pro 12.9 (3rd gen) portrait 1024x1366, touch (now 0.602: the product block moves down when the television is inserted)",
   "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on iPad Pro 12.9 (3rd gen) landscape 1366x1024, touch",
   "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on Android tablet 800x1280, touch",
   "G5 target: layout shift below 0.1 on Android tablet 800x1280, touch (now 0.528: the product block moves down when the television is inserted)"

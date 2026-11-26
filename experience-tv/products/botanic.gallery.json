@@ -1,12 +1,12 @@
 {
- "_about": "The pictures of the mini-gallery (television: Your selection; standard module: the gallery at the top). key = the id of the topic whose button opens it (discover, comfort, support, adaptation, zones, benefits, covers, ...); a picture with a key is shown when that topic is opened. File names are content-addressed on media.divinedunlop.com/ddtv/. bg = the colour of the picture's edge (what shows around it when it is fitted whole).",
+ "_about": "The pictures of the mini-gallery (television: Your selection; standard module: the gallery at the top). key = the id of the topic whose button opens it (discover, comfort, support, adaptation, zones, benefits, covers, ...); a picture with a key is shown when that topic is opened. File names are content-addressed on media.divinedunlop.com/ddtv/. bg = what shows around a picture that is fitted whole: always one of the television's colours (the deep slate #2E3633, or the vanilla #FBFBED for a picture on white).",
  "base": "https://media.divinedunlop.com/ddtv/",
  "items": [
   {
    "key": "discover",
    "name": "botanic-gal-discover-c188ce5563449498eab5.webp",
    "alt": "The Botanic mattress, cut away to show the quilted cover and the latex core",
-   "bg": "#FFFFFF",
+   "bg": "#FBFBED",
    "w": 1600,
    "h": 1199
   },
@@ -14,7 +14,7 @@
    "key": "zones",
    "name": "botanic-gal-zones-0d740cb7636670e01e2a.webp",
    "alt": "Seven support zones from head to ankle, with the stretching effect",
-   "bg": "#3C3631",
+   "bg": "#2E3633",
    "w": 1600,
    "h": 456
   },
@@ -22,7 +22,7 @@
    "key": "comfort",
    "name": "botanic-gal-comfort-8ab3bb5007cd8aabfdd1.webp",
    "alt": "Comfort at any position: three sleepers on the latex core",
-   "bg": "#5C5C5C",
+   "bg": "#2E3633",
    "w": 1400,
    "h": 1049
   },
@@ -30,7 +30,7 @@
    "key": "support",
    "name": "botanic-gal-support-9fad744738f6987fb14c.webp",
    "alt": "A side sleeper held level by the latex core, shoulders and hips sinking in evenly",
-   "bg": "#787570",
+   "bg": "#2E3633",
    "w": 1600,
    "h": 1199
   },
@@ -38,7 +38,7 @@
    "key": "adaptation",
    "name": "botanic-gal-adaptation-9ad2670d4f5629e5f0f9.webp",
    "alt": "A sleeper on the mattress: the latex follows the body",
-   "bg": "#FFFFFF",
+   "bg": "#FBFBED",
    "w": 1600,
    "h": 1199
   },
@@ -46,7 +46,7 @@
    "key": "benefits",
    "name": "botanic-gal-benefits-aceaf15c5c2233fe9e34.webp",
    "alt": "Dunlop latex: 100% natural, breathable, seven zones, spinal health",
-   "bg": "#796F63",
+   "bg": "#2E3633",
    "w": 1600,
    "h": 1069
   },
@@ -54,7 +54,7 @@
    "key": "covers",
    "name": "botanic-gal-covers-7c9f4620ab03596a3b3a.webp",
    "alt": "The quilted cover of the mattress",
-   "bg": "#3F3E3E",
+   "bg": "#2E3633",
    "w": 1600,
    "h": 1199
   }

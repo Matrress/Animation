@@ -1,4 +1,4 @@
-@import url('https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap');
+/* (no @import of the font here: an @import inside the description's own <style> keeps that sheet pending in Safari; the engine loads Chillax with a print-media link that never blocks) */
 
 /* ECWID: its own "Show more" cut-off, fade and button are switched off, so the description is always whole in the page
    (readers and search engines see all of it; the topics below fold only by their own menus) */

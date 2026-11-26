@@ -1,12 +1,12 @@
 {
  "date": "2026-11-26",
- "failures": 3,
+ "failures": 0,
  "checks": 197,
  "rows": [
   {
-   "pass": false,
+   "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 50px over 51 buttons"
+   "detail": "largest radius 16px over 51 buttons"
   },
   {
    "pass": true,
@@ -334,14 +334,14 @@
    "detail": ""
   },
   {
-   "pass": false,
+   "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 50px over 51 buttons"
+   "detail": "largest radius 16px over 51 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -624,14 +624,14 @@
    "detail": ""
   },
   {
-   "pass": false,
+   "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 50px over 51 buttons"
+   "detail": "largest radius 16px over 51 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,

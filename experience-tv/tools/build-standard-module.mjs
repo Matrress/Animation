@@ -211,7 +211,7 @@ const out = join(root, 'dist', 'standard'); mkdirSync(out, { recursive: true });
 const part = (t, from, to) => { const i = from ? t.indexOf(from) + from.length : 0, j = to ? t.indexOf(to) : t.length; return t.slice(i, j); };
 const prefix = (rules) => rules.replace(/\/\*[\s\S]*?\*\//g, '').replace(/([^{}]+)\{([^{}]*)\}/g, (m, sel, body) => sel.split(',').map((x) => x.trim()).map((x) => x.startsWith('.dd-std') ? '#bp-top' + x : '#bp-top ' + x).join(',') + '{' + body + '}');
 const mini = (t) => t.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, ' ').replace(/\s*([{};,>])\s*/g, '$1').replace(/;}/g, '}').trim();
-const galCss = '#bp-top .dd-gal__s--hands{background:#EFE9DA!important}' + GALLERY.map((x) => '#bp-top .dd-gal__s--' + x.key + '{background:' + x.bg + '!important}').join('');
+const galCss = '#bp-top .dd-gal__s--hands{background:#DDD6C4!important}' + GALLERY.map((x) => '#bp-top .dd-gal__s--' + x.key + '{background:' + x.bg + '!important}').join('');
 const cssMin = mini(part(css, null, '/*=MODULE=*/') + prefix(part(css, '/*=MODULE=*/', '/*=END=*/')) + part(css, '/*=END=*/', null) + galCss);
 const full = '<style>' + cssMin + '</style>' + res.html;
 writeFileSync(join(out, 'botanic-standard-description.html'), full);
