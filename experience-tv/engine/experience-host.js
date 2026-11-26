@@ -154,6 +154,11 @@
 
   /* ---------- the long description: still in the page (it is the indexed text), folded under the television ---------- */
   var PAGE_CSS = 'html.ddtv-on .product-details__sidebar,html.ddtv-on .details-product-share{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;opacity:0!important;pointer-events:none!important;border:0!important;margin:0!important;padding:0!important}' +
+    /* owner, 26 Nov: the row "Home / Store / Collection" with its two arrows and the 100 px the page leaves above it are not needed with the television
+       (the site menu and the logo already lead everywhere); the row stays in the page for readers and search engines, only not shown;
+       the standard view gives the page back exactly as the shop made it */
+    'html.ddtv-on .product-details__top{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;opacity:0!important;pointer-events:none!important;border:0!important;padding:0!important;margin:0!important}' +
+    'html.ddtv-on #tile-product-details .ins-tile__wrap{margin-top:14px!important}' +
     /* owner, 26 Nov: no peek and no fade ("snow"): folded, the text is simply not shown (it stays in the page); one centred button opens it */
     'html.ddtv-on:not(.ddtv-desc-open) .product-details__description{max-height:0;overflow:hidden;padding:0!important;margin:0!important}' +
     '.ddtv-fold{display:block!important;clear:both!important;float:none!important;box-sizing:border-box!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:14px auto 28px!important;padding:12px 22px!important;border-radius:12px!important;border:1.5px solid #434239!important;background:#FBFBED!important;color:#2E3633!important;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif!important;text-align:center!important;cursor:pointer}' +
