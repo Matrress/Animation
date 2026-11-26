@@ -1,5 +1,5 @@
 {
- "date": "2026-11-26T11:12:11.975Z",
+ "date": "2026-11-26T16:05:47.865Z",
  "simulated": true,
  "note": "simulated Ecwid, Chromium only",
  "results": [
@@ -191,7 +191,7 @@
   {
    "ok": true,
    "msg": "G4 video requests at load do not exceed today's eight (ratchet)",
-   "detail": "8 requested; preload=auto on 2 of 7 video elements"
+   "detail": "7 requested; preload=auto on 2 of 7 video elements"
   },
   {
    "ok": true,
@@ -239,13 +239,13 @@
   "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on iPad Pro 12.9 (3rd gen) portrait 1024x1366, touch",
   "G5 target: layout shift below 0.1 on iPad Pro 12.9 (3rd gen) portrait 1024x1366, touch (now 0.602: the product block moves down when the television is inserted)",
   "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on iPad Pro 12.9 (3rd gen) landscape 1366x1024, touch",
-  "G4 target: only the opening loop is requested at load (8 video requests, 2 preload=auto) on Android tablet 800x1280, touch",
+  "G4 target: only the opening loop is requested at load (7 video requests, 2 preload=auto) on Android tablet 800x1280, touch",
   "G5 target: layout shift below 0.1 on Android tablet 800x1280, touch (now 0.528: the product block moves down when the television is inserted)"
  ],
  "mediaRequestsAtLoad": {
   "desktop 1440x900, mouse": 8,
   "iPad Pro 12.9 (3rd gen) portrait 1024x1366, touch": 8,
   "iPad Pro 12.9 (3rd gen) landscape 1366x1024, touch": 8,
-  "Android tablet 800x1280, touch": 8
+  "Android tablet 800x1280, touch": 7
  }
 }

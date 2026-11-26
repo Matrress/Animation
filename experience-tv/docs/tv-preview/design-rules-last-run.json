@@ -11,7 +11,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
