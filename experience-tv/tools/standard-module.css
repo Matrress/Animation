@@ -83,14 +83,15 @@
 .dd-std summary { list-style: none; cursor: pointer; }
 .dd-std summary::-webkit-details-marker { display: none; }
 .dd-t { background: var(--vanilla); border: 1px solid var(--line); border-radius: 14px; margin: 0 0 8px; overflow: hidden; container: ddt / inline-size; }
-.dd-t > summary { display: flex; align-items: center; gap: 10px 14px; padding: 13px 16px; flex-wrap: wrap; background: var(--coffee); }
-.dd-tg1 > summary { background: var(--slate); } .dd-tg2 > summary { background: var(--coffee); } .dd-tg3 > summary { background: var(--olive); }
-.dd-t > summary, .dd-t > summary * { color: var(--lt) !important; }
+.dd-t > summary, .dd-t > .dd-sum { display: flex; align-items: center; gap: 10px 14px; padding: 13px 16px; flex-wrap: wrap; background: var(--coffee); }
+.dd-tg1 > summary, .dd-tg1 > .dd-sum { background: var(--slate); } .dd-tg2 > summary, .dd-tg2 > .dd-sum { background: var(--coffee); } .dd-tg3 > summary, .dd-tg3 > .dd-sum { background: var(--olive); }
+.dd-t > summary, .dd-t > summary *, .dd-t > .dd-sum, .dd-t > .dd-sum * { color: var(--lt) !important; }
 .dd-t > summary::after, .dd-m > summary::after { content: ""; width: 9px; height: 9px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); margin: 0 4px 0 auto; flex: none; transition: transform .18s; position: relative !important; inset: auto !important; float: none !important; display: block; }
 .dd-t[open] > summary::after, .dd-m[open] > summary::after { transform: rotate(-135deg); }
 .dd-t > summary:hover { filter: brightness(1.12); }
-.dd-t[open] { border-color: var(--ol); }
-.dd-t[open] > summary { box-shadow: inset 4px 0 0 var(--ol); }
+.dd-t[open], .dd-st { border-color: var(--ol); }
+.dd-t[open] > summary, .dd-st > .dd-sum { box-shadow: inset 4px 0 0 var(--ol); }
+/* owner, 26 Nov: Firmness and Comfort stand open. The shop strips the open attribute of a <details> when the description is saved, so these two are plain sections (always visible, no chevron), with the same bar and body. */
 .dd-t__h { font-size: 18px; font-weight: 700; line-height: 1.25; margin: 0 !important; font-family: inherit; }
 .dd-t__s { font-size: 14px; font-weight: 400; flex: 1 1 220px; opacity: .92; }
 .dd-t__b { padding: 6px 18px 16px; }
@@ -99,7 +100,8 @@
 
 /* inner menus: "learn more" */
 .dd-m { border-left: 3px solid var(--ol); background: var(--paper); border-radius: 0 12px 12px 0; margin: 12px 0; border-top: 1px solid var(--line); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.dd-m > summary { display: flex; align-items: center; gap: 12px; padding: 11px 14px; font-weight: 600; font-size: 15.5px; color: var(--deep) !important; }
+.dd-m > summary, .dd-mst > .dd-m__t { display: flex; align-items: center; gap: 12px; padding: 11px 14px; font-weight: 600; font-size: 15.5px; color: var(--deep) !important; }
+.dd-std .dd-mst > .dd-m__t { margin: 0; line-height: 1.3; }
 .dd-m__b { padding: 2px 16px 12px; }
 
 /* small cards in a twelve-column grid: the number of cards decides the widths, so a row is never left half empty */
@@ -146,7 +148,7 @@
 .dd-v figcaption .k-mode { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--ol2) !important; }
 .dd-hd > .dd-film { margin: 4px 0 0; }
 .dd-film .dd-v__f { background: var(--deep); }
-.dd-film video { object-fit: contain; }
+.dd-film video { object-fit: contain; background: var(--deep) url('https://media.divinedunlop.com/ddtv/botanic-film-poster-80b9f7612d35f0228ee6.webp') center / cover no-repeat; }
 .dd-film figcaption { font-size: 15px; font-weight: 600; color: var(--deep) !important; margin-top: 8px; }
 
 /* the closing card: the sleeper's photo beside the closing line (photo fills its side, no empty corner) */
@@ -160,7 +162,7 @@
 
 /* the word Botanic: green on light surfaces (dark green), lifted green on the dark ones; written last and doubled so no other rule of the page can change it */
 .dd-std .dd-bo.dd-bo, .dd-std .dd-t__b .dd-bo.dd-bo, .dd-std .dd-grp .dd-bo.dd-bo { color: var(--bo) !important; }
-.dd-std .dd-dk .dd-bo.dd-bo, .dd-std .dd-t > summary .dd-bo.dd-bo, .dd-std .dd-tg2 .dd-c .dd-bo.dd-bo, .dd-std .dd-tg3 .dd-c .dd-bo.dd-bo, .dd-std .dd-tg2 .dd-m .dd-c .dd-bo.dd-bo, .dd-std .dd-tg3 .dd-m .dd-c .dd-bo.dd-bo, .dd-std .dd-end .dd-bo.dd-bo { color: var(--olt) !important; }
+.dd-std .dd-dk .dd-bo.dd-bo, .dd-std .dd-t > summary .dd-bo.dd-bo, .dd-std .dd-t > .dd-sum .dd-bo.dd-bo, .dd-std .dd-tg2 .dd-c .dd-bo.dd-bo, .dd-std .dd-tg3 .dd-c .dd-bo.dd-bo, .dd-std .dd-tg2 .dd-m .dd-c .dd-bo.dd-bo, .dd-std .dd-tg3 .dd-m .dd-c .dd-bo.dd-bo, .dd-std .dd-end .dd-bo.dd-bo { color: var(--olt) !important; }
 .dd-std .dd-grp .dd-bo.dd-bo { color: var(--bo) !important; }
 
 /*=END=*/

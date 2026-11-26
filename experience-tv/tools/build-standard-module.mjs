@@ -97,7 +97,8 @@ const res = await page.evaluate(({ src }) => {
     const sm = d.querySelector(':scope > summary'); let lab = '';
     if (sm) { const c = sm.cloneNode(true); c.querySelectorAll('svg,.sum-idx').forEach((x) => x.remove()); lab = norm(c.textContent).trim(); }
     let body = ''; for (const c of d.children) if (tag(c) !== 'summary') body += conv(c);
-    return '<details class="dd-m"' + (openMenus ? ' open' : '') + '><summary>' + esc(lab) + '</summary><div class="dd-m__b">' + body + '</div></details>';
+    if (openMenus) return '<div class="dd-m dd-mst"><h3 class="dd-m__t">' + esc(lab) + '</h3><div class="dd-m__b">' + body + '</div></div>';   // stands open (the shop drops the open attribute of a details)
+    return '<details class="dd-m"><summary>' + esc(lab) + '</summary><div class="dd-m__b">' + body + '</div></details>';
   };
   const conv = (e) => {
     if (isSkip(e)) return '';
@@ -165,7 +166,9 @@ const res = await page.evaluate(({ src }) => {
     const n = txt(sh.querySelector('.b-sh__n')).replace(/^\d+\s*[—–-]\s*/, ''), t = txt(sh.querySelector('.b-sh__t')), sub = sh.querySelector('.b-sh__s');
     let body = sub ? '<p class="dd-lead">' + inline(sub).trim() + '</p>' : '';
     openMenus = OPEN.includes(id); for (const c of bw.children) if (c !== sh) body += conv(c); openMenus = false;
-    return '<details class="dd-t dd-tg' + (gi + 1) + '" id="bp-' + id + '"' + (OPEN.includes(id) ? ' open' : '') + '><summary><h2 class="dd-t__h">' + esc(n) + '</h2>' + (t ? '<span class="dd-t__s">' + esc(t) + '</span>' : '') + '</summary><div class="dd-t__b">' + body + '</div></details>';
+    const head = '<h2 class="dd-t__h">' + esc(n) + '</h2>' + (t ? '<span class="dd-t__s">' + esc(t) + '</span>' : '');
+    if (OPEN.includes(id)) return '<section class="dd-t dd-st dd-tg' + (gi + 1) + '" id="bp-' + id + '"><div class="dd-sum">' + head + '</div><div class="dd-t__b">' + body + '</div></section>';   // stands open: the shop drops the open attribute of a details when the description is saved
+    return '<details class="dd-t dd-tg' + (gi + 1) + '" id="bp-' + id + '"><summary>' + head + '</summary><div class="dd-t__b">' + body + '</div></details>';
   };
   const GROUPS = [
     ['Choose your mattress', ['firmness', 'height', 'covers']],
