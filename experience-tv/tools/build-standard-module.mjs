@@ -82,20 +82,22 @@ const res = await page.evaluate(({ src }) => {
     }
     return o;
   };
-  const video = (v) => {
+  const video = (v, poster) => {
     const s = v.querySelector('source'), url = s ? s.getAttribute('src') : v.getAttribute('src'); if (!url) return '';
-    return '<video controls playsinline preload="none" aria-label="' + att(v.getAttribute('aria-label') || '') + '"><source src="' + att(url) + '" type="video/mp4"></video>';
+    // a window the customer starts: controls, no autoplay, no loop, nothing is fetched before play (a poster picture is shown instead)
+    return '<video controls playsinline preload="none"' + (poster ? ' poster="' + att(poster) + '"' : '') + ' aria-label="' + att(v.getAttribute('aria-label') || '') + '"><source src="' + att(url) + '" type="video/mp4"></video>';
   };
   const mtv = (e) => {
     const v = e.querySelector('video'), mode = e.querySelector('.b-mtv__mode'), ti = e.querySelector('.b-mtv__title'), de = e.querySelector('.b-mtv__desc');
     return '<figure class="dd-v"><div class="dd-v__f">' + video(v) + '</div><figcaption>' + (mode ? '<span class="k-mode">' + esc(norm(mode.textContent).trim()) + '</span> ' : '') +
       (ti ? '<strong>' + esc(norm(ti.textContent).trim()) + '</strong> ' : '') + (de ? '<span>' + esc(norm(de.textContent).trim()) + '</span>' : '') + '</figcaption></figure>';
   };
+  let openMenus = false;   // owner, 26 Nov: the menus inside Firmness and Comfort stand open too
   const det = (d) => {
     const sm = d.querySelector(':scope > summary'); let lab = '';
     if (sm) { const c = sm.cloneNode(true); c.querySelectorAll('svg,.sum-idx').forEach((x) => x.remove()); lab = norm(c.textContent).trim(); }
     let body = ''; for (const c of d.children) if (tag(c) !== 'summary') body += conv(c);
-    return '<details class="dd-m"><summary>' + esc(lab) + '</summary><div class="dd-m__b">' + body + '</div></details>';
+    return '<details class="dd-m"' + (openMenus ? ' open' : '') + '><summary>' + esc(lab) + '</summary><div class="dd-m__b">' + body + '</div></details>';
   };
   const conv = (e) => {
     if (isSkip(e)) return '';
@@ -141,6 +143,7 @@ const res = await page.evaluate(({ src }) => {
   }).join('');
   const full = pageEl.querySelector('.b-video-modal video'), fullTitle = txt(pageEl.querySelector('.b-video-modal__title'));
   const GAL = 'https://d2j6dbq0eux0bg.cloudfront.net/images/100333285/products/831592302/';
+  const POSTER = 'https://media.divinedunlop.com/ddtv/botanic-film-poster-80b9f7612d35f0228ee6.webp';   // a frame of the film itself (8 s), 11 KB: the window shows a picture, the film (3.4 MB) is fetched only when a customer presses play
   const HANDS = 'https://media.divinedunlop.com/ddtv/botanic-hands-core-482a3635808f7d9b16c9.webp';   // the owner's photo (26 Nov): hands on the cut-open latex mattress
   const photo = '<figure class="dd-ph"><img src="' + HANDS + '" alt="Hands resting on a Botanic latex mattress that is cut open to show its natural latex core and the quilted cover" width="1100" height="1100" loading="lazy" decoding="async"></figure>';
   // header: a coffee text panel and the photo side by side (the photo fills the height of the panel, nothing is left empty), then the key points as tiles, the how-to note and the glance cards
@@ -150,18 +153,19 @@ const res = await page.evaluate(({ src }) => {
     (keys.length ? '<ul class="dd-key dd-n' + keys.length + '">' + keys.map((k) => '<li>' + esc(k) + '</li>').join('') + '</ul>' : '') +
     '<p class="dd-how">Choose your size, height, firmness and cover in the selector, then add the mattress to your bag.</p>' +
     (og ? '<h3 class="dd-glance__t">' + esc(txt(q('.b-ocard__title'))) + '</h3><dl class="dd-glance dd-n' + (pageEl.querySelectorAll('.b-ocard__item').length) + '">' + og + '</dl>' : '') +
-    (full ? '<details class="dd-m dd-film"><summary>' + esc(fullTitle) + '</summary><div class="dd-m__b"><figure class="dd-v"><div class="dd-v__f">' + video(full) + '</div></figure></div></details>' : '') +
+    (full ? '<figure class="dd-v dd-film"><div class="dd-v__f">' + video(full, POSTER) + '</div><figcaption>' + esc(fullTitle) + '</figcaption></figure>' : '') +
     '</header>';
 
   // ---- topics
   const secs = {}; for (const s of pageEl.querySelectorAll('section.b-sec')) secs[s.id.replace('bp-', '')] = s;
+  const OPEN = ['firmness', 'comfort'];   // owner, 26 Nov: Firmness and Comfort stand open (with all their menus); the other topics open on a tap
   const topic = (id, gi) => {
     const s = secs[id]; if (!s) return '';
     const bw = s.querySelector(':scope > .bw'), sh = bw.querySelector(':scope > .b-sh');
     const n = txt(sh.querySelector('.b-sh__n')).replace(/^\d+\s*[—–-]\s*/, ''), t = txt(sh.querySelector('.b-sh__t')), sub = sh.querySelector('.b-sh__s');
     let body = sub ? '<p class="dd-lead">' + inline(sub).trim() + '</p>' : '';
-    for (const c of bw.children) if (c !== sh) body += conv(c);
-    return '<details class="dd-t dd-tg' + (gi + 1) + '" id="bp-' + id + '"' + (id === 'firmness' ? ' open' : '') + '><summary><h2 class="dd-t__h">' + esc(n) + '</h2>' + (t ? '<span class="dd-t__s">' + esc(t) + '</span>' : '') + '</summary><div class="dd-t__b">' + body + '</div></details>';
+    openMenus = OPEN.includes(id); for (const c of bw.children) if (c !== sh) body += conv(c); openMenus = false;
+    return '<details class="dd-t dd-tg' + (gi + 1) + '" id="bp-' + id + '"' + (OPEN.includes(id) ? ' open' : '') + '><summary><h2 class="dd-t__h">' + esc(n) + '</h2>' + (t ? '<span class="dd-t__s">' + esc(t) + '</span>' : '') + '</summary><div class="dd-t__b">' + body + '</div></details>';
   };
   const GROUPS = [
     ['Choose your mattress', ['firmness', 'height', 'covers']],

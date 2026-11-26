@@ -144,7 +144,10 @@
 .dd-v video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--deep); }
 .dd-v figcaption { font-size: 14px; margin-top: 6px; line-height: 1.4; color: var(--mute) !important; }
 .dd-v figcaption .k-mode { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--ol2) !important; }
-.dd-film { margin: 4px 0 0; }
+.dd-hd > .dd-film { margin: 4px 0 0; }
+.dd-film .dd-v__f { background: var(--deep); }
+.dd-film video { object-fit: contain; }
+.dd-film figcaption { font-size: 15px; font-weight: 600; color: var(--deep) !important; margin-top: 8px; }
 
 /* the closing card: the sleeper's photo beside the closing line (photo fills its side, no empty corner) */
 .dd-end { margin: 18px 0 6px; background: var(--coffee); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr); }
