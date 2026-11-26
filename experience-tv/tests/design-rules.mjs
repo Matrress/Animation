@@ -411,6 +411,22 @@ for (const [label, vp] of [['iPad Pro landscape 1366x1024', { width: 1366, heigh
   ok(sameMine && sameChrome && open && longOnes && held && !er.length, 'R55 the middle is open (no scroll box, as long as its text); Your selection is one fixed card of one height in all eleven topics and stays in view; the tree of the topic stays in view', JSON.stringify({ sameMine, sameChrome, open, longOnes, held, er: er.length, mineH: rows.map((r) => r.mineH).join(','), tall: rows.map((r) => r.tall).join(',') }));
   await c.close();
 }
+// R56 / R57 owner 26 Nov: THE GREEN. Whatever stands on a green surface is light (white or vanilla), never black and never brown, measured on the real pixels
+// (the inside of every green surface, its edge excluded); and green is at most a tenth of what is on the screen (the design keeps far under it)
+{
+  const c = await b.newContext({ viewport: { width: 1366, height: 900 } }); const g = await c.newPage();
+  const analyse = async (b64) => { const im = new Image(); im.src = 'data:image/png;base64,' + b64; await im.decode(); const cv = document.createElement('canvas'); cv.width = im.width; cv.height = im.height; const x = cv.getContext('2d'); x.drawImage(im, 0, 0); const d = x.getImageData(0, 0, cv.width, cv.height).data; let dark = 0, green = 0; for (let i = 0; i < d.length; i += 4) { const r = d[i], gg = d[i + 1], bl = d[i + 2], l = r * .299 + gg * .587 + bl * .114, mx = Math.max(r, gg, bl), mn = Math.min(r, gg, bl), dd = mx - mn; if (l < 70) dark++; if (dd >= 40 && mx === gg) { const h = 60 * (((bl - r) / dd) + 2), L = (mx + mn) / 510; if (h >= 62 && h <= 105 && L > .12 && L < .62) green++; } } return { dark, green, n: d.length / 4 }; };
+  let surfaces = 0, darkIn = [], worst = 0;
+  for (const q of ['?ignite=0', '?ch=firmness&pn=regulation&ignite=0', '?ch=zones&pn=map&ignite=0', '?step=0&ignite=0', '?step=2&ignite=0', '?step=4&demo=1&ignite=0', '?ch=discover&pn=intro&ignite=0']) {
+    await g.goto(file + q); await g.waitForTimeout(500);
+    const boxes = await g.evaluate(() => { const P = (c) => { const m = c.match(/rgba?\(([\d.]+)[, ]+([\d.]+)[, ]+([\d.]+)(?:[,/ ]+([\d.]+))?/); return m ? [+m[1], +m[2], +m[3], m[4] === undefined ? 1 : +m[4]] : null; }; const out = []; for (const e of document.querySelectorAll('body *')) { const cs = getComputedStyle(e), x = P(cs.backgroundColor); if (!x || x[3] < .9) continue; const [r, gg, bl] = x, mx = Math.max(r, gg, bl), mn = Math.min(r, gg, bl), d = mx - mn; if (d < 40 || mx !== gg) continue; const h = 60 * (((bl - r) / d) + 2), l = (mx + mn) / 510; if (!(h >= 62 && h <= 105 && l > .12 && l < .62)) continue; const rc = e.getBoundingClientRect(); if (rc.width < 40 || rc.height < 18 || rc.top < 0 || rc.bottom > innerHeight || cs.visibility === 'hidden') continue; out.push({ x: rc.left, y: rc.top, w: rc.width, h: rc.height, t: (e.textContent || '').trim().slice(0, 20) }); } return out; });
+    for (const bx of boxes) { const I = 7; if (bx.w < 2 * I + 12 || bx.h < 2 * I + 8) continue; const buf = await g.screenshot({ clip: { x: bx.x + I, y: bx.y + I, width: bx.w - 2 * I, height: bx.h - 2 * I } }); const r = await g.evaluate(analyse, buf.toString('base64')); surfaces++; if (r.dark > 0) darkIn.push(q + ' "' + bx.t + '" ' + r.dark); }
+    const full = await g.evaluate(analyse, (await g.screenshot()).toString('base64')); worst = Math.max(worst, 100 * full.green / full.n);
+  }
+  ok(surfaces >= 5 && darkIn.length === 0, 'R56 text and icons on every green surface are light (real pixels, ' + surfaces + ' surfaces measured): never black, never brown', darkIn.join(' | '));
+  ok(worst <= 10, 'R57 green is at most 10 % of the screen (worst of the screens tried: ' + worst.toFixed(2) + ' %)', worst.toFixed(2) + ' %');
+  await c.close();
+}
 await b.close();
 writeFileSync(join(root, 'docs', 'tv-preview', 'design-rules-last-run.json'), JSON.stringify({ date: new Date().toISOString().slice(0, 10), failures: fails, checks: rows.length, rows }, null, 1));
 console.log(fails ? `\n${fails} design rule(s) BROKEN` : `\nAll ${rows.length} design-rule checks passed`);

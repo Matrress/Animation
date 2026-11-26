@@ -57,20 +57,23 @@
 .dd-glance small { display: block; font-weight: 400; font-size: 12.5px; color: var(--mid); line-height: 1.4; margin-top: 2px; }
 
 /* groups and topics: one menu, closed until opened */
-.dd-grp { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ol2); margin: 22px 4px 8px !important; }
+.dd-grp { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gr); margin: 22px 4px 8px !important; }
 .dd-std summary { list-style: none; cursor: pointer; }
 .dd-std summary::-webkit-details-marker { display: none; }
 .dd-t { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; margin: 0 0 8px; overflow: hidden; }
 .dd-t > summary { display: flex; align-items: center; gap: 10px 14px; padding: 13px 16px; flex-wrap: wrap; }
 .dd-t > summary::after, .dd-m > summary::after { content: ""; width: 9px; height: 9px; border-right: 2px solid var(--ol2); border-bottom: 2px solid var(--ol2); transform: rotate(45deg); margin-left: auto; flex: none; transition: transform .18s; }
 .dd-t[open] > summary::after, .dd-m[open] > summary::after { transform: rotate(-135deg); }
-.dd-t > summary:hover, .dd-t[open] > summary { background: var(--cream); }
-.dd-t[open] { border-color: var(--ol); }
-.dd-t__h { font-size: 18px; font-weight: 700; line-height: 1.25; margin: 0 !important; color: var(--ink); font-family: inherit; }
-.dd-t__s { font-size: 14px; color: var(--mid); font-weight: 400; flex: 1 1 220px; }
+.dd-t > summary { background: var(--gr); color: var(--cream); }
+.dd-t > summary:hover, .dd-t[open] > summary { background: var(--ink); }
+.dd-t > summary::after { border-color: var(--cream); }
+.dd-t[open] { border-color: var(--gr); }
+.dd-t__h { font-size: 18px; font-weight: 700; line-height: 1.25; margin: 0 !important; color: var(--cream) !important; font-family: inherit; }
+.dd-t__s { font-size: 14px; color: #DDD6C4; font-weight: 400; flex: 1 1 220px; }
 .dd-t__b { padding: 6px 18px 16px; border-top: 1px solid var(--line); }
 .dd-lead { font-size: 17px; margin-top: 10px !important; }
-.dd-std summary:focus-visible { outline: 3px solid var(--ol); outline-offset: -3px; border-radius: 12px; }
+.dd-std summary:focus-visible { outline: 3px solid var(--cream); outline-offset: -5px; border-radius: 12px; }
+.dd-m > summary:focus-visible { outline-color: var(--ol); }
 
 /* inner menus: "learn more" */
 .dd-m { border-left: 3px solid var(--ol); background: var(--cream); border-radius: 0 12px 12px 0; margin: 12px 0; }
@@ -119,4 +122,6 @@
 .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button { background: #6E8601 !important; border: 1.5px solid #6E8601 !important; color: #FFFFFF !important; border-radius: 12px !important; font-family: Chillax, "Helvetica Neue", Arial, sans-serif !important; font-weight: 700 !important; }
 .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button:hover { background: #566901 !important; border-color: #566901 !important; }
 .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button .form-control__button-text, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button .svg-icon { color: #FFFFFF !important; fill: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+/* the shop turns the button's text black or white by its own filter, and picks black on our green: the filter is switched off, the text is white */
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button *, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button { filter: none !important; mix-blend-mode: normal !important; }
 html.ddtv-on #bp-top .dd-how { display: none !important; }

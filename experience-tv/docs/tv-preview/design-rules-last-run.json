@@ -1,7 +1,7 @@
 {
  "date": "2026-11-26",
  "failures": 0,
- "checks": 194,
+ "checks": 196,
  "rows": [
   {
    "pass": true,
@@ -341,7 +341,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -972,6 +972,16 @@
    "pass": true,
    "rule": "R55 the middle is open (no scroll box, as long as its text); Your selection is one fixed card of one height in all eleven topics and stays in view; the tree of the topic stays in view",
    "detail": "{\"sameMine\":true,\"sameChrome\":true,\"open\":true,\"longOnes\":true,\"held\":true,\"er\":0,\"mineH\":\"572,572,572,572,572,572,572,572,572,572,572\",\"tall\":\"1078,862,1224,1224,1058,1176,1168,929,1251,786,947\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R56 text and icons on every green surface are light (real pixels, 8 surfaces measured): never black, never brown",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R57 green is at most 10 % of the screen (worst of the screens tried: 1.29 %)",
+   "detail": "1.29 %"
   }
  ]
 }

@@ -422,3 +422,16 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
   text is read. The glass height (about 790 px on the iPad in the viewer) is now a MINIMUM height of the screen, not a limit: the choosing steps are
   laid out to fit it (round XXXVII), the reading panels are free to be longer.
 - Rule R55 checks it in all eleven topics (no scroll box, same card height, same height above, the card and the tree in view while scrolling).
+
+## Round XL (owner, 26 November 2026): the standard module, one family, the green
+- **The standard module** (the plain product page, `tools/build-standard-module.mjs` + `tools/standard-module.css`) is the old description rebuilt from the
+  approved text: one header card (no second bar), 13 topics as collapsible `<details>` menus in three groups, videos only when asked for, the shop's own
+  selectors kept (sticky beside the text on wide screens). 53 KB instead of 142 KB; the old description made the browser fetch 12.1 MB on first load,
+  10.5 MB of it video. No sentence is invented: the build checks that every approved word is in the result.
+- **Where the two views meet, an information block** says what each is for ("Two ways to view this mattress" under the television; "You are in the
+  Standard Product View" at the top of the standard view), so nobody wonders why information and selectors appear twice.
+- **No pills** for anything important: rounded boxes. **No button look without a function**: a button is only drawn where it does something.
+- **The green** (#6E8601, dark #566901): what stands on a green surface is always light (white or vanilla), never black and never brown (the shop's own
+  button filter once turned our white to black: switched off for our button); **green is at most 10 % of the screen** (it is about 1 %). The rest is
+  vanilla and graphite: darker backgrounds with vanilla text so that things stand out.
+- Rules R56 and R57 (design rules, real pixels) and M1-M6 (`tests/live/standard-module-e2.cjs`, real Ecwid page) keep it.
