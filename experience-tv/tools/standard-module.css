@@ -17,111 +17,137 @@
 .ec-size .ec-store [class*="product-details-module__btn-less"] { display: none !important; }
 
 /*=MODULE=*/
-/* THE STANDARD MODULE: the colours and the type of the television (one family) */
+/* THE STANDARD MODULE, "chocolate" (owner, 26 Nov): dark-chocolate cards, every inscription white, the word Botanic always green,
+   vanilla and pistachio as the light accents, the television's type (Chillax). Green is only a small accent (at most 10 %). */
 .dd-std {
-  --ink: #2E3633; --gr: #384442; --cream: #FBFBED; --paper: #FEFEF6; --tan: #DDD6C4; --line: #D6CFBC;
-  --ol: #6E8601; --ol2: #566901; --mid: #646155;
-  font-family: Chillax, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.6; font-weight: 400; color: var(--ink);
+  --c0: #231813; --c1: #2F211A; --c2: #3D2B22; --c3: #4B352A; --line: #5A4235;
+  --w: #FFFFFF; --sec: #F2EADB; --van: #F3E5BC; --pis: #B9CB7C; --ol: #6E8601; --olt: #8AA60C;
+  font-family: Chillax, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.6; font-weight: 400; color: var(--w) !important;
   -webkit-font-smoothing: antialiased; text-align: left;
 }
 .dd-std *, .dd-std *::before, .dd-std *::after { box-sizing: border-box; }
-.dd-std p { margin: 0 0 .8em; }
-.dd-std strong { font-weight: 700; }
-.dd-std a { color: var(--ol2); text-decoration: underline; text-underline-offset: 2px; }
-.dd-std h3, .dd-std h4 { font-family: inherit; color: var(--gr); line-height: 1.3; margin: 1.1em 0 .45em; }
+.dd-std p { margin: 0 0 .8em; color: var(--w) !important; }
+.dd-std strong { font-weight: 700; color: var(--w) !important; }
+.dd-std a { color: var(--van) !important; text-decoration: underline; text-underline-offset: 2px; }
+.dd-std h3, .dd-std h4 { font-family: inherit; color: var(--w) !important; line-height: 1.3; margin: 1.1em 0 .45em; }
 .dd-std h3 { font-size: 18px; font-weight: 700; }
 .dd-std h4 { font-size: 16px; font-weight: 700; }
-.dd-std ul, .dd-std ol { margin: 0 0 .9em; padding-left: 1.25em; }
-.dd-std li { margin: 0 0 .35em; }
-.dd-std img { max-width: 100%; height: auto; border-radius: 10px; display: block; }
-.dd-std table { border-collapse: collapse; width: 100%; margin: 0 0 1em; font-size: 15px; }
-.dd-std th, .dd-std td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+.dd-std ul, .dd-std ol { margin: 0 0 .9em; padding-left: 1.25em; color: var(--w) !important; }
+.dd-std li { margin: 0 0 .35em; color: var(--w) !important; }
+.dd-std li::marker { color: var(--pis) !important; }
+.dd-std dl, .dd-std dt, .dd-std dd, .dd-std small, .dd-std span, .dd-std figcaption { color: inherit !important; }
+.dd-std img { max-width: 100%; height: auto; border-radius: 12px; display: block; }
+.dd-std table { border-collapse: collapse; width: 100%; margin: 0 0 1em; font-size: 15px; color: var(--w) !important; }
+.dd-std th, .dd-std td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; color: var(--w) !important; }
+.dd-std th { color: var(--van) !important; font-weight: 600; }
+.dd-std .dd-bo { color: var(--olt) !important; font-weight: 700; }
 
-/* header: one calm card (no dark hero, no second bar) */
-.dd-hd { background: var(--cream); border: 1px solid var(--line); border-radius: 18px; padding: 22px 22px 12px; margin: 0 0 8px; }
-.dd-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ol2); margin: 0 0 8px !important; }
-.dd-title { font-size: clamp(26px, 3.6vw, 36px); line-height: 1.12; font-weight: 300; margin: 0 0 12px; color: var(--gr); }
-.dd-title__b { display: block; font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
+/* header: one chocolate card; the photo of the mattress beside the words (above them on a phone) */
+.dd-hd { background: var(--c1); border: 1px solid var(--line); border-radius: 18px; padding: 22px 22px 14px; margin: 0 0 8px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 26px; }
+@media (min-width: 820px) { .dd-hd { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } .dd-hd > * { grid-column: 1; } .dd-hd > .dd-ph { grid-column: 2; grid-row: 1 / span 5; align-self: start; } .dd-hd > .dd-glance__t, .dd-hd > .dd-glance, .dd-hd > .dd-film { grid-column: 1 / -1; } }
+.dd-ph { margin: 0 0 16px; border-radius: 14px; overflow: hidden; background: #FFFFFF; border: 1px solid var(--line); }
+.dd-ph img { width: 100%; height: auto; border-radius: 0; aspect-ratio: 4 / 3; object-fit: cover; }
+.dd-std .dd-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--van) !important; margin: 0 0 8px !important; }
+.dd-title { font-size: clamp(26px, 3.6vw, 36px); line-height: 1.12; font-weight: 300; margin: 0 0 12px; color: var(--w) !important; }
+.dd-std .dd-title__b { display: block; font-weight: 700; letter-spacing: -.01em; color: var(--olt) !important; }
 .dd-title em { font-style: normal; font-weight: 300; }
 .dd-intro { font-size: 17px; }
 .dd-key { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 6px 18px; list-style: none; margin: 14px 0 !important; padding: 0 !important; }
 .dd-key li { margin: 0 !important; position: relative; padding: 0 0 0 20px; font-size: 15px; font-weight: 500; }
-.dd-key li::before { content: ""; position: absolute; left: 0; top: .5em; width: 9px; height: 9px; border-radius: 3px; background: var(--ol); }
-.dd-rule { font-size: 15px; color: var(--mid); }
-.dd-how { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--ol); border-radius: 12px; padding: 10px 14px; font-size: 15px; font-weight: 500; }
-.dd-glance__t { font-size: 12px !important; font-weight: 600 !important; letter-spacing: .14em; text-transform: uppercase; color: var(--ol2) !important; margin: 16px 0 8px !important; }
+.dd-key li::before { content: ""; position: absolute; left: 0; top: .5em; width: 9px; height: 9px; border-radius: 3px; background: var(--pis); }
+.dd-std .dd-rule { font-size: 15px; color: var(--sec) !important; }
+.dd-how { background: var(--c2); border: 1px solid var(--line); border-left: 4px solid var(--ol); border-radius: 12px; padding: 10px 14px; font-size: 15px; font-weight: 500; }
+.dd-std .dd-glance__t { font-size: 12px !important; font-weight: 600 !important; letter-spacing: .14em; text-transform: uppercase; color: var(--van) !important; margin: 16px 0 8px !important; }
 .dd-glance { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px; margin: 0 0 12px; padding: 0; }
-.dd-glance > div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; }
-.dd-glance dt { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ol2); font-weight: 600; }
-.dd-glance dd { margin: 2px 0 0; font-weight: 600; }
-.dd-glance small { display: block; font-weight: 400; font-size: 12.5px; color: var(--mid); line-height: 1.4; margin-top: 2px; }
+.dd-glance > div { background: var(--c2); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; }
+.dd-glance dt { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--van) !important; font-weight: 600; }
+.dd-glance dd { margin: 2px 0 0; font-weight: 600; color: var(--w) !important; }
+.dd-glance small { display: block; font-weight: 400; font-size: 12.5px; color: var(--sec) !important; line-height: 1.4; margin-top: 2px; }
 
 /* groups and topics: one menu, closed until opened */
-.dd-grp { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gr); margin: 22px 4px 8px !important; }
+.dd-std .dd-grp .dd-bo { color: #566901 !important; }
+.dd-std .dd-grp { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #3D2B22 !important; margin: 22px 4px 8px !important; padding: 0 0 6px 0; border-bottom: 2px solid #3D2B22; }
 .dd-std summary { list-style: none; cursor: pointer; }
 .dd-std summary::-webkit-details-marker { display: none; }
-.dd-t { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; margin: 0 0 8px; overflow: hidden; }
-.dd-t > summary { display: flex; align-items: center; gap: 10px 14px; padding: 13px 16px; flex-wrap: wrap; }
-.dd-t > summary::after, .dd-m > summary::after { content: ""; width: 9px; height: 9px; border-right: 2px solid var(--ol2); border-bottom: 2px solid var(--ol2); transform: rotate(45deg); margin-left: auto; flex: none; transition: transform .18s; }
+.dd-t { background: var(--c1); border: 1px solid var(--line); border-radius: 14px; margin: 0 0 8px; overflow: hidden; }
+.dd-t > summary { display: flex; align-items: center; gap: 10px 14px; padding: 13px 16px; flex-wrap: wrap; background: var(--c0); color: var(--w) !important; }
+.dd-t > summary::after, .dd-m > summary::after { content: ""; width: 9px; height: 9px; border-right: 2px solid var(--van); border-bottom: 2px solid var(--van); transform: rotate(45deg); margin: 0 4px 0 auto; flex: none; transition: transform .18s; position: relative !important; inset: auto !important; float: none !important; display: block; }
 .dd-t[open] > summary::after, .dd-m[open] > summary::after { transform: rotate(-135deg); }
-.dd-t > summary { background: var(--gr); color: var(--cream); }
-.dd-t > summary:hover, .dd-t[open] > summary { background: var(--ink); }
-.dd-t > summary::after { border-color: var(--cream); }
-.dd-t[open] { border-color: var(--gr); }
-.dd-t__h { font-size: 18px; font-weight: 700; line-height: 1.25; margin: 0 !important; color: var(--cream) !important; font-family: inherit; }
-.dd-t__s { font-size: 14px; color: #DDD6C4; font-weight: 400; flex: 1 1 220px; }
+.dd-t > summary:hover { background: var(--c2); }
+.dd-t[open] > summary { background: var(--c0); box-shadow: inset 4px 0 0 var(--ol); }
+.dd-t[open] { border-color: var(--ol); }
+.dd-t__h { font-size: 18px; font-weight: 700; line-height: 1.25; margin: 0 !important; color: var(--w) !important; font-family: inherit; }
+.dd-std .dd-t__s { font-size: 14px; color: var(--sec) !important; font-weight: 400; flex: 1 1 220px; }
 .dd-t__b { padding: 6px 18px 16px; border-top: 1px solid var(--line); }
 .dd-lead { font-size: 17px; margin-top: 10px !important; }
-.dd-std summary:focus-visible { outline: 3px solid var(--cream); outline-offset: -5px; border-radius: 12px; }
-.dd-m > summary:focus-visible { outline-color: var(--ol); }
+.dd-std summary:focus-visible { outline: 3px solid var(--van); outline-offset: -5px; border-radius: 12px; }
 
 /* inner menus: "learn more" */
-.dd-m { border-left: 3px solid var(--ol); background: var(--cream); border-radius: 0 12px 12px 0; margin: 12px 0; }
-.dd-m > summary { display: flex; align-items: center; gap: 12px; padding: 11px 14px; font-weight: 600; font-size: 15.5px; color: var(--gr); }
+.dd-m { border-left: 3px solid var(--pis); background: var(--c2); border-radius: 0 12px 12px 0; margin: 12px 0; }
+.dd-m > summary { display: flex; align-items: center; gap: 12px; padding: 11px 14px; font-weight: 600; font-size: 15.5px; color: var(--w) !important; }
 .dd-m__b { padding: 2px 16px 12px; }
 
 /* small cards (firmness, heights, covers, benefits ...): the first line of a card is its name */
 .dd-g { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 12px 0; }
 .dd-cov, .dd-g:has(> .dd-m) { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
-.dd-c { background: var(--cream); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; }
+.dd-c { background: var(--c2); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; }
 .dd-c > p { margin: 0 0 .3em; font-size: 15px; }
-.dd-c > p:first-child, .dd-c > .k-name, .dd-c > .k-label, .dd-c > .k-title, .dd-c > .k-lbl { font-weight: 700; color: var(--gr); }
-.dd-c > .k-kg, .dd-c > .k-st, .dd-c > .k-val { font-weight: 600; color: var(--ol2); }
-.dd-c > .k-mark { font-weight: 700; color: var(--ol2); font-size: 18px; margin: 0; }
+.dd-c > p:first-child, .dd-c > .k-name, .dd-c > .k-label, .dd-c > .k-title, .dd-c > .k-lbl { font-weight: 700; color: var(--w) !important; }
+.dd-c > .k-kg, .dd-c > .k-st, .dd-c > .k-val { font-weight: 600; color: var(--van) !important; }
+.dd-c > .k-mark { font-weight: 700; color: var(--van) !important; font-size: 18px; margin: 0; }
 .dd-c > p:last-child { margin-bottom: 0; }
 .dd-t__b > .dd-c { margin: 12px 0; }
 
 /* cover pictures with their own words */
-.dd-cv { margin: 0; background: var(--cream); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+.dd-cv { margin: 0; background: var(--c2); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
 .dd-cv img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; margin: 0 0 8px; }
-.dd-cv figcaption { font-size: 15px; line-height: 1.4; }
+.dd-cv figcaption { font-size: 15px; line-height: 1.4; color: var(--w) !important; }
 .dd-g > .dd-m { margin: 0; }
 
 /* videos: only when asked for (nothing is fetched before the play button is pressed) */
 .dd-v { margin: 14px 0; }
-.dd-v__f { border-radius: 12px; overflow: hidden; background: var(--gr); aspect-ratio: 16 / 9; }
-.dd-v video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--gr); }
-.dd-v figcaption { font-size: 14px; color: var(--mid); margin-top: 6px; line-height: 1.4; }
-.dd-v figcaption .k-mode { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ol2); font-weight: 600; }
+.dd-v__f { border-radius: 12px; overflow: hidden; background: #1A100C; aspect-ratio: 16 / 9; }
+.dd-v video { display: block; width: 100%; height: 100%; object-fit: cover; background: #1A100C; }
+.dd-v figcaption { font-size: 14px; color: var(--sec) !important; margin-top: 6px; line-height: 1.4; }
+.dd-v figcaption .k-mode { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--van) !important; font-weight: 600; }
 .dd-film { margin: 12px 0 0; }
 
-/* the closing line */
-.dd-end { margin: 22px 0 6px; padding: 16px 18px; background: var(--gr); color: var(--cream); border-radius: 16px; }
-.dd-end h3 { color: var(--cream) !important; margin: 0 0 6px; }
-.dd-end p { margin: 0; color: #E9E6D4 !important; }
+/* the closing card: a second photo from the gallery, then the closing line */
+.dd-end { margin: 22px 0 6px; background: var(--c0); color: var(--w) !important; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.dd-end__p { margin: 0; background: #1A100C; }
+.dd-end__p img { width: 100%; height: auto; border-radius: 0; aspect-ratio: 16 / 7; object-fit: cover; }
+.dd-end__t { padding: 16px 18px; border-left: 4px solid var(--ol); }
+.dd-end h3 { color: var(--w) !important; margin: 0 0 6px; }
+.dd-end p { margin: 0; color: var(--sec) !important; }
 
 /*=END=*/
 /* ECWID'S OWN SELECTORS (size, depth, firmness, covers, bag): the same ones, in the family colours, and within reach while reading */
 .product-details:has(.dd-std) .form-control { border-radius: 10px !important; }
-.product-details:has(.dd-std) .details-product-option__title { font-weight: 700; color: #2E3633; }
+.product-details:has(.dd-std) .details-product-option__title { font-weight: 700; color: #2F211A; }
 @media (min-width: 900px) {
   .product-details:has(.dd-std) .product-details__sidebar { position: sticky; top: 16px; }
 }
-.product-details:has(.dd-std) .details-product-option__title, .product-details:has(.dd-std) .details-product-purchase__place, .product-details:has(.dd-std) .details-product-price__value { color: #2E3633 !important; font-family: Chillax, "Helvetica Neue", Arial, sans-serif !important; }
+.product-details:has(.dd-std) .details-product-option__title, .product-details:has(.dd-std) .details-product-purchase__place, .product-details:has(.dd-std) .details-product-price__value { color: #2F211A !important; font-family: Chillax, "Helvetica Neue", Arial, sans-serif !important; }
 .product-details:has(.dd-std) .form-control--select { border-radius: 12px !important; }
+/* the purchase button: green "Add to Bag" ... */
 .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button { background: #6E8601 !important; border: 1.5px solid #6E8601 !important; color: #FFFFFF !important; border-radius: 12px !important; font-family: Chillax, "Helvetica Neue", Arial, sans-serif !important; font-weight: 700 !important; }
 .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button:hover { background: #566901 !important; border-color: #566901 !important; }
-.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button .form-control__button-text, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button .svg-icon { color: #FFFFFF !important; fill: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
-/* the shop turns the button's text black or white by its own filter, and picks black on our green: the filter is switched off, the text is white */
-.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button *, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button { filter: none !important; mix-blend-mode: normal !important; }
+/* ... and once the mattress is in the bag the shop swaps it for "Add more" (outlined) and "Go to Checkout" (dark chocolate, white text): a different colour, so the new function is plain */
+.product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button { background: #2F211A !important; border: 1.5px solid #2F211A !important; color: #FFFFFF !important; border-radius: 12px !important; font-family: Chillax, "Helvetica Neue", Arial, sans-serif !important; font-weight: 700 !important; }
+.product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button:hover { background: #231813 !important; border-color: #231813 !important; }
+.product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button { background: #FFFFFF !important; border: 1.5px solid #2F211A !important; color: #2F211A !important; border-radius: 12px !important; font-family: Chillax, "Helvetica Neue", Arial, sans-serif !important; font-weight: 700 !important; }
+.product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button:hover { background: #F3E5BC !important; }
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button .form-control__button-text, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button .svg-icon,
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button .form-control__button-text, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button .svg-icon { color: #FFFFFF !important; fill: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button .form-control__button-text, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button .svg-icon { color: #2F211A !important; fill: #2F211A !important; -webkit-text-fill-color: #2F211A !important; }
+/* the shop turns the button's text black or white by its own filter: the filter is switched off on all three buttons */
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button *, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button,
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button *, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button,
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button *, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button { filter: none !important; mix-blend-mode: normal !important; }
+/* the two information blocks between the views (made by the television's code) wear the same chocolate */
+html #ddtv-info.ddtv-info, html #ddtv-backbox.ddtv-info { background: #2F211A !important; border-color: #5A4235 !important; border-left-color: #6E8601 !important; color: #FFFFFF !important; }
+html .ddtv-info p, html .ddtv-info .ddtv-info__h, html .ddtv-info__c b, html .ddtv-info__c { color: #FFFFFF !important; }
+html .ddtv-info .ddtv-info__c { background: #3D2B22 !important; border-color: #5A4235 !important; }
+html .ddtv-info .ddtv-fold { background: transparent !important; border-color: #F3E5BC !important; color: #F3E5BC !important; }
+html .ddtv-info .ddtv-fold:hover { background: #F3E5BC !important; color: #2F211A !important; }
 html.ddtv-on #bp-top .dd-how { display: none !important; }

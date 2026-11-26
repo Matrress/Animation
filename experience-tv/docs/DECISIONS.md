@@ -435,3 +435,15 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
   button filter once turned our white to black: switched off for our button); **green is at most 10 % of the screen** (it is about 1 %). The rest is
   vanilla and graphite: darker backgrounds with vanilla text so that things stand out.
 - Rules R56 and R57 (design rules, real pixels) and M1-M6 (`tests/live/standard-module-e2.cjs`, real Ecwid page) keep it.
+
+## Round XLI (owner, 26 November 2026): the chocolate standard module, Go to Checkout, photos
+- **Chocolate**: the standard module's cards (header, topics, small cards, closing card) are dark chocolate (#2F211A / #231813 / #3D2B22), **every inscription is
+  white** (or vanilla #F3E5BC for small labels), vanilla and pistachio are the light accents, green stays a small accent (left edge of the open topic, the
+  Add to Bag button). **The word Botanic is always green** (`<span class="dd-bo">`, wrapped by the build in text only; the lifted green #8AA60C is used on dark so that it reads at 4.5:1).
+  The shop's own rule `.ec-store * {color}` is stronger than plain rules, so the module's text colours are `!important` and tied to `#bp-top`.
+- **After Add to Bag** the shop swaps the button for "Add More" (outlined) and "Go to Checkout" (dark chocolate, white text): a different colour than the green
+  Add to Bag. The same on the television: its one button, once the mattress is in the bag, is Go to Checkout in chocolate with a vanilla edge (design rule R58).
+- **Two photos from the product gallery** (cut-open mattress in the header, a sleeper in the closing card): lazy, with alt text and sizes, no layout jump.
+- The information blocks between the two views wear the chocolate too (module CSS, so no new television file was needed for that part).
+- The chevrons of the topic bars were clipped by the shop's `summary::after` rule (absolute): fixed.
+- Tests: M7 (every inscription readable, 4.5:1, light on chocolate), M8 (every Botanic green), M9 (post-add states), M10 (photos, information blocks).

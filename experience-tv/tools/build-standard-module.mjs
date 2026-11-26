@@ -140,7 +140,9 @@ const res = await page.evaluate(({ src }) => {
     return '<div><dt>' + esc(lbl) + '</dt><dd>' + esc(val || pills.join(' · ')) + (note ? '<small>' + esc(note) + '</small>' : '') + '</dd></div>';
   }).join('');
   const full = pageEl.querySelector('.b-video-modal video'), fullTitle = txt(pageEl.querySelector('.b-video-modal__title'));
-  const header = '<header class="dd-hd" id="bp-top-head"><p class="dd-eyebrow">' + esc(eyebrow) + '</p>' +
+  const GAL = 'https://d2j6dbq0eux0bg.cloudfront.net/images/100333285/products/831592302/';
+  const photo = '<figure class="dd-ph"><img src="' + GAL + '4706741739.webp" alt="A Botanic mattress cut open to show its natural latex core and the quilted cover" width="800" height="600" loading="lazy" decoding="async"></figure>';
+  const header = '<header class="dd-hd" id="bp-top-head"><p class="dd-eyebrow">' + esc(eyebrow) + '</p>' + photo +
     '<h2 class="dd-title"><span class="dd-title__b">' + esc(logo) + '</span> <em>' + esc(h1em) + '</em> ' + esc(h1rest) + '</h2>' +
     '<p class="dd-intro">' + intro + '</p>' +
     (keys.length ? '<ul class="dd-key">' + keys.map((k) => '<li>' + esc(k) + '</li>').join('') + '</ul>' : '') +
@@ -168,8 +170,10 @@ const res = await page.evaluate(({ src }) => {
   for (const [g, ids] of GROUPS) { topics += '<p class="dd-grp">' + esc(g) + '</p>'; for (const id of ids) { topics += topic(id); used.add(id); } }
   const missing = Object.keys(secs).filter((k) => !used.has(k));
   const cta = pageEl.querySelector('.b-cta');
-  const end = cta ? '<aside class="dd-end"><h3>' + esc(txt(cta.querySelector('.b-cta__t'))) + '</h3><p>' + inline(cta.querySelector('.b-cta__s')).trim() + '</p></aside>' : '';
-  const html = '<div id="bp-top" class="dd-std">' + header + topics + end + '</div>';
+  const endPhoto = '<figure class="dd-end__p"><img src="' + GAL + '5509593549.webp" alt="A woman sleeping on her side on a Botanic mattress in a softly lit bedroom" width="800" height="533" loading="lazy" decoding="async"></figure>';
+  const end = cta ? '<aside class="dd-end">' + endPhoto + '<div class="dd-end__t"><h3>' + esc(txt(cta.querySelector('.b-cta__t'))) + '</h3><p>' + inline(cta.querySelector('.b-cta__s')).trim() + '</p></div></aside>' : '';
+  const bo = (h) => h.replace(/>([^<]+)</g, (m, t) => '>' + t.replace(/\bbotanic\b/gi, (w) => '<span class="dd-bo">' + w + '</span>') + '<');
+  const html = bo('<div id="bp-top" class="dd-std">' + header + topics + end + '</div>');
 
   // ---- text check: every word of the approved text (minus decoration/buttons/navigation) must be in the result
   const words = (s) => s.toLowerCase().replace(/[^\p{L}\p{N}%]+/gu, ' ').split(/\s+/).filter((w) => w.length > 0);

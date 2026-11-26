@@ -1,7 +1,7 @@
 {
  "date": "2026-11-26",
  "failures": 0,
- "checks": 196,
+ "checks": 197,
  "rows": [
   {
    "pass": true,
@@ -341,7 +341,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -982,6 +982,11 @@
    "pass": true,
    "rule": "R57 green is at most 10 % of the screen (worst of the screens tried: 1.29 %)",
    "detail": "1.29 %"
+  },
+  {
+   "pass": true,
+   "rule": "R58 Add to Bag is green; once the mattress is in the bag the same button is Go to Checkout in dark chocolate with white text (real pixels: no green, mostly chocolate, light letters)",
+   "detail": "{\"before\":{\"bg\":\"rgb(110, 134, 1)\",\"dis\":false},\"after\":{\"bg\":\"rgb(47, 33, 26)\",\"fg\":\"rgb(255, 255, 255)\",\"x\":1064,\"y\":626.734375,\"w\":246,\"h\":64,\"t\":\"Go to Checkout\"},\"px\":{\"light\":864,\"green\":0,\"choc\":9650,\"n\":11040}}"
   }
  ]
 }
