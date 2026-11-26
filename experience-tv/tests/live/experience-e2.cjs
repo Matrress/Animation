@@ -10,7 +10,7 @@
  *   S5 Add to Bag on the television is ready when the four are chosen; neither button is clicked
  *   S6 no cart, checkout or order request at any time; no page error of ours
  *   S7 only listed products start it; another product page removes it; coming back mounts it again
- *   S8 the description is still the shop's full text, folded under "Read the full description"
+ *   S8 the description is still the shop's full text, folded (nothing of it shown, no fade) under one centred "Read the full description" button
  *
  *   NODE_PATH=$(npm root -g) node tests/live/experience-e2.cjs [width height] [shot.png]
  */
@@ -89,8 +89,8 @@ const URL = 'https://divinedunlop.com/products/botanic-original-100-organic-late
   ok(/26 cm/.test(n3.depth) && /180x200/.test(n3.size) && /Wool/.test(n3.cover), 'S2 the television did not push back: Ecwid keeps the customer\'s own choice', JSON.stringify(n3));
 
   // S8: the description stays, folded
-  const s8 = await p.evaluate(() => { const d = document.querySelector('.product-details__description'); return { len: d.textContent.length, fold: !!document.querySelector('.ddtv-fold'), folded: getComputedStyle(d).maxHeight }; });
-  ok(s8.len === descBefore && s8.fold && s8.folded === '420px', 'S8 the shop\'s description is complete and folded under "Read the full description"', JSON.stringify(s8));
+  const s8 = await p.evaluate(() => { const d = document.querySelector('.product-details__description'), f = document.querySelector('.ddtv-fold'), db = d.getBoundingClientRect(), fb = f && f.getBoundingClientRect(), cs = getComputedStyle(d); return { len: d.textContent.length, fold: !!f, folded: cs.maxHeight, mask: cs.webkitMaskImage || cs.maskImage || 'none', h: Math.round(db.height), below: !!fb && fb.top >= db.bottom - 1, centred: !!fb && Math.abs((fb.left + fb.width / 2) - (document.documentElement.clientWidth / 2)) < 160, aria: f && f.getAttribute('aria-expanded') }; });
+  ok(s8.len === descBefore && s8.fold && s8.folded === '0px' && s8.h === 0 && /none/.test(s8.mask) && s8.below && s8.aria === 'false', 'S8 the shop\'s description is complete, folded to nothing (no peek, no fade) with one "Read the full description" button below it', JSON.stringify(s8));
 
   // certificates: the logos arrive on demand
   await click('[data-ch="certs"]'); await p.waitForTimeout(800);

@@ -154,14 +154,14 @@
 
   /* ---------- the long description: still in the page (it is the indexed text), folded under the television ---------- */
   var PAGE_CSS = 'html.ddtv-on .product-details__sidebar,html.ddtv-on .details-product-share{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;opacity:0!important;pointer-events:none!important;border:0!important;margin:0!important;padding:0!important}' +
-    'html.ddtv-on:not(.ddtv-desc-open) .product-details__description{max-height:420px;overflow:hidden;position:relative;' +
-    '-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}' +
-    '.ddtv-fold{display:block;margin:14px auto 28px;padding:12px 22px;border-radius:12px;border:1.5px solid #434239;background:#FBFBED;color:#2E3633;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif;cursor:pointer}' +
-    '.ddtv-fold:hover{background:#434239;color:#FBFBED}' +
+    /* owner, 26 Nov: no peek and no fade ("snow"): folded, the text is simply not shown (it stays in the page); one centred button opens it */
+    'html.ddtv-on:not(.ddtv-desc-open) .product-details__description{max-height:0;overflow:hidden;padding:0!important;margin:0!important}' +
+    '.ddtv-fold{display:block!important;clear:both!important;float:none!important;box-sizing:border-box!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:14px auto 28px!important;padding:12px 22px!important;border-radius:12px!important;border:1.5px solid #434239!important;background:#FBFBED!important;color:#2E3633!important;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif!important;text-align:center!important;cursor:pointer}' +
+    '.ddtv-fold:hover{background:#434239!important;color:#FBFBED!important}' +
     '#ddtv-experience{display:block;width:100%;margin:0 0 24px;clear:both}' +
     'html.ddtv-classic #ddtv-experience{display:none}' +
-    '#ddtv-back{display:block;margin:0 auto 18px;padding:12px 22px;border-radius:12px;border:1.5px solid #434239;background:#FBFBED;color:#2E3633;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif;cursor:pointer}' +
-    '#ddtv-back:hover{background:#434239;color:#FBFBED}';
+    '#ddtv-back{display:block!important;clear:both!important;float:none!important;box-sizing:border-box!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:0 auto 18px!important;padding:12px 22px!important;border-radius:12px!important;border:1.5px solid #434239!important;background:#FBFBED!important;color:#2E3633!important;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif!important;text-align:center!important;cursor:pointer}' +
+    '#ddtv-back:hover{background:#434239!important;color:#FBFBED!important}';
   function pageStyle() {
     if (doc.getElementById('ddtv-page-css')) return;
     var st = doc.createElement('style'); st.id = 'ddtv-page-css'; st.textContent = PAGE_CSS; (doc.head || doc.documentElement).appendChild(st);
@@ -171,9 +171,9 @@
     var d = doc.querySelector('.product-details__description'); if (!d) return;
     if (foldBtn && foldBtn.parentNode && foldBtn.previousSibling === d) return;
     foldBtn = foldBtn || doc.createElement('button');
-    foldBtn.type = 'button'; foldBtn.className = 'ddtv-fold';
+    foldBtn.type = 'button'; foldBtn.className = 'ddtv-fold'; foldBtn.setAttribute('aria-expanded', String(doc.documentElement.classList.contains('ddtv-desc-open')));
     foldBtn.textContent = doc.documentElement.classList.contains('ddtv-desc-open') ? 'Fold the description' : 'Read the full description';
-    foldBtn.onclick = function () { var on = doc.documentElement.classList.toggle('ddtv-desc-open'); foldBtn.textContent = on ? 'Fold the description' : 'Read the full description'; };
+    foldBtn.onclick = function () { var on = doc.documentElement.classList.toggle('ddtv-desc-open'); foldBtn.setAttribute('aria-expanded', String(on)); foldBtn.textContent = on ? 'Fold the description' : 'Read the full description'; };
     d.parentNode.insertBefore(foldBtn, d.nextSibling);
   }
 

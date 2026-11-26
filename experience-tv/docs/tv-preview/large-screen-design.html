@@ -2270,7 +2270,7 @@ var D = {"product":{"name":"Botanic Original 100% Organic Latex Mattress","intro
   function heroView() {
     var H = D.hero, B = CUR('discover/intro').bold || [], bold = function (t) { var h = esc(t); B.forEach(function (w) { h = h.replace(esc(w), '<b>' + esc(w) + '</b>'); }); return h; };
     return '<div class="hero"><div><div class="rc"><h2>' + esc(H.headline) + '</h2><p>' + bold(H.intro) + '</p><p>' + esc(H.note) + '</p></div></div>' +
-      '<div>' + filmPanel('Natural environments', 'Watch the whole film, full screen, with sound.', film(D.videos && D.videos.discover), '<button class="btn p fullbtn" type="button" data-playfull="discoverFull"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>Watch the full video</button>', 'Presentation video') + '</div></div>' +
+      '<div>' + filmPanel('Comfortable natural environment', 'Watch the whole film, full screen, with sound.', film(D.videos && D.videos.discover), '<button class="btn p fullbtn" type="button" data-playfull="discoverFull"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>Watch the full video</button>', 'Presentation video') + '</div></div>' +
       '<div class="fts f3">' + D.features.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '</div>';
   }
   function factsView() {
