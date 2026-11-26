@@ -58,7 +58,7 @@ const res = await page.evaluate(({ src }) => {
   const kidsEls = (e) => [...e.children].filter((c) => !isSkip(c));
   const cls1 = (c) => (c.classList[0] || '').replace(/\d+$/, '');
   const sameKind = (ch) => ch.length >= 2 && ch[0].classList.length > 0 && ch.every((c) => cls1(c) === cls1(ch[0]));
-  const grid = (ch) => '<div class="dd-g">' + ch.map(card).join('') + '</div>';
+  const grid = (ch) => '<div class="dd-g dd-n' + ch.length + '">' + ch.map(card).join('') + '</div>';
   const ownText = (e) => [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
   const leaves = (c) => {      // children are small text boxes: each is one line of the card
     const els = kidsEls(c); if (!els.length || ownText(c)) { const h = inline(c).trim(); return h ? '<p>' + h + '</p>' : ''; }
@@ -113,7 +113,7 @@ const res = await page.evaluate(({ src }) => {
     if (e.classList.contains('b-mtv')) return mtv(e);
     if (e.classList.contains('b-cover-micro-wrap')) {      // the cover pictures: each picture with its own words (the radio-tab gallery of the old module is not needed)
       const sl = [...e.querySelectorAll('.b-cover-micro-slide img')], tx = [...e.querySelectorAll('.b-cover-micro-text')];
-      return '<div class="dd-g dd-cov">' + sl.map((im, i) => '<figure class="dd-cv"><img src="' + att(im.getAttribute('src') || '') + '" alt="' + att(im.getAttribute('alt') || '') + '" loading="lazy" decoding="async"><figcaption>' + (tx[i] ? inline(tx[i]).trim() : '') + '</figcaption></figure>').join('') + '</div>';
+      return '<div class="dd-g dd-cov dd-n' + sl.length + '">' + sl.map((im, i) => '<figure class="dd-cv"><img src="' + att(im.getAttribute('src') || '') + '" alt="' + att(im.getAttribute('alt') || '') + '" loading="lazy" decoding="async"><figcaption>' + (tx[i] ? inline(tx[i]).trim() : '') + '</figcaption></figure>').join('') + '</div>';
     }
     const ch = kidsEls(e);
     // rows of look-alike boxes: each row becomes a grid of cards; a row of look-alike boxes is a grid of cards
@@ -137,41 +137,44 @@ const res = await page.evaluate(({ src }) => {
   const keys = [...pageEl.querySelectorAll('.b-hero-bar:not(nav) .b-hero-bar__item')].map((a) => txt(a));
   const og = [...pageEl.querySelectorAll('.b-ocard__item')].map((i) => {
     const lbl = txt(i.querySelector('.b-ocard__lbl')), val = txt(i.querySelector('.b-ocard__val')), pills = [...i.querySelectorAll('.b-ocard__pills span')].map(txt), note = txt(i.querySelector('.b-ocard__note'));
-    return '<div><dt>' + esc(lbl) + '</dt><dd>' + esc(val || pills.join(' · ')) + (note ? '<small>' + esc(note) + '</small>' : '') + '</dd></div>';
+    return '<div class="dd-dk"><dt>' + esc(lbl) + '</dt><dd>' + esc(val || pills.join(' · ')) + (note ? '<small>' + esc(note) + '</small>' : '') + '</dd></div>';
   }).join('');
   const full = pageEl.querySelector('.b-video-modal video'), fullTitle = txt(pageEl.querySelector('.b-video-modal__title'));
   const GAL = 'https://d2j6dbq0eux0bg.cloudfront.net/images/100333285/products/831592302/';
-  const photo = '<figure class="dd-ph"><img src="' + GAL + '4706741739.webp" alt="A Botanic mattress cut open to show its natural latex core and the quilted cover" width="800" height="600" loading="lazy" decoding="async"></figure>';
-  const header = '<header class="dd-hd" id="bp-top-head"><p class="dd-eyebrow">' + esc(eyebrow) + '</p>' + photo +
+  const HANDS = 'https://media.divinedunlop.com/ddtv/botanic-hands-core-482a3635808f7d9b16c9.webp';   // the owner's photo (26 Nov): hands on the cut-open latex mattress
+  const photo = '<figure class="dd-ph"><img src="' + HANDS + '" alt="Hands resting on a Botanic latex mattress that is cut open to show its natural latex core and the quilted cover" width="1100" height="1100" loading="lazy" decoding="async"></figure>';
+  // header: a coffee text panel and the photo side by side (the photo fills the height of the panel, nothing is left empty), then the key points as tiles, the how-to note and the glance cards
+  const header = '<header class="dd-hd" id="bp-top-head"><div class="dd-hd__t dd-dk"><p class="dd-eyebrow">' + esc(eyebrow) + '</p>' +
     '<h2 class="dd-title"><span class="dd-title__b">' + esc(logo) + '</span> <em>' + esc(h1em) + '</em> ' + esc(h1rest) + '</h2>' +
-    '<p class="dd-intro">' + intro + '</p>' +
-    (keys.length ? '<ul class="dd-key">' + keys.map((k) => '<li>' + esc(k) + '</li>').join('') + '</ul>' : '') +
-    '<p class="dd-rule">' + rule + '</p>' +
+    '<p class="dd-intro">' + intro + '</p><p class="dd-rule">' + rule + '</p></div>' + photo +
+    (keys.length ? '<ul class="dd-key dd-n' + keys.length + '">' + keys.map((k) => '<li>' + esc(k) + '</li>').join('') + '</ul>' : '') +
     '<p class="dd-how">Choose your size, height, firmness and cover in the selector, then add the mattress to your bag.</p>' +
-    (og ? '<h3 class="dd-glance__t">' + esc(txt(q('.b-ocard__title'))) + '</h3><dl class="dd-glance">' + og + '</dl>' : '') +
+    (og ? '<h3 class="dd-glance__t">' + esc(txt(q('.b-ocard__title'))) + '</h3><dl class="dd-glance dd-n' + (pageEl.querySelectorAll('.b-ocard__item').length) + '">' + og + '</dl>' : '') +
     (full ? '<details class="dd-m dd-film"><summary>' + esc(fullTitle) + '</summary><div class="dd-m__b"><figure class="dd-v"><div class="dd-v__f">' + video(full) + '</div></figure></div></details>' : '') +
     '</header>';
 
   // ---- topics
   const secs = {}; for (const s of pageEl.querySelectorAll('section.b-sec')) secs[s.id.replace('bp-', '')] = s;
-  const topic = (id) => {
+  const topic = (id, gi) => {
     const s = secs[id]; if (!s) return '';
     const bw = s.querySelector(':scope > .bw'), sh = bw.querySelector(':scope > .b-sh');
     const n = txt(sh.querySelector('.b-sh__n')).replace(/^\d+\s*[—–-]\s*/, ''), t = txt(sh.querySelector('.b-sh__t')), sub = sh.querySelector('.b-sh__s');
     let body = sub ? '<p class="dd-lead">' + inline(sub).trim() + '</p>' : '';
     for (const c of bw.children) if (c !== sh) body += conv(c);
-    return '<details class="dd-t" id="bp-' + id + '"><summary><h2 class="dd-t__h">' + esc(n) + '</h2>' + (t ? '<span class="dd-t__s">' + esc(t) + '</span>' : '') + '</summary><div class="dd-t__b">' + body + '</div></details>';
+    return '<details class="dd-t dd-tg' + (gi + 1) + '" id="bp-' + id + '"><summary><h2 class="dd-t__h">' + esc(n) + '</h2>' + (t ? '<span class="dd-t__s">' + esc(t) + '</span>' : '') + '</summary><div class="dd-t__b">' + body + '</div></details>';
   };
   const GROUPS = [
     ['Choose your mattress', ['firmness', 'height', 'covers']],
     ['Why Botanic', ['comfort', 'benefits', 'support', 'adaptation', 'zones', 'ventilation', 'hygiene']],
     ['Made, certified and delivered', ['certs', 'warranty', 'delivery']]];
   const used = new Set(); let topics = '';
-  for (const [g, ids] of GROUPS) { topics += '<p class="dd-grp">' + esc(g) + '</p>'; for (const id of ids) { topics += topic(id); used.add(id); } }
+  const duo = '<div class="dd-duo"><figure><img src="' + GAL + '5480424608.webp" alt="A child lying on a Botanic mattress with a latex pillow, smiling" width="800" height="600" loading="lazy" decoding="async"></figure><figure><img src="' + GAL + '4706741739.webp" alt="A Botanic mattress cut open to show its natural latex core and the quilted cover" width="800" height="600" loading="lazy" decoding="async"></figure></div>';
+  let gi = -1;
+  for (const [g, ids] of GROUPS) { gi++; topics += '<p class="dd-grp">' + esc(g) + '</p>' + (g === 'Why Botanic' ? duo : ''); for (const id of ids) { topics += topic(id, gi); used.add(id); } }
   const missing = Object.keys(secs).filter((k) => !used.has(k));
   const cta = pageEl.querySelector('.b-cta');
   const endPhoto = '<figure class="dd-end__p"><img src="' + GAL + '5509593549.webp" alt="A woman sleeping on her side on a Botanic mattress in a softly lit bedroom" width="800" height="533" loading="lazy" decoding="async"></figure>';
-  const end = cta ? '<aside class="dd-end">' + endPhoto + '<div class="dd-end__t"><h3>' + esc(txt(cta.querySelector('.b-cta__t'))) + '</h3><p>' + inline(cta.querySelector('.b-cta__s')).trim() + '</p></div></aside>' : '';
+  const end = cta ? '<aside class="dd-end dd-dk">' + endPhoto + '<div class="dd-end__t"><h3>' + esc(txt(cta.querySelector('.b-cta__t'))) + '</h3><p>' + inline(cta.querySelector('.b-cta__s')).trim() + '</p></div></aside>' : '';
   const bo = (h) => h.replace(/>([^<]+)</g, (m, t) => '>' + t.replace(/\bbotanic\b/gi, (w) => '<span class="dd-bo">' + w + '</span>') + '<');
   const html = bo('<div id="bp-top" class="dd-std">' + header + topics + end + '</div>');
 

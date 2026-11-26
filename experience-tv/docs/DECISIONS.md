@@ -447,3 +447,17 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - The information blocks between the two views wear the chocolate too (module CSS, so no new television file was needed for that part).
 - The chevrons of the topic bars were clipped by the shop's `summary::after` rule (absolute): fixed.
 - Tests: M7 (every inscription readable, 4.5:1, light on chocolate), M8 (every Botanic green), M9 (post-add states), M10 (photos, information blocks).
+
+## Round XLII (owner, 26 November 2026): the module in the television's own colours, no wasted space
+- The near-black chocolate of round XLI was rejected: the module takes its brown from the television. Palette: coffee #434239, slate #384442, deep slate #2E3633,
+  olive-grey #646155, latte #DDD6C4, vanilla #FBFBED, paper #FEFEF6, green #6E8601 (about 1.5 % of the screen). Dark and light rows alternate like the
+  television's Explore (coffee), Select & Buy (slate) and Your selection (olive-grey): topic bars are slate (choosing), coffee (why Botanic), olive-grey (made and delivered);
+  small cards are latte on the first, coffee on the second, slate on the third; the key points are latte tiles; the glance cards slate.
+- The word Botanic is green everywhere (dark green on light, lifted green #A9C23A on dark; the television itself avoids green text on coffee at 2.5:1).
+- **No wasted space** (owner): the header is a coffee text panel with the owner's photo filling the panel's whole height (no empty column under a picture);
+  card grids are 12-column grids whose widths follow the number of cards (4 -> 4 across, 5 -> 3+2, 7 -> 4+3 ...), so no row is half empty; covers are picture-beside-words; a photo
+  strip (child, cut-open mattress) and the closing card with the sleeper's photo make the page a mosaic. Container queries (`@container`) make it follow the width the page really gives (not the screen).
+- The owner's photo (hands on the cut-open mattress) is published as `botanic-hands-core-482a3635808f7d9b16c9.webp` (media job ddtv-botanic-photo-20261126).
+- Go to Checkout (after Add to Bag) is coffee #434239 with white text, both in the shop's own state ("Add More" outlined) and on the television (design rule R58).
+- The information blocks between the views keep the television's cream and green edge again.
+- Tests: M7 (television palette only, dark and light rows, readable), M8, M9, M10, M11 (no wasted space).

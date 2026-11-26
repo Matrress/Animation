@@ -985,8 +985,8 @@
   },
   {
    "pass": true,
-   "rule": "R58 Add to Bag is green; once the mattress is in the bag the same button is Go to Checkout in dark chocolate with white text (real pixels: no green, mostly chocolate, light letters)",
-   "detail": "{\"before\":{\"bg\":\"rgb(110, 134, 1)\",\"dis\":false},\"after\":{\"bg\":\"rgb(47, 33, 26)\",\"fg\":\"rgb(255, 255, 255)\",\"x\":1064,\"y\":626.734375,\"w\":246,\"h\":64,\"t\":\"Go to Checkout\"},\"px\":{\"light\":864,\"green\":0,\"choc\":9650,\"n\":11040}}"
+   "rule": "R58 Add to Bag is green; once the mattress is in the bag the same button is Go to Checkout in coffee with white text (real pixels: no green, mostly chocolate, light letters)",
+   "detail": "{\"before\":{\"bg\":\"rgb(110, 134, 1)\",\"dis\":false},\"after\":{\"bg\":\"rgb(67, 66, 57)\",\"fg\":\"rgb(255, 255, 255)\",\"x\":1064,\"y\":626.734375,\"w\":246,\"h\":64,\"t\":\"Go to Checkout\"},\"px\":{\"light\":905,\"green\":0,\"choc\":9657,\"n\":11040}}"
   }
  ]
 }

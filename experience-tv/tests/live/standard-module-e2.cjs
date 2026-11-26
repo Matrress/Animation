@@ -10,10 +10,12 @@
  *       green is at most 10 % of what is on the screen (the design aims at far less)
  *   M5  the shop's own selectors stay within reach beside the text on wide screens
  *   M6  the information blocks between the two views exist and their buttons work
- *   M7  CHOCOLATE (owner, 26 Nov): every inscription on the chocolate cards is white or vanilla (contrast measured on the real colours, 4.5:1), the module's cards are dark chocolate
+ *   M7  THE TELEVISION'S COLOURS (owner, 26 Nov): every surface of the module is one of the television's colours (coffee, slate, deep slate, olive-grey, latte, vanilla, paper, the green) and dark and light rows both stand;
+ *       every inscription is readable (4.5:1 measured on the real colours) and light on the dark rows
+ *   M11 no wasted space: the header's photo is as tall as its text panel; the last row of every card grid reaches the right edge (no half-empty rows)
  *   M8  the word Botanic is always green (every occurrence in the module, in its own span), light enough to read on the chocolate
  *   M9  after "Add to Bag" (classes set by hand, nothing is clicked or added): "Go to Checkout" is a different colour from the green "Add to Bag", its text is light on the real pixels
- *   M10 the photos from the gallery are in the module (header, closing card), load, have alt text and sizes; the information blocks wear the chocolate too
+ *   M10 the photos (the owner's photo in the header, gallery photos in the strip and the closing card) are in the module, load, have alt text and sizes
  */
 const { chromium } = require('playwright'); const fs = require('fs'); const R = '/home/user/Animation/experience-tv/';
 const js = fs.readFileSync(R + 'dist/experience/botanic-tv.js', 'utf8'), logos = fs.readFileSync(R + 'dist/experience/botanic-tv-logos.js', 'utf8');
@@ -85,10 +87,13 @@ const analyse = async (b64) => {
       // on a dark chocolate card the inscription must be light (white, vanilla, pistachio or the lifted green)
       if (isBg && lum(fg) < .25) bad.push('NOT LIGHT on chocolate: ' + (e.className || e.tagName) + ' ' + st.color);
     }
-    const cards = ['.dd-hd', '.dd-t', '.dd-c', '.dd-end'].map((s) => { const e = document.querySelector(s); const c = rgb(getComputedStyle(e).backgroundColor); return s + ':' + (lum(c) < .06 ? 'chocolate' : 'LIGHT ' + c.join(',')); });
-    return { checked: n, onDark, lowest: +lowest.toFixed(2), bad: bad.slice(0, 8), cards };
+    const PAL = [[67, 66, 57], [58, 57, 50], [56, 68, 66], [46, 54, 51], [100, 97, 85], [105, 104, 98], [221, 214, 196], [251, 251, 237], [254, 254, 246], [255, 255, 255], [110, 134, 1], [86, 105, 1]], near = (c) => PAL.some((q) => Math.abs(q[0] - c[0]) <= 3 && Math.abs(q[1] - c[1]) <= 3 && Math.abs(q[2] - c[2]) <= 3);
+    const seen = new Map(); for (const e of document.querySelectorAll('#bp-top *')) { const r = e.getBoundingClientRect(); if (r.width < 8 || r.height < 8 || e.tagName === 'IMG') continue; const c = rgb(getComputedStyle(e).backgroundColor); if (c[3] < .9) continue; const k = c.slice(0, 3).join(','); seen.set(k, (seen.get(k) || 0) + 1); }
+    const foreign = [...seen.keys()].filter((k) => !near(k.split(',').map(Number))), darkKinds = [...seen.keys()].filter((k) => lum(k.split(',').map(Number)) < .13).length, lightKinds = [...seen.keys()].filter((k) => lum(k.split(',').map(Number)) > .6).length;
+    const cards = { foreign, darkKinds, lightKinds };
+    return { checked: n, onDark, lowest: +lowest.toFixed(2), bad: bad.slice(0, 14), cards };
   });
-  ok(m7.bad.length === 0 && m7.onDark > 100 && m7.cards.every((c) => /chocolate/.test(c)), 'M7 chocolate: every inscription on the cards is light and readable (' + m7.checked + ' texts checked, lowest contrast ' + m7.lowest + ':1); header, topics, small cards and closing card are dark chocolate', JSON.stringify(m7));
+  ok(m7.bad.length === 0 && m7.onDark > 100 && m7.cards.foreign.length === 0 && m7.cards.darkKinds >= 3 && m7.cards.lightKinds >= 2, 'M7 only the television\'s colours are used, dark rows and light rows both stand; every inscription is readable (' + m7.checked + ' texts checked, lowest contrast ' + m7.lowest + ':1) and light on the dark ones', JSON.stringify(m7));
   const m8 = await p.evaluate(() => {
     const w = document.createTreeWalker(document.getElementById('bp-top'), NodeFilter.SHOW_TEXT); const miss = []; let all = 0, green = 0, n;
     while ((n = w.nextNode())) { const re = /\bbotanic\b/gi; let m; while ((m = re.exec(n.textContent))) { all++; const sp = n.parentElement; const c = getComputedStyle(sp).color; const mm = c.match(/\d+/g).map(Number); const isGreen = sp.classList.contains('dd-bo') && mm[1] > mm[0] && mm[1] > mm[2] + 60; if (isGreen) green++; else miss.push(n.textContent.slice(Math.max(0, m.index - 12), m.index + 14)); } }
@@ -96,15 +101,23 @@ const analyse = async (b64) => {
   });
   ok(m8.all >= 10 && m8.miss.length === 0, 'M8 the word Botanic is green everywhere it is written in the module (' + m8.green + ' of ' + m8.all + ')', JSON.stringify(m8));
   await p.evaluate(() => { document.querySelectorAll('#bp-top img').forEach((i) => i.scrollIntoView()); window.scrollTo(0, 0); }); await p.waitForTimeout(2500);
-  const m10 = await p.evaluate(() => { const ph = document.querySelector('.dd-ph img'), ep = document.querySelector('.dd-end__p img'); const f = (i) => i && { ok: i.complete && i.naturalWidth > 0, alt: i.alt.length > 20, size: !!(i.getAttribute('width') && i.getAttribute('height')), lazy: i.loading === 'lazy', host: new URL(i.src).host }; return { header: f(ph), end: f(ep) }; });
-  ok(m10.header && m10.end && [m10.header, m10.end].every((x) => x.ok && x.alt && x.size && x.lazy && /cloudfront/.test(x.host)), 'M10 two gallery photos are in the module (header, closing card): they load, have alt text and sizes (no layout jump), are lazy', JSON.stringify(m10));
+  const m10 = await p.evaluate(() => { const f = (i) => i && { ok: i.complete && i.naturalWidth > 0, alt: i.alt.length > 20, size: !!(i.getAttribute('width') && i.getAttribute('height')), lazy: i.loading === 'lazy', host: new URL(i.src).host }; const duo = [...document.querySelectorAll('.dd-duo img')].map(f); return { header: f(document.querySelector('.dd-ph img')), end: f(document.querySelector('.dd-end__p img')), duo: duo.length === 2 && duo.every((x) => x.ok && x.alt && x.size && x.lazy) }; });
+  ok(m10.header && m10.end && m10.duo && [m10.header, m10.end].every((x) => x.ok && x.alt && x.size && x.lazy && /cloudfront|media\.divinedunlop/.test(x.host)), 'M10 the owner\'s photo (header) and three gallery photos (strip, closing card) are in the module: they load, have alt text and sizes (no layout jump), are lazy', JSON.stringify(m10));
+  // M11: no wasted space (all topics are open here)
+  await p.evaluate(() => { document.querySelectorAll('#bp-top .dd-t').forEach((d) => { d.open = true; }); }); await p.waitForTimeout(500);
+  const m11 = await p.evaluate(() => {
+    const hdT = document.querySelector('.dd-hd__t').getBoundingClientRect(), hdP = document.querySelector('.dd-ph').getBoundingClientRect(), hd = document.querySelector('.dd-hd').getBoundingClientRect();
+    const half = []; for (const g of document.querySelectorAll('#bp-top .dd-g[class*="dd-n"]')) { if (/dd-n22/.test(g.className)) continue; const gr = g.getBoundingClientRect(); if (gr.width < 300 || !g.offsetParent) continue; const kids = [...g.children].filter((k) => k.getBoundingClientRect().height > 2); const bottom = Math.max(...kids.map((k) => Math.round(k.getBoundingClientRect().top))); const last = kids.filter((k) => Math.round(k.getBoundingClientRect().top) === bottom); const right = Math.max(...last.map((k) => k.getBoundingClientRect().right)); if (right < gr.right - 3) half.push(g.className + ' n=' + kids.length + ' right ' + Math.round(right) + ' of ' + Math.round(gr.right)); }
+    return { sameHeight: Math.abs(hdT.height - hdP.height) <= 2, photoH: Math.round(hdP.height), panelH: Math.round(hdT.height), photoRight: Math.abs(hdP.right - hd.right) <= 2, half: half.slice(0, 5) };
+  });
+  ok(m11.sameHeight && m11.photoRight && m11.half.length === 0, 'M11 no wasted space: the header photo is as tall as its text panel and reaches the right edge; the last row of every card grid reaches the right edge (no half-empty rows)', JSON.stringify(m11));
   // M9: the shop's own states after "Add to Bag", set by hand
   await p.evaluate(() => { document.querySelectorAll('#bp-top details').forEach((d) => { d.open = false; }); document.querySelector('.details-product-purchase').scrollIntoView({ block: 'center' }); }); await p.waitForTimeout(500);
   const clip = async (sel) => { const r = await p.evaluate((s) => { const e = document.querySelector(s); e.scrollIntoView({ block: 'center' }); const b = e.getBoundingClientRect(); return { x: b.left, y: b.top, w: b.width, h: b.height }; }, sel); await p.waitForTimeout(300); const shot = await p.screenshot({ clip: { x: r.x, y: r.y, width: r.w, height: r.h } }); return p.evaluate(analyse, shot.toString('base64')); };
   await p.evaluate(() => { document.querySelector('.details-product-purchase').classList.add('details-product-purchase--in-bag', 'details-product-purchase--add-more', 'details-product-purchase--checkout'); }); await p.waitForTimeout(900);
   const co = await clip('.details-product-purchase__checkout .form-control__button'), mo = await clip('.details-product-purchase__add-more .form-control__button');
   const cols = await p.evaluate(() => { const g = (s) => { const e = document.querySelector(s + ' .form-control__button'); const c = getComputedStyle(e); return { bg: c.backgroundColor, fg: c.color, t: e.textContent.trim() }; }; return { checkout: g('.details-product-purchase__checkout'), more: g('.details-product-purchase__add-more'), bag: g('.details-product-purchase__add-to-bag') }; });
-  ok(/Go to Checkout/.test(cols.checkout.t) && cols.checkout.bg !== cols.bag.bg && cols.checkout.bg === 'rgb(47, 33, 26)' && cols.checkout.fg === 'rgb(255, 255, 255)' && co.green === 0 && co.dark > 3000 && co.dark / co.n > .5, 'M9 after Add to Bag the button becomes "Go to Checkout" in dark chocolate (the bag was green): white text, a different colour on the real pixels; "Add More" is outlined', JSON.stringify({ cols, checkoutPixels: co, morePixels: mo }));
+  ok(/Go to Checkout/.test(cols.checkout.t) && cols.checkout.bg !== cols.bag.bg && cols.checkout.bg === 'rgb(67, 66, 57)' && cols.checkout.fg === 'rgb(255, 255, 255)' && co.green === 0 && co.dark > 3000 && co.dark / co.n > .5, 'M9 after Add to Bag the button becomes "Go to Checkout" in the television\'s coffee (the bag was green): white text, a different colour on the real pixels; "Add More" is outlined', JSON.stringify({ cols, checkoutPixels: co, morePixels: mo }));
   await p.evaluate(() => { document.querySelector('.details-product-purchase').classList.remove('details-product-purchase--in-bag', 'details-product-purchase--add-more', 'details-product-purchase--checkout'); });
   // the television build: the information blocks and their green buttons
   await p.evaluate((code) => { window.__ddtvAllow = [876405767]; window.__ddtvPage = { type: 'PRODUCT', productId: 876405767 }; (0, eval)(code); }, js); await p.waitForSelector('#ddtv-experience', { timeout: 30000 }); await p.waitForTimeout(3000);
@@ -117,9 +130,7 @@ const analyse = async (b64) => {
   // M6
   await p.click('#ddtv-to-standard'); await p.waitForTimeout(1500);
   const m6 = await p.evaluate(() => ({ cls: document.documentElement.className, box: !!document.getElementById('ddtv-backbox'), btn: (document.getElementById('ddtv-back') || {}).textContent, selects: document.querySelectorAll('.details-product-option select').length, topics: document.querySelectorAll('.dd-t').length }));
-  const ibc = await p.evaluate(() => { const e = document.getElementById('ddtv-backbox'); const c = getComputedStyle(e); return { bg: c.backgroundColor, fg: c.color }; });
   await p.click('#ddtv-back'); await p.waitForTimeout(1500); const m6b = await p.evaluate(() => ({ cls: document.documentElement.className, info: !!document.getElementById('ddtv-info'), box: !!document.getElementById('ddtv-backbox') }));
-  ok(ibc.bg === 'rgb(47, 33, 26)' && ibc.fg === 'rgb(255, 255, 255)', 'M10 the information block between the views wears the chocolate too (dark card, white text)', JSON.stringify(ibc));
   ok(/ddtv-classic/.test(m6.cls) && m6.box && /Optimised Preview/.test(m6.btn) && m6.selects >= 4 && m6.topics === 13 && /ddtv-on/.test(m6b.cls) && m6b.info && !m6b.box, 'M6 the two information blocks and their buttons work: to the standard view and back, with the selectors and the 13 topics there', JSON.stringify({ m6, m6b }));
   ok(errs.length === 0, 'no page error of ours', errs.join(' | '));
   console.log(fails ? `\n${fails} check(s) FAILED` : '\nAll standard-module checks passed (real Ecwid page, this browser only, nothing saved)'); await b.close(); process.exit(fails ? 1 : 0);
