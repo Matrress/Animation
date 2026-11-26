@@ -21,7 +21,7 @@
   var PHONE_MAX_SHORT_SIDE = CFG.phoneMaxShortSide || 600;
   var ROLE = { size: /^\s*size\b/i, depth: /depth|height/i, firmness: /firmness/i, cover: /cover/i };
   var ROLES = ['size', 'depth', 'firmness', 'cover'];
-  var host = null, app = null, mo = null, poll = null, pending = null, bagAt = 0, lastPid = null, foldBtn = null;
+  var host = null, app = null, mo = null, poll = null, pending = null, bagAt = 0, lastPid = null, foldBtn = null, infoBox = null;
 
   function txt(n) { return n ? (n.textContent || '').replace(/\s+/g, ' ').trim() : ''; }
   function isPhone() { var s = global.screen || {}; return Math.min(s.width || 9999, s.height || 9999) < PHONE_MAX_SHORT_SIDE; }
@@ -161,26 +161,50 @@
     'html.ddtv-on #tile-product-details .ins-tile__wrap{margin-top:14px!important}' +
     /* owner, 26 Nov: no peek and no fade ("snow"): folded, the text is simply not shown (it stays in the page); one centred button opens it */
     'html.ddtv-on:not(.ddtv-desc-open) .product-details__description{max-height:0;overflow:hidden;padding:0!important;margin:0!important}' +
-    '.ddtv-fold{display:block!important;clear:both!important;float:none!important;box-sizing:border-box!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:14px auto 28px!important;padding:12px 22px!important;border-radius:12px!important;border:1.5px solid #434239!important;background:#FBFBED!important;color:#2E3633!important;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif!important;text-align:center!important;cursor:pointer}' +
-    '.ddtv-fold:hover{background:#434239!important;color:#FBFBED!important}' +
-    'html.ddtv-classic .ddtv-fold{display:none!important}' +   /* the standard view shows the whole description: no fold button there */
+    /* owner, 26 Nov: where the two views meet, a short information block says what each is for (so nobody does the choosing twice);
+       rounded boxes, no pills; a button is only drawn where it does something; the colours are the television's */
+    '.ddtv-info{display:block!important;clear:both!important;float:none!important;box-sizing:border-box!important;max-width:100%!important;margin:18px 0 10px!important;padding:16px 18px!important;border:1px solid #D6CFBC!important;border-left:4px solid #6E8601!important;border-radius:14px!important;background:#FBFBED!important;color:#2E3633!important;font:400 15px/1.55 Chillax,"Helvetica Neue",Arial,sans-serif!important}' +
+    '.ddtv-info p{margin:0 0 8px!important;color:#2E3633!important;font:inherit!important}' +
+    '.ddtv-info .ddtv-info__h{margin:0 0 10px!important;font:700 17px/1.3 Chillax,"Helvetica Neue",Arial,sans-serif!important}' +
+    '.ddtv-info__g{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))!important;gap:10px!important;margin:0 0 10px!important}' +
+    '.ddtv-info__c{margin:0!important;padding:10px 14px!important;border:1px solid #D6CFBC!important;border-radius:12px!important;background:#FEFEF6!important}' +
+    '.ddtv-info__c b{display:block;margin:0 0 2px;font-weight:700}' +
+    '.ddtv-info__a{display:flex!important;flex-wrap:wrap!important;gap:10px!important;margin:12px 0 0!important}' +
+    '.ddtv-btn,.ddtv-fold,#ddtv-back{display:inline-block!important;float:none!important;box-sizing:border-box!important;width:auto!important;max-width:100%!important;margin:0!important;padding:11px 20px!important;border-radius:12px!important;font:700 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif!important;text-align:center!important;cursor:pointer!important}' +
+    '.ddtv-btn,#ddtv-back{border:1.5px solid #6E8601!important;background:#6E8601!important;color:#FFFFFF!important}' +
+    '.ddtv-btn:hover,#ddtv-back:hover{background:#566901!important;border-color:#566901!important}' +
+    '.ddtv-fold{border:1.5px solid #384442!important;background:#FEFEF6!important;color:#2E3633!important}' +
+    '.ddtv-fold:hover{background:#384442!important;color:#FBFBED!important}' +
+    'html.ddtv-classic #ddtv-info{display:none!important}' +
     '#ddtv-experience{display:block;width:100%;margin:0 0 24px;clear:both}' +
-    'html.ddtv-classic #ddtv-experience{display:none}' +
-    '#ddtv-back{display:block!important;clear:both!important;float:none!important;box-sizing:border-box!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:0 auto 18px!important;padding:12px 22px!important;border-radius:12px!important;border:1.5px solid #434239!important;background:#FBFBED!important;color:#2E3633!important;font:600 15px/1.2 Chillax,"Helvetica Neue",Arial,sans-serif!important;text-align:center!important;cursor:pointer}' +
-    '#ddtv-back:hover{background:#434239!important;color:#FBFBED!important}';
+    'html.ddtv-classic #ddtv-experience{display:none}';
+
   function pageStyle() {
     if (doc.getElementById('ddtv-page-css')) return;
     var st = doc.createElement('style'); st.id = 'ddtv-page-css'; st.textContent = PAGE_CSS; (doc.head || doc.documentElement).appendChild(st);
     if (CFG.fontCss && !doc.getElementById('ddtv-font')) { var l = doc.createElement('link'); l.id = 'ddtv-font'; l.rel = 'stylesheet'; l.href = CFG.fontCss; (doc.head || doc.documentElement).appendChild(l); }
   }
+  var BOTH = 'Both show the same mattress and the same choices, so you only need one of them.';
+  function infoHtml(inStd) {
+    var tv = '<div class="ddtv-info__c"><b>Optimised Preview</b>The modern, guided way: explore the information and make your choices in one screen.</div>',
+        sd = '<div class="ddtv-info__c"><b>Standard Product View</b>The familiar page: dropdown selectors beside the text and all the information in menus.</div>';
+    return '<p class="ddtv-info__h">' + (inStd ? 'You are in the Standard Product View' : 'Two ways to view this mattress') + '</p><div class="ddtv-info__g">' + (inStd ? sd + tv : tv + sd) + '</div><p>' + BOTH + '</p>';
+  }
   function ensureFold() {
+    if (doc.documentElement.classList.contains('ddtv-classic')) return;   // the standard view has its own block and no fold
     var d = doc.querySelector('.product-details__description'); if (!d) return;
-    if (foldBtn && foldBtn.parentNode && foldBtn.previousSibling === d) return;
-    foldBtn = foldBtn || doc.createElement('button');
-    foldBtn.type = 'button'; foldBtn.className = 'ddtv-fold'; foldBtn.setAttribute('aria-expanded', String(doc.documentElement.classList.contains('ddtv-desc-open')));
-    foldBtn.textContent = doc.documentElement.classList.contains('ddtv-desc-open') ? 'Fold the description' : 'Read the full description';
-    foldBtn.onclick = function () { var on = doc.documentElement.classList.toggle('ddtv-desc-open'); foldBtn.setAttribute('aria-expanded', String(on)); foldBtn.textContent = on ? 'Fold the description' : 'Read the full description'; };
-    d.parentNode.insertBefore(foldBtn, d.nextSibling);
+    if (infoBox && infoBox.parentNode && infoBox.nextSibling === d) return;
+    if (!infoBox) {
+      infoBox = doc.createElement('div'); infoBox.id = 'ddtv-info'; infoBox.className = 'ddtv-info'; infoBox.setAttribute('role', 'region'); infoBox.setAttribute('aria-label', 'Two ways to view this mattress');
+      infoBox.innerHTML = infoHtml(false) + '<div class="ddtv-info__a"></div>';
+      var to = doc.createElement('button'); to.type = 'button'; to.className = 'ddtv-btn'; to.id = 'ddtv-to-standard'; to.textContent = 'Open the Standard Product View'; to.onclick = classic;
+      foldBtn = doc.createElement('button'); foldBtn.type = 'button'; foldBtn.className = 'ddtv-fold';
+      foldBtn.onclick = function () { var on = doc.documentElement.classList.toggle('ddtv-desc-open'); foldBtn.setAttribute('aria-expanded', String(on)); foldBtn.textContent = on ? 'Fold the description' : 'Read the full description'; };
+      var a = infoBox.querySelector('.ddtv-info__a'); a.appendChild(to); a.appendChild(foldBtn);
+    }
+    var open = doc.documentElement.classList.contains('ddtv-desc-open');
+    foldBtn.setAttribute('aria-expanded', String(open)); foldBtn.textContent = open ? 'Fold the description' : 'Read the full description';
+    d.parentNode.insertBefore(infoBox, d);
   }
 
   /* the classic view: the shop's own page, the television steps aside; one button brings it back */
@@ -188,17 +212,20 @@
     if (!host) return;
     doc.documentElement.classList.remove('ddtv-on', 'ddtv-desc-open');
     doc.documentElement.classList.add('ddtv-classic');
-    if (foldBtn && foldBtn.parentNode) foldBtn.parentNode.removeChild(foldBtn); foldBtn = null;
-    if (!doc.getElementById('ddtv-back')) {
+    if (infoBox && infoBox.parentNode) infoBox.parentNode.removeChild(infoBox); infoBox = null; foldBtn = null;
+    if (!doc.getElementById('ddtv-backbox')) {
       var r = shopRoot(); if (!r) return;
-      var bk = doc.createElement('button'); bk.id = 'ddtv-back'; bk.type = 'button'; bk.textContent = 'Optimised Preview';
-      bk.onclick = tvOn; r.parentNode.insertBefore(bk, r);
+      var bx = doc.createElement('div'); bx.id = 'ddtv-backbox'; bx.className = 'ddtv-info'; bx.setAttribute('role', 'region'); bx.setAttribute('aria-label', 'Two ways to view this mattress');
+      bx.innerHTML = infoHtml(true) + '<div class="ddtv-info__a"></div>';
+      var bk = doc.createElement('button'); bk.id = 'ddtv-back'; bk.type = 'button'; bk.textContent = 'Open the Optimised Preview'; bk.onclick = tvOn;
+      bx.querySelector('.ddtv-info__a').appendChild(bk); r.parentNode.insertBefore(bx, r);
     }
+    try { global.scrollTo && global.scrollTo(0, Math.max(0, (doc.getElementById('ddtv-backbox').getBoundingClientRect().top + (global.pageYOffset || 0)) - 80)); } catch (e) { /* the page stays where it is */ }
   }
   function tvOn() {
     doc.documentElement.classList.remove('ddtv-classic');
     doc.documentElement.classList.add('ddtv-on');
-    var bk = doc.getElementById('ddtv-back'); if (bk && bk.parentNode) bk.parentNode.removeChild(bk);
+    var bx = doc.getElementById('ddtv-backbox'); if (bx && bx.parentNode) bx.parentNode.removeChild(bx);
     if (A) { A.S.view = 'tv'; A.draw(); }
     ensureFold();
   }
@@ -244,10 +271,10 @@
     if (mo) mo.disconnect(); mo = null; clearInterval(poll); poll = null;
     doc.removeEventListener('change', onNativeChange, true); global.removeEventListener('resize', onResize);
     if (host && host.parentNode) host.parentNode.removeChild(host);
-    if (foldBtn && foldBtn.parentNode) foldBtn.parentNode.removeChild(foldBtn);
-    host = null; app = null; A = null; foldBtn = null;
+    if (infoBox && infoBox.parentNode) infoBox.parentNode.removeChild(infoBox);
+    host = null; app = null; A = null; foldBtn = null; infoBox = null;
     doc.documentElement.classList.remove('ddtv-on', 'ddtv-desc-open', 'ddtv-classic');
-    var bk = doc.getElementById('ddtv-back'); if (bk && bk.parentNode) bk.parentNode.removeChild(bk);
+    var bx = doc.getElementById('ddtv-backbox'); if (bx && bx.parentNode) bx.parentNode.removeChild(bx);
   }
 
   function onPage(page) {
