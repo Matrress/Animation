@@ -152,7 +152,7 @@ const res = await page.evaluate(({ src, GALLERY }) => {
   // Plain markup, no script, no button: it works as a slider on its own. The first picture is the owner's hands photo, then the pictures of the topics, each fitted whole.
   const slides = [{ key: 'hands', url: HANDS, alt: 'Hands resting on a Botanic latex mattress that is cut open to show its natural latex core and the quilted cover', w: 1100, h: 1100 }].concat(GALLERY);
   const photo = '<figure class="dd-ph dd-gal" aria-roledescription="carousel" aria-label="Pictures of the mattress"><div class="dd-gal__v">' +
-    slides.map((x, i) => '<div class="dd-gal__s dd-gal__s--' + x.key + '"><img src="' + x.url + '" alt="' + att(x.alt) + '" width="' + x.w + '" height="' + x.h + '"' + (i === 0 ? '' : ' loading="lazy"') + ' decoding="async" draggable="false"></div>').join('') +
+    slides.map((x, i) => '<div class="dd-gal__s dd-gal__s--' + x.key + '"><img src="' + x.url + '" alt="' + att(x.alt) + '" width="' + x.w + '" height="' + x.h + '"' + ' loading="lazy" decoding="async" draggable="false"></div>').join('') +
     '</div><div class="dd-gal__d" aria-hidden="true">' + slides.map((x, i) => '<span class="dd-gal__dot' + (i === 0 ? ' on' : '') + '"></span>').join('') + '</div></figure>';
   // header: a coffee text panel and the photo side by side (the photo fills the height of the panel, nothing is left empty), then the key points as tiles, the how-to note and the glance cards
   const header = '<header class="dd-hd" id="bp-top-head"><div class="dd-hd__t dd-dk"><p class="dd-eyebrow">' + esc(eyebrow) + '</p>' +
@@ -211,7 +211,7 @@ const out = join(root, 'dist', 'standard'); mkdirSync(out, { recursive: true });
 const part = (t, from, to) => { const i = from ? t.indexOf(from) + from.length : 0, j = to ? t.indexOf(to) : t.length; return t.slice(i, j); };
 const prefix = (rules) => rules.replace(/\/\*[\s\S]*?\*\//g, '').replace(/([^{}]+)\{([^{}]*)\}/g, (m, sel, body) => sel.split(',').map((x) => x.trim()).map((x) => x.startsWith('.dd-std') ? '#bp-top' + x : '#bp-top ' + x).join(',') + '{' + body + '}');
 const mini = (t) => t.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, ' ').replace(/\s*([{};,>])\s*/g, '$1').replace(/;}/g, '}').trim();
-const galCss = '.dd-gal__s--hands{background:#EFE9DA}' + GALLERY.map((x) => '.dd-gal__s--' + x.key + '{background:' + x.bg + '}').join('');
+const galCss = '#bp-top .dd-gal__s--hands{background:#EFE9DA!important}' + GALLERY.map((x) => '#bp-top .dd-gal__s--' + x.key + '{background:' + x.bg + '!important}').join('');
 const cssMin = mini(part(css, null, '/*=MODULE=*/') + prefix(part(css, '/*=MODULE=*/', '/*=END=*/')) + part(css, '/*=END=*/', null) + galCss);
 const full = '<style>' + cssMin + '</style>' + res.html;
 writeFileSync(join(out, 'botanic-standard-description.html'), full);

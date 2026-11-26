@@ -24,6 +24,10 @@
   var host = null, app = null, mo = null, poll = null, pending = null, bagAt = 0, lastPid = null, foldBtn = null, infoBox = null;
 
   function txt(n) { return n ? (n.textContent || '').replace(/\s+/g, ' ').trim() : ''; }
+  var AL = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>',
+      AR = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg>',
+      AX = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var HIDE = { position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', 'clip-path': 'inset(50%)', opacity: '0', 'pointer-events': 'none', margin: '0', padding: '0', border: '0' };
   function isPhone() { var s = global.screen || {}; return Math.min(s.width || 9999, s.height || 9999) < PHONE_MAX_SHORT_SIDE; }
   function fire(node, type) { var ev; try { ev = new Event(type, { bubbles: true, cancelable: true }); } catch (e) { ev = doc.createEvent('Event'); ev.initEvent(type, true, true); } node.dispatchEvent(ev); }
 
@@ -180,12 +184,12 @@
     '.ddtv-fold:hover{background:#384442!important;color:#FBFBED!important}' +
     'html.ddtv-classic #ddtv-info{display:none!important}' +
     /* owner, 26 Nov: the gallery of the standard module (arrows) and its enlargement (a lightbox that closes with the X, Esc or a tap outside) */
-    '.dd-gal__a{all:unset;box-sizing:border-box;position:absolute;top:50%;width:34px;height:34px;margin-top:-17px;border-radius:50%;display:grid;place-items:center;background:rgba(46,54,51,.74);color:#FBFBED;cursor:pointer;z-index:2;opacity:0;transition:opacity .15s}' +
+    '.dd-gal__a{all:unset;box-sizing:border-box;position:absolute;top:50%;width:34px;height:34px;margin-top:-17px;border-radius:10px;display:grid;place-items:center;background:rgba(46,54,51,.74);color:#FBFBED;cursor:pointer;z-index:2;opacity:0;transition:opacity .15s}' +
     '.dd-gal__prev{left:8px}.dd-gal__next{right:8px}.dd-gal:hover .dd-gal__a:not(:disabled),.dd-gal__a:focus-visible{opacity:1}@media (hover:none){.dd-gal__a:not(:disabled){opacity:.86}}.dd-gal__a:disabled{display:none}.dd-gal__a:focus-visible,.dd-gal__dot:focus-visible{outline:2px solid #6E8601;outline-offset:2px}' +
     '#ddtv-lb{position:fixed;inset:0;z-index:2147483000;box-sizing:border-box;padding:max(14px,env(safe-area-inset-top)) 14px 14px;background:rgba(24,29,27,.94);display:grid;grid-template-rows:minmax(0,1fr) auto;gap:10px;font-family:Chillax,"Helvetica Neue",Arial,sans-serif}' +
     '#ddtv-lb .ddtv-lb__b{min-height:0;display:flex;align-items:center;justify-content:center;border-radius:12px;overflow:hidden}#ddtv-lb img{display:block;width:100%;height:100%;object-fit:contain;max-width:none;-webkit-user-drag:none;user-select:none}' +
     '#ddtv-lb .ddtv-lb__t{display:flex;justify-content:space-between;gap:14px;align-items:baseline;color:#FBFBED;font:500 14px/1.4 Chillax,"Helvetica Neue",Arial,sans-serif}#ddtv-lb .ddtv-lb__t b{white-space:nowrap;font-weight:600;letter-spacing:.04em}' +
-    '#ddtv-lb button{all:unset;box-sizing:border-box;position:absolute;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(46,54,51,.86);color:#FBFBED;cursor:pointer;border:1.5px solid rgba(251,251,237,.5);z-index:2}#ddtv-lb button:hover{background:#FBFBED;color:#2E3633}#ddtv-lb button:focus-visible{outline:2px solid #FBFBED;outline-offset:2px}' +
+    '#ddtv-lb button{all:unset;box-sizing:border-box;position:absolute;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(46,54,51,.86);color:#FBFBED;cursor:pointer;border:1.5px solid rgba(251,251,237,.5);z-index:2}#ddtv-lb button:hover{background:#FBFBED;color:#2E3633}#ddtv-lb button:focus-visible{outline:2px solid #FBFBED;outline-offset:2px}' +
     '#ddtv-lb .ddtv-lb__c{top:max(16px,env(safe-area-inset-top));right:16px}#ddtv-lb .ddtv-lb__a{top:50%;margin-top:-23px}#ddtv-lb .ddtv-lb__p{left:16px}#ddtv-lb .ddtv-lb__n{right:16px}' +
     '#ddtv-experience{display:block;width:100%;margin:0 0 24px;clear:both}' +
     'html.ddtv-classic #ddtv-experience{display:none}';
@@ -338,7 +342,7 @@
 
   /* the page's rules are checked, not assumed: if the stylesheet is in the page but not in force (a browser that holds style updates), the same rules
      are also given as a constructable sheet, which does not depend on the head */
-  var adopted = false, fallback = false;
+  var adopted, fallback;   // (declared, not assigned here: boot() above has already mounted and may have set them)
   function inForce() {
     try {
       var t = doc.querySelector('.product-details__top'); if (t) return global.getComputedStyle(t).width === '1px';
@@ -350,7 +354,6 @@
   /* insurance by effect, not by cause (owner, 26 Nov, iPad: the television stood with the shop's top row, sidebar and old description around it until
      something made Safari apply the page's rules): if the rules are not in force while the television is on, the same hiding is also written on the elements
      themselves; it is taken back with the classic view and with unmount */
-  var HIDE = { position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', 'clip-path': 'inset(50%)', opacity: '0', 'pointer-events': 'none', margin: '0', padding: '0', border: '0' };
   function inlineApply(on) {
     var each = function (sel, props, set) { var n = doc.querySelectorAll(sel); for (var i = 0; i < n.length; i++) for (var k in props) { if (set) n[i].style.setProperty(k, props[k], 'important'); else n[i].style.removeProperty(k); } };
     each('.product-details__top,.product-details__product-title,.product-details__sidebar,.details-product-share', HIDE, on);
@@ -360,10 +363,7 @@
 
   /* ===== the gallery of the standard module (owner, 26 Nov). The module's markup (.dd-gal) is a plain slider that works without script; the engine makes the dots
      tappable, adds the arrows and a mouse drag, and opens the picture large (a lightbox) with a close button, Esc and a tap outside. ===== */
-  var AL = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>',
-      AR = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg>',
-      AX = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-  var lb = null, lbKey = null, lbFrom = null;
+  var lb, lbKey, lbFrom;
   function lbClose() {
     if (!lb) return; if (lb.parentNode) lb.parentNode.removeChild(lb); lb = null; doc.removeEventListener('keydown', lbKey, true); doc.documentElement.style.overflow = '';
     if (lbFrom && lbFrom.focus) try { lbFrom.focus({ preventScroll: true }); } catch (e) { /* none */ } lbFrom = null;

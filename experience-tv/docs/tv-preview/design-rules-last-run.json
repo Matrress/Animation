@@ -1,17 +1,17 @@
 {
  "date": "2026-11-26",
- "failures": 0,
+ "failures": 3,
  "checks": 197,
  "rows": [
   {
-   "pass": true,
+   "pass": false,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 34 buttons"
+   "detail": "largest radius 50px over 51 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -334,14 +334,14 @@
    "detail": ""
   },
   {
-   "pass": true,
+   "pass": false,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 34 buttons"
+   "detail": "largest radius 50px over 51 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -624,14 +624,14 @@
    "detail": ""
   },
   {
-   "pass": true,
+   "pass": false,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 34 buttons"
+   "detail": "largest radius 50px over 51 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(253, 253, 243)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -980,13 +980,13 @@
   },
   {
    "pass": true,
-   "rule": "R57 green is at most 10 % of the screen (worst of the screens tried: 1.94 %)",
-   "detail": "1.94 %"
+   "rule": "R57 green is at most 10 % of the screen (worst of the screens tried: 1.81 %)",
+   "detail": "1.81 %"
   },
   {
    "pass": true,
    "rule": "R58 Add to Bag is green; once the mattress is in the bag the same button is Go to Checkout in coffee with white text (real pixels: no green, mostly coffee, light letters)",
-   "detail": "{\"before\":{\"bg\":\"rgb(110, 134, 1)\",\"dis\":false},\"after\":{\"bg\":\"rgb(67, 66, 57)\",\"fg\":\"rgb(255, 255, 255)\",\"x\":1064,\"y\":595.46875,\"w\":246,\"h\":64,\"t\":\"Go to Checkout\"},\"px\":{\"light\":905,\"green\":0,\"choc\":9657,\"n\":11040}}"
+   "detail": "{\"before\":{\"bg\":\"rgb(110, 134, 1)\",\"dis\":false},\"after\":{\"bg\":\"rgb(67, 66, 57)\",\"fg\":\"rgb(255, 255, 255)\",\"x\":1064,\"y\":598,\"w\":246,\"h\":64,\"t\":\"Go to Checkout\"},\"px\":{\"light\":905,\"green\":0,\"choc\":9657,\"n\":11040}}"
   }
  ]
 }
