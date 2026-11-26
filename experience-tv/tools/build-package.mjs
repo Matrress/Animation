@@ -9,7 +9,7 @@
 //     paste/2-description.html → the product's Description, HTML mode
 //     PASTE-ME.html        a page with the two blocks and a Copy button each, and the steps
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -22,7 +22,8 @@ run('build-phone.mjs'); run('build-experience.mjs');
 const D = join(root, 'dist', 'experience'), P = join(root, 'dist', 'package');
 rmSync(P, { recursive: true, force: true });
 mkdirSync(join(P, 'upload', 'ddtv'), { recursive: true }); mkdirSync(join(P, 'paste'), { recursive: true });
-for (const f of ['botanic-tv.js', 'botanic-phone.js', 'botanic-tv-logos.js', 'botanic-cup.webp', 'botanic-mattress.webp']) copyFileSync(join(D, f), join(P, 'upload', 'ddtv', f));
+const logosFile = readdirSync(D).find((f) => /^botanic-tv-logos-[0-9a-f]{20}\.js$/.test(f));
+for (const f of ['botanic-tv.js', 'botanic-phone.js', logosFile, 'botanic-cup.webp', 'botanic-mattress.webp']) copyFileSync(join(D, f), join(P, 'upload', 'ddtv', f));
 const loader = readFileSync(join(D, 'loader.html'), 'utf8').trim();
 const desc = readFileSync(join(D, 'botanic-description.html'), 'utf8');
 writeFileSync(join(P, 'paste', '1-loader.txt'), loader);

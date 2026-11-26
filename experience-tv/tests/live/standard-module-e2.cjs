@@ -18,7 +18,7 @@
  *   M10 the photos (the owner's photo in the header, gallery photos in the strip and the closing card) are in the module, load, have alt text and sizes
  */
 const { chromium } = require('playwright'); const fs = require('fs'); const R = '/home/user/Animation/experience-tv/';
-const js = fs.readFileSync(R + 'dist/experience/botanic-tv.js', 'utf8'), logos = fs.readFileSync(R + 'dist/experience/botanic-tv-logos.js', 'utf8');
+const js = fs.readFileSync(R + 'dist/experience/botanic-tv.js', 'utf8'), logos = fs.readFileSync(R + 'dist/experience/' + fs.readdirSync(R + 'dist/experience').find((f) => /^botanic-tv-logos-[0-9a-f]{20}\.js$/.test(f)), 'utf8');
 const html = fs.readFileSync(R + 'dist/standard/botanic-standard-description.html', 'utf8'), report = fs.readFileSync(R + 'dist/standard/REPORT.txt', 'utf8');
 const URL = 'https://divinedunlop.com/products/botanic-experience-tv-test-draft?cb=' + Date.now();
 let fails = 0; const ok = (c, m, d) => { console.log((c ? 'PASS ' : 'FAIL ') + m + (d ? '  [' + d + ']' : '')); if (!c) fails++; };
@@ -37,7 +37,7 @@ const analyse = async (b64) => {
 (async () => {
   const b = await chromium.launch({ args: ['--no-sandbox'] }); const vp = { width: 1366, height: 1024 }; const ctx = await b.newContext({ viewport: vp, screen: vp }); const p = await ctx.newPage(); const errs = [], media = [];
   p.on('pageerror', (e) => { if (!/in promise/.test(e.message)) errs.push(e.message.slice(0, 90)); }); p.on('request', (r) => { if (/\.mp4/.test(r.url())) media.push(r.url().split('/').pop()); });
-  await p.route(/media\.divinedunlop\.com\/ddtv\/botanic-tv-[0-9a-f]{20}\.js/, (r) => r.abort()); await p.route(/media\.divinedunlop\.com\/ddtv\/botanic-tv-logos\./, (r) => r.fulfill({ contentType: 'text/javascript', body: logos }));
+  await p.route(/media\.divinedunlop\.com\/ddtv\/botanic-tv-[0-9a-f]{20}\.js/, (r) => r.abort()); await p.route(/media\.divinedunlop\.com\/ddtv\/botanic-tv-logos-[0-9a-f]{20}\.js/, (r) => r.fulfill({ contentType: 'text/javascript', body: logos }));
   await p.goto(URL, { waitUntil: 'commit', timeout: 90000 }); await p.waitForSelector('.details-product-option select', { timeout: 80000 }); await p.waitForTimeout(3500);
   try { await p.getByRole('button', { name: /decline/i }).first().click({ timeout: 2000 }); } catch (e) { /* none */ }
   await p.waitForTimeout(2000); media.length = 0;
@@ -127,6 +127,13 @@ const analyse = async (b64) => {
   const fullShot = await p.screenshot(); const fr = await p.evaluate(analyse, fullShot.toString('base64')); worstShare = Math.max(worstShare, 100 * fr.green / fr.n);
   ok(worstShare <= 10, 'M4 green is at most 10 % of what is on the screen in every view tried (worst ' + worstShare.toFixed(2) + ' %)', worstShare.toFixed(2) + ' %');
   ok(parseFloat(ib.radius) >= 10 && parseFloat(ib.radius) < 40 && parseFloat(ib.btnRadius) < 40, 'M3 the information block and its button are rounded boxes, not pills', JSON.stringify({ r: ib.radius, b: ib.btnRadius }));
+  // M12: the television's certificate logos are really on the media host (a mocked route hid a 404 once): the name the television asks for answers 200 with the built bytes
+  {
+    const tvJs = fs.readFileSync(R + 'dist/experience/botanic-tv.js', 'utf8'); const m = /(botanic-tv-logos-[0-9a-f]{20}\.js)\?v=/.exec(tvJs);
+    const crypto = require('crypto'); let st = 0, same = false;
+    if (m) { try { const body = require('child_process').execFileSync('curl', ['-s', '-w', '\n%{http_code}', 'https://media.divinedunlop.com/ddtv/' + m[1]], { maxBuffer: 5e6 }).toString(); const code = +body.trim().split('\n').pop(); st = code; if (code === 200) { const txt = body.slice(0, body.lastIndexOf('\n')); same = crypto.createHash('sha256').update(Buffer.from(txt)).digest('hex') === crypto.createHash('sha256').update(logos).digest('hex'); } } catch (e) { st = 'error ' + e.message; } }
+    ok(!!m && st === 200 && same, 'M12 the certificate logos the television asks for are on the media host and are the built file (no 404)', JSON.stringify({ file: m && m[1], status: st, same }));
+  }
   // M6
   await p.click('#ddtv-to-standard'); await p.waitForTimeout(1500);
   const m6 = await p.evaluate(() => ({ cls: document.documentElement.className, box: !!document.getElementById('ddtv-backbox'), btn: (document.getElementById('ddtv-back') || {}).textContent, selects: document.querySelectorAll('.details-product-option select').length, topics: document.querySelectorAll('.dd-t').length }));

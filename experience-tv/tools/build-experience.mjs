@@ -148,6 +148,11 @@ ${body}
 
 // ---------- 6. the file ----------
 const version = createHash('sha256').update(css + markup + body + dataJs + hostJs).digest('hex').slice(0, 10);
+const logosJs = `/* Botanic Experience: certificate logos, loaded when Certifications is opened. */\nwindow.__ddtvLogos && window.__ddtvLogos(${JSON.stringify(logos)});\n`;
+// the logos file is named by its content (as every media file is): the television points to exactly this name,
+// so a name that does not exist on the media host (a 404) can never be written into the page
+const logosName = 'botanic-tv-logos-' + createHash('sha256').update(logosJs).digest('hex').slice(0, 20) + '.js';
+writeFileSync(join(out, logosName), logosJs);
 const tv = `/* Botanic Experience: the television for the Ecwid product page (tools/build-experience.mjs, ${version}).
    Built from the approved design. Ecwid stays the executor: options, price, bag and checkout are the shop's own.
    Starts only on the listed products, never on phones. ?ddtv=off switches it off. */
@@ -156,7 +161,7 @@ const tv = `/* Botanic Experience: the television for the Ecwid product page (to
   var me = document.currentScript && document.currentScript.src || '';
   var base = me ? me.replace(/[^/]*$/, '') : ${JSON.stringify(BASE)};
   window.__DDTVX_CONFIG = window.__DDTVX_CONFIG || { version: ${JSON.stringify(version)}, products: ${JSON.stringify(PRODUCTS)}, phoneMaxShortSide: 600,
-    base: base, fontCss: ${JSON.stringify(FONT)}, logosUrl: base + 'botanic-tv-logos.js?v=${version}' };
+    base: base, fontCss: ${JSON.stringify(FONT)}, logosUrl: base + '${logosName}?v=${version}' };
   var CSS = ${JSON.stringify(css)};
   var MARKUP = ${JSON.stringify(markup)};
   var DATA = ${JSON.stringify(dataJs)};
@@ -166,8 +171,7 @@ ${factory}
 })();
 ${hostJs}`;
 writeFileSync(join(out, 'botanic-tv.js'), tv);
-const logosJs = `/* Botanic Experience: certificate logos, loaded when Certifications is opened. */\nwindow.__ddtvLogos && window.__ddtvLogos(${JSON.stringify(logos)});\n`;
-writeFileSync(join(out, 'botanic-tv-logos.js'), logosJs);
+
 
 // ---------- 7. the loader for Ecwid → Website → Custom JavaScript code ----------
 // the phone layer is built first (tools/build-phone.mjs); its own version keys the cache
@@ -196,7 +200,7 @@ const manifest = `Botanic Experience: store module (${version})
 botanic-tv.js        ${tv.length} bytes, gzip ${gz(tv)}   sha256 ${sha(tv)}
 ${BOWL_FILE.padEnd(20)} ${readFileSync(join(out, BOWL_FILE)).length} bytes (picture)
 ${PHOTO_FILE.padEnd(20)} ${readFileSync(join(out, PHOTO_FILE)).length} bytes (picture)
-botanic-tv-logos.js  ${logosJs.length} bytes, gzip ${gz(logosJs)}   sha256 ${sha(logosJs)}
+${logosName}  ${logosJs.length} bytes, gzip ${gz(logosJs)}   sha256 ${sha(logosJs)}
 loader.html          ${loader.length} characters (field limit 4000)\nbotanic-description.html ${desc.length} characters (the product description, HTML mode; the bridge takes 100 000, so it is pasted in Ecwid's admin)
 upload to            ${BASE}
 products             ${PRODUCTS.join(', ')}

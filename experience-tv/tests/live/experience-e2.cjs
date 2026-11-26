@@ -19,7 +19,7 @@ const fs = require('fs'); const path = require('path');
 const R = path.join(__dirname, '..', '..') + '/';
 const W = +(process.argv[2] || 1366), H = +(process.argv[3] || 1000), SHOT = process.argv[4] || '';
 const js = fs.readFileSync(R + 'dist/experience/botanic-tv.js', 'utf8');
-const logos = fs.readFileSync(R + 'dist/experience/botanic-tv-logos.js', 'utf8');
+const logosName = fs.readdirSync(R + 'dist/experience').find((f) => /^botanic-tv-logos-[0-9a-f]{20}\.js$/.test(f)); const logos = fs.readFileSync(R + 'dist/experience/' + logosName, 'utf8');
 let fails = 0; const ok = (c, m, d) => { console.log((c ? 'PASS ' : 'FAIL ') + m + (d ? '  [' + d + ']' : '')); if (!c) fails++; };
 const URL = 'https://divinedunlop.com/products/botanic-original-100-organic-latex-mattress-dunlop';
 
@@ -29,7 +29,7 @@ const URL = 'https://divinedunlop.com/products/botanic-original-100-organic-late
   const p = await ctx.newPage(); const errs = [], posts = [];
   p.on('pageerror', (e) => errs.push(e.message));
   p.on('request', (r) => { if (r.method() === 'POST') posts.push(r.url()); });
-  await p.route('https://media.divinedunlop.com/ddtv/botanic-tv-logos.js**', (r) => r.fulfill({ contentType: 'text/javascript', body: logos }));
+  await p.route(new RegExp('media\\.divinedunlop\\.com/ddtv/botanic-tv-logos-[0-9a-f]{20}\\.js'), (r) => r.fulfill({ contentType: 'text/javascript', body: logos }));
   await p.route(/https:\/\/media\.divinedunlop\.com\/ddtv\/botanic-(cup|mattress)\./, (r) => { const n = /botanic-(cup|mattress)\./.exec(r.request().url())[1]; r.fulfill({ contentType: 'image/webp', body: fs.readFileSync(R + 'dist/experience/' + fs.readdirSync(R + 'dist/experience').find((f) => f.startsWith('botanic-' + n + '.'))) }); });
   await p.goto(URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await p.waitForSelector('.details-product-option select', { timeout: 45000 }); await p.waitForTimeout(2500);

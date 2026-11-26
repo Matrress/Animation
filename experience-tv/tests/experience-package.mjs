@@ -1,7 +1,7 @@
 // The owner's package: the page's Copy buttons put EXACTLY the two blocks on the clipboard, and the zip holds what the page says.
 //   NODE_PATH=$(npm root -g) node tests/experience-package.mjs   (after: node tools/build-package.mjs)
 import { createRequire } from 'node:module';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -20,7 +20,7 @@ for (const [id, want, label] of [['t1', loader, 'the loader'], ['t2', desc, 'the
 ok(loader.length <= 4000 && /ddtv=off/.test(loader) && !/<script[^>]*src=/.test(loader), 'the loader fits the 4000-character field and loads nothing by itself', String(loader.length));
 ok(!/<script/i.test(desc) && !/Organic\s+Natural|Natural\s+Organic/i.test(desc), 'the description has no script and no "Organic Natural"');
 const names = execFileSync('python3', ['-m', 'zipfile', '-l', join(root, 'dist', 'botanic-ddtv-package.zip')]).toString();
-ok(['PASTE-ME.html', 'upload/ddtv/botanic-tv.js', 'upload/ddtv/botanic-phone.js', 'upload/ddtv/botanic-tv-logos.js', 'upload/ddtv/botanic-cup.webp', 'upload/ddtv/botanic-mattress.webp', 'paste/1-loader.txt', 'paste/2-description.html'].every((n) => names.includes(n)), 'the zip holds the page, the four files and the two blocks');
+ok(['PASTE-ME.html', 'upload/ddtv/botanic-tv.js', 'upload/ddtv/botanic-phone.js', (() => { const f = readdirSync(join(root, 'dist', 'experience')).find((x) => /^botanic-tv-logos-[0-9a-f]{20}\.js$/.test(x)); return 'upload/ddtv/' + f; })(), 'upload/ddtv/botanic-cup.webp', 'upload/ddtv/botanic-mattress.webp', 'paste/1-loader.txt', 'paste/2-description.html'].every((n) => names.includes(n)), 'the zip holds the page, the four files and the two blocks');
 const base = /https:\/\/[^'"]+\/ddtv\//.exec(loader)[0];
 ok(['botanic-tv.js', 'botanic-phone.js'].every((f) => loader.includes(base)) && existsSync(join(P, 'upload', 'ddtv', 'botanic-tv.js')), 'the loader asks for the folder the page tells the owner to upload to', base);
 await b.close();
