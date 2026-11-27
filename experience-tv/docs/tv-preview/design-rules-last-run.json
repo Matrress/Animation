@@ -1,17 +1,17 @@
 {
  "date": "2026-11-27",
  "failures": 0,
- "checks": 197,
+ "checks": 200,
  "rows": [
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 42 buttons"
+   "detail": "largest radius 16px over 44 buttons"
   },
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(254, 254, 245)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -70,7 +70,7 @@
   },
   {
    "pass": true,
-   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); the Select & Buy tile (was View Model Gallery) a compact tile as wide as its words, in the same green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
    "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
@@ -135,13 +135,13 @@
   },
   {
    "pass": true,
-   "rule": "R20 View Model Gallery and the Optimised Preview / Standard Product View switch are on top",
+   "rule": "R20 the green Select & Buy tile and the Optimised Preview / Standard Product View switch are on top",
    "detail": ""
   },
   {
    "pass": true,
-   "rule": "R21 the gallery opens inside the television with the photographs",
-   "detail": ""
+   "rule": "R21 (owner, 27 Nov) Select & Buy opens the sizes at once and starts the choosing; the old gallery inside the television is gone",
+   "detail": "{\"h\":\"Select here  ·  Step 1 of 5  ·  Size\",\"sizes\":6,\"pressed\":\"true\",\"oldGallery\":false}"
   },
   {
    "pass": true,
@@ -166,7 +166,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "47 panels"
+   "detail": "49 panels"
   },
   {
    "pass": true,
@@ -182,6 +182,11 @@
    "pass": true,
    "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; it plays once, when the model is entered: pressing Discover or Optimised Preview does not play it again; sound after a tap; Skip",
    "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
+  },
+  {
+   "pass": true,
+   "rule": "R29b the start-up always has its music: played at once where the browser allows it, otherwise the first tap brings it in without skipping; the next tap skips; made in the browser, no sound file",
+   "detail": "{\"before\":{\"played\":0,\"on\":true},\"after\":{\"played\":1,\"on\":true},\"skipped\":true}"
   },
   {
    "pass": true,
@@ -271,7 +276,7 @@
   {
    "pass": true,
    "rule": "R48 no parts strip under the Explore row: the parts are in the tree on the left with a hint line; a part goes to its page; All topics opens the whole nomenclature and a choice from it opens that part",
-   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":0,\"tree0\":4,\"head0\":\"Discover\",\"hint0\":\"Tap a part to move between them, forward or back.\"},\"xc\":{\"strip\":0,\"head\":\"Comfort\",\"n\":5,\"want\":5,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":0,\"n\":5,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":38,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":0,\"tree0\":4,\"head0\":\"Discover\",\"hint0\":\"Tap a part to move between them, forward or back.\"},\"xc\":{\"strip\":0,\"head\":\"Comfort\",\"n\":6,\"want\":6,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":0,\"n\":6,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":40,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
   },
   {
    "pass": true,
@@ -295,7 +300,7 @@
   },
   {
    "pass": true,
-   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (61 pages checked)",
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (63 pages checked)",
    "detail": ""
   },
   {
@@ -336,7 +341,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 42 buttons"
+   "detail": "largest radius 16px over 44 buttons"
   },
   {
    "pass": true,
@@ -360,7 +365,7 @@
   },
   {
    "pass": true,
-   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); the Select & Buy tile (was View Model Gallery) a compact tile as wide as its words, in the same green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
    "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
@@ -425,13 +430,13 @@
   },
   {
    "pass": true,
-   "rule": "R20 View Model Gallery and the Optimised Preview / Standard Product View switch are on top",
+   "rule": "R20 the green Select & Buy tile and the Optimised Preview / Standard Product View switch are on top",
    "detail": ""
   },
   {
    "pass": true,
-   "rule": "R21 the gallery opens inside the television with the photographs",
-   "detail": ""
+   "rule": "R21 (owner, 27 Nov) Select & Buy opens the sizes at once and starts the choosing; the old gallery inside the television is gone",
+   "detail": "{\"h\":\"Select here  ·  Step 1 of 5  ·  Size\",\"sizes\":6,\"pressed\":\"true\",\"oldGallery\":false}"
   },
   {
    "pass": true,
@@ -456,7 +461,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "47 panels"
+   "detail": "49 panels"
   },
   {
    "pass": true,
@@ -472,6 +477,11 @@
    "pass": true,
    "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; it plays once, when the model is entered: pressing Discover or Optimised Preview does not play it again; sound after a tap; Skip",
    "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
+  },
+  {
+   "pass": true,
+   "rule": "R29b the start-up always has its music: played at once where the browser allows it, otherwise the first tap brings it in without skipping; the next tap skips; made in the browser, no sound file",
+   "detail": "{\"before\":{\"played\":0,\"on\":true},\"after\":{\"played\":1,\"on\":true},\"skipped\":true}"
   },
   {
    "pass": true,
@@ -511,7 +521,7 @@
   {
    "pass": true,
    "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
-   "detail": "{\"y0\":260,\"yFam\":150,\"yPick\":150,\"yNav\":150,\"stageTop\":513,\"scrTop\":2,\"isFit\":true,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+   "detail": "{\"y0\":305,\"yFam\":195,\"yPick\":195,\"yNav\":195,\"stageTop\":512,\"scrTop\":2,\"isFit\":true,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
   },
   {
    "pass": true,
@@ -561,7 +571,7 @@
   {
    "pass": true,
    "rule": "R48 no parts strip under the Explore row: the parts are in the tree on the left with a hint line; a part goes to its page; All topics opens the whole nomenclature and a choice from it opens that part",
-   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":0,\"tree0\":4,\"head0\":\"Discover\",\"hint0\":\"Tap a part to move between them, forward or back.\"},\"xc\":{\"strip\":0,\"head\":\"Comfort\",\"n\":5,\"want\":5,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":0,\"n\":5,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":38,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":0,\"tree0\":4,\"head0\":\"Discover\",\"hint0\":\"Tap a part to move between them, forward or back.\"},\"xc\":{\"strip\":0,\"head\":\"Comfort\",\"n\":6,\"want\":6,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":0,\"n\":6,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":40,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
   },
   {
    "pass": true,
@@ -585,7 +595,7 @@
   },
   {
    "pass": true,
-   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (61 pages checked)",
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (63 pages checked)",
    "detail": ""
   },
   {
@@ -626,7 +636,7 @@
   {
    "pass": true,
    "rule": "R1 rounded corners only: no pill or round button",
-   "detail": "largest radius 16px over 42 buttons"
+   "detail": "largest radius 16px over 44 buttons"
   },
   {
    "pass": true,
@@ -690,7 +700,7 @@
   },
   {
    "pass": true,
-   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); View Model Gallery a quiet square tile, never green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); the Select & Buy tile (was View Model Gallery) a compact tile as wide as its words, in the same green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
    "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
   },
   {
@@ -755,13 +765,13 @@
   },
   {
    "pass": true,
-   "rule": "R20 View Model Gallery and the Optimised Preview / Standard Product View switch are on top",
+   "rule": "R20 the green Select & Buy tile and the Optimised Preview / Standard Product View switch are on top",
    "detail": ""
   },
   {
    "pass": true,
-   "rule": "R21 the gallery opens inside the television with the photographs",
-   "detail": ""
+   "rule": "R21 (owner, 27 Nov) Select & Buy opens the sizes at once and starts the choosing; the old gallery inside the television is gone",
+   "detail": "{\"h\":\"Select here  ·  Step 1 of 5  ·  Size\",\"sizes\":6,\"pressed\":\"true\",\"oldGallery\":false}"
   },
   {
    "pass": true,
@@ -786,7 +796,7 @@
   {
    "pass": true,
    "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
-   "detail": "47 panels"
+   "detail": "49 panels"
   },
   {
    "pass": true,
@@ -802,6 +812,11 @@
    "pass": true,
    "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; it plays once, when the model is entered: pressing Discover or Optimised Preview does not play it again; sound after a tap; Skip",
    "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
+  },
+  {
+   "pass": true,
+   "rule": "R29b the start-up always has its music: played at once where the browser allows it, otherwise the first tap brings it in without skipping; the next tap skips; made in the browser, no sound file",
+   "detail": "{\"before\":{\"played\":0,\"on\":true},\"after\":{\"played\":1,\"on\":true},\"skipped\":true}"
   },
   {
    "pass": true,
@@ -891,7 +906,7 @@
   {
    "pass": true,
    "rule": "R48 no parts strip under the Explore row: the parts are in the tree on the left with a hint line; a part goes to its page; All topics opens the whole nomenclature and a choice from it opens that part",
-   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":0,\"tree0\":4,\"head0\":\"Discover\",\"hint0\":\"Tap a part to move between them, forward or back.\"},\"xc\":{\"strip\":0,\"head\":\"Comfort\",\"n\":5,\"want\":5,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":0,\"n\":5,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":38,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":0,\"tree0\":4,\"head0\":\"Discover\",\"hint0\":\"Tap a part to move between them, forward or back.\"},\"xc\":{\"strip\":0,\"head\":\"Comfort\",\"n\":6,\"want\":6,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":0,\"n\":6,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":40,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
   },
   {
    "pass": true,
@@ -915,7 +930,7 @@
   },
   {
    "pass": true,
-   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (61 pages checked)",
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (63 pages checked)",
    "detail": ""
   },
   {
@@ -980,8 +995,8 @@
   },
   {
    "pass": true,
-   "rule": "R57 green is at most 10 % of the screen (worst of the screens tried: 1.81 %)",
-   "detail": "1.81 %"
+   "rule": "R57 green is at most 10 % of the screen (worst of the screens tried: 2.11 %)",
+   "detail": "2.11 %"
   },
   {
    "pass": true,

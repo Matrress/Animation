@@ -59,6 +59,12 @@ export const OWN = {
     { h: 'Not like memory foam', blocks: [{ k: 'p', t: 'You do not get the slow, deep sinking that memory foam gives.' }] },
     { h: 'Not like springs', blocks: [{ k: 'p', t: 'And you do not get the tension or the upward push that a spring construction can give. It is a different feeling altogether.' }] },
     { h: 'Why', blocks: [{ k: 'p', t: 'Natural latex is very dense, almost twice as dense as many of the foams used in mattresses. That density is the base for stable support that keeps its elasticity and its adaptation.' }] }] },
+  surface: { title: 'Keeps You On The Surface', groups: [
+    { h: 'On the mattress, not in it', blocks: [{ k: 'p', t: 'Botanic keeps you on the surface of the mattress. Your body is carried where it lies, at the right level, instead of sinking into a hollow that closes around you.' }] },
+    { h: 'Nothing is given up for it', blocks: [{ k: 'p', t: 'Staying on the surface does not mean lying on something hard. The natural latex still follows the shape of your body: it gives way where the shoulders and hips press, and it fills in under the waist and the small of the back. You keep all the adaptation and all the comfort.' }] },
+    { h: 'Held up, not wrapped', blocks: [{ k: 'p', t: 'Memory foam wraps around the body and lets it sink slowly. Botanic does not enclose you. It gives you a real feeling of being held up, and the comfort you feel comes from that support itself.' }] },
+    { h: 'Support without heaviness', blocks: [{ k: 'p', t: 'There is no heaviness and no pressure building up underneath you, and no tension pushing back. The support is adaptive and balanced, and it keeps you on top of the mattress all night.' }] },
+    { h: 'Free to move', blocks: [{ k: 'p', t: 'Because you lie on the mattress and not in it, turning over takes little effort, and you are never working your way out of a dip.' }] }] },
   adaptwhy: { title: 'Why Adaptation Matters', groups: [
     { h: 'More than support', blocks: [{ k: 'p', t: 'Good sleep needs muscles that can relax, less strain on the nervous system and good blood circulation.' }] },
     { h: 'Pressure gets in the way', blocks: [{ k: 'p', t: 'When one body area takes too much pressure, it interferes with the body’s natural comfort and relaxation.' }] },

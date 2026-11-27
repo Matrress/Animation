@@ -33,11 +33,11 @@ D.covers = D.covers.map((c, i) => Object.assign(c, { mod: [0, 0, 0, 77][i] }));
 const SPEC = [
   ['discover', 'Discover', [['intro', 'Introduction', 'hero'], ['glance', 'At a Glance', 'facts'], ['who', 'Who It Is For', 'copy:firmness/who'], ['promise', 'Honest Promise', 'own:promise']]],
   ['firmness', 'Firmness', [['choose', 'Select Your Firmness', 'step:firmness'], ['principle', 'Correct vs Softer', 'read:0'], ['regulation', 'How It Works', 'read:1'], ['who', 'Who It Is For', 'read:2'], ['lying', 'Lying, Not Sitting', 'own:lying'], ['balance', 'Firmer Is Not Always Better', 'own:balance']]],
-  ['comfort', 'Comfort', [['expect', 'What To Expect', 'article'], ['who', 'Who It Is For', 'own:whocomfort'], ['first', 'Your First Ten Days', 'own:first'], ['behaviour', 'Latex Behaviour', 'read:0'], ['density', 'How Density Works', 'density']]],
+  ['comfort', 'Comfort', [['expect', 'What To Expect', 'article'], ['who', 'Who It Is For', 'own:whocomfort'], ['first', 'Your First Ten Days', 'own:first'], ['surface', 'Keeps You On The Surface', 'own:surface'], ['behaviour', 'Latex Behaviour', 'read:0'], ['density', 'How Density Works', 'density']]],
   ['height', 'Height', [['sizes', 'Select Your Size', 'step:size'], ['heights', 'Select Your Depth', 'step:depth'], ['why', 'Why Height Matters', 'read:0'], ['cover', 'Core And Cover', 'copy:covers/fit']]],
   ['covers', 'Covers', [['choose', 'Select Your Cover', 'step:cover'], ['fit', 'How The Cover Fits', 'coverfit'], ['care', 'Zip And Washing', 'covercare'], ['warranty', 'Covers And Warranty', 'coverwarranty'], ['system', 'Cover System', 'read:4']]],
   ['benefits', 'Benefits', [['origin', 'Origin', 'points'], ['why', 'Why Latex', 'own:whylatex']]],
-  ['support', 'Support', [['bearing', 'Bearing Force', 'points'], ['feel', 'How Support Feels', 'own:supportfeel'], ['together', 'Support + Adaptation', 'own:highboth'], ['density', 'How Density Works', 'density']]],
+  ['support', 'Support', [['bearing', 'Bearing Force', 'points'], ['feel', 'How Support Feels', 'own:supportfeel'], ['surface', 'Keeps You On The Surface', 'own:surface'], ['together', 'Support + Adaptation', 'own:highboth'], ['density', 'How Density Works', 'density']]],
   ['adaptation', 'Adaptation', [['elasticity', 'Elasticity', 'points'], ['why', 'Why It Matters', 'own:adaptwhy'], ['together', 'Support + Adaptation', 'copy:support/together'], ['feel', 'How It Feels', 'read:0'], ['adjustable', 'Adjustable Beds', 'adjust']]],
   ['zones', '7-Zone', [['map', 'Zone Map', 'zones'], ['how', 'How 7 Zones Work', 'own:zoneswork'], ['detail', 'Zone By Zone', 'read:0']]],
   ['ventilation', 'Ventilation', [['airflow', 'Airflow', 'points'], ['sleep', 'Why It Matters', 'read:0']]],
@@ -235,7 +235,10 @@ D.curated['discover/who'] = D.curated['firmness/who'];   // the same panel, in D
    Preview). Minimal, like a car's instrument panel waking up. The two facts are mandatory and are the description's own
    (hero bar: "100% Organic · Dunlop Technology"); a later model sets its own name and facts here. */
 /* owner, 26 Nov: the mini-gallery of Your selection (and the gallery of the standard module): the owner's pictures, fitted whole, one per topic */
-{ const GJ = JSON.parse(readFileSync(join(root, 'products', 'botanic.gallery.json'), 'utf8')); D.gallery = GJ.items.map((x) => ({ key: x.key, url: GJ.base + x.name, alt: x.alt, label: x.label, cut: !!x.cut, w: x.w, h: x.h })); }
+{ const GJ = JSON.parse(readFileSync(join(root, 'products', 'botanic.gallery.json'), 'utf8')); const known = new Set(); SPEC.forEach(([c, , parts]) => { known.add(c); parts.forEach(([pn]) => known.add(c + '/' + pn)); });
+  for (const x of GJ.items) for (const k of [x.key].concat(x.also || [])) if (!known.has(k)) throw new Error('gallery: "' + k + '" (' + x.name + ') is not a topic or a part of one');
+  for (const x of GJ.items) if (!/^[a-z0-9-]+-[0-9a-f]{20}\.webp$/.test(x.name) || !(x.w > 0 && x.h > 0) || !(x.alt && x.alt.length > 10)) throw new Error('gallery: ' + x.name + ' needs a content-addressed name, its size and an alt text');
+  D.gallery = GJ.items.map((x) => ({ key: x.key, also: x.also || [], url: GJ.base + x.name, alt: x.alt, label: x.label, cut: !!x.cut, w: x.w, h: x.h })); }
 D.ignition = { name: 'BOTANIC', facts: [['Material', '100% Natural Latex'], ['Process', 'Dunlop Technology']],
   pillars: [['Explore', '11 topics, one clear way in'], ['Select & Buy', 'Four choices, then one button'], ['Custom', 'Made to order, to your confirmed specification']],
   tagline: 'Custom Dunlop Natural Environment for Healthy Sleep', sub: 'One custom presentation module: it explores, it selects and it customises.' };

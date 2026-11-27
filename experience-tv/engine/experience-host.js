@@ -24,6 +24,7 @@
   var host = null, app = null, mo = null, poll = null, pending = null, bagAt = 0, lastPid = null, foldBtn = null, infoBox = null;
 
   function txt(n) { return n ? (n.textContent || '').replace(/\s+/g, ' ').trim() : ''; }
+  var ro;   /* a ResizeObserver on the shop's column and the page width: a re-laid column or a scrollbar that comes and goes re-centres the television (declared, not assigned: mount can run before this line) */
   var ignited = false;   /* the start-up has played in this page load (in memory, so a fresh load plays it again) */
   var AP = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>';
   var AN = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg>';
@@ -192,6 +193,7 @@
     '#ddtv-lb .ddtv-lb__d i{all:unset;box-sizing:content-box;width:7px;height:7px;padding:4px;background:rgba(254,254,246,.42) content-box;border-radius:50%;cursor:pointer}#ddtv-lb .ddtv-lb__d i.on{background-color:#FBFBED}' +
     '#ddtv-lb button{all:unset;box-sizing:border-box;position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(46,54,51,.86);color:#FBFBED;cursor:pointer;border:1.5px solid rgba(251,251,237,.5);z-index:2}#ddtv-lb button:hover{background:#FBFBED;color:#2E3633}#ddtv-lb button:focus-visible{outline:2px solid #FBFBED;outline-offset:2px}' +
     '#ddtv-lb button[data-s="p"],#ddtv-lb button[data-s="n"]{top:50%;margin-top:-23px;right:auto}#ddtv-lb button[data-s="p"]{left:max(12px,env(safe-area-inset-left))}#ddtv-lb button[data-s="n"]{right:max(12px,env(safe-area-inset-right))}' +
+    'html.ddtv-on,html.ddtv-on body{overflow-x:hidden}@supports (overflow:clip){html.ddtv-on,html.ddtv-on body{overflow-x:clip}}' +
     '#ddtv-experience{display:block;width:100%;margin:0 0 24px;clear:both}' +
     'html.ddtv-classic #ddtv-experience{display:none}';
 
@@ -252,17 +254,27 @@
 
   /* The approved design is drawn for the whole width of the screen (its own maximum is 1440 px, centred); the shop's column is
      narrower (1120 px). The television therefore takes the page's full width and the design centres itself, as approved. */
+  /* full width (the television spans the whole screen whatever column the shop puts it in). Owner, 27 Nov (iPad): after a choice the television was
+     pushed to the right by ~270 px. The old code measured the host against the VIEWPORT (getBoundingClientRect) and only on 'resize'; on an iPad the
+     viewport itself moves (the toolbar, the rubber-band bounce, zoom) and the shop re-lays its columns after a choice, so a measurement taken at the
+     wrong moment, or never retaken, left the television off-centre. Now the position is taken in DOCUMENT coordinates (the offset chain, which no
+     scrolling, bounce or zoom can disturb), it is re-checked whenever the shop's page changes or anything resizes, and the page cannot scroll sideways. */
+  function docLeft(el) { var x = 0; for (var e = el; e; e = e.offsetParent) x += e.offsetLeft || 0; return x; }
   function bleed() {
-    if (!host) return;
+    if (!host || !host.parentNode) return;
     var cw = doc.documentElement.clientWidth || global.innerWidth;
-    host.style.width = cw + 'px'; host.style.maxWidth = 'none'; host.style.marginLeft = '0px';
-    var left = host.getBoundingClientRect().left;
-    host.style.marginLeft = (-left) + 'px';
+    var cur = parseFloat(host.style.marginLeft) || 0, natural = docLeft(host) - cur;
+    var vv = global.visualViewport, r = host.getBoundingClientRect(), sx = global.pageXOffset || 0;
+    /* the box measurement is exact to the sub-pixel, but only to be trusted when the viewport is plain (no zoom, no offset) and agrees with the offsets */
+    if ((!vv || (Math.abs(vv.scale - 1) < 0.001 && !vv.offsetLeft)) && Math.abs((r.left + sx - cur) - natural) < 2) natural = r.left + sx - cur;
+    host.style.maxWidth = 'none';
+    if (host.style.width !== cw + 'px') host.style.width = cw + 'px';
+    if (Math.abs(-natural - cur) > 0.5) host.style.marginLeft = (-natural) + 'px';
   }
   var onResize = function () { clearTimeout(onResize.t); onResize.t = setTimeout(bleed, 60); };
 
   /* ---------- mount and unmount (Ecwid swaps product pages without reloading) ---------- */
-  function schedule() { if (pending) return; pending = setTimeout(function () { pending = null; pull(); ensureFold(); galScan(); }, 80); }
+  function schedule() { if (pending) return; pending = setTimeout(function () { pending = null; pull(); ensureFold(); galScan(); bleed(); }, 80); }
   function mount(pid) {
     if (host && doc.body.contains(host)) return host;
     if (isPhone() && !global.__ddtvForceTv) return null;
@@ -281,7 +293,9 @@
       attach: function (api) { A = api; pull.ps = priceSig(); pull(); }
     });
     } catch (err) { unmount(); return null; }   // if the television cannot be built, the shop's page is given back whole
-    bleed(); global.addEventListener('resize', onResize);
+    bleed(); global.addEventListener('resize', onResize); global.addEventListener('orientationchange', onResize);
+    if (global.visualViewport) global.visualViewport.addEventListener('resize', onResize);
+    if (global.ResizeObserver) { try { ro = new global.ResizeObserver(onResize); ro.observe(doc.documentElement); if (host.parentNode) ro.observe(host.parentNode); } catch (e) { ro = null; } }
     ensureFold();
     mo = new MutationObserver(schedule);
     mo.observe(pd, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class', 'selected', 'disabled'] });
@@ -307,6 +321,7 @@
   function unmount() {
     if (mo) mo.disconnect(); mo = null; clearInterval(poll); poll = null;
     doc.removeEventListener('change', onNativeChange, true); global.removeEventListener('resize', onResize);
+    global.removeEventListener('orientationchange', onResize); if (global.visualViewport) global.visualViewport.removeEventListener('resize', onResize); if (ro) ro.disconnect(); ro = null;
     if (host && host.parentNode) host.parentNode.removeChild(host);
     if (infoBox && infoBox.parentNode) infoBox.parentNode.removeChild(infoBox);
     if (fallback) inlineApply(false); fallback = false;

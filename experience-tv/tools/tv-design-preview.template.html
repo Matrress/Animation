@@ -1351,12 +1351,15 @@ body { background: #F5F4E5; }
 .ivory .bagbtn[data-checkout]:not(:disabled):hover { background: #2E3633 !important; }
 .ivory .fconf .btn.bagbtn { font-size: 19px; height: 52px; }
 .ivory .bagbtn:not(:disabled):hover, .ivory .btn.bagbtn.ready:hover { background: #5D7200 !important; }
-/* View Model Gallery: the same green outside, white inside, the same white edge */
+/* Select & Buy (was View Model Gallery): the same green outside, white inside, the same white edge */
 .ivory #galbtn { width: 88px; height: 76px; background: #6E8601 !important; color: #FFFFFF !important; border: 2px solid #F6F8EA !important; box-shadow: 0 0 0 2px #3F4440 !important; gap: 5px; }
 .ivory #galbtn span { color: #FFFFFF !important; font-size: 18.7px; font-weight: 700; letter-spacing: 0; }
 .ivory #galbtn svg { width: 26px; height: 26px; color: #FFFFFF !important; stroke: #FFFFFF !important; }
 .ivory #galbtn:hover { background: #5D7200 !important; border-color: #F6F8EA !important; }
 .ivory #galbtn[aria-pressed=true] { background: #566901 !important; box-shadow: 0 0 0 2px #3F4440, inset 0 -4px 0 #F6F8EA !important; }
+/* owner, 27 Nov: the green tile is SELECT & BUY (the old gallery is gone: the mini-gallery of Your selection is the one gallery). Same green, same edge; as wide as its words */
+.ivory #galbtn { width: auto; min-width: 88px; padding: 6px 16px; } .ivory #galbtn span { white-space: nowrap; }
+.ivory #galbtn[aria-pressed=true] { background: #6E8601 !important; }   /* while choosing: the same green, only the white line underneath says 'you are here' */
 /* the green in text on dark: the word is vanilla with the green underneath it (green text on coffee would be 2.5:1) */
 .ivory .q h1 .acc, .ivory .screen[data-layer=explore] .q h1 .acc { color: #FBFBED !important; text-decoration: underline; text-decoration-color: #6E8601; text-decoration-thickness: 4px; text-underline-offset: 7px; }
 /* the lettered badges: always strong (coffee disc, vanilla letter, the topic colour as the ring) */
@@ -1681,7 +1684,7 @@ strong.olx { font-weight: 800; }
   <header class="top">
     <div class="brand" aria-label="Botanic Original 100% Organic Latex Mattress, Dunlop Technology"><b>Botanic</b> <i>Original</i> <span>100%</span> <b class="ol">Organic Latex</b> <span>Mattress</span> <b class="dl">Dunlop</b> <span>Technology</span></div>
     <div class="tools">
-      <button class="tbtn" id="galbtn" data-gal="1" aria-pressed="false" aria-label="View Model Gallery" title="View Model Gallery"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span>Gallery</span></button>
+      <button class="tbtn" id="galbtn" data-sb="1" aria-pressed="false" aria-label="Select &amp; Buy: choose your size, depth, firmness and cover" title="Select &amp; Buy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Select &amp; Buy</span></button>
       <button class="allbtn" id="allbtn" type="button" data-contents="1" aria-pressed="false" aria-label="All topics: the whole list" title="All topics"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>All topics</span></button>
       <div class="seg" role="group" aria-label="View"><button data-view="tv" id="vtv" aria-pressed="true">Optimised Preview</button><button data-view="std" id="vstd" aria-pressed="false">Standard Product View</button></div>
     </div>
@@ -1714,7 +1717,7 @@ var D = /*__DATA__*/;
     return el;
   };
   var $ = function (s) { var e = document.querySelector(s); return STABLE[s] ? stable(e) : e; }, esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-  var S = { promo: 10, view: 'tv', gal: false, gi: 0, ch: 'discover', pn: 'intro', rd: {}, step: 0, coach: null, size: null, firmness: null, depth: null, cover: null, pick: {}, edit: {}, weight: null, height: null, bagged: null };
+  var S = { promo: 10, view: 'tv', gi: 0, ch: 'discover', pn: 'intro', rd: {}, step: 0, coach: null, size: null, firmness: null, depth: null, cover: null, pick: {}, edit: {}, weight: null, height: null, bagged: null };
   var LEAF = '<svg class="leaf" viewBox="0 0 28 20" aria-hidden="true"><defs><linearGradient id="lfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6E8601"/><stop offset="1" stop-color="#6E8601"/></linearGradient></defs><g transform="rotate(-28 14 10)"><path d="M2 16C2 7 8 3 26 3C26 12 19 16 2 16Z" fill="url(#lfg)"/><path d="M5 14.5L22 4.6" stroke="#FEFEF6" stroke-opacity=".5" stroke-width="1.2" stroke-linecap="round"/></g></svg>';
   var SHORT = ['Organic Cotton', 'Cotton / Wool', 'Aloe Vera Blend', 'Cashmere + Silver'];
   var STEPS = [
@@ -1744,6 +1747,7 @@ var D = /*__DATA__*/;
   function panel() { var c = chap(S.ch); return c.panels.filter(function (p) { return p.id === S.pn; })[0] || c.panels[0]; }
   function goPanel(c, p) { S.ch = c; S.pn = p; var pp = panel(); if (pp.kind === 'step') S.step = STEPS.map(function (x) { return x.id; }).indexOf(pp.step); else { var k = infoStep(c, p); if (k >= 0) S.step = k; } }
   function inSelect() { return panel().kind === 'step' || infoStep(S.ch, S.pn) >= 0; }   // a choice, or more information about a choice
+  function firstOpenStep() { for (var i = 0; i < STEPS.length - 1; i++) if (!S[STEPS[i].id]) return i; return STEPS.length - 1; }
   function goStep(i) { var m = STEPMAP[STEPS[i].id]; goPanel(m[0], m[1]); }
   function flatIndex() { for (var i = 0; i < FLAT.length; i++) if (FLAT[i][0] === S.ch && FLAT[i][1] === S.pn) return i; return 0; }
   function snippet(t) { var m = t.match(/^[^.!?]*[.!?]/), s = (m ? m[0] : t); if (s.length > 52) s = s.slice(0, 50).replace(/\s+\S*$/, '') + '…'; return s; }
@@ -1888,7 +1892,7 @@ var D = /*__DATA__*/;
   }
   function mgFor() {   // the picture of the open topic, or of the open part of it (a part wins over its topic)
     var ix = -1, part = S.ch + '/' + S.pn;
-    MG.forEach(function (m, j) { if (m.key === part && ix < 0) ix = j + 1; });
+    MG.forEach(function (m, j) { if ((m.key === part || (m.also && m.also.indexOf(part) >= 0)) && ix < 0) ix = j + 1; });
     if (ix < 0) MG.forEach(function (m, j) { if (m.key === S.ch && ix < 0) ix = j + 1; });
     return ix;
   }
@@ -2012,7 +2016,7 @@ var D = /*__DATA__*/;
      unless it is the review, which shows the price) */
   function drawPrice() {
     if (S.view !== 'tv') { draw(); return; }
-    if (!S.all && !S.gal && !S.coach && panel().kind === 'step' && STEPS[S.step].id === 'review') { draw(); return; }
+    if (!S.all && !S.coach && panel().kind === 'step' && STEPS[S.step].id === 'review') { draw(); return; }
     drawBuy(); compactStage();
   }
   /* COSMIC SELECTION (owner, 16 Nov IX): the sizes in six families, each in its own light. Tap a family to open it; the other
@@ -2116,7 +2120,7 @@ var D = /*__DATA__*/;
     return f || null;
   }
   function confirmBox() {
-    if (S.all || S.gal || S.coach || panel().kind !== 'step') return '';   // a step already confirmed has nothing to confirm (all four confirmed: none)
+    if (S.all || S.coach || panel().kind !== 'step') return '';   // a step already confirmed has nothing to confirm (all four confirmed: none)
     var st = STEPS[S.step]; if (!st || st.id === 'review') return '';
     var k = st.id, CK = CHECK.replace('width="18" height="18"', 'width="16" height="16"');
     if (k === 'firmness') {
@@ -2351,13 +2355,6 @@ var D = /*__DATA__*/;
   function factsView() {
     return '<div class="fx">' + D.facts.map(function (f) { return '<div><small>' + esc(f.l) + '</small><b>' + esc(f.v) + '</b>' + (f.pills.length ? '<em>' + esc(f.pills.join(' · ')) + '</em>' : '') + '</div>'; }).join('') + '</div><p class="fnote">' + esc(D.factsNote) + '</p>';
   }
-  function galDraw() {
-    var im = D.images, i = S.gi;
-    $('#q').className = 'q'; $('#q').innerHTML = '<h1>' + LEAF + '<span>Model Gallery</span></h1><p>The product photographs, as the shop holds them.</p>';
-    $('#answer').innerHTML = '<div class="gal"><div class="gmain"><button class="garr l" data-gimg="' + (i - 1) + '" aria-label="Previous photograph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><img src="' + esc(im[i]) + '" alt="Botanic, photograph ' + (i + 1) + '"><button class="garr r" data-gimg="' + (i + 1) + '" aria-label="Next photograph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button><span class="gcount">' + (i + 1) + ' / ' + im.length + '</span></div><div class="gth">' + im.map(function (u, j) { return '<button data-gimg="' + j + '" aria-pressed="' + (j === i) + '" aria-label="Photograph ' + (j + 1) + '"><img src="' + esc(u) + '" alt=""></button>'; }).join('') + '</div></div>';
-    $('#act').innerHTML = '<button class="btn p" data-gal="1">Close gallery</button>';
-    $('#stageh').textContent = 'Model Gallery';
-  }
   var NAT = { depth: ['H- 20 cm (8”) Balanced Comfort', 'H -24 cm (9.5”) Deep Comfort (+£156)', 'H- 26 cm (10.25”) Premium Deep Comfort (+£190)'], firmness: [['Soft', 'Up to 47 kg / up to 7.4 st body weight – SOFT'], ['Medium', '48–85 kg / 7.6–13.4 st body weight – MEDIUM'], ['Firm', '85–110 kg / 13.4–17.3 st body weight – FIRM'], ['Extra Firm', 'Over 120 kg / over 18.9 st body weight – EXTRA FIRM (+£88)']] };
   function drawStd() {   // Standard Product View: the shop's own page (stand-in); the same selection, the same bag
     var o = function (sel, v, t) { return '<option value="' + v + '"' + (sel ? ' selected' : '') + '>' + esc(t) + '</option>'; }, im = D.images, i = S.gi;
@@ -2438,11 +2435,10 @@ var D = /*__DATA__*/;
     $('#stageh').className = 'colh'; $('#stageh').innerHTML = 'Explore  ·  All topics';
   }
   function draw0() {
-    document.body.classList.toggle('std', S.view === 'std'); $('#allbtn').setAttribute('aria-pressed', String(!!S.all));  $('#galbtn').setAttribute('aria-pressed', String(S.gal)); $('#vtv').setAttribute('aria-pressed', String(S.view === 'tv')); $('#vstd').setAttribute('aria-pressed', String(S.view === 'std'));
+    document.body.classList.toggle('std', S.view === 'std'); $('#allbtn').setAttribute('aria-pressed', String(!!S.all));  $('#galbtn').setAttribute('aria-pressed', String(!S.all && S.view === 'tv' && panel().kind === 'step')); $('#vtv').setAttribute('aria-pressed', String(S.view === 'tv')); $('#vstd').setAttribute('aria-pressed', String(S.view === 'std'));
     if (S.view === 'std') { drawStd(); return; }
     var pp = panel(), cc = chap(S.ch); drawBar();
     if (S.all) { contentsDraw(); drawRail(); drawMine(); return; }
-    if (S.gal) { galDraw(); drawRail(); drawMine(); return; }
     if (pp.kind !== 'step') { infoDraw(pp, cc); drawRail(); drawMine(); return; }
     if (S.coach) { coachDraw(); drawRail(); drawMine(); return; }
     var st = STEPS[S.step], q = $('#q'), FC = CUR('firmness/choose'), FL = CUR('delivery/yours'); q.className = 'q' + (st.id === 'review' ? ' mn' : ''); seen(STEPMAP[st.id].join('/'));
@@ -2493,18 +2489,17 @@ var D = /*__DATA__*/;
   document.addEventListener('click', function (e) {
     var pf = e.target.closest('[data-playfull], .hero .fpan .vid'); if (pf) { playFull(pf.dataset.playfull || 'discoverFull'); return; }
     if (e.target.closest('#vmodal .vclose')) { closeFull(); return; }
-    if (e.target.closest('[data-contents]')) { S.all = !S.all; S.gal = false; draw(); toStage(); return; }
+    if (e.target.closest('[data-contents]')) { S.all = !S.all; draw(); toStage(); return; }
     if (e.target.closest('[data-goto]') && S.all) { S.all = false; }
     if (e.target.closest('[data-ch]') && !e.target.closest('[data-goto]')) { S.all = false; }
     NAVD = true;
-    var t = e.target.closest('[data-confirm],[data-change],[data-sgrp],[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-gal],[data-gimg],[data-view]'); if (!t) return;
+    var t = e.target.closest('[data-confirm],[data-change],[data-sgrp],[data-goto],[data-fconfirm],[data-fchange],[data-go],[data-size],[data-firm],[data-depth],[data-cover],[data-next],[data-back],[data-more],[data-send],[data-bag],[data-checkout],[data-ch],[data-pn],[data-rd],[data-flat],[data-sb],[data-gimg],[data-view]'); if (!t) return;
     var d = t.dataset, cg = S.coach; S.coach = null; clearTimeout(COACHT);
+    if (d.sb != null) { S.all = false; d = { go: String(firstOpenStep()) }; }   // owner, 27 Nov: Select & Buy starts the choosing
     if (d.coachgo != null) { goStep(cg ? cg.to : S.step); draw(); toStage(); return; }
     if (d.coachstay != null) { draw(); return; }
     if (d.view != null) { S.view = d.view; draw(); return; }
-    if (d.gal != null) { S.gal = !S.gal; draw(); return; }
     if (d.gimg != null) { S.gi = (+d.gimg + D.images.length) % D.images.length; draw(); return; }
-    S.gal = false;   // any other button leaves the gallery
     if (d.sgrp != null) { S.sgrp = d.sgrp || null; draw(); return; }
     if (d.ch != null) { var cc0 = chap(d.ch); goPanel(cc0.id, vis(cc0)[0].id); }
     else if (d.pn != null) goPanel(S.ch, d.pn);
@@ -2559,26 +2554,71 @@ var D = /*__DATA__*/;
   });
   /* IGNITION: each time the television is switched on (page start, every press of Optimised Preview). Skipped in automated
      browsers unless ?ignite=1, and never with ?ignite=0, so the screen tests see the television itself. */
-  /* AMBIENT: a soft pad made in the browser (Web Audio, no sound file): a low open fifth that swells and opens, a faint shimmer
-     with the two readouts, one quiet bell as the screen lights. Browsers allow sound only after the customer's own tap, so the
-     page start is silent and every press of Optimised Preview has the sound. Sound off is remembered on this device. */
+  /* MUSIC (owner, 27 Nov: "always music in the start-up, an acoustic guitar, fingerpicked, two chords"). An ORIGINAL piece, written for
+     Botanic (not anyone's song): a slow fingerpicked figure in open D, D add9 and G add9 over the same low D, the way a guitar rings in an
+     open tuning, ending on a natural harmonic as the screen lights. Played by a plucked-string model in the browser (Karplus-Strong,
+     no sound file to download). Browsers do not let a page make a sound before the visitor's own tap or key: when the start-up begins
+     before any tap, the music starts with the visitor's first tap, from the point the start-up has reached (that first tap on the
+     start-up screen starts the music instead of skipping it; the next one skips). Sound off is remembered on this device. */
   var SND_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>', SND_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>';
-  var AC = null, BUS = null, GESTURE = false;
-  document.addEventListener('pointerdown', function () { GESTURE = true; }, true); document.addEventListener('keydown', function () { GESTURE = true; }, true);
+  var AC = null, BUS = null, GESTURE = false, MPEND = null, PLUCK = {};
   function soundOn() { try { return localStorage.getItem('ddtvSound') !== 'off'; } catch (e) { return true; } }
   function setSound(on) { try { localStorage.setItem('ddtvSound', on ? 'on' : 'off'); } catch (e) {} }
-  function hush() { if (!BUS || !AC) return; var t = AC.currentTime; BUS.gain.cancelScheduledValues(t); BUS.gain.setValueAtTime(BUS.gain.value, t); BUS.gain.linearRampToValueAtTime(0, t + .35); BUS = null; }
-  function ambient(reduce, now) {
-    if (!soundOn() || !(GESTURE || now)) return; var Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
-    try { AC = AC || new Ctx(); if (AC.state === 'suspended') AC.resume(); } catch (e) { return; }
-    hush(); var t0 = AC.currentTime + .05, vol = reduce ? .05 : .085, end = t0 + (reduce ? 2.6 : 9.2);
-    var bus = AC.createGain(); bus.gain.setValueAtTime(0, t0); bus.gain.linearRampToValueAtTime(vol, t0 + 1.1); bus.gain.setValueAtTime(vol, end - 1.4); bus.gain.linearRampToValueAtTime(0, end); bus.connect(AC.destination); BUS = bus;
-    var lp = AC.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = .7; lp.frequency.setValueAtTime(260, t0); lp.frequency.exponentialRampToValueAtTime(2100, t0 + 6.5); lp.connect(bus);
-    [[110, 'sine', 1], [110.6, 'triangle', .45], [164.8, 'sine', .7], [220, 'sine', .35]].forEach(function (v) { var o = AC.createOscillator(), g = AC.createGain(); o.type = v[1]; o.frequency.value = v[0]; g.gain.value = v[2]; o.connect(g); g.connect(lp); o.start(t0); o.stop(end + .1); });
-    var bell = function (at, f, a) { var o = AC.createOscillator(), g = AC.createGain(); o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(0, at); g.gain.linearRampToValueAtTime(a, at + .02); g.gain.exponentialRampToValueAtTime(.0001, at + 1.6); o.connect(g); g.connect(bus); o.start(at); o.stop(at + 1.7); };
-    if (!reduce) { bell(t0 + 1.35, 659.3, .10); bell(t0 + 1.75, 880, .08); bell(t0 + 3.0, 587.3, .07); bell(t0 + 3.9, 740, .07); bell(t0 + 4.8, 880, .07); bell(t0 + 6.35, 1318.5, .08); bell(t0 + 8.6, 1760, .05); }
+  function hush() { MPEND = null; if (!BUS || !AC) return; var t = AC.currentTime; BUS.gain.cancelScheduledValues(t); BUS.gain.setValueAtTime(BUS.gain.value, t); BUS.gain.linearRampToValueAtTime(0, t + .45); BUS = null; }
+  /* the score: eighth notes at 76 per minute; each bar rolls up from the low D and back; the chords ring into each other */
+  var SCORE = (function () {
+    var D2 = 73.42, A2 = 110, D3 = 146.83, E3 = 164.81, Fs3 = 185, G3 = 196, A3 = 220, B3 = 246.94, D4 = 293.66, E4 = 329.63;
+    var B2 = 123.47, Dadd9 = [D2, A2, D3, E3, Fs3, A3, D4, E4], Gadd9 = [D2, B2, D3, G3, A3, B3, D4, E4];
+    var bars = [Dadd9, Gadd9, Dadd9], fig = [0, 2, 4, 6, 7, 5, 3, 1], e8 = 60 / 76 / 2, n = [];
+    bars.forEach(function (ch, b) { fig.forEach(function (ix, k) { var t = (b * 8 + k) * e8; n.push({ t: t + (k ? (k % 2 ? .012 : 0) : 0), f: ch[ix], v: ix === 0 ? .9 : (k === 4 ? .7 : .52), pan: (ix / 7) * .6 - .3 }); }); });
+    var tl = 24 * e8; n.push({ t: tl, f: D2, v: .85, pan: -.3 }, { t: tl + .03, f: A2, v: .55, pan: -.15 }, { t: tl + .06, f: D3, v: .5, pan: 0 }, { t: tl + .09, f: Fs3, v: .45, pan: .1 }, { t: tl + .12, f: A3, v: .42, pan: .2 });
+    n.push({ t: tl + .55, f: D4 * 2, v: .32, pan: .25, harm: true });   // the natural harmonic at the twelfth fret: the screen lights
+    return { notes: n, len: tl + 2.6 };
+  })();
+  function pluck(f, harm) {   /* one plucked string, rendered once and kept: a noise burst through a delay line that loses its highs as it rings */
+    var key = f.toFixed(2) + (harm ? 'h' : ''); if (PLUCK[key]) return PLUCK[key];
+    var sr = AC.sampleRate, dur = harm ? 2.4 : 3.2, len = Math.floor(sr * dur), buf = AC.createBuffer(1, len, sr), y = buf.getChannelData(0);
+    var N = Math.max(2, Math.round(sr / f)), line = new Float32Array(N), i, prev = 0, damp = harm ? .9985 : (f < 120 ? .9975 : .996);
+    for (i = 0; i < N; i++) { var w = Math.random() * 2 - 1; prev = prev + (harm ? .2 : .55) * (w - prev); line[i] = prev; }   /* a softer burst = a thumb, not a pick */
+    var p = 0, last = 0;
+    for (i = 0; i < len; i++) { var cur = line[p], nx = line[(p + 1) % N], v = damp * .5 * (cur + nx); line[p] = v; y[i] = cur; p = (p + 1) % N; last = v; }
+    var a = Math.floor(sr * .004); for (i = 0; i < a; i++) y[i] *= i / a;   /* no click at the start */
+    var r = Math.floor(sr * .25); for (i = 0; i < r; i++) y[len - 1 - i] *= i / r;
+    return (PLUCK[key] = buf);
+  }
+  function music(reduce, from) {   /* from: seconds into the piece already gone (the start-up was running before the first tap) */
+    var t0 = AC.currentTime + .06 - (from || 0), vol = reduce ? .28 : .46, end = t0 + (reduce ? Math.min(3, SCORE.len) : SCORE.len);
+    var bus = AC.createGain(), now = AC.currentTime; bus.gain.setValueAtTime(0, now); bus.gain.linearRampToValueAtTime(vol, now + (from ? .6 : .05));
+    bus.gain.setValueAtTime(vol, Math.max(now + .7, end - 1.2)); bus.gain.linearRampToValueAtTime(0, Math.max(now + 1, end)); BUS = bus;
+    var body = AC.createBiquadFilter(); body.type = 'peaking'; body.frequency.value = 196; body.Q.value = 1.1; body.gain.value = 4;   /* the guitar's body */
+    var air = AC.createBiquadFilter(); air.type = 'lowpass'; air.frequency.value = 4200; air.Q.value = .5;
+    body.connect(air); air.connect(bus); bus.connect(AC.destination);
+    SCORE.notes.forEach(function (n) {
+      var at = t0 + n.t; if (at < AC.currentTime + .02 || at > end - .3) return;
+      var src = AC.createBufferSource(), g = AC.createGain(), pn = AC.createStereoPanner ? AC.createStereoPanner() : null;
+      src.buffer = pluck(n.f, n.harm); g.gain.value = n.v; src.connect(g);
+      if (pn) { pn.pan.value = n.pan; g.connect(pn); pn.connect(body); } else g.connect(body);
+      src.start(at);
+    });
     window.__ambient = (window.__ambient || 0) + 1;
   }
+  function ambient(reduce, now) {
+    if (!soundOn()) return; var Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+    try { AC = AC || new Ctx(); } catch (e) { return; }
+    hush(); var started = Date.now();
+    var go = function () { MPEND = null; try { music(reduce, (Date.now() - started) / 1000); } catch (e) { /* no sound is never an error */ } };
+    if (AC.state === 'running') { go(); return; }
+    try { var pr = AC.resume(); if (pr && pr.then) pr.then(function () { if (AC.state === 'running' && MPEND === go) go(); }, function () {}); } catch (e) { /* waits for a tap */ }
+    MPEND = go;   /* the browser waits for the visitor: the first tap or key starts it */
+  }
+  function unlock() {   /* the first tap or key: the browser now allows sound; a start-up that is running gets its music from where it is */
+    GESTURE = true; if (!AC || !MPEND) return false;
+    var go = MPEND; try { AC.resume(); } catch (e) { /* none */ }
+    if ($('#ign').hidden) { MPEND = null; return false; }
+    go(); return true;
+  }
+  document.addEventListener('pointerdown', function () { GESTURE = true; }, true);
+  document.addEventListener('keydown', function () { GESTURE = true; }, true);
   var IGN = null;
   function ignite(force) {
     var el = $('#ign'), q = location.search;
@@ -2598,11 +2638,11 @@ var D = /*__DATA__*/;
     IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, reduce ? 3000 : 9500);
   }
   function igniteEnd() { var el = $('#ign'); if (el.hidden) return; clearTimeout(IGN); hush(); el.className = 'ign end'; IGN = setTimeout(function () { el.hidden = true; el.className = 'ign'; }, 300); }
-  $('#ign').addEventListener('click', function (e) { var b = e.target.closest('[data-snd]'); if (b) { e.stopPropagation(); setSound(!soundOn()); b.setAttribute('aria-pressed', String(soundOn())); b.innerHTML = soundOn() ? SND_ON + 'Sound on' : SND_OFF + 'Sound off'; if (soundOn()) ambient(false, true); else hush(); return; } igniteEnd(); });
+  $('#ign').addEventListener('click', function (e) { var b = e.target.closest('[data-snd]'); if (b) { e.stopPropagation(); setSound(!soundOn()); b.setAttribute('aria-pressed', String(soundOn())); b.innerHTML = soundOn() ? SND_ON + 'Sound on' : SND_OFF + 'Sound off'; if (soundOn()) ambient(false, true); else hush(); return; } if (!e.target.closest('.skip') && MPEND && unlock()) return; igniteEnd(); });
   document.addEventListener('keydown', function (e) { var z = $('#mgz'); if (z && !z.hidden) { if (e.key === 'Escape') { e.preventDefault(); mgClose(); } else if (e.key === 'ArrowRight') { e.preventDefault(); mgZoom(S.mgz + 1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); mgZoom(S.mgz - 1); } } });
   document.addEventListener('keydown', function (e) { if (!$('#ign').hidden && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); igniteEnd(); } });
   window.__ignite = function () { ignite(true); };
-  (function url() { var q = location.search.match(/step=(\d)/); if (q) goStep(Math.min(4, +q[1])); var cq = location.search.match(/ch=([a-z0-9]+)/), pq = location.search.match(/pn=([a-z0-9]+)/); if (cq && chap(cq[1])) goPanel(cq[1], pq ? pq[1] : chap(cq[1]).panels[0].id); var pm = location.search.match(/promo=(\d+)/); if (pm) S.promo = +pm[1]; if (/gal=1/.test(location.search)) S.gal = true; if (/view=std/.test(location.search)) S.view = 'std'; var rq = location.search.match(/rd=(\d+)/); if (rq) S.rd[S.ch + '/' + S.pn] = +rq[1]; var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); if (/bag=1/.test(location.search)) S.bagged = sig(); } })();
+  (function url() { var q = location.search.match(/step=(\d)/); if (q) goStep(Math.min(4, +q[1])); var cq = location.search.match(/ch=([a-z0-9]+)/), pq = location.search.match(/pn=([a-z0-9]+)/); if (cq && chap(cq[1])) goPanel(cq[1], pq ? pq[1] : chap(cq[1]).panels[0].id); var pm = location.search.match(/promo=(\d+)/); if (pm) S.promo = +pm[1]; if (/view=std/.test(location.search)) S.view = 'std'; var rq = location.search.match(/rd=(\d+)/); if (rq) S.rd[S.ch + '/' + S.pn] = +rq[1]; var p = location.search.match(/demo=1/); if (p) { S.size = D.sizes[12]; S.weight = 82; S.height = 178; S.firmness = 'Firm'; S.depth = Object.assign({ i: 1 }, D.depths[1]); S.cover = Object.assign({ i: 1 }, D.covers[1]); if (/bag=1/.test(location.search)) S.bagged = sig(); } })();
   draw();
   if (S.view === 'tv') ignite();
 })();
