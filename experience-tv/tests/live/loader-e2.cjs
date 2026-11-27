@@ -13,11 +13,11 @@ let fails = 0; const ok = (c, m, d) => { console.log((c ? 'PASS ' : 'FAIL ') + m
   const b = await chromium.launch({ args: ['--no-sandbox'] });
   for (const [label, opts, want] of [['laptop', { viewport: { width: 1366, height: 900 }, screen: { width: 1366, height: 900 } }, 'tv'], ['iPhone 13', devices['iPhone 13'], 'phone']]) {
     const ctx = await b.newContext(opts); const p = await ctx.newPage(); const asked = [];
-    await p.route('https://media.divinedunlop.com/ddtv/**', (r) => { const f = r.request().url().split('/').pop().split('?')[0]; asked.push(f); const ct = /\.js$/.test(f) ? 'text/javascript' : 'image/webp'; r.fulfill({ contentType: ct, body: fs.readFileSync(R + f) }); });
+    await p.route('https://media.divinedunlop.com/ddtv/**', (r) => { const f = r.request().url().split('/').pop().split('?')[0]; asked.push(f); const ct = /\.js$/.test(f) ? 'text/javascript' : 'image/webp'; if (!fs.existsSync(R + f)) return r.fulfill({ status: 404, body: '' });   /* gallery pictures live only on the media host */ r.fulfill({ contentType: ct, body: fs.readFileSync(R + f) }); });
     await p.goto('https://divinedunlop.com/products/botanic-original-100-organic-latex-mattress-dunlop', { waitUntil: 'domcontentloaded', timeout: 60000 });
     await p.waitForSelector('.details-product-option select', { timeout: 45000 }); await p.waitForTimeout(2000);
     const cls = await p.evaluate(() => !!document.querySelector('[class*="ecwid-productBrowser-ProductPage-831592302"]'));
-    await p.evaluate((code) => { window.__ddtvAllow = [831592302]; (0, eval)(code); }, loader);   // the files themselves also guard the product list
+    await p.evaluate((code) => { window.__ddtvLoader = 0; window.__ddtvAllow = [831592302]; (0, eval)(code); }, loader);   // the shop's own central loader (installed for the test product) has already set this flag on the real page: the copy under test must run   // the files themselves also guard the product list
     await p.waitForTimeout(4000);
     const st = await p.evaluate(() => ({ tv: !!document.getElementById('ddtv-experience'), phone: !!document.getElementById('cfg-cta') }));
     ok(cls, label + ': Ecwid marks the product page with its id (the loader\'s fallback when it runs late)');
