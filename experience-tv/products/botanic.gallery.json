@@ -1,33 +1,24 @@
 {
- "_about": "The pictures of the mini-gallery (television: Your selection; standard module: the gallery in the header). key = the id of the topic whose button opens it ('comfort') or of one of its parts ('adaptation/adjustable'); a part's picture wins over its topic's. cut = a cut-out on a transparent background (it floats on the card, with a soft shadow); a picture without cut is a designed picture and is shown whole, with rounded corners. There is never a field behind a picture. File names are content-addressed on media.divinedunlop.com/ddtv/.",
+ "_about": "The pictures of the mini-gallery (television: Your selection; standard module: the gallery in the header). key = the id of the topic whose button opens it ('comfort') or of one of its parts ('adaptation/adjustable'); a part's picture wins over its topic's. cut = a clean cut-out on a transparent background (it floats on the card, with a soft shadow); a picture without cut is a designed picture and is shown whole, with rounded corners: a picture is cut only when the cut is flawless, otherwise it stays whole. There is never a field behind a picture. File names are content-addressed on media.divinedunlop.com/ddtv/.",
  "base": "https://media.divinedunlop.com/ddtv/",
  "items": [
   {
-   "key": "discover",
-   "name": "botanic-g2-discover-730911531c1c86743108.webp",
-   "alt": "The Botanic mattress, cut away to show the quilted cover and the latex core",
-   "label": "The mattress",
-   "cut": true,
-   "w": 1400,
-   "h": 649
-  },
-  {
    "key": "adaptation",
-   "name": "botanic-g2-adaptation-cccabccfd88b85bdf09f.webp",
+   "name": "botanic-g3-adaptation-a60d9f6afb47c19c7690.webp",
    "alt": "A sleeper resting on the Botanic mattress: the latex follows the body",
    "label": "Adaptation",
    "cut": true,
-   "w": 1400,
-   "h": 358
+   "w": 1266,
+   "h": 332
   },
   {
    "key": "adaptation/adjustable",
-   "name": "botanic-g2-adjustable-c5f249957b3209b8af6e.webp",
+   "name": "botanic-g3-adjustable-5d6809f67d053f53c841.webp",
    "alt": "A Botanic mattress curved as on an adjustable base",
    "label": "Adjustable beds",
    "cut": true,
-   "w": 1400,
-   "h": 545
+   "w": 1156,
+   "h": 455
   },
   {
    "key": "comfort",
@@ -67,21 +58,21 @@
   },
   {
    "key": "hygiene",
-   "name": "botanic-g2-hygiene-f8e7476829d61ea41ff4.webp",
+   "name": "botanic-g3-hygiene-fb84b27fb8cdf06f72eb.webp",
    "alt": "A Botanic mattress in its clean, washable cover",
    "label": "Hygiene",
    "cut": true,
-   "w": 1400,
-   "h": 728
+   "w": 1138,
+   "h": 597
   },
   {
    "key": "covers",
-   "name": "botanic-g2-covers-ade6d110d7a74113a77d.webp",
-   "alt": "The quilted cover of the mattress",
+   "name": "botanic-gal-covers-7c9f4620ab03596a3b3a.webp",
+   "alt": "The quilted cover of the mattress, shown whole",
    "label": "Covers",
-   "cut": true,
-   "w": 1400,
-   "h": 298
+   "cut": false,
+   "w": 1600,
+   "h": 1199
   }
  ]
 }
