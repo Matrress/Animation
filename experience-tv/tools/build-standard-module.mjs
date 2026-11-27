@@ -23,7 +23,7 @@ const css = readFileSync(join(root, 'tools', 'standard-module.css'), 'utf8');
 const browser = await chromium.launch({ args: ['--no-sandbox'] });
 const page = await browser.newPage();
 const GJ = JSON.parse(readFileSync(join(root, 'products', 'botanic.gallery.json'), 'utf8'));   // the owner's pictures, one per topic (the same list the television uses)
-const GALLERY = GJ.items.map((x) => ({ key: x.key, url: GJ.base + x.name, alt: x.alt, bg: x.bg, w: x.w, h: x.h }));
+const GALLERY = GJ.items.map((x) => ({ key: x.key.replace(/[^a-z0-9]+/g, '-'), url: GJ.base + x.name, alt: x.alt, cut: !!x.cut, w: x.w, h: x.h }));
 const res = await page.evaluate(({ src, GALLERY }) => {
   const doc = new DOMParser().parseFromString(src, 'text/html');
   const pageEl = doc.querySelector('.dd-botanic-page');
@@ -150,9 +150,9 @@ const res = await page.evaluate(({ src, GALLERY }) => {
   const HANDS = 'https://media.divinedunlop.com/ddtv/botanic-hands-core-482a3635808f7d9b16c9.webp';   // the owner's photo (26 Nov): hands on the cut-open latex mattress
   // owner, 26 Nov: the photo slot of the header is a small GALLERY (swipe with a finger or a mouse; the television engine adds the dots' taps, the arrows and the enlargement).
   // Plain markup, no script, no button: it works as a slider on its own. The first picture is the owner's hands photo, then the pictures of the topics, each fitted whole.
-  const slides = [{ key: 'hands', url: HANDS, alt: 'Hands resting on a Botanic latex mattress that is cut open to show its natural latex core and the quilted cover', w: 1100, h: 1100 }].concat(GALLERY);
+  const slides = [{ key: 'hands', cut: false, url: HANDS, alt: 'Hands resting on a Botanic latex mattress that is cut open to show its natural latex core and the quilted cover', w: 1100, h: 1100 }].concat(GALLERY);
   const photo = '<figure class="dd-ph dd-gal" aria-roledescription="carousel" aria-label="Pictures of the mattress"><div class="dd-gal__v">' +
-    slides.map((x, i) => '<div class="dd-gal__s dd-gal__s--' + x.key + '"><img src="' + x.url + '" alt="' + att(x.alt) + '" width="' + x.w + '" height="' + x.h + '"' + ' loading="lazy" decoding="async" draggable="false"></div>').join('') +
+    slides.map((x, i) => '<div class="dd-gal__s' + (x.cut ? ' dd-cut' : '') + '"><img src="' + x.url + '" alt="' + att(x.alt) + '" width="' + x.w + '" height="' + x.h + '"' + ' loading="lazy" decoding="async" draggable="false"></div>').join('') +
     '</div><div class="dd-gal__d" aria-hidden="true">' + slides.map((x, i) => '<span class="dd-gal__dot' + (i === 0 ? ' on' : '') + '"></span>').join('') + '</div></figure>';
   // header: a coffee text panel and the photo side by side (the photo fills the height of the panel, nothing is left empty), then the key points as tiles, the how-to note and the glance cards
   const header = '<header class="dd-hd" id="bp-top-head"><div class="dd-hd__t dd-dk"><p class="dd-eyebrow">' + esc(eyebrow) + '</p>' +
@@ -211,7 +211,7 @@ const out = join(root, 'dist', 'standard'); mkdirSync(out, { recursive: true });
 const part = (t, from, to) => { const i = from ? t.indexOf(from) + from.length : 0, j = to ? t.indexOf(to) : t.length; return t.slice(i, j); };
 const prefix = (rules) => rules.replace(/\/\*[\s\S]*?\*\//g, '').replace(/([^{}]+)\{([^{}]*)\}/g, (m, sel, body) => sel.split(',').map((x) => x.trim()).map((x) => x.startsWith('.dd-std') ? '#bp-top' + x : '#bp-top ' + x).join(',') + '{' + body + '}');
 const mini = (t) => t.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, ' ').replace(/\s*([{};,>])\s*/g, '$1').replace(/;}/g, '}').trim();
-const galCss = '#bp-top .dd-gal__s--hands{background:#DDD6C4!important}' + GALLERY.map((x) => '#bp-top .dd-gal__s--' + x.key + '{background:' + x.bg + '!important}').join('');
+const galCss = '';   // no field behind a picture: nothing to generate
 const cssMin = mini(part(css, null, '/*=MODULE=*/') + prefix(part(css, '/*=MODULE=*/', '/*=END=*/')) + part(css, '/*=END=*/', null) + galCss);
 const full = '<style>' + cssMin + '</style>' + res.html;
 writeFileSync(join(out, 'botanic-standard-description.html'), full);
