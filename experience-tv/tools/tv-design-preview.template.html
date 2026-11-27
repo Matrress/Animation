@@ -1666,6 +1666,9 @@ strong.olx { font-weight: 800; }
 .mg-zc { all: unset; box-sizing: border-box; position: absolute; top: 18px; right: 18px; width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: rgba(46,54,51,.86); color: #FBFBED; cursor: pointer; border: 1.5px solid rgba(251,251,237,.5); z-index: 2; }
 .mg-zc:hover { background: #FBFBED; color: #2E3633; }
 .mg-zc:focus-visible { outline: 2px solid #FBFBED; outline-offset: 2px; }
+.mg-zn { all: unset; box-sizing: border-box; position: absolute; top: 50%; margin-top: -23px; width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: rgba(46,54,51,.86); color: #FBFBED; cursor: pointer; border: 1.5px solid rgba(251,251,237,.5); z-index: 2; }
+.mg-zn[data-mgzn="-1"] { left: 18px; } .mg-zn[data-mgzn="1"] { right: 18px; }
+.mg-zn:hover { background: #FBFBED; color: #2E3633; } .mg-zn:focus-visible { outline: 2px solid #FBFBED; outline-offset: 2px; }
 @media (min-width: 800px) {
   .ivory .screen.fit .mine .mi { flex: 1 1 0; min-height: 120px; max-height: 300px; }
   .ivory .screen.fit.fit-s .mine .mi { min-height: 96px; }
@@ -1819,13 +1822,15 @@ var D = /*__DATA__*/;
   }
   function mattressCard() {   // ROUND XXXV (owner, 23 Nov): the photograph of the mattress, always in view while choosing; Ready when all four are made
     var ok = complete();
-    return '<div class="mic' + (ok ? ' ok' : '') + '"><img src="' + D.photo + '" alt="The Botanic mattress: the quilted cover and the Organic Latex core" width="900" height="460" decoding="async">' + (ok ? '<span class="rdy">' + CHECK.replace('width="18" height="18"', 'width="14" height="14"') + 'Ready</span>' : '') + '</div>';
+    return '<div class="mic' + (ok ? ' ok' : '') + '"><img src="' + D.photo + '" alt="The Botanic mattress: the quilted cover and the Organic Latex core" width="' + (D.photoW || 900) + '" height="' + (D.photoH || 460) + '" decoding="async">' + (ok ? '<span class="rdy">' + CHECK.replace('width="18" height="18"', 'width="14" height="14"') + 'Ready</span>' : '') + '</div>';
   }
   /* ===== ROUND L (owner, 26-27 Nov): Your selection holds a MINI-GALLERY. Slide 0 is the photograph of the mattress with its Ready mark; then the owner's pictures. A picture is
      either a CUT-OUT (no background: it floats on the card with a soft shadow) or a designed picture shown whole; there is never a field behind a picture. They swipe with a finger or
      a mouse; dots (no arrows) show where you are, and the line under the picture names the topic. Opening a topic (or a part of it) brings its picture. A tap enlarges the picture
      inside the screen's own frame, at most 70 % of it, with a close X; swipe, the dots and the keys move on. ===== */
   var MG = D.gallery || [], mgLast = null;
+  var MGP = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>';
+  var MGN = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg>';
   var MGX = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   function mgN() { return 1 + MG.length; }
   function mgItem(i) { return i === 0 ? { url: D.photo, alt: 'The Botanic mattress: the quilted cover and the Organic Latex core', label: 'Your mattress', cut: true } : MG[i - 1]; }
@@ -1850,10 +1855,11 @@ var D = /*__DATA__*/;
   function mgZoomHtml(i) {
     var m = mgItem(i);
     return '<div class="mg-zb' + (m.cut ? ' cut' : ' whole') + '"><img src="' + esc(m.url) + '" alt="' + esc(m.alt) + '" draggable="false"></div><div class="mg-zt">' + esc(m.label || '') + '</div><div class="mg-d mg-zd" role="group" aria-label="Pictures">' + mgDotsHtml('data-mgzi', i) + '</div>' +
-      '<button type="button" class="mg-zc" data-mgzc="1" aria-label="Close the picture">' + MGX + '</button>';
+      '<button type="button" class="mg-zc" data-mgzc="1" aria-label="Close the picture">' + MGX + '</button>' +
+      (mgN() > 1 ? '<button type="button" class="mg-zn" data-mgzn="-1" aria-label="Previous picture">' + MGP + '</button><button type="button" class="mg-zn" data-mgzn="1" aria-label="Next picture">' + MGN + '</button>' : '');
   }
   function mgZoom(i) {
-    var z = $('#mgz'); if (!z) return; i = Math.max(0, Math.min(mgN() - 1, i)); S.mgz = i; z.innerHTML = mgZoomHtml(i); z.hidden = false;
+    var z = $('#mgz'); if (!z) return; i = (i + mgN()) % mgN(); S.mgz = i; z.innerHTML = mgZoomHtml(i); z.hidden = false;
     var c = z.querySelector('.mg-zc'); if (c && c.focus) try { c.focus({ preventScroll: true }); } catch (e) { c.focus(); }
   }
   function mgClose() {
@@ -1876,7 +1882,7 @@ var D = /*__DATA__*/;
     });
     var z = $('#mgz'); if (z && !z.__w) {
       z.__w = 1; var sx = null;
-      z.addEventListener('click', function (e) { var t = e.target.closest ? e.target.closest('[data-mgzc],[data-mgzi]') : null; if (t) { if (t.hasAttribute('data-mgzc')) mgClose(); else mgZoom(+t.getAttribute('data-mgzi')); return; } if (e.target === z) mgClose(); });
+      z.addEventListener('click', function (e) { var t = e.target.closest ? e.target.closest('[data-mgzc],[data-mgzi],[data-mgzn]') : null; if (t) { if (t.hasAttribute('data-mgzc')) mgClose(); else if (t.hasAttribute('data-mgzn')) mgZoom(S.mgz + (+t.getAttribute('data-mgzn'))); else mgZoom(+t.getAttribute('data-mgzi')); return; } if (e.target === z) mgClose(); });
       z.addEventListener('pointerdown', function (e) { sx = e.clientX; }); z.addEventListener('pointerup', function (e) { if (sx == null) return; var dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 60 && S.mgz != null) mgZoom(S.mgz + (dx < 0 ? 1 : -1)); });
     }
   }

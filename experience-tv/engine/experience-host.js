@@ -24,6 +24,9 @@
   var host = null, app = null, mo = null, poll = null, pending = null, bagAt = 0, lastPid = null, foldBtn = null, infoBox = null;
 
   function txt(n) { return n ? (n.textContent || '').replace(/\s+/g, ' ').trim() : ''; }
+  var ignited = false;   /* the start-up has played in this page load (in memory, so a fresh load plays it again) */
+  var AP = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>';
+  var AN = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg>';
   var AX = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   var HIDE = { position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', 'clip-path': 'inset(50%)', opacity: '0', 'pointer-events': 'none', margin: '0', padding: '0', border: '0' };
   function isPhone() { var s = global.screen || {}; return Math.min(s.width || 9999, s.height || 9999) < PHONE_MAX_SHORT_SIDE; }
@@ -188,6 +191,7 @@
     '#ddtv-lb .ddtv-lb__t{flex:none;color:rgba(251,251,237,.88);font:600 12px/16px Chillax,"Helvetica Neue",Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase}#ddtv-lb .ddtv-lb__d{flex:none;display:flex;justify-content:center;height:15px}' +
     '#ddtv-lb .ddtv-lb__d i{all:unset;box-sizing:content-box;width:7px;height:7px;padding:4px;background:rgba(254,254,246,.42) content-box;border-radius:50%;cursor:pointer}#ddtv-lb .ddtv-lb__d i.on{background-color:#FBFBED}' +
     '#ddtv-lb button{all:unset;box-sizing:border-box;position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(46,54,51,.86);color:#FBFBED;cursor:pointer;border:1.5px solid rgba(251,251,237,.5);z-index:2}#ddtv-lb button:hover{background:#FBFBED;color:#2E3633}#ddtv-lb button:focus-visible{outline:2px solid #FBFBED;outline-offset:2px}' +
+    '#ddtv-lb button[data-s="p"],#ddtv-lb button[data-s="n"]{top:50%;margin-top:-23px;right:auto}#ddtv-lb button[data-s="p"]{left:max(12px,env(safe-area-inset-left))}#ddtv-lb button[data-s="n"]{right:max(12px,env(safe-area-inset-right))}' +
     '#ddtv-experience{display:block;width:100%;margin:0 0 24px;clear:both}' +
     'html.ddtv-classic #ddtv-experience{display:none}';
 
@@ -273,7 +277,7 @@
     var R = host.attachShadow ? host.attachShadow({ mode: 'open' }) : host;
     app = global.__DDTVX_TV(R, {   // the television, built from the approved design
       shop: shop, addToBag: addToBag, checkout: checkout, classic: classic, after: push,
-      firstTime: function () { try { if (global.sessionStorage.getItem('ddtvIgnited')) return false; global.sessionStorage.setItem('ddtvIgnited', '1'); } catch (e) { /* private mode: play it */ } return true; },
+      firstTime: function () { if (ignited) return false; ignited = true; return true; },   // owner, 27 Nov: the start-up plays at the start of every fresh page load (not only once per tab session); the shop's own page changes within that load do not replay it
       attach: function (api) { A = api; pull.ps = priceSig(); pull(); }
     });
     } catch (err) { unmount(); return null; }   // if the television cannot be built, the shop's page is given back whole
@@ -366,16 +370,16 @@
     if (lbFrom && lbFrom.focus) try { lbFrom.focus({ preventScroll: true }); } catch (e) { /* none */ } lbFrom = null;
   }
   function lbShow(items, i, from) {
-    i = Math.max(0, Math.min(items.length - 1, i)); var it = items[i]; lbFrom = from || lbFrom;
+    i = (i + items.length) % items.length; var it = items[i]; lbFrom = from || lbFrom;
     if (!lb) {
       lb = doc.createElement('div'); lb.id = 'ddtv-lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Picture');
-      lb.addEventListener('click', function (e) { var t = e.target.closest ? e.target.closest('button,i') : null; if (t) { if (t.tagName === 'BUTTON') lbClose(); else lbShow(items, +t.getAttribute('data-i')); return; } if (e.target === lb || (e.target.classList && e.target.classList.contains('ddtv-lb__b'))) lbClose(); });
+      lb.addEventListener('click', function (e) { var t = e.target.closest ? e.target.closest('button,i') : null; if (t) { var ds = t.getAttribute('data-s'); if (ds === 'p') lbShow(items, lb.__i - 1); else if (ds === 'n') lbShow(items, lb.__i + 1); else if (t.tagName === 'BUTTON') lbClose(); else lbShow(items, +t.getAttribute('data-i')); return; } if (e.target === lb || (e.target.classList && e.target.classList.contains('ddtv-lb__b'))) lbClose(); });
       var sx = null; lb.addEventListener('pointerdown', function (e) { sx = e.clientX; }); lb.addEventListener('pointerup', function (e) { if (sx == null) return; var dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 60) lbShow(items, lb.__i + (dx < 0 ? 1 : -1)); });
       lbKey = function (e) { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); lbClose(); } else if (e.key === 'ArrowRight') { e.preventDefault(); lbShow(items, lb.__i + 1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); lbShow(items, lb.__i - 1); } };
       doc.addEventListener('keydown', lbKey, true); doc.documentElement.style.overflow = 'hidden'; (doc.body || doc.documentElement).appendChild(lb);
     }
     lb.__i = i; var dots = ''; for (var k = 0; k < items.length; k++) dots += '<i data-i="' + k + '"' + (k === i ? ' class="on"' : '') + '></i>';
-    lb.innerHTML = '<div class="ddtv-lb__b' + (it.cut ? ' cut' : ' whole') + '"><img alt=""></div><div class="ddtv-lb__t"></div><div class="ddtv-lb__d">' + dots + '</div><button type="button" data-s="x" aria-label="Close the picture">' + AX + '</button>';
+    lb.innerHTML = '<div class="ddtv-lb__b' + (it.cut ? ' cut' : ' whole') + '"><img alt=""></div><div class="ddtv-lb__t"></div><div class="ddtv-lb__d">' + dots + '</div><button type="button" data-s="x" aria-label="Close the picture">' + AX + '</button>' + (items.length > 1 ? '<button type="button" data-s="p" aria-label="Previous picture">' + AP + '</button><button type="button" data-s="n" aria-label="Next picture">' + AN + '</button>' : '');
     lb.querySelector('img').src = it.url; lb.querySelector('img').setAttribute('alt', it.alt || ''); lb.querySelector('.ddtv-lb__t').textContent = it.label || '';
     var c = lb.querySelector('button'); if (c && c.focus) try { c.focus({ preventScroll: true }); } catch (e) { /* none */ }
   }

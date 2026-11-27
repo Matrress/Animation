@@ -160,7 +160,7 @@ const rules = readFileSync(join(root, 'engine', 'selection-rules.js'), 'utf8');
   D.bioWord = { vb: '1540 -1370 2460 470', d: bp.slice(12), f: bf.slice(12) };   // the wordmark "Bio Dunlop" (paths 12-23)
   D.bioMark = { vb: '2400 -1372 360 376', d: [bp[21], bp[20]], f: [bf[21], bf[20]] };   // the D with the spiral (paths 20-21)
   D.moon = b64('q-dd-moon-88.webp'); D.core = b64('q-latex-closeup.webp'); D.bowl = b64('q-latex-milk-bowl-cut-700.webp');
-  D.photo = b64('q-botanic-cutaway-900.webp');   // XXXV (owner, 23 Nov): the owner's photograph of the mattress, trimmed to its contour, not altered
+  D.photo = b64('q-botanic-cutaway-1100.webp'); Object.assign(D, { photoW: JSON.parse(readFileSync(join(A, 'q-botanic-cutaway-1100.json'), 'utf8')).w, photoH: JSON.parse(readFileSync(join(A, 'q-botanic-cutaway-1100.json'), 'utf8')).h });   // XXXV (owner, 23 Nov): the owner's photograph of the mattress, trimmed to its contour, not altered
   D.abSketch = JSON.parse(readFileSync(join(A, 'adjustable-sketch.json'), 'utf8')); D.pins = b64('q-latex-pins.webp');
   D.logos = { oeko: b64('q-logo-oekotex-mono.webp'), hohenstein: b64('q-logo-hohenstein-mono.webp'), iso9001: b64('q-logo-iso9001-mono.webp'), iso14001: b64('q-logo-iso14001-mono.webp'), siemens: b64('q-logo-siemens-monitoring-mono.webp') };
 }

@@ -346,7 +346,7 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
   disabled until a pick; gone once that step is confirmed; gone for good once all four are confirmed, and then only Add to Bag
   remains, marked Ready. "Change" brings it back for that step.
 - **The photograph of the mattress replaces the drawn icon** in Your selection and is always in view while choosing. It is the
-  owner's own photograph, trimmed to its contour only (`assets/botanic/q-botanic-cutaway-900.webp`, 900 × 460, not retouched);
+  owner's own photograph, trimmed to its contour only (`assets/botanic/q-botanic-cutaway-900.webp` (replaced in Round LII by the 1100 clean matte), 900 × 460, not retouched);
   Ready appears on it when all four are chosen. In the shop it is a file next to the module (`botanic-mattress.webp`).
 - **The Bio Dunlop logo leaves the column;** the cup of latex stays under Add to Bag. On a very short glass the cup only shows when it
   has room to be seen whole.
@@ -541,3 +541,11 @@ The owner's wireframe (IMG_6184) defines the colours; they were sampled exactly 
 - **Method now**: segmentation model for the object, then **closed-form alpha matting** (pymatting, a narrow unknown band along the edge), a gentle choke of the soft fringe, and colour decontamination of the edge. Three pictures passed at 1:1 and are cut: **Adaptation, Hygiene, Adjustable beds**. Everything else stays **whole** with rounded corners: Comfort, 7-Zone (the zone pictures are not cut), Support, Benefits, and the **black-and-white** picture of the covers (the white quilted mattress on black).
 - The old main picture ("BOTANIC 100% NATURAL" mattress) is **no longer in the galleries**: the television's own cut-away photograph (slide 0, already trimmed to its contour) is the clean version of the same thing; the module's second slide is that same photograph.
 - The first cut-out files stay on the media host (immutable, unused).
+
+## Round LII (27 Nov): start-up each load, one picture less, a clean main picture, arrows in the large views, the cover of the standard module
+- **The start-up animation plays at the start of every fresh page load** (owner: "the animation does not load at the start"). Before, it was remembered per browser tab (`sessionStorage`), so a tab that had seen it once never saw it again, however often the page was opened. Now the flag is in memory only (`ignited` in `engine/experience-host.js`): a new load plays it, a shop page change inside the same load does not replay it. (`?ignite=0` still switches it off for tests; automated browsers skip it unless `?ignite=1`.)
+- **The black-and-white picture ("covers") is removed** from both galleries (`products/botanic.gallery.json`). Pictures: Your selection 9 (the mattress slide + 8), the module 10 (the cover + 9).
+- **The main mattress picture is a clean alpha-matted cut-out** (`assets/botanic/q-botanic-cutaway-1100.webp`, 1104 × 517; ISNet mask, closed-form matting, same rule as before: used only because it is flawless 1:1 on dark and light). It replaces the frayed 900-px trim. Published as `botanic-mattress-b0e6581651f11ebfeea8.webp` (bridge PR 94). Its size is carried in the build (`D.photoW/photoH`), not hard-coded.
+- **Navigation arrows only in the enlarged views** (the television's zoom and the module's lightbox): two rounded squares (not circles, as everywhere), at the sides of the picture, vertically centred, round-robin; the swipe/drag, the dots, Esc and the X stay. The cards and the header slot keep NO arrows (dots only).
+- **The standard module's first picture is the COVER of the header** (owner: "the first picture, part of the site's design, bigger"): the hands photograph fills the whole slot beside the text (`object-fit: cover`, rounded like the panels, as tall as the text panel from 640 px of module width); when the visitor swipes, the other pictures keep their own structure (designed pictures whole, cut-outs floating). Class `dd-cover`.
+- Tests: `tests/live/gallery-mini-e2.cjs` G2/G4a/G5a/G5c/G6 updated; new G5e (the arrows work and round the ends) and G5f (the cover fills the slot).

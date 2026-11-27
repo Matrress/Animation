@@ -54,13 +54,17 @@
 .dd-hd__t { background: var(--coffee); border-radius: 18px; padding: 22px 22px 8px; }
 .dd-ph { margin: 0; position: relative; display: flex; flex-direction: column; justify-content: center; gap: 4px; background: none; }
 /* the gallery: one picture at a time, swiped sideways, a compact 4:3 window that stands vertically centred beside the text. No field behind a picture (a cut-out floats with a soft shadow; a designed picture is shown whole);
-   round dots under it, no arrows (the engine makes the dots tappable and opens the picture large, at most 70 % of the screen) */
+   round dots under it, no arrows in the slot itself (the engine makes the dots tappable and opens the picture large, at most 70 % of the screen, with arrows there) */
 .dd-gal__v { position: relative; width: 100%; aspect-ratio: 4 / 3; display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .dd-gal__v::-webkit-scrollbar { display: none; }
 .dd-gal__v.dd-drag { scroll-snap-type: none; cursor: grabbing; user-select: none; }
 .dd-gal__s { flex: 0 0 100%; min-width: 0; height: 100%; scroll-snap-align: center; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; background: none; }
 .dd-gal__s img { display: block; width: 100%; height: 100%; min-height: 0; border-radius: 14px; object-fit: contain; cursor: zoom-in; -webkit-user-drag: none; background: none; }
 .dd-gal__s.dd-cut img { border-radius: 0; padding: 6px 10px 14px; box-sizing: border-box; filter: drop-shadow(0 10px 10px rgba(46,54,51,.34)); }
+/* owner, 27 Nov: the first picture is the COVER of the header, part of the page's design: it fills the whole slot beside the text (the slot is as tall as the text panel), rounded like the panels.
+   The pictures that follow it (swiping) keep their own structure, whole or cut out. */
+.dd-gal__s.dd-cover img { object-fit: cover; object-position: 32% 52%; border-radius: 18px; }
+@container dd (min-width: 640px) { .dd-gal__v { aspect-ratio: auto; flex: 1 1 auto; min-height: 300px; } }
 .dd-gal__d { height: 22px; display: flex; justify-content: center; align-items: center; }
 .dd-gal__dot { width: 7px; height: 7px; margin: 0 5px; border-radius: 50%; background: #B9B2A0; cursor: pointer; }
 .dd-gal__dot.on { background: #6E8601; }
