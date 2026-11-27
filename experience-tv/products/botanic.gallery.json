@@ -1,7 +1,16 @@
 {
- "_about": "The pictures of the mini-gallery (television: Your selection; standard module: the gallery in the header). key = the id of the topic whose button opens it ('comfort') or of one of its parts ('adaptation/adjustable'); a part's picture wins over its topic's. cut = a clean cut-out on a transparent background (it floats on the card, with a soft shadow); a picture without cut is a designed picture and is shown whole, with rounded corners: a picture is cut only when the cut is flawless, otherwise it stays whole. There is never a field behind a picture. File names are content-addressed on media.divinedunlop.com/ddtv/.",
+ "_about": "The pictures of the mini-gallery (television: Your selection; standard module: the gallery in the header). key = the id of the topic whose button opens it ('comfort') or of one of its parts ('adaptation/adjustable'); a part's picture wins over its topic's. cut = a clean cut-out on a transparent background (it floats on the card, with a soft shadow); a picture without cut is a designed picture and is shown whole, with rounded corners: a picture is cut only when the cut is flawless, otherwise it stays whole. There is never a field behind a picture. File names are content-addressed on media.divinedunlop.com/ddtv/. An interior photograph is always kept whole: customers see the mattress in a room too.",
  "base": "https://media.divinedunlop.com/ddtv/",
  "items": [
+  {
+   "key": "discover",
+   "name": "botanic-g4-interior-746301e2d83b6f736dfb.webp",
+   "alt": "A Botanic mattress on a floating platform in a softly lit bedroom",
+   "label": "In the room",
+   "cut": false,
+   "w": 1024,
+   "h": 723
+  },
   {
    "key": "adaptation",
    "name": "botanic-g3-adaptation-a60d9f6afb47c19c7690.webp",
