@@ -11,7 +11,7 @@
   {
    "pass": true,
    "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
-   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+   "detail": "{\"rail\":\"rgb(254, 254, 245)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
   },
   {
    "pass": true,
@@ -995,13 +995,13 @@
   },
   {
    "pass": true,
-   "rule": "R57 green is at most 10 % of the screen (worst of the screens tried: 2.11 %)",
-   "detail": "2.11 %"
+   "rule": "R57 green is at most 10 % of the screen (worst of the screens tried: 2.18 %)",
+   "detail": "2.18 %"
   },
   {
    "pass": true,
    "rule": "R58 Add to Bag is green; once the mattress is in the bag the same button is Go to Checkout in coffee with white text (real pixels: no green, mostly coffee, light letters)",
-   "detail": "{\"before\":{\"bg\":\"rgb(110, 134, 1)\",\"dis\":false},\"after\":{\"bg\":\"rgb(67, 66, 57)\",\"fg\":\"rgb(255, 255, 255)\",\"x\":1064,\"y\":598,\"w\":246,\"h\":64,\"t\":\"Go to Checkout\"},\"px\":{\"light\":905,\"green\":0,\"choc\":9657,\"n\":11040}}"
+   "detail": "{\"before\":{\"bg\":\"rgb(110, 134, 1)\",\"dis\":false},\"after\":{\"bg\":\"rgb(67, 66, 57)\",\"fg\":\"rgb(255, 255, 255)\",\"x\":1064,\"y\":600,\"w\":246,\"h\":64,\"t\":\"Go to Checkout\"},\"px\":{\"light\":905,\"green\":0,\"choc\":9657,\"n\":11040}}"
   }
  ]
 }
