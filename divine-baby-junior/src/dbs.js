@@ -97,7 +97,7 @@
     var sizes = $$('[data-w]', root).map(function (li) {
       return { li: li, w: +li.getAttribute('data-w'), l: +li.getAttribute('data-l'), range: li.getAttribute('data-range') };
     });
-    var heights = $$('[data-h]', root).map(function (li) { return { li: li, h: +li.getAttribute('data-h') }; });
+    var heights = $$('[data-h]', root).map(function (li) { return { li: li, h: +li.getAttribute('data-h'), range: li.getAttribute('data-range') }; });   /* a depth with data-range belongs to that collection only */
     var ranges = $$('[data-set]', root).map(function (li) { return { li: li, key: li.getAttribute('data-set') }; });
     if (!sizes.length || !heights.length) { return; }
 
@@ -249,9 +249,26 @@
     /* state helpers */
     function sizeObj() { for (var i = 0; i < sizes.length; i++) { if (sizes[i].li === state.size) { return sizes[i]; } } return null; }
     function heightObj() { for (var i = 0; i < heights.length; i++) { if (heights[i].li === state.h) { return heights[i]; } } return null; }
+    function fits(h, rk) { return !h.range || !rk || h.range === rk; }                 /* does this depth belong to the collection? */
+    function heightsIn(rk) { return heights.filter(function (h) { return fits(h, rk); }); }
     function firstOfRange(r) { for (var i = 0; i < sizes.length; i++) { if (sizes[i].range === r) { return sizes[i]; } } return sizes[0]; }
     function rangeName() { for (var i = 0; i < ranges.length; i++) { if (ranges[i].key === state.range) { var nm = $('.dbs-cm', ranges[i].li); return (nm ? nm.textContent : '').replace(/^\s|\s$/g, ''); } } return ''; }
 
+    /* Ecwid's own Height dropdown: the other collection's depths are switched off, and one that does not fit the size is cleared.
+       (Ecwid itself has only the valid variations; this keeps its dropdown honest too.) */
+    function enforceNative(rk) {
+      var hs = findSelect(nameHeight); if (!hs || probing) { return; }
+      var z = sizeObj(), key = z ? z.range : null;
+      for (var i = 0; i < hs.options.length; i++) {
+        var o = hs.options[i], v = parseHeight(optText(o)), ho = null;
+        heights.forEach(function (h) { if (h.h === v) { ho = h; } });
+        var off = !!(key && ho && ho.range && ho.range !== key);
+        if (off) { if (!o.disabled) { o.disabled = true; o.setAttribute('data-ddx-off', '1'); } }
+        else if (o.hasAttribute('data-ddx-off')) { o.disabled = false; o.removeAttribute('data-ddx-off'); }
+      }
+      var cur = hs.options[hs.selectedIndex];
+      if (cur && cur.hasAttribute('data-ddx-off') && /^please\s+choose/i.test(optText(hs.options[0]))) { busy = true; try { hs.selectedIndex = 0; fire(hs, 'input'); fire(hs, 'change'); } finally { busy = false; } }
+    }
     function setLab(l, cm, inn) {
       $('.dbs-cm', l).textContent = cm; $('.dbs-in', l).textContent = inn;
     }
@@ -267,10 +284,17 @@
         if (!firstVisible && (!shown || z.range === shown)) { firstVisible = z; }
       });
       sizes.forEach(function (z) { z.btn.tabIndex = (z.li === state.size || (!sizeObj() && z === firstVisible)) ? 0 : -1; });
-      heights.forEach(function (h, i) { var on = h.li === state.h; h.btn.setAttribute('aria-checked', on ? 'true' : 'false'); h.btn.tabIndex = (on || (!heightObj() && i === 0)) ? 0 : -1; });
+      var firstH = null;
+      heights.forEach(function (h) {
+        var vis = fits(h, shown); h.li.hidden = !vis;                                  /* only the depths of the chosen collection */
+        if (vis && !firstH) { firstH = h; }
+        var on = h.li === state.h; h.btn.setAttribute('aria-checked', on ? 'true' : 'false');
+      });
+      heights.forEach(function (h) { h.btn.tabIndex = (h.li === state.h || (!heightObj() && h === firstH)) ? 0 : -1; });
+      enforceNative(shown);
 
       $$('[data-ht]', root).forEach(function (n) { var hv = heightObj(); n.className = n.className.replace(/\s*is-on/, '') + (hv && +n.getAttribute('data-ht') === hv.h ? ' is-on' : ''); });
-      var z = sizeObj() || firstOfRange(shown), h = heightObj() || heights[Math.min(1, heights.length - 1)];
+      var z = sizeObj() || firstOfRange(shown), hin = heightsIn(shown), h = heightObj() || hin[Math.min(1, hin.length - 1)] || heights[0];
       var pending = !sizeObj() || !heightObj();
       root.setAttribute('data-pending', pending ? 'true' : 'false');
       go(z.l, z.w, h.h);
@@ -303,7 +327,7 @@
     function indexIn(sel, test) { for (var i = 0; i < sel.options.length; i++) { if (test(optText(sel.options[i]))) { return i; } } return -1; }
     function remember(p) { var z = sizeObj(), h = heightObj(); if (z && h && p) { prices[pkey(z, h)] = p; } }
     function missingCombos(only) {
-      var list = []; sizes.forEach(function (z) { if (only && z !== only) { return; } heights.forEach(function (h) { if (!prices[pkey(z, h)]) { list.push({ z: z, h: h }); } }); });
+      var list = []; sizes.forEach(function (z) { if (only && z !== only) { return; } heightsIn(z.range).forEach(function (h) { if (!prices[pkey(z, h)]) { list.push({ z: z, h: h }); } }); });
       return list;
     }
     function highlightMatrix() {
@@ -322,17 +346,18 @@
         var g = el('div', 'dbs-mx-g'), rn = null;
         ranges.forEach(function (r) { if (r.key === rk) { rn = r; } });
         if (rn) { g.appendChild(el('p', 'dbs-mx-t', ($('.dbs-cm', rn.li) || {}).textContent || '')); }
-        var hd = el('div', 'dbs-mx-r dbs-mx-h'); hd.style.setProperty('--n', String(heights.length));
+        var hin = heightsIn(rk);
+        var hd = el('div', 'dbs-mx-r dbs-mx-h'); hd.style.setProperty('--n', String(hin.length));
         hd.appendChild(el('span', 'dbs-mx-k', 'Width × length'));
-        heights.forEach(function (h) { var hc = el('span', 'dbs-mx-s'); hc.appendChild(el('span', 'dbs-mx-cm', h.h + ' cm')); hc.appendChild(el('span', 'dbs-mx-in', inch(h.h) + ' in')); hd.appendChild(hc); });
+        hin.forEach(function (h) { var hc = el('span', 'dbs-mx-s'); hc.appendChild(el('span', 'dbs-mx-cm', h.h + ' cm')); hc.appendChild(el('span', 'dbs-mx-in', inch(h.h) + ' in')); hd.appendChild(hc); });
         g.appendChild(hd);
         sizes.forEach(function (z) {
           if ((z.range || '') !== rk) { return; }
           var row = el('div', 'dbs-mx-r'), lab = el('span', 'dbs-mx-s');
-          row.style.setProperty('--n', String(heights.length));
+          row.style.setProperty('--n', String(hin.length));
           lab.appendChild(el('span', 'dbs-mx-cm', z.w + ' × ' + z.l + ' cm')); lab.appendChild(el('span', 'dbs-mx-in', inch(z.w) + ' × ' + inch(z.l) + ' in'));
           row.appendChild(lab);
-          heights.forEach(function (h) {
+          hin.forEach(function (h) {
             var b = el('button', 'dbs-mx-b'); b.type = 'button';
             b.addEventListener('click', function () { selectCombo(z, h); });
             mxBtns.push({ z: z, h: h, b: b }); row.appendChild(b);
@@ -351,7 +376,7 @@
       sizes.forEach(function (z) {
         if (!z.pr) { return; }
         var best = '', bestN = null, n = 0, same = true, first = '';
-        heights.forEach(function (h) {
+        heightsIn(z.range).forEach(function (h) {
           var p = prices[pkey(z, h)]; if (!p) { return; }
           n++; if (!first) { first = p; } else if (p !== first) { same = false; }
           var v = numOf(p); if (v !== null && (bestN === null || v < bestN)) { bestN = v; best = p; }
@@ -361,13 +386,13 @@
       var sz = sizeObj();
       heights.forEach(function (h) {
         if (!h.pr) { return; }
-        var p = sz ? prices[pkey(sz, h)] : ''; h.pr.hidden = !p; h.pr.textContent = p || '';
+        var p = sz && fits(h, sz.range) ? prices[pkey(sz, h)] : ''; h.pr.hidden = !p; h.pr.textContent = p || '';
       });
       var known = 0;
       mxBtns.forEach(function (c) {
         var p = prices[pkey(c.z, c.h)]; if (p) { known++; }
         c.b.textContent = p || 'See price'; c.b.setAttribute('data-known', p ? 'true' : 'false');
-        c.b.setAttribute('aria-label', c.z.w + ' by ' + c.z.l + ' centimetres, ' + c.h.h + ' centimetres high' + (p ? ', ' + p : ': press to choose it and see the price'));
+        c.b.setAttribute('aria-label', c.z.w + ' by ' + c.z.l + ' centimetres, ' + c.h.h + ' centimetres deep' + (p ? ', ' + p : ': press to choose it and see the price'));
       });
       if (loadBtn && !probing) { loadBtn.hidden = known === mxBtns.length; loadBtn.textContent = 'Show every price'; }
       if (mxNote) { mxNote.textContent = known ? 'These prices are read from the store, not typed into this page.' : 'Press a size and depth to see its price. Every price comes from the store.'; }
@@ -458,7 +483,11 @@
       if (kind === 'range') {
         state.range = it.key;
         var z = sizeObj(); if (!z || z.range !== it.key) { state.size = null; }
-      } else if (kind === 'size') { state.size = it.li; state.range = it.range || state.range; }
+        var hq = heightObj(); if (hq && !fits(hq, it.key)) { state.h = null; }
+      } else if (kind === 'size') {
+        state.size = it.li; state.range = it.range || state.range;
+        var hq2 = heightObj(); if (hq2 && !fits(hq2, state.range)) { state.h = null; }
+      }
       else { state.h = it.li; }
       sync(); render();
       openPanel(kind === 'height' ? 'height' : 'size');
@@ -473,7 +502,7 @@
           if (k === 'ArrowRight' || k === 'ArrowDown' || k === 39 || k === 40) { dir = 1; }
           else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 37 || k === 38) { dir = -1; }
           else if (k === 'Home') { dir = -99; } else if (k === 'End') { dir = 99; } else { return; }
-          var list = items.filter(function (x) { return !x.li.parentNode.hidden; });
+          var list = items.filter(function (x) { return !x.li.hidden && !x.li.parentNode.hidden; });
           var i = list.indexOf(it), n = dir === -99 ? 0 : dir === 99 ? list.length - 1 : (i + dir + list.length) % list.length;
           e.preventDefault(); list[n].btn.focus(); choose(kind, list[n]);
         });
@@ -489,13 +518,14 @@
       if (m) { sizes.forEach(function (z) { if ((m.a === z.w && m.b === z.l) || (m.a === z.l && m.b === z.w)) { state.size = z.li; state.range = z.range || state.range; changed = true; } }); }
       var hv = hs ? parseHeight(selectedText(hs)) : null;
       if (hv !== null) { heights.forEach(function (h) { if (h.h === hv) { state.h = h.li; changed = true; } }); }
+      var zq = sizeObj(), hq3 = heightObj(); if (zq && hq3 && !fits(hq3, zq.range)) { state.h = null; changed = true; }
       if (changed) { openPanel(m ? 'size' : 'height'); state.synced = (sizeObj() && heightObj() && ss && hs) ? 'ok' : 'none'; if (state.synced === 'ok') { pricePoll(readPrice(), '', 0); } render(); }
     }
     document.addEventListener('change', function (e) { var t = e.target; if (t && t.tagName === 'SELECT' && t.closest && t.closest('.details-product-option')) { fromNative(); } }, true);
 
     root.className += ' dbs--on';
     openPanel(panels.length ? panels[0].key : '');
-    draw(big.l, big.w, heights[Math.min(1, heights.length - 1)].h);
+    var h0 = heightsIn(ranges.length ? ranges[0].key : null); draw(big.l, big.w, (h0[Math.min(1, h0.length - 1)] || heights[0]).h);
     fromNative();
     buildMatrix();
     render();

@@ -2,7 +2,7 @@ const { chromium, devices } = require('playwright'); const path = require('path'
 const file = 'file://' + path.resolve(process.argv[2]); const out = process.argv[3];
 let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) fails++; };
 /* The prototype imitates Ecwid with these prices and a 300 ms price delay (test data only: the real page reads Ecwid). */
-const PRICE = { '60x110': [239, 279], '60x120': [255.78, 295.78], '70x130': [269, 309], '70x140': [289, 329], '70x160': [309, 369], '80x160': [359, 419], '80x180': [409, 469], '80x200': [469, 529] };
+const PRICE = { '60x110': [249, 270], '60x120': [270, 293], '70x130': [289, 314], '70x140': [309, 335], '70x160': [364, 395], '80x160': [409, 444], '80x180': [459, 498], '80x200': [499, 542], '90x190': [529, 574], '90x200': [539, 585] };
 const fmt = n => '£' + (Number.isInteger(n) ? n : n.toFixed(2));
 const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAttribute('data-probing') !== 'true', null, { timeout: 60000 });
 (async () => {
@@ -11,20 +11,21 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
   await p.goto(file); await p.waitForSelector('.dbs--on', { timeout: 8000 }).catch(() => {});
   ok(await p.$('.dbs--on') !== null, 'selector upgraded (dbs--on)');
-  ok((await p.$$('.dbs-btn')).length === 2 + 8 + 2, 'all buttons created (2 groups, 8 sizes, 2 heights)');
+  ok((await p.$$('.dbs-btn')).length === 2 + 10 + 4, 'all buttons created (2 groups, 10 sizes, 4 depths)');
   ok(await p.evaluate(() => !!document.querySelector('.dbs[data-pending="true"]')), 'starts pending, nothing selected');
   ok((await p.$$('.dbs-tab')).length === 7, 'seven presentation tabs (Detail, Size, Height, Prices, Inside, Materials, Firmness)');
   await p.waitForTimeout(1500);
   ok(await p.evaluate(() => document.querySelector('.details-product-option--SIZE select').selectedIndex === 0 && document.querySelector('.dbs').getAttribute('data-probing') !== 'true'), 'nothing is selected or read on load (Ecwid dropdowns untouched)');
-  ok(await p.evaluate(() => [...document.querySelectorAll('.dbs-pr')].every(e => e.hidden)) && (await p.$$('.dbs-mx-b[data-known="false"]')).length === 16, 'no price is shown before the customer acts; the matrix has 16 cells waiting');
+  ok(await p.evaluate(() => [...document.querySelectorAll('.dbs-pr')].every(e => e.hidden)) && (await p.$$('.dbs-mx-b[data-known="false"]')).length === 20, 'no price is shown before the customer acts; the matrix has 20 cells waiting');
 
   const lay = await p.evaluate(() => { const l = document.querySelector('.dbs-sel').getBoundingClientRect(), r = document.querySelector('.dbs-pres').getBoundingClientRect(); return { l: Math.round(l.width), r: Math.round(r.width), lx: Math.round(l.left), rx: Math.round(r.left) }; });
   console.log('cubes', JSON.stringify(lay));
   ok(Math.abs(lay.l - lay.r) <= 2 && lay.lx < lay.rx, 'selection (left) and presentation (right) cubes are equal, 50/50');
   ok(await p.evaluate(() => document.querySelector('.dbs-pres [data-panel="detail"]').hidden === false), 'presentation starts on Detail');
   await p.click('.dbs-btn:has-text("Junior Size")');
-  ok(await p.evaluate(() => document.querySelector('[data-sizes="junior"]').hidden === false && document.querySelector('[data-sizes="cot"]').hidden === true), 'Junior Size shows only its four sizes');
-  ok((await p.$$('[data-sizes="junior"] .dbs-btn')).length === 4, 'Junior Size has four sizes');
+  ok(await p.evaluate(() => document.querySelector('[data-sizes="junior"]').hidden === false && document.querySelector('[data-sizes="cot"]').hidden === true), 'Junior Size shows only its six sizes');
+  ok((await p.$$('[data-sizes="junior"] .dbs-btn')).length === 6, 'Junior Size has six sizes');
+  ok(await p.evaluate(() => [...document.querySelectorAll('[data-h]')].filter(l => !l.hidden).map(l => l.dataset.h).join() === '14,16'), 'Junior shows only the depths 14 and 16 cm');
   await p.click('.dbs-btn:has-text("80 × 200 cm")');
   ok(await p.evaluate(() => document.querySelector('[data-panel="size"]').hidden === false && document.querySelector('[data-panel="detail"]').hidden === true && !!document.querySelector('[data-panel="size"] .dbs-stage')), 'pressing a size opens the Size panel with the drawing');
   await p.click('[data-h="14"] .dbs-btn');
@@ -33,15 +34,15 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   const nat = await p.evaluate(() => ({ s: document.querySelector('.details-product-option--SIZE select').value, h: document.querySelector('.details-product-option--HEIGHT select').value, price: document.getElementById('proto-price').textContent, vis: document.querySelector('.details-product-price').style.visibility, pe: document.getElementById('proto-add').style.pointerEvents }));
   ok(/80 × 200 cm/.test(nat.s) && /^Junior Size:/.test(nat.s), 'native SIZE set and kept after the other height was read: ' + nat.s);
   ok(/14 cm/.test(nat.h), 'native HEIGHT set and kept: ' + nat.h);
-  ok(nat.vis !== 'hidden' && nat.pe !== 'none' && nat.price === fmt(529), 'Ecwid price and Add to Bag are back, showing ' + nat.price);
+  ok(nat.vis !== 'hidden' && nat.pe !== 'none' && nat.price === fmt(499), 'Ecwid price and Add to Bag are back, showing ' + nat.price);
   const sum = await p.evaluate(() => ({ v: document.querySelector('.dbs-sv').textContent, v2: document.querySelector('.dbs-sv2').textContent, st: document.querySelector('.dbs-st').textContent, price: document.querySelector('.dbs-price').textContent, cta: !document.querySelector('.dbs-cta').hidden }));
   console.log('summary', JSON.stringify(sum));
   ok(/Junior Size · 80 × 200 cm · 14 cm/.test(sum.v) && /31\.5 × 78\.7 in · 5\.5 in/.test(sum.v2), 'summary shows cm and inches');
   ok(/Selected in the options/.test(sum.st), 'status: selected in the options');
-  ok(sum.price === fmt(529), 'summary price is the Ecwid price: ' + sum.price);
+  ok(sum.price === fmt(499), 'summary price is the Ecwid price: ' + sum.price);
   const tags = await p.evaluate(() => ({ size: document.querySelector('[data-w="80"][data-l="200"] .dbs-pr').textContent, h: [...document.querySelectorAll('[data-h] .dbs-pr')].map(e => e.textContent).join() }));
   console.log('tags', JSON.stringify(tags));
-  ok(tags.size === 'from £469' && tags.h === '£469,£529', 'both heights of the chosen size show the prices Ecwid gave');
+  ok(tags.size === 'from £499' && tags.h === ',,£499,£542', 'both heights of the chosen size show the prices Ecwid gave');
   ok(sum.cta, 'Add to bag shown');
   await p.click('.dbs-cta');
   ok(await p.evaluate(() => document.getElementById('proto-add').getAttribute('data-clicked') === '1'), 'Add to bag proxies the native button');
@@ -52,7 +53,7 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   /* the Prices tab: the matrix, and "Show every price" */
   await p.click('.dbs-tab:has-text("Prices")');
   ok(await p.evaluate(() => document.querySelector('[data-panel="prices"]').hidden === false && document.querySelectorAll('.dbs-mx-g').length === 2), 'Prices tab opens the matrix, split into the two groups');
-  ok(await p.evaluate(() => document.querySelectorAll('.dbs-mx-b[aria-pressed="true"]').length === 1 && document.querySelector('.dbs-mx-b[aria-pressed="true"]').textContent === '£529'), 'matrix marks the chosen combination');
+  ok(await p.evaluate(() => document.querySelectorAll('.dbs-mx-b[aria-pressed="true"]').length === 1 && document.querySelector('.dbs-mx-b[aria-pressed="true"]').textContent === '£499'), 'matrix marks the chosen combination');
   await p.click('.dbs-loadall');
   ok(await p.evaluate(() => document.querySelector('.dbs').getAttribute('data-probing') === 'true'), 'while every price is read the block is busy (buttons blocked)');
   ok(await p.evaluate(() => document.querySelector('.details-product-price').style.visibility === 'hidden' && document.getElementById('proto-add').style.pointerEvents === 'none' && document.querySelector('.details-product-option--SIZE').style.pointerEvents === 'none'), 'while it is read Ecwid\'s price, Add to Bag and dropdowns are blocked');
@@ -60,16 +61,16 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   const cells = await p.evaluate(() => [...document.querySelectorAll('.dbs-mx-b')].map(b => b.textContent));
   const want = []; Object.keys(PRICE).forEach(k => PRICE[k].forEach(n => want.push(fmt(n))));
   console.log('matrix', JSON.stringify(cells));
-  ok(cells.length === 16 && cells.every((t, i) => t === want[i]), 'all 16 prices read, each equal to Ecwid\'s own');
+  ok(cells.length === 20 && cells.every((t, i) => t === want[i]), 'all 20 prices read, each equal to Ecwid\'s own');
   const back = await p.evaluate(() => ({ s: document.querySelector('.details-product-option--SIZE select').value, h: document.querySelector('.details-product-option--HEIGHT select').value, price: document.getElementById('proto-price').textContent, vis: document.querySelector('.details-product-price').style.visibility, pe: document.getElementById('proto-add').style.pointerEvents, dd: document.querySelector('.details-product-option--SIZE').style.pointerEvents, sum: document.querySelector('.dbs-price').textContent, btn: document.querySelector('.dbs-loadall').hidden }));
-  ok(/80 × 200/.test(back.s) && /14 cm/.test(back.h) && back.price === fmt(529) && back.sum === fmt(529), 'the customer\'s selection and price are back after the full read');
+  ok(/80 × 200/.test(back.s) && /14 cm/.test(back.h) && back.price === fmt(499) && back.sum === fmt(499), 'the customer\'s selection and price are back after the full read');
   ok(back.vis !== 'hidden' && back.pe !== 'none' && back.dd !== 'none', 'Ecwid price, Add to Bag and dropdowns are unblocked');
   ok(back.btn === true, '"Show every price" disappears once every price is known');
   ok(!/£/.test(fs.readFileSync(path.resolve(__dirname, '../src/description.html'), 'utf8')), 'no price is typed into the description source (no £ sign)');
   ok(!/£\d/.test(fs.readFileSync(path.resolve(__dirname, '../src/dbs.js'), 'utf8')), 'no price is typed into the script');
   await p.click('.dbs-mx-b >> nth=1');
   await p.waitForTimeout(1500); await idle(p);
-  ok(await p.evaluate(() => /60 × 110/.test(document.querySelector('.details-product-option--SIZE select').value) && /14 cm/.test(document.querySelector('.details-product-option--HEIGHT select').value) && document.querySelector('.dbs-price').textContent === '£279'), 'pressing a price in the matrix selects that size and height in Ecwid (60 × 110, 14 cm, £279)');
+  ok(await p.evaluate(() => /60 × 110/.test(document.querySelector('.details-product-option--SIZE select').value) && /12 cm/.test(document.querySelector('.details-product-option--HEIGHT select').value) && document.querySelector('.dbs-price').textContent === '£270'), 'pressing a price in the matrix selects that size and depth in Ecwid (60 × 110, 12 cm, £270)');
   await p.click('.dbs-tab:has-text("Inside")');
   ok(await p.evaluate(() => document.querySelector('[data-panel="inside"]').hidden === false && document.querySelector('[data-panel="height"]').hidden === true), 'a tab opens its panel on its own (Inside)');
   ok(await p.evaluate(() => document.querySelector('.details-product-option--SIZE select').value.includes('60 × 110')), 'browsing tabs does not change the options');
@@ -86,18 +87,19 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   await p.screenshot({ path: out + '/dbs-desktop.png', fullPage: false });
   const el = await p.$('.dbs'); await el.scrollIntoViewIfNeeded(); await el.screenshot({ path: out + '/dbs-panel.png' });
   ok(errs.length === 0, 'no console errors ' + errs.join('|'));
-  const prod = fs.readdirSync(path.resolve(__dirname, '../ecwid')).filter(f => /^description-.*\.html$/.test(f)).sort().pop();
+  const prod = fs.readdirSync(path.resolve(__dirname, '../ecwid')).filter(f => /^description-1\..*\.html$/.test(f)).sort().pop();
   const prodText = fs.readFileSync(path.resolve(__dirname, '../ecwid/' + prod), 'utf8').replace(/<style>[\s\S]*?<\/style>/, '').replace(/<[^>]+>/g, ' ');
-  ok(!/12 cm|4\.7 in|12cm/.test(prodText), 'no 12 cm anywhere in the production description (' + prod + ')');
+  ok(/12 cm/.test(prodText) && /16 cm/.test(prodText) && !/\bHeight\b/.test(prodText) && /OEKO-TEX/.test(prodText) && /natural environment for your baby/i.test(prodText), 'the production description (' + prod + ') carries four depths, Depth wording, OEKO-TEX and the natural-environment message');
+  ok(!/dbj-rv|\bREVIEW\b/.test(fs.readFileSync(path.resolve(__dirname, '../ecwid/' + prod), 'utf8')), 'no review notes in the production description');
 
   /* the swipe gallery (Botanic TV placement): works by CSS alone, dots/drag/keys come from dbs.js */
   const c2 = await b.newContext({ viewport: { width: 1440, height: 1000 }, javaScriptEnabled: false }); const p2 = await c2.newPage(); await p2.goto(file);
-  ok((await p2.$$('.dbs-list li')).length === 12, 'without JS the static list stays (12 items)');
-  ok(await p2.evaluate(() => { const v = document.querySelector('.dbj-car__v'); const cs = getComputedStyle(v); return document.querySelectorAll('.dbj-car__s').length === 5 && cs.overflowX === 'auto' && cs.scrollSnapType.indexOf('x') === 0 && getComputedStyle(document.querySelector('.dbj-car__d')).display === 'none' && v.scrollWidth > v.clientWidth * 4; }), 'gallery without JS: five slides that scroll and snap (no dots yet)');
+  ok((await p2.$$('.dbs-list li')).length === 16, 'without JS the static list stays (16 items)');
+  ok(await p2.evaluate(() => { const v = document.querySelector('.dbj-car__v'); const cs = getComputedStyle(v); return document.querySelectorAll('.dbj-car__s').length === 8 && cs.overflowX === 'auto' && cs.scrollSnapType.indexOf('x') === 0 && getComputedStyle(document.querySelector('.dbj-car__d')).display === 'none' && v.scrollWidth > v.clientWidth * 4; }), 'gallery without JS: eight slides that scroll and snap (no dots yet)');
   const lay2 = await p2.evaluate(() => { const g = document.querySelector('.dbj-hero-grid').children; const t = g[0].getBoundingClientRect(), c = g[1].getBoundingClientRect(); return { tx: Math.round(t.left), cx: Math.round(c.left), tw: Math.round(t.width), cw: Math.round(c.width) }; });
   console.log('hero', JSON.stringify(lay2));
   ok(lay2.cx > lay2.tx && lay2.cw > 250 && lay2.cw < lay2.tw, 'hero: title on the left, gallery on the right (Botanic TV placement)');
-  ok(await p.evaluate(() => document.querySelectorAll('.dbj-car__dot').length === 5 && document.querySelectorAll('.dbj-car__dot.on').length === 1), 'gallery with JS: five dots, one active');
+  ok(await p.evaluate(() => document.querySelectorAll('.dbj-car__dot').length === 8 && document.querySelectorAll('.dbj-car__dot.on').length === 1), 'gallery with JS: eight dots, one active');
   await p.evaluate(() => document.querySelector('.dbj-car').scrollIntoView({ block: 'center' }));
   await p.click('.dbj-car__dot >> nth=3'); await p.waitForTimeout(900);
   ok(await p.evaluate(() => { const v = document.querySelector('.dbj-car__v'); return Math.abs(v.scrollLeft - 3 * v.clientWidth) < 3 && document.querySelectorAll('.dbj-car__dot')[3].classList.contains('on'); }), 'a dot scrolls to its picture and becomes active');
@@ -106,7 +108,7 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   const vb = await (await p.$('.dbj-car__v')).boundingBox();
   await p.mouse.move(vb.x + vb.width * 0.7, vb.y + vb.height / 2); await p.mouse.down(); await p.mouse.move(vb.x + vb.width * 0.15, vb.y + vb.height / 2, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(900);
   ok(await p.evaluate(() => document.querySelectorAll('.dbj-car__dot')[3].classList.contains('on') && Math.abs(document.querySelector('.dbj-car__v').scrollLeft % document.querySelector('.dbj-car__v').clientWidth) < 3), 'mouse drag moves to the next picture and snaps');
-  for (const n of [0, 1, 2, 3, 4]) { await p.click('.dbj-car__dot >> nth=' + n); await p.waitForTimeout(900); const gg = await p.$('.dbj-car'); await gg.screenshot({ path: out + '/gallery-' + (n + 1) + '.png' }); }
+  for (const n of [0, 1, 2, 3, 4, 5, 6, 7]) { await p.click('.dbj-car__dot >> nth=' + n); await p.waitForTimeout(900); const gg = await p.$('.dbj-car'); await gg.screenshot({ path: out + '/gallery-' + (n + 1) + '.png' }); }
   const el2 = await p2.$('.dbs'); await el2.screenshot({ path: out + '/dbs-static.png' });
 
   const c3 = await b.newContext({ ...devices['iPhone 13'], reducedMotion: 'reduce' }); const p3 = await c3.newPage(); await p3.goto(file); await p3.waitForSelector('.dbs--on');
@@ -114,7 +116,7 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   await p3.waitForTimeout(1800);
   const ov = await p3.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   ok(ov <= 0, 'phone: no horizontal overflow (' + ov + ')');
-  ok(await p3.evaluate(() => document.querySelector('.dbs-price').textContent === '£255.78'), 'phone: 60 × 120, 10 cm shows £255.78');
+  ok(await p3.evaluate(() => document.querySelector('.dbs-price').textContent === '£270'), 'phone: 60 × 120, 10 cm shows £270');
   const el3 = await p3.$('.dbs'); await el3.screenshot({ path: out + '/dbs-phone.png' });
   console.log(fails ? 'FAILURES: ' + fails : 'ALL PASSED'); await b.close();
 })();

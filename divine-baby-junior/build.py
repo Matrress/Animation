@@ -10,8 +10,8 @@ Usage: python3 build.py
 """
 import re, pathlib
 
-VERSION = "1.2.0"
-JS_COMMIT = "ff28404f10230b45a7e67232eb56e6775a984846"   # commit that holds release/1.2.0/dbs.js
+VERSION = "1.3.0"
+JS_COMMIT = "0000000000000000000000000000000000000000"   # commit that holds release/1.2.0/dbs.js
 CDN = "https://cdn.jsdelivr.net/gh/Matrress/Animation@"
 FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"    # Chillax files already used by Hero 1.17.1 and Collection
 FONT400 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-400.woff2"
@@ -21,6 +21,7 @@ FONT600 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-600.wof
 ASSETS = {
     "v1": dict(commit="c3cafc0705ba2ae2e9c8374bafa7ef7bed16bc63", dir="release/0.1.0/assets/"),
     "v2": dict(commit="b0c161a67ae725da9db1cfeaa2eae2b82d7e9b0f", dir="release/0.2.0/assets/"),
+    "v3": dict(commit="04a88f44070fb3a9df6482f9545563ce06ba5a79", dir="experience/assets/"),
 }
 
 # key: (asset set, file stem, widths available, width, height of the largest file, sizes attribute)
@@ -31,6 +32,10 @@ IMAGES = {
     "latex":  ("v2", "dunlop-baby-junior-natural-latex-core-ventilation-detail", [690], 690, 350, "(min-width: 960px) 700px, 100vw"),
     "quilt":  ("v2", "dunlop-baby-junior-cotton-cover-quilting-detail", [660], 660, 300, "(min-width: 960px) 360px, 100vw"),
     "zip":    ("v2", "dunlop-baby-junior-cotton-cover-zip-detail", [340], 340, 220, "(min-width: 960px) 360px, 100vw"),
+    "latexcore": ("v3", "dunlop-natural-latex-core-ventilation-channels", [800, 1600], 1600, 1065, "(min-width: 960px) 700px, 100vw"),
+    "cot":    ("v3", "dunlop-baby-asleep-in-cot", [800, 1600], 1600, 1123, BIG),
+    "top":    ("v3", "dunlop-baby-on-pillow-mattress-top-view", [800, 1600], 1600, 800, BIG),
+    "depths": ("v3", "dunlop-baby-and-junior-depths", [800, 1600], 1600, 900, BIG),
 }
 
 # Bio Dunlop logo: the file already used by the 7 zones section, pinned to the commit that holds it (a copy is in src/assets)
@@ -109,7 +114,7 @@ prod_html = build_html(html_src, remote=True, keep_review=False)
 assert "dbj-rv" not in prod_html and "REVIEW" not in prod_html and "dbj-rv" not in css_prod
 assert "coir" not in prod_html.lower() and "coconut" not in prod_html.lower() and "coir" not in css_prod.lower()
 # palette guard: only the six Bio Comfort colours may appear as hex values (shades come from rgba of the same colours)
-ALLOWED = {"003A68", "006591", "B2E3FB", "91E8F1", "E4E8F0", "FFFFFF", "FFF"}
+ALLOWED = {"003A68", "006591", "B2E3FB", "91E8F1", "E4E8F0", "FFFFFF", "FFF", "F8F2FC", "009289"}
 used = {h.upper().lstrip("#") for h in re.findall(r"#[0-9A-Fa-f]{3,8}\b", css_prod)}
 assert used <= ALLOWED, f"colours outside the palette: {sorted(used - ALLOWED)}"
 prod = (f"<!-- Divine DunlopDreams · Dunlop Baby & Junior description {VERSION} · scoped to .dbj · no JavaScript -->"
@@ -131,10 +136,10 @@ g_closed = f"{v1}{IMAGES['closed'][1]}-800.webp"
 g_open = f"{v1}{IMAGES['open'][1]}-800.webp"
 g_heights = g_open
 size_vals = [("Baby Cot Size", 60, 110), ("Baby Cot Size", 60, 120), ("Baby Cot Size", 70, 130), ("Baby Cot Size", 70, 140),
-             ("Junior Size", 70, 160), ("Junior Size", 80, 160), ("Junior Size", 80, 180), ("Junior Size", 80, 200)]
+             ("Junior Size", 70, 160), ("Junior Size", 80, 160), ("Junior Size", 80, 180), ("Junior Size", 80, 200), ("Junior Size", 90, 190), ("Junior Size", 90, 200)]
 inch = lambda cm: f"{round(cm / 2.54 * 10) / 10:.1f}"
 sizes_opts = "".join(f"<option>{n}: {w} × {l} cm ({inch(w)}″ × {inch(l)}″)</option>" for n, w, l in size_vals)
-height_opts = "".join(f"<option>{h} cm ({inch(h)}″)</option>" for h in (10, 14))
+height_opts = "".join(f"<option>{h} cm ({inch(h)}″)</option>" for h in (10, 12, 14, 16))
 shell = f"""<!doctype html>
 <html lang="en-GB" id="ecwid_html">
 <head>
@@ -204,8 +209,8 @@ body{{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#003A68}}
 <script>
 /* prototype only: imitates how Ecwid reacts to its option dropdowns (price) */
 (function(){{var s=document.querySelector('.details-product-option--SIZE select'),h=document.querySelector('.details-product-option--HEIGHT select'),p=document.getElementById('proto-price');
-var T={{'60x110':[239,279],'60x120':[255.78,295.78],'70x130':[269,309],'70x140':[289,329],'70x160':[309,369],'80x160':[359,419],'80x180':[409,469],'80x200':[469,529]}};
-function upd(){{var m=/(\\d+) × (\\d+) cm/.exec(s.value),k=/\\((\\d+)/.exec(h.value),hh=/^(\\d+) cm/.exec(h.value);window.setTimeout(function(){{var r=m&&T[m[1]+'x'+m[2]];p.textContent=(r&&hh)?'£'+r[hh[1]==='10'?0:1]:'£0';}},300);}}
+var T={{'60x110':{{10:249,12:270}},'60x120':{{10:270,12:293}},'70x130':{{10:289,12:314}},'70x140':{{10:309,12:335}},'70x160':{{14:364,16:395}},'80x160':{{14:409,16:444}},'80x180':{{14:459,16:498}},'80x200':{{14:499,16:542}},'90x190':{{14:529,16:574}},'90x200':{{14:539,16:585}}}};
+function upd(){{var m=/(\\d+) × (\\d+) cm/.exec(s.value),k=/\\((\\d+)/.exec(h.value),hh=/^(\\d+) cm/.exec(h.value);window.setTimeout(function(){{var r=m&&T[m[1]+'x'+m[2]],v=r&&hh&&r[hh[1]];p.textContent=v?'£'+v:'£0';}},300);}}
 s.addEventListener('change',upd);h.addEventListener('change',upd);
 document.getElementById('proto-add').addEventListener('click',function(){{this.setAttribute('data-clicked',String((+this.getAttribute('data-clicked')||0)+1));}});}})();
 </script>

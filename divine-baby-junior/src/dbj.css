@@ -1,6 +1,6 @@
 /* Divine DunlopDreams · Dunlop Baby & Junior · product description 1.1.0
    Built on the Bio Comfort system, read from its live description (--bc-* tokens):
-   ink #003A68 for ALL text (body at 78%), surface #E4E8F0 with fine navy outlines, light-blue card #B2E3FB (55%),
+   ink #003A68 for ALL text (body at 92%); soft lilac-pink #F8F2FC cards; leaf green #009289 for the natural icons, surface #E4E8F0 with fine navy outlines, light-blue card #B2E3FB (55%),
    accent #91E8F1, strong blue #006591 with white text only on small bars (label, chips, facts strip, toggles).
    No dark panels, no gradients, no other greys. Radii 10 / 16 / 22. Chillax only.
    The description column on the product page is about 730 px wide (the options sit beside it), so the layout
@@ -13,8 +13,8 @@
 
 /* ---------- tokens (same values as Bio Comfort) ---------- */
 .dbj{
-  --ink:#003A68; --ink-s:rgba(0,58,104,.78); --line:#003A68; --line-s:rgba(0,58,104,.18); --line-f:rgba(0,58,104,.10);
-  --sky:#B2E3FB; --sky-s:rgba(178,227,251,.55); --acc:#91E8F1; --surf:#E4E8F0; --strong:#006591; --w:#FFFFFF;
+  --ink:#003A68; --ink-s:rgba(0,58,104,.92); --line:#003A68; --line-s:rgba(0,58,104,.26); --line-f:rgba(0,58,104,.10);
+  --pk:#F8F2FC; --lf:#009289; --sky:#B2E3FB; --sky-s:rgba(178,227,251,.55); --acc:#91E8F1; --surf:#E4E8F0; --strong:#006591; --w:#FFFFFF;
   --r-sm:10px; --r:16px; --r-lg:22px;
   font-family:"DBJChillax",system-ui,-apple-system,"Segoe UI",sans-serif;
   color:var(--ink); background:var(--w);
@@ -48,7 +48,7 @@
 
 /* ---------- sections and the opening card ---------- */
 .dbj .dbj-sec{padding-top:56px}
-.dbj .dbj-card{background:var(--surf);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 18px 22px}
+.dbj .dbj-card{background:var(--pk);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 18px 22px}
 .dbj .dbj-card--sky{background:var(--sky-s);border-color:var(--line-s)}
 .dbj .dbj-hero .dbj-display{margin-top:14px}
 .dbj .dbj-bar{display:block;background:var(--strong);color:#fff;border-radius:6px;padding:11px 14px;font-size:11.5px;line-height:1.45;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
@@ -80,7 +80,7 @@
 
 /* tiles: pale cards with a fine outline */
 .dbj .dbj-bento{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:20px}
-.dbj .dbj-tile{--pad:20px;position:relative;overflow:hidden;background:var(--surf);border:1px solid var(--line-s);border-radius:var(--r);padding:var(--pad)}
+.dbj .dbj-tile{--pad:20px;position:relative;overflow:hidden;background:var(--pk);border:1px solid var(--line-s);border-radius:var(--r);padding:var(--pad)}
 .dbj .dbj-tile--line{background:var(--w)}
 .dbj .dbj-bento .dbj-tile{display:flex;flex-direction:column;gap:10px}
 .dbj .dbj-crop{position:relative;aspect-ratio:3 / 2;margin:auto calc(var(--pad) * -1) calc(var(--pad) * -1)}
@@ -89,7 +89,7 @@
 
 /* bullet cards (as on Bio Comfort) */
 .dbj .dbj-cards{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:20px}
-.dbj .dbj-cards li{position:relative;background:var(--surf);border:1px solid var(--line-s);border-radius:var(--r);padding:15px 18px 15px 38px;font-size:16px;line-height:1.5;color:var(--ink-s)}
+.dbj .dbj-cards li{position:relative;background:var(--pk);border:1px solid var(--line-s);border-radius:var(--r);padding:15px 18px 15px 38px;font-size:16px;line-height:1.5;color:var(--ink-s)}
 .dbj .dbj-cards li::before{content:"";position:absolute;left:18px;top:23px;width:7px;height:7px;border-radius:50%;background:var(--strong)}
 .dbj .dbj-cards b{font-weight:600;color:var(--ink)}
 
@@ -101,8 +101,8 @@
 /* heights: a plain line drawing in proportion 10 : 14 */
 .dbj .dbj-hts{--u:5px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px;padding:22px 14px 18px}
 .dbj .dbj-ht{display:flex;flex-direction:column;justify-content:flex-start;gap:4px}
-.dbj .dbj-bar2{display:block;width:100%;height:calc(var(--h) * var(--u));margin:calc((14 - var(--h)) * var(--u)) 0 12px;border:1px solid var(--ink);border-radius:var(--r-sm);background:#fff}
-.dbj .dbj-bar2--10{--h:10}.dbj .dbj-bar2--14{--h:14}
+.dbj .dbj-bar2{display:block;width:100%;height:calc(var(--h) * var(--u));margin:calc((16 - var(--h)) * var(--u)) 0 12px;border:1px solid var(--ink);border-radius:var(--r-sm);background:#fff}
+.dbj .dbj-bar2--10{--h:10}.dbj .dbj-bar2--12{--h:12}.dbj .dbj-bar2--14{--h:14}.dbj .dbj-bar2--16{--h:16}.dbj .dbj-hts--4{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .dbj .dbj-num{font-size:30px;line-height:1;font-weight:400;letter-spacing:-.025em;color:var(--ink)}
 .dbj .dbj-num span{font-size:.45em;letter-spacing:0;margin-left:4px;color:var(--ink-s)}
 .dbj .dbj-ht .dbj-tt{font-size:14px;line-height:1.4}
@@ -124,7 +124,7 @@
 .dbj .dbj-acc details[open] summary{border-radius:var(--r-sm) var(--r-sm) 0 0}
 .dbj .dbj-acc details[open] summary::after{margin-top:-2px;transform:rotate(-135deg)}
 .dbj .dbj-acc summary:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-.dbj .dbj-acc-body{background:var(--surf);border:1px solid var(--line-s);border-top:0;border-radius:0 0 var(--r-sm) var(--r-sm);padding:16px 18px}
+.dbj .dbj-acc-body{background:var(--pk);border:1px solid var(--line-s);border-top:0;border-radius:0 0 var(--r-sm) var(--r-sm);padding:16px 18px}
 .dbj .dbj-specs{display:grid}
 .dbj .dbj-specs div{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;padding:12px 0;border-top:1px solid var(--line-s)}
 .dbj .dbj-specs div:first-child{border-top:0;padding-top:0}
@@ -248,7 +248,10 @@
 .dbj .dbj-car__s--2{--p:55%;--k:1;--oy:50%}
 .dbj .dbj-car__s--3{--p:12%;--k:1.9;--oy:57%}
 .dbj .dbj-car__s--4{--p:40%;--k:2;--oy:40%}
+.dbj .dbj-car__s--3{--p:50%;--k:1;--oy:50%}
 .dbj .dbj-car__s--5{--p:28%;--k:2.1;--oy:68%}
+.dbj .dbj-car__s--6{--p:50%;--k:1;--oy:50%}
+.dbj .dbj-car__s--7 img,.dbj .dbj-car__s--8 img{object-fit:contain!important;transform:none!important;background:var(--pk)}
 .dbj .dbj-car__c{position:absolute;left:10px;bottom:10px;z-index:1;background:var(--w);border:1px solid var(--line-s);border-radius:999px;padding:6px 12px;font-size:13px;line-height:1.2;font-weight:600;color:var(--ink)}
 .dbj .dbj-car__d{display:none;height:24px;align-items:center;justify-content:center}
 .dbj .dbj-car--on .dbj-car__d{display:flex}
@@ -258,7 +261,7 @@
 .dbj .dbj-car__dot:focus-visible{outline:2px solid var(--ink);outline-offset:1px;border-radius:50%}
 
 /* cover facts */
-.dbj .dbj-facts{display:grid;grid-template-columns:minmax(0,1fr);gap:0;margin-top:14px;background:var(--surf);border:1px solid var(--line-s);border-radius:var(--r);overflow:hidden}
+.dbj .dbj-facts{display:grid;grid-template-columns:minmax(0,1fr);gap:0;margin-top:14px;background:var(--pk);border:1px solid var(--line-s);border-radius:var(--r);overflow:hidden}
 .dbj .dbj-facts div{padding:14px 18px;border-top:1px solid var(--line-s)}
 .dbj .dbj-facts div:first-child{border-top:0}
 .dbj .dbj-facts dt{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--strong)}
@@ -275,7 +278,7 @@
 .dbj .dbs-loadall:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .dbj .dbs-loadall[hidden]{display:none}
 .dbj .dbs-matrix{display:grid;gap:12px;margin-top:16px}
-.dbj .dbs-mx-g{background:var(--surf);border:1px solid var(--line-s);border-radius:var(--r);overflow:hidden}
+.dbj .dbs-mx-g{background:var(--pk);border:1px solid var(--line-s);border-radius:var(--r);overflow:hidden}
 .dbj .dbs-mx-t{padding:12px 14px 4px;font-size:12px;line-height:1.3;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong)}
 .dbj .dbs-mx-r{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(var(--n,2),minmax(0,1fr));gap:8px;align-items:center;padding:8px 14px}
 .dbj .dbs-mx-r + .dbs-mx-r{border-top:1px solid var(--line-f)}
@@ -326,7 +329,6 @@
   .dbj .dbj-car__v{aspect-ratio:1 / 1}
   .dbj .dbj-car__s--1{--p:52.7%;--k:.9}
   .dbj .dbj-car__s--2{--p:53%;--k:.9}
-  .dbj .dbj-car__s--3{--p:24.7%}
   .dbj .dbj-car__s--4{--p:43.3%}
   .dbj .dbj-car__s--5{--p:35.3%}
   .dbj .dbj-facts{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -356,3 +358,23 @@
   .dbj .dbj-acc-body{padding:18px 22px}
   .dbj .dbj-specs div{grid-template-columns:minmax(0,1fr) minmax(0,2.4fr);gap:20px}
 }
+
+/* ---------- the natural icons: the leaf green of the Bio Dunlop logo ---------- */
+.dbj .dbj-nat{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:16px}
+.dbj .dbj-nat li{display:flex;align-items:flex-start;gap:14px;background:var(--pk);border:1px solid var(--line-s);border-radius:var(--r);padding:14px 16px}
+.dbj .dbj-nat li b{display:block;color:var(--ink)}
+.dbj .dbj-ic{flex:0 0 40px;width:40px;height:40px;border-radius:50%;background-color:var(--lf);background-repeat:no-repeat;background-position:center;background-size:22px 22px}
+.dbj .dbj-ic--leaf{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M4%2020C4%2010%2010%204%2020%204c0%2010-6%2016-16%2016z'/%3E%3Cpath%20d='M5%2019c4-5%207-8%2011-11'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--cotton{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Ccircle%20cx='12'%20cy='8.5'%20r='3'/%3E%3Ccircle%20cx='8'%20cy='12'%20r='3'/%3E%3Ccircle%20cx='16'%20cy='12'%20r='3'/%3E%3Ccircle%20cx='12'%20cy='13'%20r='3'/%3E%3Cpath%20d='M12%2016v5M9%2021h6'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--shield{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M12%203l8%203v6c0%205-3.5%208-8%209-4.5-1-8-4-8-9V6l8-3z'/%3E%3Cpath%20d='M8.5%2012l2.5%202.5%204.5-5'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--wind{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M3%209h11a3%203%200%201%200-3-3'/%3E%3Cpath%20d='M3%2014h15a3%203%200%201%201-3%203'/%3E%3Cpath%20d='M3%2019h6'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--wash{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M4%209h16l-1.5%2010h-13L4%209z'/%3E%3Cpath%20d='M8%209V6M12%209V4M16%209V6'/%3E%3Cpath%20d='M9%2014c1%201%202%201%203%200s2-1%203%200'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--check{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M5%2012l5%205%209-10'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--layers{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M3%208l9-4%209%204-9%204-9-4z'/%3E%3Cpath%20d='M3%2012l9%204%209-4'/%3E%3Cpath%20d='M3%2016l9%204%209-4'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--sun{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Ccircle%20cx='12'%20cy='12'%20r='4'/%3E%3Cpath%20d='M12%202v3M12%2019v3M2%2012h3M19%2012h3M5%205l2%202M17%2017l2%202M5%2019l2-2M17%207l2-2'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--moon{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M20%2014.5A8%208%200%200%201%209.5%204%208%208%200%201%200%2020%2014.5z'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--sprout{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M12%2021v-9'/%3E%3Cpath%20d='M12%2012c0-4-3-6-7-6%200%204%203%206%207%206z'/%3E%3Cpath%20d='M12%2014c0-3%202.5-5%206-5%200%203-2.5%205-6%205z'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--box{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M3%208l9-4%209%204v8l-9%204-9-4V8z'/%3E%3Cpath%20d='M3%208l9%204%209-4M12%2012v8'/%3E%3C/svg%3E")}
+.dbj .dbj-ic--gift{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Crect%20x='3'%20y='9'%20width='18'%20height='11'%20rx='1'/%3E%3Cpath%20d='M12%209v11M3%2013h18'/%3E%3Cpath%20d='M12%209c-2-4-6-3-5%200M12%209c2-4%206-3%205%200'/%3E%3C/svg%3E")}
+.dbj .dbj-eyebrow::before{background:var(--lf)}
+@container (min-width:640px){.dbj .dbj-nat{grid-template-columns:repeat(2,minmax(0,1fr))}}
