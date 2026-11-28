@@ -31,8 +31,9 @@ async function open(b, opt, cfg, code) {
   await p.click('[data-pick-size="90x200"]'); await p.waitForTimeout(400);
   const s1 = await p.evaluate(() => ({ s: document.querySelector('.details-product-option--SIZE select').value }));
   ok(/Special Single 90x200/.test(s1.s), 'choosing a size in the television sets Ecwid\'s SIZE dropdown: ' + s1.s);
-  await p.click('[data-next="depth"]'); await p.waitForTimeout(300); await p.click('[data-pick-height="26"]');
+  await p.waitForTimeout(300); await p.click('[data-pick-height="26"]');
   await p.waitForTimeout(2500); await p.waitForFunction(() => !document.querySelector('.product-details').querySelector('.details-product-price[style*="hidden"]'), null, { timeout: 30000 }); await p.waitForTimeout(800);
+  await p.evaluate(() => document.getElementById('ddtv-experience').shadowRoot.querySelector('[data-step="depth"]').click()); await p.waitForTimeout(300);
   const s2 = await p.evaluate(() => { const r = document.getElementById('ddtv-experience').shadowRoot; return { d: document.querySelector('.details-product-option--DEPTH select').value, price: document.querySelector('.details-product-price__value').textContent, mine: (r.querySelector('.pv') || {}).textContent, hc: [...r.querySelectorAll('.hc .pr')].map(e => e.textContent), bag: (r.querySelector('.bag') || {}).textContent, dis: (r.querySelector('.bag') || {}).disabled }; });
   console.log('after choosing', JSON.stringify(s2));
   ok(/26 cm/.test(s2.d), 'choosing a height sets Ecwid\'s DEPTH dropdown: ' + s2.d);
@@ -82,9 +83,9 @@ async function open(b, opt, cfg, code) {
   await p.click('#ddp-cta'); await p.waitForTimeout(500);
   await p.evaluate(() => document.getElementById('ddp-sheet').shadowRoot.querySelector('[data-pick-size="90x200"]').click()); await p.waitForTimeout(500);
   ok(/Special Single 90x200/.test(await p.evaluate(() => document.querySelector('.details-product-option--SIZE select').value)), 'phone: choosing a size sets Ecwid\'s SIZE dropdown');
-  await p.evaluate(() => document.getElementById('ddp-sheet').shadowRoot.querySelector('[data-go="depth"]').click()); await p.waitForTimeout(300);
+  await p.waitForTimeout(300);
   await p.evaluate(() => document.getElementById('ddp-sheet').shadowRoot.querySelector('[data-pick-height="26"]').click()); await p.waitForTimeout(3500);
-  await p.evaluate(() => document.getElementById('ddp-sheet').shadowRoot.querySelector('[data-go="review"]').click()); await p.waitForTimeout(500);
+  await p.waitForTimeout(500);
   const ph = await p.evaluate(() => { const r = document.getElementById('ddp-sheet').shadowRoot; return { d: document.querySelector('.details-product-option--DEPTH select').value, price: document.querySelector('.details-product-price__value').textContent, rv: (r.querySelector('.rvp b') || {}).textContent, bag: (r.querySelector('[data-bag]') || {}).textContent, dis: (r.querySelector('[data-bag]') || {}).disabled }; });
   console.log('phone', JSON.stringify(ph));
   ok(/26 cm/.test(ph.d) && norm(ph.rv) === norm(ph.price) && /£/.test(ph.price), 'phone: height set in Ecwid; the review shows Ecwid\'s price ' + ph.price);
