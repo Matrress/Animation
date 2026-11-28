@@ -21,7 +21,7 @@ function isPhone() {
 /* ---------- the two choices the customer makes (firmness and cover are fixed for this model) ---------- */
 var ROLE = { size: /^size\b/i, height: /height|depth/i };
 var ROLES = ['size', 'height'];
-var ORDER = [['size', 'Size'], ['height', 'Height']];
+var ORDER = [['size', 'Size'], ['height', 'Depth']];   /* the shop's own option is still called Height: the interface says Depth */
 function shopRoot() {
   var c = $$('.product-details');
   for (var i = 0; i < c.length; i++) { if (c[i].offsetParent || c[i].getClientRects().length) { return c[i]; } }
@@ -174,10 +174,10 @@ function onCart() { if (!bagAt || Date.now() - bagAt > 15000) { return; } bagAt 
 function openCart() { if (win.Ecwid && win.Ecwid.openPage) { win.Ecwid.openPage('cart'); } }
 
 /* ---------- the selection laws (one place; the television and the phone layer share them) ----------
-   1. The bag button is READY only when every choice is made: size and height. Firmness (Medium) and cover (100% cotton) are fixed.
+   1. The bag button is READY only when every choice is made: size and depth. Firmness (Medium) and cover (100% cotton) are fixed and have nothing to select.
    2. Once complete, changing a choice keeps the button active for the new configuration.
    3. When the bag holds exactly this configuration, the same button is Go to Checkout (it opens the shopping cart, Ecwid's own).
-   4. Whatever is missing is named: "Still to choose: Size · Height".
+   4. Whatever is missing is named: "Still to choose: Size · Depth".
    5. A coupon or code is entered in the cart, never here. */
 function missing() { return ORDER.filter(function (o) { return X.S[o[0]] == null; }).map(function (o) { return o[1]; }); }
 function complete() { return missing().length === 0; }
@@ -185,7 +185,7 @@ function signature() { return complete() ? ORDER.map(function (o) { return o[0] 
 function bagFace() {
   if (!complete()) { return { face: 'add', enabled: false, ready: false, text: 'Add to Bag', guide: 'Still to choose: ' + missing().join(' · ') }; }
   if (X.S.bagged && X.S.bagged === signature()) { return { face: 'checkout', enabled: true, ready: false, text: 'Go to Checkout', guide: 'Added to your bag' }; }
-  return { face: 'add', enabled: true, ready: true, text: 'Add to Bag', guide: X.S.bagged ? 'Your new choice is not in the bag yet: Add to Bag again' : 'Ready to order: size and height chosen' };
+  return { face: 'add', enabled: true, ready: true, text: 'Add to Bag', guide: X.S.bagged ? 'Your new choice is not in the bag yet: Add to Bag again' : 'Ready to order: size and depth chosen' };
 }
 function chosenLabel(role) {
   if (role === 'size') { var z = X.S.size && sizeByKey(X.S.size); return z ? (groupByKey(z.g).name + ' · ' + z.w + ' × ' + z.l + ' cm') : null; }

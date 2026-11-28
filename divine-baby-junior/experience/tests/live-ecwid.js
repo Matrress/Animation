@@ -27,11 +27,11 @@ async function open(b, opt, cfg, code) {
   ok(await p.evaluate(() => !!document.getElementById('ddtv-info') && getComputedStyle(document.querySelector('.product-details__description')).maxHeight === '0px'), 'the two-ways information block is shown and the description is folded');
   const host = await p.$('#ddtv-experience'); await host.scrollIntoViewIfNeeded();
   await p.click('#galbtn'); await p.waitForTimeout(300);
-  ok(await p.evaluate(() => document.getElementById('ddtv-experience').shadowRoot.querySelectorAll('[data-family]').length === 2), 'Select & Buy shows the two size groups');
-  await p.click('[data-family="cot"]'); await p.click('[data-pick-size="90x200"]'); await p.waitForTimeout(400);
+  ok(await p.evaluate(() => document.getElementById('ddtv-experience').shadowRoot.querySelectorAll('.grp').length === 2), 'Select & Buy shows the two size groups, stacked');
+  await p.click('[data-pick-size="90x200"]'); await p.waitForTimeout(400);
   const s1 = await p.evaluate(() => ({ s: document.querySelector('.details-product-option--SIZE select').value }));
   ok(/Special Single 90x200/.test(s1.s), 'choosing a size in the television sets Ecwid\'s SIZE dropdown: ' + s1.s);
-  await p.click('[data-next="height"]'); await p.waitForTimeout(300); await p.click('[data-pick-height="26"]');
+  await p.click('[data-next="depth"]'); await p.waitForTimeout(300); await p.click('[data-pick-height="26"]');
   await p.waitForTimeout(2500); await p.waitForFunction(() => !document.querySelector('.product-details').querySelector('.details-product-price[style*="hidden"]'), null, { timeout: 30000 }); await p.waitForTimeout(800);
   const s2 = await p.evaluate(() => { const r = document.getElementById('ddtv-experience').shadowRoot; return { d: document.querySelector('.details-product-option--DEPTH select').value, price: document.querySelector('.details-product-price__value').textContent, mine: (r.querySelector('.pv') || {}).textContent, hc: [...r.querySelectorAll('.hc .pr')].map(e => e.textContent), bag: (r.querySelector('.bag') || {}).textContent, dis: (r.querySelector('.bag') || {}).disabled }; });
   console.log('after choosing', JSON.stringify(s2));
@@ -41,8 +41,7 @@ async function open(b, opt, cfg, code) {
   ok(/Add to Bag/.test(s2.bag) && s2.dis === false, 'the bag button is ready (not pressed)');
   ok(await p.evaluate(() => { const b = [...document.querySelectorAll('.product-details button')].find(x => /add\s+to\s+(bag|cart)/i.test(x.textContent)); return !!b; }), 'Ecwid\'s own Add to Bag button is found');
   /* every price, checked one by one against Ecwid */
-  await p.evaluate(() => document.getElementById('ddtv-experience').shadowRoot.querySelector('[data-topic="order"]').click());
-  await p.evaluate(() => document.getElementById('ddtv-experience').shadowRoot.querySelector('[data-part="1"]').click()); await p.waitForTimeout(300);
+  await p.evaluate(() => document.getElementById('ddtv-experience').shadowRoot.querySelector('[data-step="prices"]').click()); await p.waitForTimeout(300);
   const t0 = Date.now();
   await p.evaluate(() => document.getElementById('ddtv-experience').shadowRoot.querySelector('[data-readall]').click());
   await p.waitForFunction(() => { const r = document.getElementById('ddtv-experience').shadowRoot; return !r.querySelector('[data-readall]') && r.querySelectorAll('.mxb').length > 0; }, null, { timeout: 90000 }); await p.waitForTimeout(1200);
@@ -81,10 +80,9 @@ async function open(b, opt, cfg, code) {
   await p.waitForSelector('#ddp-cta', { timeout: 15000 });
   ok(await p.evaluate(() => { const c = document.getElementById('ddp-cta'), o = document.querySelector('.details-product-option'); return !!c && c.parentNode === o.parentNode && c.compareDocumentPosition(o) & 4; }), 'the Configure button sits above Ecwid\'s own options');
   await p.click('#ddp-cta'); await p.waitForTimeout(500);
-  await p.evaluate(() => document.getElementById('ddp-sheet').shadowRoot.querySelector('[data-family="cot"]').click());
   await p.evaluate(() => document.getElementById('ddp-sheet').shadowRoot.querySelector('[data-pick-size="90x200"]').click()); await p.waitForTimeout(500);
   ok(/Special Single 90x200/.test(await p.evaluate(() => document.querySelector('.details-product-option--SIZE select').value)), 'phone: choosing a size sets Ecwid\'s SIZE dropdown');
-  await p.evaluate(() => document.getElementById('ddp-sheet').shadowRoot.querySelector('[data-go="height"]').click()); await p.waitForTimeout(300);
+  await p.evaluate(() => document.getElementById('ddp-sheet').shadowRoot.querySelector('[data-go="depth"]').click()); await p.waitForTimeout(300);
   await p.evaluate(() => document.getElementById('ddp-sheet').shadowRoot.querySelector('[data-pick-height="26"]').click()); await p.waitForTimeout(3500);
   await p.evaluate(() => document.getElementById('ddp-sheet').shadowRoot.querySelector('[data-go="review"]').click()); await p.waitForTimeout(500);
   const ph = await p.evaluate(() => { const r = document.getElementById('ddp-sheet').shadowRoot; return { d: document.querySelector('.details-product-option--DEPTH select').value, price: document.querySelector('.details-product-price__value').textContent, rv: (r.querySelector('.rvp b') || {}).textContent, bag: (r.querySelector('[data-bag]') || {}).textContent, dis: (r.querySelector('[data-bag]') || {}).disabled }; });

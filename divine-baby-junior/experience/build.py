@@ -24,7 +24,7 @@ CDN = "https://cdn.jsdelivr.net/gh/Matrress/Animation@"
 FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"
 FONT400 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-400.woff2"
 FONT600 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-600.woff2"
-ASSET = {"v1": ("c3cafc0705ba2ae2e9c8374bafa7ef7bed16bc63", "release/0.1.0/assets/"), "v2": ("b0c161a67ae725da9db1cfeaa2eae2b82d7e9b0f", "release/0.2.0/assets/")}
+ASSET = {"v1": ("c3cafc0705ba2ae2e9c8374bafa7ef7bed16bc63", "release/0.1.0/assets/"), "v2": ("b0c161a67ae725da9db1cfeaa2eae2b82d7e9b0f", "release/0.2.0/assets/"), "v3": ("7ec5ad8ae12e1e16be82f8928cdb1fcc6f78126c", "experience/assets/")}
 LOGO = f"{CDN}9d681f860c9dae7dd866236d6824f413443b8512/divine-home-discovery/assets/bio-dunlop.svg"
 
 
@@ -46,6 +46,8 @@ def build_data(local=False):
         "quilt": {"src": u("v2", "dunlop-baby-junior-cotton-cover-quilting-detail-660.webp")},
         "zip": {"src": u("v2", "dunlop-baby-junior-cotton-cover-zip-detail-340.webp")},
     }
+    data["videos"]["origin"]["poster"] = u("v3", "dunlop-natural-latex-origin-film-poster-960.webp")
+    data["videos"]["vent"]["poster"] = u("v3", "dunlop-natural-latex-ventilation-film-poster-960.webp")
     data["logo"] = (str(top / "src/assets/bio-dunlop.svg").replace(str(top), "../..")) if local else LOGO
     data["product"]["heroHead"] = "One piece of natural latex"
     return data
@@ -79,7 +81,7 @@ def bundle(kind, local=False, bio=False):
         html = (src / "tv.html").read_text().strip().replace("\n", "")
         consts["TV_CSS"] = json.dumps(css)
         consts["TV_MARKUP"] = json.dumps(html)
-        parts += [(src / "tv.js").read_text().replace("R.innerHTML = '<style>' + TV_CSS + '</style>' + TV_MARKUP;", "R.innerHTML = '<style>' + TV_CSS + '</style>' + TV_MARKUP.replace('{{bag}}', ico('bag')).replace('{{list}}', ico('list'));"), (src / "page.js").read_text()]
+        parts += [(src / "tv.js").read_text(), (src / "page.js").read_text()]
         guard, title = "__DDBABY_TV", "the television (Optimised Preview and Standard Product View)"
     else:
         consts["PH_CSS"] = json.dumps(min_css((src / "phone.css").read_text()))
@@ -203,9 +205,9 @@ if __name__ == "__main__":
     harness(out)
     base_commit = sys.argv[1] if len(sys.argv) > 1 else "COMMIT"
     (dist / "loader-baby.js").write_text(LOADER % {"base": f"{CDN}{base_commit}/divine-baby-junior/experience/dist/"})
-    # the Standard Product View description (the approved look, 1.1.0) with the hidden pointer for the Experience in front of it
-    base_desc = top / "ecwid/description-1.1.0.html"
+    # the Standard Product View description (the approved look, 1.2.0) with the hidden pointer for the Experience in front of it
+    base_desc = top / "ecwid/description-1.2.0.html"
     if base_desc.exists():
-        (top / "ecwid/description-2.0.0.html").write_text(pointer + "\n" + base_desc.read_text())
+        (top / "ecwid/description-2.1.0.html").write_text(pointer + "\n" + base_desc.read_text())
     sizes = {k: (dist / v).stat().st_size for k, v in out.items()}
     print(json.dumps(out), sizes)

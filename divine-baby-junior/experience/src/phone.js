@@ -17,29 +17,27 @@ function pageStylePhone() {
   }
 }
 /* the guided steps */
-var PSTEPS = ['size', 'height', 'review'];
+var PSTEPS = ['size', 'depth', 'review'];
 function phSheetHtml(U) {
   var idx = PSTEPS.indexOf(U.step) + 1, body = '', foot = '';
   if (U.step === 'size') {
-    var fam = U.family || (X.S.size && sizeByKey(X.S.size).g) || null;
-    body = '<h2 class="q">How big is the cot or bed?</h2><p class="sub">Every size in centimetres and in inches.</p><div class="fam">' + DATA.groups.map(function (g) {
-      return '<button type="button" class="card fm' + (fam === g.key ? ' on' : '') + '" data-family="' + g.key + '"><span class="fm1">' + esc(g.name) + '</span><span class="fm3">' + esc(g.sub) + '</span></button>'; }).join('') + '</div>';
-    if (fam) { body += '<p class="lab2">' + esc(groupByKey(fam).name) + ' · width × length</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === fam; }).map(function (z) {
-      var on = X.S.size === sizeKey(z), av = shopHas('size', sizeKey(z));
-      return '<button type="button" class="card sz' + (on ? ' on' : '') + '" data-pick-size="' + sizeKey(z) + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + z.w + ' × ' + z.l + ' cm</span><span class="in">' + inch(z.w) + ' × ' + inch(z.l) + ' in</span></button>'; }).join('') + '</div>'; }
+    body = '<h2 class="q">How big is the cot or bed?</h2><p class="sub">Choose your size. Every size in centimetres and in inches.</p>' + DATA.groups.map(function (g) {
+      return '<p class="lab2">' + esc(g.name) + ' · ' + esc(g.sub) + '</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(function (z) {
+        var on = X.S.size === sizeKey(z), av = shopHas('size', sizeKey(z));
+        return '<button type="button" class="card sz' + (on ? ' on' : '') + '" data-pick-size="' + sizeKey(z) + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + z.w + ' × ' + z.l + ' cm</span><span class="in">' + inch(z.w) + ' × ' + inch(z.l) + ' in</span></button>'; }).join('') + '</div>'; }).join('');
     body += '<p class="need">Cot and bed sizes differ between manufacturers: measure the <b>inside</b> of the frame.</p>';
-    foot = '<button type="button" class="btn" data-go="height"' + (X.S.size ? '' : ' disabled') + '>Continue to Height</button>';
-  } else if (U.step === 'height') {
+    foot = '<button type="button" class="btn" data-go="depth"' + (X.S.size ? '' : ' disabled') + '>Continue to Depth</button>';
+  } else if (U.step === 'depth') {
     var z = X.S.size && sizeByKey(X.S.size);
-    body = '<h2 class="q">How high should it be?</h2><p class="sub">Two heights. Length and width stay the same: check the maximum mattress height your cot or bed allows.</p><div class="cards">' + DATA.heights.map(function (h) {
+    body = '<h2 class="q">How deep should it be?</h2><p class="sub">Two depths. Length and width stay the same: check the maximum mattress depth your cot or bed allows.</p><div class="cards">' + DATA.heights.map(function (h) {
       var p = z ? priceOf(z, h) : '', on = X.S.height === String(h.cm), av = shopHas('height', String(h.cm));
       return '<button type="button" class="card hc' + (on ? ' on' : '') + '" data-pick-height="' + h.cm + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + h.cm + ' cm</span><span class="in">' + inch(h.cm) + ' in</span>' + (p ? '<span class="pr">' + esc(p) + '</span>' : '') + '<span class="dsc">' + esc(h.desc) + '</span></button>'; }).join('') + '</div>';
     foot = '<button type="button" class="btn ghost" data-go="size">Back</button><button type="button" class="btn" data-go="review"' + (X.S.height ? '' : ' disabled') + '>Review</button>';
   } else {
     var fc = bagFace();
     body = '<h2 class="q">Review your order</h2><ul class="rv">' + ORDER.map(function (o) { return '<li><span>' + o[1] + '</span><b>' + (chosenLabel(o[0]) ? esc(chosenLabel(o[0])) : '<i>Not chosen yet</i>') + '</b></li>'; }).join('') +
-      '<li><span>Firmness</span><b>Medium <i>· fixed</i></b></li><li><span>Cover</span><b>100% cotton <i>· fixed</i></b></li></ul><div class="rvp"><span>Price</span><b>' + (complete() && priceNow() ? esc(priceNow()) : '<i>Choose a size and a height</i>') + '</b></div><p class="guide">' + esc(fc.guide) + '</p>';
-    foot = '<button type="button" class="btn ghost" data-go="height">Back</button><button type="button" class="btn big' + (fc.ready ? ' ready' : '') + '" data-bag="1"' + (fc.enabled ? '' : ' disabled') + '>' + fc.text + '</button>';
+      '</ul><p class="bp s incl">Every mattress is <b>Medium</b> firmness with a <b>100% cotton</b> cover. Both are explained in the description; there is nothing to select.</p><div class="rvp"><span>Price</span><b>' + (complete() && priceNow() ? esc(priceNow()) : '<i>Choose a size and a depth</i>') + '</b></div><p class="guide">' + esc(fc.guide) + '</p>';
+    foot = '<button type="button" class="btn ghost" data-go="depth">Back</button><button type="button" class="btn big' + (fc.ready ? ' ready' : '') + '" data-bag="1"' + (fc.enabled ? '' : ' disabled') + '>' + fc.text + '</button>';
   }
   return '<header class="hd"><div class="hdt"><span class="stp">Step ' + idx + ' of 3</span><b>' + esc(DATA.product.name) + '</b></div><button type="button" class="x" data-close aria-label="Close the configuration">×</button></header><div class="prog">' + PSTEPS.map(function (s, i) { return '<i class="' + (i < idx ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="bd">' + body + '</div><footer class="ft">' + foot + '</footer>';
 }
@@ -50,7 +48,7 @@ function openSheet() {
   var hostEl = doc.createElement('div'); hostEl.id = 'ddp-sheet'; doc.body.appendChild(hostEl);
   var R = hostEl.attachShadow ? hostEl.attachShadow({ mode: 'open' }) : hostEl;
   R.innerHTML = '<style>' + phoneCss() + '</style><div class="sheet" role="dialog" aria-modal="true" aria-label="Configure your mattress"></div><div class="toast" role="status"></div>';
-  var U = { step: nextStepP(), family: null }, sh = $('.sheet', R), toast = $('.toast', R);
+  var U = { step: nextStepP() }, sh = $('.sheet', R), toast = $('.toast', R);
   function draw() { sh.innerHTML = phSheetHtml(U); var b = $('.bd', sh); if (b && draw.keep != null) { b.scrollTop = draw.keep; } }
   function say(t) { toast.textContent = t; toast.classList.add('on'); win.clearTimeout(say.t); say.t = win.setTimeout(function () { toast.classList.remove('on'); }, 2600); }
   function close() { doc.documentElement.classList.remove('ddp-lock'); if (hostEl.parentNode) { hostEl.parentNode.removeChild(hostEl); } PH = null; X.hooks.draw = null; X.hooks.prices = null; X.hooks.state = null; refreshCta(); }
@@ -58,7 +56,6 @@ function openSheet() {
     var t = e.target.closest ? e.target.closest('button') : null; if (!t || t.disabled) { return; } var v;
     if (t.hasAttribute('data-close')) { close(); return; }
     if ((v = t.getAttribute('data-go'))) { U.step = v; draw.keep = 0; draw(); return; }
-    if ((v = t.getAttribute('data-family'))) { U.family = v; draw(); return; }
     if ((v = t.getAttribute('data-pick-size'))) {
       var prev = rawPrice(); X.S.size = v; push(); draw();
       if (X.S.height) { awaitPrice(prev, function () { draw(); readOthers(); }); }
@@ -72,7 +69,7 @@ function openSheet() {
   doc.documentElement.classList.add('ddp-lock'); PH = { host: hostEl, draw: draw, close: close }; draw();
   var fb = $('.btn:not(:disabled)', sh); if (fb && fb.focus) { try { fb.focus({ preventScroll: true }); } catch (e) { /* ok */ } }
 }
-function nextStepP() { return X.S.size == null ? 'size' : X.S.height == null ? 'height' : 'review'; }
+function nextStepP() { return X.S.size == null ? 'size' : X.S.height == null ? 'depth' : 'review'; }
 /* the button and its one-line status, in the shop's own options block */
 function refreshCta() {
   if (!ctaBtn || !ctaNote) { return; }
