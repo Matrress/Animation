@@ -2,7 +2,7 @@
 (function(w,d){var H=d.documentElement,q=w.location.search,G='https://cdn.jsdelivr.net/gh/Matrress/Animation@',B='https://media.divinedunlop.com/ddtv/',LIVE=[876405767],NM=/^[a-z][a-z0-9-]{0,45}-[0-9a-f]{20}\.js$/,M=/^[a-z0-9-]{1,40}$/,N={},Q=0,S,tm,on=0,sc=w.screen||{},CL=LIVE.map(function(i){return'ecwid-productBrowser-ProductPage-'+i});
 function js(u,o){var e=d.createElement('script'),k;e.src=u;for(k in o||{})e[k]=o[k];d.head.appendChild(e);return e}
 if(!w.__ddcLoader){w.__ddcLoader=1;var C=G+'08088112777cbf09aa9bf7dad1386cb474bd5eae/divine-collection/release/3.13.2-configB/',off=function(){H.classList.remove('ddc-js')},l=d.createElement('link');H.classList.add('ddc-js');l.rel='stylesheet';l.href=C+'ddc.css';l.onerror=off;d.head.appendChild(l);js(C+'ddc.js',{defer:true,onerror:off});setTimeout(function(){w.DDC||off()},8000)}
-if(!w.__dbsLoader){w.__dbsLoader=1;js(G+'8cccb4390a29cefd6522f5ef8078f312840278cf/divine-baby-junior/release/1.4.0/dbs.js',{defer:true})}
+if(!w.__dbsLoader){w.__dbsLoader=1;js(G+'6e8c21882170da1202e34bc93c5f1fa90c5eec57/divine-baby-junior/release/1.4.0/dbs.js',{defer:true})}
 if(/[?&]ddtv=off\b/.test(q)||w.__ddtvLoader)return;w.__ddtvLoader=1;
 function ph(){var p=Math.min(sc.width||9999,sc.height||9999)<600;if(/[?&]ddtv=tv\b/.test(q))p=false;if(/[?&]ddtv=phone\b/.test(q))p=true;return p}
 function F(){clearTimeout(tm);S.classList.add('ddtv-go')}

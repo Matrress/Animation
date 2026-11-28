@@ -45,7 +45,7 @@ async function run(b, o, code, html) {
   /* length and content */
   const code = loaderCode('876405767');
   ok(code.replace(/\n$/, '').length <= 4000, 'the unified loader is ' + code.replace(/\n$/, '').length + ' characters (limit 4000)');
-  ok(/08088112777cbf09aa9bf7dad1386cb474bd5eae\/divine-collection\/release\/3\.13\.2-configB\//.test(code) && /release\/1\.3\.0\/dbs\.js/.test(code) && /media\.divinedunlop\.com\/ddtv\//.test(code), 'it names the Divine Collection files, the selector and the Experience folder');
+  ok(/08088112777cbf09aa9bf7dad1386cb474bd5eae\/divine-collection\/release\/3\.13\.2-configB\//.test(code) && /release\/1\.4\.0\/dbs\.js/.test(code) && /media\.divinedunlop\.com\/ddtv\//.test(code), 'it names the Divine Collection files, the selector and the Experience folder');
   ok(!/eval\(|document\.wri|innerHTML/.test(code), 'no eval, document write or innerHTML in the loader');
 
   /* 1. Baby & Junior, test channel: nothing without the opt-in, mounted with ?ddtv=test */
