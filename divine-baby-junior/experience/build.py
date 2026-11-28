@@ -208,6 +208,6 @@ if __name__ == "__main__":
     # the Standard Product View description (the approved look, 1.2.0) with the hidden pointer for the Experience in front of it
     base_desc = top / "ecwid/description-1.2.0.html"
     if base_desc.exists():
-        (top / "ecwid/description-2.1.0.html").write_text(pointer + "\n" + base_desc.read_text())
+        (top / "ecwid/description-2.2.0.html").write_text(pointer + "\n" + base_desc.read_text())
     sizes = {k: (dist / v).stat().st_size for k, v in out.items()}
     print(json.dumps(out), sizes)
