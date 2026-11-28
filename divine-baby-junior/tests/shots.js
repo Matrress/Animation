@@ -4,7 +4,7 @@ const file = 'file://' + path.resolve(process.argv[2]); const out = process.argv
 (async () => {
   const b = await chromium.launch();
   for (const [name, opt] of [['desk', { viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' }], ['ipad', { viewport: { width: 834, height: 1100 }, reducedMotion: 'reduce' }], ['phone', { ...devices['iPhone 13'], reducedMotion: 'reduce' }]]) {
-    const ctx = await b.newContext(opt); const p = await ctx.newPage(); await p.goto(file); await p.waitForSelector('.dbs--on');
+    const ctx = await b.newContext(opt); const p = await ctx.newPage(); await p.goto(file); await p.waitForSelector('.dbs--on'); await p.waitForFunction(() => [...document.querySelectorAll('.dbj-car__s--1 img')].every(i => i.complete && i.naturalWidth > 0), null, { timeout: 20000 });
         const hero = await p.$('.dbj-hero'); await hero.screenshot({ path: `${out}/v10-${name}-hero.png` });
     await p.click('.dbs-btn:has-text("Baby Cot Size")'); await p.click('.dbs-btn:has-text("60 × 120 cm")'); await p.click('[data-h="14"] .dbs-btn');
     await p.waitForTimeout(2200);

@@ -90,14 +90,23 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   const prodText = fs.readFileSync(path.resolve(__dirname, '../ecwid/' + prod), 'utf8').replace(/<style>[\s\S]*?<\/style>/, '').replace(/<[^>]+>/g, ' ');
   ok(!/12 cm|4\.7 in|12cm/.test(prodText), 'no 12 cm anywhere in the production description (' + prod + ')');
 
-  /* the gallery works with CSS alone */
+  /* the swipe gallery (Botanic TV placement): works by CSS alone, dots/drag/keys come from dbs.js */
   const c2 = await b.newContext({ viewport: { width: 1440, height: 1000 }, javaScriptEnabled: false }); const p2 = await c2.newPage(); await p2.goto(file);
   ok((await p2.$$('.dbs-list li')).length === 12, 'without JS the static list stays (12 items)');
-  ok(await p2.evaluate(() => getComputedStyle(document.querySelector('.dbj-slide--1')).opacity === '1' && getComputedStyle(document.querySelector('.dbj-slide--4')).opacity === '0'), 'gallery: the first photo shows, the others are hidden (no JS)');
-  await p2.click('label[for="dbj-g4"]'); await p2.waitForTimeout(500);
-  ok(await p2.evaluate(() => getComputedStyle(document.querySelector('.dbj-slide--4')).opacity === '1' && getComputedStyle(document.querySelector('.dbj-slide--1')).opacity === '0' && getComputedStyle(document.querySelector('.dbj-cap--4')).display === 'block' && getComputedStyle(document.querySelector('.dbj-cap--1')).display === 'none'), 'gallery: a tab shows its photo and caption (CSS only)');
-  const g = await p2.$('.dbj-gal'); await g.screenshot({ path: out + '/gallery-quilting.png' });
-  for (const n of [1, 2, 3, 5]) { await p2.click('label[for="dbj-g' + n + '"]'); await p2.waitForTimeout(450); const gg = await p2.$('.dbj-gal-frame'); await gg.screenshot({ path: out + '/gallery-' + n + '.png' }); }
+  ok(await p2.evaluate(() => { const v = document.querySelector('.dbj-car__v'); const cs = getComputedStyle(v); return document.querySelectorAll('.dbj-car__s').length === 5 && cs.overflowX === 'auto' && cs.scrollSnapType.indexOf('x') === 0 && getComputedStyle(document.querySelector('.dbj-car__d')).display === 'none' && v.scrollWidth > v.clientWidth * 4; }), 'gallery without JS: five slides that scroll and snap (no dots yet)');
+  const lay2 = await p2.evaluate(() => { const g = document.querySelector('.dbj-hero-grid').children; const t = g[0].getBoundingClientRect(), c = g[1].getBoundingClientRect(); return { tx: Math.round(t.left), cx: Math.round(c.left), tw: Math.round(t.width), cw: Math.round(c.width) }; });
+  console.log('hero', JSON.stringify(lay2));
+  ok(lay2.cx > lay2.tx && lay2.cw > 250 && lay2.cw < lay2.tw, 'hero: title on the left, gallery on the right (Botanic TV placement)');
+  ok(await p.evaluate(() => document.querySelectorAll('.dbj-car__dot').length === 5 && document.querySelectorAll('.dbj-car__dot.on').length === 1), 'gallery with JS: five dots, one active');
+  await p.evaluate(() => document.querySelector('.dbj-car').scrollIntoView({ block: 'center' }));
+  await p.click('.dbj-car__dot >> nth=3'); await p.waitForTimeout(900);
+  ok(await p.evaluate(() => { const v = document.querySelector('.dbj-car__v'); return Math.abs(v.scrollLeft - 3 * v.clientWidth) < 3 && document.querySelectorAll('.dbj-car__dot')[3].classList.contains('on'); }), 'a dot scrolls to its picture and becomes active');
+  await p.focus('.dbj-car__v'); await p.keyboard.press('ArrowLeft'); await p.waitForTimeout(900);
+  ok(await p.evaluate(() => document.querySelectorAll('.dbj-car__dot')[2].classList.contains('on')), 'ArrowLeft goes to the previous picture');
+  const vb = await (await p.$('.dbj-car__v')).boundingBox();
+  await p.mouse.move(vb.x + vb.width * 0.7, vb.y + vb.height / 2); await p.mouse.down(); await p.mouse.move(vb.x + vb.width * 0.15, vb.y + vb.height / 2, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(900);
+  ok(await p.evaluate(() => document.querySelectorAll('.dbj-car__dot')[3].classList.contains('on') && Math.abs(document.querySelector('.dbj-car__v').scrollLeft % document.querySelector('.dbj-car__v').clientWidth) < 3), 'mouse drag moves to the next picture and snaps');
+  for (const n of [0, 1, 2, 3, 4]) { await p.click('.dbj-car__dot >> nth=' + n); await p.waitForTimeout(900); const gg = await p.$('.dbj-car'); await gg.screenshot({ path: out + '/gallery-' + (n + 1) + '.png' }); }
   const el2 = await p2.$('.dbs'); await el2.screenshot({ path: out + '/dbs-static.png' });
 
   const c3 = await b.newContext({ ...devices['iPhone 13'], reducedMotion: 'reduce' }); const p3 = await c3.newPage(); await p3.goto(file); await p3.waitForSelector('.dbs--on');

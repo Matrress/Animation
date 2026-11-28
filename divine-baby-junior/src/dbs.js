@@ -1,4 +1,4 @@
-/* Divine DunlopDreams · mattress selector and presentation (dbs) 1.0.0
+/* Divine DunlopDreams · mattress selector and presentation (dbs) 1.1.0
  *
  * Turns a static, readable block (marked with data-dbs) into two equal cubes side by side: the selection on the
  * left (buttons for type, size and height, a summary) and the presentation on the right (tabs and panels; pressing
@@ -501,9 +501,54 @@
     render();
   }
 
+  /* ---------- picture carousel ([data-dbg]): the slides already swipe by CSS scroll-snap; this adds dots, mouse drag and arrow keys ---------- */
+  function initCarousel(fig) {
+    if (fig.__dbg) { return; }
+    var v = $('.dbj-car__v', fig), slides = $$('.dbj-car__s', fig), d = $('.dbj-car__d', fig);
+    if (!v || slides.length < 2 || !d) { return; }
+    fig.__dbg = 1;
+    var dots = [], raf = 0;
+    function cur() { return Math.max(0, Math.min(slides.length - 1, Math.round(v.scrollLeft / (v.clientWidth || 1)))); }
+    function go(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      var x = i * v.clientWidth;
+      try { v.scrollTo({ left: x, behavior: reduce ? 'auto' : 'smooth' }); } catch (e5) { v.scrollLeft = x; }
+    }
+    function mark() {
+      var n = cur();
+      dots.forEach(function (b, k) { b.className = 'dbj-car__dot' + (k === n ? ' on' : ''); b.setAttribute('aria-current', k === n ? 'true' : 'false'); });
+    }
+    slides.forEach(function (s, i) {
+      var b = el('button', 'dbj-car__dot'); b.type = 'button'; b.setAttribute('aria-label', 'Picture ' + (i + 1) + ' of ' + slides.length);
+      b.addEventListener('click', function () { go(i); });
+      d.appendChild(b); dots.push(b);
+    });
+    v.addEventListener('scroll', function () { if (!raf) { raf = window.requestAnimationFrame(function () { raf = 0; mark(); }); } }, { passive: true });
+    v.addEventListener('keydown', function (e) {
+      var k = e.key || e.keyCode;
+      if (k === 'ArrowRight' || k === 39) { e.preventDefault(); go(cur() + 1); } else if (k === 'ArrowLeft' || k === 37) { e.preventDefault(); go(cur() - 1); }
+    });
+    /* mouse drag (touch and trackpads scroll natively) */
+    var drag = null;
+    v.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse' || e.button !== 0) { return; } drag = { x: e.clientX, s: v.scrollLeft, moved: false }; });
+    window.addEventListener('pointermove', function (e) {
+      if (!drag) { return; }
+      var dx = e.clientX - drag.x;
+      if (!drag.moved && Math.abs(dx) > 4) { drag.moved = true; v.className += ' dbj-drag'; }
+      if (drag.moved) { v.scrollLeft = drag.s - dx; }
+    });
+    window.addEventListener('pointerup', function () {
+      if (!drag) { return; }
+      var was = drag.moved; drag = null;
+      if (was) { v.className = v.className.replace(/\s*dbj-drag/, ''); go(cur()); }
+    });
+    fig.className += ' dbj-car--on';
+    mark();
+  }
+
   /* ---------- start: after Ecwid has rendered the page; bounded polling, no observers ---------- */
   var timer = 0;
-  function scan() { $$('[data-dbs]').forEach(init); }
+  function scan() { $$('[data-dbs]').forEach(init); $$('[data-dbg]').forEach(initCarousel); }
   function kick() {
     if (timer) { window.clearInterval(timer); }
     var n = 0; scan();

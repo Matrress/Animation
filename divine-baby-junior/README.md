@@ -1,10 +1,10 @@
 # Divine DunlopDreams · Dunlop Baby & Junior · product description
 
-Status: **1.0.0 (Bio Comfort model, CSS gallery, 50/50 selection and presentation, prices read from Ecwid), not published.** The product in Ecwid stays disabled; this code has not been pasted into Ecwid.
+Status: **1.1.0 (Bio Comfort model, swipe gallery beside the title, 50/50 selection and presentation, prices read from Ecwid), not published.** The product in Ecwid stays disabled; this code has not been pasted into Ecwid.
 
 - Analysis, design system, review questions and business model: [`ANALYSIS.md`](ANALYSIS.md)
 - Prototype (open in a browser): [`preview/prototype.html`](preview/prototype.html)
-- Paste-ready Ecwid Description: [`ecwid/description-1.0.0.html`](ecwid/description-1.0.0.html)
+- Paste-ready Ecwid Description: [`ecwid/description-1.1.0.html`](ecwid/description-1.1.0.html)
 - Screenshots: [`docs/shots/`](docs/shots/)
 - Earlier builds (0.1.0, 0.2.0) are in git history only, so an old description cannot be pasted by mistake.
 
@@ -15,7 +15,7 @@ python3 build.py
 Edit only `src/description.html` and `src/dbj.css`. Blocks wrapped in `<!--R-->…<!--/R-->` (HTML) and `/*R*/…/*/R*/` (CSS) are review notes: they show in the prototype and are removed from the Ecwid file. The build fails if anything from review remains in the Ecwid file.
 
 ## Selector (dbs.js)
-`src/dbs.js` (copied to `release/1.0.0/dbs.js`) builds two equal cubes side by side: selection (type, size, height, summary, Add to bag proxy) on the left and a tabbed presentation on the right; pressing a selection button opens the matching panel (a size opens the dimensioned drawing in centimetres and inches, a height opens the height comparison, a Prices tab shows a size-by-height matrix). It fills Ecwid's own option dropdowns (price, bag and checkout stay with Ecwid) and shows prices only as Ecwid gives them: after the customer chooses, it reads the other height of that size; "Show every price" reads all combinations. No price is typed into the page or the script. Heights: 10 and 14 cm. The CSS gallery (hero) needs no JavaScript. It is loaded by a 283-character site-wide loader (`ecwid/loader-1.0.0.html`, pinned to the commit that holds the script); **not installed, needs approval**. Without it the description still shows the full static list. Tests: `node tests/dbs-test.js preview/prototype.html OUT_DIR` and `node tests/dbs-live.js src/dbs.js` and `node tests/dbs-live-prices.js src/dbs.js` (read the live Bio Comfort page in the browser only; nothing is bought or saved).
+`src/dbs.js` (copied to `release/1.1.0/dbs.js`) builds two equal cubes side by side: selection (type, size, height, summary, Add to bag proxy) on the left and a tabbed presentation on the right; pressing a selection button opens the matching panel (a size opens the dimensioned drawing in centimetres and inches, a height opens the height comparison, a Prices tab shows a size-by-height matrix). It fills Ecwid's own option dropdowns (price, bag and checkout stay with Ecwid) and shows prices only as Ecwid gives them: after the customer chooses, it reads the other height of that size; "Show every price" reads all combinations. No price is typed into the page or the script. Heights: 10 and 14 cm. The hero gallery is a swipe carousel placed beside the title, the Botanic TV pattern (CSS scroll-snap; dbs.js adds dots, mouse drag and arrow keys). It is loaded by a 283-character site-wide loader (`ecwid/loader-1.1.0.html`, pinned to the commit that holds the script); **not installed, needs approval**. Without it the description still shows the full static list. Tests: `node tests/dbs-test.js preview/prototype.html OUT_DIR` and `node tests/dbs-live.js src/dbs.js` and `node tests/dbs-live-prices.js src/dbs.js` (read the live Bio Comfort page in the browser only; nothing is bought or saved).
 
 ## Preview as a web page
 ```
@@ -37,6 +37,6 @@ The result is one HTML file plus `assets/` that can be published as a private pr
 
 ## Installing (only after approval)
 1. Ecwid admin → the Baby & Junior **draft** product → Description → `<>` (HTML) mode.
-2. Replace the content with the whole of `ecwid/description-1.0.0.html`. Save. Keep the product unpublished.
+2. Replace the content with the whole of `ecwid/description-1.1.0.html`. Save. Keep the product unpublished.
 3. Preview the draft on desktop, iPad and iPhone.
 4. If the description is truncated (length limit not yet verified; file is about 42,500 characters), move the CSS into a pinned jsDelivr file loaded by the existing site-wide loader.

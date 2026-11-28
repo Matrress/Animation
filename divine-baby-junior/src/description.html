@@ -3,32 +3,24 @@
 <!-- A · Opening card: same pattern as Bio Comfort (surface card, strong-blue label bar, chips, facts strip) -->
 <section class="dbj-card dbj-hero" aria-labelledby="dbj-a">
   <p class="dbj-bar">Dunlop Baby &amp; Junior · 100% Natural Latex Mattress</p>
-  <img class="dbj-logo" src="{{LOGO}}" alt="Bio Dunlop" width="130" height="51" loading="lazy" decoding="async">
-  <h2 class="dbj-display" id="dbj-a">One piece of natural latex.</h2>
-  <p class="dbj-lead">Dunlop Technology · Cotton cover · Made to order</p>
-  <p class="dbj-p">A cot and junior bed mattress with a single core of 100% natural Dunlop latex, inside a quilted 100% cotton cover. Made to order, for the first beds of childhood.</p>
-  <!-- Gallery: pure CSS (radio buttons and labels), no JavaScript. One large frame, a caption, and a row of tabs. -->
-  <div class="dbj-gal" role="group" aria-label="Photo gallery of the Baby &amp; Junior mattress">
-    <input type="radio" name="dbj-gal" id="dbj-g1" checked aria-label="Closed">
-    <input type="radio" name="dbj-gal" id="dbj-g2" aria-label="Open">
-    <input type="radio" name="dbj-gal" id="dbj-g3" aria-label="Latex core">
-    <input type="radio" name="dbj-gal" id="dbj-g4" aria-label="Quilting">
-    <input type="radio" name="dbj-gal" id="dbj-g5" aria-label="Zip">
-    <div class="dbj-gal-frame">
-      <figure class="dbj-slide dbj-slide--1"><div class="dbj-float">{{IMG:closed|Dunlop Baby &amp; Junior mattress with its cotton cover closed, showing the wide quilted waves and the zip along the side|eager}}</div></figure>
-      <figure class="dbj-slide dbj-slide--2">{{IMG:open|Dunlop Baby &amp; Junior mattress with the cotton cover unzipped and folded back to reveal the one-piece natural latex core|lazy}}</figure>
-      <figure class="dbj-slide dbj-slide--3">{{IMG:open|Close-up of the one-piece natural Dunlop latex core with its rows of ventilation channels|lazy}}</figure>
-      <figure class="dbj-slide dbj-slide--4">{{IMG:closed|Close-up of the quilted 100% cotton cover with its wide transverse waves|lazy}}</figure>
-      <figure class="dbj-slide dbj-slide--5">{{IMG:closed|Close-up of the zip puller and the side panel of the cotton cover|lazy}}</figure>
+  <div class="dbj-hero-grid">
+    <div class="dbj-hero-t">
+      <img class="dbj-logo" src="{{LOGO}}" alt="Bio Dunlop" width="130" height="51" loading="lazy" decoding="async">
+      <h2 class="dbj-display" id="dbj-a">One piece of natural latex.</h2>
+      <p class="dbj-lead">Dunlop Technology · Cotton cover · Made to order</p>
+      <p class="dbj-p">A cot and junior bed mattress with a single core of 100% natural Dunlop latex, inside a quilted 100% cotton cover. Made to order, for the first beds of childhood.</p>
     </div>
-    <p class="dbj-cap dbj-cap--1"><b>Closed.</b> Wide quilted waves in 100% cotton, with a zip along the side.</p>
-    <p class="dbj-cap dbj-cap--2"><b>Open.</b> Unzip the cover and the whole mattress is in view: cotton over one block of natural latex.</p>
-    <p class="dbj-cap dbj-cap--3"><b>Latex core.</b> One piece of natural Dunlop latex, with ventilation channels you can see.</p>
-    <p class="dbj-cap dbj-cap--4"><b>Quilting.</b> A 100% cotton cover with wide, flowing waves.</p>
-    <p class="dbj-cap dbj-cap--5"><b>Zip.</b> A zip along the side, so the cover opens and the core can be checked.</p>
-    <div class="dbj-gal-tabs">
-      <label for="dbj-g1">Closed</label><label for="dbj-g2">Open</label><label for="dbj-g3">Latex core</label><label for="dbj-g4">Quilting</label><label for="dbj-g5">Zip</label>
-    </div>
+    <!-- Swipe gallery (the Botanic TV pattern): scroll-snap slides and dots. Swipes and scrolls without JavaScript; dbs.js adds the dots, mouse drag and arrow keys. -->
+    <figure class="dbj-car" aria-roledescription="carousel" aria-label="Pictures of the mattress" data-dbg>
+      <div class="dbj-car__v" tabindex="0" role="group" aria-label="Pictures. Swipe, or use the left and right arrow keys.">
+        <div class="dbj-car__s dbj-car__s--1"><span class="dbj-car__c">Closed</span>{{IMG:closed|Dunlop Baby &amp; Junior mattress with its cotton cover closed, showing the wide quilted waves and the zip along the side|eager}}</div>
+        <div class="dbj-car__s dbj-car__s--2"><span class="dbj-car__c">Open</span>{{IMG:open|Dunlop Baby &amp; Junior mattress with the cotton cover unzipped and folded back to reveal the one-piece natural latex core|lazy}}</div>
+        <div class="dbj-car__s dbj-car__s--3"><span class="dbj-car__c">Latex core</span>{{IMG:open|Close-up of the one-piece natural Dunlop latex core with its rows of ventilation channels|lazy}}</div>
+        <div class="dbj-car__s dbj-car__s--4"><span class="dbj-car__c">Quilting</span>{{IMG:closed|Close-up of the quilted 100% cotton cover with its wide transverse waves|lazy}}</div>
+        <div class="dbj-car__s dbj-car__s--5"><span class="dbj-car__c">Zip</span>{{IMG:closed|Close-up of the zip puller and the side panel of the cotton cover|lazy}}</div>
+      </div>
+      <div class="dbj-car__d"></div>
+    </figure>
   </div>
   <p class="dbj-eyebrow">In brief</p>
   <ul class="dbj-tags">
