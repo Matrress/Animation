@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+"""The unified site-wide loader: Divine Collection + the Baby & Junior selector + the Experience loader (Botanic TV scheme).
+
+  python3 loader/build_loader.py <selector commit> [live ids, comma separated]
+
+Writes loader/divine-site-loader.js (code only) and loader/divine-site-loader.html (the same inside <script>), and stops if the code
+is longer than 4000 characters (Ecwid's limit for the site-wide custom code field).
+
+It keeps, line for line in behaviour:
+  - the Divine Collection loader 3.13.2-configB (class ddc-js, ddc.css, ddc.js, 8 s fallback);
+  - the selector loader of the Baby & Junior description (dbs.js, acts only on [data-dbs] blocks);
+  - the Experience loader v1.5 of Botanic TV (pointer #ddtv-pointer, LIVE ids, ?ddtv=test|off|tv|phone, early style, exact file names
+    from media.divinedunlop.com/ddtv/). Baby & Junior uses the same mechanism: its two files are served from the same place.
+"""
+import pathlib, sys
+
+here = pathlib.Path(__file__).resolve().parent
+dbs_commit = sys.argv[1] if len(sys.argv) > 1 else '0' * 40
+live = [int(x) for x in (sys.argv[2] if len(sys.argv) > 2 else '876405767').split(',') if x]
+DDC = '08088112777cbf09aa9bf7dad1386cb474bd5eae/divine-collection/release/3.13.2-configB/'
+DBS = f'{dbs_commit}/divine-baby-junior/release/1.4.0/dbs.js'
+
+code = r"""/*DDD site loader 1.0: Collection, selector, Experience. ?ddtv=test|off*/
+(function(w,d){var H=d.documentElement,q=w.location.search,G='https://cdn.jsdelivr.net/gh/Matrress/Animation@',B='https://media.divinedunlop.com/ddtv/',LIVE=[%LIVE%],NM=/^[a-z][a-z0-9-]{0,45}-[0-9a-f]{20}\.js$/,M=/^[a-z0-9-]{1,40}$/,N={},Q=0,S,tm,on=0,sc=w.screen||{},CL=LIVE.map(function(i){return'ecwid-productBrowser-ProductPage-'+i});
+function js(u,o){var e=d.createElement('script'),k;e.src=u;for(k in o||{})e[k]=o[k];d.head.appendChild(e);return e}
+if(!w.__ddcLoader){w.__ddcLoader=1;var C=G+'%DDC%',off=function(){H.classList.remove('ddc-js')},l=d.createElement('link');H.classList.add('ddc-js');l.rel='stylesheet';l.href=C+'ddc.css';l.onerror=off;d.head.appendChild(l);js(C+'ddc.js',{defer:true,onerror:off});setTimeout(function(){w.DDC||off()},8000)}
+if(!w.__dbsLoader){w.__dbsLoader=1;js(G+'%DBS%',{defer:true})}
+if(/[?&]ddtv=off\b/.test(q)||w.__ddtvLoader)return;w.__ddtvLoader=1;
+function ph(){var p=Math.min(sc.width||9999,sc.height||9999)<600;if(/[?&]ddtv=tv\b/.test(q))p=false;if(/[?&]ddtv=phone\b/.test(q))p=true;return p}
+function F(){clearTimeout(tm);S.classList.add('ddtv-go')}
+function A(){if(!ph())S.classList.remove('ddtv-go')}
+function E(){var f=0,i;for(i=0;i<CL.length;i++)if(d.getElementsByClassName(CL[i]).length)f=1;
+if(f&&!on){on=1;A();clearTimeout(tm);tm=setTimeout(F,30000)}else if(!f&&on){on=0;clearTimeout(tm);A()}
+if(on&&d.getElementById('ddtv-experience'))F()}
+function Z(x){return LIVE.map(function(i){return'html:not(.ddtv-go):has(.ecwid-productBrowser-ProductPage-'+i+') '+x}).join()}
+var st=d.createElement('style');st.id='ddtv-early';st.textContent=Z(':is(.product-details__top,.product-details__product-title)')+'{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;opacity:0!important}'+Z('#tile-product-details .ins-tile__wrap')+'{margin-top:14px!important}'+Z('.product-details')+'{visibility:hidden;max-height:min(120vh,1250px);overflow:hidden}'+Z('.product-details::before')+'{content:"";display:block;visibility:visible;min-height:min(100vh,1100px);border-radius:14px;background:#f7f7ee}';
+S=H;(d.head||H).appendChild(st);if(ph())F();new MutationObserver(E).observe(H,{childList:true,subtree:true});E();
+function T(){try{return w.sessionStorage.getItem('ddtvTest')==='1'}catch(e){return false}}
+try{if(/[?&]ddtv=test\b/.test(q))w.sessionStorage.setItem('ddtvTest','1')}catch(e){}
+function pg(){var n=d.querySelector('[class*="ecwid-productBrowser-ProductPage-"]'),m=n&&/ProductPage-(\d+)/.exec(n.className);return m?{n:n,id:+m[1]}:null}
+function U(e,id){var a=function(k){return e.getAttribute('data-ddtv-'+k)||''},c=a('channel'),L,i;
+if(a('v')!=='1'||a('product')!==String(id)||!M.test(a('model')))return F();
+if(!(c==='test'&&T())&&!((c==='live'||c==='test')&&LIVE.indexOf(id)>=0))return F();
+L=(ph()?a('phone'):a('tv')).split(' ');if(L.length>4)return F();for(i=0;i<L.length;i++)if(!NM.test(L[i]))return F();
+w.__ddtvPage={type:'PRODUCT',productId:id};w.__ddtvAllow=w.__ddtvAllow||[];if(w.__ddtvAllow.indexOf(id)<0)w.__ddtvAllow.push(id);
+for(i=0;i<L.length;i++)if(!N[L[i]]){N[L[i]]=1;js(B+L[i],{async:false,onerror:function(){S.setAttribute('data-ddtv-load','failed');F()}})}}
+function go(id){var me=++Q,n=0;(function t(){if(me!==Q)return;var p=pg(),e=p&&p.id===id&&p.n.querySelector('#ddtv-pointer');if(e)return U(e,id);if(++n<170&&(!p||p.id===id))setTimeout(t,150);else if(p&&p.id===id)F()})()}
+(function W(n){if(w.Ecwid&&w.Ecwid.OnPageLoaded){w.Ecwid.OnPageLoaded.add(function(g){if(g&&g.type==='PRODUCT')try{go(+g.productId)}catch(e){F()}});var p=pg();if(p)try{go(p.id)}catch(e){F()}return}if(n<300)setTimeout(function(){W(n+1)},100)})(0)})(window,document);
+"""
+code = code.replace('%LIVE%', ','.join(str(i) for i in live)).replace('%DDC%', DDC).replace('%DBS%', DBS)
+n = len(code.rstrip('\n'))
+print('loader length', n, 'characters (limit 4000)')
+assert n <= 4000, 'the unified loader is longer than 4000 characters'
+(here / 'divine-site-loader.js').write_text(code)
+(here / 'divine-site-loader.html').write_text('<script>' + code.rstrip('\n') + '</script>\n')

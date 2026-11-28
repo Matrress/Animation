@@ -256,3 +256,5 @@ b{font-weight:600}
   .cards,.fam,.hcards,.facts,.hts,.duo{grid-template-columns:minmax(0,1fr)}.chips{grid-template-columns:repeat(2,minmax(0,1fr))}
   .h3q{font-size:25px}.h3x{font-size:30px}.keys{grid-template-columns:minmax(0,1fr)}.brand{font-size:18px}
 }
+
+span.mxb{display:grid;place-items:center;min-height:44px;font-size:14px;color:var(--ink2);border:1px dashed var(--line);border-radius:var(--r);padding:8px 6px}

@@ -64,7 +64,7 @@ function shopHas(role, key) {
 }
 
 /* ---------- reading the shop and setting the shop ---------- */
-var X = { S: { size: null, height: null, bagged: '' }, busy: false, probing: false, prices: {}, hooks: {} };
+var X = { S: { size: null, height: null, bagged: '' }, busy: false, probing: false, prices: {}, gone: {}, hooks: {} };
 function readShop() { var o = {}; ROLES.forEach(function (r) { o[r] = shopKey(r, chosenText(selectFor(r))); }); return o; }
 function setShop(role, key) {
   var sel = selectFor(role); if (!sel || key == null) { return false; }
@@ -125,9 +125,11 @@ function priceNow() {
 function numOf(t) { var n = parseFloat(String(t).replace(/,/g, '').replace(/[^\d.]/g, '')); return isNaN(n) ? null : n; }
 function pkey(z, h) { return sizeKey(z) + '|' + h.cm; }
 function priceOf(z, h) { return X.prices[pkey(z, h)] || ''; }
+/* Ecwid now also holds the blocked combinations as Out of stock variations: a price is never taken from one, and it never goes into the tables */
+function soldOut() { var r = shopRoot(); return !!r && !shopBagButton() && /out\s+of\s+stock|sold\s+out/i.test(r.textContent || ''); }
 function remember() {
   var z = X.S.size && sizeByKey(X.S.size), h = X.S.height && heightByKey(X.S.height), p = priceNow();
-  if (z && h && p) { X.prices[pkey(z, h)] = p; }
+  if (z && h && p && !soldOut()) { X.prices[pkey(z, h)] = p; }
 }
 /* Ecwid changes its price in one step, 250 to 480 ms after a change: wait for the real change (or, for an equal price, long enough) */
 var pollT = 0;
@@ -138,7 +140,7 @@ function awaitPrice(before, cb, t) {
   if (t < 2600) { pollT = win.setTimeout(function () { awaitPrice(before, cb, t + 40); }, 40); } else { pollT = 0; cb(''); }
 }
 function missingCombos(only) {
-  var list = []; DATA.sizes.forEach(function (z) { if (only && z !== only) { return; } heightsFor(z).forEach(function (h) { if (!X.prices[pkey(z, h)] && shopHas('size', sizeKey(z)) && shopHas('height', String(h.cm))) { list.push({ z: z, h: h }); } }); });
+  var list = []; DATA.sizes.forEach(function (z) { if (only && z !== only) { return; } heightsFor(z).forEach(function (h) { if (!X.prices[pkey(z, h)] && !X.gone[pkey(z, h)] && shopHas('size', sizeKey(z)) && shopHas('height', String(h.cm))) { list.push({ z: z, h: h }); } }); });
   return list;
 }
 /* Select each combination in Ecwid's own dropdowns, wait for the price to change, remember it, then put the customer's selection back.
@@ -176,7 +178,7 @@ function readCombos(list, progress, finish) {
     s2.selectedIndex = zi; h2.selectedIndex = hi; fire(s2, 'input'); fire(s2, 'change'); fire(h2, 'input'); fire(h2, 'change');
     (function wait() {
       var raw = rawPrice(), p = priceNow();
-      if ((raw !== before && p) || t >= 900) { if (p) { X.prices[pkey(c.z, c.h)] = p; } if (progress) { progress(i, list.length); } if (X.hooks.prices) { X.hooks.prices(); } next(); return; }
+      if ((raw !== before && p) || t >= 900) { if (p && soldOut()) { X.gone[pkey(c.z, c.h)] = 1; } else if (p) { X.prices[pkey(c.z, c.h)] = p; } if (progress) { progress(i, list.length); } if (X.hooks.prices) { X.hooks.prices(); } next(); return; }
       t += 25; win.setTimeout(wait, 25);
     }());
   }
@@ -209,6 +211,7 @@ function complete() { return missing().length === 0; }
 function signature() { return complete() ? ORDER.map(function (o) { return o[0] + '=' + X.S[o[0]]; }).join('|') : ''; }
 function bagFace() {
   if (!complete()) { return { face: 'add', enabled: false, ready: false, text: 'Add to Bag', guide: 'Still to choose: ' + missing().join(' · ') }; }
+  if (soldOut()) { return { face: 'add', enabled: false, ready: false, text: 'Add to Bag', guide: 'This size and depth is not available' }; }
   if (X.S.bagged && X.S.bagged === signature()) { return { face: 'checkout', enabled: true, ready: false, text: 'Go to Checkout', guide: 'Added to your bag' }; }
   return { face: 'add', enabled: true, ready: true, text: 'Add to Bag', guide: X.S.bagged ? 'Your new choice is not in the bag yet: Add to Bag again' : 'Ready to order: size and depth chosen' };
 }

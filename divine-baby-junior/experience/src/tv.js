@@ -170,7 +170,8 @@ function pricesMatrixHtml() {
       out += '<div class="mxr" style="--n:' + hs.length + '"><span class="mxs"><b>' + z.w + ' × ' + z.l + ' cm</b><i>' + inch(z.w) + ' × ' + inch(z.l) + ' in</i></span>' +
         hs.map(function (h) {
           total++;
-          var p = priceOf(z, h), on = X.S.size === sizeKey(z) && X.S.height === String(h.cm);
+          var p = priceOf(z, h), on = X.S.size === sizeKey(z) && X.S.height === String(h.cm), gone = !!X.gone[pkey(z, h)];
+          if (gone) { return '<span class="mxb un">Not available</span>'; }
           return '<button type="button" class="mxb' + (p ? '' : ' un') + '" data-pair="' + sizeKey(z) + ',' + h.cm + '" aria-pressed="' + (on ? 'true' : 'false') + '"' + (X.probing ? ' disabled' : '') + '>' + (p ? esc(p) : 'See price') + '</button>';
         }).join('') + '</div>';
     });

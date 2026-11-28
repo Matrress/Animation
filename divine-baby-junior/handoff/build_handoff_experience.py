@@ -1,5 +1,5 @@
-"""Handoff page for the Baby & Junior Experience 2.3.0 (the Botanic TV scheme): what to upload, what to paste, how to test.
-Reuses the style and the copy script of the 1.1.0 handoff page. Output: handoff/ecwid-experience-2.3.0.html"""
+"""Handoff page for the Baby & Junior Experience 2.4.0 (the Botanic TV scheme): what to upload, what to paste, how to test.
+Reuses the style and the copy script of the 1.1.0 handoff page. Output: handoff/ecwid-experience-2.4.0.html"""
 import base64, html, pathlib, re
 root = pathlib.Path(__file__).resolve().parent.parent
 old = (root / 'handoff/ecwid-code-1.1.0.html').read_text()
@@ -7,10 +7,9 @@ style = re.search(r'<style>.*?</style>', old, re.S).group(0)
 script = re.search(r'<script>.*?</script>', old, re.S).group(0)
 dist = root / 'experience/dist'
 tv = next(dist.glob('baby-tv-*.js')); ph = next(dist.glob('baby-phone-*.js'))
-desc = (root / 'ecwid/description-2.3.0.html').read_text()
+desc = (root / 'ecwid/description-2.4.0.html').read_text()
 pointer = (dist / 'pointer.html').read_text().strip()
-loader = (dist / 'loader-baby.js').read_text().strip()
-dbs_loader = (root / 'ecwid/loader-1.3.0.js').read_text().strip()
+loader = (root / 'loader/divine-site-loader.js').read_text().strip()
 b64 = lambda p: base64.b64encode(p.read_bytes()).decode()
 dl = lambda p: f'<a class="dl" download="{p.name}" href="data:text/javascript;base64,{b64(p)}">Свали {p.name} ({p.stat().st_size // 1024} KB)</a>'
 extra = '''<style>
@@ -31,14 +30,14 @@ page = f'''<!doctype html>
 </head>
 <body>
 <main class="wrap">
-  <p class="eyebrow">Ecwid · Dunlop Baby &amp; Junior · Experience 2.3.0</p>
+  <p class="eyebrow">Ecwid · Dunlop Baby &amp; Junior · Experience 2.4.0</p>
   <h1>Схемата на Botanic TV, за бебешкия матрак</h1>
   <p class="lead">Три слоя, като при Botanic TV: телевизор (Optimised Preview), Standard Product View и телефонен слой. Опциите, цената, кошницата и касата остават на Ecwid. Нищо още не е в магазина.</p>
 
   <div class="steps">
-    <div class="step"><b>1</b><h3>Два файла</h3><p>Качи двата JS файла в <code>media.divinedunlop.com/ddtv/</code> (както Botanic TV). Или ползвай втория loader по-долу и ги сервирай от jsDelivr.</p></div>
-    <div class="step"><b>2</b><h3>Описанието</h3><p>Постави описанието по-долу (има скрития указател <code>#ddtv-pointer</code> най-отпред). Продуктът остава изключен.</p></div>
-    <div class="step"><b>3</b><h3>Тест</h3><p>Отвори продукта с <code>?ddtv=test</code> (канал „test“, както при Botanic TV). <code>?ddtv=off</code> изключва всичко.</p></div>
+    <div class="step"><b>1</b><h3>Два файла</h3><p>Качи двата JS файла в <code>media.divinedunlop.com/ddtv/</code> с точно тези имена. Те са единствените нови файлове за медията.</p></div>
+    <div class="step"><b>2</b><h3>Продуктовият HTML</h3><p>Постави в описанието на продукта <b>само</b> файла <code>description-2.4.0.html</code> (отделен файл, не тази страница). Продуктът остава изключен.</p></div>
+    <div class="step"><b>3</b><h3>Един loader</h3><p>В глобалния код на сайта замени сегашния код с <b>единия</b> loader по-долу (3915 знака, лимит 4000).</p></div>
   </div>
 
   <section class="card">
@@ -50,32 +49,30 @@ page = f'''<!doctype html>
   </section>
 
   <section class="card">
-    <div class="card-head"><h2>Описание с указателя · description-2.3.0</h2><button class="copy" data-target="desc">Копирай описанието</button></div>
+    <div class="card-head"><h2>Описание с указателя · description-2.4.0</h2><button class="copy" data-target="desc">Копирай описанието</button></div>
     <pre id="desc">{html.escape(desc)}</pre>
   </section>
 
   <section class="card">
-    <div class="card-head"><h2>Само указателят</h2><button class="copy" data-target="pointer">Копирай указателя</button></div>
-    <pre id="pointer">{html.escape(pointer)}</pre>
-  </section>
-
-  <section class="card">
-    <div class="card-head"><h2>Loader за двата файла от jsDelivr (по избор)</h2><button class="copy" data-target="loader">Копирай loader-а</button></div>
+    <div class="card-head"><h2>Единен loader за целия сайт</h2><button class="copy" data-target="loader">Копирай loader-а</button></div>
     <pre id="loader">{html.escape(loader)}</pre>
   </section>
 
   <section class="card">
-    <div class="card-head"><h2>Loader за селекцията в описанието (Standard Product View)</h2><button class="copy" data-target="dbsl">Копирай loader-а</button></div>
-    <pre id="dbsl">{html.escape(dbs_loader)}</pre>
+    <div class="card-head"><h2>Контролирано тестване</h2></div>
+    <div class="files"><div class="row"><div><b>1 · Качване без видимост</b><p>Файловете в медията нямат ефект, докато описанието със указателя не е в продукта и продуктът е изключен.</p></div></div>
+    <div class="row"><div><b>2 · Тест на канал „test“</b><p>С включен loader отвори продукта (в администраторски преглед) с <code>?ddtv=test</code>. Само ти го виждаш: за останалите продуктът остава със стандартния си изглед. <code>?ddtv=off</code> изключва телевизора, <code>?ddtv=tv</code> и <code>?ddtv=phone</code> налагат десктоп или телефон.</p></div></div>
+    <div class="row"><div><b>3 · Какво да провериш</b><p>20 валидни комбинации и цените им, блокираните да не се избират, количката (Add to Bag → Go to Checkout), Standard Product View, телефон, iPad портрет и пейзаж, връщане назад, директно зареждане.</p></div></div>
+    <div class="row"><div><b>4 · Публично пускане</b><p>Едва след одобрение: добави <code>876311857</code> в списъка <code>LIVE</code> в loader-а (в началото на кода) и включи продукта.</p></div></div></div>
   </section>
 
-  <div class="note"><b>Какво още не е направено и иска твое одобрение:</b> качването на двата файла в медията на магазина, записването на описанието в продукта, loader-ите (глобална настройка на сайта) и включването на продукта. Loader-ът на Botanic TV пуска само продуктите от своя списък <code>LIVE</code>; за каналa „test“ това не е нужно, но за публично пускане ID-то 876311857 трябва да влезе в списъка (или да ползваме втория loader). Продуктът е изключен, а Ecwid не показва изключен продукт на публичен адрес, така че тестът е през прегледа на Ecwid.</div>
+  <div class="note"><b>Нищо от това не е направено в магазина.</b> Качването на файловете, записването на описанието, смяната на глобалния код, наличностите и включването на продукта чакат твоето одобрение.</div>
 </main>
 <div class="toast" id="toast">Копирано</div>
 {script}
 </body>
 </html>
 '''
-out = root / 'handoff/ecwid-experience-2.3.0.html'
+out = root / 'handoff/ecwid-experience-2.4.0.html'
 out.write_text(page)
 print(out, len(page) // 1024, 'KB')

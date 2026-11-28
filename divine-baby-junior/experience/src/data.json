@@ -25,7 +25,7 @@
    ]
   ],
   "name": "Dunlop Baby & Junior 100% Natural Latex Mattress",
-  "intro": "A natural environment for your baby, from 100% natural latex: a single core of Dunlop latex in a quilted 100% cotton cover, with nothing else added. Made for your baby's first nights, and for your child's growing years."
+  "intro": "A natural environment for your baby, from 100% natural latex: a single core of Dunlop latex in a quilted 100% cotton cover, with nothing else added. For your baby's first nights, and for your child's growing years."
  },
  "groups": [
   {
@@ -139,7 +139,7 @@
   "One-piece core, no glued layers",
   "Ventilation channels",
   "OEKO-TEX® Standard 100",
-  "A baby pillow included"
+  "A natural latex baby pillow, a gift"
  ],
  "slides": [
   {
@@ -283,9 +283,9 @@
   },
   {
    "l": "Included",
-   "v": "A baby pillow",
+   "v": "A natural latex baby pillow",
    "pills": [
-    "With every mattress"
+    "A gift with every mattress"
    ]
   }
  ],
@@ -1098,24 +1098,24 @@
   {
    "id": "delivery",
    "label": "Delivery",
-   "head": "Delivery of your baby's mattress.",
+   "head": "Delivery of your baby's mattress, and a gift for your baby.",
    "panels": [
     {
      "id": "order",
      "kind": "read",
-     "label": "Made For Your Baby",
-     "title": "Your baby's mattress is made for you",
+     "label": "Delivery",
+     "title": "Delivery of your baby's mattress",
      "groups": [
       {
        "h": null,
        "blocks": [
         {
          "k": "p",
-         "t": "Your baby's mattress is made for the size and depth you choose. Please allow up to **20 days** for it to be made and delivered."
+         "t": "Please allow up to **20 days** for your baby's mattress to be prepared and delivered."
         },
         {
          "k": "p",
-         "t": "It arrives exactly as you ordered it, in the size and depth your baby's cot or your child's bed needs."
+         "t": "It arrives in the size and depth you chose for your baby's cot or your child's bed."
         }
        ]
       }
@@ -1145,19 +1145,59 @@
     {
      "id": "pillow",
      "kind": "read",
-     "label": "A Baby Pillow",
-     "title": "A baby pillow with every mattress",
+     "label": "A Gift For Your Baby",
+     "title": "A gift for your baby: our natural latex pillow",
      "groups": [
       {
        "h": null,
        "blocks": [
         {
          "k": "p",
-         "t": "Every Baby & Junior mattress comes with a **baby pillow** as a bonus. It is packed inside the package, together with your baby's mattress."
+         "t": "Every Baby & Junior mattress comes with a gift: **our own baby pillow**, specially developed and made from natural latex, in the same natural philosophy as the mattress."
         },
         {
          "k": "p",
-         "t": "Please follow the instructions supplied with the pillow, and current safer-sleep guidance, for when and how to use it."
+         "t": "It is an added value of the collection, packed together with your baby's mattress, at no extra cost."
+        }
+       ]
+      },
+      {
+       "h": "Natural, like the mattress",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Natural latex, shaped for a small head. It belongs to the same natural environment as the mattress your baby sleeps on."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "use",
+     "kind": "read",
+     "label": "Using The Pillow",
+     "title": "How and when to use the pillow",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "li",
+         "t": [
+          "**Purpose.** A head pillow for sleep, for your child in a cot bed or in a bed of their own.",
+          "**Age.** A baby under 12 months sleeps without a pillow, on a firm, flat mattress. Our pillow is for your child from 12 months, as the instructions supplied with it also state.",
+          "**Your baby's cot.** Keep the cot of a baby under 12 months clear: no pillow, and nothing loose.",
+          "**Follow the instructions.** Use and care instructions are supplied with the pillow. Always follow current guidance from the NHS and The Lullaby Trust."
+         ]
+        }
+       ]
+      },
+      {
+       "h": "For the years ahead",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "The pillow is a gift for the years ahead, when your baby has grown into a child with a bed of their own."
         }
        ]
       }

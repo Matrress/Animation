@@ -160,7 +160,7 @@ body{{margin:0;font-family:system-ui,sans-serif;color:#222;background:#fff}}
     <div class="details-product-option details-product-option--Size"><div class="details-product-option__title">Size</div><div class="product-details-module__content"><div class="form-control"><select aria-label="Size" class="form-control__select"><option>Please choose</option>{s_opts}</select></div></div></div>
     <div class="details-product-option details-product-option--Height"><div class="details-product-option__title">Height</div><div class="product-details-module__content"><div class="form-control"><select aria-label="Height" class="form-control__select"><option>Please choose</option>{h_opts}</select></div></div></div>
     <div class="details-product-price"><div class="details-product-price__value" id="proto-price">£0</div></div>
-    <button type="button" class="form-control__button" id="proto-add"><span>Add to Bag</span></button>
+    <button type="button" class="form-control__button" id="proto-add"><span>Add to Bag</span></button><div id="proto-oos" style="display:none">Out of stock</div>
     <div class="details-product-share">Share this product</div>
   </div>
   <div class="product-details__description">{pointer}
@@ -172,7 +172,7 @@ body{{margin:0;font-family:system-ui,sans-serif;color:#222;background:#fff}}
 /* Ecwid imitation: the page type events, the cart event, and a price that changes 300 ms after an option changes */
 (function(){{var T={{'60x110':{{10:249,12:270}},'60x120':{{10:270,12:293}},'70x130':{{10:289,12:314}},'70x140':{{10:309,12:335}},'70x160':{{14:364,16:395}},'80x160':{{14:409,16:444}},'80x180':{{14:459,16:498}},'80x200':{{14:499,16:542}},'90x190':{{14:529,16:574}},'90x200':{{14:539,16:585}}}};
 var s=document.querySelector('.details-product-option--Size select'),h=document.querySelector('.details-product-option--Height select'),p=document.getElementById('proto-price');
-function upd(){{var m=/(\\d+) × (\\d+) cm/.exec(s.value),hh=/^(\\d+) cm/.exec(h.value);setTimeout(function(){{var r=m&&T[m[1]+'x'+m[2]],v=r&&hh&&r[hh[1]];p.textContent=v?'£'+v:'£0';}},300);}}
+function upd(){{var m=/(\\d+) × (\\d+) cm/.exec(s.value),hh=/^(\\d+) cm/.exec(h.value);setTimeout(function(){{var r=m&&T[m[1]+'x'+m[2]],v=r&&hh&&r[hh[1]],bad=!!(r&&hh&&!v),ad=document.getElementById('proto-add'),oo=document.getElementById('proto-oos');p.textContent=v?'£'+v:(bad?'£249':'£0');ad.style.display=bad?'none':'';oo.style.display=bad?'block':'none';}},300);}}
 s.addEventListener('change',upd);h.addEventListener('change',upd);
 var pl=[],cl=[];window.__bagClicks=0;window.__cartOpened=0;
 window.Ecwid={{OnPageLoaded:{{add:function(f){{pl.push(f);setTimeout(function(){{f({{type:'PRODUCT',productId:876311857}});}},50);}}}},OnProductSelectedOptionsChanged:{{add:function(){{}}}},OnCartChanged:{{add:function(f){{cl.push(f);}}}},openPage:function(x){{window.__cartOpened++;}}}};
@@ -212,9 +212,9 @@ if __name__ == "__main__":
     harness(out)
     base_commit = sys.argv[1] if len(sys.argv) > 1 else "COMMIT"
     (dist / "loader-baby.js").write_text(LOADER % {"base": f"{CDN}{base_commit}/divine-baby-junior/experience/dist/"})
-    # the Standard Product View description (the approved look, 1.3.0) with the hidden pointer for the Experience in front of it
-    base_desc = top / "ecwid/description-1.3.0.html"
+    # the Standard Product View description (the approved look, 1.4.0) with the hidden pointer for the Experience in front of it
+    base_desc = top / "ecwid/description-1.4.0.html"
     if base_desc.exists():
-        (top / "ecwid/description-2.3.0.html").write_text(pointer + "\n" + base_desc.read_text())
+        (top / "ecwid/description-2.4.0.html").write_text(pointer + "\n" + base_desc.read_text())
     sizes = {k: (dist / v).stat().st_size for k, v in out.items()}
     print(json.dumps(out), sizes)

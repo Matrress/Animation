@@ -50,6 +50,12 @@ const q = (code) => '(' + SR + ').' + code;
   await click(p, '[data-topic="ventilation"]'); await p.waitForTimeout(150); const sV = await slideAt();
   ok(sO === 1 && sV === 2, 'Origin shows the open mattress (1); Ventilation shows the latex core with its channels (2)');
   ok(await ev(p, q('querySelectorAll("#mine .slv .sl")') + '.length === 11 && ' + q('querySelectorAll("#mine .dot")') + '.length === 11'), 'the card holds 10 photographs and the size drawing, with dots');
+  /* the gift pillow, with its use and age */
+  await click(p, '[data-topic="delivery"]'); await click(p, '[data-part="3"]'); await p.waitForTimeout(150);
+  ok(await ev(p, '/12 months/.test(' + q('querySelector(".answer")') + '.textContent) && /Purpose/.test(' + q('querySelector(".answer")') + '.textContent) && /Age/.test(' + q('querySelector(".answer")') + '.textContent)'), 'Delivery: the gift pillow has its purpose, its age and its instructions');
+  await click(p, '[data-part="2"]'); await p.waitForTimeout(150);
+  ok(await ev(p, '/gift/i.test(' + q('querySelector(".answer")') + '.textContent) && /natural latex/i.test(' + q('querySelector(".answer")') + '.textContent)'), 'Delivery: our natural latex baby pillow is presented as a gift with every mattress');
+  ok(!/made to order|custom made/i.test(await ev(p, q('textContent'))), 'no "made to order" and no "custom made" anywhere in the television');
   /* the gallery opens large (about two thirds of the screen) and closes */
   await click(p, '[data-open="5"]'); await p.waitForTimeout(300);
   const gm = await ev(p, '({open:!' + q('getElementById("gmodal")') + '.hidden, w:' + q('querySelector(".gwrap")') + '.getBoundingClientRect().width, m:' + q('querySelector(".monitor")') + '.getBoundingClientRect().width, src:' + q('getElementById("gimg")') + '.getAttribute("src"), cap:' + q('getElementById("gcap")') + '.textContent})');
@@ -66,6 +72,7 @@ const q = (code) => '(' + SR + ').' + code;
   const tops = async () => ev(p, '({a:Math.round(' + q('querySelector(".banner, .hero2")') + '.getBoundingClientRect().top), b:Math.round(' + q('querySelector(".mine .start")') + '.getBoundingClientRect().top), c:Math.round(' + q('querySelector(".rail .tnode")') + '.getBoundingClientRect().top)})');
   const tp = await tops(); ok(Math.max(tp.a, tp.b, tp.c) - Math.min(tp.a, tp.b, tp.c) <= 1, 'Explore: the Start here card, the content card and the topic card start at one level ' + JSON.stringify(tp));
   /* the film: a card that opens large, and closes */
+  await click(p, '[data-topic="ventilation"]'); await p.waitForTimeout(150);
   await click(p, '[data-play="vent"]'); await p.waitForTimeout(200);
   ok(await ev(p, '!' + q('getElementById("vmodal")') + '.hidden && /airflow-ventilation/.test(' + q('getElementById("vfull")') + '.getAttribute("src"))'), 'the film opens large');
   await click(p, '.vclose'); ok(await ev(p, q('getElementById("vmodal")') + '.hidden && !' + q('getElementById("vfull")') + '.getAttribute("src")'), 'the film closes and stops');
@@ -80,7 +87,7 @@ const q = (code) => '(' + SR + ').' + code;
   const allowed = new Set(['003A68', '006591', 'B2E3FB', '91E8F1', 'E4E8F0', 'FFFFFF', 'FFF', 'F8F2FC', '009289']);
   ok([...hex].every(h => allowed.has(h)), 'palette guard: only the Bio Comfort colours, the soft lilac-pink (F8F2FC) and the leaf green (009289) in the television CSS ' + [...hex].filter(h => !allowed.has(h)).join(','));
   const content = JSON.stringify(JSON.parse(/var DATA = (\{.*?\});\nvar /s.exec(tvJs)[1]).chapters);
-  ok(!/coir|coconut/i.test(tvJs) && !/organic|waterproof|medically|newborn|SIDS|clinically|safest|healthiest|best for (your )?baby|anti-?bacterial|dust ?mite|customi[sz]/i.test(content), 'no coir, organic, waterproof, superlative, customisation or medical wording in the content');
+  ok(!/coir|coconut/i.test(tvJs) && !/organic|waterproof|medically|newborn|SIDS|clinically|safest|healthiest|best for (your )?baby|anti-?bacterial|dust ?mite|customi[sz]|made[- ]to[- ]order|custom[- ]made/i.test(content), 'no coir, organic, waterproof, superlative, customisation, made-to-order or medical wording in the content');
 
   /* ---------- select & buy: only Size and Depth ---------- */
   await click(p, '#galbtn'); await p.waitForTimeout(200);
@@ -137,6 +144,7 @@ const q = (code) => '(' + SR + ').' + code;
   await p.evaluate(() => { const h = document.querySelector('.details-product-option--Height select'); h.selectedIndex = [...h.options].findIndex(o => /^14 cm/.test(o.text)); h.dispatchEvent(new Event('input', { bubbles: true })); h.dispatchEvent(new Event('change', { bubbles: true })); }); await p.waitForTimeout(1800);
   const inv2 = await ev(p, '({h:document.querySelector(".details-product-option--Height select").value, dis:' + q('querySelector(".bag")') + '.disabled})');
   ok(/Please choose/.test(inv2.h) && inv2.dis, 'a Baby Cot size forced with a 14 cm depth in Ecwid\'s own dropdown is cleared again and the bag stays blocked');
+  ok(await ev(p, 'document.getElementById("proto-oos").style.display === "none" && document.getElementById("proto-add").style.display !== "none"'), 'the blocked (Out of stock) combination is not left standing in the shop: Ecwid\'s own button is back');
   /* reverse sync */
   await p.selectOption('.details-product-option--Size select', { label: 'Junior Size: 80 × 200 cm (31.5″ × 78.7″)' }); await p.waitForTimeout(1800);
   ok(await ev(p, q('querySelector(".stp[data-step=size] .st2")') + '.textContent.indexOf("80 × 200") === 0'), 'the television follows Ecwid\'s own dropdown');
