@@ -47,12 +47,12 @@
 
   /* ---------- Ecwid's own option controls ---------- */
   function findSelect(name) {
-    var want = String(name || '').toLowerCase();
+    var want = String(name || '').toLowerCase().split('|');   /* "height|depth": the shop's option may be called either */
     var blocks = $$('.details-product-option');
     for (var i = 0; i < blocks.length; i++) {
       var t = $('.details-product-option__title', blocks[i]);
       var txt = t ? t.textContent.replace(/[*\s]+$/, '').replace(/^\s+/, '').toLowerCase() : '';
-      if (txt === want) { var s = $('select', blocks[i]); if (s) { return s; } }
+      if (want.indexOf(txt) > -1) { var s = $('select', blocks[i]); if (s) { return s; } }
     }
     return null;
   }
@@ -102,7 +102,7 @@
     if (!sizes.length || !heights.length) { return; }
 
     var nameSize = root.getAttribute('data-ecwid-size') || 'size';
-    var nameHeight = root.getAttribute('data-ecwid-height') || 'height';
+    var nameHeight = root.getAttribute('data-ecwid-height') || 'height|depth';
     var maxL = 0, maxW = 0, maxH = 0, big = sizes[0];
     sizes.forEach(function (s) { if (s.w * s.l > big.w * big.l) { big = s; } if (s.l > maxL) { maxL = s.l; } if (s.w > maxW) { maxW = s.w; } });
     heights.forEach(function (h) { if (h.h > maxH) { maxH = h.h; } });
@@ -277,17 +277,17 @@
       setLab(labL, z.l + ' cm', inch(z.l) + ' in');
       setLab(labW, z.w + ' cm', inch(z.w) + ' in');
       setLab(labH, h.h + ' cm', inch(h.h) + ' in');
-      s.setAttribute('aria-label', (rangeName() ? rangeName() + ' mattress, ' : 'Mattress, ') + z.w + ' by ' + z.l + ' centimetres (' + inch(z.w) + ' by ' + inch(z.l) + ' inches), ' + h.h + ' centimetres (' + inch(h.h) + ' inches) high' + (pending ? '. Example only: choose a size and a height.' : '.'));
+      s.setAttribute('aria-label', (rangeName() ? rangeName() + ' mattress, ' : 'Mattress, ') + z.w + ' by ' + z.l + ' centimetres (' + inch(z.w) + ' by ' + inch(z.l) + ' inches), ' + h.h + ' centimetres (' + inch(h.h) + ' inches) deep' + (pending ? '. Example only: choose a size and a depth.' : '.'));
 
       if (pending) {
-        sumV.textContent = 'Choose a type, a size and a height.';
+        sumV.textContent = 'Choose a type, a size and a depth.';
         sumV2.textContent = 'The drawing shows an example until you choose.';
         sumSt.textContent = '';
       } else {
         sumV.textContent = (rangeName() ? rangeName() + ' · ' : '') + z.w + ' × ' + z.l + ' cm · ' + h.h + ' cm';
         sumV2.textContent = inch(z.w) + ' × ' + inch(z.l) + ' in · ' + inch(h.h) + ' in · Medium';
         if (state.unit === 'in') { var a = sumV.textContent; sumV.textContent = sumV2.textContent.replace(' · Medium', ''); sumV2.textContent = a + ' · Medium'; }
-        sumSt.textContent = state.synced === 'ok' ? 'Selected in the options on this page.' : state.synced === 'nomatch' ? 'This combination is not in the options yet. Please choose it in the options on this page.' : 'Please choose the same size and height in the options on this page.';
+        sumSt.textContent = state.synced === 'ok' ? 'Selected in the options on this page.' : state.synced === 'nomatch' ? 'This combination is not in the options yet. Please choose it in the options on this page.' : 'Please choose the same size and depth in the options on this page.';
       }
       sumSt.setAttribute('data-state', pending ? 'none' : state.synced);
       cta.hidden = !(state.synced === 'ok' && !pending && nativeAddToBag(root));
@@ -370,7 +370,7 @@
         c.b.setAttribute('aria-label', c.z.w + ' by ' + c.z.l + ' centimetres, ' + c.h.h + ' centimetres high' + (p ? ', ' + p : ': press to choose it and see the price'));
       });
       if (loadBtn && !probing) { loadBtn.hidden = known === mxBtns.length; loadBtn.textContent = 'Show every price'; }
-      if (mxNote) { mxNote.textContent = known ? 'These prices are read from the store, not typed into this page.' : 'Press a size and height to see its price. Every price comes from the store.'; }
+      if (mxNote) { mxNote.textContent = known ? 'These prices are read from the store, not typed into this page.' : 'Press a size and depth to see its price. Every price comes from the store.'; }
       highlightMatrix();
     }
     /* Select each combination in Ecwid's own dropdowns, wait for Ecwid's price to change, remember it, then put the

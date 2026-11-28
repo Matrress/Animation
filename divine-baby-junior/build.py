@@ -10,8 +10,8 @@ Usage: python3 build.py
 """
 import re, pathlib
 
-VERSION = "1.1.0"
-JS_COMMIT = "76e42397519b4cea438aaff41b03279a06a6b51c"   # commit that holds release/1.1.0/dbs.js
+VERSION = "1.2.0"
+JS_COMMIT = "0000000000000000000000000000000000000000"   # commit that holds release/1.2.0/dbs.js
 CDN = "https://cdn.jsdelivr.net/gh/Matrress/Animation@"
 FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"    # Chillax files already used by Hero 1.17.1 and Collection
 FONT400 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-400.woff2"
