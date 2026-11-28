@@ -10,8 +10,8 @@ Usage: python3 build.py
 """
 import re, pathlib
 
-VERSION = "1.3.0"
-JS_COMMIT = "cb2d502266b6a91309e62fbc18d8760fb8f74927"   # commit that holds release/1.2.0/dbs.js
+VERSION = "1.4.0"
+JS_COMMIT = "0000000000000000000000000000000000000000"
 CDN = "https://cdn.jsdelivr.net/gh/Matrress/Animation@"
 FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"    # Chillax files already used by Hero 1.17.1 and Collection
 FONT400 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-400.woff2"
@@ -193,7 +193,7 @@ body{{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#003A68}}
     <div class="details-product-option details-product-option--SIZE"><div class="details-product-option__title">SIZE</div><div class="product-details-module__content"><div class="form-control"><select aria-label="SIZE" class="form-control__select"><option>Please choose</option>{sizes_opts}</select></div></div></div>
     <div class="details-product-option details-product-option--HEIGHT"><div class="details-product-option__title">HEIGHT</div><div class="product-details-module__content"><div class="form-control"><select aria-label="HEIGHT" class="form-control__select"><option>Please choose</option>{height_opts}</select></div></div></div>
     <div class="details-product-price"><div class="details-product-price__value" id="proto-price">£0</div></div>
-    <button type="button" class="form-control__button proto-cta" id="proto-add">Add to Bag</button>
+    <button type="button" class="form-control__button proto-cta" id="proto-add">Add to Bag</button><div id="proto-oos" style="display:none">Out of stock</div>
     <p class="proto-note">This block imitates Ecwid's own gallery and dropdown options. It is not in the description code: prices, options and checkout stay with Ecwid.</p>
   </div>
   <div class="proto-desc">
@@ -210,7 +210,7 @@ body{{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#003A68}}
 /* prototype only: imitates how Ecwid reacts to its option dropdowns (price) */
 (function(){{var s=document.querySelector('.details-product-option--SIZE select'),h=document.querySelector('.details-product-option--HEIGHT select'),p=document.getElementById('proto-price');
 var T={{'60x110':{{10:249,12:270}},'60x120':{{10:270,12:293}},'70x130':{{10:289,12:314}},'70x140':{{10:309,12:335}},'70x160':{{14:364,16:395}},'80x160':{{14:409,16:444}},'80x180':{{14:459,16:498}},'80x200':{{14:499,16:542}},'90x190':{{14:529,16:574}},'90x200':{{14:539,16:585}}}};
-function upd(){{var m=/(\\d+) × (\\d+) cm/.exec(s.value),k=/\\((\\d+)/.exec(h.value),hh=/^(\\d+) cm/.exec(h.value);window.setTimeout(function(){{var r=m&&T[m[1]+'x'+m[2]],v=r&&hh&&r[hh[1]];p.textContent=v?'£'+v:'£0';}},300);}}
+function upd(){{var m=/(\\d+) × (\\d+) cm/.exec(s.value),k=/\\((\\d+)/.exec(h.value),hh=/^(\\d+) cm/.exec(h.value);window.setTimeout(function(){{var r=m&&T[m[1]+'x'+m[2]],v=r&&hh&&r[hh[1]],bad=!!(r&&hh&&!v),ad=document.getElementById('proto-add'),oo=document.getElementById('proto-oos');p.textContent=v?'£'+v:(bad?'£249':'£0');ad.style.display=bad?'none':'';oo.style.display=bad?'block':'none';}},300);}}
 s.addEventListener('change',upd);h.addEventListener('change',upd);
 document.getElementById('proto-add').addEventListener('click',function(){{this.setAttribute('data-clicked',String((+this.getAttribute('data-clicked')||0)+1));}});}})();
 </script>

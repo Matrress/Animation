@@ -111,7 +111,7 @@
     var state = { range: null, size: null, h: null, unit: 'cm', synced: 'none' };
     try { var u = window.localStorage.getItem('dbs-unit'); if (u === 'in' || u === 'cm') { state.unit = u; } } catch (e1) { /* storage may be blocked */ }
     var busy = false;
-    var prices = {}, probing = false;                         /* prices: combination -> the text Ecwid showed */
+    var prices = {}, gone = {}, probing = false;                         /* prices: combination -> the text Ecwid showed */
     var mx = $('[data-matrix]', root), mxNote = $('.dbs-pnote', root), mxBtns = [], loadBtn = null;
 
     /* upgrade the static lists into radio buttons */
@@ -325,9 +325,11 @@
     function matchSize(z) { return function (t) { var m = parseSize(t); return !!m && ((m.a === z.w && m.b === z.l) || (m.a === z.l && m.b === z.w)); }; }
     function matchHeight(h) { return function (t) { return parseHeight(t) === h.h; }; }
     function indexIn(sel, test) { for (var i = 0; i < sel.options.length; i++) { if (test(optText(sel.options[i]))) { return i; } } return -1; }
-    function remember(p) { var z = sizeObj(), h = heightObj(); if (z && h && p) { prices[pkey(z, h)] = p; } }
+    /* Ecwid also holds the blocked combinations as Out of stock variations: a price is never taken from one, and it never goes into the tables */
+    function soldOut() { var r = $('.product-details') || document.body; return !nativeAddToBag(root) && /out\s+of\s+stock|sold\s+out/i.test(r.textContent || ''); }
+    function remember(p) { var z = sizeObj(), h = heightObj(); if (z && h && p && !soldOut()) { prices[pkey(z, h)] = p; } }
     function missingCombos(only) {
-      var list = []; sizes.forEach(function (z) { if (only && z !== only) { return; } heightsIn(z.range).forEach(function (h) { if (!prices[pkey(z, h)]) { list.push({ z: z, h: h }); } }); });
+      var list = []; sizes.forEach(function (z) { if (only && z !== only) { return; } heightsIn(z.range).forEach(function (h) { if (!prices[pkey(z, h)] && !gone[pkey(z, h)]) { list.push({ z: z, h: h }); } }); });
       return list;
     }
     function highlightMatrix() {
@@ -391,10 +393,11 @@
       var known = 0;
       mxBtns.forEach(function (c) {
         var p = prices[pkey(c.z, c.h)]; if (p) { known++; }
-        c.b.textContent = p || 'See price'; c.b.setAttribute('data-known', p ? 'true' : 'false');
+        c.b.textContent = gone[pkey(c.z, c.h)] ? 'Not available' : (p || 'See price'); c.b.disabled = !!gone[pkey(c.z, c.h)]; c.b.setAttribute('data-known', p ? 'true' : 'false');
         c.b.setAttribute('aria-label', c.z.w + ' by ' + c.z.l + ' centimetres, ' + c.h.h + ' centimetres deep' + (p ? ', ' + p : ': press to choose it and see the price'));
       });
-      if (loadBtn && !probing) { loadBtn.hidden = known === mxBtns.length; loadBtn.textContent = 'Show every price'; }
+      var nGone = 0; mxBtns.forEach(function (c) { if (gone[pkey(c.z, c.h)]) { nGone++; } });
+      if (loadBtn && !probing) { loadBtn.hidden = known + nGone === mxBtns.length; loadBtn.textContent = 'Show every price'; }
       if (mxNote) { mxNote.textContent = known ? 'These prices are read from the store, not typed into this page.' : 'Press a size and depth to see its price. Every price comes from the store.'; }
       highlightMatrix();
     }
@@ -438,7 +441,7 @@
         (function wait() {
           var raw = rawPrice(), p = readPrice();
           if ((raw !== before && p) || t >= 900) {      /* changed, or (same price as the last one) waited long enough */
-            if (p) { prices[pkey(c.z, c.h)] = p; }
+            if (p && soldOut()) { gone[pkey(c.z, c.h)] = 1; } else if (p) { prices[pkey(c.z, c.h)] = p; }
             if (progress) { progress(i, list.length); }
             renderPrices(); next(); return;
           }

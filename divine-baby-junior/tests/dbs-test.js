@@ -82,14 +82,20 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   await p.waitForTimeout(300); await idle(p);
   ok(await p.evaluate(() => document.querySelector('.details-product-option--SIZE select').value.includes('60 × 120')), 'ArrowRight selects the next size and syncs');
   await p.selectOption('.details-product-option--SIZE select', { label: 'Baby Cot Size: 70 × 130 cm (27.6″ × 51.2″)' });
+
   await p.waitForTimeout(300);
   ok(await p.evaluate(() => /Baby Cot Size · 70 × 130 cm/.test(document.querySelector('.dbs-sv').textContent)), 'follows the native dropdown (reverse sync)');
+  await p.waitForTimeout(300);
+  await p.evaluate(() => { const h = document.querySelector('.details-product-option--HEIGHT select'); h.selectedIndex = [...h.options].findIndex(o => /^16 cm/.test(o.text)); h.dispatchEvent(new Event('input', { bubbles: true })); h.dispatchEvent(new Event('change', { bubbles: true })); });
+  await p.waitForTimeout(1800);
+  ok(await p.evaluate(() => /Please choose/.test(document.querySelector('.details-product-option--HEIGHT select').value) && document.getElementById('proto-add').style.display !== 'none' && document.getElementById('proto-oos').style.display === 'none'), 'a Baby Cot size with 16 cm (an Out of stock variation in Ecwid) is cleared again in the shop\'s dropdown');
   await p.screenshot({ path: out + '/dbs-desktop.png', fullPage: false });
   const el = await p.$('.dbs'); await el.scrollIntoViewIfNeeded(); await el.screenshot({ path: out + '/dbs-panel.png' });
   ok(errs.length === 0, 'no console errors ' + errs.join('|'));
   const prod = fs.readdirSync(path.resolve(__dirname, '../ecwid')).filter(f => /^description-1\..*\.html$/.test(f)).sort().pop();
   const prodText = fs.readFileSync(path.resolve(__dirname, '../ecwid/' + prod), 'utf8').replace(/<style>[\s\S]*?<\/style>/, '').replace(/<[^>]+>/g, ' ');
   ok(/12 cm/.test(prodText) && /16 cm/.test(prodText) && !/\bHeight\b/.test(prodText) && /OEKO-TEX/.test(prodText) && /natural environment for your baby/i.test(prodText), 'the production description (' + prod + ') carries four depths, Depth wording, OEKO-TEX and the natural-environment message');
+  ok(!/made to order|custom made/i.test(prodText) && !/@keyframes|animation\s*:|animation-/.test(fs.readFileSync(path.resolve(__dirname, '../ecwid/' + prod), 'utf8')), 'no "made to order" and no @keyframes or animation in the production description');
   ok(!/dbj-rv|\bREVIEW\b/.test(fs.readFileSync(path.resolve(__dirname, '../ecwid/' + prod), 'utf8')), 'no review notes in the production description');
 
   /* the swipe gallery (Botanic TV placement): works by CSS alone, dots/drag/keys come from dbs.js */
