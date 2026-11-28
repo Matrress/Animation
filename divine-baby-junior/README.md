@@ -40,3 +40,17 @@ The result is one HTML file plus `assets/` that can be published as a private pr
 2. Replace the content with the whole of `ecwid/description-1.1.0.html`. Save. Keep the product unpublished.
 3. Preview the draft on desktop, iPad and iPhone.
 4. If the description is truncated (length limit not yet verified; file is about 42,500 characters), move the CSS into a pinned jsDelivr file loaded by the existing site-wide loader.
+
+## Experience 2.0.0 (the Botanic TV scheme, for this model)
+
+`experience/` is the Baby & Junior version of the Botanic Experience TV system. Source in `experience/src`, built by `python3 experience/build.py` into `experience/dist`:
+
+- `baby-tv-<20 hex>.js`: the television. **Optimised Preview** (Explore topics, Select & Buy steps, parts rail, stage, "Your selection" with the shop's price and the one bag button) and **Standard Product View** (the shop's own page; the description folds and unfolds). Desktop and tablets.
+- `baby-phone-<20 hex>.js`: the phone layer, a guided configuration (Size, Height, Review) over the shop's own options.
+- `pointer.html`: the hidden `#ddtv-pointer` element for the description (model `baby`, channel `test`, product 876311857). File names follow the shop's loader rule `^[a-z][a-z0-9-]{0,45}-[0-9a-f]{20}\.js$`.
+- `loader-baby.js`: an alternative loader that serves the two files from jsDelivr.
+- The description with the pointer: `ecwid/description-2.0.0.html`. Handoff page: `handoff/ecwid-experience-2.0.0.html`.
+
+Ecwid stays the executor: the engine sets Ecwid's own dropdowns, shows Ecwid's own price (never calculated or typed in), and presses Ecwid's own Add to Bag only when the customer asks. Selection laws: the bag button is READY only when size and height are chosen (firmness Medium and the 100% cotton cover are fixed); what is missing is named; once in the bag the same button is Go to Checkout (the shop's cart); a changed choice makes it Add to Bag again.
+
+Tests: `node experience/tests/experience-test.js docs/shots` (53 checks on an imitation of the product page), `node experience/tests/live-ecwid.js` (the same engine pointed at Bio Comfort's real options on the live page, client-side only: 10 prices equal to Ecwid's own, both views, the phone flow). Nothing is bought or saved.

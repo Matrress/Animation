@@ -1,0 +1,144 @@
+{
+  "model": "baby",
+  "product": {
+    "id": 876311857,
+    "brand": [["b", "Dunlop"], ["i", "Baby & Junior"], ["s", "100%"], ["b", "Natural Latex"], ["s", "Mattress"]],
+    "name": "Dunlop Baby & Junior 100% Natural Latex Mattress",
+    "intro": "A cot and junior bed mattress with a single core of 100% natural Dunlop latex, inside a quilted 100% cotton cover. Made to order, in the size and height you choose, for the first beds of childhood."
+  },
+  "groups": [
+    { "key": "cot", "name": "Baby Cot Size", "sub": "Cots and cot beds" },
+    { "key": "junior", "name": "Junior Size", "sub": "Junior and single beds" }
+  ],
+  "sizes": [
+    { "w": 60, "l": 110, "g": "cot" }, { "w": 60, "l": 120, "g": "cot" }, { "w": 70, "l": 130, "g": "cot" }, { "w": 70, "l": 140, "g": "cot" },
+    { "w": 70, "l": 160, "g": "junior" }, { "w": 80, "l": 160, "g": "junior" }, { "w": 80, "l": 180, "g": "junior" }, { "w": 80, "l": 200, "g": "junior" }
+  ],
+  "heights": [
+    { "cm": 10, "name": "10 cm", "sub": "The lower height", "desc": "Length and width are the same as in every size. This is the lower of the two heights: check the maximum mattress height your cot or bed allows." },
+    { "cm": 14, "name": "14 cm", "sub": "The higher height", "desc": "The same footprint with more latex depth. Check that your cot or bed allows a mattress of this height before you choose it." }
+  ],
+  "fixed": {
+    "firmness": { "label": "Firmness", "value": "Medium", "note": "One firmness for the whole range, in every size and height." },
+    "cover": { "label": "Cover", "value": "100% cotton", "note": "Quilted in wide waves, with a zip along the side." }
+  },
+  "keyFeatures": ["100% natural Dunlop latex", "One-piece core", "Ventilation channels", "100% cotton cover", "Baby Cot and Junior sizes", "Made to order"],
+  "slides": [
+    { "id": "closed", "label": "Closed", "alt": "Dunlop Baby & Junior mattress with its cotton cover closed, showing the wide quilted waves and the zip along the side" },
+    { "id": "open", "label": "Open", "alt": "Dunlop Baby & Junior mattress with the cotton cover unzipped and folded back to reveal the one-piece natural latex core" },
+    { "id": "core", "label": "Latex core", "alt": "Close-up of the one-piece natural Dunlop latex core with its rows of ventilation channels" },
+    { "id": "quilt", "label": "Quilting", "alt": "Close-up of the quilted 100% cotton cover with its wide transverse waves" },
+    { "id": "zip", "label": "Zip", "alt": "Close-up of the zip puller and the side panel of the cotton cover" }
+  ],
+  "facts": [
+    { "l": "Material", "v": "100% natural Dunlop latex" },
+    { "l": "Heights", "v": "10 / 14 cm", "pills": [] },
+    { "l": "Sizes", "v": "8 sizes", "pills": ["Baby Cot Size · 4", "Junior Size · 4"] },
+    { "l": "Firmness", "v": "Medium", "pills": ["One firmness"] },
+    { "l": "Cover", "v": "100% cotton", "pills": ["Quilted", "Zip along the side"] },
+    { "l": "Made", "v": "To order", "pills": ["Your size", "Your height"] }
+  ],
+  "chapters": [
+    {
+      "id": "discover", "label": "Discover", "head": "Everything about the mattress, topic by topic.",
+      "panels": [
+        { "id": "intro", "label": "Introduction", "kind": "hero" },
+        { "id": "glance", "label": "At A Glance", "kind": "facts" },
+        { "id": "who", "label": "Who It Is For", "kind": "read", "title": "For cots and first beds",
+          "groups": [
+            { "h": null, "blocks": [
+              { "k": "p", "t": "**Baby Cot Size** is made for cots and cot beds. **Junior Size** is made for junior and single beds. Each size is made to order, in the height you choose." },
+              { "k": "p", "t": "The right mattress is the one that matches the **inside** of your frame: it should fit snugly, with no gaps at the sides or ends." } ] },
+            { "h": "Before you choose", "blocks": [
+              { "k": "p", "t": "Cot and bed sizes differ between manufacturers. Measure the inside of the frame, length and width, and check the maximum mattress height your cot or bed allows." } ] } ] },
+        { "id": "promise", "label": "Honest Promise", "kind": "read", "title": "What we say, and what we do not",
+          "groups": [
+            { "h": "What we say", "blocks": [
+              { "k": "p", "t": "One piece of 100% natural Dunlop latex with ventilation channels, inside a quilted 100% cotton cover with a zip along the side. Medium firmness. Made to order in the size and height you select." } ] },
+            { "h": "What we do not say", "blocks": [
+              { "k": "p", "t": "We do not say this mattress suits every cot, and we make no medical claims. Always follow current guidance from the NHS and The Lullaby Trust, together with the instructions supplied with your cot." } ] } ] }
+      ]
+    },
+    {
+      "id": "size", "label": "Size", "head": "Two groups, eight sizes, every measurement in centimetres and inches.",
+      "panels": [
+        { "id": "measure", "label": "Measure Inside", "kind": "read", "title": "Find the right fit",
+          "groups": [
+            { "h": null, "blocks": [
+              { "k": "p", "t": "Cot and bed sizes differ between manufacturers. The right mattress is the one that matches the inside of your frame." },
+              { "k": "li", "t": ["**Measure inside.** Length and width of the cot or bed frame, not the outside.", "**Match the size.** It should fit snugly, with no gaps at the sides or ends.", "**Check your cot.** Follow its instructions on mattress size and maximum height."] } ] } ] },
+        { "id": "cot", "label": "Baby Cot Size", "kind": "sizes", "group": "cot", "title": "Baby Cot Size" },
+        { "id": "junior", "label": "Junior Size", "kind": "sizes", "group": "junior", "title": "Junior Size" }
+      ]
+    },
+    {
+      "id": "height", "label": "Height", "head": "The lower or the higher core: your cot or bed decides.",
+      "panels": [
+        { "id": "two", "label": "Two Heights", "kind": "heights", "title": "Same footprint. Two heights." },
+        { "id": "which", "label": "Which Height", "kind": "read", "title": "Which height should I choose?",
+          "groups": [ { "h": null, "blocks": [
+            { "k": "p", "t": "Start with your cot or bed. Many cots state a **maximum mattress height**: choose a height within it." },
+            { "k": "p", "t": "Both heights share the same length and width, so the choice of size and the choice of height are independent." } ] } ] }
+      ]
+    },
+    {
+      "id": "cover", "label": "Cover", "head": "100% cotton. Quilted. Zipped.",
+      "panels": [
+        { "id": "cotton", "label": "100% Cotton", "kind": "cover", "title": "100% cotton, quilted in wide waves" },
+        { "id": "zip", "label": "The Zip", "kind": "read", "title": "A zip along the side",
+          "groups": [ { "h": null, "blocks": [
+            { "k": "p", "t": "A zip runs along the side, so the cover opens and the one-piece latex core inside can be seen and checked." },
+            { "k": "p", "t": "Follow the care instructions supplied with your mattress." } ] } ] }
+      ]
+    },
+    {
+      "id": "inside", "label": "Latex Core", "head": "One piece of natural Dunlop latex.",
+      "panels": [
+        { "id": "one", "label": "One Piece", "kind": "core", "title": "One piece, no glued layers" },
+        { "id": "vent", "label": "Ventilation", "kind": "read", "title": "Ventilation channels you can see",
+          "groups": [ { "h": null, "blocks": [
+            { "k": "p", "t": "The core is made with **Dunlop Technology** as a single block of 100% natural latex, with rows of ventilation channels formed in it during moulding." } ] } ] }
+      ]
+    },
+    {
+      "id": "firmness", "label": "Firmness", "head": "One firmness for the whole range.",
+      "panels": [
+        { "id": "medium", "label": "Medium", "kind": "read", "title": "Medium. Only Medium.",
+          "groups": [
+            { "h": null, "blocks": [
+              { "k": "p", "t": "The Baby & Junior range is made in a single firmness, **Medium**, in every size and height." } ] },
+            { "h": "Not weight-based", "blocks": [
+              { "k": "p", "t": "Our adult, weight-based firmness recommendations do not apply to babies and children and are not used for this range." } ] } ] }
+      ]
+    },
+    {
+      "id": "care", "label": "Care & Fit", "head": "Before it goes in the cot.",
+      "panels": [
+        { "id": "before", "label": "Before Use", "kind": "read", "title": "Before it goes in the cot",
+          "groups": [ { "h": null, "blocks": [
+            { "k": "li", "t": ["**Fit.** Use it only in a cot or bed whose inner dimensions match the size you ordered, within the maximum height given by the cot manufacturer.", "**Unpacking.** Remove all packaging, including any plastic wrapping, before use, and keep it away from children.", "**Bedding.** Use a fitted sheet made for the exact mattress size. Keep the sleeping surface flat and clear.", "**Cover.** Follow the care instructions supplied with your mattress."] } ] } ] },
+        { "id": "latex", "label": "Latex & Safer Sleep", "kind": "read", "title": "Latex and safer sleep",
+          "groups": [
+            { "h": "Contains natural rubber latex", "blocks": [ { "k": "p", "t": "If anyone in your household has a latex allergy, please seek medical advice before purchase." } ] },
+            { "h": "Safer sleep", "blocks": [ { "k": "p", "t": "Always follow current guidance from the NHS and The Lullaby Trust, together with the instructions supplied with your cot." } ] } ] }
+      ]
+    },
+    {
+      "id": "order", "label": "Made To Order", "head": "Your size, your height, one price each.",
+      "panels": [
+        { "id": "made", "label": "Made To Order", "kind": "read", "title": "Made in the size and height you choose",
+          "groups": [ { "h": null, "blocks": [
+            { "k": "p", "t": "Every Baby & Junior mattress is made to order. Choose a size and a height in **Select & Buy**; the options, price, bag and checkout are the store's own." } ] } ] },
+        { "id": "prices", "label": "Prices", "kind": "prices", "title": "Every size and height, one price each" }
+      ]
+    }
+  ],
+  "specs": [
+    ["Product", "Dunlop Baby & Junior 100% Natural Latex Mattress"],
+    ["Core", "One-piece 100% natural Dunlop latex · Dunlop Technology · Vertical ventilation channels"],
+    ["Construction", "Single moulded core · No glued layers · Made to order"],
+    ["Cover", "100% cotton fabric · Quilted, wide transverse waves · Zip along the side"],
+    ["Firmness", "Medium · One firmness for the whole range"],
+    ["Heights", "10 cm (3.9 in) · 14 cm (5.5 in)"]
+  ]
+}
