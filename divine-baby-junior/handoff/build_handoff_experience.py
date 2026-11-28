@@ -10,7 +10,7 @@ tv = next(dist.glob('baby-tv-*.js')); ph = next(dist.glob('baby-phone-*.js'))
 desc = (root / 'ecwid/description-2.3.0.html').read_text()
 pointer = (dist / 'pointer.html').read_text().strip()
 loader = (dist / 'loader-baby.js').read_text().strip()
-dbs_loader = (root / 'ecwid/loader-1.1.0.js').read_text().strip()
+dbs_loader = (root / 'ecwid/loader-1.3.0.js').read_text().strip()
 b64 = lambda p: base64.b64encode(p.read_bytes()).decode()
 dl = lambda p: f'<a class="dl" download="{p.name}" href="data:text/javascript;base64,{b64(p)}">Свали {p.name} ({p.stat().st_size // 1024} KB)</a>'
 extra = '''<style>
