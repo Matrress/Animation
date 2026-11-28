@@ -1,5 +1,5 @@
-"""Handoff page for the Baby & Junior Experience 2.4.0 (the Botanic TV scheme): what to upload, what to paste, how to test.
-Reuses the style and the copy script of the 1.1.0 handoff page. Output: handoff/ecwid-experience-2.4.0.html"""
+"""Handoff page for the Baby & Junior Experience 2.5.0 (the Botanic TV scheme): what to upload, what to paste, how to test.
+Reuses the style and the copy script of the 1.1.0 handoff page. Output: handoff/ecwid-experience-2.5.0.html"""
 import base64, html, pathlib, re
 root = pathlib.Path(__file__).resolve().parent.parent
 old = (root / 'handoff/ecwid-code-1.1.0.html').read_text()
@@ -7,7 +7,7 @@ style = re.search(r'<style>.*?</style>', old, re.S).group(0)
 script = re.search(r'<script>.*?</script>', old, re.S).group(0)
 dist = root / 'experience/dist'
 tv = next(dist.glob('baby-tv-*.js')); ph = next(dist.glob('baby-phone-*.js'))
-desc = (root / 'ecwid/description-2.4.0.html').read_text()
+desc = (root / 'ecwid/description-2.5.0.html').read_text()
 pointer = (dist / 'pointer.html').read_text().strip()
 loader = (root / 'loader/divine-site-loader.js').read_text().strip()
 b64 = lambda p: base64.b64encode(p.read_bytes()).decode()
@@ -30,31 +30,23 @@ page = f'''<!doctype html>
 </head>
 <body>
 <main class="wrap">
-  <p class="eyebrow">Ecwid · Dunlop Baby &amp; Junior · Experience 2.4.0</p>
+  <p class="eyebrow">Ecwid · Dunlop Baby &amp; Junior · Experience 2.5.0</p>
   <h1>Схемата на Botanic TV, за бебешкия матрак</h1>
   <p class="lead">Три слоя, като при Botanic TV: телевизор (Optimised Preview), Standard Product View и телефонен слой. Опциите, цената, кошницата и касата остават на Ecwid. Нищо още не е в магазина.</p>
 
   <div class="steps">
-    <div class="step"><b>1</b><h3>Два файла</h3><p>Качи двата JS файла в <code>media.divinedunlop.com/ddtv/</code> с точно тези имена. Те са единствените нови файлове за медията.</p></div>
-    <div class="step"><b>2</b><h3>Продуктовият HTML</h3><p>Постави в описанието на продукта <b>само</b> файла <code>description-2.4.0.html</code> (отделен файл, не тази страница). Продуктът остава изключен.</p></div>
-    <div class="step"><b>3</b><h3>Един loader</h3><p>В глобалния код на сайта замени сегашния код с <b>единия</b> loader по-долу (3915 знака, лимит 4000).</p></div>
+    <div class="step"><b>1</b><h3>Описанието на продукта</h3><p>Продукт Baby &amp; Junior → Description → <code>&lt;&gt;</code>: постави <b>целия</b> файл <code>1-PRODUCT-DESCRIPTION</code> (само продуктовия HTML). Продуктът остава изключен.</p></div>
+    <div class="step"><b>2</b><h3>Кодът на сайта (loader)</h3><p>Глобалният JavaScript на сайта: <b>замени</b> сегашния код с <code>2-SITE-LOADER</code>. Той включва и Botanic TV, и Divine Collection, и Baby &amp; Junior. Нищо друго не се качва никъде.</p></div>
+    <div class="step"><b>3</b><h3>Тест</h3><p>Отвори продукта с <code>?ddtv=test</code>. Всички други посетители виждат стандартния изглед. <code>?ddtv=off</code> изключва телевизора.</p></div>
   </div>
 
   <section class="card">
-    <div class="card-head"><h2>Двата файла за качване</h2><span>имената са по правилото на loader-а: име-20 hex.js</span></div>
-    <div class="files">
-      <div class="row"><div><b>Телевизор</b><p>Optimised Preview и Standard Product View (десктоп и таблет)</p></div>{dl(tv)}</div>
-      <div class="row"><div><b>Телефон</b><p>Ръководена конфигурация върху опциите на Ecwid</p></div>{dl(ph)}</div>
-    </div>
-  </section>
-
-  <section class="card">
-    <div class="card-head"><h2>Описание с указателя · description-2.4.0</h2><button class="copy" data-target="desc">Копирай описанието</button></div>
+    <div class="card-head"><h2>1 · Описание на продукта (същото като файла) · description-2.5.0</h2><button class="copy" data-target="desc">Копирай описанието</button></div>
     <pre id="desc">{html.escape(desc)}</pre>
   </section>
 
   <section class="card">
-    <div class="card-head"><h2>Единен loader за целия сайт</h2><button class="copy" data-target="loader">Копирай loader-а</button></div>
+    <div class="card-head"><h2>2 · Единен loader за целия сайт (3965 знака, лимит 4000)</h2><button class="copy" data-target="loader">Копирай loader-а</button></div>
     <pre id="loader">{html.escape(loader)}</pre>
   </section>
 
@@ -73,6 +65,6 @@ page = f'''<!doctype html>
 </body>
 </html>
 '''
-out = root / 'handoff/ecwid-experience-2.4.0.html'
+out = root / 'handoff/ecwid-experience-2.5.0.html'
 out.write_text(page)
 print(out, len(page) // 1024, 'KB')
