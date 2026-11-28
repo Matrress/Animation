@@ -52,11 +52,14 @@ function shopKey(role, t) {
 function sizeKey(z) { return Math.min(z.w, z.l) + 'x' + Math.max(z.w, z.l); }
 function sizeByKey(k) { for (var i = 0; i < DATA.sizes.length; i++) { if (sizeKey(DATA.sizes[i]) === k) { return DATA.sizes[i]; } } return null; }
 function heightByKey(k) { for (var i = 0; i < DATA.heights.length; i++) { if (String(DATA.heights[i].cm) === String(k)) { return DATA.heights[i]; } } return null; }
+/* the two collections have their own depths: Baby Cot 10 / 12 cm, Junior 14 / 16 cm. A depth without a group (the tests on Bio Comfort) goes with every size. */
+function heightsFor(z) { return DATA.heights.filter(function (h) { return h.g == null || !z || h.g === z.g; }); }
+function validPair(zk, hk) { var z = sizeByKey(zk), h = heightByKey(hk); return !!(z && h && (h.g == null || h.g === z.g)); }
 function groupByKey(k) { for (var i = 0; i < DATA.groups.length; i++) { if (DATA.groups[i].key === k) { return DATA.groups[i]; } } return null; }
 /* is this size / height among Ecwid's own options? (an option the store does not have is shown as not available yet) */
 function shopHas(role, key) {
   var sel = selectFor(role); if (!sel) { return null; }                 /* null: the options have not arrived yet */
-  for (var i = 0; i < sel.options.length; i++) { if (shopKey(role, txt(sel.options[i])) === key && !sel.options[i].disabled) { return true; } }
+  for (var i = 0; i < sel.options.length; i++) { if (shopKey(role, txt(sel.options[i])) === key && (!sel.options[i].disabled || sel.options[i].hasAttribute('data-ddx-off'))) { return true; } }
   return false;
 }
 
@@ -66,18 +69,38 @@ function readShop() { var o = {}; ROLES.forEach(function (r) { o[r] = shopKey(r,
 function setShop(role, key) {
   var sel = selectFor(role); if (!sel || key == null) { return false; }
   for (var i = 0; i < sel.options.length; i++) {
-    if (shopKey(role, txt(sel.options[i])) === key && !sel.options[i].disabled) {
+    if (shopKey(role, txt(sel.options[i])) === key && (!sel.options[i].disabled || sel.options[i].hasAttribute('data-ddx-off'))) {
       if (sel.selectedIndex !== i) { sel.selectedIndex = i; fire(sel, 'input'); fire(sel, 'change'); }
       return true;
     }
   }
   return false;
 }
+/* Defence in depth: in Ecwid's own Height dropdown the depths of the other collection are switched off, and a combination that does not exist is cleared.
+   (Ecwid itself has only the 20 valid variations, so an invalid pair cannot be bought; this also keeps the dropdown honest.) */
+function enforceOptions() {
+  var hs = selectFor('height'), z = X.S.size && sizeByKey(X.S.size); if (!hs) { return; }
+  for (var i = 0; i < hs.options.length; i++) {
+    var o = hs.options[i], k = shopKey('height', txt(o)), h = k != null ? heightByKey(k) : null;
+    var off = !!(z && h && h.g != null && h.g !== z.g);
+    if (off) { if (!o.disabled) { o.disabled = true; o.setAttribute('data-ddx-off', '1'); } }
+    else if (o.hasAttribute('data-ddx-off')) { o.disabled = false; o.removeAttribute('data-ddx-off'); }
+  }
+  var cur = hs.options[hs.selectedIndex]; if (cur && cur.hasAttribute('data-ddx-off') && !X.probing) { clearShop('height'); }
+}
+function clearShop(role) {
+  var sel = selectFor(role); if (!sel || sel.selectedIndex <= 0 || !/^please\s+choose/i.test(txt(sel.options[0]))) { return; }
+  X.busy = true; try { sel.selectedIndex = 0; fire(sel, 'input'); fire(sel, 'change'); } finally { X.busy = false; }
+}
 /* the customer's choice goes into the shop's dropdowns */
 function push() {
   if (X.busy) { return; }
   var shop = readShop(); X.busy = true;
-  try { ROLES.forEach(function (r) { var want = X.S[r]; if (want != null && want !== shop[r]) { setShop(r, want); } }); } finally { X.busy = false; }
+  try {
+    if (X.S.size != null && X.S.height != null && !validPair(X.S.size, X.S.height)) { X.S.height = null; clearShop('height'); }
+    ROLES.forEach(function (r) { var want = X.S[r]; if (want != null && want !== shop[r]) { setShop(r, want); if (r === 'size') { enforceOptions(); } } });
+    enforceOptions();
+  } finally { X.busy = false; }
 }
 /* the shop changed (the customer used Ecwid's own dropdowns): bring the selection up to date */
 function pull() {
@@ -88,6 +111,8 @@ function pull() {
     if (shop[r] != null && (r === 'size' ? !sizeByKey(shop[r]) : !heightByKey(shop[r]))) { return; }
     X.S[r] = shop[r]; changed = true;
   });
+  if (X.S.size != null && X.S.height != null && !validPair(X.S.size, X.S.height)) { X.S.height = null; clearShop('height'); changed = true; }
+  enforceOptions();
   return changed;
 }
 
@@ -113,7 +138,7 @@ function awaitPrice(before, cb, t) {
   if (t < 2600) { pollT = win.setTimeout(function () { awaitPrice(before, cb, t + 40); }, 40); } else { pollT = 0; cb(''); }
 }
 function missingCombos(only) {
-  var list = []; DATA.sizes.forEach(function (z) { if (only && z !== only) { return; } DATA.heights.forEach(function (h) { if (!X.prices[pkey(z, h)] && shopHas('size', sizeKey(z)) && shopHas('height', String(h.cm))) { list.push({ z: z, h: h }); } }); });
+  var list = []; DATA.sizes.forEach(function (z) { if (only && z !== only) { return; } heightsFor(z).forEach(function (h) { if (!X.prices[pkey(z, h)] && shopHas('size', sizeKey(z)) && shopHas('height', String(h.cm))) { list.push({ z: z, h: h }); } }); });
   return list;
 }
 /* Select each combination in Ecwid's own dropdowns, wait for the price to change, remember it, then put the customer's selection back.
@@ -131,7 +156,7 @@ function readCombos(list, progress, finish) {
   function leave() {
     if (box) { box.style.visibility = keep.vis; } buy.style.pointerEvents = keep.pe;
     blocks.forEach(function (x, k) { if (x) { x.style.pointerEvents = keep.bp[k]; } });
-    X.busy = false; X.probing = false; if (X.hooks.state) { X.hooks.state(); } if (finish) { finish(true); }
+    X.busy = false; X.probing = false; enforceOptions(); if (X.hooks.state) { X.hooks.state(); } if (finish) { finish(true); }
   }
   function restore() {
     var s2 = selectFor('size'), h2 = selectFor('height');

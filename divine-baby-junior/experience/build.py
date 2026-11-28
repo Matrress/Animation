@@ -24,7 +24,7 @@ CDN = "https://cdn.jsdelivr.net/gh/Matrress/Animation@"
 FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"
 FONT400 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-400.woff2"
 FONT600 = f"{CDN}{FONT_COMMIT}/divine-hero/release/1.17.1/assets/chillax-600.woff2"
-ASSET = {"v1": ("c3cafc0705ba2ae2e9c8374bafa7ef7bed16bc63", "release/0.1.0/assets/"), "v2": ("b0c161a67ae725da9db1cfeaa2eae2b82d7e9b0f", "release/0.2.0/assets/"), "v3": ("7ec5ad8ae12e1e16be82f8928cdb1fcc6f78126c", "experience/assets/")}
+ASSET = {"v1": ("c3cafc0705ba2ae2e9c8374bafa7ef7bed16bc63", "release/0.1.0/assets/"), "v2": ("b0c161a67ae725da9db1cfeaa2eae2b82d7e9b0f", "release/0.2.0/assets/"), "v3": ("04a88f44070fb3a9df6482f9545563ce06ba5a79", "experience/assets/")}
 LOGO = f"{CDN}9d681f860c9dae7dd866236d6824f413443b8512/divine-home-discovery/assets/bio-dunlop.svg"
 
 
@@ -39,10 +39,17 @@ def build_data(local=False):
         return (f"../../{ASSET[v][1]}{name}") if local else asset(v, name)
     closed = "dunlop-baby-junior-latex-mattress-cotton-cover-closed"
     opened = "dunlop-baby-junior-latex-core-cotton-cover-open"
+    def img3(n):
+        return {"src": u("v3", f"dunlop-{n}-1600.webp"), "srcset": f"{u('v3', f'dunlop-{n}-800.webp')} 800w, {u('v3', f'dunlop-{n}-1600.webp')} 1600w"}
     data["images"] = {
         "closed": {"src": u("v1", f"{closed}-1600.webp"), "srcset": f"{u('v1', closed + '-800.webp')} 800w, {u('v1', closed + '-1600.webp')} 1600w"},
         "open": {"src": u("v1", f"{opened}-1600.webp"), "srcset": f"{u('v1', opened + '-800.webp')} 800w, {u('v1', opened + '-1600.webp')} 1600w"},
-        "latex": {"src": u("v2", "dunlop-baby-junior-natural-latex-core-ventilation-detail-690.webp")},
+        "latexcore": img3("natural-latex-core-ventilation-channels"),
+        "cot": img3("baby-asleep-in-cot"),
+        "pillow": img3("baby-asleep-on-pillow"),
+        "top": img3("baby-on-pillow-mattress-top-view"),
+        "depths": img3("baby-and-junior-depths"),
+        "nursery": img3("baby-and-junior-depths-nursery"),
         "quilt": {"src": u("v2", "dunlop-baby-junior-cotton-cover-quilting-detail-660.webp")},
         "zip": {"src": u("v2", "dunlop-baby-junior-cotton-cover-zip-detail-340.webp")},
     }
@@ -122,10 +129,10 @@ def harness(out):
     desc = re.search(r"<!--DESC-->(.*?)<!--/DESC-->", proto, re.S).group(1)
     desc = desc.replace('src="../', 'src="../../').replace('srcset="../', 'srcset="../../').replace(", ../", ", ../../")
     desc = re.sub(r"(srcset=\"[^\"]*\")", lambda m: m.group(1).replace(",../", ",../../"), desc)
-    sizes = [("Baby Cot Size", 60, 110), ("Baby Cot Size", 60, 120), ("Baby Cot Size", 70, 130), ("Baby Cot Size", 70, 140), ("Junior Size", 70, 160), ("Junior Size", 80, 160), ("Junior Size", 80, 180), ("Junior Size", 80, 200)]
+    sizes = [("Baby Cot Size", 60, 110), ("Baby Cot Size", 60, 120), ("Baby Cot Size", 70, 130), ("Baby Cot Size", 70, 140), ("Junior Size", 70, 160), ("Junior Size", 80, 160), ("Junior Size", 80, 180), ("Junior Size", 80, 200), ("Junior Size", 90, 190), ("Junior Size", 90, 200)]
     inch = lambda cm: f"{round(cm / 2.54 * 10) / 10:.1f}"
     s_opts = "".join(f"<option>{n}: {w} × {l} cm ({inch(w)}″ × {inch(l)}″)</option>" for n, w, l in sizes)
-    h_opts = "".join(f"<option>{h} cm ({inch(h)}″)</option>" for h in (10, 14))
+    h_opts = "".join(f"<option>{h} cm ({inch(h)}″)</option>" for h in (10, 12, 14, 16))
     pointer = (dist / "pointer.html").read_text().strip()
     shell = f"""<!doctype html>
 <html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -163,9 +170,9 @@ body{{margin:0;font-family:system-ui,sans-serif;color:#222;background:#fff}}
 </div>
 <script>
 /* Ecwid imitation: the page type events, the cart event, and a price that changes 300 ms after an option changes */
-(function(){{var T={{'60x110':[239,279],'60x120':[255.78,295.78],'70x130':[269,309],'70x140':[289,329],'70x160':[309,369],'80x160':[359,419],'80x180':[409,469],'80x200':[469,529]}};
+(function(){{var T={{'60x110':{{10:249,12:270}},'60x120':{{10:270,12:293}},'70x130':{{10:289,12:314}},'70x140':{{10:309,12:335}},'70x160':{{14:364,16:395}},'80x160':{{14:409,16:444}},'80x180':{{14:459,16:498}},'80x200':{{14:499,16:542}},'90x190':{{14:529,16:574}},'90x200':{{14:539,16:585}}}};
 var s=document.querySelector('.details-product-option--Size select'),h=document.querySelector('.details-product-option--Height select'),p=document.getElementById('proto-price');
-function upd(){{var m=/(\\d+) × (\\d+) cm/.exec(s.value),hh=/^(\\d+) cm/.exec(h.value);setTimeout(function(){{var r=m&&T[m[1]+'x'+m[2]];p.textContent=(r&&hh)?'£'+r[hh[1]==='10'?0:1]:'£0';}},300);}}
+function upd(){{var m=/(\\d+) × (\\d+) cm/.exec(s.value),hh=/^(\\d+) cm/.exec(h.value);setTimeout(function(){{var r=m&&T[m[1]+'x'+m[2]],v=r&&hh&&r[hh[1]];p.textContent=v?'£'+v:'£0';}},300);}}
 s.addEventListener('change',upd);h.addEventListener('change',upd);
 var pl=[],cl=[];window.__bagClicks=0;window.__cartOpened=0;
 window.Ecwid={{OnPageLoaded:{{add:function(f){{pl.push(f);setTimeout(function(){{f({{type:'PRODUCT',productId:876311857}});}},50);}}}},OnProductSelectedOptionsChanged:{{add:function(){{}}}},OnCartChanged:{{add:function(f){{cl.push(f);}}}},openPage:function(x){{window.__cartOpened++;}}}};
@@ -205,9 +212,9 @@ if __name__ == "__main__":
     harness(out)
     base_commit = sys.argv[1] if len(sys.argv) > 1 else "COMMIT"
     (dist / "loader-baby.js").write_text(LOADER % {"base": f"{CDN}{base_commit}/divine-baby-junior/experience/dist/"})
-    # the Standard Product View description (the approved look, 1.2.0) with the hidden pointer for the Experience in front of it
-    base_desc = top / "ecwid/description-1.2.0.html"
+    # the Standard Product View description (the approved look, 1.3.0) with the hidden pointer for the Experience in front of it
+    base_desc = top / "ecwid/description-1.3.0.html"
     if base_desc.exists():
-        (top / "ecwid/description-2.2.0.html").write_text(pointer + "\n" + base_desc.read_text())
+        (top / "ecwid/description-2.3.0.html").write_text(pointer + "\n" + base_desc.read_text())
     sizes = {k: (dist / v).stat().st_size for k, v in out.items()}
     print(json.dumps(out), sizes)

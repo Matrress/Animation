@@ -37,3 +37,6 @@ b{font-weight:600}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 .incl{margin:12px 2px 0;font-size:14.5px;line-height:1.45;color:rgba(0,58,104,.78)}.incl b{color:#003A68}
+.gsub{margin:-6px 0 10px;font-size:14.5px;color:var(--ink2)}
+
+.natl{display:flex;align-items:flex-start;gap:8px;margin:0 0 14px;padding:10px 12px;background:var(--pk);border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;font-weight:600;color:var(--ink)}.natl svg{flex:0 0 16px;margin-top:2px;color:#009289}

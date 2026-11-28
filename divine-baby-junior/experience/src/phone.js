@@ -22,24 +22,30 @@ function phSheetHtml(U) {
   var idx = PSTEPS.indexOf(U.step) + 1, body = '', foot = '';
   if (U.step === 'size') {
     body = '<h2 class="q">What size is your baby&#39;s cot or bed?</h2><p class="sub">Choose your size. Every size in centimetres and in inches.</p>' + DATA.groups.map(function (g) {
-      return '<p class="lab2">' + esc(g.name) + ' · ' + esc(g.sub) + '</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(function (z) {
+      return '<p class="lab2">' + esc(g.name) + ' · ' + DATA.heights.filter(function (h) { return h.g == null || h.g === g.key; }).map(function (h) { return h.cm; }).join(' / ') + ' cm deep</p><p class="gsub">' + esc(g.sub) + '</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(function (z) {
         var on = X.S.size === sizeKey(z), av = shopHas('size', sizeKey(z));
         return '<button type="button" class="card sz' + (on ? ' on' : '') + '" data-pick-size="' + sizeKey(z) + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + z.w + ' × ' + z.l + ' cm</span><span class="in">' + inch(z.w) + ' × ' + inch(z.l) + ' in</span></button>'; }).join('') + '</div>'; }).join('');
     body += '<p class="need">Cot and bed sizes differ between manufacturers: measure the <b>inside</b> of the frame.</p>';
     foot = '<button type="button" class="btn" data-go="depth"' + (X.S.size ? '' : ' disabled') + '>Continue to Depth</button>';
   } else if (U.step === 'depth') {
     var z = X.S.size && sizeByKey(X.S.size);
-    body = '<h2 class="q">How deep should the mattress be?</h2><p class="sub">Two depths. Length and width stay the same: check the maximum mattress depth your cot or bed allows.</p><div class="cards">' + DATA.heights.map(function (h) {
-      var p = z ? priceOf(z, h) : '', on = X.S.height === String(h.cm), av = shopHas('height', String(h.cm));
-      return '<button type="button" class="card hc' + (on ? ' on' : '') + '" data-pick-height="' + h.cm + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + h.cm + ' cm</span><span class="in">' + inch(h.cm) + ' in</span>' + (p ? '<span class="pr">' + esc(p) + '</span>' : '') + '<span class="dsc">' + esc(h.desc) + '</span></button>'; }).join('') + '</div>';
-    foot = '<button type="button" class="btn ghost" data-go="size">Back</button><button type="button" class="btn" data-go="review"' + (X.S.height ? '' : ' disabled') + '>Review</button>';
+    if (!z) {
+      body = '<h2 class="q">How deep should the mattress be?</h2><p class="sub">The depths depend on the collection, so choose your size first.</p><p class="need">Baby Cot sizes come in <b>10 or 12 cm</b>. Junior sizes come in <b>14 or 16 cm</b>.</p>';
+      foot = '<button type="button" class="btn" data-go="size">Choose your size</button>';
+    } else {
+      var hz = heightsFor(z);
+      body = '<h2 class="q">How deep should the mattress be?</h2><p class="sub">' + esc(groupByKey(z.g).name) + ' comes in ' + hz.map(function (h) { return h.cm; }).join(' or ') + ' cm. Length and width stay the same: check the maximum mattress depth your cot or bed allows. A deeper mattress is not automatically a better one.</p><div class="cards">' + hz.map(function (h) {
+        var p = priceOf(z, h), on = X.S.height === String(h.cm), av = shopHas('height', String(h.cm));
+        return '<button type="button" class="card hc' + (on ? ' on' : '') + '" data-pick-height="' + h.cm + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + h.cm + ' cm</span><span class="in">' + inch(h.cm) + ' in</span>' + (p ? '<span class="pr">' + esc(p) + '</span>' : '') + '<span class="dsc">' + esc(h.desc) + '</span></button>'; }).join('') + '</div>';
+      foot = '<button type="button" class="btn ghost" data-go="size">Back</button><button type="button" class="btn" data-go="review"' + (X.S.height ? '' : ' disabled') + '>Review</button>';
+    }
   } else {
     var fc = bagFace();
     body = '<h2 class="q">Review your order</h2><ul class="rv">' + ORDER.map(function (o) { return '<li><span>' + o[1] + '</span><b>' + (chosenLabel(o[0]) ? esc(chosenLabel(o[0])) : '<i>Not chosen yet</i>') + '</b></li>'; }).join('') +
       '</ul><p class="bp s incl">Every mattress is <b>Medium</b> firmness with a <b>100% cotton</b> cover. Both are explained in the description; there is nothing to select.</p><div class="rvp"><span>Price</span><b>' + (complete() && priceNow() ? esc(priceNow()) : '<i>Choose a size and a depth</i>') + '</b></div><p class="guide">' + esc(fc.guide) + '</p>';
     foot = '<button type="button" class="btn ghost" data-go="depth">Back</button><button type="button" class="btn big' + (fc.ready ? ' ready' : '') + '" data-bag="1"' + (fc.enabled ? '' : ' disabled') + '>' + fc.text + '</button>';
   }
-  return '<header class="hd"><div class="hdt"><span class="stp">Step ' + idx + ' of 3</span><b>' + esc(DATA.product.name) + '</b></div><button type="button" class="x" data-close aria-label="Close the configuration">×</button></header><div class="prog">' + PSTEPS.map(function (s, i) { return '<i class="' + (i < idx ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="bd">' + body + '</div><footer class="ft">' + foot + '</footer>';
+  return '<header class="hd"><div class="hdt"><span class="stp">Step ' + idx + ' of 3</span><b>' + esc(DATA.product.name) + '</b></div><button type="button" class="x" data-close aria-label="Close the configuration">×</button></header><div class="prog">' + PSTEPS.map(function (s, i) { return '<i class="' + (i < idx ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="bd"><p class="natl"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20C4 10 10 4 20 4c0 10-6 16-16 16z" fill="currentColor"/></svg>A natural environment for your baby · 100% natural latex · 100% cotton cover</p>' + body + '</div><footer class="ft">' + foot + '</footer>';
 }
 function phoneCss() { return PH_CSS; }
 function openSheet() {
