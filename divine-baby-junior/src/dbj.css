@@ -1,4 +1,4 @@
-/* Divine DunlopDreams · Dunlop Baby & Junior · product description 0.7.0
+/* Divine DunlopDreams · Dunlop Baby & Junior · product description 1.0.0
    Built on the Bio Comfort system, read from its live description (--bc-* tokens):
    ink #003A68 for ALL text (body at 78%), surface #E4E8F0 with fine navy outlines, light-blue card #B2E3FB (55%),
    accent #91E8F1, strong blue #006591 with white text only on small bars (label, chips, facts strip, toggles).
@@ -98,11 +98,11 @@
 .dbj .dbj-dl dt{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--strong)}
 .dbj .dbj-dl dd{font-size:16.5px;line-height:1.4;color:var(--ink);margin-top:2px}
 
-/* heights: a plain line drawing in proportion 10 : 12 : 14 */
-.dbj .dbj-hts{--u:5px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px;padding:22px 14px 18px}
+/* heights: a plain line drawing in proportion 10 : 14 */
+.dbj .dbj-hts{--u:5px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px;padding:22px 14px 18px}
 .dbj .dbj-ht{display:flex;flex-direction:column;justify-content:flex-start;gap:4px}
 .dbj .dbj-bar2{display:block;width:100%;height:calc(var(--h) * var(--u));margin:calc((14 - var(--h)) * var(--u)) 0 12px;border:1px solid var(--ink);border-radius:var(--r-sm);background:#fff}
-.dbj .dbj-bar2--10{--h:10}.dbj .dbj-bar2--12{--h:12}.dbj .dbj-bar2--14{--h:14}
+.dbj .dbj-bar2--10{--h:10}.dbj .dbj-bar2--14{--h:14}
 .dbj .dbj-num{font-size:30px;line-height:1;font-weight:400;letter-spacing:-.025em;color:var(--ink)}
 .dbj .dbj-num span{font-size:.45em;letter-spacing:0;margin-left:4px;color:var(--ink-s)}
 .dbj .dbj-ht .dbj-tt{font-size:14px;line-height:1.4}
@@ -233,6 +233,65 @@
 .dbj .dbs-see::after{content:"";width:7px;height:7px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg);margin-top:-3px}
 .dbj .dbs-see[hidden]{display:none}
 
+/* ---------- gallery: pure CSS radio gallery (no JavaScript), the Botanic cover-gallery pattern in Bio Comfort colours ---------- */
+.dbj .dbj-gal{position:relative;margin-top:22px}
+.dbj .dbj-gal > input{position:absolute;left:0;top:0;width:1px;height:1px;margin:0;padding:0;opacity:0;pointer-events:none}
+.dbj .dbj-gal-frame{position:relative;aspect-ratio:2 / 1;overflow:hidden;background:var(--w);border:1px solid var(--line-s);border-radius:var(--r)}
+.dbj .dbj-slide{position:absolute;left:0;top:0;right:0;bottom:0;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease}
+.dbj .dbj-slide img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;transform-origin:0 0}
+.dbj .dbj-slide--1 .dbj-float{position:absolute;left:0;top:0;width:100%;height:100%}
+.dbj .dbj-slide--1 img{transform:translate(-20.4%,-21.2%) scale(1.4)}
+.dbj .dbj-slide--2 img{transform:translate(-20.4%,-21.2%) scale(1.4)}
+.dbj .dbj-slide--3 img{transform:translate(-32%,-76%) scale(2.2)}
+.dbj .dbj-slide--4 img{transform:translate(-62%,-46%) scale(2.4)}
+.dbj .dbj-slide--5 img{transform:translate(-66.9%,-118%) scale(2.4)}
+.dbj #dbj-g1:checked ~ .dbj-gal-frame .dbj-slide--1,.dbj #dbj-g2:checked ~ .dbj-gal-frame .dbj-slide--2,.dbj #dbj-g3:checked ~ .dbj-gal-frame .dbj-slide--3,.dbj #dbj-g4:checked ~ .dbj-gal-frame .dbj-slide--4,.dbj #dbj-g5:checked ~ .dbj-gal-frame .dbj-slide--5{opacity:1;visibility:visible}
+.dbj .dbj-cap{display:none;margin-top:12px;background:var(--w);border:1px solid var(--line-s);border-radius:var(--r-sm);padding:12px 16px;font-size:15.5px;line-height:1.5;color:var(--ink-s)}
+.dbj .dbj-cap b{font-weight:600;color:var(--ink)}
+.dbj #dbj-g1:checked ~ .dbj-cap--1,.dbj #dbj-g2:checked ~ .dbj-cap--2,.dbj #dbj-g3:checked ~ .dbj-cap--3,.dbj #dbj-g4:checked ~ .dbj-cap--4,.dbj #dbj-g5:checked ~ .dbj-cap--5{display:block}
+.dbj .dbj-gal-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.dbj .dbj-gal-tabs label{display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px 12px;margin:0;text-align:center;background:var(--w);border:1px solid var(--line-s);border-radius:var(--r-sm);font-size:14.5px;font-weight:600;line-height:1.2;color:var(--ink);cursor:pointer;transition:background-color .2s ease,border-color .2s ease,color .2s ease}
+.dbj .dbj-gal-tabs label:last-child{grid-column:span 2}
+.dbj .dbj-gal-tabs label:hover{border-color:var(--ink)}
+.dbj #dbj-g1:checked ~ .dbj-gal-tabs label[for="dbj-g1"],.dbj #dbj-g2:checked ~ .dbj-gal-tabs label[for="dbj-g2"],.dbj #dbj-g3:checked ~ .dbj-gal-tabs label[for="dbj-g3"],.dbj #dbj-g4:checked ~ .dbj-gal-tabs label[for="dbj-g4"],.dbj #dbj-g5:checked ~ .dbj-gal-tabs label[for="dbj-g5"]{background:var(--strong);border-color:var(--strong);color:#fff}
+.dbj #dbj-g1:focus-visible ~ .dbj-gal-tabs label[for="dbj-g1"],.dbj #dbj-g2:focus-visible ~ .dbj-gal-tabs label[for="dbj-g2"],.dbj #dbj-g3:focus-visible ~ .dbj-gal-tabs label[for="dbj-g3"],.dbj #dbj-g4:focus-visible ~ .dbj-gal-tabs label[for="dbj-g4"],.dbj #dbj-g5:focus-visible ~ .dbj-gal-tabs label[for="dbj-g5"]{outline:2px solid var(--ink);outline-offset:2px}
+
+/* cover facts */
+.dbj .dbj-facts{display:grid;grid-template-columns:minmax(0,1fr);gap:0;margin-top:14px;background:var(--surf);border:1px solid var(--line-s);border-radius:var(--r);overflow:hidden}
+.dbj .dbj-facts div{padding:14px 18px;border-top:1px solid var(--line-s)}
+.dbj .dbj-facts div:first-child{border-top:0}
+.dbj .dbj-facts dt{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--strong)}
+.dbj .dbj-facts dd{font-size:16.5px;line-height:1.4;color:var(--ink);margin-top:2px}
+
+/* prices read from Ecwid: tags on the buttons and the matrix panel */
+.dbj .dbs-pr{display:block;font-size:13.5px;line-height:1.3;font-weight:600;color:var(--ink);margin-top:4px}
+.dbj .dbs-pr[hidden]{display:none}
+.dbj .dbs-btn[aria-checked="true"] .dbs-pr{color:#fff}
+.dbj .dbs[data-probing="true"] .dbs-btn,.dbj .dbs[data-probing="true"] .dbs-mx-b,.dbj .dbs[data-probing="true"] .dbs-loadall{pointer-events:none;opacity:.7}
+.dbj .dbs-mx-b[data-known="false"]{font-weight:400;font-size:14px;color:var(--ink-s)}
+.dbj .dbs-loadall{appearance:none;display:inline-flex;align-items:center;margin:14px 0 0;border:1px solid var(--line-s);background:#fff;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;line-height:1.2;padding:11px 16px;min-height:44px;border-radius:999px;cursor:pointer}
+.dbj .dbs-loadall:hover{border-color:var(--ink)}
+.dbj .dbs-loadall:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.dbj .dbs-loadall[hidden]{display:none}
+.dbj .dbs-matrix{display:grid;gap:12px;margin-top:16px}
+.dbj .dbs-mx-g{background:var(--surf);border:1px solid var(--line-s);border-radius:var(--r);overflow:hidden}
+.dbj .dbs-mx-t{padding:12px 14px 4px;font-size:12px;line-height:1.3;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong)}
+.dbj .dbs-mx-r{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(var(--n,2),minmax(0,1fr));gap:8px;align-items:center;padding:8px 14px}
+.dbj .dbs-mx-r + .dbs-mx-r{border-top:1px solid var(--line-f)}
+.dbj .dbs-mx-h{padding-top:4px;padding-bottom:10px}
+.dbj .dbs-mx-k{font-size:12px;line-height:1.3;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-s)}
+.dbj .dbs-mx-h .dbs-mx-cm{font-size:14.5px}
+.dbj .dbs-mx-s{display:flex;flex-direction:column}
+.dbj .dbs-mx-cm{font-size:15.5px;line-height:1.25;font-weight:600;color:var(--ink)}
+.dbj .dbs-mx-in{font-size:13px;line-height:1.3;color:var(--ink-s)}
+.dbj .dbs[data-unit="in"] .dbs-mx-in{order:1;font-size:15.5px;font-weight:600;color:var(--ink)}
+.dbj .dbs[data-unit="in"] .dbs-mx-cm{order:2;font-size:13px;font-weight:400;color:var(--ink-s)}
+.dbj .dbs-mx-b{appearance:none;width:100%;min-height:44px;margin:0;font:inherit;font-size:15.5px;font-weight:600;color:var(--ink);background:var(--w);border:1px solid var(--line-s);border-radius:var(--r-sm);padding:8px 6px;cursor:pointer;transition:background-color .2s ease,border-color .2s ease,color .2s ease}
+.dbj .dbs-mx-b:hover{border-color:var(--ink)}
+.dbj .dbs-mx-b:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.dbj .dbs-mx-b[disabled]{cursor:default;color:var(--ink-s);border-color:var(--line-f)}
+.dbj .dbs-mx-b[aria-pressed="true"]{background:var(--strong);border-color:var(--strong);color:#fff}
+
 /*R*/
 /* ---------- review marks (prototype only; build removes them): same quiet family as the page ---------- */
 .dbj .dbj-rv{display:block;margin:14px 0 0;padding:12px 16px;border-radius:var(--r-sm);background:#fff;border:1px dashed var(--line-s);color:var(--ink-s);font-size:14px;line-height:1.5;text-align:left}
@@ -262,6 +321,14 @@
   .dbj .dbj-p,.dbj .dbj-tt{font-size:17px}
   .dbj .dbj-bar{font-size:12px;padding:12px 16px}
   .dbj .dbj-stage--hero{margin-top:26px}
+  .dbj .dbj-gal{margin-top:26px}
+  .dbj .dbj-gal-tabs{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .dbj .dbj-gal-tabs label:last-child{grid-column:auto}
+  .dbj .dbj-gal-tabs label{font-size:15px}
+  .dbj .dbj-cap{font-size:16.5px;padding:13px 18px}
+  .dbj .dbj-facts{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .dbj .dbj-facts div{border-top:0;border-left:1px solid var(--line-s)}
+  .dbj .dbj-facts div:first-child{border-left:0}
   .dbj .dbj-stage--hero img{width:90%;margin:0 auto;transform:none}
   .dbj .dbj-plate-in{transform:scale(1.2);transform-origin:50% 56%}
   .dbj .dbj-pin{width:25px;height:25px;margin:-12.5px 0 0 -12.5px;line-height:22px;font-size:12px}

@@ -1,4 +1,4 @@
-/* Divine DunlopDreams · mattress selector and presentation (dbs) 0.9.0
+/* Divine DunlopDreams · mattress selector and presentation (dbs) 1.0.0
  *
  * Turns a static, readable block (marked with data-dbs) into two equal cubes side by side: the selection on the
  * left (buttons for type, size and height, a summary) and the presentation on the right (tabs and panels; pressing
@@ -8,7 +8,11 @@
  *
  * Safe by design:
  *  - acts only on elements marked [data-dbs]; every element it creates lives inside them;
- *  - changes Ecwid's dropdowns only when the customer picks something (never on load);
+ *  - changes Ecwid's dropdowns only because the customer acted (picked a size or height, or pressed "Show every
+ *    price"). To show the other height's price it selects that combination in Ecwid's own dropdowns, waits for Ecwid's
+ *    price to change, then puts the customer's selection back. While it does this (about a second, or a few seconds
+ *    for every price) it hides Ecwid's price and blocks Ecwid's Add to Bag button and dropdowns, so nothing wrong can be
+ *    bought. Every price shown comes from Ecwid; none is typed in;
  *  - without this script the static block stays a complete, readable list;
  *  - no MutationObserver; a short, bounded poll waits for Ecwid to render the page.
  *
@@ -107,6 +111,8 @@
     var state = { range: null, size: null, h: null, unit: 'cm', synced: 'none' };
     try { var u = window.localStorage.getItem('dbs-unit'); if (u === 'in' || u === 'cm') { state.unit = u; } } catch (e1) { /* storage may be blocked */ }
     var busy = false;
+    var prices = {}, probing = false;                         /* prices: combination -> the text Ecwid showed */
+    var mx = $('[data-matrix]', root), mxNote = $('.dbs-pnote', root), mxBtns = [], loadBtn = null;
 
     /* upgrade the static lists into radio buttons */
     function upgrade(group, items, labelledBy) {
@@ -116,6 +122,7 @@
         var b = el('button', 'dbs-btn'); b.type = 'button'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', 'false'); b.tabIndex = -1;
         if (it.h) { var g = el('span', 'dbs-glyph'); g.setAttribute('aria-hidden', 'true'); g.style.height = (it.h * 2.4) + 'px'; b.appendChild(g); }
         while (it.li.firstChild) { b.appendChild(it.li.firstChild); }
+        if (it.w || it.h) { var pr = el('span', 'dbs-pr'); pr.hidden = true; b.appendChild(pr); it.pr = pr; }
         it.li.appendChild(b); it.btn = b;
       });
       return ul;
@@ -284,17 +291,159 @@
       }
       sumSt.setAttribute('data-state', pending ? 'none' : state.synced);
       cta.hidden = !(state.synced === 'ok' && !pending && nativeAddToBag(root));
+      renderPrices();
+    }
+
+    /* ---------- prices: always read from Ecwid, never typed in ---------- */
+    function pkey(z, h) { return z.w + 'x' + z.l + '|' + h.h; }
+    function numOf(t) { var n = parseFloat(String(t).replace(/,/g, '').replace(/[^\d.]/g, '')); return isNaN(n) ? null : n; }
+    function rawPrice() { var e = $('.details-product-price__value'); return e ? e.textContent : ''; }
+    function matchSize(z) { return function (t) { var m = parseSize(t); return !!m && ((m.a === z.w && m.b === z.l) || (m.a === z.l && m.b === z.w)); }; }
+    function matchHeight(h) { return function (t) { return parseHeight(t) === h.h; }; }
+    function indexIn(sel, test) { for (var i = 0; i < sel.options.length; i++) { if (test(optText(sel.options[i]))) { return i; } } return -1; }
+    function remember(p) { var z = sizeObj(), h = heightObj(); if (z && h && p) { prices[pkey(z, h)] = p; } }
+    function missingCombos(only) {
+      var list = []; sizes.forEach(function (z) { if (only && z !== only) { return; } heights.forEach(function (h) { if (!prices[pkey(z, h)]) { list.push({ z: z, h: h }); } }); });
+      return list;
+    }
+    function highlightMatrix() {
+      var z = sizeObj(), hh = heightObj();
+      mxBtns.forEach(function (c) { c.b.setAttribute('aria-pressed', (z && hh && c.z === z && c.h === hh) ? 'true' : 'false'); });
+    }
+    function selectCombo(z, h) {
+      if (probing) { return; }
+      state.size = z.li; state.range = z.range || state.range; state.h = h.li; sync(); render();
+    }
+    function buildMatrix() {
+      if (!mx || mx.__built) { return; }
+      mx.__built = true;
+      var order = ranges.length ? ranges.map(function (r) { return r.key; }) : [''];
+      order.forEach(function (rk) {
+        var g = el('div', 'dbs-mx-g'), rn = null;
+        ranges.forEach(function (r) { if (r.key === rk) { rn = r; } });
+        if (rn) { g.appendChild(el('p', 'dbs-mx-t', ($('.dbs-cm', rn.li) || {}).textContent || '')); }
+        var hd = el('div', 'dbs-mx-r dbs-mx-h'); hd.style.setProperty('--n', String(heights.length));
+        hd.appendChild(el('span', 'dbs-mx-k', 'Width × length'));
+        heights.forEach(function (h) { var hc = el('span', 'dbs-mx-s'); hc.appendChild(el('span', 'dbs-mx-cm', h.h + ' cm')); hc.appendChild(el('span', 'dbs-mx-in', inch(h.h) + ' in')); hd.appendChild(hc); });
+        g.appendChild(hd);
+        sizes.forEach(function (z) {
+          if ((z.range || '') !== rk) { return; }
+          var row = el('div', 'dbs-mx-r'), lab = el('span', 'dbs-mx-s');
+          row.style.setProperty('--n', String(heights.length));
+          lab.appendChild(el('span', 'dbs-mx-cm', z.w + ' × ' + z.l + ' cm')); lab.appendChild(el('span', 'dbs-mx-in', inch(z.w) + ' × ' + inch(z.l) + ' in'));
+          row.appendChild(lab);
+          heights.forEach(function (h) {
+            var b = el('button', 'dbs-mx-b'); b.type = 'button';
+            b.addEventListener('click', function () { selectCombo(z, h); });
+            mxBtns.push({ z: z, h: h, b: b }); row.appendChild(b);
+          });
+          g.appendChild(row);
+        });
+        mx.appendChild(g);
+      });
+      loadBtn = el('button', 'dbs-loadall', 'Show every price'); loadBtn.type = 'button';
+      loadBtn.addEventListener('click', function () {
+        readCombos(missingCombos(), function (i, n) { loadBtn.textContent = 'Reading prices from the store… ' + i + ' of ' + n; }, function () { renderPrices(); render(); });
+      });
+      mx.parentNode.insertBefore(loadBtn, mxNote || mx.nextSibling);
+    }
+    function renderPrices() {
+      sizes.forEach(function (z) {
+        if (!z.pr) { return; }
+        var best = '', bestN = null, n = 0, same = true, first = '';
+        heights.forEach(function (h) {
+          var p = prices[pkey(z, h)]; if (!p) { return; }
+          n++; if (!first) { first = p; } else if (p !== first) { same = false; }
+          var v = numOf(p); if (v !== null && (bestN === null || v < bestN)) { bestN = v; best = p; }
+        });
+        z.pr.hidden = !best; z.pr.textContent = best ? ((n > 1 && !same ? 'from ' : '') + best) : '';
+      });
+      var sz = sizeObj();
+      heights.forEach(function (h) {
+        if (!h.pr) { return; }
+        var p = sz ? prices[pkey(sz, h)] : ''; h.pr.hidden = !p; h.pr.textContent = p || '';
+      });
+      var known = 0;
+      mxBtns.forEach(function (c) {
+        var p = prices[pkey(c.z, c.h)]; if (p) { known++; }
+        c.b.textContent = p || 'See price'; c.b.setAttribute('data-known', p ? 'true' : 'false');
+        c.b.setAttribute('aria-label', c.z.w + ' by ' + c.z.l + ' centimetres, ' + c.h.h + ' centimetres high' + (p ? ', ' + p : ': press to choose it and see the price'));
+      });
+      if (loadBtn && !probing) { loadBtn.hidden = known === mxBtns.length; loadBtn.textContent = 'Show every price'; }
+      if (mxNote) { mxNote.textContent = known ? 'These prices are read from the store, not typed into this page.' : 'Press a size and height to see its price. Every price comes from the store.'; }
+      highlightMatrix();
+    }
+    /* Select each combination in Ecwid's own dropdowns, wait for Ecwid's price to change, remember it, then put the
+       customer's selection back. Ecwid changes its price in one step, 250 to 480 ms after the change. */
+    function readCombos(list, progress, finish) {
+      var ss = findSelect(nameSize), hs = findSelect(nameHeight), buy = nativeAddToBag(root);
+      list = list.filter(function (c) { return ss && hs && indexIn(ss, matchSize(c.z)) > -1 && indexIn(hs, matchHeight(c.h)) > -1; });
+      if (probing || !ss || !hs || !buy || !list.length) { if (finish) { finish(false); } return; }
+      probing = true; root.setAttribute('data-probing', 'true'); root.setAttribute('aria-busy', 'true');
+      var box = $('.details-product-price'), blocks = [ss, hs].map(function (s0) { return s0.closest ? s0.closest('.details-product-option') : null; });
+      var keep = { s: ss.selectedIndex, h: hs.selectedIndex, raw: rawPrice(), vis: box ? box.style.visibility : '', pe: buy.style.pointerEvents, bp: blocks.map(function (x) { return x ? x.style.pointerEvents : ''; }) };
+      if (box) { box.style.visibility = 'hidden'; }
+      buy.style.pointerEvents = 'none';
+      blocks.forEach(function (x) { if (x) { x.style.pointerEvents = 'none'; } });
+      busy = true;
+      var i = 0;
+      function leave() {
+        if (box) { box.style.visibility = keep.vis; }
+        buy.style.pointerEvents = keep.pe;
+        blocks.forEach(function (x, k) { if (x) { x.style.pointerEvents = keep.bp[k]; } });
+        busy = false; probing = false; root.setAttribute('data-probing', 'false'); root.removeAttribute('aria-busy');
+        if (finish) { finish(true); }
+      }
+      function restore() {
+        var s2 = findSelect(nameSize), h2 = findSelect(nameHeight);
+        try {
+          if (s2 && s2.selectedIndex !== keep.s) { s2.selectedIndex = keep.s; fire(s2, 'input'); fire(s2, 'change'); }
+          if (h2 && h2.selectedIndex !== keep.h) { h2.selectedIndex = keep.h; fire(h2, 'input'); fire(h2, 'change'); }
+        } catch (e4) { /* leave the dropdowns as they are */ }
+        var w = 0;                                    /* keep Ecwid's price hidden until it shows the customer's price again */
+        (function settle() { if (rawPrice() === keep.raw || w >= 1200) { leave(); return; } w += 40; window.setTimeout(settle, 40); }());
+      }
+      function next() {
+        if (i >= list.length) { restore(); return; }
+        var c = list[i++], s2 = findSelect(nameSize), h2 = findSelect(nameHeight);
+        if (!s2 || !h2) { restore(); return; }
+        var zi = indexIn(s2, matchSize(c.z)), hi = indexIn(h2, matchHeight(c.h)), before = rawPrice(), t = 0;
+        s2.selectedIndex = zi; h2.selectedIndex = hi;
+        fire(s2, 'input'); fire(s2, 'change'); fire(h2, 'input'); fire(h2, 'change');
+        (function wait() {
+          var raw = rawPrice(), p = readPrice();
+          if ((raw !== before && p) || t >= 900) {      /* changed, or (same price as the last one) waited long enough */
+            if (p) { prices[pkey(c.z, c.h)] = p; }
+            if (progress) { progress(i, list.length); }
+            renderPrices(); next(); return;
+          }
+          t += 25; window.setTimeout(wait, 25);
+        }());
+      }
+      next();
+    }
+    /* after the customer has chosen a size and a height, also read the price of the other height of that size */
+    function readMissingForSize() {
+      var z = sizeObj(); if (!z || probing) { return; }
+      var list = missingCombos(z); if (!list.length) { return; }
+      window.setTimeout(function () { readCombos(list, null, function () { renderPrices(); render(); }); }, 150);
     }
 
     /* push the choice into Ecwid's dropdowns, then show Ecwid's price */
-    function pricePoll(n) {
+    /* Ecwid updates its price a moment after the dropdown changes: wait until the price has changed and settled
+       (or, when the new price equals the old one, until enough time has passed) before showing it */
+    var poll = 0;
+    function pricePoll(before, last, t) {
+      if (t === 0 && poll) { window.clearTimeout(poll); }
       var p = readPrice();
-      if (p && state.synced === 'ok') { sumPrice.textContent = p; sumRow.setAttribute('data-has-price', 'true'); return; }
-      if (n > 0) { window.setTimeout(function () { pricePoll(n - 1); }, 350); } else { sumPrice.textContent = ''; sumRow.setAttribute('data-has-price', 'false'); }
+      if (p && state.synced === 'ok' && p !== before) { sumPrice.textContent = p; sumRow.setAttribute('data-has-price', 'true'); poll = 0; remember(p); renderPrices(); readMissingForSize(); return; }
+      if (p && state.synced === 'ok' && p === before && t >= 800) { sumPrice.textContent = p; sumRow.setAttribute('data-has-price', 'true'); poll = 0; remember(p); renderPrices(); readMissingForSize(); return; }
+      if (t < 2400) { poll = window.setTimeout(function () { pricePoll(before, p, t + 40); }, 40); }
+      else { sumPrice.textContent = ''; sumRow.setAttribute('data-has-price', 'false'); poll = 0; }
     }
     function sync() {
       var z = sizeObj(), h = heightObj();
-      var ss = findSelect(nameSize), hs = findSelect(nameHeight), ok = true, any = false;
+      var ss = findSelect(nameSize), hs = findSelect(nameHeight), ok = true, any = false, before = readPrice();
       busy = true;
       try {
         if (z && ss) { any = true; ok = setSelect(ss, function (t) { var m = parseSize(t); return !!m && ((m.a === z.w && m.b === z.l) || (m.a === z.l && m.b === z.w)); }) && ok; }
@@ -302,9 +451,10 @@
       } finally { busy = false; }
       var haveBoth = z && h && ss && hs;
       state.synced = !any ? 'none' : (ok && haveBoth ? 'ok' : (ok ? 'none' : 'nomatch'));
-      if (state.synced === 'ok') { pricePoll(8); } else { sumPrice.textContent = ''; sumRow.setAttribute('data-has-price', 'false'); }
+      if (state.synced === 'ok') { pricePoll(before, '', 0); } else { sumPrice.textContent = ''; sumRow.setAttribute('data-has-price', 'false'); }
     }
     function choose(kind, it) {
+      if (probing) { return; }
       if (kind === 'range') {
         state.range = it.key;
         var z = sizeObj(); if (!z || z.range !== it.key) { state.size = null; }
@@ -339,7 +489,7 @@
       if (m) { sizes.forEach(function (z) { if ((m.a === z.w && m.b === z.l) || (m.a === z.l && m.b === z.w)) { state.size = z.li; state.range = z.range || state.range; changed = true; } }); }
       var hv = hs ? parseHeight(selectedText(hs)) : null;
       if (hv !== null) { heights.forEach(function (h) { if (h.h === hv) { state.h = h.li; changed = true; } }); }
-      if (changed) { openPanel(m ? 'size' : 'height'); state.synced = (sizeObj() && heightObj() && ss && hs) ? 'ok' : 'none'; if (state.synced === 'ok') { pricePoll(8); } render(); }
+      if (changed) { openPanel(m ? 'size' : 'height'); state.synced = (sizeObj() && heightObj() && ss && hs) ? 'ok' : 'none'; if (state.synced === 'ok') { pricePoll(readPrice(), '', 0); } render(); }
     }
     document.addEventListener('change', function (e) { var t = e.target; if (t && t.tagName === 'SELECT' && t.closest && t.closest('.details-product-option')) { fromNative(); } }, true);
 
@@ -347,6 +497,7 @@
     openPanel(panels.length ? panels[0].key : '');
     draw(big.l, big.w, heights[Math.min(1, heights.length - 1)].h);
     fromNative();
+    buildMatrix();
     render();
   }
 

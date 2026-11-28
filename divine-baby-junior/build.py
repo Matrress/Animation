@@ -10,7 +10,7 @@ Usage: python3 build.py
 """
 import re, pathlib
 
-VERSION = "0.9.0"
+VERSION = "1.0.0"
 JS_COMMIT = "596f85cfb9d2d8e1a01fd026d78cb05ce9e00fe5"   # commit that holds release/0.9.0/dbs.js
 CDN = "https://cdn.jsdelivr.net/gh/Matrress/Animation@"
 FONT_COMMIT = "57479ca18f8e6bab02e2a4aa0ec4f0cf82578fad"    # Chillax files already used by Hero 1.17.1 and Collection
@@ -31,7 +31,6 @@ IMAGES = {
     "latex":  ("v2", "dunlop-baby-junior-natural-latex-core-ventilation-detail", [690], 690, 350, "(min-width: 960px) 700px, 100vw"),
     "quilt":  ("v2", "dunlop-baby-junior-cotton-cover-quilting-detail", [660], 660, 300, "(min-width: 960px) 360px, 100vw"),
     "zip":    ("v2", "dunlop-baby-junior-cotton-cover-zip-detail", [340], 340, 220, "(min-width: 960px) 360px, 100vw"),
-    "stack":  ("v2", "dunlop-baby-junior-heights-10-12-14-cm-stack", [700, 1060], 1060, 450, BIG),
 }
 
 # Bio Dunlop logo: the file already used by the 7 zones section, pinned to the commit that holds it (a copy is in src/assets)
@@ -130,12 +129,12 @@ proto_html = build_html(html_src, remote=False, keep_review=True)
 v1 = asset_base("v1", remote=False)
 g_closed = f"{v1}{IMAGES['closed'][1]}-800.webp"
 g_open = f"{v1}{IMAGES['open'][1]}-800.webp"
-g_heights = f"{v1}dunlop-baby-junior-latex-mattress-heights-10-12-14-cm-800.webp"
-size_vals = [("Baby Cot", 60, 110), ("Baby Cot", 60, 120), ("Baby Cot", 70, 130), ("Baby Cot", 70, 140),
-             ("Junior", 70, 160), ("Junior", 80, 160), ("Junior", 80, 180), ("Junior", 80, 200)]
+g_heights = g_open
+size_vals = [("Baby Cot Size", 60, 110), ("Baby Cot Size", 60, 120), ("Baby Cot Size", 70, 130), ("Baby Cot Size", 70, 140),
+             ("Junior Size", 70, 160), ("Junior Size", 80, 160), ("Junior Size", 80, 180), ("Junior Size", 80, 200)]
 inch = lambda cm: f"{round(cm / 2.54 * 10) / 10:.1f}"
-sizes_opts = "".join(f"<option>{n} · {w} × {l} cm · {inch(w)} × {inch(l)} in</option>" for n, w, l in size_vals)
-height_opts = "".join(f"<option>{h} cm · {inch(h)} in</option>" for h in (10, 12, 14))
+sizes_opts = "".join(f"<option>{n}: {w} × {l} cm ({inch(w)}″ × {inch(l)}″)</option>" for n, w, l in size_vals)
+height_opts = "".join(f"<option>{h} cm ({inch(h)}″)</option>" for h in (10, 14))
 shell = f"""<!doctype html>
 <html lang="en-GB" id="ecwid_html">
 <head>
@@ -188,7 +187,7 @@ body{{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#003A68}}
     <p class="proto-price">Price set in Ecwid</p>
     <div class="details-product-option details-product-option--SIZE"><div class="details-product-option__title">SIZE</div><div class="product-details-module__content"><div class="form-control"><select aria-label="SIZE" class="form-control__select"><option>Please choose</option>{sizes_opts}</select></div></div></div>
     <div class="details-product-option details-product-option--HEIGHT"><div class="details-product-option__title">HEIGHT</div><div class="product-details-module__content"><div class="form-control"><select aria-label="HEIGHT" class="form-control__select"><option>Please choose</option>{height_opts}</select></div></div></div>
-    <div class="details-product-price__value" id="proto-price">£0</div>
+    <div class="details-product-price"><div class="details-product-price__value" id="proto-price">£0</div></div>
     <button type="button" class="form-control__button proto-cta" id="proto-add">Add to Bag</button>
     <p class="proto-note">This block imitates Ecwid's own gallery and dropdown options. It is not in the description code: prices, options and checkout stay with Ecwid.</p>
   </div>
@@ -205,7 +204,8 @@ body{{margin:0;background:#fff;font-family:system-ui,sans-serif;color:#003A68}}
 <script>
 /* prototype only: imitates how Ecwid reacts to its option dropdowns (price) */
 (function(){{var s=document.querySelector('.details-product-option--SIZE select'),h=document.querySelector('.details-product-option--HEIGHT select'),p=document.getElementById('proto-price');
-function upd(){{var m=/(\\d+) × (\\d+) cm/.exec(s.value),k=/(\\d+) cm/.exec(h.value);p.textContent=(m&&k)?'£'+Math.round(280+m[1]*m[2]/30+k[1]*8):'£0';}}
+var T={{'60x110':[239,279],'60x120':[255.78,295.78],'70x130':[269,309],'70x140':[289,329],'70x160':[309,369],'80x160':[359,419],'80x180':[409,469],'80x200':[469,529]}};
+function upd(){{var m=/(\\d+) × (\\d+) cm/.exec(s.value),k=/\\((\\d+)/.exec(h.value),hh=/^(\\d+) cm/.exec(h.value);window.setTimeout(function(){{var r=m&&T[m[1]+'x'+m[2]];p.textContent=(r&&hh)?'£'+r[hh[1]==='10'?0:1]:'£0';}},300);}}
 s.addEventListener('change',upd);h.addEventListener('change',upd);
 document.getElementById('proto-add').addEventListener('click',function(){{this.setAttribute('data-clicked',String((+this.getAttribute('data-clicked')||0)+1));}});}})();
 </script>

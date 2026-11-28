@@ -1,7 +1,7 @@
 import base64, html, pathlib
 root = pathlib.Path(__file__).resolve().parent.parent
-desc = (root / 'ecwid/description-0.9.0.html').read_text()
-loader = (root / 'ecwid/loader-0.9.0.js').read_text().strip()
+desc = (root / 'ecwid/description-1.0.0.html').read_text()
+loader = (root / 'ecwid/loader-1.0.0.js').read_text().strip()
 font = base64.b64encode((root.parent / '/dev/null').read_bytes() if False else b'').decode()
 scratch = pathlib.Path('/tmp/claude-0/-home-user-Animation/14fb12be-58fb-599c-974a-ee4b14141df2/scratchpad/preview')
 f400 = base64.b64encode((scratch / 'chillax-400.woff2').read_bytes()).decode()
@@ -46,7 +46,7 @@ pre{{margin:0;background:#fff;padding:20px;overflow:auto;max-height:460px;font:4
 </head>
 <body>
 <main class="wrap">
-  <p class="eyebrow">Ecwid · Dunlop Baby &amp; Junior · 0.9.0</p>
+  <p class="eyebrow">Ecwid · Dunlop Baby &amp; Junior · 1.0.0</p>
   <h1>Код за описанието</h1>
   <p class="lead">Първо тестова категория, после живия сайт, и само след одобрение. Кодът е без скриптове и се копира с един клик.</p>
 
@@ -57,7 +57,7 @@ pre{{margin:0;background:#fff;padding:20px;overflow:auto;max-height:460px;font:4
   </div>
 
   <section class="card">
-    <div class="card-head"><h2>Описание · description-0.9.0</h2><button class="copy" data-target="desc">Копирай описанието</button></div>
+    <div class="card-head"><h2>Описание · description-1.0.0</h2><button class="copy" data-target="desc">Копирай описанието</button></div>
     <pre id="desc">{html.escape(desc)}</pre>
   </section>
 
@@ -86,6 +86,6 @@ pre{{margin:0;background:#fff;padding:20px;overflow:auto;max-height:460px;font:4
 </body>
 </html>
 '''
-out = root / 'handoff/ecwid-code-0.9.0.html'
+out = root / 'handoff/ecwid-code-1.0.0.html'
 out.write_text(page)
 print(out, len(page))

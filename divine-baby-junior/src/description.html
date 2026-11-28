@@ -7,14 +7,36 @@
   <h2 class="dbj-display" id="dbj-a">One piece of natural latex.</h2>
   <p class="dbj-lead">Dunlop Technology · Cotton cover · Made to order</p>
   <p class="dbj-p">A cot and junior bed mattress with a single core of 100% natural Dunlop latex, inside a quilted 100% cotton cover. Made to order, for the first beds of childhood.</p>
-  <figure class="dbj-stage dbj-stage--hero"><div class="dbj-float">{{IMG:closed|Dunlop Baby &amp; Junior mattress with its cotton cover closed, showing the wide quilted waves and the zip along the side|eager}}</div></figure>
+  <!-- Gallery: pure CSS (radio buttons and labels), no JavaScript. One large frame, a caption, and a row of tabs. -->
+  <div class="dbj-gal" role="group" aria-label="Photo gallery of the Baby &amp; Junior mattress">
+    <input type="radio" name="dbj-gal" id="dbj-g1" checked aria-label="Closed">
+    <input type="radio" name="dbj-gal" id="dbj-g2" aria-label="Open">
+    <input type="radio" name="dbj-gal" id="dbj-g3" aria-label="Latex core">
+    <input type="radio" name="dbj-gal" id="dbj-g4" aria-label="Quilting">
+    <input type="radio" name="dbj-gal" id="dbj-g5" aria-label="Zip">
+    <div class="dbj-gal-frame">
+      <figure class="dbj-slide dbj-slide--1"><div class="dbj-float">{{IMG:closed|Dunlop Baby &amp; Junior mattress with its cotton cover closed, showing the wide quilted waves and the zip along the side|eager}}</div></figure>
+      <figure class="dbj-slide dbj-slide--2">{{IMG:open|Dunlop Baby &amp; Junior mattress with the cotton cover unzipped and folded back to reveal the one-piece natural latex core|lazy}}</figure>
+      <figure class="dbj-slide dbj-slide--3">{{IMG:open|Close-up of the one-piece natural Dunlop latex core with its rows of ventilation channels|lazy}}</figure>
+      <figure class="dbj-slide dbj-slide--4">{{IMG:closed|Close-up of the quilted 100% cotton cover with its wide transverse waves|lazy}}</figure>
+      <figure class="dbj-slide dbj-slide--5">{{IMG:closed|Close-up of the zip puller and the side panel of the cotton cover|lazy}}</figure>
+    </div>
+    <p class="dbj-cap dbj-cap--1"><b>Closed.</b> Wide quilted waves in 100% cotton, with a zip along the side.</p>
+    <p class="dbj-cap dbj-cap--2"><b>Open.</b> Unzip the cover and the whole mattress is in view: cotton over one block of natural latex.</p>
+    <p class="dbj-cap dbj-cap--3"><b>Latex core.</b> One piece of natural Dunlop latex, with ventilation channels you can see.</p>
+    <p class="dbj-cap dbj-cap--4"><b>Quilting.</b> A 100% cotton cover with wide, flowing waves.</p>
+    <p class="dbj-cap dbj-cap--5"><b>Zip.</b> A zip along the side, so the cover opens and the core can be checked.</p>
+    <div class="dbj-gal-tabs">
+      <label for="dbj-g1">Closed</label><label for="dbj-g2">Open</label><label for="dbj-g3">Latex core</label><label for="dbj-g4">Quilting</label><label for="dbj-g5">Zip</label>
+    </div>
+  </div>
   <p class="dbj-eyebrow">In brief</p>
   <ul class="dbj-tags">
     <li>100% natural Dunlop latex</li><li>One-piece core</li><li>Ventilation channels</li>
     <li>100% cotton cover</li><li>Zip along the side</li><li>Baby Cot and Junior sizes</li>
   </ul>
   <ul class="dbj-strip" aria-label="Key facts">
-    <li><b>3 heights</b><span>10 · 12 · 14 cm</span></li>
+    <li><b>2 heights</b><span>10 · 14 cm</span></li>
     <li><b>8 sizes</b><span>Baby Cot · Junior</span></li>
     <li><b>Medium</b><span>One firmness</span></li>
     <li><b>Made to order</b><span>Your size, your height</span></li>
@@ -27,26 +49,26 @@
 <section class="dbj-sec" aria-labelledby="dbj-sel">
   <p class="dbj-eyebrow">Choose and discover</p>
   <h2 class="dbj-h2" id="dbj-sel">Choose on one side. See it on the other.</h2>
-  <p class="dbj-p">Pick a type, a size and a height; the matching view opens next to your choice. Every measurement is given in centimetres and inches. Your choice is set in the options on this page, so the price and the bag stay exactly as usual.</p>
+  <p class="dbj-p">Pick a group, a size and a height; the matching view opens next to your choice. Every measurement is given in centimetres and inches. Your choice is set in the options on this page, so the price you see is always the store’s own.</p>
   <div class="dbs" data-dbs data-ecwid-size="size" data-ecwid-height="height">
     <div class="dbs-controls">
       <div class="dbs-group" data-group="range">
-        <p class="dbs-gl">1 · Type</p>
+        <p class="dbs-gl">1 · Group</p>
         <ul class="dbs-list dbs-list--2">
-          <li data-set="cot"><span class="dbs-cm">Baby Cot</span><span class="dbs-sub">Cots and cot beds</span></li>
-          <li data-set="junior"><span class="dbs-cm">Junior</span><span class="dbs-sub">Junior and single beds</span></li>
+          <li data-set="cot"><span class="dbs-cm">Baby Cot Size</span><span class="dbs-sub">Cots and cot beds</span></li>
+          <li data-set="junior"><span class="dbs-cm">Junior Size</span><span class="dbs-sub">Junior and single beds</span></li>
         </ul>
       </div>
       <div class="dbs-group" data-group="size">
         <p class="dbs-gl">2 · Size, width × length</p>
-        <p class="dbs-sl">Baby Cot</p>
+        <p class="dbs-sl">Baby Cot Size</p>
         <ul class="dbs-list dbs-list--2" data-sizes="cot">
           <li data-range="cot" data-w="60" data-l="110"><span class="dbs-cm">60 × 110 cm</span><span class="dbs-in">23.6 × 43.3 in</span></li>
           <li data-range="cot" data-w="60" data-l="120"><span class="dbs-cm">60 × 120 cm</span><span class="dbs-in">23.6 × 47.2 in</span></li>
           <li data-range="cot" data-w="70" data-l="130"><span class="dbs-cm">70 × 130 cm</span><span class="dbs-in">27.6 × 51.2 in</span></li>
           <li data-range="cot" data-w="70" data-l="140"><span class="dbs-cm">70 × 140 cm</span><span class="dbs-in">27.6 × 55.1 in</span></li>
         </ul>
-        <p class="dbs-sl">Junior</p>
+        <p class="dbs-sl">Junior Size</p>
         <ul class="dbs-list dbs-list--2" data-sizes="junior">
           <li data-range="junior" data-w="70" data-l="160"><span class="dbs-cm">70 × 160 cm</span><span class="dbs-in">27.6 × 63.0 in</span></li>
           <li data-range="junior" data-w="80" data-l="160"><span class="dbs-cm">80 × 160 cm</span><span class="dbs-in">31.5 × 63.0 in</span></li>
@@ -56,9 +78,8 @@
       </div>
       <div class="dbs-group" data-group="height">
         <p class="dbs-gl">3 · Height</p>
-        <ul class="dbs-list dbs-list--3">
+        <ul class="dbs-list dbs-list--2">
           <li data-h="10"><span class="dbs-cm">10 cm</span><span class="dbs-in">3.9 in</span></li>
-          <li data-h="12"><span class="dbs-cm">12 cm</span><span class="dbs-in">4.7 in</span></li>
           <li data-h="14"><span class="dbs-cm">14 cm</span><span class="dbs-in">5.5 in</span></li>
         </ul>
       </div>
@@ -94,14 +115,20 @@
     </article>
 
     <article class="dbs-panel" data-panel="height" data-title="Height">
-      <h3 class="dbs-ph">Same footprint. Three heights.</h3>
+      <h3 class="dbs-ph">Same footprint. Two heights.</h3>
       <p class="dbj-tt">Length and width stay exactly the same. Only the height of the latex core changes.</p>
-      <div class="dbj-tile dbj-hts" role="img" aria-label="Side view of the three heights drawn to scale: 10 cm, 12 cm and 14 cm, all with the same width">
+      <div class="dbj-tile dbj-hts" role="img" aria-label="Side view of the two heights drawn to scale: 10 cm and 14 cm, both with the same width">
         <div class="dbj-ht" data-ht="10"><span class="dbj-bar2 dbj-bar2--10"></span><p class="dbj-num">10<span>cm</span></p><p class="dbj-tt">3.9 in</p></div>
-        <div class="dbj-ht" data-ht="12"><span class="dbj-bar2 dbj-bar2--12"></span><p class="dbj-num">12<span>cm</span></p><p class="dbj-tt">4.7 in</p></div>
         <div class="dbj-ht" data-ht="14"><span class="dbj-bar2 dbj-bar2--14"></span><p class="dbj-num">14<span>cm</span></p><p class="dbj-tt">5.5 in</p></div>
       </div>
       <p class="dbj-note">Drawn to scale against each other.</p>
+    </article>
+
+    <article class="dbs-panel" data-panel="prices" data-title="Prices">
+      <h3 class="dbs-ph">Every size and height, one price each.</h3>
+      <p class="dbj-tt">Each price is read from the store’s own options for this product. Press a price to choose that size and height.</p>
+      <div class="dbs-matrix" data-matrix></div>
+      <p class="dbj-note dbs-pnote">Choose a size and a height in the options on this page to see the price.</p>
     </article>
 
     <article class="dbs-panel" data-panel="inside" data-title="Inside">
@@ -155,9 +182,32 @@
       </div>
     </article>
   </div>
-  <!--R--><p class="dbj-rv">Proposed sizes and heights, not confirmed cot compatibility. 60 × 120 and 70 × 140 are the common UK cot and cot-bed sizes; 60 × 110, 70 × 130 and 70 × 160 need a market check. Many cots state a maximum mattress height: 14 cm may exceed it, so decide whether 14 cm is offered for Baby Cot sizes at all. Manufacturing tolerance on height, length and width to be confirmed. The Ecwid dropdown values must contain the same numbers (see ANALYSIS.md) so the selector can fill them. Verify the permitted gap under current UK guidance before publishing any gap figure.</p><!--/R-->
+  <!--R--><p class="dbj-rv">Proposed sizes and heights, not confirmed cot compatibility. 60 × 120 and 70 × 140 are the common UK cot and cot-bed sizes; 60 × 110, 70 × 130 and 70 × 160 need a market check. Many cots state a maximum mattress height: 14 cm may exceed it, so decide whether 14 cm is offered for Baby Cot sizes at all. The approved heights photo shows 10, 12 and 14 cm, so it is not used on this page (12 cm is no longer offered); a new 10 / 14 cm image is needed. The Ecwid main photo of a baby on a pillow is also not used on this page. Manufacturing tolerance on height, length and width to be confirmed. The Ecwid dropdown values must contain the same numbers (see ANALYSIS.md) so the selector can fill them. Verify the permitted gap under current UK guidance before publishing any gap figure.</p><!--/R-->
   <!--R--><p class="dbj-rv">Inside and Materials: confirm with the manufacturer whether the cover is designed to be removed by the customer (not only opened), how the ventilation channels are described in their technical sheet, and whether the quilting contains any wadding (if so it must be named and falls within UK fire-safety scope).</p><!--/R-->
   <!--R--><p class="dbj-rv">Firmness, highest priority: UK safer sleep guidance asks for a firm, flat mattress for babies, and BS EN 16890 includes a firmness test: Medium must be confirmed on the finished mattress, and may need to become Firm for Baby Cot sizes. The owner’s reason for Medium (stability of a child’s skeletal system during growth) is a health claim: it is deliberately not on the page and needs a verified source and agreed wording before any version of it is published.</p><!--/R-->
+</section>
+
+<!-- The cover: 100% cotton, explained -->
+<section class="dbj-sec" aria-labelledby="dbj-c">
+  <p class="dbj-eyebrow">The cover</p>
+  <h2 class="dbj-h2" id="dbj-c">100% cotton. Quilted. Zipped.</h2>
+  <p class="dbj-p">The cover is made of 100% cotton fabric, quilted in wide, flowing waves. A zip runs along the side, so the cover opens and the one-piece latex core inside can be seen and checked.</p>
+  <div class="dbj-bento">
+    <article class="dbj-tile">
+      <p class="dbj-tt"><b>Wide quilted waves.</b> The cotton is quilted in long transverse waves across the top.</p>
+      <figure class="dbj-crop">{{IMG:quilt|Close-up of the quilted 100% cotton cover with its wide transverse waves|lazy}}</figure>
+    </article>
+    <article class="dbj-tile">
+      <p class="dbj-tt"><b>A zip along the side.</b> It opens the cover along its length.</p>
+      <figure class="dbj-crop">{{IMG:zip|Close-up of the zip puller and the side panel of the Baby &amp; Junior mattress cover|lazy}}</figure>
+    </article>
+  </div>
+  <dl class="dbj-facts">
+    <div><dt>Fabric</dt><dd>100% cotton</dd></div>
+    <div><dt>Finish</dt><dd>Wide transverse quilting waves</dd></div>
+    <div><dt>Closure</dt><dd>Zip along the side</dd></div>
+  </dl>
+  <!--R--><p class="dbj-rv">Cover wording is limited to what is verified: 100% cotton, quilted, zip. Do not add organic, washable, waterproof, hypoallergenic or temperature claims for the cover until each is verified for this fabric. Confirm whether the cover is meant to be removed by the customer, and whether it contains wadding.</p><!--/R-->
 </section>
 
 <!--R-->
@@ -184,7 +234,7 @@
     <li><b>Fit.</b> Use it only in a cot or bed whose inner dimensions match the size you ordered, within the maximum height given by the cot manufacturer.</li>
     <li><b>Unpacking.</b> Remove all packaging, including any plastic wrapping, before use, and keep it away from children.</li>
     <li><b>Bedding.</b> Use a fitted sheet made for the exact mattress size. Keep the sleeping surface flat and clear.</li>
-    <li><b>Cover.</b> Care instructions are on the label sewn into the cover. Please follow them.</li>
+    <li><b>Cover.</b> Follow the care instructions supplied with your mattress.</li>
     <li><b>Contains natural rubber latex.</b> If anyone in your household has a latex allergy, please seek medical advice before purchase.</li>
     <li><b>Safer sleep.</b> Always follow current guidance from the NHS and The Lullaby Trust, together with the instructions supplied with your cot.</li>
   </ul>
@@ -205,16 +255,20 @@
           <div><dt>Construction</dt><dd>Single moulded core · No glued layers · Made to order</dd></div>
           <div><dt>Cover</dt><dd>100% cotton fabric · Quilted, wide transverse waves · Zip along the side</dd></div>
           <div><dt>Firmness</dt><dd>Medium · One firmness for the whole range</dd></div>
-          <div><dt>Heights</dt><dd>10 cm (3.9 in) · 12 cm (4.7 in) · 14 cm (5.5 in)</dd></div>
-          <div><dt>Baby Cot</dt><dd>60 × 110 · 60 × 120 · 70 × 130 · 70 × 140 cm<br>23.6 × 43.3 · 23.6 × 47.2 · 27.6 × 51.2 · 27.6 × 55.1 in</dd></div>
-          <div><dt>Junior</dt><dd>70 × 160 · 80 × 160 · 80 × 180 · 80 × 200 cm<br>27.6 × 63.0 · 31.5 × 63.0 · 31.5 × 70.9 · 31.5 × 78.7 in</dd></div>
+          <div><dt>Heights</dt><dd>10 cm (3.9 in) · 14 cm (5.5 in)</dd></div>
+          <div><dt>Baby Cot Size</dt><dd>60 × 110 · 60 × 120 · 70 × 130 · 70 × 140 cm<br>23.6 × 43.3 · 23.6 × 47.2 · 27.6 × 51.2 · 27.6 × 55.1 in</dd></div>
+          <div><dt>Junior Size</dt><dd>70 × 160 · 80 × 160 · 80 × 180 · 80 × 200 cm<br>27.6 × 63.0 · 31.5 × 63.0 · 31.5 × 70.9 · 31.5 × 78.7 in</dd></div>
           <!--R--><div><dt>To confirm</dt><dd>Weight per size and height · tolerances · country of manufacture · BS EN 16890 result · UK fire-safety evidence · lead time</dd></div><!--/R-->
         </dl>
       </div>
     </details>
     <details>
       <summary>Which height should I choose?</summary>
-      <div class="dbj-acc-body"><p class="dbj-tt">Start with your cot or bed. Many cots state a maximum mattress height; choose a height within it. All three heights share the same length and width.</p></div>
+      <div class="dbj-acc-body"><p class="dbj-tt">Start with your cot or bed. Many cots state a maximum mattress height; choose a height within it. Both heights share the same length and width.</p></div>
+    </details>
+    <details>
+      <summary>What is the cover made of?</summary>
+      <div class="dbj-acc-body"><p class="dbj-tt">The cover is 100% cotton fabric, quilted in wide transverse waves, with a zip along the side.</p></div>
     </details>
     <details>
       <summary>How do I know the size will fit?</summary>
