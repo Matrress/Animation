@@ -64,7 +64,7 @@ function shopHas(role, key) {
 }
 
 /* ---------- reading the shop and setting the shop ---------- */
-var X = { S: { size: null, height: null, bagged: '' }, busy: false, probing: false, prices: {}, gone: {}, hooks: {} };
+var X = { S: { size: null, height: null, bagged: '' }, last: 'size', busy: false, probing: false, prices: {}, gone: {}, hooks: {} };
 function readShop() { var o = {}; ROLES.forEach(function (r) { o[r] = shopKey(r, chosenText(selectFor(r))); }); return o; }
 function setShop(role, key) {
   var sel = selectFor(role); if (!sel || key == null) { return false; }
@@ -97,7 +97,7 @@ function push() {
   if (X.busy) { return; }
   var shop = readShop(); X.busy = true;
   try {
-    if (X.S.size != null && X.S.height != null && !validPair(X.S.size, X.S.height)) { X.S.height = null; clearShop('height'); }
+    if (X.S.size != null && X.S.height != null && !validPair(X.S.size, X.S.height)) { if (X.last === 'height') { X.S.size = null; clearShop('size'); } else { X.S.height = null; clearShop('height'); } }
     ROLES.forEach(function (r) { var want = X.S[r]; if (want != null && want !== shop[r]) { setShop(r, want); if (r === 'size') { enforceOptions(); } } });
     enforceOptions();
   } finally { X.busy = false; }
@@ -109,9 +109,9 @@ function pull() {
   ROLES.forEach(function (r) {
     if (X.S[r] === shop[r]) { return; }
     if (shop[r] != null && (r === 'size' ? !sizeByKey(shop[r]) : !heightByKey(shop[r]))) { return; }
-    X.S[r] = shop[r]; changed = true;
+    X.S[r] = shop[r]; X.last = r; changed = true;
   });
-  if (X.S.size != null && X.S.height != null && !validPair(X.S.size, X.S.height)) { X.S.height = null; clearShop('height'); changed = true; }
+  if (X.S.size != null && X.S.height != null && !validPair(X.S.size, X.S.height)) { if (X.last === 'height') { X.S.size = null; clearShop('size'); } else { X.S.height = null; clearShop('height'); } changed = true; }
   enforceOptions();
   return changed;
 }

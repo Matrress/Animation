@@ -29,8 +29,8 @@ async function run(b, o, code, html) {
     const u = r.request().url();
     if (/^file:/.test(u) || /^data:/.test(u)) { return r.continue(); }
     hits.push(u);
-    if (/media\.divinedunlop\.com\/ddtv\/baby-tv-/.test(u)) { return r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(path.join(harness, 'baby-tv.local.js')) }); }
-    if (/media\.divinedunlop\.com\/ddtv\/baby-phone-/.test(u)) { return r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(path.join(harness, 'baby-phone.local.js')) }); }
+    if (/jsdelivr\.net\/gh\/Matrress\/Animation@[0-9a-f]{40}\/divine-baby-junior\/experience\/dist\/baby-tv-/.test(u)) { return r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(path.join(harness, 'baby-tv.local.js')) }); }
+    if (/jsdelivr\.net\/gh\/Matrress\/Animation@[0-9a-f]{40}\/divine-baby-junior\/experience\/dist\/baby-phone-/.test(u)) { return r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(path.join(harness, 'baby-phone.local.js')) }); }
     if (/media\.divinedunlop\.com\/ddtv\/botanic-/.test(u)) { return r.fulfill({ contentType: 'application/javascript', body: 'window.__botanicLoaded=(window.__botanicLoaded||0)+1;' }); }
     if (/\/dbs\.js$/.test(u)) { return r.fulfill({ contentType: 'application/javascript', body: 'window.__dbsRan=1;' }); }
     if (/ddc\.js$/.test(u)) { return r.fulfill({ contentType: 'application/javascript', body: 'window.DDC=1;' }); }
@@ -45,7 +45,7 @@ async function run(b, o, code, html) {
   /* length and content */
   const code = loaderCode('876405767');
   ok(code.replace(/\n$/, '').length <= 4000, 'the unified loader is ' + code.replace(/\n$/, '').length + ' characters (limit 4000)');
-  ok(/08088112777cbf09aa9bf7dad1386cb474bd5eae\/divine-collection\/release\/3\.13\.2-configB\//.test(code) && /release\/1\.4\.0\/dbs\.js/.test(code) && /media\.divinedunlop\.com\/ddtv\//.test(code), 'it names the Divine Collection files, the selector and the Experience folder');
+  ok(/08088112777cbf09aa9bf7dad1386cb474bd5eae\/divine-collection\/release\/3\.13\.2-configB\//.test(code) && /release\/1\.5\.0\/dbs\.js/.test(code) && /media\.divinedunlop\.com\/ddtv\//.test(code), 'it names the Divine Collection files, the selector and the Experience folder');
   ok(!/eval\(|document\.wri|innerHTML/.test(code), 'no eval, document write or innerHTML in the loader');
 
   /* 1. Baby & Junior, test channel: nothing without the opt-in, mounted with ?ddtv=test */
@@ -53,12 +53,12 @@ async function run(b, o, code, html) {
   await t.go(); await t.p.waitForTimeout(2500);
   ok(await t.p.evaluate(() => !document.getElementById('ddtv-experience')), 'Baby & Junior: not shown to visitors while it is on the test channel (no opt-in)');
   ok(await t.p.evaluate(() => !!window.DDC && window.__dbsRan === 1 && document.documentElement.classList.contains('ddc-js')), 'Collection and selector load on the page as before');
-  ok(!t.hits.some(u => /media\.divinedunlop\.com\/ddtv\/baby-/.test(u)), 'the Baby & Junior files were not even requested');
+  ok(!t.hits.some(u => /experience\/dist\/baby-|ddtv\/baby-/.test(u)), 'the Baby & Junior files were not even requested');
   await t.ctx.close();
   t = await run(b, { viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' }, code, page(code, 876311857, babyPointer('test')));
   await t.go('?ddtv=test'); await t.p.waitForSelector('#ddtv-experience', { timeout: 15000 }); await t.p.waitForTimeout(1200);
   ok(await t.p.evaluate(() => document.documentElement.classList.contains('ddtv-on') && !!document.getElementById('ddtv-experience').shadowRoot), 'Baby & Junior: ?ddtv=test mounts the television through the unified loader');
-  ok(t.hits.some(u => u.indexOf('https://media.divinedunlop.com/ddtv/' + tvName) === 0) && !t.hits.some(u => u.indexOf(phName) > -1), 'only the television file was requested, from media.divinedunlop.com/ddtv/');
+  ok(t.hits.some(u => /^https:\/\/cdn\.jsdelivr\.net\/gh\/Matrress\/Animation@[0-9a-f]{40}\/divine-baby-junior\/experience\/dist\//.test(u) && u.indexOf(tvName) > -1) && !t.hits.some(u => u.indexOf(phName) > -1) && !t.hits.some(u => /media\.divinedunlop\.com\/ddtv\/baby/.test(u)), 'only the television file was requested, from the repository through jsDelivr: nothing is uploaded to the media folder');
   ok(t.errs.length === 0, 'no page errors ' + t.errs.join('|'));
   await t.ctx.close();
   /* the same session, off */
@@ -74,7 +74,7 @@ async function run(b, o, code, html) {
   await t.ctx.close();
   /* 2. public launch: the id in LIVE, no opt-in, channel test or live */
   const codeLive = loaderCode('876405767,876311857');
-  ok(codeLive.replace(/\n$/, '').length <= 4000, 'with the Baby & Junior id in LIVE the loader is ' + codeLive.replace(/\n$/, '').length + ' characters');
+  ok(codeLive.replace(/\n$/, '').length + 15 <= 4000, 'with the Baby & Junior id in LIVE the loader, with its script tags, is ' + (codeLive.replace(/\n$/, '').length + 15) + ' characters');
   t = await run(b, { viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' }, codeLive, page(codeLive, 876311857, babyPointer('live')));
   await t.go(); await t.p.waitForSelector('#ddtv-experience', { timeout: 15000 });
   ok(await t.p.evaluate(() => document.documentElement.classList.contains('ddtv-on')), 'launch: Baby & Junior in LIVE shows the television to everyone');

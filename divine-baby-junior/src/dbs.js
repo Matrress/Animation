@@ -304,7 +304,7 @@
       s.setAttribute('aria-label', (rangeName() ? rangeName() + ' mattress, ' : 'Mattress, ') + z.w + ' by ' + z.l + ' centimetres (' + inch(z.w) + ' by ' + inch(z.l) + ' inches), ' + h.h + ' centimetres (' + inch(h.h) + ' inches) deep' + (pending ? '. Example only: choose a size and a depth.' : '.'));
 
       if (pending) {
-        sumV.textContent = 'Choose a type, a size and a depth.';
+        sumV.textContent = 'Select a collection, a size and a depth.';
         sumV2.textContent = 'The drawing shows an example until you choose.';
         sumSt.textContent = '';
       } else {
@@ -493,7 +493,7 @@
       }
       else { state.h = it.li; }
       sync(); render();
-      openPanel(kind === 'height' ? 'height' : 'size');
+      openPanel(kind === 'range' ? 'size' : (!state.h ? 'height' : (!state.size ? 'size' : (kind === 'height' ? 'height' : 'size'))));   /* complete the configuration: show the other choice */
     }
 
     /* events: click and arrow keys on every radio group */

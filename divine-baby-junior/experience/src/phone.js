@@ -18,27 +18,29 @@ function pageStylePhone() {
 }
 /* the guided steps */
 var PSTEPS = ['size', 'depth', 'review'];
+function selP(on) { return '<span class="sel">' + (on ? '✓ Selected' : 'Select') + '</span>'; }
+function grpP(g, inner) {
+  var hs = DATA.heights.filter(function (h) { return h.g == null || h.g === g.key; }), ns = DATA.sizes.filter(function (z) { return z.g === g.key; }).length;
+  return '<section class="grp g-' + g.key + '"><h3 class="gt">' + esc(g.name) + '</h3><p class="gs">' + esc(g.sub) + '</p><p class="gm">' + ns + ' sizes · ' + hs.map(function (h) { return h.cm; }).join(' or ') + ' cm deep</p>' + inner + '</section>';
+}
 function phSheetHtml(U) {
   var idx = PSTEPS.indexOf(U.step) + 1, body = '', foot = '';
   if (U.step === 'size') {
-    body = '<h2 class="q">What size is your baby&#39;s cot or bed?</h2><p class="sub">Choose your size. Every size in centimetres and in inches.</p>' + DATA.groups.map(function (g) {
-      return '<p class="lab2">' + esc(g.name) + ' · ' + DATA.heights.filter(function (h) { return h.g == null || h.g === g.key; }).map(function (h) { return h.cm; }).join(' / ') + ' cm deep</p><p class="gsub">' + esc(g.sub) + '</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(function (z) {
+    body = '<h2 class="q">Select your size</h2><p class="sub">What size is your baby&#39;s cot or bed? Every size in centimetres and in inches. You can also start with the depth.</p>' + DATA.groups.map(function (g) {
+      return grpP(g, '<p class="selh">Select a size</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(function (z) {
         var on = X.S.size === sizeKey(z), av = shopHas('size', sizeKey(z));
-        return '<button type="button" class="card sz' + (on ? ' on' : '') + '" data-pick-size="' + sizeKey(z) + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + z.w + ' × ' + z.l + ' cm</span><span class="in">' + inch(z.w) + ' × ' + inch(z.l) + ' in</span></button>'; }).join('') + '</div>'; }).join('');
+        return '<button type="button" class="card sz' + (on ? ' on' : '') + '" data-pick-size="' + sizeKey(z) + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + z.w + ' × ' + z.l + ' cm</span><span class="in">' + inch(z.w) + ' × ' + inch(z.l) + ' in</span>' + selP(on) + '</button>'; }).join('') + '</div>');
+    }).join('');
     body += '<p class="need">Cot and bed sizes differ between manufacturers: measure the <b>inside</b> of the frame.</p>';
-    foot = '<button type="button" class="btn" data-go="depth"' + (X.S.size ? '' : ' disabled') + '>Continue to Depth</button>';
+    foot = '<button type="button" class="btn" data-go="depth">Select your depth</button>';
   } else if (U.step === 'depth') {
-    var z = X.S.size && sizeByKey(X.S.size);
-    if (!z) {
-      body = '<h2 class="q">How deep should the mattress be?</h2><p class="sub">The depths depend on the collection, so choose your size first.</p><p class="need">Baby Cot sizes come in <b>10 or 12 cm</b>. Junior sizes come in <b>14 or 16 cm</b>.</p>';
-      foot = '<button type="button" class="btn" data-go="size">Choose your size</button>';
-    } else {
-      var hz = heightsFor(z);
-      body = '<h2 class="q">How deep should the mattress be?</h2><p class="sub">' + esc(groupByKey(z.g).name) + ' comes in ' + hz.map(function (h) { return h.cm; }).join(' or ') + ' cm. Length and width stay the same: check the maximum mattress depth your cot or bed allows. A deeper mattress is not automatically a better one.</p><div class="cards">' + hz.map(function (h) {
-        var p = priceOf(z, h), on = X.S.height === String(h.cm), av = shopHas('height', String(h.cm));
-        return '<button type="button" class="card hc' + (on ? ' on' : '') + '" data-pick-height="' + h.cm + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + h.cm + ' cm</span><span class="in">' + inch(h.cm) + ' in</span>' + (p ? '<span class="pr">' + esc(p) + '</span>' : '') + '<span class="dsc">' + esc(h.desc) + '</span></button>'; }).join('') + '</div>';
-      foot = '<button type="button" class="btn ghost" data-go="size">Back</button><button type="button" class="btn" data-go="review"' + (X.S.height ? '' : ' disabled') + '>Review</button>';
-    }
+    var z = X.S.size && sizeByKey(X.S.size), gs = z ? DATA.groups.filter(function (g) { return g.key === z.g; }) : DATA.groups;
+    body = '<h2 class="q">Select your depth</h2><p class="sub">' + (z ? esc(groupByKey(z.g).name) + ' comes in ' + heightsFor(z).map(function (h) { return h.cm; }).join(' or ') + ' cm. ' : 'Baby Cot comes in 10 or 12 cm, Junior in 14 or 16 cm. ') + 'Length and width stay the same: check the maximum mattress depth your cot or bed allows. A deeper mattress is not automatically a better one.</p>' + gs.map(function (g) {
+      return grpP(g, '<p class="selh">Select a depth</p><div class="cards">' + DATA.heights.filter(function (h) { return h.g == null || h.g === g.key; }).map(function (h) {
+        var p = z ? priceOf(z, h) : '', on = X.S.height === String(h.cm), av = shopHas('height', String(h.cm));
+        return '<button type="button" class="card hc' + (on ? ' on' : '') + '" data-pick-height="' + h.cm + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + h.cm + ' cm</span><span class="in">' + inch(h.cm) + ' in</span>' + (p ? '<span class="pr">' + esc(p) + '</span>' : '') + '<span class="dsc">' + esc(h.desc) + '</span>' + selP(on) + '</button>'; }).join('') + '</div>');
+    }).join('');
+    foot = '<button type="button" class="btn ghost" data-go="size">Select your size</button><button type="button" class="btn" data-go="review"' + (complete() ? '' : ' disabled') + '>Review</button>';
   } else {
     var fc = bagFace();
     body = '<h2 class="q">Review your order</h2><ul class="rv">' + ORDER.map(function (o) { return '<li><span>' + o[1] + '</span><b>' + (chosenLabel(o[0]) ? esc(chosenLabel(o[0])) : '<i>Not chosen yet</i>') + '</b></li>'; }).join('') +
@@ -63,11 +65,11 @@ function openSheet() {
     if (t.hasAttribute('data-close')) { close(); return; }
     if ((v = t.getAttribute('data-go'))) { U.step = v; draw.keep = 0; draw(); return; }
     if ((v = t.getAttribute('data-pick-size'))) {
-      var prev = rawPrice(); X.S.size = v; push(); draw();
+      var prev = rawPrice(); X.S.size = v; X.last = 'size'; push(); U.step = X.S.height == null ? 'depth' : 'review'; draw.keep = 0; draw();
       if (X.S.height) { awaitPrice(prev, function () { draw(); readOthers(); }); }
       return;
     }
-    if ((v = t.getAttribute('data-pick-height'))) { var prev2 = rawPrice(); X.S.height = v; push(); draw(); awaitPrice(prev2, function () { draw(); readOthers(); }); return; }
+    if ((v = t.getAttribute('data-pick-height'))) { var prev2 = rawPrice(); X.S.height = v; X.last = 'height'; push(); U.step = X.S.size == null ? 'size' : 'review'; draw.keep = 0; draw(); if (X.S.size) { awaitPrice(prev2, function () { draw(); readOthers(); }); } return; }
     if (t.hasAttribute('data-bag')) { var f = bagFace(); if (f.face === 'checkout') { close(); openCart(); } else if (f.enabled) { if (addToBag()) { say('Added to your bag'); } else { say('The store\'s bag button is not ready yet. Please try again.'); } } draw(); return; }
   });
   function readOthers() { var z = X.S.size && sizeByKey(X.S.size); if (!z) { return; } var miss = missingCombos(z); if (miss.length) { win.setTimeout(function () { readCombos(miss, null, function () { draw(); }); }, 150); } }
@@ -80,7 +82,7 @@ function nextStepP() { return X.S.size == null ? 'size' : X.S.height == null ? '
 function refreshCta() {
   if (!ctaBtn || !ctaNote) { return; }
   var z = X.S.size && sizeByKey(X.S.size), h = X.S.height && heightByKey(X.S.height), fc = bagFace();
-  ctaBtn.textContent = complete() ? 'Review your mattress' : (X.S.size || X.S.height ? 'Continue configuring' : 'Configure Your Mattress');
+  ctaBtn.textContent = complete() ? 'Review your mattress' : (X.S.size || X.S.height ? 'Continue: select your ' + (X.S.size ? 'depth' : 'size') : 'Select Your Mattress');
   ctaNote.innerHTML = complete() ? '<b>' + esc(chosenLabel('size')) + ' · ' + esc(chosenLabel('height')) + '</b>' + (priceNow() ? ' · ' + esc(priceNow()) : '') : esc(fc.guide);
 }
 function mountCta() {

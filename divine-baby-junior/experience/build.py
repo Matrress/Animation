@@ -212,9 +212,9 @@ if __name__ == "__main__":
     harness(out)
     base_commit = sys.argv[1] if len(sys.argv) > 1 else "COMMIT"
     (dist / "loader-baby.js").write_text(LOADER % {"base": f"{CDN}{base_commit}/divine-baby-junior/experience/dist/"})
-    # the Standard Product View description (the approved look, 1.4.0) with the hidden pointer for the Experience in front of it
-    base_desc = top / "ecwid/description-1.4.0.html"
+    # the Standard Product View description (the approved look, 1.5.0) with the hidden pointer for the Experience in front of it
+    base_desc = top / "ecwid/description-1.5.0.html"
     if base_desc.exists():
-        (top / "ecwid/description-2.4.0.html").write_text(pointer + "\n" + base_desc.read_text())
+        (top / "ecwid/description-2.5.0.html").write_text(pointer + "\n" + base_desc.read_text())
     sizes = {k: (dist / v).stat().st_size for k, v in out.items()}
     print(json.dumps(out), sizes)

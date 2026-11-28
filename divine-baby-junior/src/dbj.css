@@ -368,3 +368,11 @@
 .dbj .dbj-ic--gift{background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='white'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Crect%20x='3'%20y='9'%20width='18'%20height='11'%20rx='1'/%3E%3Cpath%20d='M12%209v11M3%2013h18'/%3E%3Cpath%20d='M12%209c-2-4-6-3-5%200M12%209c2-4%206-3%205%200'/%3E%3C/svg%3E")}
 .dbj .dbj-eyebrow::before{background:var(--lf)}
 @container (min-width:640px){.dbj .dbj-nat{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---------- Select: the two collections as two clear blocks ---------- */
+.dbj .dbs-group[data-group="range"] .dbs-cm{font-size:22px;line-height:1.15}
+.dbj .dbs-group[data-group="range"] .dbs-sub{font-size:14.5px;color:var(--ink)}
+.dbj .dbs-group[data-group="range"] li[data-set="cot"] .dbs-btn{background-color:var(--pk)}
+.dbj .dbs-group[data-group="range"] li[data-set="junior"] .dbs-btn{background-color:var(--surf);border-color:var(--line)}
+.dbj .dbs-group[data-group="range"] li .dbs-btn[aria-checked="true"]{background-color:var(--strong)}
+.dbj .dbs-gl{font-size:13.5px}

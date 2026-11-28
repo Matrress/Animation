@@ -40,3 +40,12 @@ b{font-weight:600}
 .gsub{margin:-6px 0 10px;font-size:14.5px;color:var(--ink2)}
 
 .natl{display:flex;align-items:flex-start;gap:8px;margin:0 0 14px;padding:10px 12px;background:var(--pk);border:1px solid var(--line);border-radius:12px;font-size:13.5px;line-height:1.4;font-weight:600;color:var(--ink)}.natl svg{flex:0 0 16px;margin-top:2px;color:#009289}
+
+.grp{border:1.5px solid var(--line);border-radius:20px;padding:18px 16px 16px;margin:0 0 14px}
+.g-cot{background:var(--pk)}.g-junior{background:var(--surf)}
+.gt{margin:0;font-size:28px;line-height:1.1;font-weight:600;color:var(--ink)}
+.gs{margin:2px 0 0;font-size:16px;color:var(--ink)}
+.gm{display:inline-block;margin:12px 0 12px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-weight:600;font-size:14px}
+.selh{margin:0 0 10px;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--strong)}
+.sel{display:inline-block;align-self:flex-start;margin-top:8px;border:1.5px solid var(--strong);color:var(--strong);background:#fff;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:600}
+.card.on .sel{background:#fff;color:var(--strong);border-color:#fff}

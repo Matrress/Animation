@@ -27,7 +27,7 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   ok((await p.$$('[data-sizes="junior"] .dbs-btn')).length === 6, 'Junior Size has six sizes');
   ok(await p.evaluate(() => [...document.querySelectorAll('[data-h]')].filter(l => !l.hidden).map(l => l.dataset.h).join() === '14,16'), 'Junior shows only the depths 14 and 16 cm');
   await p.click('.dbs-btn:has-text("80 × 200 cm")');
-  ok(await p.evaluate(() => document.querySelector('[data-panel="size"]').hidden === false && document.querySelector('[data-panel="detail"]').hidden === true && !!document.querySelector('[data-panel="size"] .dbs-stage')), 'pressing a size opens the Size panel with the drawing');
+  ok(await p.evaluate(() => document.querySelector('[data-panel="height"]').hidden === false && document.querySelector('[data-panel="detail"]').hidden === true && !!document.querySelector('[data-panel="size"] .dbs-stage')), 'pressing a size, with no depth chosen yet, opens the Depth panel to complete the configuration (the drawing stays in the Size panel)');
   await p.click('[data-h="14"] .dbs-btn');
   ok(await p.evaluate(() => document.querySelector('[data-panel="height"]').hidden === false && document.querySelector('[data-ht="14"]').className.indexOf('is-on') > -1), 'pressing a height opens the Height panel and marks 14 cm');
   await p.waitForTimeout(900); await idle(p); await p.waitForTimeout(500);

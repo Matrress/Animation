@@ -155,7 +155,7 @@ function sizeCardHtml(z) {
   var on = X.S.size === sizeKey(z);
   return '<button type="button" class="card sz' + (on ? ' on' : '') + '" data-pick-size="' + sizeKey(z) + '"' + (avail === false ? ' disabled' : '') + ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
     '<span class="cm">' + z.w + ' × ' + z.l + ' cm</span><span class="in">' + inch(z.w) + ' × ' + inch(z.l) + ' in</span>' +
-    (cheapest ? '<span class="pr">' + (n > 1 && !same ? 'from ' : '') + esc(cheapest) + '</span>' : '') + (avail === false ? '<span class="na">Not available yet</span>' : '') + '</button>';
+    (cheapest ? '<span class="pr">' + (n > 1 && !same ? 'from ' : '') + esc(cheapest) + '</span>' : '') + (avail === false ? '<span class="na">Not available yet</span>' : sel(on)) + '</button>';
 }
 /* a small sketch of the zip along the side of the cover (a drawing, not a photograph) */
 function zipArt() {
@@ -211,13 +211,16 @@ function panelHtml(ch, p) {
 function chapterOf(id) { for (var i = 0; i < DATA.chapters.length; i++) { if (DATA.chapters[i].id === id) { return DATA.chapters[i]; } } return DATA.chapters[0]; }
 function flat() { var a = []; DATA.chapters.forEach(function (c) { c.panels.forEach(function (p, i) { a.push({ c: c, p: p, i: i }); }); }); return a; }
 var STEPS = [{ id: 'size', n: 'Size', icon: 'size' }, { id: 'depth', n: 'Depth', icon: 'depth' }];
+function sel(on) { return '<span class="sel">' + (on ? '✓ Selected' : 'Select') + '</span>'; }
 function stepValue(id) {
   if (id === 'size') { var z = X.S.size && sizeByKey(X.S.size); return z ? z.w + ' × ' + z.l + ' cm' : ''; }
   return X.S.height ? X.S.height + ' cm' : '';
 }
 function stepDone(id) { return id === 'size' ? X.S.size != null : X.S.height != null; }
 function nextStep() { for (var i = 0; i < STEPS.length; i++) { if (!stepDone(STEPS[i].id)) { return STEPS[i]; } } return null; }
-function slideFor(U) { return U.mode === 'buy' ? DRAW_SLIDE : (DATA.topicSlide[U.topic] || 0); }
+function slideIx(id) { for (var i = 0; i < DATA.slides.length; i++) { if (DATA.slides[i].id === id) { return i; } } return 0; }
+/* Explore: the picture follows the topic. Select & Buy: the depth step opens the pictures of the depths; the others show the chosen size drawn in proportion */
+function slideFor(U) { return U.mode === 'buy' ? (U.step === 'depth' ? slideIx('depths') : DRAW_SLIDE) : (DATA.topicSlide[U.topic] || 0); }
 
 function chbarHtml(U) {
   var seen = U.seen || {};
@@ -225,7 +228,7 @@ function chbarHtml(U) {
     return '<button type="button" class="chip' + (U.mode === 'explore' && U.topic === c.id ? ' on' : '') + (seen[c.id] ? ' seen' : '') + '" data-topic="' + c.id + '" aria-pressed="' + (U.mode === 'explore' && U.topic === c.id ? 'true' : 'false') + '"><i class="dotc"></i>' + esc(c.label) + '</button>'; }).join('') + '<button type="button" class="chip tile" id="allbtn" aria-pressed="' + (U.all ? 'true' : 'false') + '" aria-label="All topics: the whole list">' + ico('list') + 'All topics</button></div></section>';
   var buy = '<section class="card2 order" aria-label="Select and Buy: your order"><p class="lab">' + leaf() + 'Select &amp; Buy · Your order</p><div class="steps">' + STEPS.map(function (s, i) {
     var on = U.mode === 'buy' && U.step === s.id, v = stepValue(s.id);
-    return '<button type="button" class="stp' + (on ? ' on' : '') + (stepDone(s.id) ? ' done' : '') + '" data-step="' + s.id + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + ico(s.icon) + '<span class="st1">' + s.n + '</span><span class="st2">' + (v ? esc(v) : 'Choose') + '</span><span class="num">' + (i + 1) + '</span></button>';
+    return '<button type="button" class="stp' + (on ? ' on' : '') + (stepDone(s.id) ? ' done' : '') + '" data-step="' + s.id + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + ico(s.icon) + '<span class="st1">Select ' + s.n.toLowerCase() + '</span><span class="st2">' + (v ? esc(v) : 'Tap to select') + '</span><span class="num">' + (i + 1) + '</span></button>';
   }).join('') + '<button type="button" class="rev' + (U.mode === 'buy' && U.step === 'review' ? ' on' : '') + (complete() ? ' ready' : '') + '" data-step="review">' + ico('bag') + '<span class="st1">Review</span><span class="st2">Your order</span></button></div>' +
     '<button type="button" class="allpr' + (U.mode === 'buy' && U.step === 'prices' ? ' on' : '') + '" data-step="prices">' + ico('tag') + '<span>All sizes and prices</span></button></section>';
   return ex + buy;
@@ -236,35 +239,35 @@ function railHtml(U) {
     return '<p class="lab">' + leaf() + 'In this topic</p><div class="tree"><div class="tnode on"><i class="dotc"></i><b>' + esc(ch.label) + '</b><span>' + ch.panels.length + ' parts in this topic</span></div><div class="kids">' +
       ch.panels.map(function (p, i) { return '<button type="button" class="kid' + (U.part === i ? ' on' : '') + '" data-part="' + i + '" aria-current="' + (U.part === i ? 'true' : 'false') + '"><span class="ltr">' + String.fromCharCode(65 + i) + '</span>' + esc(p.label) + '</button>'; }).join('') + '</div></div><p class="hint">Tap a part to move between them, forward or back.</p>';
   }
-  var nm = { size: ['Size', 'size'], depth: ['Depth', 'depth'], review: ['Review', 'bag'], prices: ['All prices', 'tag'] }[U.step];
+  var nm = { size: ['Select your size', 'size'], depth: ['Select your depth', 'depth'], review: ['Review', 'bag'], prices: ['All prices', 'tag'] }[U.step];
   var st = U.step === 'review' ? (complete() ? 'Ready to order' : 'Still to choose: ' + missing().join(' · ')) : U.step === 'prices' ? 'Every size and depth' : (stepDone(U.step) ? stepValue(U.step) : 'Not chosen yet');
   return '<p class="lab">' + leaf() + 'You are choosing</p><div class="tree"><div class="tnode on step">' + ico(nm[1]) + '<b>' + nm[0] + '</b><span>' + esc(st) + '</span></div></div><p class="hint">' +
-    (U.step === 'size' ? 'Every size in centimetres and inches, straight from the shop.' : U.step === 'depth' ? 'Only the depths of your collection are shown: 10 or 12 cm for Baby Cot, 14 or 16 cm for Junior.' : U.step === 'prices' ? 'Each price is read from the shop.' : 'Check your order, then add it to the bag.') + '</p>';
+    (U.step === 'size' ? 'Select a size: every size is in centimetres and inches, straight from the shop. You can start with the depth instead.' : U.step === 'depth' ? 'Select a depth: 10 or 12 cm for Baby Cot, 14 or 16 cm for Junior. You can start with the depth, or with the size.' : U.step === 'prices' ? 'Each price is read from the shop.' : 'Check your order, then add it to the bag.') + '</p>';
+}
+/* one big block per collection: Baby Cot (lilac-pink) above, Junior (grey) below, each with its own sizes and depths */
+function grpHtml(g, inner) {
+  var hs = DATA.heights.filter(function (h) { return h.g == null || h.g === g.key; }), ns = DATA.sizes.filter(function (z) { return z.g === g.key; }).length;
+  return '<section class="grp g-' + g.key + '" aria-label="' + esc(g.name) + '"><div class="gh">' + nat(g.key === 'cot' ? 'moon' : 'sprout') + '<div><h4 class="gt">' + esc(g.name) + '</h4><p class="gs">' + esc(g.sub) + '</p></div></div><p class="gm">' + ns + ' sizes · ' + hs.map(function (h) { return h.cm; }).join(' or ') + ' cm deep</p>' + inner + '</section>';
 }
 function buyStageHtml(U) {
   var idx = { size: 1, depth: 2, review: 3, prices: 0 }[U.step];
   var head = function (q, sub) { return '<div class="banner">' + bleaf() + '<p class="crumb">' + leaf() + 'Select here · ' + (idx ? 'Step ' + idx + ' of 3 · ' : '') + { size: 'Size', depth: 'Depth', review: 'Review', prices: 'All prices' }[U.step] + '</p><h3 class="h3q">' + q + '</h3><p class="sub">' + sub + '</p></div>'; };
   var body = '', act = '';
   if (U.step === 'size') {
-    body = head('What size is your baby\'s cot or bed?', 'Choose your size. Every size is shown in centimetres and in inches.');
-    body += '<div class="pick">' + DATA.groups.map(function (g) {
-      var hs = DATA.heights.filter(function (h) { return h.g == null || h.g === g.key; }), ns = DATA.sizes.filter(function (z) { return z.g === g.key; }).length;
-      return '<div class="grp"><p class="lab2">' + nat(g.key === 'cot' ? 'moon' : 'sprout') + esc(g.name) + ' · ' + ns + ' sizes · ' + hs.map(function (h) { return h.cm; }).join(' / ') + ' cm deep</p><p class="gsub">' + esc(g.sub) + '</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(sizeCardHtml).join('') + '</div></div>'; }).join('') + '</div>' +
-      '<p class="need">Cot and bed sizes differ between manufacturers: measure the <b>inside</b> of the frame.</p>';
-    act = '<button type="button" class="btn" data-next="depth"' + (X.S.size ? '' : ' disabled') + '>Continue to Depth</button>';
+    body = head('Select your size', 'What size is your baby\'s cot or bed? Every size is shown in centimetres and in inches.');
+    body += DATA.groups.map(function (g) {
+      return grpHtml(g, '<p class="selh">Select a size</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(sizeCardHtml).join('') + '</div>');
+    }).join('') + '<p class="need">Cot and bed sizes differ between manufacturers: measure the <b>inside</b> of the frame.</p>';
+    act = '<button type="button" class="btn" data-next="depth">Select your depth</button>';
   } else if (U.step === 'depth') {
-    var z = X.S.size && sizeByKey(X.S.size);
-    if (!z) {
-      body = head('How deep should the mattress be?', 'The depths depend on the collection, so choose your size first.') + '<div class="pick"><p class="bp">Baby Cot sizes come in <b>10 or 12 cm</b>. Junior sizes come in <b>14 or 16 cm</b>.</p></div>';
-      act = '<button type="button" class="btn" data-next="size">Choose your size</button>';
-    } else {
-      var hz = heightsFor(z);
-      body = head('How deep should the mattress be?', esc(groupByKey(z.g).name) + ' comes in ' + hz.map(function (h) { return h.cm; }).join(' or ') + ' cm. Length and width stay the same: check the maximum mattress depth your cot or bed allows, because a deeper mattress is not automatically a better one.');
-      body += '<div class="pick"><div class="hcards">' + hz.map(function (h) {
-        var p = priceOf(z, h), on = X.S.height === String(h.cm), av = shopHas('height', String(h.cm));
-        return '<button type="button" class="card hc' + (on ? ' on' : '') + '" data-pick-height="' + h.cm + '" aria-pressed="' + (on ? 'true' : 'false') + '"' + (av === false ? ' disabled' : '') + '><span class="bar" style="--h:' + h.cm + '"></span><span class="cm">' + h.cm + ' cm</span><span class="in">' + inch(h.cm) + ' in</span>' + (p ? '<span class="pr">' + esc(p) + '</span>' : '') + '<span class="dsc">' + esc(h.desc) + '</span></button>'; }).join('') + '</div></div>';
-      act = '<button type="button" class="btn ghost" data-next="size">Back to Size</button><button type="button" class="btn" data-next="review"' + (X.S.height ? '' : ' disabled') + '>Review</button>';
-    }
+    var z = X.S.size && sizeByKey(X.S.size), gs = z ? DATA.groups.filter(function (g) { return g.key === z.g; }) : DATA.groups;
+    body = head('Select your depth', (z ? esc(groupByKey(z.g).name) + ' comes in ' + heightsFor(z).map(function (h) { return h.cm; }).join(' or ') + ' cm. ' : 'Baby Cot comes in 10 or 12 cm, Junior in 14 or 16 cm. ') + 'Length and width stay the same: check the maximum mattress depth your cot or bed allows, because a deeper mattress is not automatically a better one.');
+    body += gs.map(function (g) {
+      return grpHtml(g, '<p class="selh">Select a depth</p><div class="hcards">' + DATA.heights.filter(function (h) { return h.g == null || h.g === g.key; }).map(function (h) {
+        var p = z ? priceOf(z, h) : '', on = X.S.height === String(h.cm), av = shopHas('height', String(h.cm));
+        return '<button type="button" class="card hc' + (on ? ' on' : '') + '" data-pick-height="' + h.cm + '" aria-pressed="' + (on ? 'true' : 'false') + '"' + (av === false ? ' disabled' : '') + '><span class="bar" style="--h:' + h.cm + '"></span><span class="cm">' + h.cm + ' cm</span><span class="in">' + inch(h.cm) + ' in</span>' + (p ? '<span class="pr">' + esc(p) + '</span>' : '') + '<span class="dsc">' + esc(h.desc) + '</span>' + sel(on) + '</button>'; }).join('') + '</div>');
+    }).join('');
+    act = '<button type="button" class="btn ghost" data-next="size">Select your size</button><button type="button" class="btn" data-next="review"' + (complete() ? '' : ' disabled') + '>Review</button>';
   } else if (U.step === 'prices') {
     body = head('Every size and depth, one price each', 'Each price is read from the store. Press one to choose that size and depth.') + '<div class="pm">' + pricesMatrixHtml() + '</div>';
     act = '<button type="button" class="btn ghost" data-next="size">Back to Size</button>';
@@ -286,12 +289,12 @@ function exploreStageHtml(U) {
   var banner = '<div class="banner">' + bleaf() + '<h3 class="h3q">' + esc(p.title || ch.label) + '</h3><p class="sub">' + esc(ch.head) + '</p></div>';
   var body = (p.kind === 'hero' ? '' : banner) + '<div class="panel" data-kind="' + p.kind + '">' + panelHtml(ch, p) + '</div>';
   var strip = '<ul class="natbar">' + [['leaf', 'A natural environment for your baby'], ['drop', '100% natural latex core'], ['cotton', '100% cotton cover']].map(function (a) { return '<li>' + nat(a[0]) + esc(a[1]) + '</li>'; }).join('') + '</ul>';
-  return { head: crumb, body: body, strip: strip, act: nx ? '<button type="button" class="btn dark" data-goto="' + nx.c.id + ':' + nx.i + '">Next: ' + esc(nx.p.label) + '</button>' : '<button type="button" class="btn" data-open-buy="size">Select &amp; Buy</button>' };
+  return { head: crumb, body: body, strip: strip, act: nx ? '<button type="button" class="btn dark" data-goto="' + nx.c.id + ':' + nx.i + '">Next: ' + esc(nx.p.label) + '</button>' : '<button type="button" class="btn" data-open-buy="size">Select &amp; Buy: select your size</button>' };
 }
 function mineHtml(U) {
   var done = ORDER.filter(function (o) { return X.S[o[0]] != null; }).length, ns = nextStep(), fc = bagFace();
   var prompt = complete() ? '<button type="button" class="start ok" data-step="review"><span class="s1">Ready</span><span class="s2">Review your order</span>' + ico('arrow') + '</button>' :
-    '<button type="button" class="start" data-step="' + ns.id + '"><span class="s1">Start here</span><span class="s2">Choose your ' + ns.n + '</span>' + ico('arrow') + '</button>';
+    '<button type="button" class="start" data-step="' + ns.id + '"><span class="s1">Start here</span><span class="s2">Select your ' + ns.n.toLowerCase() + '</span>' + ico('arrow') + '</button>';
   var price = X.probing ? '<b class="pv">…</b><p class="bp s">Reading the prices from the store…</p>' : (priceNow() && X.S.size && X.S.height ? '<b class="pv">' + esc(priceNow()) + '</b><p class="bp s">The store\'s own price for this size and depth.</p>' : '<b class="pv">–</b><p class="bp s">' + (X.S.size ? 'Choose a depth to see the price.' : 'Choose a size and a depth to see the price.') + '</p>');
   var seg = ORDER.map(function (o) { return '<i class="' + (X.S[o[0]] != null ? 'on' : '') + '"></i>'; }).join('');
   return '<p class="lab">' + leaf() + 'Your selection</p>' + prompt + '<div class="prog">' + seg + '</div><p class="pl"><span>' + done + ' of ' + ORDER.length + '</span><span>Your choices</span></p>' +
@@ -328,7 +331,8 @@ function buildTv(R, hooks) {
   function live() { if (U.mode === 'buy') { draw(); } else { drawLive(); } }
   function go(mode, o) { U.mode = mode; if (o) { for (var k in o) { U[k] = o[k]; } } if (mode === 'explore') { U.seen[U.topic] = 1; } U.slide = slideFor(U); U.all = false; draw(); }
   function choose(role, key) {
-    var prev = rawPrice(); X.S[role] = key; push(); U.slide = DRAW_SLIDE; draw();
+    var prev = rawPrice(); X.S[role] = key; X.last = role; push();
+    go('buy', { step: X.S.size == null ? 'size' : X.S.height == null ? 'depth' : 'review' });         /* complete the configuration: the other choice, or the review */
     if (X.S.size && X.S.height) {
       awaitPrice(prev, function () { live(); var zz = sizeByKey(X.S.size), miss = zz ? missingCombos(zz) : []; if (miss.length) { win.setTimeout(function () { readCombos(miss, null, function () { live(); }); }, 150); } });
     }
