@@ -1,0 +1,1007 @@
+{
+ "date": "2026-11-27",
+ "failures": 0,
+ "checks": 200,
+ "rows": [
+  {
+   "pass": true,
+   "rule": "R1 rounded corners only: no pill or round button",
+   "detail": "largest radius 16px over 44 buttons"
+  },
+  {
+   "pass": true,
+   "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
+   "detail": "{\"rail\":\"rgb(254, 254, 245)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R3 the middle stage is the light one (not dark, not grey)",
+   "detail": "#FBFBED"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?step=0",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?step=1",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?step=2",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?step=3",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?step=4",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?ch=comfort&pn=behaviour",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?ch=zones&pn=map",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?ch=warranty&pn=cover",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R5 the eleven Explore topics are on top, none repeats a Select & Buy button",
+   "detail": "11 buttons; select Size,Depth,Firmness,Cover,Review"
+  },
+  {
+   "pass": true,
+   "rule": "R6 no \"Select your Botanic\" row or button (the right card says where to start); the gallery and the view switch sit in the header line; the stage says \"Select here\"",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); the Select & Buy tile (was View Model Gallery) a compact tile as wide as its words, in the same green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
+   "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
+  },
+  {
+   "pass": true,
+   "rule": "R8 the frame of the television is thin",
+   "detail": "2px"
+  },
+  {
+   "pass": true,
+   "rule": "R9 the leaf is the Botanic green, not a milky one",
+   "detail": "#6E8601,#6E8601"
+  },
+  {
+   "pass": true,
+   "rule": "R10 no \"Choose by hand\" / manual mode inside the television",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R11 firmness numbers are the module's: 48 / 49-87 / 88-114 / 115+",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R12 weight and height sliders are on the large screen",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R13 Extra Firm is kept and redirected to the specialist model (a plain link)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R14 sizes are shown in centimetres and in inches, large and easy to read",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R15 three depths drawn from the owner's mattress drawing",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R16 (XXXV) the photograph of the mattress is in Your selection from the start, without Ready",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R17 (XXXV) all four choices made: the photograph stays and carries Ready",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R18 7-Zone: each zone carries its own name and note inside the drawing (no separate boxes, no Z-numbers); the shade key beside the film",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R19 covers: four photographs and the information board beside them",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R20 the green Select & Buy tile and the Optimised Preview / Standard Product View switch are on top",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R21 (owner, 27 Nov) Select & Buy opens the sizes at once and starts the choosing; the old gallery inside the television is gone",
+   "detail": "{\"h\":\"Select here  ·  Step 1 of 5  ·  Size\",\"sizes\":6,\"pressed\":\"true\",\"oldGallery\":false}"
+  },
+  {
+   "pass": true,
+   "rule": "R22 Standard Product View shows the shop's own four options",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R23 a choice made in the standard view is shown in the television",
+   "detail": "90 × 200 cm"
+  },
+  {
+   "pass": true,
+   "rule": "R24 a choice made in the television is shown in the standard view",
+   "detail": "Single 90x190 cm / 35.4” x 74.8” (+£797)"
+  },
+  {
+   "pass": true,
+   "rule": "R25 Add to Bag waits for the four choices, becomes Go to Checkout (both buttons), and returns if a choice changes",
+   "detail": "Add to Bag [off] > Add to Bag > Go to Checkout > Add to Bag"
+  },
+  {
+   "pass": true,
+   "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
+   "detail": "49 panels"
+  },
+  {
+   "pass": true,
+   "rule": "R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones",
+   "detail": "{\"bg\":\"none\",\"ratio\":2.563,\"share\":1,\"video\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R28 depths drawn in true proportion 20:24:26 (front-edge scale of the owner's 26 cm drawing) and the chosen one is marked",
+   "detail": "0.769 0.923 chosen 1"
+  },
+  {
+   "pass": true,
+   "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; it plays once, when the model is entered: pressing Discover or Optimised Preview does not play it again; sound after a tap; Skip",
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
+  },
+  {
+   "pass": true,
+   "rule": "R29b the start-up always has its music: played at once where the browser allows it, otherwise the first tap brings it in without skipping; the next tap skips; made in the browser, no sound file",
+   "detail": "{\"before\":{\"played\":0,\"on\":true},\"after\":{\"played\":1,\"on\":true},\"skipped\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now",
+   "detail": " | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+  },
+  {
+   "pass": true,
+   "rule": "R33 palette (coffee and vanilla, XVI): none of the old blues and no teal anywhere outside the logo; Explore and Select & Buy are two environments",
+   "detail": "explore,explore,explore,explore,select,select,select"
+  },
+  {
+   "pass": true,
+   "rule": "R34 there is no second order bar: the Select & Buy · Your order card leads back to every step; Review fills both rows; the seven zones carry their text inside the drawing; no moon over the logo; no glow on white",
+   "detail": "{\"tr\":{\"n\":0,\"vis\":false,\"label\":\"Select & Buy · Your order\",\"back\":true,\"values\":\"Size90 × 190 cm | DepthChoose2 | FirmnessChoose3 | CoverChoose4\"},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R35 Explore, Select & Buy · Your order and Your selection are three cards, each with its own colour (the second order bar is gone)",
+   "detail": "rgb(67, 66, 57)|none  //  rgb(221, 214, 196)|none  //  rgb(100, 97, 85)|none"
+  },
+  {
+   "pass": true,
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the middle is open: no scroll box of its own, the rail never scrolls",
+   "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its rows (King three and two, no card alone); three depths side by side; weight up to 180 kg",
+   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":2,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R38 size, depth and cover: pick, Confirm, then it counts; Change brings the other options back and a changed choice can be confirmed again",
+   "detail": "{\"dis0\":true,\"pickedNoCount\":true,\"en1\":true,\"sizeDone\":true,\"onlyOne\":true,\"reopen\":true,\"changed\":true,\"dDis\":true,\"dPick\":true,\"dDone\":true,\"dBack\":true,\"cDis\":true,\"cPick\":true,\"cDone\":true,\"cBack\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
+   "detail": "{\"y0\":260,\"yFam\":150,\"yPick\":150,\"yNav\":150,\"stageTop\":174,\"scrTop\":2,\"isFit\":true,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+  },
+  {
+   "pass": true,
+   "rule": "R40 every text has strong contrast on its colour (4.5:1, large text 3:1) on all main screens",
+   "detail": "26 screens"
+  },
+  {
+   "pass": true,
+   "rule": "R41 one green #6E8601 for Add to Bag, Confirm and the gallery tile, white labels, a white edge; the leaf in the same green",
+   "detail": "{\"gr\":{\"bag\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"gal\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"galLabel\":\"rgb(255, 255, 255)\",\"leaf\":\"#6E8601,#6E8601\"},\"cf\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R42 Covers explained (fit with a drawing, zip and washing at 40°C, warranty only for the core, a spare cover); Who It Is For in Discover and Firmness; the customer letter in Firmness, Comfort, Support, Adaptation and Certifications; the cover facts also in Hygiene and Warranty",
+   "detail": "{\"fitSvg\":\"24 cmin totalCover · 1 cmLatex core · 22 cmthe part the warr\",\"railC\":[\"AHow The Cover FitsHelps you choose\",\"BZip And WashingHelps you choose\",\"CCovers And WarrantyHelps you choose\",\"DCover SystemHelps you choose\"],\"who1\":1052,\"who2\":1052}"
+  },
+  {
+   "pass": true,
+   "rule": "R31 no long dash is shown anywhere",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R32 after a choice the television says what is chosen and what is next, then opens Depth by itself",
+   "detail": "Size chosen90 × 190 cm | Next: 2 of 4Now choose your DepthThree heights are available. All three deliver  | How thick should it be?Three heights are | Select here  ·  Step 2 of 5  ·  Depth"
+  },
+  {
+   "pass": true,
+   "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
+   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,install,made,journey,yours\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R45 weight in kg and stones and pounds, height in cm and inches: typed or slid, each changes the others at once, an out-of-range value waits, and the firmness guidance follows",
+   "detail": "{\"w1\":{\"kg\":\"82\",\"st\":\"12\",\"lb\":\"13\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"82\",\"gh\":\"170\",\"wv\":\"82 kg\",\"wi\":\"12 st 13 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"w2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"4\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"72\",\"gh\":\"170\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"h1\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"182\",\"inch\":\"71.7\",\"gw\":\"72\",\"gh\":\"182\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"182 cm\",\"hi\":\"6 ft 0 in\",\"rec\":1},\"h2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"178\",\"inch\":\"70\",\"gw\":\"72\",\"gh\":\"178\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1},\"bad\":\"72\",\"w3\":{\"kg\":\"100\",\"st\":\"15\",\"lb\":\"10\",\"cm\":\"178\",\"inch\":\"70.1\",\"gw\":\"100\",\"gh\":\"178\",\"wv\":\"100 kg\",\"wi\":\"15 st 10 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1}}"
+  },
+  {
+   "pass": true,
+   "rule": "R46 (XXXV) only the cup sits under Add to Bag, small, on the column's tone; no Bio Dunlop logo in Your selection; nothing of it in the Discover panel",
+   "detail": "[{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false}]"
+  },
+  {
+   "pass": true,
+   "rule": "R47 Discover offers the whole film (not the loop) full screen with controls; nothing is loaded before it is asked for; Escape, the close button and a tap on the loop work",
+   "detail": "{\"fv0\":{\"btn\":true,\"src0\":null,\"hid\":true,\"key\":true},\"fv1\":{\"hid\":false,\"src\":\"https://media.divinedunlop.com/videos/botanic-natural-latex-mattress-premium-presentation-full.mp4\",\"ctl\":true},\"fv2\":{\"hid\":true,\"src\":null},\"fv3\":true,\"fv4\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R48 no parts strip under the Explore row: the parts are in the tree on the left with a hint line; a part goes to its page; All topics opens the whole nomenclature and a choice from it opens that part",
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":0,\"tree0\":4,\"head0\":\"Discover\",\"hint0\":\"Tap a part to move between them, forward or back.\"},\"xc\":{\"strip\":0,\"head\":\"Comfort\",\"n\":6,\"want\":6,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":0,\"n\":6,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":40,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
+  },
+  {
+   "pass": true,
+   "rule": "R49 Delivery has an Installation part after What To Expect: prepare the bed, carry it in its bag, lay it down, unpack it there, read the label on the lower short edge for the feet, two people for the large ones",
+   "detail": "\"prep,install,made,journey,yours\""
+  },
+  {
+   "pass": true,
+   "rule": "R50 (XXXV) the photograph stands on the column without a white card and carries Ready when all four are chosen; the brand block is a tone of the column",
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgba(0, 0, 0, 0)\",\"photo\":true,\"ready\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R43 (XXXV) the mattress photograph is above Add to Bag and carries Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
+   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"photo\":true,\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R51 the open topic and part are the same vanilla item with the same green notch in the top row and the tree, with the same words",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (63 pages checked)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 every \"Organic Latex\" and \"Natural Latex\" on the screen is bold",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 the header and the start-up screen carry \"Organic Latex\" / \"Natural Latex\" in bold",
+   "detail": "{\"hdr51\":{\"t\":\"Organic Latex\",\"w\":800,\"lbl\":\"Botanic Original 100% Organic Latex Mattress Dunlop Technology\"},\"igb\":{\"n\":1,\"all\":\"100% Natural Latex | Dunlop Technology\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Comfort has Who It Is For: the solid classic, one firmness, stable support matched to the weight",
+   "detail": "expect,who,first Who Is This Mattress For?"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Benefits opens with Not Petroleum-Based; Latex Is Bio-Based names Indonesia, the tropics, the European production and baby use; Why Latex Costs More says why",
+   "detail": "Not Petroleum-Based|Latex Is Bio-Based|Breathability Advantage|Why Latex Costs More"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Support and Adaptation carry the same point with a clear headline (highest support and highest adaptation, together)",
+   "detail": "Highest Support And Highest Adaptation, Together"
+  },
+  {
+   "pass": true,
+   "rule": "R52 the point opens from both Support and Adaptation",
+   "detail": "{\"r52b\":{\"h1\":\"Highest Support And Highest Adaptation, Together\",\"cur\":\"CSupport + Adaptation\"},\"r52c\":\"Highest Support And Highest Adaptation, Together\"}"
+  },
+  {
+   "pass": true,
+   "rule": "no page errors",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R1 rounded corners only: no pill or round button",
+   "detail": "largest radius 16px over 44 buttons"
+  },
+  {
+   "pass": true,
+   "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
+   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R3 the middle stage is the light one (not dark, not grey)",
+   "detail": "#FBFBED"
+  },
+  {
+   "pass": true,
+   "rule": "R5 the eleven Explore topics are on top, none repeats a Select & Buy button",
+   "detail": "11 buttons; select Size,Depth,Firmness,Cover,Review"
+  },
+  {
+   "pass": true,
+   "rule": "R6 no \"Select your Botanic\" row or button (the right card says where to start); the gallery and the view switch sit in the header line; the stage says \"Select here\"",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); the Select & Buy tile (was View Model Gallery) a compact tile as wide as its words, in the same green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
+   "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
+  },
+  {
+   "pass": true,
+   "rule": "R8 the frame of the television is thin",
+   "detail": "2px"
+  },
+  {
+   "pass": true,
+   "rule": "R9 the leaf is the Botanic green, not a milky one",
+   "detail": "#6E8601,#6E8601"
+  },
+  {
+   "pass": true,
+   "rule": "R10 no \"Choose by hand\" / manual mode inside the television",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R11 firmness numbers are the module's: 48 / 49-87 / 88-114 / 115+",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R12 weight and height sliders are on the large screen",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R13 Extra Firm is kept and redirected to the specialist model (a plain link)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R14 sizes are shown in centimetres and in inches, large and easy to read",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R15 three depths drawn from the owner's mattress drawing",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R16 (XXXV) the photograph of the mattress is in Your selection from the start, without Ready",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R17 (XXXV) all four choices made: the photograph stays and carries Ready",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R18 7-Zone: each zone carries its own name and note inside the drawing (no separate boxes, no Z-numbers); the shade key beside the film",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R19 covers: four photographs and the information board beside them",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R20 the green Select & Buy tile and the Optimised Preview / Standard Product View switch are on top",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R21 (owner, 27 Nov) Select & Buy opens the sizes at once and starts the choosing; the old gallery inside the television is gone",
+   "detail": "{\"h\":\"Select here  ·  Step 1 of 5  ·  Size\",\"sizes\":6,\"pressed\":\"true\",\"oldGallery\":false}"
+  },
+  {
+   "pass": true,
+   "rule": "R22 Standard Product View shows the shop's own four options",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R23 a choice made in the standard view is shown in the television",
+   "detail": "90 × 200 cm"
+  },
+  {
+   "pass": true,
+   "rule": "R24 a choice made in the television is shown in the standard view",
+   "detail": "Single 90x190 cm / 35.4” x 74.8” (+£797)"
+  },
+  {
+   "pass": true,
+   "rule": "R25 Add to Bag waits for the four choices, becomes Go to Checkout (both buttons), and returns if a choice changes",
+   "detail": "Add to Bag [off] > Add to Bag > Go to Checkout > Add to Bag"
+  },
+  {
+   "pass": true,
+   "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
+   "detail": "49 panels"
+  },
+  {
+   "pass": true,
+   "rule": "R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones",
+   "detail": "{\"bg\":\"none\",\"ratio\":2.563,\"share\":1,\"video\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R28 depths drawn in true proportion 20:24:26 (front-edge scale of the owner's 26 cm drawing) and the chosen one is marked",
+   "detail": "0.769 0.923 chosen 1"
+  },
+  {
+   "pass": true,
+   "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; it plays once, when the model is entered: pressing Discover or Optimised Preview does not play it again; sound after a tap; Skip",
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
+  },
+  {
+   "pass": true,
+   "rule": "R29b the start-up always has its music: played at once where the browser allows it, otherwise the first tap brings it in without skipping; the next tap skips; made in the browser, no sound file",
+   "detail": "{\"before\":{\"played\":0,\"on\":true},\"after\":{\"played\":1,\"on\":true},\"skipped\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now",
+   "detail": " | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+  },
+  {
+   "pass": true,
+   "rule": "R33 palette (coffee and vanilla, XVI): none of the old blues and no teal anywhere outside the logo; Explore and Select & Buy are two environments",
+   "detail": "explore,explore,explore,explore,select,select,select"
+  },
+  {
+   "pass": true,
+   "rule": "R34 there is no second order bar: the Select & Buy · Your order card leads back to every step; Review fills both rows; the seven zones carry their text inside the drawing; no moon over the logo; no glow on white",
+   "detail": "{\"tr\":{\"n\":0,\"vis\":false,\"label\":\"Select & Buy · Your order\",\"back\":true,\"values\":\"Size90 × 190 cm | DepthChoose2 | FirmnessChoose3 | CoverChoose4\"},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R35 Explore, Select & Buy · Your order and Your selection are three cards, each with its own colour (the second order bar is gone)",
+   "detail": "rgb(67, 66, 57)|none  //  rgb(221, 214, 196)|none  //  rgb(100, 97, 85)|none"
+  },
+  {
+   "pass": true,
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the middle is open: no scroll box of its own, the rail never scrolls",
+   "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its rows (King three and two, no card alone); three depths side by side; weight up to 180 kg",
+   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":2,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R38 size, depth and cover: pick, Confirm, then it counts; Change brings the other options back and a changed choice can be confirmed again",
+   "detail": "{\"dis0\":true,\"pickedNoCount\":true,\"en1\":true,\"sizeDone\":true,\"onlyOne\":true,\"reopen\":true,\"changed\":true,\"dDis\":true,\"dPick\":true,\"dDone\":true,\"dBack\":true,\"cDis\":true,\"cPick\":true,\"cDone\":true,\"cBack\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
+   "detail": "{\"y0\":305,\"yFam\":195,\"yPick\":195,\"yNav\":195,\"stageTop\":512,\"scrTop\":2,\"isFit\":true,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+  },
+  {
+   "pass": true,
+   "rule": "R40 every text has strong contrast on its colour (4.5:1, large text 3:1) on all main screens",
+   "detail": "26 screens"
+  },
+  {
+   "pass": true,
+   "rule": "R41 one green #6E8601 for Add to Bag, Confirm and the gallery tile, white labels, a white edge; the leaf in the same green",
+   "detail": "{\"gr\":{\"bag\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"gal\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"galLabel\":\"rgb(255, 255, 255)\",\"leaf\":\"#6E8601,#6E8601\"},\"cf\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R42 Covers explained (fit with a drawing, zip and washing at 40°C, warranty only for the core, a spare cover); Who It Is For in Discover and Firmness; the customer letter in Firmness, Comfort, Support, Adaptation and Certifications; the cover facts also in Hygiene and Warranty",
+   "detail": "{\"fitSvg\":\"24 cmin totalCover · 1 cmLatex core · 22 cmthe part the warr\",\"railC\":[\"AHow The Cover FitsHelps you choose\",\"BZip And WashingHelps you choose\",\"CCovers And WarrantyHelps you choose\",\"DCover SystemHelps you choose\"],\"who1\":1052,\"who2\":1052}"
+  },
+  {
+   "pass": true,
+   "rule": "R31 no long dash is shown anywhere",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R32 after a choice the television says what is chosen and what is next, then opens Depth by itself",
+   "detail": "Size chosen90 × 190 cm | Next: 2 of 4Now choose your DepthThree heights are available. All three deliver  | How thick should it be?Three heights are | Select here  ·  Step 2 of 5  ·  Depth"
+  },
+  {
+   "pass": true,
+   "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
+   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,install,made,journey,yours\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R45 weight in kg and stones and pounds, height in cm and inches: typed or slid, each changes the others at once, an out-of-range value waits, and the firmness guidance follows",
+   "detail": "{\"w1\":{\"kg\":\"82\",\"st\":\"12\",\"lb\":\"13\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"82\",\"gh\":\"170\",\"wv\":\"82 kg\",\"wi\":\"12 st 13 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"w2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"4\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"72\",\"gh\":\"170\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"h1\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"182\",\"inch\":\"71.7\",\"gw\":\"72\",\"gh\":\"182\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"182 cm\",\"hi\":\"6 ft 0 in\",\"rec\":1},\"h2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"178\",\"inch\":\"70\",\"gw\":\"72\",\"gh\":\"178\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1},\"bad\":\"72\",\"w3\":{\"kg\":\"100\",\"st\":\"15\",\"lb\":\"10\",\"cm\":\"178\",\"inch\":\"70.1\",\"gw\":\"100\",\"gh\":\"178\",\"wv\":\"100 kg\",\"wi\":\"15 st 10 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1}}"
+  },
+  {
+   "pass": true,
+   "rule": "R46 (XXXV) only the cup sits under Add to Bag, small, on the column's tone; no Bio Dunlop logo in Your selection; nothing of it in the Discover panel",
+   "detail": "[{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false}]"
+  },
+  {
+   "pass": true,
+   "rule": "R47 Discover offers the whole film (not the loop) full screen with controls; nothing is loaded before it is asked for; Escape, the close button and a tap on the loop work",
+   "detail": "{\"fv0\":{\"btn\":true,\"src0\":null,\"hid\":true,\"key\":true},\"fv1\":{\"hid\":false,\"src\":\"https://media.divinedunlop.com/videos/botanic-natural-latex-mattress-premium-presentation-full.mp4\",\"ctl\":true},\"fv2\":{\"hid\":true,\"src\":null},\"fv3\":true,\"fv4\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R48 no parts strip under the Explore row: the parts are in the tree on the left with a hint line; a part goes to its page; All topics opens the whole nomenclature and a choice from it opens that part",
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":0,\"tree0\":4,\"head0\":\"Discover\",\"hint0\":\"Tap a part to move between them, forward or back.\"},\"xc\":{\"strip\":0,\"head\":\"Comfort\",\"n\":6,\"want\":6,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":0,\"n\":6,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":40,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
+  },
+  {
+   "pass": true,
+   "rule": "R49 Delivery has an Installation part after What To Expect: prepare the bed, carry it in its bag, lay it down, unpack it there, read the label on the lower short edge for the feet, two people for the large ones",
+   "detail": "\"prep,install,made,journey,yours\""
+  },
+  {
+   "pass": true,
+   "rule": "R50 (XXXV) the photograph stands on the column without a white card and carries Ready when all four are chosen; the brand block is a tone of the column",
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgba(0, 0, 0, 0)\",\"photo\":true,\"ready\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R43 (XXXV) the mattress photograph is above Add to Bag and carries Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
+   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"photo\":true,\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R51 the open topic and part are the same vanilla item with the same green notch in the top row and the tree, with the same words",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (63 pages checked)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 every \"Organic Latex\" and \"Natural Latex\" on the screen is bold",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 the header and the start-up screen carry \"Organic Latex\" / \"Natural Latex\" in bold",
+   "detail": "{\"hdr51\":{\"t\":\"Organic Latex\",\"w\":800,\"lbl\":\"Botanic Original 100% Organic Latex Mattress Dunlop Technology\"},\"igb\":{\"n\":1,\"all\":\"100% Natural Latex | Dunlop Technology\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Comfort has Who It Is For: the solid classic, one firmness, stable support matched to the weight",
+   "detail": "expect,who,first Who Is This Mattress For?"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Benefits opens with Not Petroleum-Based; Latex Is Bio-Based names Indonesia, the tropics, the European production and baby use; Why Latex Costs More says why",
+   "detail": "Not Petroleum-Based|Latex Is Bio-Based|Breathability Advantage|Why Latex Costs More"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Support and Adaptation carry the same point with a clear headline (highest support and highest adaptation, together)",
+   "detail": "Highest Support And Highest Adaptation, Together"
+  },
+  {
+   "pass": true,
+   "rule": "R52 the point opens from both Support and Adaptation",
+   "detail": "{\"r52b\":{\"h1\":\"Highest Support And Highest Adaptation, Together\",\"cur\":\"CSupport + Adaptation\"},\"r52c\":\"Highest Support And Highest Adaptation, Together\"}"
+  },
+  {
+   "pass": true,
+   "rule": "no page errors",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R1 rounded corners only: no pill or round button",
+   "detail": "largest radius 16px over 44 buttons"
+  },
+  {
+   "pass": true,
+   "rule": "R2 the topic rail is light (cream); \"Your selection\" is its own olive column (#646155)",
+   "detail": "{\"rail\":\"rgb(253, 253, 244)\",\"mine\":\"rgb(100, 97, 85)\",\"stage\":\"#FBFBED\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R3 the middle stage is the light one (not dark, not grey)",
+   "detail": "#FBFBED"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?step=0",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?step=1",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?step=2",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?step=3",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?step=4",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?ch=comfort&pn=behaviour",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?ch=zones&pn=map",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R4 the open middle card, the card Your selection and the tree card share one top line ?ch=warranty&pn=cover",
+   "detail": "352.0 / 352.0 / 352.0"
+  },
+  {
+   "pass": true,
+   "rule": "R5 the eleven Explore topics are on top, none repeats a Select & Buy button",
+   "detail": "11 buttons; select Size,Depth,Firmness,Cover,Review"
+  },
+  {
+   "pass": true,
+   "rule": "R6 no \"Select your Botanic\" row or button (the right card says where to start); the gallery and the view switch sit in the header line; the stage says \"Select here\"",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R7 the call to action in the soft olive green with deep ink (Add to Bag, Go to Checkout); the Select & Buy tile (was View Model Gallery) a compact tile as wide as its words, in the same green; the two view buttons share one card with no border and change colour on hover and press; flat, no glow",
+   "detail": "shadow blur 0px, 4 solid, view buttons outlined true"
+  },
+  {
+   "pass": true,
+   "rule": "R8 the frame of the television is thin",
+   "detail": "2px"
+  },
+  {
+   "pass": true,
+   "rule": "R9 the leaf is the Botanic green, not a milky one",
+   "detail": "#6E8601,#6E8601"
+  },
+  {
+   "pass": true,
+   "rule": "R10 no \"Choose by hand\" / manual mode inside the television",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R11 firmness numbers are the module's: 48 / 49-87 / 88-114 / 115+",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R12 weight and height sliders are on the large screen",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R13 Extra Firm is kept and redirected to the specialist model (a plain link)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R14 sizes are shown in centimetres and in inches, large and easy to read",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R15 three depths drawn from the owner's mattress drawing",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R16 (XXXV) the photograph of the mattress is in Your selection from the start, without Ready",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R17 (XXXV) all four choices made: the photograph stays and carries Ready",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R18 7-Zone: each zone carries its own name and note inside the drawing (no separate boxes, no Z-numbers); the shade key beside the film",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R19 covers: four photographs and the information board beside them",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R20 the green Select & Buy tile and the Optimised Preview / Standard Product View switch are on top",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R21 (owner, 27 Nov) Select & Buy opens the sizes at once and starts the choosing; the old gallery inside the television is gone",
+   "detail": "{\"h\":\"Select here  ·  Step 1 of 5  ·  Size\",\"sizes\":6,\"pressed\":\"true\",\"oldGallery\":false}"
+  },
+  {
+   "pass": true,
+   "rule": "R22 Standard Product View shows the shop's own four options",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R23 a choice made in the standard view is shown in the television",
+   "detail": "90 × 200 cm"
+  },
+  {
+   "pass": true,
+   "rule": "R24 a choice made in the television is shown in the standard view",
+   "detail": "Single 90x190 cm / 35.4” x 74.8” (+£797)"
+  },
+  {
+   "pass": true,
+   "rule": "R25 Add to Bag waits for the four choices, becomes Go to Checkout (both buttons), and returns if a choice changes",
+   "detail": "Add to Bag [off] > Add to Bag > Go to Checkout > Add to Bag"
+  },
+  {
+   "pass": true,
+   "rule": "R26 every panel of every topic, and every piece of more information under a choice, shows its content",
+   "detail": "49 panels"
+  },
+  {
+   "pass": true,
+   "rule": "R27 7-Zone (reference 24): the engineering view full width, undistorted, no dark sky; the one film beside the zones",
+   "detail": "{\"bg\":\"none\",\"ratio\":2.563,\"share\":1,\"video\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R28 depths drawn in true proportion 20:24:26 (front-edge scale of the owner's 26 cm drawing) and the chosen one is marked",
+   "detail": "0.769 0.923 chosen 1"
+  },
+  {
+   "pass": true,
+   "rule": "R29 ignition v3: the two facts, Explore / Select & Buy / Custom and the tagline; ends by itself; the television opens on Discover; it plays once, when the model is entered: pressing Discover or Optimised Preview does not play it again; sound after a tap; Skip",
+   "detail": "BOTANICMaterial100% Natural LatexProcessDunlop TechnologyExplore11 topics, one clear way i | true | true | true | true | true | true | {\"btn\":true,\"played\":1}"
+  },
+  {
+   "pass": true,
+   "rule": "R29b the start-up always has its music: played at once where the browser allows it, otherwise the first tap brings it in without skipping; the next tap skips; made in the browser, no sound file",
+   "detail": "{\"before\":{\"played\":0,\"on\":true},\"after\":{\"played\":1,\"on\":true},\"skipped\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R30 rail in capitals, Sizes with Select Your Size and Select Your Depth, the order Size/Depth/Firmness/Cover with icons, the header names the model, the choosing topics stand out, the guide says what to do now",
+   "detail": " | Size/Depth/Firmness/Cover/Review | 5 | Size,Depth,Firmness,Cover,Review | Start hereChoose your Size→"
+  },
+  {
+   "pass": true,
+   "rule": "R33 palette (coffee and vanilla, XVI): none of the old blues and no teal anywhere outside the logo; Explore and Select & Buy are two environments",
+   "detail": "explore,explore,explore,explore,select,select,select"
+  },
+  {
+   "pass": true,
+   "rule": "R34 there is no second order bar: the Select & Buy · Your order card leads back to every step; Review fills both rows; the seven zones carry their text inside the drawing; no moon over the logo; no glow on white",
+   "detail": "{\"tr\":{\"n\":0,\"vis\":false,\"label\":\"Select & Buy · Your order\",\"back\":true,\"values\":\"Size90 × 190 cm | DepthChoose2 | FirmnessChoose3 | CoverChoose4\"},\"backTo\":\"0\",\"rv\":true,\"zr\":true,\"trOff\":true,\"moon\":\"none\",\"glow\":\"\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R35 Explore, Select & Buy · Your order and Your selection are three cards, each with its own colour (the second order bar is gone)",
+   "detail": "rgb(67, 66, 57)|none  //  rgb(221, 214, 196)|none  //  rgb(100, 97, 85)|none"
+  },
+  {
+   "pass": true,
+   "rule": "R36 calm start-up; the Standard Product View keeps the approved description; real films; lettered parts; outlined Explore; the delivery journey; no explored count; the middle is open: no scroll box of its own, the rail never scrolls",
+   "detail": "{\"ign\":{\"moon\":false,\"glow\":false},\"vids\":1,\"letters\":\"ABCD\",\"outline\":true,\"counted\":false,\"jn\":{\"n\":7,\"inc\":true},\"fits\":true,\"desc\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R37 Cosmic Selection: six size families holding all 22 sizes, each in its own light; open, switch, back; a family fills its rows (King three and two, no card alone); three depths side by side; weight up to 180 kg",
+   "detail": "{\"famTotal\":22,\"famCols\":6,\"kingN\":5,\"chips\":6,\"rowTops\":2,\"empN\":3,\"backAll\":6,\"dTops\":1,\"wmax\":\"180\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R38 size, depth and cover: pick, Confirm, then it counts; Change brings the other options back and a changed choice can be confirmed again",
+   "detail": "{\"dis0\":true,\"pickedNoCount\":true,\"en1\":true,\"sizeDone\":true,\"onlyOne\":true,\"reopen\":true,\"changed\":true,\"dDis\":true,\"dPick\":true,\"dDone\":true,\"dBack\":true,\"cDis\":true,\"cPick\":true,\"cDone\":true,\"cBack\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R39 the screen stays at the information block when anything is pressed; opening a family or picking a size never moves the page; the size families are centred small spaced capitals over large figures, rectangular, not pills",
+   "detail": "{\"y0\":260,\"yFam\":150,\"yPick\":150,\"yNav\":150,\"stageTop\":174,\"scrTop\":2,\"isFit\":true,\"famQ\":{\"r\":10,\"up\":\"uppercase\",\"sp\":1.08},\"fam2\":{\"up\":\"uppercase\",\"sp\":3.92,\"fs\":14,\"al\":\"center\",\"noFig\":true,\"r\":16}}"
+  },
+  {
+   "pass": true,
+   "rule": "R40 every text has strong contrast on its colour (4.5:1, large text 3:1) on all main screens",
+   "detail": "26 screens"
+  },
+  {
+   "pass": true,
+   "rule": "R41 one green #6E8601 for Add to Bag, Confirm and the gallery tile, white labels, a white edge; the leaf in the same green",
+   "detail": "{\"gr\":{\"bag\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"gal\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\",\"bc\":\"rgb(246, 248, 234)\"},\"galLabel\":\"rgb(255, 255, 255)\",\"leaf\":\"#6E8601,#6E8601\"},\"cf\":{\"bg\":\"rgb(110, 134, 1)\",\"fg\":\"rgb(255, 255, 255)\",\"bw\":\"2px\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R42 Covers explained (fit with a drawing, zip and washing at 40°C, warranty only for the core, a spare cover); Who It Is For in Discover and Firmness; the customer letter in Firmness, Comfort, Support, Adaptation and Certifications; the cover facts also in Hygiene and Warranty",
+   "detail": "{\"fitSvg\":\"24 cmin totalCover · 1 cmLatex core · 22 cmthe part the warr\",\"railC\":[\"AHow The Cover FitsHelps you choose\",\"BZip And WashingHelps you choose\",\"CCovers And WarrantyHelps you choose\",\"DCover SystemHelps you choose\"],\"who1\":1052,\"who2\":1052}"
+  },
+  {
+   "pass": true,
+   "rule": "R31 no long dash is shown anywhere",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R32 after a choice the television says what is chosen and what is next, then opens Depth by itself",
+   "detail": "Size chosen90 × 190 cm | Next: 2 of 4Now choose your DepthThree heights are available. All three deliver  | How thick should it be?Three heights are | Select here  ·  Step 2 of 5  ·  Depth"
+  },
+  {
+   "pass": true,
+   "rule": "R44 Delivery opens with What To Expect Before Your Mattress Arrives, with one sentence on buying directly from the manufacturer; 7-Zone explains that the perforation, not a different firmness, sets the support",
+   "detail": "{\"first\":\"AWhat To Expect\",\"h1\":\"What To Expect Before Your Mattress Arrives\",\"q\":\"What To Expect Before Your Mattress ArrivesYou buy directly from the manufacturer. This is what to expect before your mattress arrives.\",\"direct\":1,\"panels\":\"prep,install,made,journey,yours\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R45 weight in kg and stones and pounds, height in cm and inches: typed or slid, each changes the others at once, an out-of-range value waits, and the firmness guidance follows",
+   "detail": "{\"w1\":{\"kg\":\"82\",\"st\":\"12\",\"lb\":\"13\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"82\",\"gh\":\"170\",\"wv\":\"82 kg\",\"wi\":\"12 st 13 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"w2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"4\",\"cm\":\"\",\"inch\":\"\",\"gw\":\"72\",\"gh\":\"170\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"–\",\"hi\":\"\",\"rec\":0},\"h1\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"182\",\"inch\":\"71.7\",\"gw\":\"72\",\"gh\":\"182\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"182 cm\",\"hi\":\"6 ft 0 in\",\"rec\":1},\"h2\":{\"kg\":\"72\",\"st\":\"11\",\"lb\":\"5\",\"cm\":\"178\",\"inch\":\"70\",\"gw\":\"72\",\"gh\":\"178\",\"wv\":\"72 kg\",\"wi\":\"11 st 5 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1},\"bad\":\"72\",\"w3\":{\"kg\":\"100\",\"st\":\"15\",\"lb\":\"10\",\"cm\":\"178\",\"inch\":\"70.1\",\"gw\":\"100\",\"gh\":\"178\",\"wv\":\"100 kg\",\"wi\":\"15 st 10 lb\",\"hv\":\"178 cm\",\"hi\":\"5 ft 10 in\",\"rec\":1}}"
+  },
+  {
+   "pass": true,
+   "rule": "R46 (XXXV) only the cup sits under Add to Bag, small, on the column's tone; no Bio Dunlop logo in Your selection; nothing of it in the Discover panel",
+   "detail": "[{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false},{\"after\":true,\"cup\":true,\"logo\":false,\"inCol\":true,\"small\":true,\"card\":false,\"hero\":false}]"
+  },
+  {
+   "pass": true,
+   "rule": "R47 Discover offers the whole film (not the loop) full screen with controls; nothing is loaded before it is asked for; Escape, the close button and a tap on the loop work",
+   "detail": "{\"fv0\":{\"btn\":true,\"src0\":null,\"hid\":true,\"key\":true},\"fv1\":{\"hid\":false,\"src\":\"https://media.divinedunlop.com/videos/botanic-natural-latex-mattress-premium-presentation-full.mp4\",\"ctl\":true},\"fv2\":{\"hid\":true,\"src\":null},\"fv3\":true,\"fv4\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R48 no parts strip under the Explore row: the parts are in the tree on the left with a hint line; a part goes to its page; All topics opens the whole nomenclature and a choice from it opens that part",
+   "detail": "{\"xk\":{\"allt\":true,\"hoverWraps\":0,\"strip0\":0,\"tree0\":4,\"head0\":\"Discover\",\"hint0\":\"Tap a part to move between them, forward or back.\"},\"xc\":{\"strip\":0,\"head\":\"Comfort\",\"n\":6,\"want\":6,\"cur\":\"AWhat To Expect\"},\"xg\":{\"where\":\"ComfortCYour First Ten Days\",\"strip\":0,\"n\":6,\"cur\":\"CYour First Ten Days\"},\"xa\":{\"title\":\"All topics\",\"cards\":11,\"items\":40,\"strip\":0},\"xb\":{\"where\":\"DeliveryBInstallation\",\"contents\":false}}"
+  },
+  {
+   "pass": true,
+   "rule": "R49 Delivery has an Installation part after What To Expect: prepare the bed, carry it in its bag, lay it down, unpack it there, read the label on the lower short edge for the feet, two people for the large ones",
+   "detail": "\"prep,install,made,journey,yours\""
+  },
+  {
+   "pass": true,
+   "rule": "R50 (XXXV) the photograph stands on the column without a white card and carries Ready when all four are chosen; the brand block is a tone of the column",
+   "detail": "{\"bgMi\":\"rgba(0, 0, 0, 0)\",\"bgBc\":\"rgba(0, 0, 0, 0)\",\"photo\":true,\"ready\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R43 (XXXV) the mattress photograph is above Add to Bag and carries Ready only when all four choices are made; the outer frame is at most 2 px; no core picture in Your selection",
+   "detail": "{\"r43\":{\"ok\":true,\"rdy\":true,\"photo\":true,\"mon\":\"2px\",\"order\":true},\"r43b\":true}"
+  },
+  {
+   "pass": true,
+   "rule": "R51 the open topic and part are the same vanilla item with the same green notch in the top row and the tree, with the same words",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 \"Organic Natural\" and \"Natural Organic\" appear nowhere on any page of the screen (63 pages checked)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 every \"Organic Latex\" and \"Natural Latex\" on the screen is bold",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R51 the header and the start-up screen carry \"Organic Latex\" / \"Natural Latex\" in bold",
+   "detail": "{\"hdr51\":{\"t\":\"Organic Latex\",\"w\":800,\"lbl\":\"Botanic Original 100% Organic Latex Mattress Dunlop Technology\"},\"igb\":{\"n\":1,\"all\":\"100% Natural Latex | Dunlop Technology\"}}"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Comfort has Who It Is For: the solid classic, one firmness, stable support matched to the weight",
+   "detail": "expect,who,first Who Is This Mattress For?"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Benefits opens with Not Petroleum-Based; Latex Is Bio-Based names Indonesia, the tropics, the European production and baby use; Why Latex Costs More says why",
+   "detail": "Not Petroleum-Based|Latex Is Bio-Based|Breathability Advantage|Why Latex Costs More"
+  },
+  {
+   "pass": true,
+   "rule": "R52 Support and Adaptation carry the same point with a clear headline (highest support and highest adaptation, together)",
+   "detail": "Highest Support And Highest Adaptation, Together"
+  },
+  {
+   "pass": true,
+   "rule": "R52 the point opens from both Support and Adaptation",
+   "detail": "{\"r52b\":{\"h1\":\"Highest Support And Highest Adaptation, Together\",\"cur\":\"CSupport + Adaptation\"},\"r52c\":\"Highest Support And Highest Adaptation, Together\"}"
+  },
+  {
+   "pass": true,
+   "rule": "no page errors",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R53 one screen while choosing: menus in view, Confirm above Add to Bag in Your selection and on the glass, both visible, the photograph in view with air on both sides (XXXVI), the cup at the very bottom of the card, Confirm gone when all four are confirmed",
+   "detail": "[]"
+  },
+  {
+   "pass": true,
+   "rule": "R53 a phone keeps the normal page (no held screen)",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R54 the cover cards are square; the Confirm words fit the button; on 1366x790 (the iPad in the viewer), 1440x900, 1366x1024 and 1024x1366 every step, confirmed or not, and the review stand whole without scrolling, Add to Bag in view",
+   "detail": "[]"
+  },
+  {
+   "pass": true,
+   "rule": "R55 the middle is open (no scroll box, as long as its text); Your selection is one fixed card of one height in all eleven topics and stays in view; the tree of the topic stays in view",
+   "detail": "{\"sameMine\":true,\"sameChrome\":true,\"open\":true,\"longOnes\":true,\"held\":true,\"er\":0,\"mineH\":\"572,572,572,572,572,572,572,572,572,572,572\",\"tall\":\"1078,862,1224,1224,1058,1176,1168,929,1251,786,947\"}"
+  },
+  {
+   "pass": true,
+   "rule": "R56 text and icons on every green surface are light (real pixels, 8 surfaces measured): never black, never brown",
+   "detail": ""
+  },
+  {
+   "pass": true,
+   "rule": "R57 green is at most 10 % of the screen (worst of the screens tried: 2.18 %)",
+   "detail": "2.18 %"
+  },
+  {
+   "pass": true,
+   "rule": "R58 Add to Bag is green; once the mattress is in the bag the same button is Go to Checkout in coffee with white text (real pixels: no green, mostly coffee, light letters)",
+   "detail": "{\"before\":{\"bg\":\"rgb(110, 134, 1)\",\"dis\":false},\"after\":{\"bg\":\"rgb(67, 66, 57)\",\"fg\":\"rgb(255, 255, 255)\",\"x\":1064,\"y\":600,\"w\":246,\"h\":64,\"t\":\"Go to Checkout\"},\"px\":{\"light\":905,\"green\":0,\"choc\":9657,\"n\":11040}}"
+  }
+ ]
+}

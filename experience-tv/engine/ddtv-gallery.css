@@ -1,0 +1,219 @@
+/* ═══════════════════════════════════════════════════════════
+   Divine DunlopDreams — Experience TV: model gallery
+   The "View Model Gallery" button in the monitor's header and the gallery
+   overlay inside the monitor. Scoped under .ddtv-wrap / .ddtv, like the shell.
+   Shape rule: rounded corners only. No pills, no circles.
+═══════════════════════════════════════════════════════════ */
+
+/* ───────────── The button: prominent, in the header row of every screen ───────────── */
+/* The header row: heading and eyebrow stacked on the left, the button on the right at the same height,
+   so the button is a primary control on the title row and never wraps under it. The monitor's
+   screen below it is not covered. */
+.ddtv__head.ddtv__head--gal {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 18px;
+  row-gap: 3px;
+  padding-top: 12px;
+  padding-bottom: 10px;
+}
+.ddtv__head--gal .ddtv__title { grid-column: 1; grid-row: 1; }
+.ddtv__head--gal .ddtv__eyebrow { grid-column: 1; grid-row: 2; }
+.ddtv__head--gal .ddtv__galbtn { grid-column: 2; grid-row: 1 / span 2; }
+
+/* The button: the one solid, saturated control in the header, so it reads as the primary
+   action of the monitor. The base colour is the contrast floor (white on #2C7894 is 5:1);
+   the gradient only darkens it. */
+.ddtv__galbtn {
+  -webkit-appearance: none;
+  appearance: none;
+  align-self: center;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 20px 0 16px;
+  border: 0;
+  border-radius: var(--r-m);
+  background-color: var(--tv-accent-mid);
+  background-image: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(14,50,64,.38) 100%);
+  box-shadow: 0 8px 20px rgba(27,85,104,.28), inset 0 1px 0 rgba(255,255,255,.2);
+  color: #fff;
+  font-family: var(--tv-font);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.ddtv__galbtn[hidden] { display: none; }
+.ddtv__galbtn:hover { background-color: var(--tv-ink-deep); box-shadow: 0 10px 24px rgba(27,36,48,.34), inset 0 1px 0 rgba(255,255,255,.14); transform: translateY(-1px); }
+.ddtv__galbtn:active { transform: translateY(0); }
+.ddtv__galbtn:focus-visible { outline: 3px solid var(--tv-accent-pale); outline-offset: 3px; }
+/* A picture-set sign: four small squares. */
+.ddtv__galbtn-ico {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  background:
+    linear-gradient(currentColor, currentColor) 0 0 / 9px 9px no-repeat,
+    linear-gradient(currentColor, currentColor) 11px 0 / 9px 9px no-repeat,
+    linear-gradient(currentColor, currentColor) 0 11px / 9px 9px no-repeat,
+    linear-gradient(currentColor, currentColor) 11px 11px / 9px 9px no-repeat;
+}
+.ddtv__galbtn-n { padding-left: 12px; border-left: 1px solid rgba(255,255,255,.4); font-size: 13px; font-weight: 500; }
+.ddtv__galbtn-n:empty { display: none; }
+@media (prefers-reduced-motion: reduce) { .ddtv__galbtn, .ddtv__galbtn:hover { transition: none; transform: none; } }
+
+/* ───────────── The gallery: fills the monitor's screen area ───────────── */
+.ddtv-gal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 14px 12px;
+  background: var(--tv-ink-deep);
+  color: var(--tv-on-dark);
+}
+.ddtv-gal__top { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+.ddtv-gal__title { font-size: 15px; font-weight: 700; }
+.ddtv-gal__count { font-size: 13px; font-weight: 600; color: var(--tv-accent-pale); font-variant-numeric: tabular-nums; }
+.ddtv-gal__close {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-left: auto;
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1.5px solid rgba(255,255,255,.4);
+  border-radius: var(--r-m);
+  background: transparent;
+  color: #fff;
+  font-family: var(--tv-font);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ddtv-gal__close:hover { background: rgba(255,255,255,.12); }
+
+/* Category filter: shown only when the gallery has more than one category. */
+.ddtv-gal__cats { display: flex; flex-wrap: nowrap; gap: 6px; flex: 0 0 auto; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.ddtv-gal__cats::-webkit-scrollbar { display: none; }
+.ddtv-gal__cats[hidden] { display: none; }
+.ddtv-gal__cat {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  min-height: 30px;
+  padding: 0 11px;
+  border: 1.5px solid rgba(255,255,255,.3);
+  border-radius: var(--r-s);
+  background: transparent;
+  color: var(--tv-on-dark);
+  font-family: var(--tv-font);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ddtv-gal__cat:hover { border-color: var(--tv-accent-pale); }
+.ddtv-gal__cat.is-on { background: var(--tv-accent-mid); border-color: var(--tv-accent-mid); color: #fff; }
+
+/* The large photo, always shown whole (the photos have different shapes). */
+.ddtv-gal__stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 8px;
+  touch-action: pan-y pinch-zoom;
+}
+.ddtv-gal__fig {
+  margin: 0;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 6px;
+}
+.ddtv-gal__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+  border-radius: var(--r-m);
+  background: #0E141B;
+  transition: opacity .2s ease;
+}
+.ddtv-gal__img.is-loading { opacity: .35; }
+.ddtv-gal__cap { font-size: 13px; line-height: 1.4; text-align: center; color: var(--tv-on-dark); }
+.ddtv-gal__cap[hidden] { display: none; }
+.ddtv-gal__nav {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1.5px solid rgba(255,255,255,.6);
+  border-radius: var(--r-m);
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  font-family: var(--tv-font);
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+.ddtv-gal__nav:hover:not(:disabled) { background: rgba(255,255,255,.12); }
+.ddtv-gal__nav:disabled { opacity: .3; cursor: default; }
+
+/* The strip: small files, requested lazily. */
+.ddtv-gal__strip {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 6px;
+  padding: 2px;
+  overflow-x: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.3) transparent;
+}
+.ddtv-gal__thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 0 0 76px;
+  height: 56px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--r-s);
+  background: #0E141B;
+  overflow: hidden;
+  cursor: pointer;
+}
+.ddtv-gal__thumb.is-on { border-color: var(--tv-accent-pale); }
+.ddtv-gal__thumb:focus-visible, .ddtv-gal__nav:focus-visible, .ddtv-gal__close:focus-visible, .ddtv-gal__cat:focus-visible { outline: 2px solid var(--tv-accent-pale); outline-offset: 2px; }
+.ddtv-gal__timg { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ddtv-gal__timg.is-missing { visibility: hidden; }
+
+/* Narrow monitors: arrows overlay the photo's edges instead of taking columns. */
+@container tvw (max-width: 640px) {
+  .ddtv-gal__stage { grid-template-columns: minmax(0, 1fr); position: relative; }
+  .ddtv-gal__nav { position: absolute; top: 50%; z-index: 1; background: rgba(20,28,38,.72); transform: translateY(-50%); }
+  .ddtv-gal__nav--prev { left: 6px; }
+  .ddtv-gal__nav--next { right: 6px; }
+}
+
+/* Touch devices: 44px tap targets, as the rest of the shell. */
+@media (pointer: coarse) {
+  .ddtv__galbtn { min-height: 48px; }
+  .ddtv-gal__close { min-height: 44px; }
+  .ddtv-gal__cat { min-height: 44px; }
+  .ddtv-gal__thumb { height: 60px; }
+}

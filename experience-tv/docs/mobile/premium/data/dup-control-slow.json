@@ -1,0 +1,281 @@
+{
+ "url": "https://divinedunlop.com/products/latex-mattress-for-partners",
+ "mode": "slow",
+ "date": "2026-11-10T16:17:55.050Z",
+ "results": [
+  {
+   "productPages": 0,
+   "productDescriptions": 0,
+   "storeRoots": [
+    {
+     "id": "my-store-100333285",
+     "children": 0,
+     "productPages": 0
+    }
+   ],
+   "h1": [
+    "Latex Mattress for Partners",
+    "Latex Mattress for Partners"
+   ],
+   "pp": [],
+   "log": {
+    "added": [
+     {
+      "t": 7018,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser ecwid-productBrowser-v3 ecwid-productBrowser-Cate",
+      "into": "div < div.ec-storefront-v3 < div#ec-product-browser-popup.ecwid < div < div.ecwid-ProductBrowserPopup-content"
+     },
+     {
+      "t": 7019,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3"
+     },
+     {
+      "t": 7917,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser ecwid-productBrowser-v3 ecwid-productBrowser-Cate",
+      "into": "div < div.ec-storefront-v3 < div#ecwid-products < div.ins-tile__wrap < div#tile-product-details.ins-tile"
+     },
+     {
+      "t": 7917,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3"
+     },
+     {
+      "t": 8289,
+      "tag": "div",
+      "id": "my-store-100333285",
+      "cls": "",
+      "into": "div#ecwid-products.ecwid < div.ins-tile__wrap < div#tile-product-details.ins-tile < main.ins-tiles--main < div#ec-instantsite.ins-tiles"
+     }
+    ],
+    "ecwid": [
+     {
+      "t": 5225,
+      "ev": "OnPageLoad",
+      "type": "CATEGORY"
+     },
+     {
+      "t": 5229,
+      "ev": "OnRouterStateChanged",
+      "s": "{\"page\":\"category-with-slug\",\"categoryId\":183376502,\"slugForRouteWithId\":\"Latex-Mattress-f"
+     },
+     {
+      "t": 9582,
+      "ev": "OnPageLoaded",
+      "type": "CATEGORY"
+     },
+     {
+      "t": 9590,
+      "ev": "OnPageLoaded",
+      "type": "CATEGORY"
+     }
+    ],
+    "scripts": []
+   },
+   "hash": "",
+   "popups": 7,
+   "bodyClass": "starter-site disable-ecwid-loader ecwid-customer-loggedOut ecwid-lang-en"
+  },
+  {
+   "productPages": 0,
+   "productDescriptions": 0,
+   "storeRoots": [
+    {
+     "id": "my-store-100333285",
+     "children": 0,
+     "productPages": 0
+    }
+   ],
+   "h1": [
+    "Latex Mattress for Partners",
+    "Latex Mattress for Partners"
+   ],
+   "pp": [],
+   "log": {
+    "added": [
+     {
+      "t": 1504,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser ecwid-productBrowser-v3 ecwid-productBrowser-Cate",
+      "into": "div < div.ec-storefront-v3-ssr < div.static-content < div < div#static-html.store"
+     },
+     {
+      "t": 1505,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3-ssr"
+     },
+     {
+      "t": 1506,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser ecwid-productBrowser-v3 ecwid-productBrowser-Cate",
+      "into": "div < div.ec-storefront-v3-ssr < div.static-content < div < div#static-html.store"
+     },
+     {
+      "t": 1506,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3-ssr"
+     },
+     {
+      "t": 1506,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser ecwid-productBrowser-v3 ecwid-productBrowser-Cate",
+      "into": "div < div.ec-storefront-v3-ssr < div.static-content < div < div#static-html.store"
+     },
+     {
+      "t": 1506,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3-ssr"
+     },
+     {
+      "t": 1506,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser ecwid-productBrowser-v3 ecwid-productBrowser-Cate",
+      "into": "div < div.ec-storefront-v3-ssr < div.static-content < div < div#static-html.store"
+     },
+     {
+      "t": 1506,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3-ssr"
+     },
+     {
+      "t": 1507,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser ecwid-productBrowser-v3 ecwid-productBrowser-Cate",
+      "into": "div < div.ec-storefront-v3-ssr < div.static-content < div < div#static-html.store"
+     },
+     {
+      "t": 1507,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3-ssr"
+     },
+     {
+      "t": 1507,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser ecwid-productBrowser-v3 ecwid-productBrowser-Cate",
+      "into": "div < div.ec-storefront-v3-ssr < div.static-content < div < div#static-html.store"
+     },
+     {
+      "t": 1507,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3-ssr"
+     },
+     {
+      "t": 1507,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3-ssr"
+     },
+     {
+      "t": 1507,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3-ssr"
+     },
+     {
+      "t": 1507,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3-ssr"
+     },
+     {
+      "t": 1507,
+      "tag": "div",
+      "id": "",
+      "cls": "ec-wrapper",
+      "into": "div < div < div < div.ecwid-productBrowser < div"
+     },
+     {
+      "t": 7816,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser ecwid-productBrowser-v3 ecwid-productBrowser-Cate",
+      "into": "div < div.ec-storefront-v3 < div#ecwid-products.ecwid < div.ins-tile__wrap < div#tile-product-details.ins-tile"
+     },
+     {
+      "t": 7816,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3"
+     },
+     {
+      "t": 7916,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser ecwid-productBrowser-v3 ecwid-productBrowser-Cate",
+      "into": "div < div.ec-storefront-v3 < div#ec-product-browser-popup < div < div.ecwid-ProductBrowserPopup-content"
+     },
+     {
+      "t": 7916,
+      "tag": "div",
+      "id": "",
+      "cls": "ecwid-productBrowser-head",
+      "into": "div < div < div.ecwid-productBrowser < div < div.ec-storefront-v3"
+     },
+     {
+      "t": 8141,
+      "tag": "div",
+      "id": "my-store-100333285",
+      "cls": "",
+      "into": "div#ecwid-products.ecwid < div.ins-tile__wrap < div#tile-product-details.ins-tile < main.ins-tiles--main < div#ec-instantsite.ins-tiles"
+     }
+    ],
+    "ecwid": [
+     {
+      "t": 5450,
+      "ev": "OnPageLoad",
+      "type": "CATEGORY"
+     },
+     {
+      "t": 5453,
+      "ev": "OnRouterStateChanged",
+      "s": "{\"page\":\"category-with-slug\",\"categoryId\":183376502,\"slugForRouteWithId\":\"Latex-Mattress-f"
+     },
+     {
+      "t": 10090,
+      "ev": "OnPageLoaded",
+      "type": "CATEGORY"
+     },
+     {
+      "t": 10096,
+      "ev": "OnPageLoaded",
+      "type": "CATEGORY"
+     }
+    ],
+    "scripts": []
+   },
+   "hash": "",
+   "popups": 7,
+   "bodyClass": "starter-site disable-ecwid-loader ecwid-customer-loggedOut ecwid-lang-en"
+  }
+ ]
+}

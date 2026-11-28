@@ -1,0 +1,65 @@
+<!--TOURBAR-->
+<div id="tour" class="tourbar" role="region" aria-label="Guided tour of the Botanic television">
+  <button id="tgo" class="tgo" type="button" aria-label="Play the guided tour"><svg id="tplay" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg><svg id="tpause" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" hidden><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg><span id="tgol">Play tour</span></button>
+  <div class="tmid"><div class="tcap" id="tcap" aria-live="polite"><b>Guided tour</b><span>Press Play. The module opens its own topics and makes a sample order. You can click anything at any time.</span></div><div class="tbar"><i id="tbar"></i></div></div>
+  <div class="tnav"><button id="tprev" type="button" aria-label="Previous step">&larr;</button><button id="tnext" type="button" aria-label="Next step">&rarr;</button><button id="tign" type="button" title="Play the start-up again">Start-up</button></div>
+</div>
+<!--/TOURBAR-->
+<!--TOURCODE-->
+<style>
+/* the guided tour: a player strip attached under the television; it only presses the module's own buttons */
+.tourbar { display: flex; align-items: center; gap: 16px; margin: 10px 0 12px; padding: 10px 14px; background: linear-gradient(180deg, #FEFEF6, #FAF9EB); border: 1.5px solid var(--line); border-radius: 14px; box-shadow: 0 12px 24px -22px rgba(56,68,66,.45); }
+.std .tourbar { display: none; }
+.tgo { display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 20px 0 16px; border-radius: 12px; border: 0; background: var(--grad-band); color: #F3F2E2; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; flex: none; }
+.tmid { flex: 1; min-width: 0; } .tcap { display: block; font-size: 14.5px; line-height: 1.35; color: var(--ink2); } .tcap b { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: #46572A; font-weight: 700; margin-right: 10px; }
+.tbar { height: 3px; border-radius: 2px; background: var(--line); margin-top: 8px; overflow: hidden; } .tbar i { display: block; height: 100%; width: 0; background: #566901; transition: width .4s ease; }
+.tnav { display: flex; gap: 8px; flex: none; } .tnav button { height: 40px; min-width: 40px; padding: 0 12px; border-radius: 10px; border: 1.5px solid var(--line2); background: #FEFEF6; color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.tourbar button:focus-visible { outline: 3px solid #BAC98F; outline-offset: 2px; }
+@media (max-width: 760px) { .tourbar { flex-wrap: wrap; } .tmid { order: 3; flex-basis: 100%; } #tign { display: none; } }
+</style>
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var click = function (sel) { var e = $(sel); if (e) e.click(); return !!e; };
+  var CAP = {
+    discover: 'Discover: the model in one screen, one film and six facts.', firmness: 'Firmness: body weight and height set the level; the figure shows Support and Adaptation.', comfort: 'Comfort: what to expect, latex behaviour, and How Density Works.',
+    height: 'Height: why all three depths are valid, and what more latex changes.', covers: 'Covers: four real fabrics and what each one gives you.', benefits: 'Benefits: where latex begins, and why it is different.',
+    support: 'Support: bearing force, the Stretching Effect and How Density Works.', adaptation: 'Adaptation: instant response, and suitable for adjustable beds.', zones: '7-Zone: the engineering view, one core, seven responses.',
+    ventilation: 'Ventilation: airflow, the process in five steps.', hygiene: 'Hygiene: cleaner sleep in a 2 by 2 grid.', certs: 'Certifications: the marks and what each one covers.',
+    warranty: 'Warranty: three rows, and the 12% rule for the height you chose.', delivery: 'Delivery: made to order, then your Botanic.'
+  };
+  var steps = [];
+  function add(t, cap, fn, ms) { steps.push({ t: t, cap: cap, fn: fn, ms: ms || 4400 }); }
+  add('Start-up', 'Explore, Select & Buy, Custom: the module says what it is, with soft sound (after a tap).', function () { click('#chbar [data-ch="discover"]'); if (window.__ignite) window.__ignite(); }, 11800);
+  add('Select & Buy', 'The Select & Buy group holds the order. Step 1: a size, chosen in the Cosmic Selection.', function () { click('.sb[data-go="0"]'); }, 3000);
+  add('Select', 'Cosmic Selection: every size lives in its family (Single, Small Double, Double, King, Super King, Emperor). One touch opens the King family; the other families stay one touch away.', function () { click('[data-sgrp="king"]'); }, 3600);
+  add('Select', 'King Long picked. Nothing counts yet: the customer confirms it.', function () { click('.card[data-size="12"]'); }, 2800);
+  add('Select', 'Confirmed. The module says what comes next and opens Depth by itself. Change size stays one touch away.', function () { click('[data-confirm="size"]'); }, 4200);
+  add('Select', 'Depth: three heights in true proportion. A touch chooses one.', function () { click('.sb[data-go="1"]'); }, 2800);
+  add('Select', '24 cm picked, then confirmed. The guide moves on to Firmness.', function () { click('.dcard[data-depth="1"]'); setTimeout(function () { click('[data-confirm="depth"]'); }, 1500); }, 4200);
+  add('Select', 'Firmness: body weight and height give the level. A touch confirms it.', function () { click('.sb[data-go="2"]'); }, 3000);
+  add('Select', 'More about Firmness hangs under the choice on the left: Correct vs Softer, How It Works, Who It Is For.', function () { click('#rail [data-goto="firmness/principle"]'); }, 3800);
+  add('Select', 'Back to the choice.', function () { click('.sb[data-go="2"]'); }, 1600);
+  add('Select', 'Firm picked. The customer confirms it: the other levels fold away, and Change brings them back.', function () { click('.fcard[data-firm="Firm"]'); }, 3000);
+  add('Select', 'Firm confirmed. Next is the cover.', function () { click('[data-fconfirm]'); }, 4200);
+  add('Select', 'Cover: four real fabrics. A touch shows what each one gives you.', function () { click('.sb[data-go="3"]'); }, 2800);
+  add('Select', 'Cotton / Wool picked, then confirmed. All four choices are made.', function () { click('.tile[data-cover="1"]'); setTimeout(function () { click('[data-confirm="cover"]'); }, 1500); }, 4200);
+  add('Buy', 'Review: the four choices, the price and the discount exactly as the shop gives them.', function () { click('.sb[data-go="4"]'); }, 3400);
+  add('Buy', 'Add to Bag is lit only when all four choices are made. Pressing it adds the mattress.', function () { click('#bag [data-bag]'); }, 3200);
+  add('Buy', 'The same button is now Go to Checkout. It opens the shop’s shopping cart.', function () { }, 3000);
+  var exAll = document.querySelectorAll('#chbar .ch');
+  exAll.forEach(function (b, i) {
+    var id = b.dataset.ch;
+    add('Explore ' + (i + 1) + ' of ' + exAll.length, CAP[id] || b.textContent, function () { click('#chbar [data-ch="' + id + '"]'); if (id === 'adaptation') setTimeout(function () { click('#rail [data-pn="adjustable"]'); }, 1200); if (id === 'comfort') setTimeout(function () { click('#rail [data-pn="density"]'); }, 1400); if (id === 'discover') { var ig = $('#ign'); if (ig && !ig.hidden) click('#ign .skip'); } }, (id === 'adaptation' || id === 'comfort') ? 5600 : 3800);
+  });
+  var pos = -1, timer = null, playing = false, token = 0;
+  function show(i) { pos = Math.max(0, Math.min(steps.length - 1, i)); var s = steps[pos]; $('#tcap').innerHTML = '<b>' + s.t + '</b><span>' + s.cap + '</span>'; $('#tbar').style.width = ((pos + 1) / steps.length * 100) + '%'; try { s.fn(); } catch (e) {} }
+  function ui() { $('#tplay').hidden = playing; $('#tpause').hidden = !playing; $('#tgol').textContent = playing ? 'Pause' : 'Play tour'; }
+  function stop() { playing = false; clearTimeout(timer); ui(); }
+  function tick(my) { if (!playing || my !== token) return; var nx = pos + 1; if (nx >= steps.length) { stop(); $('#tcap').innerHTML = '<b>Done</b><span>That is the whole module. Click anything to try it yourself.</span>'; return; } show(nx); timer = setTimeout(function () { tick(my); }, steps[nx].ms); }
+  $('#tgo').addEventListener('click', function () { if (playing) { stop(); return; } playing = true; token++; ui(); var my = token; show(pos < 0 || pos >= steps.length - 1 ? 0 : pos + 1); timer = setTimeout(function () { tick(my); }, steps[pos].ms); });
+  $('#tnext').addEventListener('click', function () { stop(); show(pos + 1); }); $('#tprev').addEventListener('click', function () { stop(); show(pos - 1); });
+  $('#tign').addEventListener('click', function () { if (window.__ignite) window.__ignite(); });
+})();
+</script>
+<!--/TOURCODE-->

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1727 731" role="img" aria-label="Mattress"><title>Mattress</title>
+<!-- Theming: set --mat-top, --mat-front, --mat-side (face fills), --mat-line and --mat-line-width on the element or a parent.
+     Defaults are the Graphite Blue palette. Layers: #mat-faces (three fills), #mat-lines (the drawing), #mat-zones (optional, empty). -->
+<defs><linearGradient id="mat-top-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--mat-top, #314058)"/><stop offset="1" stop-color="var(--mat-top-2, #263347)"/></linearGradient></defs>
+<g id="mat-faces" stroke="none">
+<polygon id="mat-face-side" fill="var(--mat-side, #1A2332)" points="1101,499 1715,137 1717,139 1714,173 1714,268 1716,280 1108,714"/>
+<polygon id="mat-face-front" fill="var(--mat-front, #202B3C)" points="16,289 995,502 1035,508 1071,508 1086,505 1101,499 1108,714 1091,720 1068,721 988,704 200,497 31,450 20,436 15,413 8,318 8,291 14,275"/>
+<polygon id="mat-face-top" fill="url(#mat-top-g)" points="22,266 103,238 425,136 843,8 869,13 1703,133 1715,137 1101,499 1086,505 1071,508 1035,508 995,502 16,289 14,275"/>
+</g>
+<g id="mat-zones"></g>
+<g id="mat-lines" fill="none" stroke="var(--mat-line, currentColor)" stroke-width="var(--mat-line-width, 1.6)" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" style="color: #C3D5ED"><path d="M 22 266 L 103 238 L 425 136 L 843 8 L 869 13 L 1703 133 L 1715 137"/><path d="M 1101 499 L 1086 505 L 1071 508 L 1035 508 L 995 502 L 16 289"/><path d="M 20 436 L 15 413 L 8 318 L 8 291 L 14 275"/><path d="M 1717 139 L 1714 173 L 1714 268 L 1716 280"/><path d="M 31 450 L 200 497 L 988 704 L 1068 721 L 1091 720 L 1108 714"/><path d="M 1101 499 L 1715 137"/><path d="M 1108 714 L 1716 280"/></g>
+</svg>

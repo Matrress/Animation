@@ -1,0 +1,99 @@
+{
+ "_about": "The pictures of the mini-gallery (television: Your selection; standard module: the gallery in the header). key = the id of the topic whose button opens it ('comfort') or of one of its parts ('adaptation/adjustable'); a part's picture wins over its topic's. also = more parts that show the same picture (one picture, several buttons; it is in the gallery once). cut = a clean cut-out on a transparent background (it floats on the card, with a soft shadow); a picture without cut is a designed picture and is shown whole, with rounded corners: a picture is cut only when the cut is flawless, otherwise it stays whole. There is never a field behind a picture. File names are content-addressed on media.divinedunlop.com/ddtv/. An interior photograph is always kept whole: customers see the mattress in a room too.",
+ "base": "https://media.divinedunlop.com/ddtv/",
+ "items": [
+  {
+   "key": "discover",
+   "name": "botanic-g4-interior-746301e2d83b6f736dfb.webp",
+   "alt": "A Botanic mattress on a floating platform in a softly lit bedroom",
+   "label": "In the room",
+   "cut": false,
+   "w": 1024,
+   "h": 723
+  },
+  {
+   "key": "adaptation",
+   "name": "botanic-g3-adaptation-a60d9f6afb47c19c7690.webp",
+   "alt": "A sleeper resting on the Botanic mattress: the latex follows the body",
+   "label": "Adaptation",
+   "cut": true,
+   "w": 1266,
+   "h": 332
+  },
+  {
+   "key": "adaptation/adjustable",
+   "name": "botanic-g3-adjustable-5d6809f67d053f53c841.webp",
+   "alt": "A Botanic mattress curved as on an adjustable base",
+   "label": "Adjustable beds",
+   "cut": true,
+   "w": 1156,
+   "h": 455
+  },
+  {
+   "key": "comfort",
+   "name": "botanic-g2-comfort-ff03768f1029921bbb3c.webp",
+   "alt": "Comfort at any position: three sleepers on the latex core",
+   "label": "Comfort",
+   "cut": false,
+   "w": 1400,
+   "h": 1049
+  },
+  {
+   "key": "support/surface",
+   "also": [
+    "comfort/surface"
+   ],
+   "name": "botanic-g5-surface-524acae91e412f59b336.webp",
+   "alt": "A woman lying on her back on a Botanic latex mattress with a contoured latex pillow, resting on the surface of the mattress",
+   "label": "On the surface",
+   "cut": true,
+   "w": 1400,
+   "h": 565
+  },
+  {
+   "key": "zones",
+   "name": "botanic-g2-zones-475131071d45f156f00d.webp",
+   "alt": "Seven support zones from head to ankle, shown on a sleeper",
+   "label": "7-Zone",
+   "cut": false,
+   "w": 1400,
+   "h": 977
+  },
+  {
+   "key": "support",
+   "name": "botanic-gal-support-9fad744738f6987fb14c.webp",
+   "alt": "A side sleeper held level by the latex core, shoulders and hips sinking in evenly",
+   "label": "Support",
+   "cut": false,
+   "w": 1600,
+   "h": 1199
+  },
+  {
+   "key": "ventilation",
+   "name": "botanic-g5-ventilation-ef63bb6126a57490cbd8.webp",
+   "alt": "A Botanic mattress opened at the corner: the perforated natural latex core inside the quilted, zipped cover",
+   "label": "Ventilation",
+   "cut": true,
+   "w": 1400,
+   "h": 930
+  },
+  {
+   "key": "benefits",
+   "name": "botanic-gal-benefits-aceaf15c5c2233fe9e34.webp",
+   "alt": "Dunlop latex: 100% natural, breathable, seven zones, spinal health",
+   "label": "Benefits",
+   "cut": false,
+   "w": 1600,
+   "h": 1069
+  },
+  {
+   "key": "hygiene",
+   "name": "botanic-g3-hygiene-fb84b27fb8cdf06f72eb.webp",
+   "alt": "A Botanic mattress in its clean, washable cover",
+   "label": "Hygiene",
+   "cut": true,
+   "w": 1138,
+   "h": 597
+  }
+ ]
+}

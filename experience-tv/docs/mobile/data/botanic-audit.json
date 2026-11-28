@@ -1,0 +1,684 @@
+{
+ "source": "source/botanic-original-description.html",
+ "rootSelector": "#bp-top",
+ "sourceBytes": 142551,
+ "widths": [
+  350,
+  560,
+  720
+ ],
+ "blocks": [
+  {
+   "id": "hero",
+   "kind": "hero",
+   "title": "Organic Latex Mattress",
+   "heightPx": 2116,
+   "nodes": 85,
+   "chars": 1005,
+   "words": 165,
+   "visibleChars": 943,
+   "imgs": 0,
+   "videos": 2,
+   "autoplayVideos": 1,
+   "details": 0,
+   "tables": 0,
+   "svgs": 0,
+   "links": 6,
+   "anchors": 6,
+   "inputs": 0,
+   "headings": [
+    "h2: Organic Latex Mattress"
+   ],
+   "effects": {
+    "gradient": 1,
+    "shadow": 5,
+    "transition": 5,
+    "backdrop-filter": 3,
+    "sticky/fixed": 1
+   },
+   "heightByWidth": {
+    "350": 2116,
+    "560": 1798,
+    "720": 1760
+   }
+  },
+  {
+   "id": "key-features-bar",
+   "kind": "nav",
+   "title": "",
+   "heightPx": 217,
+   "nodes": 16,
+   "chars": 146,
+   "words": 23,
+   "visibleChars": 140,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 0,
+   "tables": 0,
+   "svgs": 0,
+   "links": 6,
+   "anchors": 6,
+   "inputs": 0,
+   "headings": [],
+   "effects": {
+    "transition": 6
+   },
+   "heightByWidth": {
+    "350": 217,
+    "560": 205,
+    "720": 205
+   }
+  },
+  {
+   "id": "section-nav-bar",
+   "kind": "nav",
+   "title": "",
+   "heightPx": 144,
+   "nodes": 16,
+   "chars": 118,
+   "words": 13,
+   "visibleChars": 106,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 0,
+   "tables": 0,
+   "svgs": 0,
+   "links": 13,
+   "anchors": 13,
+   "inputs": 0,
+   "headings": [],
+   "effects": {
+    "transition": 13
+   },
+   "heightByWidth": {
+    "350": 144,
+    "560": 144,
+    "720": 144
+   }
+  },
+  {
+   "id": "bp-firmness",
+   "kind": "section",
+   "title": "Choose Your Latex Mattress Firmness By Body Weight",
+   "heightPx": 2652,
+   "nodes": 98,
+   "chars": 4756,
+   "words": 797,
+   "visibleChars": 1390,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 3,
+   "tables": 0,
+   "svgs": 3,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: Choose Your Latex Mattress Firmness By Body Weight",
+    "h4: Use Your Individual Body Weight Only",
+    "h4: Why Body Weight — Not Personal Preference?",
+    "h4: Who Is It Not For?"
+   ],
+   "effects": {
+    "shadow": 8,
+    "transition": 10
+   },
+   "heightByWidth": {
+    "350": 2652,
+    "560": 2144,
+    "720": 1614
+   }
+  },
+  {
+   "id": "dividers",
+   "kind": "dividers",
+   "title": "",
+   "heightPx": 456,
+   "nodes": 108,
+   "chars": 0,
+   "words": 0,
+   "visibleChars": 0,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 0,
+   "tables": 0,
+   "svgs": 12,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [],
+   "effects": {
+    "gradient": 24
+   },
+   "heightByWidth": {
+    "350": 456,
+    "560": 456,
+    "720": 456
+   }
+  },
+  {
+   "id": "bp-comfort",
+   "kind": "section",
+   "title": "What Comfort Should You Expect From This Latex Mattress?",
+   "heightPx": 1524,
+   "nodes": 34,
+   "chars": 2743,
+   "words": 460,
+   "visibleChars": 826,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 1,
+   "tables": 0,
+   "svgs": 1,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: What Comfort Should You Expect From This Latex Mattress?",
+    "h4: The Balance Between Support And Adaptation",
+    "h4: Individual Weight — Always",
+    "h4: The Magic Of Density",
+    "h4: The Magic Of Elasticity",
+    "h4: Instant Adaptation",
+    "h4: A Gift From Nature, Processed With Dunlop Technology"
+   ],
+   "effects": {
+    "shadow": 1,
+    "transition": 2
+   },
+   "heightByWidth": {
+    "350": 1524,
+    "560": 1006,
+    "720": 891
+   }
+  },
+  {
+   "id": "bp-height",
+   "kind": "section",
+   "title": "Choose Your Natural Latex Mattress Height",
+   "heightPx": 1575,
+   "nodes": 114,
+   "chars": 1899,
+   "words": 353,
+   "visibleChars": 763,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 2,
+   "tables": 0,
+   "svgs": 2,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: Choose Your Natural Latex Mattress Height"
+   ],
+   "effects": {
+    "transition": 7,
+    "shadow": 3
+   },
+   "heightByWidth": {
+    "350": 1575,
+    "560": 1313,
+    "720": 871
+   }
+  },
+  {
+   "id": "bp-covers",
+   "kind": "section",
+   "title": "Premium Latex Mattress Cover Options",
+   "heightPx": 1615,
+   "nodes": 117,
+   "chars": 2643,
+   "words": 406,
+   "visibleChars": 706,
+   "imgs": 4,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 5,
+   "tables": 0,
+   "svgs": 5,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 4,
+   "headings": [
+    "h3: Premium Latex Mattress Cover Options",
+    "h4: Fire Safety Without Chemicals",
+    "h4: Zip-Off Design",
+    "h4: Cover Customisation"
+   ],
+   "effects": {
+    "shadow": 8,
+    "gradient": 1,
+    "transition": 22
+   },
+   "heightByWidth": {
+    "350": 1615,
+    "560": 1630,
+    "720": 1666
+   }
+  },
+  {
+   "id": "bp-benefits",
+   "kind": "section",
+   "title": "Why Organic Natural Latex Is Different",
+   "heightPx": 2439,
+   "nodes": 67,
+   "chars": 2514,
+   "words": 379,
+   "visibleChars": 1392,
+   "imgs": 0,
+   "videos": 1,
+   "autoplayVideos": 1,
+   "details": 1,
+   "tables": 0,
+   "svgs": 1,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: Why Organic Natural Latex Is Different",
+    "h4: Petroleum Foams Explained",
+    "h4: Latex Is Bio-Based",
+    "h4: Breathability Advantage",
+    "h4: Why Latex Costs More"
+   ],
+   "effects": {
+    "transition": 8,
+    "shadow": 13
+   },
+   "heightByWidth": {
+    "350": 2439,
+    "560": 1922,
+    "720": 1577
+   }
+  },
+  {
+   "id": "bp-support",
+   "kind": "section",
+   "title": "Orthopaedic Support From Natural Latex",
+   "heightPx": 1666,
+   "nodes": 49,
+   "chars": 1796,
+   "words": 274,
+   "visibleChars": 1018,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 1,
+   "tables": 0,
+   "svgs": 1,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: Orthopaedic Support From Natural Latex"
+   ],
+   "effects": {
+    "transition": 6,
+    "shadow": 8
+   },
+   "heightByWidth": {
+    "350": 1666,
+    "560": 1200,
+    "720": 961
+   }
+  },
+  {
+   "id": "bp-adaptation",
+   "kind": "section",
+   "title": "Anatomical Adaptation And Instant Latex Response",
+   "heightPx": 1979,
+   "nodes": 54,
+   "chars": 1999,
+   "words": 318,
+   "visibleChars": 1070,
+   "imgs": 0,
+   "videos": 1,
+   "autoplayVideos": 1,
+   "details": 1,
+   "tables": 0,
+   "svgs": 1,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: Anatomical Adaptation And Instant Latex Response"
+   ],
+   "effects": {
+    "transition": 6,
+    "shadow": 9
+   },
+   "heightByWidth": {
+    "350": 1979,
+    "560": 1634,
+    "720": 1416
+   }
+  },
+  {
+   "id": "bp-zones",
+   "kind": "section",
+   "title": "Advanced 7-Zone Latex Mattress Support",
+   "heightPx": 1492,
+   "nodes": 75,
+   "chars": 2133,
+   "words": 337,
+   "visibleChars": 552,
+   "imgs": 0,
+   "videos": 1,
+   "autoplayVideos": 1,
+   "details": 1,
+   "tables": 0,
+   "svgs": 1,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: Advanced 7-Zone Latex Mattress Support",
+    "h4: Zone by Zone",
+    "h4: Additional Effects"
+   ],
+   "effects": {
+    "transition": 9,
+    "shadow": 8
+   },
+   "heightByWidth": {
+    "350": 1492,
+    "560": 1451,
+    "720": 1391
+   }
+  },
+  {
+   "id": "bp-ventilation",
+   "kind": "section",
+   "title": "Breathable Latex Mattress For Temperature Comfort",
+   "heightPx": 2012,
+   "nodes": 75,
+   "chars": 1936,
+   "words": 297,
+   "visibleChars": 1067,
+   "imgs": 0,
+   "videos": 1,
+   "autoplayVideos": 1,
+   "details": 1,
+   "tables": 0,
+   "svgs": 1,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: Breathable Latex Mattress For Temperature Comfort",
+    "h4: A Note On Claims"
+   ],
+   "effects": {
+    "transition": 6,
+    "shadow": 9
+   },
+   "heightByWidth": {
+    "350": 2012,
+    "560": 1551,
+    "720": 1419
+   }
+  },
+  {
+   "id": "bp-hygiene",
+   "kind": "section",
+   "title": "Hypoallergenic Latex Mattress For Cleaner Sleep",
+   "heightPx": 1640,
+   "nodes": 50,
+   "chars": 1731,
+   "words": 253,
+   "visibleChars": 979,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 1,
+   "tables": 0,
+   "svgs": 1,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: Hypoallergenic Latex Mattress For Cleaner Sleep",
+    "h4: A Realistic Picture",
+    "h4: The Logic"
+   ],
+   "effects": {
+    "transition": 6,
+    "shadow": 8
+   },
+   "heightByWidth": {
+    "350": 1640,
+    "560": 1174,
+    "720": 932
+   }
+  },
+  {
+   "id": "bp-certs",
+   "kind": "section",
+   "title": "Certified Natural Latex Foam And European Production",
+   "heightPx": 2473,
+   "nodes": 73,
+   "chars": 3958,
+   "words": 564,
+   "visibleChars": 1561,
+   "imgs": 0,
+   "videos": 1,
+   "autoplayVideos": 1,
+   "details": 1,
+   "tables": 0,
+   "svgs": 1,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: Certified Natural Latex Foam And European Production",
+    "h4: Why OEKO-TEX® Matters More Than Decorative Eco Claims",
+    "h4: German Standards and Process Oversight",
+    "h4: Raw Material Origin",
+    "h4: A Factual Note on Latex Foam Production"
+   ],
+   "effects": {
+    "transition": 7,
+    "shadow": 6
+   },
+   "heightByWidth": {
+    "350": 2473,
+    "560": 2151,
+    "720": 1802
+   }
+  },
+  {
+   "id": "bp-warranty",
+   "kind": "section",
+   "title": "",
+   "heightPx": 989,
+   "nodes": 27,
+   "chars": 912,
+   "words": 150,
+   "visibleChars": 389,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 1,
+   "tables": 0,
+   "svgs": 1,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [],
+   "effects": {
+    "shadow": 2,
+    "transition": 2
+   },
+   "heightByWidth": {
+    "350": 989,
+    "560": 989,
+    "720": 635
+   }
+  },
+  {
+   "id": "bp-delivery",
+   "kind": "section",
+   "title": "Made To Order Latex Mattress — Prepared to Your Specification",
+   "heightPx": 549,
+   "nodes": 20,
+   "chars": 793,
+   "words": 119,
+   "visibleChars": 313,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 1,
+   "tables": 0,
+   "svgs": 1,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [
+    "h3: Made To Order Latex Mattress — Prepared to Your Specificatio"
+   ],
+   "effects": {
+    "transition": 2
+   },
+   "heightByWidth": {
+    "350": 549,
+    "560": 458,
+    "720": 428
+   }
+  },
+  {
+   "id": "cta",
+   "kind": "cta",
+   "title": "Engineered For Deep, Natural Sleep.",
+   "heightPx": 564,
+   "nodes": 9,
+   "chars": 204,
+   "words": 31,
+   "visibleChars": 199,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 0,
+   "tables": 0,
+   "svgs": 0,
+   "links": 3,
+   "anchors": 3,
+   "inputs": 0,
+   "headings": [
+    "h3: Engineered For Deep, Natural Sleep."
+   ],
+   "effects": {
+    "gradient": 1,
+    "transition": 3,
+    "shadow": 1
+   },
+   "heightByWidth": {
+    "350": 564,
+    "560": 443,
+    "720": 391
+   }
+  },
+  {
+   "id": "floating",
+   "kind": "floating",
+   "title": "",
+   "heightPx": 33,
+   "nodes": 1,
+   "chars": 11,
+   "words": 3,
+   "visibleChars": 11,
+   "imgs": 0,
+   "videos": 0,
+   "autoplayVideos": 0,
+   "details": 0,
+   "tables": 0,
+   "svgs": 0,
+   "links": 0,
+   "anchors": 0,
+   "inputs": 0,
+   "headings": [],
+   "effects": {
+    "transition": 1,
+    "shadow": 1,
+    "sticky/fixed": 1
+   },
+   "heightByWidth": {
+    "350": 33,
+    "560": 39,
+    "720": 39
+   }
+  }
+ ],
+ "global": {
+  "styleBlocks": 1,
+  "cssChars": 54520,
+  "cssRules": 303,
+  "cssRulesMatchingSomething": 249,
+  "cssRulesMatchingNothing": 54,
+  "selectorsThatThrow": 0,
+  "mediaQueries": [
+   "(max-width: 900px)",
+   "(max-width: 680px)",
+   "(max-width: 640px)",
+   "(max-width: 540px)"
+  ],
+  "keyframes": 0,
+  "importantCount": 216,
+  "supportsBlocks": 0,
+  "scriptsInDescription": 0,
+  "iframes": 0,
+  "markupChars": 87161,
+  "inlineStyleAttrs": 39,
+  "classCount": 157,
+  "headingOutline": "h2 h3 h4… h3 h4… h3… h4… h3 h4… h3… h4… h3 h4 h3 h4… h3 h4… h3…",
+  "h1Count": 0,
+  "imgsWithoutAlt": 0,
+  "videosWithoutLabel": 0,
+  "imgsMissingDimensions": 4,
+  "videosMissingPoster": 7,
+  "videoPreload": [
+   "auto+autoplay",
+   "auto+controls",
+   "metadata+autoplay",
+   "metadata+autoplay",
+   "metadata+autoplay",
+   "metadata+autoplay",
+   "metadata+autoplay"
+  ],
+  "detailsTotal": 20,
+  "jsDependency": "none (no <script> in the description; every interaction is <details>, radio inputs or :target)"
+ },
+ "duplicates": [
+  {
+   "text": "A custom-made organic latex mattress built around your body, your firmness regulation and ",
+   "copies": 2
+  }
+ ],
+ "total350": {
+  "heightPx": 26103,
+  "nodes": 1088,
+  "chars": 31314,
+  "words": 4942,
+  "visibleChars": 13425
+ },
+ "total560": {
+  "heightPx": 21671,
+  "nodes": 1088,
+  "chars": 31314,
+  "words": 4942,
+  "visibleChars": 13425
+ },
+ "total720": {
+  "heightPx": 18561,
+  "nodes": 1088,
+  "chars": 31314,
+  "words": 4942,
+  "visibleChars": 13425
+ }
+}

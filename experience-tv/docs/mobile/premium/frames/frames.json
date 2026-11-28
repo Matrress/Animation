@@ -1,0 +1,544 @@
+{
+ "date": "2026-11-11T19:25:05.008Z",
+ "sheet": [
+  {
+   "name": "botanic-natural-latex-mattress-premium-presentation-loop",
+   "info": {
+    "codec": "h264",
+    "profile": "High",
+    "width": 910,
+    "height": 512,
+    "fps": "30/1",
+    "pixFmt": "yuv420p",
+    "durationS": 12,
+    "bitRateKbps": 313,
+    "audio": null,
+    "sizeBytes": 469753,
+    "moovOffset": 32,
+    "mdatOffset": 5168,
+    "faststart": true
+   },
+   "proposed": "f35.jpg",
+   "candidates": [
+    {
+     "at": 0.35,
+     "file": "f35.jpg",
+     "brightness": 78.0011,
+     "edge": 21.3963,
+     "score": 16.596465
+    },
+    {
+     "at": 0.5,
+     "file": "f50.jpg",
+     "brightness": 69.7261,
+     "edge": 22.6073,
+     "score": 16.566215
+    },
+    {
+     "at": 0.9,
+     "file": "f90.jpg",
+     "brightness": 64.4238,
+     "edge": 22.5511,
+     "score": 15.714670000000002
+    },
+    {
+     "at": 0.05,
+     "file": "f05.jpg",
+     "brightness": 89.5747,
+     "edge": 17.1177,
+     "score": 14.053905
+    },
+    {
+     "at": 0.15,
+     "file": "f15.jpg",
+     "brightness": 83.26,
+     "edge": 16.2241,
+     "score": 12.2131
+    },
+    {
+     "at": 0.25,
+     "file": "f25.jpg",
+     "brightness": 79.7688,
+     "edge": 16.3437,
+     "score": 11.809019999999999
+    },
+    {
+     "at": 0.8,
+     "file": "f80.jpg",
+     "brightness": 62.9389,
+     "edge": 16.609,
+     "score": 9.549835000000002
+    },
+    {
+     "at": 0.65,
+     "file": "f65.jpg",
+     "brightness": 62.6684,
+     "edge": 16.0645,
+     "score": 8.964759999999998
+    }
+   ]
+  },
+  {
+   "name": "botanic-natural-latex-mattress-premium-presentation-full",
+   "info": {
+    "codec": "h264",
+    "profile": "High",
+    "width": 910,
+    "height": 512,
+    "fps": "30/1",
+    "pixFmt": "yuv420p",
+    "durationS": 62.333333,
+    "bitRateKbps": 442,
+    "audio": null,
+    "sizeBytes": 3445075,
+    "moovOffset": 32,
+    "mdatOffset": 23073,
+    "faststart": true
+   },
+   "proposed": "f05.jpg",
+   "candidates": [
+    {
+     "at": 0.05,
+     "file": "f05.jpg",
+     "brightness": 41.6321,
+     "edge": 65.8036,
+     "score": 55.548415000000006
+    },
+    {
+     "at": 0.9,
+     "file": "f90.jpg",
+     "brightness": 162.164,
+     "edge": 33.854,
+     "score": 26.029400000000003
+    },
+    {
+     "at": 0.5,
+     "file": "f50.jpg",
+     "brightness": 76.3373,
+     "edge": 24.4466,
+     "score": 19.397195
+    },
+    {
+     "at": 0.65,
+     "file": "f65.jpg",
+     "brightness": 73.3997,
+     "edge": 23.7246,
+     "score": 18.234555
+    },
+    {
+     "at": 0.35,
+     "file": "f35.jpg",
+     "brightness": 59.0392,
+     "edge": 23.8558,
+     "score": 16.21168
+    },
+    {
+     "at": 0.8,
+     "file": "f80.jpg",
+     "brightness": 184.231,
+     "edge": 24.1044,
+     "score": 12.96975
+    },
+    {
+     "at": 0.15,
+     "file": "f15.jpg",
+     "brightness": 85.8699,
+     "edge": 16.5544,
+     "score": 12.934885000000001
+    },
+    {
+     "at": 0.25,
+     "file": "f25.jpg",
+     "brightness": 63.1129,
+     "edge": 18.0955,
+     "score": 11.062435
+    }
+   ]
+  },
+  {
+   "name": "natural-latex-milk-to-foam-origin",
+   "info": {
+    "codec": "h264",
+    "profile": "High",
+    "width": 910,
+    "height": 512,
+    "fps": "30/1",
+    "pixFmt": "yuv420p",
+    "durationS": 21.5,
+    "bitRateKbps": 680,
+    "audio": null,
+    "sizeBytes": 1827189,
+    "moovOffset": 32,
+    "mdatOffset": 8161,
+    "faststart": true
+   },
+   "proposed": "f25.jpg",
+   "candidates": [
+    {
+     "at": 0.25,
+     "file": "f25.jpg",
+     "brightness": 38.7221,
+     "edge": 58.5913,
+     "score": 47.899615
+    },
+    {
+     "at": 0.5,
+     "file": "f50.jpg",
+     "brightness": 174.212,
+     "edge": 51.4697,
+     "score": 41.837900000000005
+    },
+    {
+     "at": 0.05,
+     "file": "f05.jpg",
+     "brightness": 128.992,
+     "edge": 35.1756,
+     "score": 32.326800000000006
+    },
+    {
+     "at": 0.8,
+     "file": "f80.jpg",
+     "brightness": 141.436,
+     "edge": 19.1099,
+     "score": 14.394499999999999
+    },
+    {
+     "at": 0.65,
+     "file": "f65.jpg",
+     "brightness": 28.7855,
+     "edge": 5.08216,
+     "score": -7.100014999999999
+    },
+    {
+     "at": 0.9,
+     "file": "f90.jpg",
+     "brightness": 10.9863,
+     "edge": 4.28456,
+     "score": -10.567495000000001
+    },
+    {
+     "at": 0.15,
+     "file": "f15.jpg",
+     "brightness": 2.31157,
+     "edge": 5.49659,
+     "score": -10.656674499999998
+    },
+    {
+     "at": 0.35,
+     "file": "f35.jpg",
+     "brightness": 1.59447,
+     "edge": 3.93432,
+     "score": -12.3265095
+    }
+   ]
+  },
+  {
+   "name": "natural-latex-elasticity-adjustable-bed",
+   "info": {
+    "codec": "h264",
+    "profile": "High",
+    "width": 910,
+    "height": 418,
+    "fps": "30/1",
+    "pixFmt": "yuv420p",
+    "durationS": 12,
+    "bitRateKbps": 250,
+    "audio": null,
+    "sizeBytes": 374729,
+    "moovOffset": 32,
+    "mdatOffset": 5184,
+    "faststart": true
+   },
+   "proposed": "f65.jpg",
+   "candidates": [
+    {
+     "at": 0.65,
+     "file": "f65.jpg",
+     "brightness": 65.1502,
+     "edge": 23.905,
+     "score": 17.17753
+    },
+    {
+     "at": 0.5,
+     "file": "f50.jpg",
+     "brightness": 64.3403,
+     "edge": 24.0184,
+     "score": 17.169445
+    },
+    {
+     "at": 0.35,
+     "file": "f35.jpg",
+     "brightness": 66.304,
+     "edge": 23.703,
+     "score": 17.148600000000002
+    },
+    {
+     "at": 0.8,
+     "file": "f80.jpg",
+     "brightness": 66.5892,
+     "edge": 23.5628,
+     "score": 17.051180000000002
+    },
+    {
+     "at": 0.25,
+     "file": "f25.jpg",
+     "brightness": 66.9143,
+     "edge": 22.7905,
+     "score": 16.327645
+    },
+    {
+     "at": 0.9,
+     "file": "f90.jpg",
+     "brightness": 66.9168,
+     "edge": 21.977,
+     "score": 15.514520000000001
+    },
+    {
+     "at": 0.15,
+     "file": "f15.jpg",
+     "brightness": 66.7435,
+     "edge": 20.4817,
+     "score": 13.993224999999999
+    },
+    {
+     "at": 0.05,
+     "file": "f05.jpg",
+     "brightness": 64.5155,
+     "edge": 18.6214,
+     "score": 11.798725000000001
+    }
+   ]
+  },
+  {
+   "name": "natural-latex-7-zone-spinal-alignment",
+   "info": {
+    "codec": "h264",
+    "profile": "High",
+    "width": 910,
+    "height": 512,
+    "fps": "30/1",
+    "pixFmt": "yuv420p",
+    "durationS": 51.8,
+    "bitRateKbps": 261,
+    "audio": null,
+    "sizeBytes": 1687688,
+    "moovOffset": 32,
+    "mdatOffset": 18604,
+    "faststart": true
+   },
+   "proposed": "f15.jpg",
+   "candidates": [
+    {
+     "at": 0.15,
+     "file": "f15.jpg",
+     "brightness": 137.398,
+     "edge": 41.8493,
+     "score": 37.7396
+    },
+    {
+     "at": 0.5,
+     "file": "f50.jpg",
+     "brightness": 67.1736,
+     "edge": 34.3273,
+     "score": 27.90334
+    },
+    {
+     "at": 0.35,
+     "file": "f35.jpg",
+     "brightness": 63.409,
+     "edge": 34.3749,
+     "score": 27.386249999999997
+    },
+    {
+     "at": 0.25,
+     "file": "f25.jpg",
+     "brightness": 67.4753,
+     "edge": 31.1771,
+     "score": 24.798395
+    },
+    {
+     "at": 0.8,
+     "file": "f80.jpg",
+     "brightness": 80.6995,
+     "edge": 28.2456,
+     "score": 23.850525
+    },
+    {
+     "at": 0.9,
+     "file": "f90.jpg",
+     "brightness": 81.2723,
+     "edge": 22.8573,
+     "score": 18.548144999999998
+    },
+    {
+     "at": 0.05,
+     "file": "f05.jpg",
+     "brightness": 232.508,
+     "edge": 30.4479,
+     "score": 12.0717
+    },
+    {
+     "at": 0.65,
+     "file": "f65.jpg",
+     "brightness": 1,
+     "edge": 0,
+     "score": -16.349999999999998
+    }
+   ]
+  },
+  {
+   "name": "natural-latex-airflow-ventilation-channels",
+   "info": {
+    "codec": "h264",
+    "profile": "High",
+    "width": 910,
+    "height": 512,
+    "fps": "30/1",
+    "pixFmt": "yuv420p",
+    "durationS": 12.366667,
+    "bitRateKbps": 575,
+    "audio": null,
+    "sizeBytes": 888826,
+    "moovOffset": 32,
+    "mdatOffset": 5257,
+    "faststart": true
+   },
+   "proposed": "f90.jpg",
+   "candidates": [
+    {
+     "at": 0.9,
+     "file": "f90.jpg",
+     "brightness": 70.5439,
+     "edge": 21.6415,
+     "score": 15.723085000000001
+    },
+    {
+     "at": 0.65,
+     "file": "f65.jpg",
+     "brightness": 185.231,
+     "edge": 24.6169,
+     "score": 13.332250000000002
+    },
+    {
+     "at": 0.5,
+     "file": "f50.jpg",
+     "brightness": 181.085,
+     "edge": 21.5496,
+     "score": 10.88685
+    },
+    {
+     "at": 0.8,
+     "file": "f80.jpg",
+     "brightness": 73.4839,
+     "edge": 12.3858,
+     "score": 6.908385000000001
+    },
+    {
+     "at": 0.35,
+     "file": "f35.jpg",
+     "brightness": 208.665,
+     "edge": 14.5429,
+     "score": -0.25684999999999825
+    },
+    {
+     "at": 0.15,
+     "file": "f15.jpg",
+     "brightness": 207.807,
+     "edge": 14.2138,
+     "score": -0.4572499999999966
+    },
+    {
+     "at": 0.25,
+     "file": "f25.jpg",
+     "brightness": 210.367,
+     "edge": 13.7824,
+     "score": -1.272649999999997
+    },
+    {
+     "at": 0.05,
+     "file": "f05.jpg",
+     "brightness": 211.453,
+     "edge": 9.9404,
+     "score": -5.27755
+    }
+   ]
+  },
+  {
+   "name": "natural-latex-durability-pressure-test",
+   "info": {
+    "codec": "h264",
+    "profile": "High",
+    "width": 910,
+    "height": 512,
+    "fps": "30/1",
+    "pixFmt": "yuv420p",
+    "durationS": 15.666667,
+    "bitRateKbps": 909,
+    "audio": null,
+    "sizeBytes": 1780516,
+    "moovOffset": 32,
+    "mdatOffset": 6073,
+    "faststart": true
+   },
+   "proposed": "f80.jpg",
+   "candidates": [
+    {
+     "at": 0.8,
+     "file": "f80.jpg",
+     "brightness": 241.203,
+     "edge": 66.9811,
+     "score": 47.30065
+    },
+    {
+     "at": 0.25,
+     "file": "f25.jpg",
+     "brightness": 178.792,
+     "edge": 50.1176,
+     "score": 39.7988
+    },
+    {
+     "at": 0.9,
+     "file": "f90.jpg",
+     "brightness": 225.72,
+     "edge": 49.9242,
+     "score": 32.566199999999995
+    },
+    {
+     "at": 0.35,
+     "file": "f35.jpg",
+     "brightness": 101.616,
+     "edge": 29.9164,
+     "score": 28.6588
+    },
+    {
+     "at": 0.5,
+     "file": "f50.jpg",
+     "brightness": 99.8037,
+     "edge": 19.9201,
+     "score": 18.390655000000002
+    },
+    {
+     "at": 0.65,
+     "file": "f65.jpg",
+     "brightness": 116.69,
+     "edge": 15.9195,
+     "score": 14.916
+    },
+    {
+     "at": 0.05,
+     "file": "f05.jpg",
+     "brightness": 71.6986,
+     "edge": 19.0286,
+     "score": 13.28339
+    },
+    {
+     "at": 0.15,
+     "file": "f15.jpg",
+     "brightness": 72.9034,
+     "edge": 8.50233,
+     "score": 2.9378400000000013
+    }
+   ]
+  }
+ ]
+}

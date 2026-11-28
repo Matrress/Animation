@@ -1,0 +1,46 @@
+NOTE: real Ecwid DOM and runtime of the PUBLIC live product, local injection, read-only. Not the test product, not Safari; media is synthetic.
+
+PASS the television mounted on the real page
+PASS before the visitor reaches for the gallery the television has made no storefront request (the page's own is the only one)
+PASS hovering the button made exactly one request to the page's own endpoint, with only the product identifier in its body
+INFO the request's response was 29 KB on the wire (it carries the product record, which includes the long description); it is made only when the visitor reaches for the gallery
+PASS the records agree with the real gallery and are used: 14 images ({"mode":"native","native":14,"shown":14,"unlisted":[],"stale":[],"unverified":0,"resources":0,"sizes":"storefront","storefront":"ok"})
+PASS each image's 1500 px file is exactly what the page's own response lists for it, in the same order
+PASS alt text and the single main-image flag come from the store's records
+PASS Optimised Preview with four real options chosen: gallery isolated, television and button visible, store price mirrored (£854.10)
+PASS 12 cycles Optimised → Standard → Optimised on the real page: every time the store's own gallery is exactly as before the television existed (same children, 14 thumbnails of 75 px) and then isolated again; the four chosen options and the price never change; one television, no duplicates, no sideways scroll
+INFO real page, 12 cycles + 3 gallery visits: documents 3→3, DOM nodes 8708→8698, JS event listeners 636→636
+PASS no accumulation: no extra documents; event listeners +0, DOM nodes +-10 over 12 cycles (the store's own activity included)
+PASS Standard Product View: clicking the store's own thumbnail 3 changes its main picture (4888579387.webp → 4706741738.webp)
+PASS the store's own zoom/lightbox opens on that photo (3 / 14)
+PASS and navigates with its own arrow inside the lightbox (4 / 14)
+PASS and closes with Escape
+PASS the television and its photo gallery do not obstruct or duplicate the store's gallery (no overlay, one hidden host)
+PASS Standard Product View: the real Add to Bag is present, enabled and not covered (not clicked)
+PASS a cover changed in Standard Product View is kept on return, and the television shows the store's price (£854.10)
+PASS no write request to the store was made by the page during all of this
+PASS no page error beyond those the store itself logs [Uncaught (in promise) #<Object> ; Timeout exceeded (250 ms) ; Timeout exceeded (250 ms)]
+PASS iPad portrait 820×1180: stacked; the store's sidebar and description now use the product block's full width (30,760 in 30,760), so no left column is left unused
+PASS iPad portrait 820×1180: no sideways scroll
+PASS iPad portrait 820×1180: the product title, price and options start directly under the television (24 px below it)
+PASS iPad portrait 820×1180: the four store options are all there, visible and inside the screen
+PASS iPad portrait 820×1180: Standard Product View: the sidebar, description and block are exactly where the store had them before the television existed (sidebar 473,317, description 30,443)
+PASS iPad portrait 820×1180: rotated to landscape the television returns to the column and the stacked layout is removed
+PASS iPad portrait 820×1180: rotated back it is applied again, one television, no sideways scroll
+PASS iPad mini portrait 744×1133: stacked; the store's sidebar and description now use the product block's full width (30,684 in 30,684), so no left column is left unused
+PASS iPad mini portrait 744×1133: no sideways scroll
+PASS iPad mini portrait 744×1133: the product title, price and options start directly under the television (24 px below it)
+PASS iPad mini portrait 744×1133: the four store options are all there, visible and inside the screen
+PASS iPad mini portrait 744×1133: Standard Product View: the sidebar, description and block are exactly where the store had them before the television existed (sidebar 429,285, description 30,399)
+PASS iPad (touch, no hover): opening the gallery made the one request and shows photo 1 of 14
+PASS on a 2x screen the large photo is the 1500 px file, loaded from the store's CDN (1500×1124 px file in a 560 px stage)
+PASS proportions are preserved (object-fit: contain; the photo is never stretched)
+PASS on the real page the screen's 1 loop(s) really play (currentTime advances)
+PASS 8 gallery round trips on the real page: nothing plays (time frozen) while the gallery is open, exactly the visible loops play after, same number of video elements, no media error
+PASS in Standard Product View no video of the television is playing
+PASS no page error beyond those the store itself logs
+PASS iPhone 390×844: standard Ecwid view only: no television, no gallery button, no attribute, no rule, the store's own gallery exactly as it was
+PASS and the television made no storefront request
+
+All checks passed (real Ecwid DOM of the public product; synthetic media; the test product and real devices are not covered)
+RESTORE exit 0

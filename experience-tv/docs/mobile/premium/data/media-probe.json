@@ -1,0 +1,118 @@
+{
+ "date": "2026-11-11T19:24:42.148Z",
+ "rows": [
+  {
+   "target": "https://media.divinedunlop.com/videos/botanic-natural-latex-mattress-premium-presentation-loop.mp4",
+   "status": 200,
+   "type": "video/mp4",
+   "bytes": 469753,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null,
+   "rangeStatus": 206,
+   "rangeBytes": 1024
+  },
+  {
+   "target": "https://media.divinedunlop.com/videos/botanic-natural-latex-mattress-premium-presentation-full.mp4",
+   "status": 200,
+   "type": "video/mp4",
+   "bytes": 3445075,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null,
+   "rangeStatus": 206,
+   "rangeBytes": 1024
+  },
+  {
+   "target": "https://media.divinedunlop.com/covers/natural-cotton-cover-texture.webp",
+   "status": 200,
+   "type": "image/webp",
+   "bytes": 106416,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null
+  },
+  {
+   "target": "https://media.divinedunlop.com/covers/cotton-wool-cover-texture.webp",
+   "status": 200,
+   "type": "image/webp",
+   "bytes": 93826,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null
+  },
+  {
+   "target": "https://media.divinedunlop.com/covers/aloe-vera-cotton-viscose-cover-texture.webp",
+   "status": 200,
+   "type": "image/webp",
+   "bytes": 200256,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null
+  },
+  {
+   "target": "https://media.divinedunlop.com/covers/cashmere-silver-ions-cover-texture.webp",
+   "status": 200,
+   "type": "image/webp",
+   "bytes": 66732,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null
+  },
+  {
+   "target": "https://media.divinedunlop.com/videos/natural-latex-milk-to-foam-origin.mp4",
+   "status": 200,
+   "type": "video/mp4",
+   "bytes": 1827189,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null,
+   "rangeStatus": 206,
+   "rangeBytes": 1024
+  },
+  {
+   "target": "https://media.divinedunlop.com/videos/natural-latex-elasticity-adjustable-bed.mp4",
+   "status": 200,
+   "type": "video/mp4",
+   "bytes": 374729,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null,
+   "rangeStatus": 206,
+   "rangeBytes": 1024
+  },
+  {
+   "target": "https://media.divinedunlop.com/videos/natural-latex-7-zone-spinal-alignment.mp4",
+   "status": 200,
+   "type": "video/mp4",
+   "bytes": 1687688,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null,
+   "rangeStatus": 206,
+   "rangeBytes": 1024
+  },
+  {
+   "target": "https://media.divinedunlop.com/videos/natural-latex-airflow-ventilation-channels.mp4",
+   "status": 200,
+   "type": "video/mp4",
+   "bytes": 888826,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null,
+   "rangeStatus": 206,
+   "rangeBytes": 1024
+  },
+  {
+   "target": "https://media.divinedunlop.com/videos/natural-latex-durability-pressure-test.mp4",
+   "status": 200,
+   "type": "video/mp4",
+   "bytes": 1780516,
+   "acceptRanges": "bytes",
+   "cache": "max-age=31536000",
+   "encoding": null,
+   "rangeStatus": 206,
+   "rangeBytes": 1024
+  }
+ ]
+}

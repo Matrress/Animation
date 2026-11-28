@@ -1,0 +1,210 @@
+/* (no @import of the font here: an @import inside the description's own <style> keeps that sheet pending in Safari; the engine loads Chillax with a print-media link that never blocks) */
+
+/* ECWID: its own "Show more" cut-off, fade and button are switched off, so the description is always whole in the page
+   (readers and search engines see all of it; the topics below fold only by their own menus) */
+.ec-size .ec-store .product-details__product-description,
+.ec-size .ec-store [class*="product-details-module__content"],
+.ec-size .ec-store [class*="product-details__product-description"] {
+  height: auto !important; min-height: 0 !important; max-height: none !important; overflow: visible !important;
+  clip: auto !important; clip-path: none !important; -webkit-mask: none !important; mask: none !important;
+  -webkit-line-clamp: unset !important; line-clamp: unset !important; content-visibility: visible !important;
+}
+.ec-size .ec-store [class*="product-details-module__content"]::before,
+.ec-size .ec-store [class*="product-details-module__content"]::after,
+.ec-size .ec-store .product-details__product-description::before,
+.ec-size .ec-store .product-details__product-description::after { display: none !important; content: none !important; }
+.ec-size .ec-store [class*="product-details-module__btn-more"],
+.ec-size .ec-store [class*="product-details-module__btn-less"] { display: none !important; }
+
+/*=MODULE=*/
+/* THE STANDARD MODULE, in the colours of the television (owner, 26 Nov): coffee #434239, slate #384442 / deep slate #2E3633, olive-grey #646155,
+   latte #DDD6C4, vanilla #FBFBED, paper #FEFEF6 and the green #6E8601 (at most a tenth of the screen). Dark rows and light rows alternate, like the television's
+   Explore card (coffee), Select & Buy (slate) and Your selection (olive-grey). The word Botanic is always green. Type: Chillax. */
+.dd-std {
+  --coffee: #434239; --coffee2: #3A3932; --slate: #384442; --deep: #2E3633; --olive: #646155; --grey: #696862;
+  --latte: #DDD6C4; --vanilla: #FBFBED; --paper: #FEFEF6; --line: #D6CFBC; --ink: #2E3633; --mute: #646155;
+  --ol: #6E8601; --ol2: #4D5F00; --olt: #A9C23A; --bo: #4D5F00; --lt: #FBFBED;
+  font-family: Chillax, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.6; font-weight: 400; color: var(--ink) !important;
+  -webkit-font-smoothing: antialiased; text-align: left; container: dd / inline-size;
+}
+.dd-std *, .dd-std *::before, .dd-std *::after { box-sizing: border-box; }
+.dd-std p { margin: 0 0 .8em; color: var(--ink) !important; }
+.dd-std strong { font-weight: 700; color: inherit !important; }
+.dd-std a { color: var(--ol2) !important; text-decoration: underline; text-underline-offset: 2px; }
+.dd-std h3, .dd-std h4 { font-family: inherit; color: var(--deep) !important; line-height: 1.3; margin: 1.1em 0 .45em; }
+.dd-std h3 { font-size: 18px; font-weight: 700; }
+.dd-std h4 { font-size: 16px; font-weight: 700; }
+.dd-std ul, .dd-std ol { margin: 0 0 .9em; padding-left: 1.25em; color: var(--ink) !important; }
+.dd-std li { margin: 0 0 .35em; color: var(--ink) !important; }
+.dd-std li::marker { color: var(--ol); }
+.dd-std dl, .dd-std dt, .dd-std dd, .dd-std small, .dd-std span, .dd-std figcaption { color: inherit !important; }
+.dd-std img { max-width: 100%; height: auto; border-radius: 12px; display: block; }
+.dd-std table { border-collapse: collapse; width: 100%; margin: 0 0 1em; font-size: 15px; color: var(--ink) !important; }
+.dd-std th, .dd-std td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; color: var(--ink) !important; }
+.dd-std th { color: var(--ol2) !important; font-weight: 600; }
+.dd-std .dd-bo { color: var(--bo) !important; font-weight: 700; }
+/* dark surfaces (coffee, slate, olive-grey): vanilla inscriptions, the lifted green for the word Botanic */
+.dd-std .dd-dk, .dd-std .dd-dk p, .dd-std .dd-dk li, .dd-std .dd-dk h3, .dd-std .dd-dk span, .dd-std .dd-dk dt, .dd-std .dd-dk dd, .dd-std .dd-dk small { color: var(--lt) !important; }
+.dd-std .dd-dk .dd-bo { color: var(--olt) !important; }
+.dd-std .dd-dk a, .dd-std .dd-tg2 .dd-c a, .dd-std .dd-tg3 .dd-c a { color: var(--lt) !important; }
+
+/* header: a coffee text panel and the photo side by side (the photo fills the panel's height), key points as latte tiles, glance cards in slate */
+.dd-hd { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 10px; margin: 0 0 8px; }
+.dd-hd > * { grid-column: 1 / -1; margin: 0; }
+.dd-hd__t { background: var(--coffee); border-radius: 18px; padding: 22px 22px 8px; }
+.dd-ph { margin: 0; position: relative; display: flex; flex-direction: column; justify-content: center; gap: 4px; background: none; }
+/* the gallery: one picture at a time, swiped sideways, a compact 4:3 window that stands vertically centred beside the text. No field behind a picture (a cut-out floats with a soft shadow; a designed picture is shown whole);
+   round dots under it, no arrows in the slot itself (the engine makes the dots tappable and opens the picture large, at most 70 % of the screen, with arrows there) */
+.dd-gal__v { position: relative; width: 100%; aspect-ratio: 4 / 3; display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.dd-gal__v::-webkit-scrollbar { display: none; }
+.dd-gal__v.dd-drag { scroll-snap-type: none; cursor: grabbing; user-select: none; }
+.dd-gal__s { flex: 0 0 100%; min-width: 0; height: 100%; scroll-snap-align: center; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; background: none; }
+.dd-gal__s img { display: block; width: 100%; height: 100%; min-height: 0; border-radius: 14px; object-fit: contain; cursor: zoom-in; -webkit-user-drag: none; background: none; }
+.dd-gal__s.dd-cut img { border-radius: 0; padding: 6px 10px 14px; box-sizing: border-box; filter: drop-shadow(0 10px 10px rgba(46,54,51,.34)); }
+/* owner, 27 Nov: the first picture is the COVER of the header, part of the page's design: it fills the whole slot beside the text (the slot is as tall as the text panel), rounded like the panels.
+   The pictures that follow it (swiping) keep their own structure, whole or cut out. */
+.dd-gal__s.dd-cover img { object-fit: cover; object-position: 32% 52%; border-radius: 18px; }
+@container dd (min-width: 640px) { .dd-gal__v { aspect-ratio: auto; flex: 1 1 auto; min-height: 300px; } }
+.dd-gal__d { height: 22px; display: flex; justify-content: center; align-items: center; }
+.dd-gal__dot { width: 7px; height: 7px; margin: 0 5px; border-radius: 50%; background: #B9B2A0; cursor: pointer; }
+.dd-gal__dot.on { background: #6E8601; }
+@container dd (max-width: 560px) { .dd-key li { grid-column: span 6; } .dd-glance > div { grid-column: span 6; } .dd-duo figure:first-child, .dd-duo figure:last-child { grid-column: span 12; } }
+@container dd (min-width: 640px) { .dd-hd__t { grid-column: 1 / 8; grid-row: 1; } .dd-ph { grid-column: 8 / -1; grid-row: 1; } }
+.dd-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 8px !important; }
+.dd-title { font-size: clamp(26px, 3.6vw, 36px); line-height: 1.12; font-weight: 300; margin: 0 0 12px; }
+.dd-std .dd-dk .dd-title__b { display: block; font-weight: 700; letter-spacing: -.01em; color: var(--olt) !important; }
+.dd-title em { font-style: normal; font-weight: 300; }
+.dd-intro { font-size: 17px; }
+.dd-rule { font-size: 15px; }
+.dd-key { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; list-style: none; margin: 0 !important; padding: 0 !important; }
+.dd-key li { grid-column: span 4; margin: 0 !important; padding: 11px 14px 11px 32px; position: relative; font-size: 15px; font-weight: 600; background: var(--latte); border-radius: 12px; display: flex; align-items: center; }
+.dd-key li::before { content: ""; position: absolute; left: 14px; top: 50%; margin-top: -4.5px; width: 9px; height: 9px; border-radius: 3px; background: var(--ol); }
+.dd-how { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--ol); border-radius: 12px; padding: 10px 14px; font-size: 15px; font-weight: 500; }
+.dd-std .dd-glance__t { font-size: 12px !important; font-weight: 600 !important; letter-spacing: .14em; text-transform: uppercase; color: var(--ol2) !important; margin: 8px 4px 0 !important; }
+.dd-glance { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; padding: 0; }
+.dd-glance > div { grid-column: span 4; background: var(--slate); border-radius: 12px; padding: 10px 14px; }
+.dd-glance dt { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; opacity: .86; }
+.dd-glance dd { margin: 2px 0 0; font-weight: 600; }
+.dd-glance small { display: block; font-weight: 400; font-size: 12.5px; line-height: 1.4; margin-top: 2px; }
+
+/* groups and topics: one menu, closed until opened; the bar colour is the group's (slate = choosing, coffee = why Botanic, olive-grey = made and delivered) */
+.dd-std .dd-grp { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--coffee) !important; margin: 20px 4px 8px !important; padding: 0 0 6px 0; border-bottom: 2px solid var(--coffee); }
+.dd-std .dd-grp .dd-bo { color: var(--ol2) !important; }
+.dd-duo { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; margin: 0 0 10px; }
+.dd-duo figure { margin: 0; border-radius: 16px; overflow: hidden; background: var(--latte); position: relative; min-height: 150px; }
+.dd-duo figure:first-child { grid-column: span 7; } .dd-duo figure:last-child { grid-column: span 5; }
+.dd-duo img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; object-fit: cover; }
+.dd-std summary { list-style: none; cursor: pointer; }
+.dd-std summary::-webkit-details-marker { display: none; }
+.dd-t { background: var(--vanilla); border: 1px solid var(--line); border-radius: 14px; margin: 0 0 8px; overflow: hidden; container: ddt / inline-size; }
+.dd-t > summary, .dd-t > .dd-sum { display: flex; align-items: center; gap: 10px 14px; padding: 13px 16px; flex-wrap: wrap; background: var(--coffee); }
+.dd-tg1 > summary, .dd-tg1 > .dd-sum { background: var(--slate); } .dd-tg2 > summary, .dd-tg2 > .dd-sum { background: var(--coffee); } .dd-tg3 > summary, .dd-tg3 > .dd-sum { background: var(--olive); }
+.dd-t > summary, .dd-t > summary *, .dd-t > .dd-sum, .dd-t > .dd-sum * { color: var(--lt) !important; }
+.dd-t > summary::after, .dd-m > summary::after { content: ""; width: 9px; height: 9px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); margin: 0 4px 0 auto; flex: none; transition: transform .18s; position: relative !important; inset: auto !important; float: none !important; display: block; }
+.dd-t[open] > summary::after, .dd-m[open] > summary::after { transform: rotate(-135deg); }
+.dd-t > summary:hover { filter: brightness(1.12); }
+.dd-t[open], .dd-st { border-color: var(--ol); }
+.dd-t[open] > summary, .dd-st > .dd-sum { box-shadow: inset 4px 0 0 var(--ol); }
+/* owner, 26 Nov: Firmness and Comfort stand open. The shop strips the open attribute of a <details> when the description is saved, so these two are plain sections (always visible, no chevron), with the same bar and body. */
+.dd-t__h { font-size: 18px; font-weight: 700; line-height: 1.25; margin: 0 !important; font-family: inherit; }
+.dd-t__s { font-size: 14px; font-weight: 400; flex: 1 1 220px; opacity: .92; }
+.dd-t__b { padding: 6px 18px 16px; }
+.dd-lead { font-size: 17px; margin-top: 10px !important; }
+.dd-std summary:focus-visible { outline: 3px solid var(--ol); outline-offset: -5px; border-radius: 12px; }
+
+/* inner menus: "learn more" */
+.dd-m { border-left: 3px solid var(--ol); background: var(--paper); border-radius: 0 12px 12px 0; margin: 12px 0; border-top: 1px solid var(--line); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.dd-m > summary, .dd-mst > .dd-m__t { display: flex; align-items: center; gap: 12px; padding: 11px 14px; font-weight: 600; font-size: 15.5px; color: var(--deep) !important; }
+.dd-std .dd-mst > .dd-m__t { margin: 0; line-height: 1.3; }
+.dd-m__b { padding: 2px 16px 12px; }
+
+/* small cards in a twelve-column grid: the number of cards decides the widths, so a row is never left half empty */
+.dd-g { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+.dd-g > * { grid-column: span 4; margin: 0; }
+.dd-n1 > * { grid-column: span 12; } .dd-n2 > * { grid-column: span 6; }
+.dd-n4 > * { grid-column: span 3; }
+.dd-n5 > * { grid-column: span 4; } .dd-n5 > :nth-child(n+4) { grid-column: span 6; }
+.dd-n7 > * { grid-column: span 3; } .dd-n7 > :nth-child(n+5) { grid-column: span 4; }
+.dd-n8 > * { grid-column: span 3; }
+.dd-g:has(> .dd-m) > * { grid-column: span 6; }
+.dd-g:has(> .dd-m) > .dd-m { margin: 0; }
+.dd-n22 { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); } .dd-n22 > * { grid-column: auto; }
+.dd-g:not([class*="dd-n"]) { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); } .dd-g:not([class*="dd-n"]) > * { grid-column: auto; }
+@container ddt (max-width: 600px) { .dd-n4 > *, .dd-n7 > *, .dd-n8 > *, .dd-n6 > * { grid-column: span 6; } .dd-n3 > * { grid-column: span 12; } .dd-n5 > *, .dd-n5 > :nth-child(n+4) { grid-column: span 6; } .dd-n5 > :last-child, .dd-n7 > :last-child, .dd-n3 > :last-child:nth-child(odd) { grid-column: span 12; } .dd-g:has(> .dd-m) > * { grid-column: span 12; } }
+@container ddt (max-width: 380px) { .dd-g > * { grid-column: span 12 !important; } }
+.dd-c { background: var(--latte); border-radius: 12px; padding: 11px 14px; }
+.dd-tg2 .dd-c { background: var(--coffee); } .dd-tg2 .dd-c, .dd-tg2 .dd-c p, .dd-tg2 .dd-c span { color: var(--lt) !important; }
+.dd-tg3 .dd-c { background: var(--slate); } .dd-tg3 .dd-c, .dd-tg3 .dd-c p, .dd-tg3 .dd-c span { color: var(--lt) !important; }
+.dd-tg2 .dd-c .dd-bo, .dd-tg3 .dd-c .dd-bo { color: var(--olt) !important; }
+/* a light menu inside a dark card keeps ink text; a dark card inside that menu keeps light text */
+.dd-std .dd-m .dd-m__b p, .dd-std .dd-m .dd-m__b span, .dd-std .dd-m .dd-m__b li { color: var(--ink) !important; }
+.dd-std .dd-tg2 .dd-m .dd-c p, .dd-std .dd-tg2 .dd-m .dd-c span, .dd-std .dd-tg3 .dd-m .dd-c p, .dd-std .dd-tg3 .dd-m .dd-c span { color: var(--lt) !important; }
+.dd-c > p { margin: 0 0 .3em; font-size: 15px; }
+.dd-std .dd-c > p:first-child, .dd-std .dd-c > .k-name, .dd-std .dd-c > .k-label, .dd-std .dd-c > .k-title, .dd-std .dd-c > .k-lbl { font-weight: 700; }
+.dd-std .dd-tg1 .dd-c > .k-kg, .dd-std .dd-tg1 .dd-c > .k-st, .dd-std .dd-tg1 .dd-c > .k-val { font-weight: 600; color: var(--ol2) !important; }
+.dd-std .dd-tg1 .dd-c > .k-mark { font-weight: 700; color: var(--ol2) !important; font-size: 18px; margin: 0; }
+.dd-std .dd-tg2 .dd-c > .k-kg, .dd-std .dd-tg2 .dd-c > .k-st, .dd-std .dd-tg2 .dd-c > .k-val, .dd-std .dd-tg2 .dd-c > .k-mark, .dd-std .dd-tg3 .dd-c > .k-kg, .dd-std .dd-tg3 .dd-c > .k-st, .dd-std .dd-tg3 .dd-c > .k-val, .dd-std .dd-tg3 .dd-c > .k-mark { color: var(--olt) !important; font-weight: 600; }
+.dd-c > p:last-child { margin-bottom: 0; }
+.dd-t__b > .dd-c { margin: 12px 0; }
+
+/* cover pictures with their own words: the picture left, the words right, so four covers make two full rows */
+.dd-cv { background: var(--latte); border-radius: 12px; padding: 8px; display: grid; grid-template-columns: minmax(0, 44%) minmax(0, 1fr); gap: 12px; align-items: center; }
+.dd-cv img { width: 100%; height: 100%; min-height: 96px; aspect-ratio: 1 / 1; object-fit: cover; margin: 0; border-radius: 10px; }
+.dd-cv figcaption { font-size: 15px; line-height: 1.4; padding-right: 6px; }
+.dd-cov > * { grid-column: span 6 !important; }
+@container ddt (max-width: 520px) { .dd-cov > * { grid-column: span 12 !important; } }
+
+/* videos: only when asked for (nothing is fetched before the play button is pressed) */
+.dd-v { margin: 14px 0; }
+.dd-v__f { border-radius: 12px; overflow: hidden; background: var(--deep); aspect-ratio: 16 / 9; }
+.dd-v video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--deep); }
+.dd-v figcaption { font-size: 14px; margin-top: 6px; line-height: 1.4; color: var(--mute) !important; }
+.dd-v figcaption .k-mode { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--ol2) !important; }
+.dd-hd > .dd-film { margin: 4px 0 0; }
+.dd-film .dd-v__f { background: var(--deep); }
+.dd-film video { object-fit: contain; background: var(--deep) url('https://media.divinedunlop.com/ddtv/botanic-film-poster-80b9f7612d35f0228ee6.webp') center / cover no-repeat; }
+.dd-film figcaption { font-size: 15px; font-weight: 600; color: var(--deep) !important; margin-top: 8px; }
+
+/* the closing card: the sleeper's photo beside the closing line (photo fills its side, no empty corner) */
+.dd-end { margin: 18px 0 6px; background: var(--coffee); border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr); }
+.dd-end__p { margin: 0; background: var(--deep); position: relative; min-height: 190px; }
+.dd-end__p img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; object-fit: cover; object-position: 50% 45%; }
+.dd-end__t { padding: 20px 22px; display: flex; flex-direction: column; justify-content: center; border-left: 4px solid var(--ol); }
+.dd-end h3 { margin: 0 0 6px; }
+.dd-end p { margin: 0; }
+@container dd (min-width: 640px) { .dd-end { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
+
+/* the word Botanic: green on light surfaces (dark green), lifted green on the dark ones; written last and doubled so no other rule of the page can change it */
+.dd-std .dd-bo.dd-bo, .dd-std .dd-t__b .dd-bo.dd-bo, .dd-std .dd-grp .dd-bo.dd-bo { color: var(--bo) !important; }
+.dd-std .dd-dk .dd-bo.dd-bo, .dd-std .dd-t > summary .dd-bo.dd-bo, .dd-std .dd-t > .dd-sum .dd-bo.dd-bo, .dd-std .dd-tg2 .dd-c .dd-bo.dd-bo, .dd-std .dd-tg3 .dd-c .dd-bo.dd-bo, .dd-std .dd-tg2 .dd-m .dd-c .dd-bo.dd-bo, .dd-std .dd-tg3 .dd-m .dd-c .dd-bo.dd-bo, .dd-std .dd-end .dd-bo.dd-bo { color: var(--olt) !important; }
+.dd-std .dd-grp .dd-bo.dd-bo { color: var(--bo) !important; }
+
+/*=END=*/
+/* ECWID'S OWN SELECTORS (size, depth, firmness, covers, bag): the same ones, in the family colours, and within reach while reading */
+.product-details:has(.dd-std) .form-control { border-radius: 10px !important; }
+.product-details:has(.dd-std) .details-product-option__title { font-weight: 700; color: #2E3633; }
+@media (min-width: 900px) {
+  .product-details:has(.dd-std) .product-details__sidebar { position: sticky; top: 16px; }
+}
+.product-details:has(.dd-std) .details-product-option__title, .product-details:has(.dd-std) .details-product-purchase__place, .product-details:has(.dd-std) .details-product-price__value { color: #2E3633 !important; font-family: Chillax, "Helvetica Neue", Arial, sans-serif !important; }
+.product-details:has(.dd-std) .form-control--select { border-radius: 12px !important; }
+/* the purchase button: green "Add to Bag" ... */
+.product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button { background: #6E8601 !important; border: 1.5px solid #6E8601 !important; color: #FFFFFF !important; border-radius: 12px !important; font-family: Chillax, "Helvetica Neue", Arial, sans-serif !important; font-weight: 700 !important; }
+.product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button:hover { background: #566901 !important; border-color: #566901 !important; }
+/* ... and once the mattress is in the bag the shop swaps it for "Add More" (outlined) and "Go to Checkout" (coffee, white text): another colour, so the new function is plain */
+.product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button { background: #434239 !important; border: 1.5px solid #434239 !important; color: #FFFFFF !important; border-radius: 12px !important; font-family: Chillax, "Helvetica Neue", Arial, sans-serif !important; font-weight: 700 !important; }
+.product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button:hover { background: #2E3633 !important; border-color: #2E3633 !important; }
+.product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button { background: #FFFFFF !important; border: 1.5px solid #434239 !important; color: #434239 !important; border-radius: 12px !important; font-family: Chillax, "Helvetica Neue", Arial, sans-serif !important; font-weight: 700 !important; }
+.product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button:hover { background: #DDD6C4 !important; }
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button .form-control__button-text, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button .svg-icon,
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button .form-control__button-text, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button .svg-icon { color: #FFFFFF !important; fill: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button .form-control__button-text, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button .svg-icon { color: #434239 !important; fill: #434239 !important; -webkit-text-fill-color: #434239 !important; }
+/* the shop turns the button's text black or white by its own filter: the filter is switched off on all three buttons */
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button *, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-to-bag .form-control__button,
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button *, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__checkout .form-control__button,
+.ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button *, .ec-size .ec-store .product-details:has(.dd-std) .details-product-purchase__add-more .form-control__button { filter: none !important; mix-blend-mode: normal !important; }
+/* owner, 26 Nov: the shop's own product title (here a draft name) is not shown above the module; it stays in the page for readers of the code and search engines. The module's header carries the name. */
+/* owner, 26 Nov: the shop's own picture block is not shown where this module stands (the module's gallery and the television's own pictures replace it; the main picture stays in the page for the category tile, the shop's data and search engines) */
+.product-details:has(.dd-std) .product-details__gallery { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; clip-path: inset(50%) !important; opacity: 0 !important; pointer-events: none !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }
+.product-details:has(.dd-std) .product-details__product-title { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; clip-path: inset(50%) !important; white-space: nowrap !important; margin: 0 !important; padding: 0 !important; border: 0 !important; opacity: 0 !important; pointer-events: none !important; }
+html.ddtv-on #bp-top .dd-how { display: none !important; }

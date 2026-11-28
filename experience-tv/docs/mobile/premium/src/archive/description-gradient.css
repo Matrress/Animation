@@ -1,0 +1,71 @@
+/* Turquoise graphite gradient, WHITE text (graphite-gradient preview ONLY). A layer over description-light.css and description-turquoise.css.
+   Rules: every piece of text is pure #FFFFFF, no grey shades. The ground is one long gradient from turquoise graphite
+   (top) to deeper graphite (bottom), so the text always sits on a dark ground (white on the lightest stop is about 6.5:1).
+   Turquoise is used for lines, edges, glints, the leaf and the button fill, never for text on the light side.
+   No green anywhere. */
+#bp-top, #productDescription, #desc-slot, #desc-slot .product-details__product-description {
+  background: linear-gradient(180deg, #1A5F6E 0%, #163F4B 24%, #0F2A33 58%, #0A1E24 100%) !important;
+}
+#bp-top { color: #FFFFFF; }
+#bp-top .b-sec, #bp-top .b-sec--lift, #bp-top .b-hero, #bp-top .p-glance, #bp-top .b-hero__grid { background: transparent !important; }
+/* all text: pure white */
+#bp-top, #bp-top p, #bp-top li, #bp-top span, #bp-top div, #bp-top h1, #bp-top h2, #bp-top h3, #bp-top h4,
+#bp-top b, #bp-top strong, #bp-top em, #bp-top label, #bp-top summary, #bp-top small, #bp-top figcaption, #bp-top td, #bp-top th, #bp-top button {
+  color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important;
+}
+#bp-top a { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; text-decoration: underline; text-decoration-color: #50CDFD; text-underline-offset: 3px; }
+#bp-top svg, #bp-top svg * { color: #50CDFD; }
+/* the leaf ornament (turquoise, the only ornament colour) */
+#bp-top .b-sh__t::before, #bp-top .p-feature .b-sh__t::before { background: linear-gradient(135deg, #9FE8FA, #3FB8D6); }
+/* headings: a little more air and weight, still white */
+#bp-top .b-sh__t, #bp-top h2, #bp-top h3 { font-weight: 700; letter-spacing: -.012em; }
+/* buttons: turquoise graphite fill with white text (about 6.5:1); outline in white */
+#bp-top .b-btn-p, #bp-top .b-btn-hero-p, #bp-top .b-main-video-actions .b-btn-p {
+  background: linear-gradient(135deg, #1B6676, #163F4B) !important; border: 1px solid #50CDFD !important; color: #FFFFFF !important;
+}
+#bp-top .b-btn-p:hover, #bp-top .b-main-video-actions .b-btn-p:hover { background: linear-gradient(135deg, #12505E, #0F2A33) !important; color: #FFFFFF !important; }
+#bp-top .b-btn-o, #bp-top .b-main-video-actions .b-btn-o { background: transparent !important; border: 1px solid rgba(255, 255, 255, .6) !important; color: #FFFFFF !important; }
+#bp-top .b-btn-o:hover { background: rgba(80, 205, 253, .14) !important; border-color: #50CDFD !important; }
+/* hero: no card around the video (the owner's preference); the frame stays as media with a turquoise edge */
+#bp-top .b-main-video-card { background: transparent !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; }
+#bp-top .p-video { background: linear-gradient(135deg, #173842, #0A1E24) !important; border: 1px solid rgba(80, 205, 253, .35); border-radius: 14px; }
+#bp-top .p-video .p-cap, #bp-top .b-main-video-card .b-mtv__head { color: #FFFFFF !important; }
+/* six key facts: quiet glass tiles with a turquoise edge */
+#bp-top .p-glance .b-hero-bar__item { background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .03)); border: 1px solid rgba(80, 205, 253, .32); box-shadow: none; }
+#bp-top .p-glance .b-hero-bar__item, #bp-top .p-glance .b-hero-bar__item * { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+#bp-top .p-glance svg { stroke: #50CDFD; }
+/* seven zones: the gradient the owner singled out (turquoise to deeper graphite) with a corner glint */
+#bp-top .p-feature { position: relative; overflow: hidden; margin: 26px -20px 0; padding: 26px 20px 22px; border: 0; border-top: 1px solid rgba(80, 205, 253, .45);
+  background: radial-gradient(80% 55% at 100% 0%, rgba(80, 205, 253, .18), transparent 62%), linear-gradient(175deg, #173842 0%, #12303A 100%); }
+#bp-top .p-feature::after { background: linear-gradient(135deg, rgba(80, 205, 253, .16), rgba(80, 205, 253, .02)); }
+#bp-top .p-feature .b-zone-pill { background: rgba(255, 255, 255, .05); border: 1px solid rgba(80, 205, 253, .32); }
+#bp-top .p-feature .b-zone-pill__num { color: #FFFFFF !important; }
+#bp-top .p-zs { background: #0F2228; border: 1.5px solid rgba(80, 205, 253, .45); }
+#bp-top .p-zlegend { color: #FFFFFF !important; }
+/* decision cards, notices and the who-for summary: translucent white glass on the dark ground */
+#bp-top .b-fc, #bp-top .b-hcol, #bp-top .b-fdecision__item, #bp-top .b-wc, #bp-top .b-sum--who {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .03)) !important; border: 1px solid rgba(80, 205, 253, .3) !important; box-shadow: none !important;
+}
+#bp-top .b-fconf__notice { background: rgba(80, 205, 253, .1) !important; border-left: 3px solid #50CDFD !important; color: #FFFFFF !important; }
+#bp-top .b-fdecision__mark { background: #1B6676 !important; color: #FFFFFF !important; border: 1px solid #50CDFD !important; }
+#bp-top .b-wc--gift { background: linear-gradient(160deg, #1B6676, #0F2A33) !important; border: 1px solid rgba(80, 205, 253, .4) !important; }
+/* proof row: the deepest graphite, to hold white text firmly */
+#bp-top .p-proof { margin: 30px -20px 0; padding: 28px 20px 24px; border: 0; border-top: 1px solid rgba(80, 205, 253, .4);
+  background: radial-gradient(100% 80% at 0% 0%, rgba(80, 205, 253, .12), transparent 60%), linear-gradient(170deg, #12303A, #0A1E24); }
+#bp-top .p-row .b-mtv { background: rgba(255, 255, 255, .05); border: 1px solid rgba(80, 205, 253, .3); border-radius: var(--rl); padding: 10px; }
+/* accordions: turquoise hairlines, white text and markers */
+#bp-top .p-note { border-top: 1px solid rgba(80, 205, 253, .28); }
+#bp-top .p-note > summary::after, #bp-top .p-note summary .sum-arr, #bp-top summary .sum-arr { color: #50CDFD !important; }
+/* closing call to action: deepest graphite with a turquoise hairline */
+#bp-top .b-cta { background: linear-gradient(135deg, #12303A 0%, #0A1E24 100%) !important; border: 1px solid rgba(80, 205, 253, .35) !important; }
+#bp-top .b-cta .b-btn-p { background: linear-gradient(135deg, #1B6676, #163F4B) !important; color: #FFFFFF !important; }
+#bp-top .b-cta .b-btn-p:hover { background: linear-gradient(135deg, #12505E, #0F2A33) !important; color: #FFFFFF !important; }
+#bp-top .b-cta .b-btn-o { border-color: rgba(255, 255, 255, .6) !important; color: #FFFFFF !important; }
+/* cover micro-slider frame and back-to-top */
+#bp-top .b-cover-micro-wrap { background: rgba(255, 255, 255, .04) !important; border: 1px solid rgba(80, 205, 253, .32) !important; }
+#bp-top .b-floating-top, .b-floating-top { background: #1B6676 !important; color: #FFFFFF !important; border: 1px solid #50CDFD !important; }
+/* final pass: the labels and the opened zone accordion, which earlier layers coloured */
+#bp-top .b-main-video-actions .b-btn-o span, #bp-top .b-btn-o span, #bp-top .b-cta .b-btn-o span, #bp-top .b-btn span { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+#bp-top .p-feature h2, #bp-top .p-feature h3, #bp-top .p-feature h4, #bp-top .p-feature p, #bp-top .p-feature li, #bp-top .p-feature summary, #bp-top .p-feature summary *, #bp-top .p-feature strong, #bp-top .p-feature b, #bp-top .p-feature div, #bp-top .p-feature span, #bp-top .p-feature .sum-left, #bp-top .p-feature .p-n-title, #bp-top .p-feature .p-n-sub, #bp-top .p-feature .p-body { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; }
+#bp-top .p-feature .b-sh__t, #bp-top .p-feature .b-sh__s { color: #FFFFFF !important; }
+#bp-top .p-feature summary .sum-arr, #bp-top .p-feature .p-note > summary::after { color: #50CDFD !important; }
