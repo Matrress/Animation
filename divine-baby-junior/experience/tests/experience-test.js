@@ -23,14 +23,14 @@ const q = (code) => '(' + SR + ').' + code;
 
   /* ---------- explore: the topics, as organised from the Botanic Experience ---------- */
   const topics = await ev(p, '[...' + q('querySelectorAll("[data-topic]")') + '].map(b => b.textContent.trim())');
-  ok(topics.join() === 'Discover,Origin,Healthy,Comfort,Benefits,Ventilation,Hygiene,Cover,Firmness,Care & Fit', 'Explore has the ten topics, in this order: ' + topics.join(' / '));
-  ok(topics.indexOf('Healthy') > -1 && !topics.some(t => /Deliver|7-zone|Seven|Size|Height|Depth/i.test(t)), 'a Healthy topic is there; no Delivery, no 7-zone, and no Size or Depth topic in Explore (those are in Select & Buy)');
+  ok(topics.join() === 'Discover,Origin,Healthy,Comfort,Firmness,Ventilation,Hygiene,Cover,Benefits,Delivery,Care & Fit', 'Explore has the eleven topics, in this order: ' + topics.join(' / '));
+  ok(topics.indexOf('Healthy') > -1 && !topics.some(t => /7-zone|Seven|Size|Height|Depth/i.test(t)), 'a Healthy topic and a Delivery topic are there; no 7-zone, and no Size or Depth topic in Explore (those are in Select & Buy)');
   ok(await ev(p, q('querySelectorAll("[data-part]")') + '.length === 4'), 'Discover has 4 parts (A to D)');
   ok(await ev(p, q('querySelector("video[data-vkey=origin]")') + ' && ' + q('querySelector("video[data-vkey=origin]")') + '.getAttribute("data-end") === "13.2"'), 'the origin film (latex falls, gathers, pours) is at the start of Explore, trimmed to 13.2 s');
   await click(p, '.act [data-goto]'); await p.waitForTimeout(200);
   ok(await ev(p, q('querySelector(".kid.on")') + '.textContent.indexOf("At A Glance") > -1'), 'Next moves to the next part (At A Glance)');
   const sections = {};
-  for (const t of ['origin', 'healthy', 'comfort', 'benefits', 'ventilation', 'hygiene', 'cover', 'firmness', 'care']) {
+  for (const t of ['origin', 'healthy', 'comfort', 'firmness', 'ventilation', 'hygiene', 'cover', 'benefits', 'delivery', 'care']) {
     await click(p, '[data-topic="' + t + '"]'); await p.waitForTimeout(120);
     sections[t] = await ev(p, '({n:' + q('querySelectorAll("[data-part]")') + '.length, imgs:' + q('querySelectorAll(".answer img")') + '.length, vid:[...' + q('querySelectorAll("video[data-vkey]")') + '].map(v=>v.dataset.vkey).join(), txt:' + q('querySelector(".answer")') + '.textContent.length})');
   }
@@ -52,7 +52,7 @@ const q = (code) => '(' + SR + ').' + code;
   await click(p, '[data-play="vent"]'); await p.waitForTimeout(200);
   ok(await ev(p, '!' + q('getElementById("vmodal")') + '.hidden && /airflow-ventilation/.test(' + q('getElementById("vfull")') + '.getAttribute("src"))'), 'the film opens large');
   await click(p, '.vclose'); ok(await ev(p, q('getElementById("vmodal")') + '.hidden && !' + q('getElementById("vfull")') + '.getAttribute("src")'), 'the film closes and stops');
-  await click(p, '#allbtn'); ok(await ev(p, '!' + q('getElementById("all")') + '.hidden && ' + q('querySelectorAll(".allc button")') + '.length >= 25'), 'All topics lists every part');
+  await click(p, '#allbtn'); ok(await ev(p, '!' + q('getElementById("all")') + '.hidden && ' + q('querySelectorAll(".allc button")') + '.length >= 35'), 'All topics lists every part');
   await p.evaluate('(' + SR + ').querySelector(".ddx").dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
   ok(await ev(p, q('getElementById("all")') + '.hidden'), 'Escape closes All topics');
   const shown = await ev(p, q('textContent'));
@@ -60,10 +60,10 @@ const q = (code) => '(' + SR + ').' + code;
   ok(!/\bHeight\b/.test(shown), 'the word Height is not used: it is Depth');
   const tvJs = fs.readFileSync(path.resolve(__dirname, '../dist/' + fs.readdirSync(path.resolve(__dirname, '../dist')).find(f => /^baby-tv-/.test(f))), 'utf8');
   const css = (/var TV_CSS = ("(?:[^"\\]|\\.)*");/.exec(tvJs) || [])[1]; const hex = new Set(((css ? JSON.parse(css) : '').match(/#[0-9A-Fa-f]{3,8}\b/g) || []).map(h => h.toUpperCase().replace('#', '')));
-  const allowed = new Set(['003A68', '006591', 'B2E3FB', '91E8F1', 'E4E8F0', 'FFFFFF', 'FFF']);
-  ok([...hex].every(h => allowed.has(h)), 'palette guard: only the Bio Comfort colours in the television CSS ' + [...hex].filter(h => !allowed.has(h)).join(','));
+  const allowed = new Set(['003A68', '006591', 'B2E3FB', '91E8F1', 'E4E8F0', 'FFFFFF', 'FFF', 'F8F2FC', '009289']);
+  ok([...hex].every(h => allowed.has(h)), 'palette guard: only the Bio Comfort colours, the soft lilac-pink (F8F2FC) and the leaf green (009289) in the television CSS ' + [...hex].filter(h => !allowed.has(h)).join(','));
   const content = JSON.stringify(JSON.parse(/var DATA = (\{.*?\});\nvar /s.exec(tvJs)[1]).chapters);
-  ok(!/coir|coconut/i.test(tvJs) && !/organic|hypoallergenic|waterproof|washable|medically|newborn|SIDS|clinically|certified|safest|healthiest|best for (your )?baby|anti-?bacterial|dust ?mite/i.test(content), 'no coir, organic, hypoallergenic, waterproof, certified, superlative or medical wording in the content');
+  ok(!/coir|coconut/i.test(tvJs) && !/organic|hypoallergenic|waterproof|medically|newborn|SIDS|clinically|certified|safest|healthiest|best for (your )?baby|anti-?bacterial|dust ?mite/i.test(content), 'no coir, organic, hypoallergenic, waterproof, certified, superlative or medical wording in the content');
 
   /* ---------- select & buy: only Size and Depth ---------- */
   await click(p, '#galbtn'); await p.waitForTimeout(200);

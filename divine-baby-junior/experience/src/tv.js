@@ -17,6 +17,7 @@ function ico(name) {
   };
   return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (p[name] || '') + '</svg>';
 }
+function bleaf() { return '<span class="bleaf" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24"><path d="M4 20C4 10 10 4 20 4c0 10-6 16-16 16z" fill="currentColor"/><path d="M5 19C9 14 12 11 16 8" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg></span>'; }
 function leaf() { return '<svg class="lf" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20C4 10 10 4 20 4c0 10-6 16-16 16z" fill="currentColor"/></svg>'; }
 
 /* a mattress drawn in proportion, in isometric view: width, length and depth in cm */
@@ -143,7 +144,7 @@ function pricesMatrixHtml() {
 function panelHtml(ch, p) {
   var k = p.kind;
   if (k === 'hero') {
-    return '<div class="hero2"><div class="hero2t"><p class="eyebrow">100% Natural · Dunlop Technology · Made to order</p><h3 class="h3x">Natural latex, made for the first beds</h3><p class="lead">' + esc(DATA.product.intro) + '</p></div>' + vcardHtml('origin') + '</div>' +
+    return '<div class="hero2"><div class="hero2t"><p class="eyebrow">' + leaf() + '100% Natural · Dunlop Technology · Made to order</p><h3 class="h3x">Made for your baby\'s first bed, and the ones after it</h3><p class="lead">' + esc(DATA.product.intro) + '</p></div>' + vcardHtml('origin') + '</div>' +
       '<ul class="keys">' + DATA.keyFeatures.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul>';
   }
   if (k === 'facts') {
@@ -195,17 +196,17 @@ function railHtml(U) {
 }
 function buyStageHtml(U) {
   var idx = { size: 1, depth: 2, review: 3, prices: 0 }[U.step];
-  var head = function (q, sub) { return '<div class="banner"><p class="crumb">' + leaf() + 'Select here · ' + (idx ? 'Step ' + idx + ' of 3 · ' : '') + { size: 'Size', depth: 'Depth', review: 'Review', prices: 'All prices' }[U.step] + '</p><h3 class="h3q">' + q + '</h3><p class="sub">' + sub + '</p></div>'; };
+  var head = function (q, sub) { return '<div class="banner">' + bleaf() + '<p class="crumb">' + leaf() + 'Select here · ' + (idx ? 'Step ' + idx + ' of 3 · ' : '') + { size: 'Size', depth: 'Depth', review: 'Review', prices: 'All prices' }[U.step] + '</p><h3 class="h3q">' + q + '</h3><p class="sub">' + sub + '</p></div>'; };
   var body = '', act = '';
   if (U.step === 'size') {
-    body = head('How big is the cot or bed?', 'Choose your size. Every size is shown in centimetres and in inches.');
+    body = head('What size is your baby\'s cot or bed?', 'Choose your size. Every size is shown in centimetres and in inches.');
     body += '<div class="pick">' + DATA.groups.map(function (g) {
       return '<div class="grp"><p class="lab2">' + esc(g.name) + ' · ' + esc(g.sub) + '</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(sizeCardHtml).join('') + '</div></div>'; }).join('') + '</div>' +
       '<p class="need">Cot and bed sizes differ between manufacturers: measure the <b>inside</b> of the frame.</p>';
     act = '<button type="button" class="btn" data-next="depth"' + (X.S.size ? '' : ' disabled') + '>Continue to Depth</button>';
   } else if (U.step === 'depth') {
     var z = X.S.size && sizeByKey(X.S.size);
-    body = head('How deep should it be?', 'Two depths. Length and width stay the same: check the maximum mattress height your cot or bed allows.');
+    body = head('How deep should the mattress be?', 'Two depths. Length and width stay the same: check the maximum mattress depth your cot or bed allows.');
     body += '<div class="pick"><div class="hcards">' + DATA.heights.map(function (h) {
       var p = z ? priceOf(z, h) : '', on = X.S.height === String(h.cm), av = shopHas('height', String(h.cm));
       return '<button type="button" class="card hc' + (on ? ' on' : '') + '" data-pick-height="' + h.cm + '" aria-pressed="' + (on ? 'true' : 'false') + '"' + (av === false ? ' disabled' : '') + '><span class="bar" style="--h:' + h.cm + '"></span><span class="cm">' + h.cm + ' cm</span><span class="in">' + inch(h.cm) + ' in</span>' + (p ? '<span class="pr">' + esc(p) + '</span>' : '') + '<span class="dsc">' + esc(h.desc) + '</span></button>'; }).join('') + '</div></div>';
@@ -228,7 +229,7 @@ function exploreStageHtml(U) {
   all.forEach(function (x, i) { if (x.c.id === ch.id && x.p.id === p.id) { at = i; } });
   var nx = all[at + 1];
   var crumb = '<p class="crumb">' + leaf() + esc(ch.label) + ' <span class="ltr s">' + String.fromCharCode(65 + (ch.panels.indexOf(p))) + '</span> ' + esc(p.label) + '</p>';
-  var banner = '<div class="banner"><h3 class="h3q">' + esc(p.title || ch.label) + '</h3><p class="sub">' + esc(ch.head) + '</p></div>';
+  var banner = '<div class="banner">' + bleaf() + '<h3 class="h3q">' + esc(p.title || ch.label) + '</h3><p class="sub">' + esc(ch.head) + '</p></div>';
   var body = (p.kind === 'hero' ? '' : banner) + '<div class="panel" data-kind="' + p.kind + '">' + panelHtml(ch, p) + '</div>';
   return { head: crumb, body: body, act: nx ? '<button type="button" class="btn dark" data-goto="' + nx.c.id + ':' + nx.i + '">Next: ' + esc(nx.p.label) + '</button>' : '<button type="button" class="btn" data-open-buy="size">Select &amp; Buy</button>' };
 }

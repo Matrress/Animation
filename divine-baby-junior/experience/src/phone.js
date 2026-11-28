@@ -21,7 +21,7 @@ var PSTEPS = ['size', 'depth', 'review'];
 function phSheetHtml(U) {
   var idx = PSTEPS.indexOf(U.step) + 1, body = '', foot = '';
   if (U.step === 'size') {
-    body = '<h2 class="q">How big is the cot or bed?</h2><p class="sub">Choose your size. Every size in centimetres and in inches.</p>' + DATA.groups.map(function (g) {
+    body = '<h2 class="q">What size is your baby&#39;s cot or bed?</h2><p class="sub">Choose your size. Every size in centimetres and in inches.</p>' + DATA.groups.map(function (g) {
       return '<p class="lab2">' + esc(g.name) + ' · ' + esc(g.sub) + '</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(function (z) {
         var on = X.S.size === sizeKey(z), av = shopHas('size', sizeKey(z));
         return '<button type="button" class="card sz' + (on ? ' on' : '') + '" data-pick-size="' + sizeKey(z) + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + z.w + ' × ' + z.l + ' cm</span><span class="in">' + inch(z.w) + ' × ' + inch(z.l) + ' in</span></button>'; }).join('') + '</div>'; }).join('');
@@ -29,7 +29,7 @@ function phSheetHtml(U) {
     foot = '<button type="button" class="btn" data-go="depth"' + (X.S.size ? '' : ' disabled') + '>Continue to Depth</button>';
   } else if (U.step === 'depth') {
     var z = X.S.size && sizeByKey(X.S.size);
-    body = '<h2 class="q">How deep should it be?</h2><p class="sub">Two depths. Length and width stay the same: check the maximum mattress depth your cot or bed allows.</p><div class="cards">' + DATA.heights.map(function (h) {
+    body = '<h2 class="q">How deep should the mattress be?</h2><p class="sub">Two depths. Length and width stay the same: check the maximum mattress depth your cot or bed allows.</p><div class="cards">' + DATA.heights.map(function (h) {
       var p = z ? priceOf(z, h) : '', on = X.S.height === String(h.cm), av = shopHas('height', String(h.cm));
       return '<button type="button" class="card hc' + (on ? ' on' : '') + '" data-pick-height="' + h.cm + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + h.cm + ' cm</span><span class="in">' + inch(h.cm) + ' in</span>' + (p ? '<span class="pr">' + esc(p) + '</span>' : '') + '<span class="dsc">' + esc(h.desc) + '</span></button>'; }).join('') + '</div>';
     foot = '<button type="button" class="btn ghost" data-go="size">Back</button><button type="button" class="btn" data-go="review"' + (X.S.height ? '' : ' disabled') + '>Review</button>';
