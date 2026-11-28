@@ -25,7 +25,7 @@ def inline_paths(s):
             return rel
         mt = 'image/svg+xml' if p.suffix == '.svg' else 'image/webp'
         return f'data:{mt};base64,{b64(p)}'
-    return re.sub(r'\.\./\.\./(?:release|src)/[A-Za-z0-9_./-]+\.(?:webp|svg)', rep, s)
+    return re.sub(r'\.\./\.\./(?:release|src|experience/assets)/[A-Za-z0-9_./-]+\.(?:webp|svg)', rep, s)
 
 
 f400 = 'data:font/woff2;base64,' + b64(out / 'chillax-400.woff2')
