@@ -1,1 +1,1 @@
-(function(d,u){if(window.__dbsLoader)return;window.__dbsLoader=1;var s=d.createElement('script');s.src=u;s.defer=true;d.head.appendChild(s)})(document,'https://cdn.jsdelivr.net/gh/Matrress/Animation@0000000000000000000000000000000000000000/divine-baby-junior/release/1.6.0/dbs.js');
+(function(d,u){if(window.__dbsLoader)return;window.__dbsLoader=1;var s=d.createElement('script');s.src=u;s.defer=true;d.head.appendChild(s)})(document,'https://cdn.jsdelivr.net/gh/Matrress/Animation@b6d112e6d70c248eb6d5962439b45b6d2b9b43f2/divine-baby-junior/release/1.6.0/dbs.js');

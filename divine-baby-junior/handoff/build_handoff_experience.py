@@ -1,5 +1,5 @@
-"""Handoff page for the Baby & Junior Experience 2.5.0 (the Botanic TV scheme): what to upload, what to paste, how to test.
-Reuses the style and the copy script of the 1.1.0 handoff page. Output: handoff/ecwid-experience-2.5.0.html"""
+"""Handoff page for the Baby & Junior Experience 2.6.0 (the Botanic TV scheme): what to upload, what to paste, how to test.
+Reuses the style and the copy script of the 1.1.0 handoff page. Output: handoff/ecwid-experience-2.6.0.html"""
 import base64, html, pathlib, re
 root = pathlib.Path(__file__).resolve().parent.parent
 old = (root / 'handoff/ecwid-code-1.1.0.html').read_text()
@@ -7,7 +7,7 @@ style = re.search(r'<style>.*?</style>', old, re.S).group(0)
 script = re.search(r'<script>.*?</script>', old, re.S).group(0)
 dist = root / 'experience/dist'
 tv = next(dist.glob('baby-tv-*.js')); ph = next(dist.glob('baby-phone-*.js'))
-desc = (root / 'ecwid/description-2.5.0.html').read_text()
+desc = (root / 'ecwid/description-2.6.0.html').read_text()
 pointer = (dist / 'pointer.html').read_text().strip()
 loader = (root / 'loader/divine-site-loader.js').read_text().strip()
 b64 = lambda p: base64.b64encode(p.read_bytes()).decode()
@@ -30,7 +30,7 @@ page = f'''<!doctype html>
 </head>
 <body>
 <main class="wrap">
-  <p class="eyebrow">Ecwid · Dunlop Baby &amp; Junior · Experience 2.5.0</p>
+  <p class="eyebrow">Ecwid · Dunlop Baby &amp; Junior · Experience 2.6.0</p>
   <h1>Схемата на Botanic TV, за бебешкия матрак</h1>
   <p class="lead">Три слоя, като при Botanic TV: телевизор (Optimised Preview), Standard Product View и телефонен слой. Опциите, цената, кошницата и касата остават на Ecwid. Нищо още не е в магазина.</p>
 
@@ -41,7 +41,7 @@ page = f'''<!doctype html>
   </div>
 
   <section class="card">
-    <div class="card-head"><h2>1 · Описание на продукта (същото като файла) · description-2.5.0</h2><button class="copy" data-target="desc">Копирай описанието</button></div>
+    <div class="card-head"><h2>1 · Описание на продукта (същото като файла) · description-2.6.0</h2><button class="copy" data-target="desc">Копирай описанието</button></div>
     <pre id="desc">{html.escape(desc)}</pre>
   </section>
 
@@ -65,6 +65,6 @@ page = f'''<!doctype html>
 </body>
 </html>
 '''
-out = root / 'handoff/ecwid-experience-2.5.0.html'
+out = root / 'handoff/ecwid-experience-2.6.0.html'
 out.write_text(page)
 print(out, len(page) // 1024, 'KB')
