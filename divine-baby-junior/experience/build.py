@@ -48,7 +48,6 @@ def build_data(local=False):
         "cot": img3("baby-asleep-in-cot"),
         "pillow": img3("baby-asleep-on-pillow"),
         "top": img3("baby-on-pillow-mattress-top-view"),
-        "depths": img3("baby-and-junior-depths"),
         "nursery": img3("baby-and-junior-depths-nursery"),
         "quilt": {"src": u("v2", "dunlop-baby-junior-cotton-cover-quilting-detail-660.webp")},
         "zip": {"src": u("v2", "dunlop-baby-junior-cotton-cover-zip-detail-340.webp")},
@@ -212,9 +211,9 @@ if __name__ == "__main__":
     harness(out)
     base_commit = sys.argv[1] if len(sys.argv) > 1 else "COMMIT"
     (dist / "loader-baby.js").write_text(LOADER % {"base": f"{CDN}{base_commit}/divine-baby-junior/experience/dist/"})
-    # the Standard Product View description (the approved look, 1.5.0) with the hidden pointer for the Experience in front of it
-    base_desc = top / "ecwid/description-1.5.0.html"
+    # the Standard Product View description (the approved look, 1.6.0) with the hidden pointer for the Experience in front of it
+    base_desc = top / "ecwid/description-1.6.0.html"
     if base_desc.exists():
-        (top / "ecwid/description-2.5.0.html").write_text(pointer + "\n" + base_desc.read_text())
+        (top / "ecwid/description-2.6.0.html").write_text(pointer + "\n" + base_desc.read_text())
     sizes = {k: (dist / v).stat().st_size for k, v in out.items()}
     print(json.dumps(out), sizes)

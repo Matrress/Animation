@@ -13,7 +13,7 @@
 
 /* ---------- tokens (same values as Bio Comfort) ---------- */
 .dbj{
-  --ink:#003A68; --ink-s:rgba(0,58,104,.92); --line:#003A68; --line-s:rgba(0,58,104,.26); --line-f:rgba(0,58,104,.10);
+  --ink:#003A68; --ink-s:rgba(0,58,104,.92); --line:#003A68; --line-s:rgba(0,58,104,.20); --line-f:rgba(0,58,104,.10);
   --pk:#F8F2FC; --lf:#009289; --sky:#B2E3FB; --sky-s:rgba(178,227,251,.55); --acc:#91E8F1; --surf:#E4E8F0; --strong:#006591; --w:#FFFFFF;
   --r-sm:10px; --r:16px; --r-lg:22px;
   font-family:"DBJChillax",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -32,18 +32,18 @@
 .dbj b,.dbj strong{font-weight:600}
 
 /* ---------- type ---------- */
-.dbj .dbj-eyebrow{display:flex;align-items:center;gap:10px;font-size:12px;line-height:1.3;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--strong);margin-bottom:10px}
+.dbj .dbj-eyebrow{display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.3;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--strong);margin-bottom:10px}
 .dbj .dbj-eyebrow::before{content:"";flex:0 0 18px;height:1px;background:var(--strong)}
 .dbj .dbj-display{font-size:36px;line-height:1.08;font-weight:400;letter-spacing:-.02em;color:var(--ink)}
 .dbj .dbj-h2{font-size:28px;line-height:1.15;font-weight:400;letter-spacing:-.015em;color:var(--ink)}
 .dbj .dbj-h3{font-size:21px;line-height:1.25;font-weight:600;color:var(--ink)}
-.dbj .dbj-lead{font-size:12px;line-height:1.5;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);margin-top:12px}
+.dbj .dbj-lead{font-size:13px;line-height:1.5;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);margin-top:12px}
 .dbj .dbj-p{font-size:16.5px;line-height:1.6;color:var(--ink-s);max-width:62ch;margin-top:14px}
 .dbj .dbj-fine{font-size:15px;line-height:1.55;color:var(--ink-s);max-width:56ch;margin-top:12px}
 .dbj .dbj-tt{font-size:16.5px;line-height:1.5;color:var(--ink-s)}
 .dbj .dbj-tt b{font-weight:600;color:var(--ink)}
-.dbj .dbj-k{font-size:12px;line-height:1.2;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong);margin-bottom:8px}
-.dbj .dbj-note{font-size:14.5px;line-height:1.45;color:var(--ink-s);margin-top:12px}
+.dbj .dbj-k{font-size:13px;line-height:1.2;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong);margin-bottom:8px}
+.dbj .dbj-note{font-size:15.5px;line-height:1.45;color:var(--ink-s);margin-top:12px}
 .dbj .dbj-logo{width:120px;height:auto;margin:20px 0 0}
 
 /* ---------- sections and the opening card ---------- */
@@ -51,7 +51,7 @@
 .dbj .dbj-card{background:var(--pk);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 18px 22px}
 .dbj .dbj-card--sky{background:var(--sky-s);border-color:var(--line-s)}
 .dbj .dbj-hero .dbj-display{margin-top:14px}
-.dbj .dbj-bar{display:block;background:var(--strong);color:#fff;border-radius:6px;padding:11px 14px;font-size:11.5px;line-height:1.45;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.dbj .dbj-bar{display:block;background:var(--strong);color:#fff;border-radius:6px;padding:11px 14px;font-size:13px;line-height:1.45;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
 .dbj .dbj-hero .dbj-eyebrow{margin-top:26px}
 
 /* strong-blue chips and facts strip */
@@ -62,8 +62,8 @@
 .dbj .dbj-strip li{padding:14px 10px;text-align:center;color:#fff;border-top:1px solid rgba(255,255,255,.2);border-left:1px solid rgba(255,255,255,.2)}
 .dbj .dbj-strip li:nth-child(-n+2){border-top:0}
 .dbj .dbj-strip li:nth-child(odd){border-left:0}
-.dbj .dbj-strip b{display:block;font-size:12px;line-height:1.4;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
-.dbj .dbj-strip span{display:block;font-size:13.5px;line-height:1.4;margin-top:2px;color:rgba(255,255,255,.85)}
+.dbj .dbj-strip b{display:block;font-size:13px;line-height:1.4;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.dbj .dbj-strip span{display:block;font-size:14.5px;line-height:1.4;margin-top:2px;color:rgba(255,255,255,.85)}
 
 /* stages: clean photos; the photo's white blends into the surface behind it (multiply) */
 .dbj .dbj-stage{position:relative;overflow:hidden;border-radius:var(--r);background:var(--surf)}
@@ -72,7 +72,7 @@
 .dbj .dbj-stage--hero img{transform:scale(1.28);transform-origin:50% 55%}
 .dbj .dbj-stage--plate{margin-top:22px;border:1px solid var(--line-s)}
 .dbj .dbj-plate-in{position:relative;transform:scale(1.4);transform-origin:50% 58%}
-.dbj .dbj-pin{position:absolute;left:var(--x);top:var(--y);width:21px;height:21px;margin:-10.5px 0 0 -10.5px;border:1.5px solid var(--ink);border-radius:50%;background:#fff;color:var(--ink);font-size:11px;font-weight:600;line-height:18px;text-align:center}
+.dbj .dbj-pin{position:absolute;left:var(--x);top:var(--y);width:21px;height:21px;margin:-10.5px 0 0 -10.5px;border:1.5px solid var(--ink);border-radius:50%;background:#fff;color:var(--ink);font-size:13px;font-weight:600;line-height:18px;text-align:center}
 .dbj .dbj-pin--1{--x:66%;--y:33%}
 .dbj .dbj-pin--2{--x:61.5%;--y:54%}
 .dbj .dbj-pin--3{--x:46%;--y:64%}
@@ -95,7 +95,7 @@
 
 /* materials */
 .dbj .dbj-dl{display:grid;gap:12px;margin-top:14px}
-.dbj .dbj-dl dt{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--strong)}
+.dbj .dbj-dl dt{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--strong)}
 .dbj .dbj-dl dd{font-size:16.5px;line-height:1.4;color:var(--ink);margin-top:2px}
 
 /* heights: a plain line drawing in proportion 10 : 14 */
@@ -105,12 +105,12 @@
 .dbj .dbj-bar2--10{--h:10}.dbj .dbj-bar2--12{--h:12}.dbj .dbj-bar2--14{--h:14}.dbj .dbj-bar2--16{--h:16}.dbj .dbj-hts--4{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .dbj .dbj-num{font-size:30px;line-height:1;font-weight:400;letter-spacing:-.025em;color:var(--ink)}
 .dbj .dbj-num span{font-size:.45em;letter-spacing:0;margin-left:4px;color:var(--ink-s)}
-.dbj .dbj-ht .dbj-tt{font-size:14px;line-height:1.4}
+.dbj .dbj-ht .dbj-tt{font-size:15px;line-height:1.4}
 
 /* sizes */
 .dbj .dbj-chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .dbj .dbj-chips li{background:#fff;border:1px solid var(--line-f);border-radius:var(--r-sm);padding:12px 12px 10px;font-size:17px;line-height:1.15;font-weight:600;color:var(--ink);white-space:nowrap}
-.dbj .dbj-chips small{display:block;font-size:13px;font-weight:400;color:var(--ink-s);margin-top:3px}
+.dbj .dbj-chips small{display:block;font-size:14px;font-weight:400;color:var(--ink-s);margin-top:3px}
 
 /* firmness: one card, one word */
 .dbj .dbj-card--sky .dbj-display{font-size:44px;line-height:1.05}
@@ -128,7 +128,7 @@
 .dbj .dbj-specs{display:grid}
 .dbj .dbj-specs div{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;padding:12px 0;border-top:1px solid var(--line-s)}
 .dbj .dbj-specs div:first-child{border-top:0;padding-top:0}
-.dbj .dbj-specs dt{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--strong)}
+.dbj .dbj-specs dt{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--strong)}
 .dbj .dbj-specs dd{font-size:16px;line-height:1.5;color:var(--ink)}
 
 .dbj .dbj-final .dbj-logo{margin-top:0}
@@ -144,15 +144,15 @@
 .dbj .dbs-panel > .dbj-tt{margin-bottom:6px}
 .dbj .dbs [hidden]{display:none}
 .dbj .dbs-group + .dbs-group{margin-top:20px}
-.dbj .dbs-gl{font-size:12px;line-height:1.3;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong);margin-bottom:10px}
-.dbj .dbs-sl{font-size:13px;font-weight:600;color:var(--ink);margin:12px 0 8px}
+.dbj .dbs-gl{font-size:13px;line-height:1.3;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong);margin-bottom:10px}
+.dbj .dbs-sl{font-size:14px;font-weight:600;color:var(--ink);margin:12px 0 8px}
 .dbj .dbs-list{display:grid;gap:8px}
 .dbj .dbs-list--2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .dbj .dbs-list--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .dbj .dbs-list li{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line-f);border-radius:var(--r-sm);padding:12px 14px}
 .dbj .dbs-cm{display:block;font-size:16.5px;line-height:1.25;font-weight:600;color:var(--ink)}
-.dbj .dbs-in{display:block;font-size:13.5px;line-height:1.3;color:var(--ink-s);margin-top:2px}
-.dbj .dbs-sub{display:block;font-size:13.5px;line-height:1.3;color:var(--ink-s);margin-top:2px}
+.dbj .dbs-in{display:block;font-size:14.5px;line-height:1.3;color:var(--ink-s);margin-top:2px}
+.dbj .dbs-sub{display:block;font-size:14.5px;line-height:1.3;color:var(--ink-s);margin-top:2px}
 .dbj .dbs-fixed{font-size:15px;line-height:1.5;color:var(--ink-s);margin-top:18px}
 .dbj .dbs-fixed b{color:var(--ink);font-weight:600}
 .dbj .dbs-head,.dbj .dbs-stage-wrap,.dbj .dbs-sum{display:none}
@@ -166,7 +166,7 @@
 .dbj .dbs--on .dbs-pbody .dbj-bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
 .dbj .dbs--on .dbs-pbody .dbj-tile--one{grid-column:span 2}
 .dbj .dbs-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.dbj .dbs-tab{appearance:none;border:1px solid var(--line-s);background:#fff;color:var(--ink);font:inherit;font-size:13.5px;font-weight:600;line-height:1;padding:9px 13px;min-height:36px;border-radius:999px;cursor:pointer;transition:background-color .2s ease,border-color .2s ease,color .2s ease}
+.dbj .dbs-tab{appearance:none;border:1px solid var(--line-s);background:#fff;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;line-height:1;padding:9px 13px;min-height:36px;border-radius:999px;cursor:pointer;transition:background-color .2s ease,border-color .2s ease,color .2s ease}
 .dbj .dbs-tab:hover{border-color:var(--ink)}
 .dbj .dbs-tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
 .dbj .dbs-tab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
@@ -176,9 +176,9 @@
 .dbj .dbs--on .dbs-sl{display:none}
 .dbj .dbs--on .dbs-list li{background:none;border:0;padding:0;display:block}
 .dbj .dbs-head{align-items:center;justify-content:space-between;gap:12px}
-.dbj .dbs-ht{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong)}
+.dbj .dbs-ht{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong)}
 .dbj .dbs-units{display:inline-flex;gap:2px;background:#fff;border:1px solid var(--line-s);border-radius:999px;padding:3px}
-.dbj .dbs-u{appearance:none;border:0;background:none;color:var(--ink);font:inherit;font-size:13.5px;font-weight:600;line-height:1;padding:9px 14px;border-radius:999px;cursor:pointer;min-height:36px}
+.dbj .dbs-u{appearance:none;border:0;background:none;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;line-height:1;padding:9px 14px;border-radius:999px;cursor:pointer;min-height:36px}
 .dbj .dbs-u[aria-checked="true"]{background:var(--strong);color:#fff}
 
 /* radio buttons */
@@ -195,11 +195,11 @@
 
 /* inches first: swap the two lines everywhere */
 .dbj .dbs[data-unit="in"] .dbs-btn .dbs-in,.dbj .dbs[data-unit="in"] .dbs-lab .dbs-in{order:1;font-size:16.5px;font-weight:600;color:var(--ink);margin:0}
-.dbj .dbs[data-unit="in"] .dbs-btn .dbs-cm,.dbj .dbs[data-unit="in"] .dbs-lab .dbs-cm{order:2;font-size:13.5px;font-weight:400;color:var(--ink-s);margin-top:2px}
+.dbj .dbs[data-unit="in"] .dbs-btn .dbs-cm,.dbj .dbs[data-unit="in"] .dbs-lab .dbs-cm{order:2;font-size:14.5px;font-weight:400;color:var(--ink-s);margin-top:2px}
 .dbj .dbs[data-unit="in"] .dbs-btn[aria-checked="true"] .dbs-in{color:#fff}
 .dbj .dbs[data-unit="in"] .dbs-btn[aria-checked="true"] .dbs-cm{color:rgba(255,255,255,.88)}
-.dbj .dbs[data-unit="in"] .dbs-lab .dbs-in{font-size:13px}
-.dbj .dbs[data-unit="in"] .dbs-lab .dbs-cm{font-size:11.5px}
+.dbj .dbs[data-unit="in"] .dbs-lab .dbs-in{font-size:14px}
+.dbj .dbs[data-unit="in"] .dbs-lab .dbs-cm{font-size:13px}
 
 /* the drawing */
 .dbj .dbs-stage{position:relative;aspect-ratio:640 / 380;background:#fff;border:1px solid var(--line-f);border-radius:var(--r);overflow:hidden}
@@ -211,17 +211,17 @@
 .dbj .dbs-ghost{fill:none;stroke:var(--ink);stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:5 5}
 .dbj .dbs-dim{fill:none;stroke:var(--ink);stroke-opacity:.45;stroke-width:1}
 .dbj .dbs-lab{position:absolute;display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-50%);background:#fff;border:1px solid var(--line-s);border-radius:8px;padding:3px 8px;text-align:center;white-space:nowrap;transition:opacity .3s ease}
-.dbj .dbs-lab .dbs-cm{font-size:13px;line-height:1.2;font-weight:600;color:var(--ink)}
-.dbj .dbs-lab .dbs-in{font-size:11.5px;line-height:1.2;color:var(--ink-s);margin:0}
+.dbj .dbs-lab .dbs-cm{font-size:14px;line-height:1.2;font-weight:600;color:var(--ink)}
+.dbj .dbs-lab .dbs-in{font-size:13px;line-height:1.2;color:var(--ink-s);margin:0}
 .dbj .dbs[data-pending="true"] .dbs-svg,.dbj .dbs[data-pending="true"] .dbs-lab{opacity:.45}
-.dbj .dbs-leg{font-size:13px;line-height:1.45;color:var(--ink-s);margin-top:8px}
+.dbj .dbs-leg{font-size:14px;line-height:1.45;color:var(--ink-s);margin-top:8px}
 
 /* summary */
 .dbj .dbs-sum{background:#fff;border:1px solid var(--line-s);border-radius:var(--r);padding:16px 18px}
-.dbj .dbs-sk{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong);margin-bottom:6px}
+.dbj .dbs-sk{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong);margin-bottom:6px}
 .dbj .dbs-sv{font-size:18px;line-height:1.35;font-weight:600;color:var(--ink)}
-.dbj .dbs-sv2{font-size:14.5px;line-height:1.4;color:var(--ink-s);margin-top:2px}
-.dbj .dbs-st{font-size:14px;line-height:1.45;color:var(--ink-s);margin-top:10px}
+.dbj .dbs-sv2{font-size:15.5px;line-height:1.4;color:var(--ink-s);margin-top:2px}
+.dbj .dbs-st{font-size:15px;line-height:1.45;color:var(--ink-s);margin-top:10px}
 .dbj .dbs-st[data-state="ok"]{color:var(--ink);font-weight:600}
 .dbj .dbs-st[data-state="ok"]::before{content:"\2713\00a0";color:var(--strong)}
 .dbj .dbs-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
@@ -229,7 +229,7 @@
 .dbj .dbs-row[data-has-price="false"] .dbs-price{display:none}
 .dbj .dbs-cta{appearance:none;border:0;background:var(--strong);color:#fff;font:inherit;font-size:15.5px;font-weight:600;border-radius:var(--r-sm);padding:13px 20px;min-height:48px;cursor:pointer;margin-left:auto}
 .dbj .dbs-cta:hover{background:var(--ink)}
-.dbj .dbs-see{appearance:none;display:inline-flex;align-items:center;gap:8px;justify-self:start;border:1px solid var(--line-s);background:#fff;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;line-height:1;padding:11px 14px;min-height:44px;border-radius:999px;cursor:pointer}
+.dbj .dbs-see{appearance:none;display:inline-flex;align-items:center;gap:8px;justify-self:start;border:1px solid var(--line-s);background:#fff;color:var(--ink);font:inherit;font-size:15.5px;font-weight:600;line-height:1;padding:11px 14px;min-height:44px;border-radius:999px;cursor:pointer}
 .dbj .dbs-see::after{content:"";width:7px;height:7px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg);margin-top:-3px}
 .dbj .dbs-see[hidden]{display:none}
 
@@ -252,7 +252,7 @@
 .dbj .dbj-car__s--5{--p:28%;--k:2.1;--oy:68%}
 .dbj .dbj-car__s--6{--p:50%;--k:1;--oy:50%}
 .dbj .dbj-car__s--7 img,.dbj .dbj-car__s--8 img{object-fit:contain!important;transform:none!important;background:var(--pk)}
-.dbj .dbj-car__c{position:absolute;left:10px;bottom:10px;z-index:1;background:var(--w);border:1px solid var(--line-s);border-radius:999px;padding:6px 12px;font-size:13px;line-height:1.2;font-weight:600;color:var(--ink)}
+.dbj .dbj-car__c{position:absolute;left:10px;bottom:10px;z-index:1;background:var(--w);border:1px solid var(--line-s);border-radius:999px;padding:6px 12px;font-size:14px;line-height:1.2;font-weight:600;color:var(--ink)}
 .dbj .dbj-car__d{display:none;height:24px;align-items:center;justify-content:center}
 .dbj .dbj-car--on .dbj-car__d{display:flex}
 .dbj .dbj-car__dot{appearance:none;position:relative;width:22px;height:22px;margin:0;padding:0;border:0;background:none;cursor:pointer}
@@ -264,32 +264,32 @@
 .dbj .dbj-facts{display:grid;grid-template-columns:minmax(0,1fr);gap:0;margin-top:14px;background:var(--pk);border:1px solid var(--line-s);border-radius:var(--r);overflow:hidden}
 .dbj .dbj-facts div{padding:14px 18px;border-top:1px solid var(--line-s)}
 .dbj .dbj-facts div:first-child{border-top:0}
-.dbj .dbj-facts dt{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--strong)}
+.dbj .dbj-facts dt{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--strong)}
 .dbj .dbj-facts dd{font-size:16.5px;line-height:1.4;color:var(--ink);margin-top:2px}
 
 /* prices read from Ecwid: tags on the buttons and the matrix panel */
-.dbj .dbs-pr{display:block;font-size:13.5px;line-height:1.3;font-weight:600;color:var(--ink);margin-top:4px}
+.dbj .dbs-pr{display:block;font-size:14.5px;line-height:1.3;font-weight:600;color:var(--ink);margin-top:4px}
 .dbj .dbs-pr[hidden]{display:none}
 .dbj .dbs-btn[aria-checked="true"] .dbs-pr{color:#fff}
 .dbj .dbs[data-probing="true"] .dbs-btn,.dbj .dbs[data-probing="true"] .dbs-mx-b,.dbj .dbs[data-probing="true"] .dbs-loadall{pointer-events:none;opacity:.7}
-.dbj .dbs-mx-b[data-known="false"]{font-weight:400;font-size:14px;color:var(--ink-s)}
-.dbj .dbs-loadall{appearance:none;display:inline-flex;align-items:center;margin:14px 0 0;border:1px solid var(--line-s);background:#fff;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;line-height:1.2;padding:11px 16px;min-height:44px;border-radius:999px;cursor:pointer}
+.dbj .dbs-mx-b[data-known="false"]{font-weight:400;font-size:15px;color:var(--ink-s)}
+.dbj .dbs-loadall{appearance:none;display:inline-flex;align-items:center;margin:14px 0 0;border:1px solid var(--line-s);background:#fff;color:var(--ink);font:inherit;font-size:15.5px;font-weight:600;line-height:1.2;padding:11px 16px;min-height:44px;border-radius:999px;cursor:pointer}
 .dbj .dbs-loadall:hover{border-color:var(--ink)}
 .dbj .dbs-loadall:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .dbj .dbs-loadall[hidden]{display:none}
 .dbj .dbs-matrix{display:grid;gap:12px;margin-top:16px}
 .dbj .dbs-mx-g{background:var(--pk);border:1px solid var(--line-s);border-radius:var(--r);overflow:hidden}
-.dbj .dbs-mx-t{padding:12px 14px 4px;font-size:12px;line-height:1.3;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong)}
+.dbj .dbs-mx-t{padding:12px 14px 4px;font-size:13px;line-height:1.3;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--strong)}
 .dbj .dbs-mx-r{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(var(--n,2),minmax(0,1fr));gap:8px;align-items:center;padding:8px 14px}
 .dbj .dbs-mx-r + .dbs-mx-r{border-top:1px solid var(--line-f)}
 .dbj .dbs-mx-h{padding-top:4px;padding-bottom:10px}
-.dbj .dbs-mx-k{font-size:12px;line-height:1.3;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-s)}
-.dbj .dbs-mx-h .dbs-mx-cm{font-size:14.5px}
+.dbj .dbs-mx-k{font-size:13px;line-height:1.3;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-s)}
+.dbj .dbs-mx-h .dbs-mx-cm{font-size:15.5px}
 .dbj .dbs-mx-s{display:flex;flex-direction:column}
 .dbj .dbs-mx-cm{font-size:15.5px;line-height:1.25;font-weight:600;color:var(--ink)}
-.dbj .dbs-mx-in{font-size:13px;line-height:1.3;color:var(--ink-s)}
+.dbj .dbs-mx-in{font-size:14px;line-height:1.3;color:var(--ink-s)}
 .dbj .dbs[data-unit="in"] .dbs-mx-in{order:1;font-size:15.5px;font-weight:600;color:var(--ink)}
-.dbj .dbs[data-unit="in"] .dbs-mx-cm{order:2;font-size:13px;font-weight:400;color:var(--ink-s)}
+.dbj .dbs[data-unit="in"] .dbs-mx-cm{order:2;font-size:14px;font-weight:400;color:var(--ink-s)}
 .dbj .dbs-mx-b{appearance:none;width:100%;min-height:44px;margin:0;font:inherit;font-size:15.5px;font-weight:600;color:var(--ink);background:var(--w);border:1px solid var(--line-s);border-radius:var(--r-sm);padding:8px 6px;cursor:pointer;transition:background-color .2s ease,border-color .2s ease,color .2s ease}
 .dbj .dbs-mx-b:hover{border-color:var(--ink)}
 .dbj .dbs-mx-b:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
@@ -298,7 +298,7 @@
 
 /*R*/
 /* ---------- review marks (prototype only; build removes them): same quiet family as the page ---------- */
-.dbj .dbj-rv{display:block;margin:14px 0 0;padding:12px 16px;border-radius:var(--r-sm);background:#fff;border:1px dashed var(--line-s);color:var(--ink-s);font-size:14px;line-height:1.5;text-align:left}
+.dbj .dbj-rv{display:block;margin:14px 0 0;padding:12px 16px;border-radius:var(--r-sm);background:#fff;border:1px dashed var(--line-s);color:var(--ink-s);font-size:15px;line-height:1.5;text-align:left}
 .dbj .dbj-rv::before{content:"REVIEW  ";color:var(--strong);font-weight:600;letter-spacing:.12em}
 /*/R*/
 
@@ -313,7 +313,7 @@
   .dbj .dbj-h2{font-size:32px}
   .dbj .dbj-h3{font-size:22px}
   .dbj .dbj-p,.dbj .dbj-tt{font-size:17px}
-  .dbj .dbj-bar{font-size:12px;padding:12px 16px}
+  .dbj .dbj-bar{font-size:13px;padding:12px 16px}
   .dbj .dbj-stage--hero{margin-top:26px}
   .dbj .dbj-hero-grid{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:26px;align-items:center}
   .dbj .dbj-car__v{aspect-ratio:1 / 1}
@@ -326,7 +326,7 @@
   .dbj .dbj-facts div:first-child{border-left:0}
   .dbj .dbj-stage--hero img{width:90%;margin:0 auto;transform:none}
   .dbj .dbj-plate-in{transform:scale(1.2);transform-origin:50% 56%}
-  .dbj .dbj-pin{width:25px;height:25px;margin:-12.5px 0 0 -12.5px;line-height:22px;font-size:12px}
+  .dbj .dbj-pin{width:25px;height:25px;margin:-12.5px 0 0 -12.5px;line-height:22px;font-size:13px}
   .dbj .dbj-tags{grid-template-columns:repeat(2,minmax(0,1fr))}
   .dbj .dbj-strip{grid-template-columns:repeat(4,minmax(0,1fr))}
   .dbj .dbj-strip li{border-top:0;border-left:1px solid rgba(255,255,255,.2)}
@@ -371,8 +371,16 @@
 
 /* ---------- Select: the two collections as two clear blocks ---------- */
 .dbj .dbs-group[data-group="range"] .dbs-cm{font-size:22px;line-height:1.15}
-.dbj .dbs-group[data-group="range"] .dbs-sub{font-size:14.5px;color:var(--ink)}
+.dbj .dbs-group[data-group="range"] .dbs-sub{font-size:15.5px;color:var(--ink)}
 .dbj .dbs-group[data-group="range"] li[data-set="cot"] .dbs-btn{background-color:var(--pk)}
 .dbj .dbs-group[data-group="range"] li[data-set="junior"] .dbs-btn{background-color:var(--surf);border-color:var(--line)}
 .dbj .dbs-group[data-group="range"] li .dbs-btn[aria-checked="true"]{background-color:var(--strong)}
-.dbj .dbs-gl{font-size:13.5px}
+.dbj .dbs-gl{font-size:14.5px}
+
+/* ---------- zoom for the standard gallery: the small enlarge button; the viewer itself is drawn by dbs.js on a matte white veil ---------- */
+.dbj .dbj-car--on .dbj-car__s{cursor:zoom-in}
+.dbj .dbj-car__z{position:absolute;right:12px;top:12px;z-index:2;width:40px;height:40px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line-s);background:var(--w);color:var(--ink);cursor:pointer}
+.dbj .dbj-car{position:relative}
+
+/* ---------- a calmer page: lighter lines; the text keeps its full ink ---------- */
+.dbj .dbj-tile,.dbj .dbj-cards li,.dbj .dbj-nat li,.dbj .dbj-acc-body{border-color:rgba(0,58,104,.16)}

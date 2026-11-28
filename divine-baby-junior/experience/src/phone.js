@@ -26,7 +26,7 @@ function grpP(g, inner) {
 function phSheetHtml(U) {
   var idx = PSTEPS.indexOf(U.step) + 1, body = '', foot = '';
   if (U.step === 'size') {
-    body = '<h2 class="q">Select your size</h2><p class="sub">What size is your baby&#39;s cot or bed? Every size in centimetres and in inches. You can also start with the depth.</p>' + DATA.groups.map(function (g) {
+    body = '<h2 class="q">Select your size</h2><p class="sub">What size is your child&#39;s cot or bed? Every size in centimetres and in inches. You can also start with the depth.</p>' + DATA.groups.map(function (g) {
       return grpP(g, '<p class="selh">Select a size</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(function (z) {
         var on = X.S.size === sizeKey(z), av = shopHas('size', sizeKey(z));
         return '<button type="button" class="card sz' + (on ? ' on' : '') + '" data-pick-size="' + sizeKey(z) + '"' + (av === false ? ' disabled' : '') + '><span class="cm">' + z.w + ' × ' + z.l + ' cm</span><span class="in">' + inch(z.w) + ' × ' + inch(z.l) + ' in</span>' + selP(on) + '</button>'; }).join('') + '</div>');
@@ -47,7 +47,7 @@ function phSheetHtml(U) {
       '</ul><p class="bp s incl">Every mattress is <b>Medium</b> firmness with a <b>100% cotton</b> cover. Both are explained in the description; there is nothing to select.</p><div class="rvp"><span>Price</span><b>' + (complete() && priceNow() ? esc(priceNow()) : '<i>Choose a size and a depth</i>') + '</b></div><p class="guide">' + esc(fc.guide) + '</p>';
     foot = '<button type="button" class="btn ghost" data-go="depth">Back</button><button type="button" class="btn big' + (fc.ready ? ' ready' : '') + '" data-bag="1"' + (fc.enabled ? '' : ' disabled') + '>' + fc.text + '</button>';
   }
-  return '<header class="hd"><div class="hdt"><span class="stp">Step ' + idx + ' of 3</span><b>' + esc(DATA.product.name) + '</b></div><button type="button" class="x" data-close aria-label="Close the configuration">×</button></header><div class="prog">' + PSTEPS.map(function (s, i) { return '<i class="' + (i < idx ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="bd"><p class="natl"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20C4 10 10 4 20 4c0 10-6 16-16 16z" fill="currentColor"/></svg>A natural environment for your baby · 100% natural latex · 100% cotton cover</p>' + body + '</div><footer class="ft">' + foot + '</footer>';
+  return '<header class="hd"><div class="hdt"><span class="stp">Step ' + idx + ' of 3</span><b>' + esc(DATA.product.name) + '</b></div><button type="button" class="x" data-close aria-label="Close the configuration">×</button></header><div class="prog">' + PSTEPS.map(function (s, i) { return '<i class="' + (i < idx ? 'on' : '') + '"></i>'; }).join('') + '</div><div class="bd"><p class="natl"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20C4 10 10 4 20 4c0 10-6 16-16 16z" fill="currentColor"/></svg>A natural environment for your child · 100% natural latex · 100% cotton cover</p>' + body + '</div><footer class="ft">' + foot + '</footer>';
 }
 function phoneCss() { return PH_CSS; }
 function openSheet() {

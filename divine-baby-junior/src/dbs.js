@@ -534,6 +534,36 @@
     render();
   }
 
+  /* ---------- zoom: the photographs of the gallery, large, on a matte white veil (no frame, no colour) ---------- */
+  var zoomOn = null;
+  function zoomOpen(list, start) {
+    if (zoomOn) { return; }
+    var i = start, prevFocus = document.activeElement, html = document.documentElement, was = html.style.overflow;
+    var v = el('div'); v.setAttribute('role', 'dialog'); v.setAttribute('aria-modal', 'true'); v.setAttribute('aria-label', 'Photographs, enlarged');
+    v.style.cssText = 'position:fixed;left:0;top:0;right:0;bottom:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.985);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-family:DBJChillax,system-ui,sans-serif;color:#003A68';
+    var im = el('img'); im.style.cssText = 'display:block;max-width:min(94vw,1500px);max-height:84vh;width:auto;height:auto;object-fit:contain;border:0;border-radius:0;box-shadow:none;margin:0;touch-action:pan-y';
+    var cap = el('p'); cap.style.cssText = 'position:absolute;left:0;right:0;bottom:18px;margin:0;text-align:center;font-size:15px;line-height:1.4;font-weight:600;letter-spacing:.02em';
+    function btn(lbl, path, pos) {
+      var b = el('button'); b.type = 'button'; b.setAttribute('aria-label', lbl);
+      b.style.cssText = 'position:absolute;' + pos + ';width:46px;height:46px;padding:0;border-radius:50%;border:1px solid rgba(0,58,104,.18);background:#fff;color:#003A68;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 12px rgba(0,58,104,.10)';
+      b.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + path + '"/></svg>';
+      return b;
+    }
+    var bc = btn('Close', 'M6 6l12 12M18 6L6 18', 'right:18px;top:18px'), bp = btn('Previous photograph', 'M15 5l-7 7 7 7', 'left:18px;top:50%;margin-top:-23px'), bn = btn('Next photograph', 'M9 5l7 7-7 7', 'right:18px;top:50%;margin-top:-23px');
+    [im, cap, bc, bp, bn].forEach(function (n) { v.appendChild(n); });
+    function show(k) { i = (k + list.length) % list.length; im.src = list[i].src; im.alt = list[i].alt; cap.textContent = list[i].label + ' · ' + (i + 1) + ' of ' + list.length; }
+    function close() { document.removeEventListener('keydown', key, true); if (v.parentNode) { v.parentNode.removeChild(v); } html.style.overflow = was; zoomOn = null; if (prevFocus && prevFocus.focus) { try { prevFocus.focus({ preventScroll: true }); } catch (e6) { /* ok */ } } }
+    function key(e) { var k = e.key; if (k === 'Escape') { e.preventDefault(); close(); } else if (k === 'ArrowRight') { e.preventDefault(); show(i + 1); } else if (k === 'ArrowLeft') { e.preventDefault(); show(i - 1); } }
+    bc.addEventListener('click', close); bp.addEventListener('click', function () { show(i - 1); }); bn.addEventListener('click', function () { show(i + 1); });
+    v.addEventListener('click', function (e) { if (e.target === v) { close(); } });
+    var x0 = null;
+    v.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
+    v.addEventListener('pointerup', function (e) { if (x0 !== null && Math.abs(e.clientX - x0) > 50) { show(i + (e.clientX < x0 ? 1 : -1)); } x0 = null; });
+    document.addEventListener('keydown', key, true);
+    html.style.overflow = 'hidden'; document.body.appendChild(v); zoomOn = v; show(i);
+    try { bc.focus({ preventScroll: true }); } catch (e7) { /* ok */ }
+  }
+
   /* ---------- picture carousel ([data-dbg]): the slides already swipe by CSS scroll-snap; this adds dots, mouse drag and arrow keys ---------- */
   function initCarousel(fig) {
     if (fig.__dbg) { return; }
@@ -567,7 +597,7 @@
     window.addEventListener('pointermove', function (e) {
       if (!drag) { return; }
       var dx = e.clientX - drag.x;
-      if (!drag.moved && Math.abs(dx) > 4) { drag.moved = true; v.className += ' dbj-drag'; }
+      if (!drag.moved && Math.abs(dx) > 4) { drag.moved = true; v.__moved = true; v.className += ' dbj-drag'; }
       if (drag.moved) { v.scrollLeft = drag.s - dx; }
     });
     window.addEventListener('pointerup', function () {
@@ -575,6 +605,13 @@
       var was = drag.moved; drag = null;
       if (was) { v.className = v.className.replace(/\s*dbj-drag/, ''); go(cur()); }
     });
+    /* a click (not a drag) on a picture opens it large */
+    function zoomList() { return slides.map(function (sl) { var im = $('img', sl), lb = $('.dbj-car__c', sl); return { src: im.getAttribute('src'), alt: im.getAttribute('alt') || '', label: lb ? lb.textContent : '' }; }); }
+    v.addEventListener('click', function (e) { if (v.__moved) { v.__moved = false; return; } var sl = e.target.closest ? e.target.closest('.dbj-car__s') : null; if (sl) { zoomOpen(zoomList(), slides.indexOf(sl)); } });
+    var zb = el('button', 'dbj-car__z'); zb.type = 'button'; zb.setAttribute('aria-label', 'Enlarge the pictures');
+    zb.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5M10.5 8v5M8 10.5h5"/></svg>';
+    zb.addEventListener('click', function () { zoomOpen(zoomList(), cur()); });
+    fig.appendChild(zb);
     fig.className += ' dbj-car--on';
     mark();
   }

@@ -133,7 +133,6 @@ function openGallery(R, i) {
   gm.setAttribute('data-i', i); gm.hidden = false;
   var im = $('#gimg', R); im.src = (src.full || src.src); im.alt = s.alt;
   $('#gcap', R).textContent = s.label + ' · ' + (i + 1) + ' of ' + n;
-  $$('.gth', gm).forEach(function (b, k) { b.className = 'gth' + (k === i ? ' on' : ''); });
   var f = $('.gclose', gm); if (f && f.focus) { try { f.focus({ preventScroll: true }); } catch (e) { /* ok */ } }
 }
 function closeGallery(R) { var gm = $('#gmodal', R); if (gm && !gm.hidden) { gm.hidden = true; $('#gimg', R).removeAttribute('src'); } }
@@ -187,7 +186,7 @@ function pricesMatrixHtml() {
 function panelHtml(ch, p) {
   var k = p.kind;
   if (k === 'hero') {
-    return '<div class="hero2"><div class="hero2t"><p class="eyebrow">' + leaf() + '100% natural latex · 100% cotton cover</p><h3 class="h3x">A natural environment for your baby, from 100% natural latex</h3><p class="lead">' + esc(DATA.product.intro) + '</p></div>' + vcardHtml('origin') + '</div>' +
+    return '<div class="hero2"><div class="hero2t"><p class="eyebrow">' + leaf() + '100% natural latex · 100% cotton cover</p><h3 class="h3x">A natural environment for your child, from 100% natural latex</h3><p class="lead">' + esc(DATA.product.intro) + '</p></div>' + vcardHtml('origin') + '</div>' +
       '<ul class="keys">' + DATA.keyFeatures.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul>';
   }
   if (k === 'facts') {
@@ -220,7 +219,7 @@ function stepDone(id) { return id === 'size' ? X.S.size != null : X.S.height != 
 function nextStep() { for (var i = 0; i < STEPS.length; i++) { if (!stepDone(STEPS[i].id)) { return STEPS[i]; } } return null; }
 function slideIx(id) { for (var i = 0; i < DATA.slides.length; i++) { if (DATA.slides[i].id === id) { return i; } } return 0; }
 /* Explore: the picture follows the topic. Select & Buy: the depth step opens the pictures of the depths; the others show the chosen size drawn in proportion */
-function slideFor(U) { return U.mode === 'buy' ? (U.step === 'depth' ? slideIx('depths') : DRAW_SLIDE) : (DATA.topicSlide[U.topic] || 0); }
+function slideFor(U) { return U.mode === 'buy' ? (U.step === 'depth' ? slideIx('nursery') : DRAW_SLIDE) : (DATA.topicSlide[U.topic] || 0); }
 
 function chbarHtml(U) {
   var seen = U.seen || {};
@@ -254,7 +253,7 @@ function buyStageHtml(U) {
   var head = function (q, sub) { return '<div class="banner">' + bleaf() + '<p class="crumb">' + leaf() + 'Select here · ' + (idx ? 'Step ' + idx + ' of 3 · ' : '') + { size: 'Size', depth: 'Depth', review: 'Review', prices: 'All prices' }[U.step] + '</p><h3 class="h3q">' + q + '</h3><p class="sub">' + sub + '</p></div>'; };
   var body = '', act = '';
   if (U.step === 'size') {
-    body = head('Select your size', 'What size is your baby\'s cot or bed? Every size is shown in centimetres and in inches.');
+    body = head('Select your size', 'What size is your child\'s cot or bed? Every size is shown in centimetres and in inches.');
     body += DATA.groups.map(function (g) {
       return grpHtml(g, '<p class="selh">Select a size</p><div class="cards">' + DATA.sizes.filter(function (z) { return z.g === g.key; }).map(sizeCardHtml).join('') + '</div>');
     }).join('') + '<p class="need">Cot and bed sizes differ between manufacturers: measure the <b>inside</b> of the frame.</p>';
@@ -288,7 +287,7 @@ function exploreStageHtml(U) {
   var crumb = '<p class="crumb">' + leaf() + esc(ch.label) + ' <span class="ltr s">' + String.fromCharCode(65 + (ch.panels.indexOf(p))) + '</span> ' + esc(p.label) + '</p>';
   var banner = '<div class="banner">' + bleaf() + '<h3 class="h3q">' + esc(p.title || ch.label) + '</h3><p class="sub">' + esc(ch.head) + '</p></div>';
   var body = (p.kind === 'hero' ? '' : banner) + '<div class="panel" data-kind="' + p.kind + '">' + panelHtml(ch, p) + '</div>';
-  var strip = '<ul class="natbar">' + [['leaf', 'A natural environment for your baby'], ['drop', '100% natural latex core'], ['cotton', '100% cotton cover']].map(function (a) { return '<li>' + nat(a[0]) + esc(a[1]) + '</li>'; }).join('') + '</ul>';
+  var strip = '<ul class="natbar">' + [['leaf', 'A natural environment for your child'], ['drop', '100% natural latex core'], ['cotton', '100% cotton cover']].map(function (a) { return '<li>' + nat(a[0]) + esc(a[1]) + '</li>'; }).join('') + '</ul>';
   return { head: crumb, body: body, strip: strip, act: nx ? '<button type="button" class="btn dark" data-goto="' + nx.c.id + ':' + nx.i + '">Next: ' + esc(nx.p.label) + '</button>' : '<button type="button" class="btn" data-open-buy="size">Select &amp; Buy: select your size</button>' };
 }
 function mineHtml(U) {
@@ -360,12 +359,11 @@ function buildTv(R, hooks) {
   });
   $('#vmodal', R).addEventListener('click', function (e) { if (e.target === this) { closeFilm(R); } });
   var gmEl = $('#gmodal', R);
-  gmEl.querySelector('.gthumbs').innerHTML = DATA.slides.map(function (s, k) { var im = DATA.images[s.img]; return '<button type="button" class="gth" data-gi="' + k + '" aria-label="' + esc(s.label) + '"><img src="' + im.src + '" alt="" loading="lazy"></button>'; }).join('');
   gmEl.addEventListener('click', function (e) {
     if (e.target === this) { closeGallery(R); return; }
     var b = e.target.closest ? e.target.closest('button') : null; if (!b) { return; }
     var cur = +gmEl.getAttribute('data-i') || 0;
-    if (b.classList.contains('gclose')) { closeGallery(R); } else if (b.classList.contains('gprev')) { openGallery(R, cur - 1); } else if (b.classList.contains('gnext')) { openGallery(R, cur + 1); } else if (b.hasAttribute('data-gi')) { openGallery(R, +b.getAttribute('data-gi')); }
+    if (b.classList.contains('gclose')) { closeGallery(R); } else if (b.classList.contains('gprev')) { openGallery(R, cur - 1); } else if (b.classList.contains('gnext')) { openGallery(R, cur + 1); } 
   });
   W.addEventListener('keydown', function (e) {
     if (!$('#gmodal', R).hidden && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) { openGallery(R, (+gmEl.getAttribute('data-i') || 0) + (e.key === 'ArrowRight' ? 1 : -1)); return; } if (e.key === 'Escape') { if (!$('#gmodal', R).hidden) { closeGallery(R); } else if (!$('#vmodal', R).hidden) { closeFilm(R); } else if (U.all) { U.all = false; draw(); } } });

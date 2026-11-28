@@ -94,18 +94,18 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   ok(errs.length === 0, 'no console errors ' + errs.join('|'));
   const prod = fs.readdirSync(path.resolve(__dirname, '../ecwid')).filter(f => /^description-1\..*\.html$/.test(f)).sort().pop();
   const prodText = fs.readFileSync(path.resolve(__dirname, '../ecwid/' + prod), 'utf8').replace(/<style>[\s\S]*?<\/style>/, '').replace(/<[^>]+>/g, ' ');
-  ok(/12 cm/.test(prodText) && /16 cm/.test(prodText) && !/\bHeight\b/.test(prodText) && /OEKO-TEX/.test(prodText) && /natural environment for your baby/i.test(prodText), 'the production description (' + prod + ') carries four depths, Depth wording, OEKO-TEX and the natural-environment message');
+  ok(/12 cm/.test(prodText) && /16 cm/.test(prodText) && !/\bHeight\b/.test(prodText) && /OEKO-TEX/.test(prodText) && /natural environment for your child/i.test(prodText), 'the production description (' + prod + ') carries four depths, Depth wording, OEKO-TEX and the natural-environment message');
   ok(!/made to order|custom made/i.test(prodText) && !/@keyframes|animation\s*:|animation-/.test(fs.readFileSync(path.resolve(__dirname, '../ecwid/' + prod), 'utf8')), 'no "made to order" and no @keyframes or animation in the production description');
   ok(!/dbj-rv|\bREVIEW\b/.test(fs.readFileSync(path.resolve(__dirname, '../ecwid/' + prod), 'utf8')), 'no review notes in the production description');
 
   /* the swipe gallery (Botanic TV placement): works by CSS alone, dots/drag/keys come from dbs.js */
   const c2 = await b.newContext({ viewport: { width: 1440, height: 1000 }, javaScriptEnabled: false }); const p2 = await c2.newPage(); await p2.goto(file);
   ok((await p2.$$('.dbs-list li')).length === 16, 'without JS the static list stays (16 items)');
-  ok(await p2.evaluate(() => { const v = document.querySelector('.dbj-car__v'); const cs = getComputedStyle(v); return document.querySelectorAll('.dbj-car__s').length === 8 && cs.overflowX === 'auto' && cs.scrollSnapType.indexOf('x') === 0 && getComputedStyle(document.querySelector('.dbj-car__d')).display === 'none' && v.scrollWidth > v.clientWidth * 4; }), 'gallery without JS: eight slides that scroll and snap (no dots yet)');
+  ok(await p2.evaluate(() => { const v = document.querySelector('.dbj-car__v'); const cs = getComputedStyle(v); return document.querySelectorAll('.dbj-car__s').length === 7 && cs.overflowX === 'auto' && cs.scrollSnapType.indexOf('x') === 0 && getComputedStyle(document.querySelector('.dbj-car__d')).display === 'none' && v.scrollWidth > v.clientWidth * 4; }), 'gallery without JS: seven slides that scroll and snap (no dots yet)');
   const lay2 = await p2.evaluate(() => { const g = document.querySelector('.dbj-hero-grid').children; const t = g[0].getBoundingClientRect(), c = g[1].getBoundingClientRect(); return { tx: Math.round(t.left), cx: Math.round(c.left), tw: Math.round(t.width), cw: Math.round(c.width) }; });
   console.log('hero', JSON.stringify(lay2));
   ok(lay2.cx > lay2.tx && lay2.cw > 250 && lay2.cw < lay2.tw, 'hero: title on the left, gallery on the right (Botanic TV placement)');
-  ok(await p.evaluate(() => document.querySelectorAll('.dbj-car__dot').length === 8 && document.querySelectorAll('.dbj-car__dot.on').length === 1), 'gallery with JS: eight dots, one active');
+  ok(await p.evaluate(() => document.querySelectorAll('.dbj-car__dot').length === 7 && document.querySelectorAll('.dbj-car__dot.on').length === 1), 'gallery with JS: seven dots, one active');
   await p.evaluate(() => document.querySelector('.dbj-car').scrollIntoView({ block: 'center' }));
   await p.click('.dbj-car__dot >> nth=3'); await p.waitForTimeout(900);
   ok(await p.evaluate(() => { const v = document.querySelector('.dbj-car__v'); return Math.abs(v.scrollLeft - 3 * v.clientWidth) < 3 && document.querySelectorAll('.dbj-car__dot')[3].classList.contains('on'); }), 'a dot scrolls to its picture and becomes active');
@@ -114,7 +114,22 @@ const idle = (p) => p.waitForFunction(() => document.querySelector('.dbs').getAt
   const vb = await (await p.$('.dbj-car__v')).boundingBox();
   await p.mouse.move(vb.x + vb.width * 0.7, vb.y + vb.height / 2); await p.mouse.down(); await p.mouse.move(vb.x + vb.width * 0.15, vb.y + vb.height / 2, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(900);
   ok(await p.evaluate(() => document.querySelectorAll('.dbj-car__dot')[3].classList.contains('on') && Math.abs(document.querySelector('.dbj-car__v').scrollLeft % document.querySelector('.dbj-car__v').clientWidth) < 3), 'mouse drag moves to the next picture and snaps');
-  for (const n of [0, 1, 2, 3, 4, 5, 6, 7]) { await p.click('.dbj-car__dot >> nth=' + n); await p.waitForTimeout(900); const gg = await p.$('.dbj-car'); await gg.screenshot({ path: out + '/gallery-' + (n + 1) + '.png' }); }
+  /* zoom: the standard gallery enlarges, pages with arrows, and is only the photograph on a matte white veil */
+  await p.click('.dbj-car__dot >> nth=0'); await p.waitForTimeout(700);
+  await p.click('.dbj-car__s >> nth=0'); await p.waitForTimeout(300);
+  const zm = await p.evaluate(() => { const z = document.querySelector('[role="dialog"][aria-label^="Photographs"]'); if (!z) { return null; } const im = z.querySelector('img'); return { bg: getComputedStyle(z).backgroundColor, src: im.getAttribute('src'), cap: z.querySelector('p').textContent, w: im.getBoundingClientRect().width }; });
+  ok(!!zm && /rgba\(255, 255, 255/.test(zm.bg) && /webp$/.test(zm.src) && /Closed · 1 of 7/.test(zm.cap) && zm.w > 700, 'a click on a picture of the gallery opens it large on a matte white veil: ' + JSON.stringify(zm));
+  await p.keyboard.press('ArrowRight'); await p.waitForTimeout(150);
+  ok(await p.evaluate(() => /Open · 2 of 7/.test(document.querySelector('[role="dialog"][aria-label^="Photographs"] p').textContent)), 'the arrow key pages to the next picture');
+  await p.click('[role="dialog"][aria-label^="Photographs"] button[aria-label="Next photograph"]'); await p.waitForTimeout(150);
+  ok(await p.evaluate(() => /3 of 7/.test(document.querySelector('[role="dialog"][aria-label^="Photographs"] p').textContent)), 'the arrow button pages to the next picture');
+  await p.keyboard.press('Escape'); await p.waitForTimeout(150);
+  ok(await p.evaluate(() => !document.querySelector('[role="dialog"][aria-label^="Photographs"]') && document.documentElement.style.overflow !== 'hidden'), 'Escape closes it and gives the page back');
+  await p.click('.dbj-car__z'); await p.waitForTimeout(200);
+  ok(await p.evaluate(() => !!document.querySelector('[role="dialog"][aria-label^="Photographs"]')), 'the enlarge button opens it too'); await p.keyboard.press('Escape');
+  ok(!/baby-and-junior-depths-(800|1600)\.webp/.test(fs.readFileSync(path.resolve(__dirname, '../ecwid/' + prod), 'utf8')), 'the repeated Baby & Junior picture is not in the description');
+  ok(!/your baby/i.test(prodText), 'the description speaks of your child, never of your baby');
+  for (const n of [0, 1, 2, 3, 4, 5, 6]) { await p.click('.dbj-car__dot >> nth=' + n); await p.waitForTimeout(900); const gg = await p.$('.dbj-car'); await gg.screenshot({ path: out + '/gallery-' + (n + 1) + '.png' }); }
   const el2 = await p2.$('.dbs'); await el2.screenshot({ path: out + '/dbs-static.png' });
 
   const c3 = await b.newContext({ ...devices['iPhone 13'], reducedMotion: 'reduce' }); const p3 = await c3.newPage(); await p3.goto(file); await p3.waitForSelector('.dbs--on');
