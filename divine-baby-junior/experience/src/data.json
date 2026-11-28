@@ -1,0 +1,1381 @@
+{
+ "model": "baby",
+ "product": {
+  "id": 876311857,
+  "brand": [
+   [
+    "b",
+    "Dunlop"
+   ],
+   [
+    "i",
+    "Baby & Junior"
+   ],
+   [
+    "s",
+    "100%"
+   ],
+   [
+    "b",
+    "Natural Latex"
+   ],
+   [
+    "s",
+    "Mattress"
+   ]
+  ],
+  "name": "Dunlop Baby & Junior 100% Natural Latex Mattress",
+  "intro": "A natural environment for your child, from 100% natural latex: a single core of Dunlop latex in a quilted 100% cotton cover, with nothing else added. For the first nights, and for the growing years that follow."
+ },
+ "groups": [
+  {
+   "key": "cot",
+   "name": "Baby Cot Size",
+   "sub": "Cots and cot beds"
+  },
+  {
+   "key": "junior",
+   "name": "Junior Size",
+   "sub": "Junior and single beds"
+  }
+ ],
+ "sizes": [
+  {
+   "w": 60,
+   "l": 110,
+   "g": "cot"
+  },
+  {
+   "w": 60,
+   "l": 120,
+   "g": "cot"
+  },
+  {
+   "w": 70,
+   "l": 130,
+   "g": "cot"
+  },
+  {
+   "w": 70,
+   "l": 140,
+   "g": "cot"
+  },
+  {
+   "w": 70,
+   "l": 160,
+   "g": "junior"
+  },
+  {
+   "w": 80,
+   "l": 160,
+   "g": "junior"
+  },
+  {
+   "w": 80,
+   "l": 180,
+   "g": "junior"
+  },
+  {
+   "w": 80,
+   "l": 200,
+   "g": "junior"
+  },
+  {
+   "w": 90,
+   "l": 190,
+   "g": "junior"
+  },
+  {
+   "w": 90,
+   "l": 200,
+   "g": "junior"
+  }
+ ],
+ "heights": [
+  {
+   "cm": 10,
+   "g": "cot",
+   "name": "10 cm",
+   "sub": "Baby Cot",
+   "desc": "The lower of the two Baby Cot depths. Length and width are the same in both: check the maximum mattress depth your cot allows."
+  },
+  {
+   "cm": 12,
+   "g": "cot",
+   "name": "12 cm",
+   "sub": "Baby Cot",
+   "desc": "The same footprint with more latex depth. Check that your cot allows a mattress of this depth before you choose it."
+  },
+  {
+   "cm": 14,
+   "g": "junior",
+   "name": "14 cm",
+   "sub": "Junior",
+   "desc": "The lower of the two Junior depths, made for your child's own bed. Check the maximum mattress depth your bed allows."
+  },
+  {
+   "cm": 16,
+   "g": "junior",
+   "name": "16 cm",
+   "sub": "Junior",
+   "desc": "The same footprint with more latex depth for the years ahead. Check that your bed allows a mattress of this depth."
+  }
+ ],
+ "videos": {
+  "origin": {
+   "url": "https://media.divinedunlop.com/videos/natural-latex-milk-to-foam-origin.mp4",
+   "end": 13.2,
+   "label": "Where natural latex begins"
+  },
+  "vent": {
+   "url": "https://media.divinedunlop.com/videos/natural-latex-airflow-ventilation-channels.mp4",
+   "end": 0,
+   "label": "Air moving through the latex"
+  }
+ },
+ "keyFeatures": [
+  "100% natural Dunlop latex core",
+  "100% cotton cover that comes off",
+  "One-piece core, no glued layers",
+  "Ventilation channels",
+  "OEKO-TEX® Standard 100",
+  "A natural latex baby pillow, a gift"
+ ],
+ "slides": [
+  {
+   "id": "closed",
+   "img": "closed",
+   "pos": "53%",
+   "label": "Closed",
+   "alt": "Dunlop Baby & Junior mattress with its cotton cover closed, showing the wide quilted waves and the zip along the side"
+  },
+  {
+   "id": "open",
+   "img": "open",
+   "pos": "55%",
+   "label": "Open",
+   "alt": "Dunlop Baby & Junior mattress with the cotton cover unzipped and folded back to reveal the one-piece natural latex core"
+  },
+  {
+   "id": "core",
+   "img": "latexcore",
+   "label": "Latex core",
+   "alt": "Cross-section of natural latex foam showing its rows of ventilation channels"
+  },
+  {
+   "id": "quilt",
+   "img": "closed",
+   "pos": "40%",
+   "k": 2,
+   "oy": "40%",
+   "label": "Quilting",
+   "alt": "Close-up of the quilted 100% cotton cover with its wide transverse waves"
+  },
+  {
+   "id": "zip",
+   "img": "closed",
+   "pos": "28%",
+   "k": 2.1,
+   "oy": "68%",
+   "label": "Zip",
+   "alt": "Close-up of the zip puller and the side panel of the cotton cover"
+  },
+  {
+   "id": "cot",
+   "img": "cot",
+   "label": "In the cot",
+   "alt": "A baby asleep in a wooden cot"
+  },
+  {
+   "id": "pillow",
+   "img": "pillow",
+   "label": "Sleeping",
+   "alt": "A baby asleep, resting on a white pillow"
+  },
+  {
+   "id": "top",
+   "img": "top",
+   "fit": "contain",
+   "label": "From above",
+   "alt": "A mattress seen from above with a baby asleep on a pillow under a cream blanket"
+  },
+  {
+   "id": "nursery",
+   "img": "nursery",
+   "fit": "contain",
+   "label": "Baby Cot and Junior",
+   "alt": "Baby Cot 10 and 12 cm and Junior 14 and 16 cm in a nursery setting"
+  }
+ ],
+ "topicSlide": {
+  "discover": 5,
+  "origin": 1,
+  "healthy": 5,
+  "comfort": 6,
+  "firmness": 7,
+  "ventilation": 2,
+  "cover": 3,
+  "benefits": 5,
+  "delivery": 0,
+  "collections": 8,
+  "care": 0
+ },
+ "facts": [
+  {
+   "l": "Material",
+   "v": "100% natural Dunlop latex",
+   "pills": [
+    "One-piece core"
+   ]
+  },
+  {
+   "l": "Cover",
+   "v": "100% cotton",
+   "pills": [
+    "Quilted",
+    "Zip along the side",
+    "Washes at 40 °C"
+   ]
+  },
+  {
+   "l": "Sizes",
+   "v": "10 sizes",
+   "pills": [
+    "Baby Cot · 4",
+    "Junior · 6"
+   ]
+  },
+  {
+   "l": "Depths",
+   "v": "10 / 12 cm · 14 / 16 cm",
+   "pills": [
+    "Baby Cot 10 / 12",
+    "Junior 14 / 16"
+   ]
+  },
+  {
+   "l": "Firmness",
+   "v": "Medium",
+   "pills": [
+    "One firmness"
+   ]
+  },
+  {
+   "l": "Tested",
+   "v": "OEKO-TEX® Standard 100",
+   "pills": [
+    "For baby use"
+   ]
+  },
+  {
+   "l": "Delivery",
+   "v": "Allow up to 20 days",
+   "pills": [
+    "Special packaging"
+   ]
+  },
+  {
+   "l": "Included",
+   "v": "A natural latex baby pillow",
+   "pills": [
+    "A gift with every mattress"
+   ]
+  }
+ ],
+ "chapters": [
+  {
+   "id": "discover",
+   "label": "Discover",
+   "head": "A natural environment for your child, topic by topic.",
+   "panels": [
+    {
+     "id": "intro",
+     "kind": "hero",
+     "label": "Introduction"
+    },
+    {
+     "id": "glance",
+     "kind": "facts",
+     "label": "At A Glance",
+     "title": "Your child's mattress at a glance"
+    },
+    {
+     "id": "who",
+     "kind": "read",
+     "label": "Made For Your Family",
+     "title": "Made for your child, from the first cot to the first bed",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "**Baby Cot Size** is made for your child's cot or cot bed. **Junior Size** is made for the bed your child moves to next. Both are made from the same natural materials: a **100% natural Dunlop latex core** and a **100% cotton cover**."
+        },
+        {
+         "k": "p",
+         "t": "Every size has the same Medium firmness, so the support your child feels in the cot is the support your child feels in the bed."
+        }
+       ]
+      },
+      {
+       "h": "Before you choose",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Cot and bed sizes differ between manufacturers. Measure the **inside** of the frame, length and width, and check the maximum mattress depth your cot or bed allows."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "promise",
+     "kind": "read",
+     "label": "Our Promise",
+     "title": "What we promise you",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "**A natural environment for your child.** Your child sleeps on a core of 100% natural latex, under a cover of 100% cotton. There are no other materials, and no glued layers."
+        },
+        {
+         "k": "p",
+         "t": "**Care for your child's sleep, and for yours.** Steady support, a natural response to every movement and air moving through the core: a good sleeping surface for your child, and, we hope, more rest for you."
+        }
+       ]
+      },
+      {
+       "h": "Honest, always",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "We would rather you know exactly what you are buying for your child than be told more than we can stand behind."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "origin",
+   "label": "Origin",
+   "head": "Your child's mattress begins with a tree.",
+   "panels": [
+    {
+     "id": "milk",
+     "kind": "video",
+     "label": "From Tree To Foam",
+     "title": "Where your child's natural latex begins",
+     "video": "origin",
+     "text": [
+      "Before it is a mattress, natural latex is the **milk of a rubber tree**, a plant that keeps growing after it is tapped. It is gathered, and **Dunlop Technology** turns it into foam.",
+      "In the film the milk flows, gathers and is poured into the shape that becomes the core of your child's mattress."
+     ]
+    },
+    {
+     "id": "plant",
+     "kind": "points",
+     "label": "Plant-Based",
+     "title": "Your child sleeps on a plant, not on petroleum",
+     "items": [
+      {
+       "t": "Made from a plant",
+       "d": "Natural latex comes from the rubber tree. Many mattress foams, such as memory foam and standard polyurethane foam, are made from refined petroleum.",
+       "ic": "tree"
+      },
+      {
+       "t": "A renewable source",
+       "d": "The tree is tapped for its milk and keeps growing.",
+       "ic": "sprout"
+      },
+      {
+       "t": "One block",
+       "d": "The core is moulded as a single piece of 100% natural latex, with no glued layers.",
+       "ic": "layers"
+      },
+      {
+       "t": "Open cells",
+       "d": "Latex foam is open-celled, so air can move through the mattress your child sleeps on.",
+       "ic": "wind"
+      }
+     ]
+    },
+    {
+     "id": "dunlop",
+     "kind": "read",
+     "label": "Dunlop Technology",
+     "title": "One piece, made with Dunlop Technology",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "The core is made with **Dunlop Technology** as one moulded block, with rows of ventilation channels formed in it as it is moulded."
+        },
+        {
+         "k": "p",
+         "t": "Because it is one piece, there are no glued layers to separate. Open the zip and the whole core is in view: nothing is hidden from you."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "healthy",
+   "label": "Healthy",
+   "head": "A natural, healthy environment for your child to sleep in.",
+   "panels": [
+    {
+     "id": "means",
+     "kind": "points",
+     "label": "A Natural Environment",
+     "title": "A natural environment for your child to sleep in",
+     "items": [
+      {
+       "t": "100% natural latex core",
+       "d": "Your child sleeps on Dunlop latex from the rubber tree, moulded as one piece.",
+       "ic": "leaf"
+      },
+      {
+       "t": "Only two materials",
+       "d": "A 100% natural latex core and a 100% cotton cover. No other materials, and no glued layers.",
+       "ic": "check"
+      },
+      {
+       "t": "A core that breathes",
+       "d": "An open-cell structure with ventilation channels lets air move through your child's mattress, not only across its top.",
+       "ic": "wind"
+      },
+      {
+       "t": "A cover that comes off",
+       "d": "The 100% cotton cover unzips, comes off and washes at 40 °C, so your child's sleeping surface is easy to keep fresh.",
+       "ic": "wash"
+      }
+     ]
+    },
+    {
+     "id": "clean",
+     "kind": "read",
+     "label": "A Clean Sleep",
+     "title": "A clean, hypoallergenic sleep environment",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Your child deserves a clean place to sleep. The mattress is made only from natural latex and cotton, with no other elements, and is tested for harmful substances."
+        },
+        {
+         "k": "seal",
+         "t": "OEKO-TEX® Standard 100",
+         "d": "Tested for harmful substances, for baby use"
+        }
+       ]
+      },
+      {
+       "h": "Please note",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "If anyone in your household has a latex allergy, please seek medical advice before you buy."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "air",
+     "kind": "read",
+     "label": "Air And Dryness",
+     "title": "Air, warmth and dryness for your child",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Babies and children sleep warm, and every night leaves some warmth and moisture behind. A core that lets air move through it, instead of holding it at the surface, helps keep your child's sleeping surface fresher and drier."
+        },
+        {
+         "k": "p",
+         "t": "This is why we made the ventilation channels a feature of the core itself, and not a surface treatment."
+        }
+       ]
+      },
+      {
+       "h": "Together with the room",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "The room matters too. Keep your child's room at a comfortable temperature, as the guidance for your cot advises."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "even",
+     "kind": "read",
+     "label": "Even Support",
+     "title": "Stable support for your child",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Natural latex is dense and elastic. It carries your child evenly across the surface and answers every movement at once, with no slow recovery."
+        },
+        {
+         "k": "p",
+         "t": "The mattress is made in one firmness, **Medium**, in every size and depth, so the support is the same from the cot to the junior bed."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "around",
+     "kind": "read",
+     "label": "The Whole Sleep Space",
+     "title": "The mattress is one part of a healthy sleep space",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "A healthy night for your child also depends on the cot, the bedding, the temperature of the room and the way your child is put down to sleep. The mattress is the part we make, and we make it from natural materials, with care."
+        },
+        {
+         "k": "p",
+         "t": "Always follow current guidance from the **NHS** and **The Lullaby Trust**, together with the instructions supplied with your cot."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "comfort",
+   "label": "Comfort",
+   "head": "Your child's comfort: stable support and natural adaptation.",
+   "panels": [
+    {
+     "id": "expect",
+     "kind": "read",
+     "label": "Your Child's Comfort",
+     "title": "The comfort your child will feel",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Natural latex keeps your child **on the surface** of the mattress and still follows their shape. It is the balance between **stable support** and **natural adaptation** that gives your child the comfort of latex."
+        },
+        {
+         "k": "p",
+         "t": "Your child feels lightness and softness on top, and steady support underneath: a natural material, used with engineering precision."
+        }
+       ]
+      },
+      {
+       "h": "Held up, not wrapped",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Your child is held up, not wrapped. There is no hollow to sink into and no slow recovery, so the comfort comes from the support itself."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "need",
+     "kind": "read",
+     "label": "Support And Adaptation",
+     "title": "Support and adaptation need each other",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "**Support comes from density.** Latex is dense, so it carries your child's weight on the surface."
+        },
+        {
+         "k": "p",
+         "t": "**Adaptation comes from elasticity.** Latex is elastic, so it follows your child's shape and answers every movement."
+        }
+       ]
+      },
+      {
+       "h": "They need each other",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Adaptation without support lets a child sink. Support without adaptation is hard and unyielding. Your child needs both, well balanced, and latex gives them together."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "support",
+     "kind": "points",
+     "label": "Support",
+     "title": "Stable support, from density",
+     "items": [
+      {
+       "t": "Dense, not hard",
+       "d": "Latex is very dense, almost twice as dense as many foams used in mattresses. That density carries your child without a hard surface.",
+       "ic": "layers"
+      },
+      {
+       "t": "On the surface",
+       "d": "Your child rests on the mattress, not in a hollow that closes around them.",
+       "ic": "leaf"
+      },
+      {
+       "t": "Even all over",
+       "d": "The weight is carried across the whole surface instead of pressing in one place.",
+       "ic": "scale"
+      },
+      {
+       "t": "Keeps its shape",
+       "d": "A dense, elastic material keeps its shape under repeated use, night after night.",
+       "ic": "check"
+      }
+     ]
+    },
+    {
+     "id": "adapt",
+     "kind": "points",
+     "label": "Adaptation",
+     "title": "Instant, natural adaptation",
+     "items": [
+      {
+       "t": "An instant response",
+       "d": "There is no delay and no warming-up: the latex answers the moment your child touches it. Memory foam is slow to respond.",
+       "ic": "sun"
+      },
+      {
+       "t": "Weight shared out",
+       "d": "The load is shared across the surface instead of concentrating in one spot.",
+       "ic": "scale"
+      },
+      {
+       "t": "Movement absorbed",
+       "d": "Every small movement in your child's sleep is absorbed and answered as it happens.",
+       "ic": "heart"
+      },
+      {
+       "t": "No slow recovery",
+       "d": "The surface resets at once, so your child is never working out of a dip. This helps your child sleep more comfortably.",
+       "ic": "moon"
+      }
+     ]
+    },
+    {
+     "id": "top",
+     "kind": "read",
+     "label": "Always On Top",
+     "title": "Your child stays on top of the mattress",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Your child does not sink into this mattress. Your child stays **on the top**, on the mattress, always."
+        },
+        {
+         "k": "p",
+         "t": "Because your child lies on the mattress and not in it, there is nothing to hold your child back: turning, rolling and stretching take little effort."
+        }
+       ]
+      },
+      {
+       "h": "From the cot to the bed",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "The **Baby Cot Size** is for the cot years. The **Junior Size** is for the bed that follows, in the same natural latex."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "calm",
+     "kind": "read",
+     "label": "Calm Nights",
+     "title": "A calmer night for your child, and for you",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Sleep matters so much for a child, and a good sleeping environment helps it. A surface that supports your child evenly, answers every movement and lets air move through is made to help your child settle."
+        },
+        {
+         "k": "p",
+         "t": "And when your child is comfortable, you can rest more too."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "firmness",
+   "label": "Firmness",
+   "head": "One firmness, chosen for your growing child.",
+   "panels": [
+    {
+     "id": "medium",
+     "kind": "read",
+     "label": "Medium",
+     "title": "Medium, chosen for your growing child",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "The Baby & Junior range is made in a single firmness, **Medium**, in every size and depth. There is nothing for you to select."
+        },
+        {
+         "k": "p",
+         "t": "Babies and growing children need steady, even support as their bodies develop. Medium is chosen to give a balance between your child's weight and the support underneath, so your child can grow and sleep comfortably."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "growing",
+     "kind": "read",
+     "label": "Support For A Growing Body",
+     "title": "Support that grows with your child",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "A young body is changing all the time. The support should not be too hard, and it should not let your child sink. Natural latex does both jobs at once: it carries your child on the surface and gives way gently where the body presses."
+        },
+        {
+         "k": "p",
+         "t": "Because latex is dense and elastic, the support stays even as your child gets taller and heavier, from the first cot to the junior bed."
+        }
+       ]
+      },
+      {
+       "h": "The same in every size",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Medium is the firmness of the whole range. We have not made soft or firm versions of this mattress, because it is made for babies and growing children."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "why",
+     "kind": "read",
+     "label": "Nothing To Choose",
+     "title": "Why you do not have to choose a firmness",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "For adults we recommend a firmness by body weight. That table is not used for babies and children: their weight changes so quickly that one balanced firmness serves them best."
+        },
+        {
+         "k": "p",
+         "t": "So you only choose what your cot or bed needs, the **size** and the **depth**, and the firmness is already right for your child."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ventilation",
+   "label": "Ventilation",
+   "head": "Ventilation for your child: breathing channels in the core.",
+   "panels": [
+    {
+     "id": "airflow",
+     "kind": "video",
+     "label": "Airflow",
+     "title": "Air moving through your child's mattress",
+     "video": "vent",
+     "text": [
+      "The open-cell structure of natural latex, together with the **ventilation channels** formed in the core, lets air move through your child's mattress.",
+      "These breathing channels are part of the core itself, moulded into the latex. They are not a coating or a surface treatment."
+     ]
+    },
+    {
+     "id": "channels",
+     "kind": "points",
+     "label": "Breathing Channels",
+     "title": "Built to breathe, for your child",
+     "items": [
+      {
+       "t": "Open cells",
+       "d": "Natural latex foam is open-celled, so air can pass through the material itself.",
+       "ic": "wind"
+      },
+      {
+       "t": "Ventilation channels",
+       "d": "Rows of channels are formed in the core as it is moulded.",
+       "ic": "layers"
+      },
+      {
+       "t": "Moulded in",
+       "d": "The channels are part of the one-piece core, not added afterwards.",
+       "ic": "check"
+      },
+      {
+       "t": "Air keeps moving",
+       "d": "Air can move through the whole depth of the mattress, not only across its top.",
+       "ic": "sun"
+      }
+     ]
+    },
+    {
+     "id": "why",
+     "kind": "read",
+     "label": "Why It Matters",
+     "title": "Why ventilation matters for your child",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Ventilation matters for children as much as for adults. Temperature comfort matters to everyone, and a child who is too warm is not comfortable. A child who is too cold is not comfortable either."
+        },
+        {
+         "k": "p",
+         "t": "Warmth and moisture are what microbes like. The more air that moves through your child's mattress, the less warmth and moisture is held there, and the less welcoming it is to them."
+        }
+       ]
+      },
+      {
+       "h": "Working all night",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "This is why the channels matter to us, and why we explain them to you: they work quietly, all night, in every mattress."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "flow",
+     "kind": "flow",
+     "label": "How It Works",
+     "title": "From the structure to a fresher surface for your child",
+     "steps": [
+      "Open-cell latex",
+      "Ventilation channels",
+      "Air moves through",
+      "A drier, fresher surface"
+     ],
+     "close": "The channels do not change the temperature of the room. They help warmth and moisture move through your child's mattress instead of staying inside it."
+    }
+   ]
+  },
+  {
+   "id": "cover",
+   "label": "Cover & Hygiene",
+   "head": "Your child's cover and the hygiene of your child's mattress.",
+   "panels": [
+    {
+     "id": "cotton",
+     "kind": "cover",
+     "label": "100% Cotton",
+     "title": "Your child's cover: 100% cotton",
+     "text": [
+      "The cover is **100% cotton**, a natural fibre, and it is the part of the mattress closest to your child. It is quilted in wide transverse waves and closes with a zip along the side.",
+      "The cover and the latex core are made together as one mattress: the cover is not a separate choice, and there are no other materials inside."
+     ]
+    },
+    {
+     "id": "zip",
+     "kind": "read",
+     "label": "Comes Off, Washes Easily",
+     "title": "Your child's cover comes off",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "A zip runs along the side, so the cover opens and comes off. The one-piece latex core inside can be seen whenever you like."
+        },
+        {
+         "k": "p",
+         "t": "The cotton cover can be machine-washed at **40 °C**. Follow the care instructions supplied with your mattress."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "clean",
+     "kind": "points",
+     "label": "Cleaner Sleep",
+     "title": "Hygiene of your child's mattress",
+     "items": [
+      {
+       "t": "Dry by design",
+       "d": "Air moving through the open-cell core helps keep your child's surface drier than a closed foam would.",
+       "ic": "wind"
+      },
+      {
+       "t": "A cover that comes off",
+       "d": "Unzip the cover along the side and take it off whenever it needs washing.",
+       "ic": "zip"
+      },
+      {
+       "t": "Washes at 40 °C",
+       "d": "The cotton cover can be machine-washed at 40 °C.",
+       "ic": "wash"
+      },
+      {
+       "t": "Nothing hidden",
+       "d": "One moulded block: there are no glued layers to trap anything between them.",
+       "ic": "check"
+      }
+     ]
+    },
+    {
+     "id": "care",
+     "kind": "read",
+     "label": "Keeping It Fresh",
+     "title": "Easy to look after",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Take the cover off, wash it at **40 °C**, and put it back. It is a simple routine that fits easily into everyday life with a child."
+        },
+        {
+         "k": "p",
+         "t": "Use a fitted sheet made for the exact mattress size, and follow the care instructions supplied with your mattress."
+        }
+       ]
+      },
+      {
+       "h": "A good start",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "A dry, ventilated core and a cover you can wash are a good start for a clean sleeping space for your child. The rest is everyday care."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "benefits",
+   "label": "Benefits",
+   "head": "What your child gains from natural latex.",
+   "panels": [
+    {
+     "id": "grow",
+     "kind": "points",
+     "label": "A Healthy Place To Grow",
+     "title": "A healthy environment for your child to grow up in",
+     "items": [
+      {
+       "t": "A natural, plant-based material",
+       "d": "Your child grows up sleeping on 100% natural Dunlop latex, from the rubber tree.",
+       "ic": "tree"
+      },
+      {
+       "t": "A surface that breathes",
+       "d": "Open cells and ventilation channels let air move through the mattress, night after night.",
+       "ic": "wind"
+      },
+      {
+       "t": "Stable support as they grow",
+       "d": "Dense, elastic latex carries your child evenly, from the first cot to the junior bed.",
+       "ic": "sprout"
+      },
+      {
+       "t": "A cover you can wash",
+       "d": "A 100% cotton cover that comes off and washes at 40 °C keeps the surface fresh.",
+       "ic": "wash"
+      }
+     ]
+    },
+    {
+     "id": "why",
+     "kind": "points",
+     "label": "Why Latex",
+     "title": "Why natural latex is different for your child",
+     "items": [
+      {
+       "t": "Different from memory foam",
+       "d": "Latex responds at once. It does not wrap around your child or recover slowly.",
+       "ic": "sun"
+      },
+      {
+       "t": "A bio-based material",
+       "d": "Tapped from a renewable plant, and not made from petroleum.",
+       "ic": "leaf"
+      },
+      {
+       "t": "One piece",
+       "d": "A single moulded block with ventilation channels and no glued layers.",
+       "ic": "layers"
+      },
+      {
+       "t": "Made with Dunlop Technology",
+       "d": "The milk of the rubber tree, turned into foam by Dunlop Technology.",
+       "ic": "drop"
+      }
+     ]
+    },
+    {
+     "id": "last",
+     "kind": "read",
+     "label": "Made To Last",
+     "title": "A mattress for the years, not only the first months",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Latex is dense and elastic, and a dense, elastic material keeps its shape and its response under repeated use."
+        },
+        {
+         "k": "p",
+         "t": "Because the core is one piece, it does not rely on layers that can separate. It is made for the nights of a whole childhood."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "delivery",
+   "label": "Delivery",
+   "head": "Delivery of your child's mattress, and a gift for your child.",
+   "panels": [
+    {
+     "id": "order",
+     "kind": "read",
+     "label": "Delivery",
+     "title": "Delivery of your child's mattress",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Please allow up to **20 days** for your child's mattress to be prepared and delivered."
+        },
+        {
+         "k": "p",
+         "t": "It arrives in the size and depth you chose for your child's cot or bed."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "pack",
+     "kind": "read",
+     "label": "Special Packaging",
+     "title": "A special package for your child's mattress",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "The mattress for your child arrives in a special package made for it, so that it reaches you in good condition."
+        },
+        {
+         "k": "p",
+         "t": "Remove all packaging, including any plastic wrapping, before use, and keep it away from children."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "pillow",
+     "kind": "read",
+     "label": "A Gift For Your Child",
+     "title": "A gift for your child: our natural latex pillow",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Every Baby & Junior mattress comes with a gift: **our own baby pillow**, specially developed and made from natural latex, in the same natural philosophy as the mattress."
+        },
+        {
+         "k": "p",
+         "t": "It is an added value of the collection, packed together with your child's mattress, at no extra cost."
+        }
+       ]
+      },
+      {
+       "h": "Natural, like the mattress",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Natural latex, shaped for a small head. It belongs to the same natural environment as the mattress your child sleeps on."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "use",
+     "kind": "read",
+     "label": "Using The Pillow",
+     "title": "How and when to use the pillow",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "li",
+         "t": [
+          "**Purpose.** A head pillow for sleep, for your child in a cot bed or in a bed of their own.",
+          "**Age.** A baby under 12 months sleeps without a pillow, on a firm, flat mattress. Our pillow is for your child from 12 months, as the instructions supplied with it also state.",
+          "**Your child's cot.** Keep the cot of a baby under 12 months clear: no pillow, and nothing loose.",
+          "**Follow the instructions.** Use and care instructions are supplied with the pillow. Always follow current guidance from the NHS and The Lullaby Trust."
+         ]
+        }
+       ]
+      },
+      {
+       "h": "For the years ahead",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "The pillow is a gift for the years ahead, when your child has grown into a child with a bed of their own."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "collections",
+   "label": "Baby & Junior",
+   "head": "Two collections, one natural philosophy, designed for growing years.",
+   "panels": [
+    {
+     "id": "two",
+     "kind": "duo",
+     "label": "Two Collections",
+     "title": "One natural philosophy. Two collections.",
+     "cols": [
+      {
+       "kicker": "Baby Cot",
+       "h": "For your child's cot",
+       "d": "Compact sizes, made for the different constructions of baby cots and cot beds.",
+       "list": [
+        "**4 sizes:** 60 × 110, 60 × 120, 70 × 130, 70 × 140 cm",
+        "**2 depths:** 10 cm and 12 cm",
+        "Medium firmness, 100% natural Dunlop latex, 100% cotton cover"
+       ]
+      },
+      {
+       "kicker": "Junior",
+       "h": "For your child's own bed",
+       "d": "Larger sizes and deeper mattresses, made for the move to a bed of your child's own and for the years that follow.",
+       "list": [
+        "**6 sizes:** 70 × 160, 80 × 160, 80 × 180, 80 × 200, 90 × 190, 90 × 200 cm",
+        "**2 depths:** 14 cm and 16 cm",
+        "Medium firmness, 100% natural Dunlop latex, 100% cotton cover"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "depths",
+     "kind": "read",
+     "label": "Why 10, 12, 14 And 16",
+     "title": "Why there are four depths",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Baby cots are built differently, so the Baby Cot collection has two depths, **10 cm** and **12 cm**. The choice depends on your cot's construction and on the maximum mattress depth its maker allows."
+        },
+        {
+         "k": "p",
+         "t": "A child's own bed is a different job: it is used for longer. The Junior collection is made deeper, **14 cm** and **16 cm**, so there is more latex under your growing child over the years."
+        }
+       ]
+      },
+      {
+       "h": "Choose what fits",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "A deeper mattress is not automatically a better one. The right depth is the one that suits your cot or bed, so please check its construction and its maximum mattress depth before you choose."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "which",
+     "kind": "read",
+     "label": "Which One Is Right?",
+     "title": "Baby Cot or Junior?",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "If you are buying for a cot or a cot bed, choose **Baby Cot**. If you are buying for a bed your child will sleep in on their own, choose **Junior**."
+        },
+        {
+         "k": "li",
+         "t": [
+          "**Measure inside.** The inside length and width of the cot or bed frame.",
+          "**Check the depth.** The maximum mattress depth the cot or bed maker allows.",
+          "**Choose the collection** that matches the frame, then the size and the depth."
+         ]
+        }
+       ]
+      },
+      {
+       "h": "Not good and better",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "The two collections share one natural philosophy: a 100% natural latex core and a 100% cotton cover. They are not different levels of quality, but two solutions for two stages of growing up."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "care",
+   "label": "Care & Fit",
+   "head": "Fit, care and safer sleep for your child.",
+   "panels": [
+    {
+     "id": "fit",
+     "kind": "read",
+     "label": "Fit",
+     "title": "Find the right fit for your cot or bed",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Cot and bed sizes differ between manufacturers. The right mattress is the one that matches the inside of your frame."
+        },
+        {
+         "k": "li",
+         "t": [
+          "**Measure inside.** Length and width of the cot or bed frame, not the outside.",
+          "**Match the size.** It should fit snugly, with no gaps at the sides or ends.",
+          "**Check the depth.** Many cots state a maximum mattress depth: choose a depth within it.",
+          "**Follow your cot.** Use its instructions on mattress size and maximum depth."
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "before",
+     "kind": "read",
+     "label": "Before Use",
+     "title": "Before it goes in your child's cot",
+     "groups": [
+      {
+       "h": null,
+       "blocks": [
+        {
+         "k": "li",
+         "t": [
+          "**Unpacking.** Remove all packaging, including any plastic wrapping, before use, and keep it away from children.",
+          "**Bedding.** Use a fitted sheet made for the exact mattress size. Keep the sleeping surface flat and clear.",
+          "**Cover.** The cover comes off and can be washed at 40 °C. Follow the care instructions supplied with your mattress."
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "latex",
+     "kind": "read",
+     "label": "Latex & Safer Sleep",
+     "title": "Latex and safer sleep",
+     "groups": [
+      {
+       "h": "Contains natural rubber latex",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "If anyone in your household has a latex allergy, please seek medical advice before you buy."
+        }
+       ]
+      },
+      {
+       "h": "Safer sleep",
+       "blocks": [
+        {
+         "k": "p",
+         "t": "Always follow current guidance from the NHS and The Lullaby Trust, together with the instructions supplied with your cot."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1 @@
+(function(d,u){if(window.__dbsLoader)return;window.__dbsLoader=1;var s=d.createElement('script');s.src=u;s.defer=true;d.head.appendChild(s)})(document,'https://cdn.jsdelivr.net/gh/Matrress/Animation@cb2d502266b6a91309e62fbc18d8760fb8f74927/divine-baby-junior/release/1.3.0/dbs.js');
